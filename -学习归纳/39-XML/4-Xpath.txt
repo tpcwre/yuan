@@ -1,0 +1,151 @@
+		=================XPATH====================
+
+
+
+
+//=====选择根元素
+
+	/AAA
+
+
+//=====选择AAA下所有为CCC的一级子元素
+
+	/AAA/CCC
+
+
+//=====选择/AAA/DDD下为BBB的一级子元素
+	
+	/AAA/DDD/BBB
+
+
+//=====选择所有DDD下为OOO的一级子元素
+	
+	//DDD/BBB
+
+
+//=====选择带有三层父元素的BBB元素
+
+	/*/*/*/BBB
+
+
+
+//=====选择AAA下首个为BBB的一级子元素
+
+	/AAA/BBB[1]
+
+
+//=====选择AAA下最后一个为BBB的一级子元素
+
+	/AAA/BBB[last()]
+
+
+//=====选择含有指定属性名和属性值的元素
+
+	//BBB[@Id="b1"]
+	//BBB[@name="lee"]
+
+
+//=====选择有任意属性的BBB元素
+
+	//BBB[@*]
+
+
+
+
+
+
+
+例：
+
+- -- -xpath.php页面：
+
+<?php
+	$xmldom = new DOMDocument();	//实例DOM对象
+	$xmldom->load("xpath.xml");		//加载XML文件
+	$xpath=new DOMXPath($xmldom);  	//实例化XPATH对象并加载DOM对象
+
+//=====选择根元素
+	$root=$xpath->query("/AAA");
+	$root->item(0)->setAttribute("A","AA");
+	
+//=====选择AAA下所有为CCC的一级子元素
+	$c=$xpath->query("/AAA/CCC");
+	for($i=0;$i<$c->length;$i++){
+		$c->item($i)->nodeValue="选择AAA下所有为CCC的一级子元素";
+	}
+
+//=====选择/AAA/DDD下为BBB的一级子元素
+	$b=$xpath->query("/AAA/DDD/BBB");
+	for($i=0;$i<$b->length;$i++){
+		$b->item($i)->setAttribute("属性","选择AAADDD下为BBB的一级子元素");
+		$b->item($i)->removeAttribute("a");
+	}
+
+//=====选择所有DDD下为OOO的一级子元素
+	$o=$xpath->query("//DDD/OOO");
+	for($i=0;$i<$o->length;$i++){
+		$o->item($i)->nodeValue="选择所有DDD下为OOO的一级子元素";
+	}
+
+//=====选择带有三层父元素的BBB元素
+	$bbb=$xpath->query("/* /* /* /BBB");   //此处与注释冲突所以加了空格
+	$bbb->item(0)->nodeValue="选择有三层父元素的并且为BBB的元素";
+
+//=====选择AAA下首个为BBB的一级子元素
+	$ab=$xpath->query("/AAA/BBB[1]");
+	$ab->item(0)->setAttribute("属性","选择AAA下首个为BBB的一级子元素");
+
+//=====选择AAA下最后一个为BBB的一级子元素
+	$lastb=$xpath->query("/AAA/BBB[last()]");
+	$lastb->item(0)->nodeValue="选择AAA下最后一个为BBB的一级子元素";
+
+//=====选择含有指定属性名和属性值的元素
+	$e=$xpath->query("//*[@e="eee"]");
+	$e->item(0)->setAttribute("属性","选择含有指定属性名和属性值的元素");
+
+//=====选择有任意属性的BBB元素
+	$all=$xpath->query("//WWW[@*]");
+	for($i=0;$i<$all->length;$i++){
+		$all->item($i)->setAttribute("属性","选择有任意属性的BBB元素");
+	}
+	
+	$xmldom->save("xpath.xml");		//将所有操作保存回原文件
+?>
+
+
+
+
+
+- -- -xpath.xml页面：
+
+<?xml version="1.0" encoding="utf- -8"?>
+<AAA>
+	<BBB>
+		<DDD>
+			<BBB></BBB>
+			<OOO></OOO>
+		</DDD>
+	</BBB>
+	<CCC></CCC>
+	<BBB/>
+	<WWW name="lee"/>
+	<DDD>
+		<BBB>
+			<OOO/>
+			<DDD>
+					<OOO></OOO>
+			</DDD>
+		</BBB>
+		<DDD/>
+	</DDD>
+	<CCC></CCC>
+	<WWW id="one" >
+		<BBB/>
+	</WWW>
+	<DDD>
+		<BBB/>
+	</DDD>
+	<BBB></BBB>
+	<EEE e="eee"/>
+	<III/>
+</AAA>

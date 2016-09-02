@@ -1,0 +1,26 @@
+
+
+
+
+	1，自定义类的创建
+
+		先在项目下创建目录 Myc , 并将自定义类放在该 目录 下，如： (目录名也可以自定义其它)
+		obj/Myc/Page.class.php
+		<?php
+		namespace Myc;		//设置好命名空间，与目录名相同
+		class Page{
+			public function index(){
+				echo 11111111111111;
+			}
+		}
+
+
+
+	2，自定义类的调用
+
+		控制器中调用
+		
+		function index(){
+        		$page = new \Myc\Page();
+        		$page->index();
+		}

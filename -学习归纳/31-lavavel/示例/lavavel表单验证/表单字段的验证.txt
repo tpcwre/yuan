@@ -1,0 +1,47 @@
+ public function store()
+	{
+		//laravel自带表单验证方法
+		$data = \Input::all();
+		
+
+		//判断验证码
+		if($data['captcha']!=\Session::get('code')){
+			return view("/404")->with('info',"你输入的验证码有误，请重新输入");
+		}
+		//构建验证约束集。
+		$rules = array(
+			'uname' => 'required|alpha_dash|min:1|max:32',
+			'upass'  => 'required|min:1|max:18'
+		);
+		//创建一个新确认器实例。
+
+		$validator = \Validator::make($data, $rules);
+		if ($validator->passes()) {
+		
+			$results = \DB::table('tb_admin_head')->where('name',$data['uname'])->where('status',1)->first();
+			if(!$results){
+				return view("/404")->with('info',"很抱歉，你输入的账号有误");
+			}
+			$code=$results->code;                   //获取验证码的四位数 
+       	 	$pass = md5($code.$data['upass']);        		//瓶装加md5
+        	$md = substr_replace($pass,$code,0,4);         //用验证码替换前4位再进行一次md5
+        	$password = md5($md);
+        	//7f47661a678c1faf370d6045240ef315
+			if(isset($results) && !empty($results)){
+				if($results->password!=$password){
+				return view("/404")->with('info',"很抱歉，你输入的密码有误，请重新输入");
+				}else{
+				\Session::put('login', $results);
+				$time=time();		//插入最后登陆时间
+				\DB::table('tb_admin_head')->where('name',$data['uname'])->update(['last_login'=>$time]);
+				 return redirect('/admin');
+				}
+			}else{
+				return view("/404")->with('info',"很抱歉，你输入的账号有误或被冻结，请重新输入");
+			}
+		}else{
+			return view("/404");
+		}
+                  
+                  
+	}

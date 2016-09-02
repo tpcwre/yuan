@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>AJAX实例</title>
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2>AJAX实例：表单验证</h2>
+        账号：<input type="text" name="uname" onblur="doCheck(this)"/><span></span><br/><br/>
+        密码：<input type="password" name="upass"/><span></span><br/><br/>
+        <script type="text/javascript">
+            function doCheck(ob){
+                //1. 创建Ajax请求对象
+				var xmlhttp=new XMLHttpRequest();
+				//2. 设置回调函数
+				xmlhttp.onreadystatechange=function(){
+					//判断请求状态为4，响应状态为200
+					if(xmlhttp.readyState==4 && xmlhttp.status==200){
+						var b = xmlhttp.responseText;	//获取响应信息	
+						//判断
+						if(b=="y"){
+							ob.nextSibling.innerHTML="账号已存在！";
+							ob.nextSibling.style.color="red";
+						}else{
+							ob.nextSibling.innerHTML="此账号可用！";
+							ob.nextSibling.style.color="green";
+						}
+					}
+				}
+				//3. 初始化请求信息
+				xmlhttp.open("get","6.php?name="+ob.value,true); //异步
+				
+				//4. 发送请求
+				xmlhttp.send();
+            }
+            
+            
+        </script>
+    </body>
+</html>

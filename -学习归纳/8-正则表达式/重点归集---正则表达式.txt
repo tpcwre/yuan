@@ -1,0 +1,287 @@
+
+//----- 正则手册位置
+//----- 正则量词
+//----- 正则元字符
+//----- 正则修饰符
+//----- preg_match() 的使用方法
+//----- preg_match_all() 的使用方法
+//----- preg_quote 定界正则 为特殊字符前加上斜杠
+//----- preg_replace() 正则替换指定字符
+//----- preg_split 分割字符串
+//----- U 贪婪，和(),\2 分组提取的应用
+
+
+
+
+	//----- 正则手册位置
+
+		php手册-》函数参考-》文本处理-》PCRE-》PCRE函数-》preg_match		// 手册位置
+
+
+
+
+	//----- 正则量词
+						
+		/ph+p/		+		1到多个前导字符
+		/ph*p/		*		0到多个前导字符
+		/ph?p/		?		0到1个前导字符
+		/ph.p/		.		任意一个字符
+		/ph{3}p/	{3}		要有3个前导字符
+		/ph{3,5}p/	{3,5}		要有3到5个前导字符
+		/ph{3,}p/	{3,}		至少3个以上前导字符
+		/php$/		$		匹配字串行尾
+		/^php/		^		匹配字串行首
+		/php|jsp/	|		匹配字串左边或右边的内容
+		/(php)(jsp)/ 	()		字符分组或定义反引用，可以使用\1\2提取
+
+		()   作用：
+		1、提高优先级
+		2、将小原子变成大原子
+		3、括号里面的东西  我们给它叫做 子模式。整个正则表达式为一个大的模式。里面的小括号包括的东西就是大模式中的子模式。
+
+
+
+		
+		
+	//----- 正则元字符
+						
+		/[a-z]/			匹配a-z的小写字母
+		/[A-Z]/			匹配A-Z的大写字母
+		/0-9]/			匹配0-9的数字
+		/[abc]/			匹配包含a或b或c 的字串 
+		/[^abc]/		匹配包含非a,b,c的字串 
+		/[a-zA-Z0-9_]/		匹配包含字母，数字及下划线的字串 
+		/\w/			同上
+		/\W/			匹配非字母，数字及下划线
+		/\d/			匹配数字，与[0-9]相同
+		/\D/			匹配非数字，与[^0-9]相同
+		/\s/			匹配空格
+		/\S/			匹配非空格
+		/\b/			匹配到达边界的单词
+		/\B/			匹配到未达边界的单词
+		/\$/	\		使用在特殊字符前面
+		
+
+		
+		
+		
+		
+		
+	//----- 正则修饰符
+			
+		/php/i  	i		不区分大小写
+
+		/php/m  	m		多行识别
+
+							将匹配的字符串中的每个断行都当作新的一行
+
+		/php/s		s	  	修正正则表达式中的. ，让其能够匹配换行回车
+
+		/php/x  	x		忽略正则中的空白
+
+		/php/A  	A		强制从头开始匹配
+
+		/php/U  	U		禁止贪婪匹配，只跟踪到最近的一个匹配符并结束、
+						修正正则中的贪婪 ，可以用(.*?)来替换该功能
+		
+
+		
+		
+		
+		
+		
+		
+		
+	//----- preg_match() 的使用方法
+		
+		preg_match('/php/','php');
+		//前为规则，后为字串	正解返回1，错误返回0.
+		//正则里的匹配不同于相等，它是匹配包含相同的字符，
+
+
+		//如
+		$a='/php/';
+		$b='php';			//结果匹配
+		//$b='phpasdfsadf';		//结果匹配
+		//$b="sdfsdfphp";		//结果匹配
+		//$b="sdflkphpjsadf";		//结果匹配
+		//$b="phapsldkf";		//结果不匹配
+		if(preg_match($a,$b)){
+			echo "匹配";
+		}else{
+			echo "不匹配";
+		}
+
+		
+		
+		
+		
+		
+		
+	//----- preg_match_all() 的使用方法
+		
+		$str='lsjdfhttp://www.baidu.comlkjfs;f';
+		echo $str.'<br>';
+		$pattern='/http\:\/\/[w]{3}\..*\.[a-z]{2,3}/';
+		preg_match_all($pattern,$str,$resault);
+		echo $resault[0][0];
+		
+		结果： http://www.baidu.com
+		
+		
+		示例二：
+
+		$str='{'':1189,'codes':'0&1&2|2&3&4|4&5&6','menuid':1157,'nums':27'}';
+		$pat='/codes\'\:\'(.*)\'\,\'/';				//这里的括号就是下面的$result[1][0]
+		preg_match_all($pat,$str,$result);
+		echo '<pre>';
+		var_dump($result);
+		echo $result[1][0];
+
+			结果：
+			array(2) {
+			  [0]=>
+			  array(1) {
+			    [0]=>
+			    string(28) "codes':'0&1&2|2&3&4|4&5&6','"
+			  }
+			  [1]=>
+			  array(1) {
+			    [0]=>
+			    string(17) "0&1&2|2&3&4|4&5&6"
+			  }
+			}
+			0&1&2|2&3&4|4&5&6
+		
+		
+		
+	//----- preg_quote 定界正则 为特殊字符前加上斜杠
+
+		$str="this price is $150";
+		echo $str."<br>";
+		echo preg_quote($str);
+		
+		结果：
+			this price is $150
+			this price is \$150
+			
+			
+			
+			
+			
+			
+			
+	//----- preg_replace() 正则替换指定字符
+
+		例一：
+			$str='aaaahttp://www.baidu.comaaaaa';
+			echo $str.'<br>';
+			$pattern='/http\:\/\/[w]{3}\..*\.[a-z]{2,3}/';	
+			$restr='mp3.sina.cn';
+			$str = preg_replace($pattern,$restr,$str); //匹配的内容转换成指定的字串
+			echo $str;
+			结果：
+				aaaahttp://www.baidu.comaaaaa
+				aaaamp3.sina.cnaaaaa
+
+
+		例二：
+			<?php
+			$string = 'April 15, 2003';
+			$pattern = '/(\w+) (\d+), (\d+)/i';
+			$replacement = '${1}1,$3';
+			echo preg_replace($pattern, $replacement, $string);
+			?>  
+			以上例程会输出：
+			April1,2003
+			
+
+		例三：
+			<?php
+			$string = 'The quick brown fox jumped over the lazy dog.';
+			$patterns = array();
+			$patterns[0] = '/quick/';
+			$patterns[1] = '/brown/';
+			$patterns[2] = '/fox/';
+			$replacements = array();
+			$replacements[2] = 'bear';
+			$replacements[1] = 'black';
+			$replacements[0] = 'slow';
+			echo preg_replace($patterns, $replacements, $string);
+			?>  
+			以上例程会输出：
+			The bear black slow jumped over the lazy dog.
+
+
+
+
+
+			
+			
+
+	//----- 正则调换日期位置 ，() \\ 及分组的示例
+		$a="2015-08-18";
+		$b=preg_replace("/([\d]{2,4})\-([\d]{1,2})\-([\d]{1,2})/","\\2-\\3-\\1",$a);
+		echo $b;
+	
+		结果： 08-18-2015
+
+		或
+
+
+		$a="2015-08-18";
+		$b=preg_replace("/([\d]{2,4})\-([\d]{1,2})\-([\d]{1,2})/","$3-$2-$1",$a);
+		echo $b;
+	
+		//结果： 18-08-2015
+			
+			
+			
+			
+			
+
+	//----- preg_split 分割字符串
+
+		$mode="/[.@$]/";
+		$str='abcd.efghij@klmnopqr$stuvwxyz';
+		echo $str."<br>";
+		print_r(preg_split($mode,$str));
+
+		结果：
+		abcd.efghij@klmnopqr$stuvwxyz
+		Array ( [0] => abcd [1] => efghij [2] => klmnopqr [3] => stuvwxyz )
+		
+		
+		
+		
+		
+		
+		
+	//----- U 贪婪，和(),\2 分组提取的应用
+
+		$mode='/(\[b\])(.*)(\[\/b\])/U';
+		$replace='<strong>\2</strong>';
+		$string="This is a [b]php5[/b],This is a [b]php6[/b]";
+		echo $string."<br>";
+		echo preg_replace($mode,$replace,$string)
+		*/
+		
+		//注： （组1） （组2）代表分组    用 \\1 \\2 或$1,$2	提取分组内容
+		//注： U 禁止贪婪，如上，当有多个<b></b><b></b> 时，就会产生贪婪情况 ，忽略掉中间的</b><b>  直接操作首个<b>和尾个		</b>   而使用 //U时，则会使每组<b></b>都会独立产生作用。
+		
+		
+		
+		
+	将日期2015-09-21替换成：09/21/2015 *}
+	$str="2015-09-21"
+	preg_replace("/(\d\d\d\d)\-(\d\d)\-(\d\d)/","\\2/\\3/\\1",$str);  
+	//前面三个括号对应后面三个\\	如： \\2代表 第二个括号中的内容
+
+	{$str|regex_replace:"/(\d\d\d\d)-(\d\d)-(\d\d)/":'$2/$3/$1'}	//smarty模板方式
+		
+		
+
+
+
+		
+		

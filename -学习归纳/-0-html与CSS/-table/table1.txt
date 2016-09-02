@@ -1,0 +1,460 @@
+
+
+
+
+
+
+//===== 表格
+//===== 表格的标签
+//===== 常用的一些属性
+//===== 表格示例
+//===== 表格中的空单元格
+//===== rowspan, colspan  跨行跨列 
+//===== 表格中的表格，列表，段落
+//===== cellpadding 单元格边距
+//===== cellspacing 单元格间距
+//===== bgcolor 表格背景色
+//===== background 表格背景图片
+//===== 向表格某个单元添加背景色或背景图片
+//===== 单元格内容的对齐方式
+//===== border-spacing 设置单元格的外边距
+//===== 表格CSS
+
+
+
+
+//===== 表格CSS
+	<style>
+		table{
+			width:500px;			/*表格的宽度*/
+					100%
+			height:500px;			/*表格的高度*/
+					100%
+			text-align:center;			/*设置文本对齐方式 */
+			border:1px solid blue;		/*表格的边框 table与td,th要分别设置*/
+			border-collapse:collapse;	/*合并表格为单一边框*/
+			border-collapse:separate;	/*分开表格边框--默认*/
+			border-spacing:10px;		/*设置单元格的间距*/
+			border-spacing:10px 30px;	/*设置单元格的间距,参数一：左右，参数二：上下*/
+			caption-side:bottom;		/*标题置底*/
+			caption-side:top;			/*标题置顶*/
+			display:table-cell;			/*将一个非表格元素表格化*/
+			vertical-align:middle;		/*将表格化的元素内容上下剧中*/
+			empty-cells:hide;			/*设置隐藏表格中空单元格上的边框和背景*/
+			table-layout:fixed;			/*单元缩放时内容会溢出*/
+		}
+		td, th{
+			border:1px solid;			/*表格边框*/
+			background:red;				/*设置表格，行，列的背景*/
+			text-align:right;			/*单元格内容右对齐*/
+			text-align:center;			/*单元格内容左右居中对齐*/
+			text-align:left;			/*单元格内容左对齐*/
+			vertical-align:top;			/*单元格内容上对齐*/
+			vertical-align:middle;			/*单元格内容上下剧中对齐*/
+			vertical-align:bottom;			/*单元格内容下对齐*/
+			padding:25px;					/*设置表格与内容的内边距*/
+		}
+	</style>
+
+	
+	
+	
+
+
+//===== 表格
+
+	<table border=1 cellpadding=1 cellspacing=5 bgcolor='red' background='1.png' width=800 align=right>					
+		<caption>标题</caption>		
+		<tr>				
+			<td rowspan=2>列元素</td> 	
+			<td colspan=2>列元素</td> 	
+		</tr>		
+	</table>
+
+
+
+//===== 表格的标签
+
+	<table> </table>  		表格声明标签
+	<th> </th>			表头
+	<tr> </tr>			表格的行
+	<td> </td>			表格的列
+	<caption> </caption>		表格标题
+	<thead>				标签，给表格添加表头
+	<tbody>				标签，展示表格中的主体数据
+	<tfoot>				标签，表格中的脚注部分
+
+   
+
+
+//===== 常用的一些属性
+
+        cellpadding:	规定每个单元格和内容之间的空白
+        cellspacing:	规定每个单元格之间的空白
+        width:			表格宽度
+		border=15		表格的边框
+		bgcolor			表格背景色
+		background 		表格背景图片
+		bgcolor='red'	背景颜色 
+		align=right		表格对齐（left,right,center）
+		frame 			规定外侧边框的哪个部分是可见的。
+						void
+						above
+						below
+						hsides
+						lhs
+						rhs
+						vsides
+						box
+						border
+						
+		border-collapse:separate;	双线边框 
+		border-collapse:collapse;	单线边框
+		caption-side:bottom;		设置标题在底部位置（默认在顶部）
+		border-spacing:10px 30px;	内容边框与外邻边框的距离
+		text-align:right;			单元格内容水平对齐 //right,left,center
+
+			
+
+	
+
+        <tr><th>、<td>中的属性
+                colspan:	规定单元格横跨的列数。
+                rowspan:	规定单元格横跨的行数。
+				align='left'	单元格内容水平对齐  left,center,right
+				valign='top'	单元格内容垂直对齐  top bottm 默认剧中
+				background 		单元格背景图片
+				bgcolor='red'	单元格背景颜色 
+				vertical-align:top;		单元格内容垂直对齐 //top,middle,bottom
+
+
+
+
+
+//===== 表格示例
+
+
+		<table border=15 width=500 height=300>
+			<caption>我的标题</caption>
+			<tr>
+				<th>标题一</th>
+				<th>标题二</th>
+				<th>标题三</th>
+			</tr>
+			<tr>
+				<td align='left'>aaa</td>
+				<td align='center'>aaa</td>
+				<td align='right'>aaa</td>
+			</tr>
+			<tr class='vlg'>
+				<td>aaa</td>
+				<td>aaa</td>
+				<td>aaa</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 表格中的空单元格
+
+		<table border=1 width=200 height=100>
+			<tr>
+				<td>aaa</td>
+				<td>bbb</td>
+			</tr>
+			<tr>
+				<td>ccc</td>
+				<td></td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+//===== rowspan, colspan  跨行跨列 
+
+		<table border=1 >
+			<caption>跨列演示</caption>
+			<tr  align='center'>
+				<td>姓名</td>
+				<td colspan=2>电话</td>
+			</tr>
+			<tr>
+				<td>join lambo</td>
+				<td>03712521</td>
+				<td>03709234</td>
+			</tr>
+		</table><br><br><br>
+
+		<table border=1 >
+			<caption>跨行演示</caption>
+			<tr>
+				<td>姓名</td>
+				<td >join lambo</td>
+			</tr>
+			<tr>
+				<td rowspan=2>电话</td>
+				<td>92384374</td>
+			</tr>
+			<tr>
+				<td>29384742</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+//===== 表格中的表格，列表，段落
+
+		<table border=1>
+			<tr>
+				<td>
+					<p>这是一个段落</p>
+					<p>这是一另个段落</p>
+				</td>
+				<td>这个单元包含一个表格
+					<table border=1>
+						<tr>
+							<td>A</td>
+							<td>B</td>
+						</tr>
+						<tr>
+							<td>A</td>
+							<td>B</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>表格中包含一个列表
+					<ul>
+						<li>苹果</li>
+						<li>香蕉</li>
+						<li>菠萝</li>
+					</ul>
+					<td>HELLO</td>
+				</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+//===== cellpadding 单元格边距
+
+		<table border=1 cellpadding=10>
+			<tr>
+				<td> A A A </td>
+				<td> B B B </td>
+			</tr>
+			<tr>
+				<td> A A A </td>
+				<td> B B B </td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+//===== cellspacing 单元格间距
+
+		<table border=1 cellspacing=15>
+			<tr>
+				<td>aaa</td>
+				<td>aaa</td>
+			</tr>
+			<tr>
+				<td>aaa</td>
+				<td>aaa</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+//===== bgcolor 表格背景色
+
+		<table border=1 bgcolor='red'>
+			<tr>
+				<td>aaa</td>
+				<td>aaa</td>
+			</tr>
+			<tr>
+				<td>aaa</td>
+				<td>aaa</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== background 表格背景图片
+
+		<table border=1 background='../1.jpg'>
+			<tr>
+				<td>aaa</td>
+				<td>aaa</td>
+			</tr>
+			<tr>
+				<td>aaa</td>
+				<td>aaa</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 向表格某个单元添加背景色或背景图片
+
+		<table border=1 width=500 height=300>
+			<tr>
+				<td bgcolor='blue'>aaa</td>
+				<td>aaa</td>
+			</tr>
+			<tr>
+				<td>aaa</td>
+				<td background='../1.jpg'>aaa</td>
+			</tr>
+		</table>
+
+
+
+
+
+//===== 单元格内容的对齐方式
+
+	//-- align 单元格内容左右对齐
+
+		<table border=1 width=300 height=100>
+			<tr>
+				<td align='right'>aaa</td>
+				<td align='center'>aaa</td>
+				<td align='left'>aaa</td>
+			</tr>
+			<tr>
+				<td>aaa</td>
+				<td>aaa</td>
+				<td>aaa</td>
+			</tr>
+		</table>
+		
+		
+		
+		
+	//-- valign 单元格内容上下对齐
+
+		<table border=1 width=300 height=100 frame=border>
+			<tr>
+				<td align='right' valign='top'>aaa</td>
+				<td align='center' valign='bottom'>aaa</td>
+				<td align='left'>aaa</td>
+			</tr>
+		</table>
+		
+		
+	//-- 用css 控制单元格内容的位置
+		<style>
+		#t1{
+			text-align:right;		//right,left,center
+		}
+		#t1 td{
+			vertical-align:top;		//top,middle,bottom
+		}
+		</style>
+		<table id='t1' border=1 width=300 height=100 frame=border>
+				<tr>
+					<td >aaa</td>
+					<td >aaa</td>
+					<td >aaa</td>
+				</tr>
+				<tr>
+					<td>aaa</td>
+					<td>aaa</td>
+					<td>aaa</td>
+				</tr>
+		</table>
+		
+		
+		
+		
+		
+		
+		
+//===== caption 表格标题
+		<style>#t2{caption-side:bottom;}</style>	将表格标题设置在底部显示（默认是顶部）
+		
+		<table id='t2' border=1 width=300 height=100 frame=border>
+			<caption>标题</caption>
+			<tr>
+				<td align='right' valign='top'>aaa</td>
+				<td align='center' valign='bottom'>aaa</td>
+				<td align='left'>aaa</td>
+			</tr>
+		</table>
+		
+		
+		
+	
+
+//===== border-spacing 设置单元格的外边距
+	<style>
+	#t1{
+		border-spacing:60px 60px;
+	}
+	</style>
+	<table id='t1' border=1 width=300 height=100 frame=border>
+			<tr>
+				<td align='right' valign='top'>aaa</td>
+				<td align='center' valign='bottom'>aaa</td>
+				<td align='left'>aaa</td>
+			</tr>
+			<tr>
+				<td align='right' valign='top'>aaa</td>
+				<td align='center' valign='bottom'>aaa</td>
+				<td align='left'>aaa</td>
+			</tr>
+	</table>

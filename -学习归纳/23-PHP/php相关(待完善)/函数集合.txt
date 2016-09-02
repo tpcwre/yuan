@@ -1,0 +1,255 @@
+        var_dump(变量);			查看变量的类型和变量里面的值
+
+//=====	unset 释放一个变量
+
+//===== is_bool()检测就是是否为布尔型 
+
+/===== is_int() 检测变量是否为一个整形 
+
+/===== is_float() 判断变量是否为一个浮点数
+
+/===== is_numeric() 判断变量是否为数值型 
+
+/===== isset() 查看变量是否存在
+
+/===== empty() 判断变量是否为空
+
+/===== gettype() 获取变量类型
+
+/===== settype() 强制转型数据 和临时转型
+
+/===== define() 常量的声明
+/===== defined() 判断常量是否存在
+
+
+
+
+
+
+
+
+
+
+
+
+/===== define() 常量的声明
+/===== defined() 判断常量是否存在
+ 
+	define('A','aaa');
+	echo A.'<br>';
+	define('B','bbb',true);
+	echo b.'--define的每三个参数 为ture时，常量不区分大小写，false时区分大小写<br>';
+	
+	echo defined('B').'--defined判断常量是否存在';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/===== settype() 强制转型数据 和临时转型
+	
+	$get="520是什么";
+	echo $get.'<br>';
+	var_dump(gettype($get));
+	
+	settype($get,'integer');
+	echo "<br>".$get."<br>";
+	var_dump(gettype($get));
+	
+	$get1='';
+	var_dump(gettype($get1));
+	settype($get1,'boolean');
+	var_dump(gettype($get1));
+
+
+	//--数据类型临时转型 
+	
+	$aaa='';
+	echo gettype($a).'<br>';
+	
+	$bbb=(boolean)$aaa;
+	echo gettype($bbb);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/===== gettype() 获取变量类型
+
+	gettype(变量名);		获取变量的类型
+
+        define('常量的名称','值');	声明常量
+
+	defined('常量名')来判断一个常量是否存在
+
+
+
+
+
+
+
+
+
+/===== gettype() 获取变量类型
+	
+	$type=223;
+	$type='a';
+	$type=3.24;
+	$type=null;
+	$type=array();
+	$type=false;
+	
+	echo gettype($type);
+
+
+
+
+
+
+
+
+
+
+/===== empty() 判断变量是否为空 
+	$empty=23;
+	$empty='';
+	
+	echo empty($empty);
+
+
+
+
+
+
+
+
+
+
+
+
+
+/===== isset() 查看变量是否存在
+	
+	$set=null;
+	$set=123;
+	echo isset($set);
+
+
+
+
+
+
+
+
+
+
+/===== is_numeric() 判断变量是否为数值型 
+
+	$numeric='a';
+	$numeric=234.3;
+	
+	echo is_numeric($numeric);
+
+
+
+
+
+
+
+
+
+
+
+
+
+/===== is_float() 判断变量是否为一个浮点数
+	$float=33;
+	$float=2.14;
+	echo is_float($float);
+
+
+
+
+
+
+
+
+
+
+
+/===== is_int() 检测变量是否为一个整形 
+
+	$int='a';
+	$int=123;
+	echo is_int($int);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== is_bool()检测就是是否为布尔型 
+	
+	$bool=0;
+	$bool='a';
+	$bool=true;
+	echo is_bool($bool);
+
+
+
+
+
+
+
+
+
+//=====	unset 释放一个变量
+	
+	$b='b';
+	echo $b;
+	unset($b);
+	echo $b;
+
+
+
+
+
+
+
+
+
+
+
+

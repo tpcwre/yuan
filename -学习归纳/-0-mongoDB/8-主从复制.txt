@@ -1,0 +1,126 @@
+
+
+//-- 主从复制的两种模式，
+	一：手支主从模式，手动设置主服，但主服崩溃后，只能再次手动设置
+	二：自动主从模式，自动选择主服，当主服崩溃后，会自动选择一个从服务来充当主服。
+
+
+
+
+
+
+
+//-- 手动主从模式
+
+	mkdir data1 data2	创建主从的数据库目录
+	touch log1 log2		创建主从的日志文件
+	
+	./bin/mongod --dbpath=/usr/local/mongo/data1 --logpath=/usr/local/mongo/log1 --port=11111 --master --fork		开启主服务
+
+																开启从服务并指定主服地址
+	./bin/mongod --dbpath=/usr/local/mongo/data2 --logpath=/usr/local/mongo/log2 --port=22222 --slave --source=127.0.0.1:11111 --fork   
+
+
+	./bin/mongo 127.0.0.1:11111		登陆主服
+
+	use t1					切换 t1 库
+	for(i=1;i<20;i++)db.tt1.insert({a:i})	插入数据
+
+	./mongo 127.0.0.1:22222			登陆从服务
+	rs.slaveOk(）				设置从服务可查看数据
+	use t1					切换 t1 库
+	db.tt1.find()				查询数据
+
+	主库中做数据的增删改，从库中做查询 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 自动主从模式（Replica Sets 副本集）
+	原理：	1，设置小组
+		2，设置组员
+		3，设置通讯密钥
+
+
+
+	1，设置数据存储目录
+	mkdir data			数据库群
+	cd data
+	mkdir data1 data2 data3		创建各数据库存储目录
+
+
+	2，设置日志
+	mkdir log 
+	cd log
+	touch log1 log2 log3		设置三个日志
+
+
+	3，设置小组协议
+	mkdir key
+	cd key 
+	echo 123 > grp1			创建协议文件并设置小组协议密钥为123
+	chmod 600 *			将协议文件设置为600权限，不允许其它用户访问 (重要)
+
+
+	4，启动服务
+	./bin/mongod --replSet=rs1  --keyFile=/usr/local/mongo/key/grp1 --port=11111 --dbpath=/usr/local/mongo/data/data1 --logpath=/usr/local/mongo/log/log1 --fork
+	./bin/mongod --replSet=rs1  --keyFile=/usr/local/mongo/key/grp1 --port=11111 --dbpath=/usr/local/mongo/data/data1 --logpath=/usr/local/mongo/log/log1 --fork
+	./bin/mongod --replSet=rs1  --keyFile=/usr/local/mongo/key/grp1 --port=11111 --dbpath=/usr/local/mongo/data/data1 --logpath=/usr/local/mongo/log/log1 --fork
+			如果这里报错，请重新设置 keyFile 文件的权限 为600
+
+
+	
+	5，设置集群协议
+	./bin/mongo 127.0.0.1:11111 	选择任意服务登陆
+					
+					设置集群协议
+		config_rs1={				//注：这里的rs1 要与 上面启动服务的 --replSet=rs1 匹配
+			_id:'rs1',
+			members:[
+			{_id:0,host:"localhost:11111",priority:1},
+			{_id:1,host:"localhost:22222",priority:2},
+			{_id:2,host:"localhost:33333",priority:3}
+			]}
+
+
+
+	rs.initiate(config_rs1)		让协议生效
+
+					创建用户
+	db.createUser({user:'a',pwd:'a',roles:[{role:"userAdminAnyDatabase",db:'admin'},{role:'readWriteAnyDatabase',db:'admin'}]})
+	db.auth('a','a')				用户登陆
+	use t1						切换数据库
+	for(i=1;i<20;i++)db.tt1.insert({a:i})		添加数据
+
+
+	./bin/mongo 127.0.0.1:22222	登陆其它服务
+	use admin
+	db.auth("a",'a')		登陆用户
+	rs.slaverOk()			从服务需要设置后才可查询操作
+	... 查询操作
+
+	./bin/mongo 127.0.0.1:33333
+	use admin
+	db.auth("a",'a')
+	rs.slaverOk()
+	... 查询操作
+	
+
+
+	这时如果主服务崩溃了，那么优先级较高的其它从服务会自动成为主服务
+	这样主服就可做增删改操作，从服做查询操作了			
+
+	
+	注意：3.0版本以后设置好集群后，需要设置用户权限，每个服务需要登陆用户来操作
+
+

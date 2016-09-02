@@ -1,0 +1,324 @@
+
+
+//===== apache 的配置
+	//-- vim httpd.conf		//编辑apache的配置文件
+	//-- apache 配置文件详解
+	//-- 配置站点或虚拟主机并设置host文件
+//===== apache 配置虚拟主机
+//===== apache 禁止或允许浏览目录列表的三种方式
+
+//===== ubantu 使用软件包管理器快速安装 apache 以及启动关闭重启命令
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== apache 源码安装
+
+	
+
+	1 下载 apache 和 需要依赖的三个程序 
+
+		0, apache 官网
+					httpd.apache.org   	可下载 .gz文件来使用
+
+		1, APR
+			下载地址：	apr.apache.org/download.cgi
+
+		2, APR-util
+			下载地址：	apr.apache.org/download.cgi
+
+		3, pcre
+			下载地址：	www.pcre.org
+			
+
+
+	2  创建并解压apache到/usr/local/httpd目录，解压后将 apr,apr-util 两个包解压并复制到 httpd/srclib目录下
+
+
+	3  创建/usr/local/pcre目录
+		进入pcre源码包
+		./configure --prefix=/usr/local/pcre		//指定目录并安装 
+
+
+	4  安装apache
+		进入httpd目录并安装apache
+		./configure --prefix=/usr/local/httpd --with-pcre=/usr/local/pcre
+			解释：将apache安装到 /usr/local/httpd目录，并指定所需要pcre的依赖包的路径为 /usr/local/pcre
+	
+		make 	编译
+
+		sudo make install 	安装
+
+
+	5  启动apache
+		首次安装的apache在运行前需要修改配置文件的servername 后才可正常执行
+			进入并编辑 sudo gedit httpd/conf/httpd.conf 	
+				修改内容： ServerName Localhost:80 即可
+				
+
+
+		进入 /usr/local/httpd/bin 
+		sudo ./apachectl start		//ubantu 源码方式启动apache  (CentOs不需要 sudo)
+		
+
+
+
+
+
+
+
+
+
+
+
+
+//===== ubantu 使用软件包管理器快速安装 apache 以及启动关闭重启命令
+
+	sudo apt-get install apache2			//一键安装
+
+	sudo /etc/init.d/apache2 stop 			//停止
+
+	sudo /etc/init.d/apache2 start			//开启
+	
+	sudo /etc/init.d/apache2 restart		//重启
+	
+	sudo /etc/init.d/apache2 graceful		//不中断服务，平滑从启
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== apache 的配置
+	
+	//-- vim httpd.conf		//编辑apache的配置文件
+
+
+	//-- apache 配置文件详解
+	
+		LoadModule rewrite_module libexec/apache2/mod_rewrite.so		//设置重写功能 ,可以配置更多的站点
+
+		LoadModule php5_module /usr/local/Cellar/php56/5.6.4/libexec/apache2/libphp5.so		//配置PHP模块，指向PHP环境，可指向不同的环境	
+
+		listen 80	// 设置apache监听多个端口，以防apache与nginx或其它软件有端口冲突
+		listen 81
+
+
+
+
+	//-- 配置站点或虚拟主机并设置host文件
+
+		进入 /extra 目录	编辑 httpd-vhosts.conf 文件
+
+		<VirtualHost *:80>		//1,配置监听端口
+			DocumentRoot "/Users/magina/sites/laravel/public"	//2,配置服务器根目录：使用laravel一定要把项目入口定位到public下
+			ServerName www.baidu.com	//3,配置使用域名
+			ErrorLog "/private/var/log/.."		//指定错误日志存储位置
+			CustomLog "/private/var/log/.."
+		</VirtualHost>
+
+
+		//注意：如果配置好虚拟主机，需要再设置一下host文件才可以在本地使用域名测试
+			sudo vim /etc/hosts
+			127.0.0.1 	www.baidu.com	将指定的域名绑定到本机IP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//==== apache 配置虚拟主机
+
+	配置虚拟主机的步骤如下；
+		1，启用 httpd-vhosts.conf
+		在httpd.conf文件中找到下面节点
+			#Virtual hosts
+			#Include conf/extra/httpd-vhosts.conf               //启用的话就把前面的#号去掉  #号相当于注释
+
+		2,在httpd-vhost.conf文件中做配置:
+			打开conf/extra/httpd-vhost.conf文件并进行相关配置，
+
+		3,配置虚拟主机
+			设置虚拟主机有两种方法。
+			一：在文件节点中找到下面这段代码。复制，进行改动设置。
+			<VirtualHost *:80>
+				ServerAdmin webmaster@dummy-host2.x				//设置管理员邮箱
+				DocumentRoot "C:/xampp/laravel/public/"		//设置网站根目录
+				ServerName www.baidu.com					//设置域名
+				ErrorLog "logs/dummy-host2.x-error.log"		
+				CustomLog "logs/dummy-host2.x-access.log" common
+			</VirtualHost>
+
+
+			二:自行设置相应数据；
+			<VirtualHost 127.0.0.1:80>       //这个主机被访问时。会被指向下面的"d:/myblog"
+				DocumentRoot "d:/myblog"
+				#这里配置欢迎首页面
+				DirectoryIndex index.html index.htm index.php
+				<Directory />
+				Options FollowSymLinks
+				#不允许别人修改我们的页面
+				AllowOverride None
+				#设置访问权限
+				Order allow,deny
+				Allow from all
+				</Directory>
+			</VirtualHost>
+
+
+		4. 配置hosts 文件
+		
+			找到 c:/windows/system32/driver/hosts 文件
+				127.0.0.1 	www.baidu.com			//将域名  www.baidu.com 定向到IP  127.0.0.1  
+
+
+
+		注：如果出现错误不能启动apache 就是 httpd-vhost.conf 没设置好
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ //===== apache 禁止或允许浏览目录列表的三种方式
+ 
+	编辑httpd.conf文件
+	
+	一：设置 Apache Options Indexes FollowSymLinks 
+
+		<Directory "D:/Apa/blabla">
+		 Options Indexes FollowSymLinks 			//这样是允许	
+		 Options FollowSymLinks						//去掉Indexs就是禁止
+		 AllowOverride None
+		 Order allow,deny
+		 Allow from all
+		</Directory>
+		你只需要将上面代码中的 Indexes 去掉，就可以禁止 Apache 显示该目录结构。用户就不会看到该目录下的文件和子目录列表了。Indexes 的作用就是当该目录下没有 index.html 文件时，就显示目录结构，去掉 Indexes，Apache 就不会显示该目录的列表了。
+
+		
+		
+		
+	二：用减号设置 Options -Indexes FollowSymLinks 
+	        
+		  <Directory “C:/Program Files/Apache2.2/htdocs”>
+			  #
+			  # Possible values for the Options directive are “None”, “All”,
+			  # or any combination of:
+				 Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews
+			  #
+			  # Note that “MultiViews” must be named *explicitly* — “Options All”
+			  # doesn’t give it to you.
+			  #
+			  # The Options directive is both complicated and important. Please see
+			  # http://httpd.apache.org/docs/2.2/mod/core.html#options
+			  # for more information.
+			  #
+			  Options Indexes FollowSymLinks
+
+			  #
+			  # AllowOverride controls what directives may be placed in .htaccess files.
+			  # It can be “All”, “None”, or any combination of the keywords:
+			  #   Options FileInfo AuthConfig Limit
+			  #
+			  AllowOverride None
+
+			  #
+			  # Controls who can get stuff from this server.
+			  #
+			  Order allow,deny
+			  Allow from all
+
+		  </Directory>
+			  ……
+
+	   在Options Indexes FollowSymLinks在Indexes前面加上 – 符号。
+			即： Options -Indexes FollowSymLinks
+	   【备注：在Indexes前，加 + 代表允许目录浏览；加 – 代表禁止目录浏览。】
+
+		这样的话就属于整个Apache禁止目录浏览了。
+
+		如果是在虚拟主机中，只要增加如下信息就行：
+			   <Directory “D:test”>
+				 Options -Indexes FollowSymLinks
+				 AllowOverride None
+				 Order deny,allow
+				 Allow from all
+			 </Directory>
+		 这样的话就禁止在test工程下进行目录浏览。
+
+	备注： 切记莫把“Allow from all”改成 “Deny from all”，否则，整个网站都不能被打开。
+	  
+
+	三： 设置 .htaccess 文件
+
+		可以在根目录的 .htaccess 文件中输入
+		<Files *>
+		Options -Indexes
+		</Files>
+		就可以阻止Apache 将目录结构列表出来。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

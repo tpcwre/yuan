@@ -1,0 +1,99 @@
+
+//===== 验证码方式 一
+
+1 ，将相关插件从composer上下载下来
+
+2 ，设置命名空间	
+
+	Mews\Captcha\CaptchaServiceProvider::class,
+
+	'Captcha' => Mews\Captcha\Facades\Captcha::class,
+
+
+3 , 创建模板元素
+	<input type="text" name="cpt" value="" />
+	<img src="{{ url('captcha/mews') }}" onclick="this.src='{{ url('captcha/mews') }}?r='+Math.random();" alt="">
+
+	
+4 ，设置路由
+
+	Route::get('captcha/mews',"CaptchaController@mews");
+
+	
+5 , 设置路由
+
+	public function mews(){
+		return \Captcha::create("default");
+	}
+
+
+
+
+
+
+
+
+//===== 验证码方式二
+
+		//--- 模板页面
+
+			<div class='burj_code' style="overflow:hidden;line-height:28px;text-align:center;">
+				<a onclick="javascript:re_captcha();" >
+					<img src=""  alt="点击验证码" title="看不清？点一下！" width="70" height="35" id="burj_code" border="0">
+				</a>
+				<script type="text/javascript">  
+					function re_captcha() {
+					$url = "/burj_code/";
+						$url = $url + "?" + Math.random();
+						document.getElementById('burj_code').src=$url;
+					}
+				</script>
+			</div>	<!--验证码-->
+			
+			
+			
+		//--- 路由
+
+				Route::get('/burj_code',"home\RegsController@codes");
+				
+				
+			
+				
+		//--- 控制器
+
+
+
+			//验证码生成
+
+			use Gregwar\Captcha\PhraseBuilder;
+			
+			use Gregwar\Captcha\CaptchaBuilder;
+
+			public function codes()
+			{
+				$phrase= new PhraseBuilder;
+				$code=$phrase->build(4);            //验证码字符
+					
+				//生成验证码图片的Builder对象，配置相应属性
+				$captcha= new CaptchaBuilder($code,$phrase);
+				$captcha->setBackgroundColor(220,220,220);
+				$captcha->setMaxBehindLines(0);         //设置在文字下方出现的横线的最大条数
+				$captcha->setMaxFrontLines(0);          //设置在文字上方出现的横线的最大条数
+				$captcha->setMaxAngle(5);               //设置在验证码的最大旋转角度
+				$captcha->setMaxOffset(3);              //设置验证码最大旋转角度
+				$captcha->build(100,70,null,null);          //宽、高、字体、指纹模式
+				$captcha->build($width = 120, $height = 50, $font = null); //设置字体大小
+				//把内容存入session
+				\Session::put('code', $captcha->getPhrase());
+				//生成图片
+				header("Cache-Control: no-cache, must-revalidate");
+				header('Content-Type: image/jpeg');
+				$captcha->output();
+			}
+			
+			
+
+
+
+
+http://www.jianshu.com/p/8e4ac7852b5a				验证码使用指导 

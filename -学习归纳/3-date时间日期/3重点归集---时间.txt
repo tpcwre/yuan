@@ -1,0 +1,416 @@
+	简例：
+	date_default_timezone_set('PRC');		//设置时区
+	$time= mktime(0,0,0,7,1,1997);			//设置一个指定的时间戳
+	echo date("Y-m-d H:i:s",$time)."<br>";		//将指定时间戳转换成时间
+	echo date("Y-m-d H:i:s");			//显示当前时间
+	echo date('Y-m-d',strtotime('-1 day',time()));	//显示前一天的时间
+
+
+
+
+
+
+//===== time()  获取时间戳
+
+	echo time();		秒单位
+	
+	echo microtime(true);	毫秒单位（千分之一秒）
+	
+	
+
+
+
+
+//===== date()  获取当前的年，月，日等日期信息
+
+	echo date("Y-m-d H:i:s");
+	
+
+
+
+
+
+
+	
+	
+	
+//===== 设置时区
+
+	//设置时默认时区
+
+	date_default_timezone_set('PRC');	// PRC 代表中国时区
+
+
+       中国在东八区，PHP是世界性的编程语言，默认的时间使用0时区，英国伦敦的时区。
+
+        更改时区：
+            1、php.ini中找到date.timezone
+            date.timezone = Europe/Berlin
+
+            怎么改？
+            Asia/Shanghai
+            Asia/Chongqing
+            PRC
+            Etc/GMT-8：表示当前的时区比标准时区快8个小时，就是当前时区-8个小时。等于格林尼治时间。
+	
+
+
+
+
+
+
+	
+//===== date_default_timezone_get()  获取当前的默认时区 
+
+	var_dump(date_default_timezone_get());
+
+
+
+
+
+
+//===== 时区列表手册位置
+
+	php Manual-》函数参考-》日期与时间相关扩展-》所支持的时区列表 
+
+
+
+
+
+//===== date时期中年月日时分秒等参数列表手册位置
+
+	1：可在索引直接搜索 date 
+
+	2：PHP Manual-》函数参考-》日期与时间相关扩展-》Date/Time函数-》date 
+
+
+
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+//===== mktime(),将时间转换成时间戳
+
+	// 方式一： mktime直接转换数值形式的时间格式
+
+	$time = mktime(0,0,0,4,1,1997);		//将时，分，秒，月，日，年 转化成时间戳 不确认的时间可填0
+	echo $time;
+	
+
+	
+	//方式二：mktime也可以用变量形式转换
+	
+	$mayao='1993-7-17';			//设置一个年月日的日期
+	
+	$arr=explode('-',$mayao);	//将日期分隔成字串
+	
+	echo mktime(0,0,0,$arr[1],$arr[2],$arr[0]);		//年日期转成时间戳	
+
+	注意顺序：mktime(时,分,秒,月,日,年);			//注意年月日的顺序，不可以串！
+
+	echo mktime(0,0,0,7,17,1993).'<br>';
+
+	echo date('Y-m-d H:i:s',mktime(0,0,0,$arr[1],$arr[2],$arr[0]));
+	
+
+
+
+
+
+
+
+
+//===== date() 将时间戳转换成时间
+
+	echo date('Y-m-d H:i:s');		//将当前时间戳转换为时间，这里省略了第二个参数(即当前的时间戳)
+
+	echo date('Y-m-d H:i:s',$time);	        //将指定的时间戳转换成时间，
+
+	echo date("m-d-y i:s:H",$time);		//时间在显示时可以自定义顺序
+	
+	
+	
+
+
+
+
+
+
+//===== 获取当前日期信息，以及获取指定时间戳日期信息
+//===== t 获取当前月份的最大天数和指定月份的最大天数
+
+	$days=date('t');				//当前月份的最大天数
+	$days=date('t',mktime(0,0,0,2,1,2012));		//获取2012年2月的最大天数
+
+
+
+	
+	
+	
+	
+	
+	
+//===== strtotime() 直接将文本的日期时间解析为时间戳
+	
+	$maYao = '1993-7-17';		//注意：年，月，日间必须用 '-'  来连接
+  
+    	$time = strtotime($maYao);
+	
+    	echo date('Y,m,d',$time);
+	
+
+
+
+	date_default_timezone_set('PRC');
+	$t1 = strtotime("now");					//获取当前的时间戳
+	echo $t1.'<br>';
+	echo date('Y-m-d H:i:s',$t1).'<br>';
+     
+	$t2 = strtotime("10 September 2000");	//指定日期时间戳
+	echo $t2.'<br>';
+	echo date('Y-m-d H:i:s',$t2).'<br>';
+	
+	$t3 = strtotime("+1 day");				//在当前时间加一天的时间戳
+	echo $t3.'<br>';
+	echo date('Y-m-d H:i:s',$t3).'<br>';
+	
+	
+	$t4 = strtotime("+1 week");				//在当前时间加一周的时间戳
+	echo $t4.'<br>';
+	echo date('Y-m-d H:i:s',$t4).'<br>';
+    
+	
+											//在当前时间加一周零两天4小时2分钏的时间戳
+	$t5 = strtotime("+1 week 2 days 4 hours 2 seconds");
+	echo $t5.'<br>';
+	echo date('Y-m-d H:i:s',$t5).'<br>';
+	
+	$t6 = strtotime("next Thursday");		//获取下一个周四的时间戳
+	echo $t6.'<br>';
+	echo date('Y-m-d H:i:s',$t6).'<br>';
+	
+	
+	$t7 = strtotime("last Monday");			//获取上周一的时间戳
+	echo $t7.'<br>';
+	echo date('Y-m-d H:i:s',$t7).'<br>';
+
+
+	
+	
+	
+	
+//===== 时间格式代号
+
+
+	date时期中年月日时分秒等参数列表手册位置
+
+	//1：可在索引直接搜索 date 
+
+	//2：PHP Manual-》函数参考-》日期与时间相关扩展-》Date/Time函数-》date 
+
+
+
+
+	//----- 年
+
+		Y 4 位数字完整表示的年份 例如：1999 或 2003 
+		y 2 位数字表示的年份 例如：99 或 03 
+		L 是否为闰年 如果是闰年为 1，否则为 0 o ISO-8601 格式年份数字。这和 Y 的值相同，只除了如果 ISO 的星期数（W）属于前一年或下一年，则用那一年。（PHP 5.1.0 新加） Examples: 1999 or 2003 
+		z 年份中的第几天 0 到 365 
+
+
+	//----- 月
+
+		n 数字表示的月份，没有前导零 1 到 12 
+		m 数字表示的月份，有前导零 01 到 12 
+		d 月份中的第几天，有前导零的 2 位数字 01 到 31 
+		j 月份中的第几天，没有前导零 1 到 31 
+		M 三个字母缩写表示的月份 Jan 到 Dec 
+		S 每月天数后面的英文后缀，2 个字符 st，nd，rd 或者 th。可以和 j 一起用
+		F 月份，完整的文本格式，例如 January 或者 March January 到 December 
+
+
+	//----- 星期
+
+		w 星期中的第几天，数字表示 0（表示星期天）到 6（表示星期六）
+		D 星期中的第几天，文本表示，3 个字母 Mon 到 Sun 
+		l（“L”的小写字母） 星期几，完整的文本格式 Sunday 到 Saturday 
+		N ISO-8601 格式数字表示的星期中的第几天（PHP 5.1.0 新加） 1（表示星期一）到 7（表示星期天）
+		W ISO-8601 格式年份中的第几周，每周从星期一开始（PHP 4.1.0 新加的） 例如：42（当年的第 42 周）
+
+		   
+
+
+	//----- 天
+
+		t 给定月份所应有的天数 28 到 31 
+		z 年份中的第几天 0 到 365
+		j 月份中的第几天，没有前导零 1 到 31
+		d 月份中的第几天，有前导零的 2 位数字 01 到 31
+
+	//----- 小时
+
+		g 小时，12 小时格式，没有前导零 1 到 12 
+		G 小时，24 小时格式，没有前导零 0 到 23 
+		h 小时，12 小时格式，有前导零 01 到 12 
+		H 小时，24 小时格式，有前导零 00 到 23 
+
+
+	//----- 分和秒
+
+		i 有前导零的分钟数 00 到 59> 
+		s 秒数，有前导零 00 到 59> 
+
+
+
+
+	//----- 其它
+		a 小写的上午和下午值 am 或 pm 
+		A 大写的上午和下午值 AM 或 PM 
+		B Swatch Internet 标准时 000 到 999 
+		时区 --- --- 
+		e 时区标识（PHP 5.1.0 新加） 例如：UTC，GMT，Atlantic/Azores 
+		I 是否为夏令时 如果是夏令时为 1，否则为 0 
+		O 与格林威治时间相差的小时数 例如：+0200 
+		P 与格林威治时间（GMT）的差别，小时和分钟之间有冒号分隔（PHP 5.1.3 新加） 例如：+02:00 
+		T 本机所在的时区 例如：EST，MDT（【译者注】在 Windows 下为完整文本格式，例如“Eastern Standard Time”，中文版会显示“中
+
+		国标准时间”）。 
+		Z 时差偏移量的秒数。UTC 西边的时区偏移量总是负的，UTC 东边的时区偏移量总是正的。 -43200 到 43200 
+		完整的日期／时间 --- --- 
+		c ISO 8601 格式的日期（PHP 5 新加） 2004-02-12T15:19:21+00:00 
+		r RFC 822 格式的日期 例如：Thu, 21 Dec 2000 16:01:07 +0200 
+		U 从 Unix 纪元（January 1 1970 00:00:00 GMT）开始至今的秒数 参见 time() 
+
+
+	
+	
+	
+	
+//===== 其它时间函数
+
+		gmdate() - 格式化一个 GMT/UTC 日期／时间
+		idate() - 将本地时间日期格式化为整数
+		getdate() - 取得日期／时间信息
+		getlastmod() - 获取页面最后修改的时间
+		mktime() - 取得一个日期的 Unix 时间戳
+		strftime() - 根据区域设置格式化本地时间／日期
+		time() - 返回当前的 Unix 时间戳
+		strtotime() - 将任何英文文本的日期时间描述解析为 Unix 时间戳
+		Predefined DateTime Constants
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 日历的编程思路
+
+<form>
+	请选择年份<select name='year'>
+				<?PHP 
+					$nowyear=date('Y');
+					for($i=$nowyear;$i>=($nowyear-100);$i--){
+						echo "<option value='{$i}'>{$i}</option>";
+					}
+					echo $stat;
+				
+				?>
+				</select>
+	请选择月份<select name='month'>
+					<option value='1'>1</option>
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+					<option value='4'>4</option>
+					<option value='5'>5</option>
+					<option value='6'>6</option>
+					<option value='7'>7</option>
+					<option value='8'>8</option>
+					<option value='9'>9</option>
+					<option value='10'>10</option>
+					<option value='11'>11</option>
+					<option value='12'>12</option>
+				</select>
+				<input type='submit'value='查询' />
+</form>
+
+
+
+
+
+	一：获取要查询的年Y和月
+	二：通过以有的年和月的时间戳来确定当月1号是星期几
+	三：通过以有的年和月的时间戳来确定当月有多少天
+	四：遍历每月1 号前的空格（是星期几就有几个空格）
+	五：遍历出每个月的天数<br>';
+	六：遍历尾行的空格（共42格减去月天数与首行空格）
+	七：设置换行，设置一个遍历的总数$sum ,每逢七换行
+
+	if(isset($_GET['year']) && $_GET['month']){		//1,判断是否使用用户的日期
+		$year=$_GET['year'];			
+		$month=$_GET['month'];
+	}else{
+		$year=date('Y');				//1,判断是否使用当前的日期
+		$month=date('m');
+	}
+
+	$week=date('w',mktime(0,0,0,$month,1,$year));		//2,获取使用日期当月的1号是周几
+	$days=date('t',mktime(0,0,0,$month,1,$year));		//3,获取使用日期当月的最大天数
+	$num=0;							//8,设置一个计数变量存储总天数
+	echo "当前选择的是{$year}年-{$month}月<br>";
+	echo "<table border=1 width=500>";				
+		echo "<tr align=center style='font:italic bold 20px normal;'>";
+			echo "<td>日</td>";			//4,设置表格并显示出一周七天
+			echo "<td>一</td>";
+			echo "<td>二</td>";
+			echo "<td>三</td>";
+			echo "<td>四</td>";
+			echo "<td>五</td>";
+			echo "<td>六</td>";
+		echo "</tr>";
+		echo "<tr>";
+		for($i=1;$i<=$week;$i++){			//5,根据1号是同几，来设置日历前端的空格
+			echo "<td>&nbsp;&nbsp;</td>";
+			$num++;					//9,每遍历一天就让总天数累加1
+		}
+		for($i=1;$i<=$days;$i++){			//6,根据当月最大天数，遍历显示出天数
+			if($num%7==0){				//10,根据总天数判断，逢七天一换行
+				echo "</tr><tr>";
+			}
+			echo "<td>{$i}</td>";
+			$num++;					//9,每遍历一天就让总天数累加1
+		}
+		$last=42-$week-$days;				//7,根据总格数算出末尾部分的空格数并遍历显示
+		for($i=1;$i<=$last;$i++){
+			if($num%7==0){				//10,根据总天数判断，逢七天一换行
+				echo "</tr><tr>";
+			}
+			echo "<td>&nbsp;&nbsp;</td>";
+			$num++;					//9,每遍历一天就让总天数累加1
+		}
+		echo "</tr>";
+			
+	echo "<table>";
+	
+	
+
+
+?>

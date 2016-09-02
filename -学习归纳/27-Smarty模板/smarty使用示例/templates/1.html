@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>{$title}</title>
+    </head>
+    <body>
+        {capture name="mycapture"}hello world!<br/>hello php!{/capture}
+		<h2>{$title}</h2>
+		<h3><a href="index.php">返回首页</a></h3>
+		<h4>从GET中获取id值:{$smarty.get.id}</h4>
+		<h4>从POST中获取name值:{$smarty.post.name}</h4>
+		<h4>从session中获取username值:{$smarty.session.username}</h4>
+		<h4>从cookie中获取loginname值:{$smarty.cookies.loginname}</h4>
+		<h4>当前时间戳:{$smarty.now}</h4>
+		<h4>当前日期:{$smarty.now|date_format:"%Y-%m-%d"}</h4>
+		<h4>当前常量:{$smarty.const.PI}</h4>
+		<h4>输出捕获信息:{$smarty.capture.mycapture}</h4>
+		<h4>当前模板名:{$smarty.template}</h4>
+		<h4>当前模板版本:{$smarty.version}</h4>
+		<h4>当前模板左右定界符:{$smarty.ldelim}, {$smarty.rdelim}</h4>
+    </body>
+</html>

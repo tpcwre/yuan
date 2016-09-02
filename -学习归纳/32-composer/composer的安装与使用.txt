@@ -1,0 +1,153 @@
+﻿
+
+//===== linux 下安装 composer
+
+	简要步骤
+		1.下载
+			curl -sS https://getcomposer.org/installer | php
+
+		2. 为php命令做全局软链接
+			ln -s /usr/local/php/bin/php /usr/local/bin/php
+			
+		3. 让composer 全局生效
+			mv composer.phar /usr/local/bin/composer
+		
+		4.	查看composer帮助
+			composer -h
+			
+
+		I. 安装
+		cd path-to-your-project
+		curl -sS https://getcomposer.org/installer | php
+		# Composer successfully installed to: /tmp/composer.phar
+		# Use it: php composer.phar
+		如果在此提示，那是因为php没有在系统的环境变量$PATH中。
+		command not found: php
+		解决方法：
+		为当前php的路径创建一个软连接
+		ln -s /usr/local/php/bin/php /usr/local/bin/php
+		仔细察看composer.phar的权限，应该是755，即-rwxr-xr-x，说明这个文件其他人都有执行权限，所以如果我们将其移动至/usr/local/bin/中，即可全局可用！
+		mv composer.phar /usr/local/bin/composer
+		II. 使用
+		我们先使用-h查看帮助
+		composer -h
+
+
+
+
+
+
+//===== composer 官网，及下载地址
+
+		www.phpcomposer.com 
+		
+		
+//===== 使用国内镜像下载相关程序
+
+	方法一：
+		linux 下运行命令
+				composer config -g repo.packagist composer http://packagist.phpcomposer.com
+				
+		CMD 下运行命令
+				d:\www\basic>php ../composer.phar  config -g repo.packagist composer http://packagist.phpcomposer.com
+
+	方法二：
+	
+		上述命令将会在当前项目中的 composer.json 文件的末尾自动添加镜像的配置信息（你也可以自己手工添加）：
+
+		"repositories": {
+			"packagist": {
+				"type": "composer",
+				"url": "http://packagist.phpcomposer.com",	//这里是国内镜像的一个地址
+			},
+			{'packagist':false}						//这里禁止去国外下载
+		}
+
+
+
+
+//===== 程序包搜索页面
+
+		https://packagist.org/search/
+
+
+
+//===== 使用composer 下载程序包
+
+	php composer.phar require yiisoft/yii2-gii 2.0.4
+		require 		下载
+		yiisoft/yii2-gii	指定要下载的程序包
+		2.0.4			指定程序的版本
+	
+		注：composer 在下载指定程序时会自动加载该程序的依赖包
+	
+		下载的程序包会存放在 vendor 目录下
+	
+	
+	
+	
+	
+//===== 程序包安装
+
+		php composer.phar install
+		
+		
+		需要编辑composer.json文件
+		
+		
+
+		
+//===== 不使用composer.json文件，直接下载yii框架或某个框架 
+
+		composer.phar create-project yiisoft/yii2-app-basic basic
+			create-project		指定使用项目形式下载
+			yiisoft/yii2-app-basic		项目名
+			basic				指定存放的目录
+		
+		直接安装会报错，回为下载时对jquery2.1的支持不完美，所以先下载一个资源管理插件并注册成全局使用
+			composer.phar global require "fxp/composer-asset-plugin:~1.0.0"
+			然后再执行
+			composer.phar create-project yiisoft/yii2-app-basic basic
+			
+			
+		
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

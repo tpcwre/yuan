@@ -1,0 +1,586 @@
+
+//===== 文件读取操作普通流
+//===== 文件读写操作 file_get_contents() 字串流
+//===== 文件读写操作 fopen 流
+//===== 文件或文件夹判断操作
+//===== 文件的访问，创建，修改时间
+//===== iconv() 转换编码格式(将带中文的路径转码)
+//===== 文件路径操作函数 
+//===== 文件与文件夹的创建与删除
+//===== 文件夹操作 opendir() 流
+//===== 文件夹遍历操作的注意点：
+//===== windows与Linux 目录类型
+//=====文件的复制移动(剪切或重命名)
+	//-----第一种获取文件信息的方法
+	//-----第二种获取文件信息的方法-直接获取指定信息
+	//-----第一种读取文件内容的方法 fread()
+	//-----第二种读取文件内容的方法
+	//-----第三种读取文件方法。分批读取
+	//-----将有序内容的ini文件直接转化成数组
+	//-----第一种写入方式 fwrite()
+	//-----第二种写入方式 file_put_contents()
+	//-----不带中文路径的文件复制
+	//-----带中文路径的文件复制
+	//-----创建一个文件夹 mkdir()
+	//-----同时创建多层级文件 mkdir($dir,0777,true)
+	//-----删除文件夹 rmdir()
+	//-----创建一个文件并写入内容 
+	//-----删除一个文件  unlink()
+	//-----文件操作相关函数实例 
+
+
+
+
+
+
+
+
+
+//===== 文件读取操作普通流
+ 
+	touch('./aaa.txt');			// touch() 创建一个文件或修改时间
+
+	$arr=file("./xxoo.txt");		// file() 将文件内容的每一行读取到数组中
+	var_dump($arr);
+	
+	$arr2=parse_ini_file('./xxoo.ini');	// parse_ini_file() 读取配置文件到数组中
+	var_dump($arr2);
+	//数组的每一个元素的下标是配置文件对应的配置的名称
+
+
+
+
+
+
+//===== 文件读写操作 file_get_contents() 字串流
+
+
+	$str=file_get_contents("./content.txt");	// file_get_contents() 将文件内容读到一个字串中
+
+	file_put_contents('./content.txt','aa');	// file_put_contents() 将字串写入文件（会清空以前内容）
+
+
+
+
+
+
+
+//===== 文件读写操作 fopen 流
+
+	$fp = fopen('./one','r+');  	// fopen() 以指定方式打开一个文件的资源
+
+		r 以只读方式打开文件，将指针指向文件头，文件不在报错。
+		r+ 以读写方式打开文件，将指针指向文件头，以覆盖方式从指针处定稿，文件不在报错。
+		w 写入方式打开文件，将指针指向文件头部，大小截取为0，文件不在会创建
+		w+ 读写方式打开文件，将指针指向文件头部，大小截取为0 ，文件不在会创建
+		a 写入方式打开文件，将指针指向文件末尾，追加写入方式，文件不在会创建
+		a+ 读写方式打开文件，将指针指向文件末尾，追加写入方式，文件不在会创建
+	
+	echo fgets($fp).'<br>';		// fgets() 每次读取一行，指针下移
+	
+	if(feof($fp)){			// 判断数据指针是否到达末尾
+		echo '数据以读取完毕';
+	}
+	rewind($fp);			// rewind() 将指针重置到头部
+
+	echo fgetc($fp).'<br>';		// fgetc() 每次读一个字符，指针下移	
+
+	echo fread($fp,3).'<br>';	// fread() 每次读指定个数的字符.指针下移
+
+	fwrite($fp,'aabbcc');		// fwrite() 把内容写入到文件指针处
+	
+	fclose($fp);			// fclose() 关闭资源
+	
+
+
+
+
+
+
+//===== 文件或文件夹判断操作  
+
+	file_exists('./one.php'));		// file_exists() 判断文件或目录是否存在 
+
+	filetype('c:\xampp'));			// filetype() 判断文件的类型是文件夹还是文件
+	var_dump(filetype('./one.php'));
+
+	filesize('./one.php'));			//filesize() 获取文件的大小
+
+	is_dir($path));				// is_dir() 判断路径指向是否为文件夹
+	
+	is_file($path));			// is_file() 判断路径指向是否为一个文件
+
+	is_executable($path));			//is_executable 判断文件是否可执行
+	
+	is_writable($path));			//is_writable 判断文件是否可写
+	
+	is_readable($path));			//is_readable 判断文件是否可读
+
+
+
+
+
+//===== 文件的访问，创建，修改时间
+	
+	
+	echo date("Y-m-d H:i:s",fileatime($path));	//fileatime() 获取文件的访问时间(access)
+
+	echo date("Y-m-d H:i:s",filectime($path));	//filectime() 获取文件创建时间(create)
+	
+	echo date("Y-m-d H:i:s",filemtime($path));	//filemtime() 获取文件的修改时间modify
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== iconv() 转换编码格式(将带中文的路径转码)
+
+	$path=iconv('utf-8','gbk',"c:/xampp/htdocs/lisihan/a/中文文件夹");
+
+
+
+
+
+
+
+
+//===== 文件路径操作函数 
+
+
+	pathinfo('路径');			// pathinfo() 获得路径的信息，返回一个数组(目录名\文件名、后缀名)
+	var_dump(basename($path));		// basename() 获取路径中的文件名
+	var_dump(dirname($path));		// dirname() 获取路径中的目录部分
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 文件与文件夹的创建与删除
+
+
+	mkdir('/zhengguofangs');	// mkdir()  创建一个文件夹
+						//   '/' 创建在X盘符根目录下
+	mkdir('./zhengguofangs');		//  './' 创建在同级目录下
+
+	mkdir('./test',0755);		//可读可执行
+	mkdir('路径',模式);		
+
+		模式权限根据以下数值来确定：可读(4)，可写(2)，可执行(1)	
+					7：拥有最大权限
+					5：可读可执行
+					
+					
+	unlink('./a/a');			// unlink() 删除一个指定文件
+	unlink('E:/aaa');			// unlink() 也可以跨盘删除文件
+
+
+
+
+
+//===== 文件夹操作 opendir() 流
+	
+	$op=opendir($path);			// opendir() 获取一个目录资源
+
+	$op = opendir($path);			// opendir()  打开一个目录资源
+
+	while($rd=readdir($op)){		// readdir() 遍历目录，目录每个文件名读取给一个变量
+		if($rd!='.' && $rd!='..'){	// 过滤掉层级目录(重要，一定要过滤，不然删除操作时后果很严重) 
+			echo $rd.'<br>';
+		}
+	}
+
+	closedir($op);				// closedir() 关闭目录资源
+
+
+	unlink('./a/a');			// unlink() 删除一个指定文件
+	unlink('E:/aaa');			// unlink() 也可以跨盘删除文件
+
+
+	rmdir('./a');				// rmdir() 删除一个空文件夹
+	rmdir('e:/aaa');			// rmdir() 也可以跨盘删除文件夹
+
+
+
+
+
+
+
+
+
+
+
+//===== 文件夹遍历操作的注意点：
+
+	注意和其它语言不同，continue 语句作用到 switch 上的作用类似于 break。如果在循环中有一个 switch 并希望 continue 到外层循环中的下一轮循环，用 continue 2。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 文件锁定机制
+
+        flock(资源,选项);  文件锁
+
+        选项：
+            读锁 LOCK_SH ，读取文件的时候其他人不要往里面写内容。
+            写锁 LOCK_EX ，写内容的时候，其他人不让写也不让读取。
+            释放锁： LOCK_UN
+
+
+
+
+
+
+
+
+//===== windows与Linux 目录类型
+
+    PHP是在Linux下开发的。因为Linux会用的人比较少。所以才移植到windows上面。PHP是以Linux的文件系统为模型的。
+    windows：下的类型：
+        file    文件
+        dir     目录
+        unknow  未知
+
+    Linux：下的类型
+        block 块
+        char  字符
+        dir  目录
+        fifo   管道
+        file   文件
+        link   链接
+        unknow  未知
+
+
+
+
+
+
+
+
+
+//=====文件的复制移动(剪切或重命名)
+
+	//-- copy() 文件的拷贝
+	
+	$srcDir="demo1/demo1.zip";
+	$desDir="demo2/demo2.zip";
+	copy($srcDir,$desDir);
+	
+
+	//-- rename() 文件的剪切与重命名
+
+	$path1='./demo1/demo2.zip';
+	$path2='./demo2/demo3.rar';
+	if(is_file($path1)){
+		rename($path1,$path2);
+	}else{
+		echo "文件以被剪切或重命名！";
+	}
+
+
+	//-- 遍历复制一个文件夹中所有内容到另一个文件夹
+	
+	$path1=__DIR__.'\demo2';	//设置源文件夹路径
+	$path2=__DIR__."\demo";		//设置拷贝指向文件夹
+	cpDir($path1,$path2);		//调用函数
+	function cpDir($p1,$p2){	//创建一个函数，传入两个路径参数
+		if(!is_dir($p2)){		//判断要拷贝到哪的文件夹是否存在
+			mkdir($p2);			//如果不存在就创建该文件夹
+		}
+		$op=opendir($p1);		//打开源文件夹资源
+		while($rd=readdir($op)){	//遍历文件夹
+			if($rd=='.' || $rd=='..'){	//过滤掉系统层级目录
+				continue;
+			}
+			$path1=$p1."\\".$rd;	//将得到的子资源名转化为绝对路径
+			$path2=$p2."\\".$rd;
+			if(is_dir($path1)){		//判断遍历当前的文件是否为一个文件夹
+				if(!is_dir($path2)){	//判断拷贝指向路径是否以存在要拷贝的文件夹
+					mkdir($path2);	
+				}
+					//如果是文件夹，就在拷贝指向路径中也创建同名文件夹
+				cpDir($path1,$path2);	//并递归调用自身函数
+			}else{
+				copy($path1,$path2);	//如果当前文件不是文件夹就直接拷贝
+			}
+		}
+		closedir($op);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//-----第一种获取文件信息的方法
+	//-----文件操作相关函数实例
+
+	/*
+	$file_path='a.txt'; //设置一个文件的路径
+	if(file_exists($file_path)){	//检验文件是否存在
+		echo "文件存在！<br>";
+		$fp = fopen($file_path,'a+');	//打开这个文件					
+		$arr=fstat($fp);		//把文件大小等相关信息存放到一个数组里   //fstat()
+		echo "<pre>";
+		print_r($arr);		//显示所有文件相关信息
+		echo "</pre>";
+		date_default_timezone_set("Asia/Chongqing");
+		echo "<br>文件上次被访问的时间是: ".date("Y-m-d H:i:s",$arr['atime']);
+		echo "<br>文件内容上次修改时间是：".date("Y-m-d H:i:s",$arr['mtime']);
+		echo "<br>文件上次被移动的时间是：".date("Y-m-d H:i:s",$arr['ctime']);
+	}
+		
+		
+		
+	//-----第二种获取文件信息的方法-直接获取指定信息
+	
+	$txt = "a.txt";
+	echo "<br>文件的大小是：".filesize($txt)."字节！";			   //filesize();
+	date_default_timezone_set("Asia/Chongqing");
+	echo "<br>文件上次被访问的时间是：".date("Y-m-d H:i:s",fileatime($txt));   //fileatime()	
+	echo "<br>文件上次被修改的时间是：".date("Y-m-d H:i:s",filemtime($txt));   //filemtime()
+	echo "<br>文件上次被移动的时间是：".date("Y-m-d H:i:s",filectime($txt));   //filectime()
+	
+	
+	
+	//-----第一种读取文件内容的方法 fread()
+	
+	$txt="a.txt";
+	if(file_exists($txt)){								
+		$fp=fopen($txt,'a+');		//打开一个文件，需要两个参数 文件名和读取方式
+		$fa = fread($fp,filesize($txt)); //把文件内容读取到一个变量内。
+		echo $fa;				//显示内容
+	}else{
+		echo "文件不存在！";
+	}
+	fclose($fp);				//关闭文件				
+	
+
+	
+	//-----第二种读取文件内容的方法
+
+	$txt = "a.txt";			//设置文件的路径
+	$con=file_get_contents($txt);	//把文件内容读取到一个变量中		//file_get_contents()
+	//echo $con;				//显示内容，但这里会忽略空格和换行
+	$con=str_replace("\r\n","<br>",$con);										   //str_replace()将文件中默认的换行符"\r\n"转换成浏览器识别的<br>
+	echo  $con;
+		//这个函数不需要关闭文件
+	
+
+	//-----第三种读取文件方法。分批读取
+	
+		//等全部读完后再显示。
+	$txt="a.txt";
+	if(file_exists($txt)){						//file_exists()
+		$fp=fopen($txt,'a+');
+		$buffer=1024; //设置每次读取字节大小
+		$str ="";		//设置一个用于存放被读取内容的变量
+		while(!feof($fp)){	//只要文件没结束就不断循环读取		//feof()
+			$str.=fread($fp,$buffer);
+		}
+		$str=str_replace("\r\n","<br>",$str);
+		echo $str;
+		fclose($fp);						//fclose()
+	}
+			//读一段，显示一段
+	$txt = "a.txt";
+	if(file_exists($txt)){
+		$fp=fopen($txt,'a+');					//fopen()
+		$str='';
+		$buffer=1024;	
+		while(!feof($fp)){
+			$str=fread($fp,$buffer);			//fread()
+			$str=str_replace("\r\n","<br>",$str);		//str_replace()
+			echo $str;
+		}
+	}else{
+		echo "文件不存在！";
+	}
+	
+
+	
+	//-----将有序内容的ini文件直接转化成数组
+	$txt = "c1.ini";
+	$arr=parse_ini_file($txt);			//parse_ini_file()
+	print_r($arr);
+	*/
+	/*
+		//t.ini文件内容
+		host=localhost
+		user=root
+		psw=abcd
+		db = test
+	*/
+	
+?>
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+	//-----第一种写入方式 fwrite()
+
+	$txt = 'b.txt';
+	if(is_file($txt)){
+		$fp=fopen($txt,'a+');
+		fwrite($fp,"helloword\r\n");
+		echo "写入成功！";
+		fclose($fp);
+	}
+
+
+
+	
+	//-----第二种写入方式 file_put_contents()
+
+	$txt="b.txt";
+	$com ="";
+	for($i=1;$i<30;$i++){
+		$com.= "aaaaabbbbb\r\n";
+	}
+	file_put_contents($txt,$com);
+	echo "ok";
+	
+	
+	//=====文件的拷贝
+
+	//-----不带中文路径的文件复制
+
+	if(copy('c:/aa.jpg','d:/aa3.jpg')){
+		echo "ok";
+	}else{
+		echo 'failed';
+	}
+	
+	
+	//-----带中文路径的文件复制
+
+	$img=iconv("utf-8","gbk","c:/一二三/aa.jpg");
+	if(copy($img,"d:/img1.jpg")){
+		echo "ok";
+	}else{
+		echo "failed";
+	}
+	
+	
+	//-----创建一个文件夹 mkdir()
+	$dir1 = "c:/aaa";
+	if(is_dir($dir1)){
+		echo "文件存在";
+	}else{
+		mkdir($dir1);
+		echo "创建成功";
+	}
+	
+	
+	//-----同时创建多层级文件 mkdir($dir,0777,true)
+	$dirs = "C:/b/c/d/e/f";
+	if(is_dir($dirs)){
+		echo "文件夹存在！";
+	}else{
+		if(mkdir($dirs,0777,true)){
+			echo "创建成功！";
+		}
+	}
+	
+	
+	
+	//-----删除文件夹 rmdir()
+	//删除的文件夹必须为空，不然报错！
+	$dir="c:/b";
+	if(is_dir($dir)){
+		if(rmdir($dir)){
+			echo "删除成功";
+		}else{
+			echo "删除失败";
+		}
+	}else{
+		echo "文件夹不存在！";
+	}
+	
+	
+	
+	//-----创建一个文件并写入内容 
+	$path="c:/b/c.txt";
+	if(is_file($path)){
+		echo "文件存在";
+	}else{
+		$fp=fopen($path,'w+');
+		if(fwrite($fp,'北京是一个大城市')){
+			echo "创建并写入成功";
+			fclose($fp);
+		}else{
+			echo "失败";
+		}
+	}
+	
+	
+	
+	//-----删除一个文件  unlink()
+	$con="c:/b/c.txt";
+	if(is_file($con)){
+		if(unlink($con)){
+			echo "删除成功";
+		}else{
+			echo "删除失败";
+		}
+	}else{
+		echo "文件不存在！";
+	}
+	
+	
+?>
+
+
+
+
+
+
+

@@ -1,0 +1,1584 @@
+
+//===== 类的定义，对象的实例化，__construct 构造方法，__destruct 析构方法
+		__construct 创建对象时自动执行，功能：用于初始化对象
+		__destruct 销毁对象时自动执行，功能： 是释放资源
+		
+//===== 魔术方法 __get() 与 __set() 访问和设置类中的非公有属性
+		__get 获取对象中非公有属性时自动执行， 功能：获取对象中非公有属性
+		__set 设置对象中非公有属性时自动执行， 功能：设置对象中非公有属性
+		
+//===== 魔术方法 __isset(),__unset() 判断和销毁类属性
+		__isset 使用isset,empty判断对象中非公有属性是否存在时自动执行
+				功能:判断对象中非公有属性是否存在
+		__unset 使用unset销毁对象中非公有属性或未定义的变量时自动执行
+				功能：销毁对象中非公有属性
+//===== 对象的克隆 __clone
+		__clone 使用clone 对象时自动执行
+				功能：
+//===== 魔术方法：__toString()的使用
+		__toString 直接输出对象时自动执行
+//===== 魔术方法：__call();
+		__call 调用一个未定义或不可见的方法时自动执行
+				功能：屏蔽和提示调用方法时出现的错误
+//===== 自动加载类的函数：__autoload();
+		__autoload 当new 实例化一个对象时，这个类若不存在，则自动调用此函数，
+//===== __sleep(),__wakeup() 串行化（序列化）时自动调用的方法
+		__sleep 执行串行化时自动调用，实现资源类型的属性关闭操作。
+		__wakeup 执行反串行化时自动调用，目的是实现资源属性的打开
+
+
+//===== parent:: 调用父类内容				*
+//===== static 静态方法与属性				*
+//===== 类的单例（单态）设计模式			*
+//===== const 定义类中的常量				*
+//===== instanceof 判断变量是否为指定类的实例		*
+//=====	un serialize对象的串行化和反串行化  （序列化）	*
+//===== 类型约束：目前只支持：array和对象		*
+//===== 用return $this 连贯操作				*
+//===== class_alias — 为类起别名			*
+//===== class_exists — 检查类是否已定义		*
+//===== 抽象类						*
+//===== 接口的使用					*
+//===== 使用接口方式实现多态效果			*
+//===== 使用抽象类方式实现多态效果			*
+//===== 自动加载类的函数：__autoload();			*
+//===== 异常的定义，使用和处理				*
+
+
+//===== 类的继承和使用及重写
+//===== protected,private 属性在类外不可直接访问
+//===== 类的继承
+//===== 继承的封装
+//===== final关键字的使用
+//===== 使用普通类方式实现多态效果
+//===== PDO查询数据 
+//===== 异常处理
+//===== 异常的定义，使用和处理
+//===== 类中的异常处理
+//===== 自定义异常类
+//===== PDO查询数据 
+//===== 异常处理
+//===== 类中的异常处理
+//===== 自定义异常类
+//===== get_class_methods — 返回类中方法名组成的数组
+//===== get_class_vars — 返回类中默认属性组成的数组
+//===== get_class — 返回对象的类名
+//===== get_object_vars — 返回由对象属性组成的关联数组
+//===== get_declared_classes — 返回由已定义类的名字所组成的数组
+//===== get_declared_interfaces — 返回一个数组包含所有已声明的接口
+//===== get_parent_class — 返回对象或类的父类名
+//===== method_exists — 检查类的方法是否存在
+//===== property_exists — 检查对象或类是否具有该属性
+//===== __NAMESPACE__	获取当前的命名空间名
+//===== 命名空间的定义和使用
+//===== 多个空间的定义和使用
+//===== 命名空间类的使用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 命名空间的定义和使用
+
+	namespace aa\bb\cc;
+	function strlen($str){
+		return "自定义字串strlen函数";
+	}
+
+	//echo strlen("aa");  		//默认使用当前定义的函数	
+
+	//通过完整路径调用
+	echo \strlen("aa");  		//使用系统函数strlen
+	echo \aa\bb\cc\strlen("cc"); 	//使用指定空间中函数
+
+
+
+
+
+
+
+//===== 多个空间的定义和使用
+
+	namespace aa\bb;
+	const AA="aa\bb下的常量<br/>";
+	function fun(){
+		echo "aa\bb空间下的函数fun()<br/>";
+	}
+	echo "当前空间".__NAMESPACE__."<br/>";
+	namespace aa\cc;
+	const AA="aa\cc下的常量<br/>";
+	function fun(){
+		echo "aa\cc空间下的函数fun()<br/>";
+	}
+					//使用
+	namespace aa;
+					//限定名称调用（相对）
+	bb\fun();
+	echo bb\AA;
+	cc\fun();
+	echo cc\AA;
+	echo "<hr/>";
+					//完全限定名称(绝对)
+	\aa\bb\fun();
+	echo \aa\bb\AA;
+	\aa\cc\fun();
+	echo \aa\cc\AA;
+	//$a = "\\aa\\cc\\fun()";
+	//$a;
+
+
+
+
+
+
+
+
+
+
+
+//===== 命名空间类的使用
+
+
+	namespace myname\demo;
+	use aa\Stu as Student; //使用指定空间的类，并起个别名
+	require("./aa/Stu.class.php");
+	/*
+	$s = new \aa\Stu("zhangsan",20);
+	echo $s->getInfo();
+	*/
+	$s = new Student("qq",25);
+	echo $s->getInfo();
+
+
+
+
+
+
+
+
+
+
+//===== __NAMESPACE__	获取当前的命名空间名
+
+	echo __NAMESPACE__;
+
+
+
+
+
+
+//===== 类的定义，对象的实例化，__construct 构造方法，__destruct 析构方法
+
+	注意： 构造和析构是运行在栈里的，如果同时产生多个对象的时候，要注意先入后出的顺序 如：在都在构造和析构的情况下 new A() ; new B();   
+		依次顺序是:     A被构造了，B被构造了，B被析构了，A被析构了
+
+
+	class Person{						//定义了一个类
+		
+		public $name="zhangsan";			//定义成员属性
+		public $age = 20+2;
+
+		public function __construct($name){		//构造方法：对象实例化时会自动调用
+			$this->name=$name;	
+			echo $this->name.'被构造了';		
+							
+		}
+		public function __destruct(){			//析构方法：对象关闭时会自动调用 
+			echo $this->name.'被析构了';
+		}
+
+
+
+		public function say(){				//定义成员方法
+			echo $this->name.":".$this->age;
+		}
+	}
+
+	$p = new Person('wangwu');				//将类实例化成对象
+	$p->name='lisi'						//更改对象中的成员属性值
+	echo $p->name."<br/>"; 					//通过对象调用其类中的成员属性
+	$p->say(); 						//通过对象调用其类中的方法。
+
+
+
+	$p1 = new Person('a');					//对象可以将某类实例化多次
+	$p2 = new Person('b');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== protected,private 属性在类外不可直接访问
+
+
+	class Stu{
+		public $name='aaa';				//公有属性与方法
+		public function fn1(){			
+			echo "公有属性方法";
+		}
+		
+		protected $age=18;				//保护属性与方法
+		protected function fn2(){
+			echo "保护属性方法";
+		}
+		
+		private $sex='nan';				//私有属性与方法
+		private function fn3(){
+			echo "私有属性方法";
+		}
+		
+		public function getNpub(){		//get方法间接访问非公有属性
+			//age为protected保护属性
+			echo $this->age;
+			//sex为private私有属性
+			echo $this->sex;
+		}
+	}
+
+
+	$stu=new Stu('aaa','18');
+
+	echo $stu->name;				//公有属性与方法类外可访问
+	echo $stu->fn1();			
+		
+	//echo $stu->age;				//保护属性与方法类外不可访问
+	//echo $stu->fn2();
+
+	//echo $stu->sex;				//私有属性与方法类外不可访问
+	//echo $stu->fn3();	
+
+	echo $stu->getNpub();			//get方获取类中的非公有属性
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 魔术方法 __get() 与 __set() 访问和设置类中的非公有属性
+
+
+	class Stu{
+		private $name;
+		private $age;
+		
+										// __ set方法；动态设置非公有属性
+		
+		public function __set($param,$value){
+			if($param=='age' && $value<=0){
+				die("年龄赋值错误！");
+			}
+			$this->$param=$value; 
+			//$param为可变变量，
+		}
+		
+										// __get方法；动态获取非公有属性
+		public function __get($param){
+			return $this->$param;
+		}
+	}
+
+	$stu=new Stu();			
+				//如果设置了 __set 方法 那么类外可以直接修改非公有属性
+	$stu->name='aaa';
+				//如果设置了 __get 方法 那么类外可以直接获取非公有属性
+	echo $stu->name;
+
+
+	*/
+
+
+
+
+
+
+
+
+
+
+
+//===== 魔术方法 __isset(),__unset() 判断和销毁类属性
+
+
+
+
+
+	class A{
+		protected $a=100;
+		private $b=200;
+		private $c=300;
+		
+							//魔术方法__isset()。帮你辅助判断成员属性是否存在。
+		public function __isset($v){
+			return isset($this->$v);
+		}
+		
+							//魔术方法__unset()。帮你辅助销毁操作。
+		public function __unset($v){
+			unset($this->$v);
+		}
+	}
+
+
+	$a=new A();
+
+			//判断非公有属性时会自动调用魔术方法__isset()。帮你辅助判断。
+	var_dump(isset($a->a));
+	var_dump(isset($a->b));
+	var_dump(isset($a->c));
+
+			//销毁非公有属性时会自动调用魔术方法__unset()。帮你辅助销毁操作。
+	unset($a->a);
+	var_dump(isset($a->a));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 类的继承
+
+
+
+
+
+	error_reporting(E_ALL & ~E_NOTICE);
+
+	class A{
+		public $name='aaa';
+		public function fn1(){
+			echo "fn1";
+		}
+		public function fn2(){
+			echo "fn2";
+		}
+	}
+	class B extends A{}
+
+	$b=new B();
+	echo $b->name;
+	$b->fn1();
+	$b->fn2();
+	echo '<hr>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 继承的封装
+
+
+
+
+
+	class C{
+		public $x=10;
+		protected $y=20;
+		private $z=30;
+	}
+	class D extends C{
+		public function fun(){
+			echo $this->x.':'.$this->y.":".$this->z;
+		}
+	}
+	$d = new D();
+	echo $d->x.'<br>';
+	//echo $d->y.'<br>';	//保护属性只能在子类中使用，但不可以在类外调用
+	echo $d->z.'<br>';	//私有属性即不能在子类中使用，也不能在类外使用
+	$d->fun();
+	var_dump($d);
+	echo "<hr>";
+
+
+
+
+
+
+
+
+
+
+//===== 类的继承和使用及重写
+//===== parent:: 调用父类内容
+
+	class Person{
+		private $name;
+		private $age;
+		public function __construct($name,$age){
+			$this->name=$name;
+			$this->age=$age;
+		}
+		public function getinfo(){
+			return "姓名：".$this->name."<br> 年龄：".$this->age.'<br>';
+		}
+	}
+	class Stu extends Person{
+		private $classid;
+		public function __construct($name,$age,$classid){
+			parent::__construct($name,$age);
+			$this->classid=$classid;
+		}
+		public function getinfo(){
+			return parent::getinfo().'<br>班级：'.$this->classid;
+		}
+		
+	}
+
+
+	$p = new Person('张三','18');
+	echo $p->getinfo();
+	$s= new Stu('李四','22','三班');
+	echo $s->getinfo(1,2);
+
+	echo "<hr>";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== final关键字的使用
+
+		//可修饰类和方法：特点：修饰的类不可有子类、修饰的方法不可以被子类覆盖
+
+	final class User{
+		public function doLogin($pass){
+			if($pass==123){
+				echo "验证成功";
+			}else{
+				echo "验证失败";
+			}
+		}
+		public function add($a,$b){
+			return $a+$b;
+		}
+	}
+
+
+	//定义final 的类不可以继承 
+	//class User2 extends User{}
+
+
+	$u=new User();
+	$u->doLogin(1234);
+	echo $u->add(22,44);
+
+	echo "<hr>";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== static 静态方法与属性
+
+
+
+
+	class Demo{
+		public static $name='lisi';		//静态属性
+		
+		public static function add($a,$b){
+			return $a+$b;
+		}
+		public static function max($a,$b){
+			return $a>$b?$a:$b;
+		}
+		public static function fun(){
+			echo self::$name;
+			echo self::max(10,200);
+		}
+	}
+	$demo=new Demo();
+
+	//对象方式调用静态方法
+	echo $demo->add(10,20).'<br>';
+	echo $demo->max(5,18).'<br>';
+
+	//静态属性不可通过对象方式调用
+	//echo $demo->name;		
+
+	//类名方式调用静态方法
+	echo Demo::add(20,25).'<br>';
+	echo Demo::max(29,98).'<br>';
+	Demo::fun();
+	echo "<hr>";
+
+
+
+	static关键字:表示静态的意思: 用于修饰类的属性和方法
+	   *static关键字修饰方法称为静态方法，可以不用new（实例化）就可以直接使用方法：如 类名::方法名
+			注意：静态方法在实例化后的对象也可以访问  //$对象名->静态方法名
+		  
+   	   static关键字修饰属性称为静态属性，可以不用new（实例化）就可以直接访问属性：如 类名::属性名
+			 注意：静态属性在实例化后的对象不可以访问； //$对象名->静态属性名
+	   
+	   注意：静态属性是共享的。也就是new很多对象也是共用一个属性
+			*在静态方法中不可以使用非静态的内容。就是不让使用$this
+			 在类的方法中可以使用其他静态属性和静态方法，不过要使用self关键字：
+				 如 【self::静态属性名】或【self::静态方法名】
+
+
+
+
+
+
+
+
+//===== 类的单例（单态）设计模式
+
+
+
+	class Danli{
+							//保存类实例在此属性中
+		private static $stat=null;		
+							//构造方法声明为private，防止直接创建对象
+		private function __construct(){} 
+							//用于获取对象静态方法
+		public static function makeObject(){
+			if(self::$stat==null){		//判断状态是否为空
+				self::$stat=new Danli(); //状态为空时可实例化自身的对象，并赋值给状态的静态属性.
+			}
+			return self::$stat; //将赋值后的属性返回给方法
+		}
+		
+		//下面定义其他方法.....
+	}
+
+
+	//单例模式，只能生成一个对象 
+	$d1 = Danli::makeObject();
+	$d2 = Danli::makeObject();
+	var_dump($d1);
+	var_dump($d2);
+
+	echo "<hr>";
+
+
+
+
+
+
+
+
+//===== const 定义类中的常量
+
+
+	class Game{
+		//定义常量
+		const RIGHT=1;
+		const LEFT=2;
+		const UP=3;
+		CONST DOWN=4;
+		public function move($m){
+			switch($m){
+				case 1:echo "右";break;
+				case 2:echo "左";break;
+				case 3:echo "上";break;
+				case 4:echo "下";break;
+			}
+		}
+	}
+
+	$g = new Game();
+	$g->move(1);
+	$g->move(2);
+	//使用常量可以提高可读性
+	$g->move(Game::UP);
+	$g->move(Game::DOWN);
+
+	echo "<hr>";
+
+
+
+
+
+
+
+
+
+//===== instanceof 判断变量是否为指定类的实例
+
+
+
+	class AA{}
+	class BB extends AA{}
+	class CC{}
+
+	$aa=new AA();
+	$bb=new BB();
+	$cc=new CC();
+
+	var_dump($aa instanceof AA);		//结果 true
+	var_dump($bb instanceof AA);
+	var_dump($cc instanceof AA);		//结果 false
+	echo "<br>";
+	var_dump($aa instanceof BB);
+	var_dump($bb instanceof BB);
+	var_dump($cc instanceof BB);
+	var_dump($cc instanceof CC);
+
+
+	//此函要求传入的对象必须设A类使用instanceof运算符为true的
+	function demo(A $a){
+		
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+//===== 对象的克隆 __clone
+
+
+	//普通复制对象相当于给对象起个别名，是关联关系
+	//克隆相当于全新创建了一个对象，其属性等都会归档到原有的默认值.
+
+	class Stu{
+		public $name;
+	}
+	$s1=new Stu();
+	$s1->name='zhangsan';
+	$s2=clone $s1;
+	//unset($s1);					//关联的对象，一旦源对象消失就会报错
+	$s2->name='lisi';
+	echo $s1->name.'<br>';			//这里的对象关系是关联，看new关键字
+	var_dump($s1);echo "<br>";
+	var_dump($s2);
+	echo '<br>';
+
+
+
+	class File{
+		private $link=null;
+		private $fname;
+		public function __construct($fname){
+			$this->fname=$fname;
+			$this->link=fopen($this->fname,'r');
+		}
+		public function read($m){
+			return fread($this->link,$m);
+		}
+		
+		public function __destruct(){
+			if($this->link){
+				@fclose($this->link);
+				$this->link=null;
+			}
+		}
+		public function __clone(){
+			$this->link=fopen($this->fname,'r');
+		}
+	}
+
+	$f = new File('a.txt');
+	echo $f->read(5).'<br>';
+	echo $f->read(20).'<br>';
+	echo "<pre>";
+	var_dump($f);
+
+	$f2 = clone $f;
+	unset($f);
+	var_dump($f2);
+	echo $f2->read(20).'<hr>';
+
+
+
+
+
+
+
+
+
+
+//===== 魔术方法：__toString()的使用
+
+
+	class A{
+		private $name;
+		private $age;
+		public function __construct($name,$age){
+			$this->name=$name;
+			$this->age=$age;
+		}
+		public function __toString(){
+			return $this->name.'--'.$this->age;
+		}
+	}
+
+	$a= new A('名字','年龄');
+	echo $a.'<hr>';
+
+
+
+
+
+
+
+
+
+//===== 魔术方法：__call();
+
+	class B{
+		public function add(){
+			echo "add()....<br>";
+		}
+		public function select(){
+			echo "select()...<br>";
+		}
+		
+		//魔术方法：当调用一个不存在的方法时，会自动调用此方法。
+		// 并将方法名作为第一个参数，参数值作为第二个参数传入。
+		public function __call($name,$param){
+			echo "您调用的方法{$name}不存在！";
+			print_r($param);
+		}	
+	}
+	$b=new B();
+	$b->add();
+	$b->select();
+	$b->del(1,2,3,4,5);
+	echo "<hr>";
+
+
+
+
+
+
+
+
+//===== 自动加载类的函数：__autoload();
+
+
+	function __autoload($className){
+		if(file_exists("./module/".$className.".class.php")){
+			require "./module/".$className.".class.php";
+		}else{
+			die("无法加载{$className}类");
+		}
+	}
+	$s=new Module('aaa','28');
+	echo $s.'<hr>';
+
+
+
+
+
+
+
+//=====	un serialize对象的串行化和反串行化  （序列化）
+			//serialize() -- 串行化
+			//unserialize() -- 反串行化
+
+	class Stu2{
+		private $name;
+		private $age;
+		public function __construct($name,$age){
+			$this->name = $name;
+			$this->age = $age;
+		}
+		public function getName(){
+			echo "我的名字叫：".$this->name;
+		}
+		public function __toString(){
+			return $this->name.':'.$this->age;
+		}
+	}
+			
+	$stu2 = new Stu2('zhangsanfeng',60);
+	$str=serialize($stu2);	//将对象串行化转成字串
+	echo $str.'<br>';
+	file_put_contents('ob.txt',$str);
+
+	$info = file_get_contents("ob.txt");	//获取文件内容
+	$ob=unserialize($info);	//将字串反串行化转成对象
+	echo $ob.'<br>';
+	$ob->getName();			//获取对象中的属性
+	echo "<hr>";
+
+
+
+
+
+
+
+//===== __sleep(),__wakeup() 串行化（序列化）时自动调用的方法
+		//__sleep():是执行串行化时自动调用的方法，目的是实现资源类型属性的关闭释放等操作。注意：sleep方法需要返回一个数组，其中数组中的值是串行化时要保留的属性名
+		//__wakeup():是在执行反串行化时自动调用的方法，目的是实现资源属性的打开（sleep方法关闭的资源），即再次初始化
+
+	class File1{
+		private $link=null;
+		private $fname;
+		private $age=18;
+		private $sex='nan';
+		public function __construct($fname){
+			$this->fname=$fname;
+			$this->link=fopen($this->fname,'r');
+		}
+		public function read($m){
+			return fread($this->link,$m);
+		}
+		public function __sleep(){		//返回串行化时需要保留的属性
+			return array('fname','age','sex');
+		}
+		public function __wakeup(){	//反串行化时自动调用的方法
+			$this->link=fopen($this->fname,'r');
+			//反串行后的资源类型属性会失效，这里就再执行一次。
+		}
+		public function __destruct(){
+			if($this->link){
+				@fclose($this->link);
+				$this->link=null;
+			}
+		}
+	}
+
+	$f = new File1('a.txt');
+	echo $f->read(5).'<br>';
+	var_dump($f);
+	$str=serialize($f);
+	echo $str.'<br>';
+
+	$info=unserialize($str);
+	var_dump($info);
+	echo $info->read(20).'<hr>';
+			
+		
+		
+		
+		
+		
+		
+		
+//===== 类型约束：目前只支持：array和对象
+
+
+	class AA{
+		public function fun(){
+			echo "aa";
+		}
+	}
+	class BB extends AA{
+		public function fun(){
+			echo "bb";
+		}
+	}
+	class demo{
+		public function fun(AA $a){		//约束参数必须是 AA类的对象
+			$a->fun();
+		}
+	}
+	$demo=new demo();
+	$demo->fun(new BB);
+
+	echo "<hr>";
+
+
+
+
+
+
+
+
+//===== 用return $this 连贯操作
+
+	class app{
+		public $str='';
+		public function append($str){
+			$this->str.=$str;
+			return $this;
+		}
+	}
+	$ap=new app();
+	echo $ap->append('a')->append('b')->append('c')->str;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 抽象类
+
+	//抽象类的特点就是不可以实例化,只能继承并重写类中的抽象方法
+	
+	
+	abstract class A{				//含有抽象方法的类就是抽象类
+		public function fun1(){
+			echo "fun1...";
+		}
+		public function fun2(){
+			echo "fun2...";
+		}
+		public abstract function fun3();	//这是一个抽象方法
+	}
+
+	class B extends A{
+		public function fun3(){
+			echo "fun3......";
+		}
+	}
+	$b = new B();
+	$b->fun1();
+	$b->fun2();
+	$b->fun3();
+	echo "<hr>";
+
+
+	
+	
+	
+	
+	
+//===== 接口的使用
+
+	interface  C{		//定义一个A接口
+		const PI=3.14;		//接口类中只能有常量和抽象方法
+		public function fun1();
+		public function fun2();	//抽象方法
+		public function fun3();
+	}
+		
+	abstract class D implements C{	//抽象类D 实现了 接口C
+		public function fun1(){
+			echo "fun1...";
+		}
+		public function fun2(){
+			echo "fun2...";
+		}
+	}
+	
+	class E extends D{			//类 E 继承了 类 D 实现了 接口 C 的 fun3()
+		public function fun3(){
+			echo "fun3......";
+		}
+	}
+	
+	$e= new E();
+	$e->fun1();
+	$e->fun2();
+	$e->fun3();
+	
+	class F{
+		public function demo(C $c){
+			$c->fun3();
+		}
+	}
+	
+	echo "<hr>";
+	
+	
+	
+	
+	
+//===== 使用接口方式实现多态效果
+
+	interface PCI{		//PCI插槽的接口
+		public function start();
+		public function stop();
+	}
+	class MainBoard{		//主板
+		public function running(PCI $p){   //限制参数为 PCI 的对象
+			$p->start();
+			$p->stop();
+		}
+	}
+	
+	class SoundCard implements PCI{		//用声卡实现了一次接口PCI
+		public function start(){
+			echo "声卡启动...";
+		}
+		public function stop(){
+			echo "声卡关闭...";
+		}
+	}
+	
+	class NetworkCard implements PCI{	//用网卡实现了一次接口PCI
+		public function start(){
+			echo "网卡启动...";
+		}
+		public function stop(){
+			echo "网卡启动...";
+		}
+	}
+	
+	$sc=new SoundCard();
+	$nc=new NetworkCard();
+	$mb=new MainBoard();	//实例化主板
+	$mb->running($sc);		//实例化主板的方法调用了声卡对象 
+	$mb->running($nc);		//实例化主板的方法调用了网卡对象 
+	echo "<hr>";
+	
+	
+	interface P{
+		public function start();
+		public function stop();
+	}
+	class P1 implements P{
+		public function start(){
+			echo "P1 is start...";
+		}
+		public function stop(){
+			echo "P1 is stop...";
+		}
+	}
+	class P2 implements P{
+		public function start(){
+			echo "P2 is start...";
+		}
+		public function stop(){
+			echo "P2 is stop...";
+		}
+	}
+	class MP{
+		public function running(P $p){
+			$p->start();
+			$p->stop();
+		}
+	}
+	
+	$p1= new P1();
+	$p2= new P2();
+	$mp= new MP();
+	$mp->running($p1);
+	$mp->running($p2);
+	
+	echo "<hr>";
+
+	
+	
+	
+	
+	
+//=====使用抽象类方式实现多态效果
+
+	abstract class PP{
+		abstract public function start();
+		abstract public function stop();
+	}
+	class PP1 extends PP{
+		public function start(){
+			echo "pp1 is start...";
+		}
+		public function stop(){
+			echo "pp1 is stop...";
+		}
+	}
+	class PP2 extends PP{
+		public function start(){
+			echo "pp2 is start...";
+		}
+		public function stop(){
+			echo "pp2 is stop...";
+		}
+	}
+	class PPM{
+		public function running(PP $p){
+			$p->start();
+			$p->stop();
+		}
+	}
+	$p1=new PP1();
+	$p2=new PP2();
+	$pm=new PPM();
+	$pm->running($p1);
+	$pm->running($p2);
+	
+	echo "<hr>";
+
+
+	
+	
+	
+
+	
+//===== 使用普通类方式实现多态效果
+
+	class CC{
+		public function start(){}
+		public function stop(){}
+	}
+
+	class CCM{
+		public function running(CC $c){
+			$c->start();
+			$c->stop();
+		}
+	}
+	class CC1 extends CC{
+		public function start(){
+			echo "cc1 is start...";
+		}
+		public function stop(){
+			echo "cc1 is stop...";
+		}
+	}
+	class CC2 extends CC{
+		public function start(){
+			echo "cc2 is start...";
+		}
+		public function stop(){
+			echo "cc2 is stop...";
+		}
+	}
+	$cm= new CCM();
+	$cc1 = new CC1();
+	$cc2 = new CC2();
+	$cm->running($cc1);
+	$cm->running($cc2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== PDO查询数据 
+//===== 异常处理
+
+	try{
+	$pdo= new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	}catch(PDOException $pe){
+		die('数据库连接失败！原因：'.$pe->getMessage());
+	}catch(Exception $pe){
+		die('数据库连接失败！原因：'.$pe->getMessage());
+	}
+	$stmt=$pdo->query("select * from user");
+	$list = $stmt->fetchAll();
+	print_r($list);
+	echo "<hr>";
+	
+	
+	
+	
+	
+	
+	
+//=====异常的定义，使用和处理
+
+
+	//PHP中的异常处理： throw 抛出异常  try捕获异常   catch处理异常
+	
+	class Demo1{
+		public function chu($a,$b){
+			if($b==0){
+				throw new Exception('除数不可为零！');
+			}
+			return $a/$b;
+		}
+	}
+	
+	
+	$d = new Demo1();
+	try{
+		echo $d->chu(5,0);
+	}catch(Exception $e){
+		echo $e->getMessage();
+	}
+	echo "<hr>";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 类中的异常处理
+//===== 自定义异常类
+	
+	class Stu{
+		private $name;
+		private $age;
+		public function __set($param,$value){
+			if($param=='age' && $value<1){
+				//throw new Exception("年龄赋值非法!");
+				throw new MyException('自定义异常，年龄赋值瀑非法!');
+			}
+			$this->$param=$value;
+		}
+		public function __toString(){
+			return $this->name.':'.$this->age;
+		}
+	}
+	
+	$s = new Stu();
+	$s->name='zhangsan';
+	try{
+		$s->age=-20;
+	}catch(MyException $e){
+		echo $e->getInfo();
+	}catch(Exception $e){
+		echo $e->getMessage();
+	}
+	echo $s;
+	
+	class MyException extends Exception{
+		public function getInfo(){
+			return "自定义异常处理--".$this->getMessage();
+		}
+	}
+	echo "<hr>";
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== PDO查询数据 
+//===== 异常处理
+
+	try{
+	$pdo= new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	}catch(PDOException $pe){
+		die('数据库连接失败！原因：'.$pe->getMessage());
+	}catch(Exception $pe){
+		die('数据库连接失败！原因：'.$pe->getMessage());
+	}
+	$stmt=$pdo->query("select * from user");
+	$list = $stmt->fetchAll();
+	print_r($list);
+	echo "<hr>";
+	
+	
+	
+	
+	
+	
+	
+//=====异常的定义，使用和处理
+
+	//PHP中的异常处理： throw 抛出异常  try捕获异常   catch处理异常
+	
+	class Demo1{
+		public function chu($a,$b){
+			if($b==0){
+				throw new Exception('除数不可为零！');
+			}
+			return $a/$b;
+		}
+	}
+	
+	
+	$d = new Demo1();
+	try{
+		echo $d->chu(5,0);
+	}catch(Exception $e){
+		echo $e->getMessage();
+	}
+	echo "<hr>";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 类中的异常处理
+//===== 自定义异常类
+	
+	class Stu{
+		private $name;
+		private $age;
+		public function __set($param,$value){
+			if($param=='age' && $value<1){
+				//throw new Exception("年龄赋值非法!");
+				throw new MyException('自定义异常，年龄赋值瀑非法!');
+			}
+			$this->$param=$value;
+		}
+		public function __toString(){
+			return $this->name.':'.$this->age;
+		}
+	}
+	
+	$s = new Stu();
+	$s->name='zhangsan';
+	try{
+		$s->age=-20;
+	}catch(MyException $e){
+		echo $e->getInfo();
+	}catch(Exception $e){
+		echo $e->getMessage();
+	}
+	echo $s;
+	
+	class MyException extends Exception{
+		public function getInfo(){
+			return "自定义异常处理--".$this->getMessage();
+		}
+	}
+	echo "<hr>";
+	
+	
+	
+	
+	
+//===== class_alias — 为类起别名
+	
+	class A{
+		public function fun(){
+			echo "aaaaaaaa";
+		}
+	}
+	
+	class_alias('A','B');
+	$b = new B();
+	$b->fun();
+	echo "<hr>";
+
+	
+	
+	
+
+	
+//===== class_exists — 检查类是否已定义
+	
+	if(class_exists('A')){
+		$a = new A();
+		$a->fun();
+	}else{
+		echo "这个类不存在！";
+	}
+	echo "<hr>";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+//===== get_class_methods — 返回类中方法名组成的数组
+//===== get_class_vars — 返回类中默认属性组成的数组
+//===== get_class — 返回对象的类名
+//===== get_object_vars — 返回由对象属性组成的关联数组
+	
+	class demo3{
+		public $a='a';
+		public $aa;
+		protected $b;
+		private $c;
+		public function a(){
+			echo 'a';
+		}
+		public function aa(){}
+		protected function b(){
+			echo "b";
+		}
+		private function c(){
+			echo 'c';
+		}
+	}
+	
+	var_dump(get_class_methods('demo3'));
+	echo "<hr>";
+	var_dump(get_class_vars('demo3'));
+	echo "<hr>";
+	$d = new demo3();
+	echo get_class($d);
+	echo "<hr>";
+	print_r(get_object_vars($d));
+	echo "<hr>";
+	
+	
+	
+	
+	
+	
+	
+//===== get_declared_classes — 返回由已定义类的名字所组成的数组
+//===== get_declared_interfaces — 返回一个数组包含所有已声明的接口
+//===== get_parent_class — 返回对象或类的父类名
+
+	class E{}
+	class F{}
+	class G{}
+	interface H{}
+	interface I{}
+	class K extends E{}
+	
+	print_r(get_declared_classes());
+	echo "<hr>";
+	print_r(get_declared_interfaces());
+	echo "<hr>";
+	echo get_parent_class('K');
+	echo "<hr>";
+	$k = new K();
+	echo get_parent_class($k);
+	echo "<hr>";
+
+	
+	
+	
+	
+	
+	
+//===== method_exists — 检查类的方法是否存在
+//===== property_exists — 检查对象或类是否具有该属性
+	
+	class L{
+		public $name='zhangsan';
+		protected $age=18;
+		private $sex='nv';
+		public function getInfo(){
+			return $this->name.'-'.$this->age.'-'.$this->sex;
+		}
+		protected function aa(){
+			echo 'aaaaaa';
+		}
+		private function bb(){
+			echo "bbbbbbbb";
+		}
+	}
+	$l = new L();
+	var_dump(method_exists($l,'getInfo'));
+	var_dump(method_exists($l,'aa'));
+	var_dump(method_exists($l,'bb'));
+	var_dump(method_exists($l,'cc'));
+	echo "<hr>";
+	var_dump(property_exists($l,'name'));
+	var_dump(property_exists($l,"age"));
+	var_dump(property_exists($l,'sex'));
+	var_dump(property_exists($l,'aa'));
+	echo "<hr>";
+	
+	
+	

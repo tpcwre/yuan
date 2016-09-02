@@ -1,0 +1,1443 @@
+
+一、key pattern 查询相应的key
+
+　　（1）redis允许模糊查询key　　有3个通配符  *、?、[]
+
+　　（2）randomkey：返回随机key　　
+
+　　（3）type key：返回key存储的类型
+
+　　（4）exists key：判断某个key是否存在
+
+　　（5）del key：删除key
+
+　　（6）rename key newkey：改名
+
+　　（7）renamenx key newkey：如果newkey不存在则修改成功
+
+　　（8）move key 1：将key移动到1数据库
+
+　　（9）ttl key：查询key的生命周期（秒）
+
+　　（10）expire key 整数值：设置key的生命周期以秒为单位
+
+　　（11）pexpire key 整数值：设置key的生命周期以毫秒为单位
+
+　　（12）pttl key：查询key 的生命周期（毫秒）
+
+　　（13）perisist key：把指定key设置为永久有效
+
+二、字符串类型的操作
+
+　　（1）set key value [ex 秒数] [px 毫秒数] [nx/xx]　　
+
+　　　　　　如果ex和px同时写，则以后面的有效期为准
+
+　　　　　　nx：如果key不存在则建立
+
+　　　　　　xx：如果key存在则修改其值
+
+　　（2）get key：取值
+
+　　（3）mset key1 value1 key2 value2 一次设置多个值
+
+　　（4）mget key1 key2 ：一次获取多个值
+
+　　（5）setrange key offset value：把字符串的offset偏移字节改成value
+
+　　　　　　　　　　　　　　　　　　如果偏移量 > 字符串长度，该字符自动补0x00
+
+　　（6）append key value ：把value追加到key 的原值上
+
+　　（7）getrange key start stop：获取字符串中[start, stop]范围的值
+
+　　　　　　　　　　　　　　　　　　对于字符串的下标，左数从0开始，右数从-1开始
+
+　　　　　　　　　　　　　　　　　　注意：当start>length，则返回空字符串
+
+　　　　　　　　　　　　　　　　　　　　　当stop>=length，则截取至字符串尾
+
+　　　　　　　　　　　　　　　　　　　　　如果start所处位置在stop右边，则返回空字符串
+
+　　（8）getset key nrevalue：获取并返回旧值，在设置新值
+
+　　（9）incr key：自增，返回新值，如果incr一个不是int的value则返回错误，incr一个不存在的key，则设置key为1
+
+　　（10）incrby key 2：跳2自增
+
+　　（11）incrbyfloat by 0.7： 自增浮点数　
+
+　　（12）setbit key offset value：设置offset对应二进制上的值，返回该位上的旧值
+
+　　　　　　　　　　　　　　　　　注意：如果offset过大，则会在中间填充0
+
+　　　　　　　　　　　　　　　　　　　　offset最大到多少
+
+　　　　　　　　　　　　　　　　　　　　　2^32-1，即可推出最大的字符串为512M
+
+　　（13）bitop operation destkey key1 [key2..]    对key1 key2做opecation并将结果保存在destkey上
+
+　　　　　　　　　　　　　　　　　　　　　　　　　　opecation可以是AND OR NOT XOR
+
+　　（14）strlen key：取指定key的value值的长度
+
+　  （15）setex key time value：设置key对应的值value，并设置有效期为time秒
+
+三、链表操作
+
+　　Redis的list类型其实就是一个每个子元素都是string类型的双向链表，链表的最大长度是2^32。list既可以用做栈，也可以用做队列。
+
+　　list的pop操作还有阻塞版本，主要是为了避免轮询
+
+　　（1）lpush key value：把值插入到链表头部
+
+　　（2）rpush key value：把值插入到链表尾部
+
+　　（3）lpop key ：返回并删除链表头部元素
+
+　　（4）rpop key： 返回并删除链表尾部元素
+
+　　（5）lrange key start stop：返回链表中[start, stop]中的元素
+
+　　（6）lrem key count value：从链表中删除value值，删除count的绝对值个value后结束
+
+　　　　　　　　　　　　　　　　count > 0 从表头删除　　count < 0 从表尾删除　　count=0 全部删除
+
+　　（7）ltrim key start stop：剪切key对应的链接，切[start, stop]一段并把改制重新赋给key
+
+　　（8）lindex key index：返回index索引上的值
+
+　　（9）llen key：计算链表的元素个数
+
+　　（10）linsert key after|before search value：在key 链表中寻找search，并在search值之前|之后插入value
+
+　　（11）rpoplpush source dest：把source 的末尾拿出，放到dest头部，并返回单元值
+
+
+
+//========== redis 基本相关操作
+	//----- redis 下载地址：
+	//----- redis 的安装 
+	//----- redis中的五个可执行文件
+	//----- 将可执行文件 拷贝到单独的一个目录
+	//----- 将配置文件拷贝到单独的一个目录中
+	
+//========== windows上 redis与php 的关联 
+	
+//===========  redis 启动三种方式
+	//----- 使用redis 启动脚本设置开机自启动方式
+	//----- 指定配置文件启动redis方式
+	//----- redis-server &	直接启动redis 方式 
+	
+//========== 三种停止退出redis的方式 
+
+//========== redis的配置文件
+	//----- redis.conf 相关配置解释
+	//----- sentinel.conf 	#redis sentinel配置文件，用于监控
+	
+//========== redis 服务器密码的设置与操作授权(登陆)
+	//----- 修改 redis 密码
+	//----- redis 操作授权(如何使用密码登陆)
+	
+//========== redis 持久化 
+	//----- od -c dump.rdb		查看 持久化文件内容 命令
+	//----- 设置redis持久化配置
+	//----- AOF方式 持久化
+	//----- 配置 AOF持久化
+	//----- 配置 rewrite 重写 (持久化文件的重写)
+	
+//========== redis服务器的 主从复制
+
+
+
+
+
+
+
+//===== 特殊 命令
+
+	//----- 查
+		type listname 			//查看一个key的数据类型
+
+ 
+	//-----	 config get dir			//获取备份文件存放位置
+		
+				1) "dir"
+				2) "/"			表示在 / 根目录
+
+
+	//----- save或bgsave			//对redis数据备份 
+		127.0.0.1:6379> save
+		OK
+
+		127.0.0.1:6379> bgsave
+		Background saving started
+
+
+
+	//----- redis.rdb 恢复数据
+		在redis.conf 配置文件中 将三个save快照条件注释掉
+		然后将以有的dump.db存放到 redis目录中(可以启动redis后用命令 config get dir查看redis目录位置)
+		重启redis后，数据就会被 redis读取并恢复
+
+
+
+	//----- 源码安装的redis启动方式
+			
+		redis-server 			//启动redis服务器
+			ctrl+c			//退出redis服务器
+
+		redis-server xxx/redis.conf	//以配置文件中的方式启动redis服务器  （配置文件中daemonize yes 为后台启动）
+			ps -aux | grep redis 	//获取redis 进程ID
+			kill -9 ID		//根据ID关闭后台启动的redis服务器
+
+		redis-cli			//启动redis客户端
+			
+
+
+
+//==========  string 类型 增删改查 操作命令
+	//----- 增
+			// set 添加或更改键值对数据
+			// setnx 创建键值对，当键存在时返回0，键不存在时返回1 
+			// setex 创建带过期时间的元素
+			// mset 同时设置多个键值对
+			// msetnx 批量设置键值对		
+	//----- 查
+			// get 获取一个key的值
+			// mget 批量获取key的值
+			// getrange 按指定长度获取元素中的子串 
+			// strlen 	获取 key中所存储值的长度
+	//----- 改
+			// getset  修改key 的值，并返回key 的旧值
+			// append 追加值  当key 不存在时，直接创建一个新键值对，并返回值的长度
+			// setrange  替换指定位置以后的字串
+			// incr /decr 	对整形数值进行递增或递减，返回递增（减）的值，如果key不在，初值为0
+			// incrby / decrby 	对数值类型的值进行递增或递减，并指定步长，
+	//----- 删
+			// del 删除一个或多个key 	
+			// flushall							//清空所有数据库		
+			// flushdb							//清空当前数据库	
+	
+//========== hash 数据类型(散列) 增删改查 操作命令
+	//----- 增
+		//hset 添加或修改hash 数据 成功返回1
+		//hmset 批量添加hash数据
+		//hsetnx	当hash的字段不存在时才创建 hash数据
+	//----- 查
+		//hlen 获取hash数据中字段的个数
+		//hget 获取hash数据中 指定字段的值 
+		//hmget 批量获取hash数据的字段值
+		//hgetall  获取hash数据中所有的字段和值 
+		//hkeys 只获取hash数据中所有的字段名
+		//hvals 只获取hash数据中所有字段的值
+		//hexists 判断hash表中是否存在 某个字段
+	//----- 改
+		//hincrby 对数值型数据递增或递减，字段如不存在，会创建，初值为0;
+		//hset 添加或修改hash 数据 成功返回1
+	//----- 删
+		//hdel 删除一个或多个 hash的字段及值 
+	
+		
+//========== 集合数据类型 增删改 操作命令
+	//----- 增
+		//sadd  向集合中添加一个或多个元素并返回元素的数量，如元素已存在则忽略 
+	//----- 查
+		// smembers 查看集合中的所有元素
+		// srandmember 从集合中随机获取一个或多个元素，
+		// sismember 判断元素是否存在于集合中，存在返回1 ，不存在 返回0
+		// scard 获取集合中元素的个数 
+	//----- 删		
+		// srem	从集合中删除一个或多个元素，返回被删除的数量
+		// spop 从集合中随机删除一个元素	
+	//----- 集合间运算命令
+		// sdiff 对多个集合执行差集运算
+		// sinter 对多个集合执行交集运算
+		// sunion	并集运算   获取指定集合中的所有元素
+		// sdiffstore  集合的差集运算并将结果保存在 指定键中
+		// sinterstore 集合的交集
+		// sunionstore 集合的并集， 
+	
+//========== 有序集合类型 增删改查 操作命令
+	//----- 增
+		// zadd	在有序集合中添加或修改一个或多个元素及其分数,返回成功加入的数量 
+	//----- 删
+		// zrem  	删除一个或多个元素，返回成功删除的数量 
+		// zremrangebyscore 按分数范围删除元素，返回值 是元素的数量
+		// zremrangebyrank	删除指定排名范围内的所有元素，返回删除元素的数量
+	//----- 改 
+		// zincrby 累加或累减一个元素的分数，返回更改后的分数  ,如果元素不存在，会被创建，初值为0；
+	//----- 查
+		// zcard	获取集合中元素的数量
+		// zscore  获取元素的分数 
+		// zrangebyscore	按大小顺序获取分数为指定区间的元素
+		// zcount 获取匹配到的指定元素的个数
+		// zrange , zrevrange 按元素分数大小顺序返回指定区间的元素
+		// zrank , zrevrank 获取元素的排名，分数最小（大）的排名为0
+		// zinterstore	计算多个有序集合的交集并将结果存储在dest键中，并返回dest键中的元素个数
+	
+//========== list 链表 增删改查命令
+	//----- 增
+		// lpush 在列表左边增加一个或多个元素，返回增加后的列表长度
+		// rpush 向列表右边增加一个或多个元素，
+		// linsert  在元素前面或后面插入一个新元素
+		// lset  给指定索引的元素赋值
+	//----- 查
+		// lrange	获取列表中某一区间的元素
+		// lindex 	获取指定索引的元素值
+		// llen	获取列表中元素的个数，当key 不存在时，会返回0
+	//----- 删
+		// lpop , rpop 从列表左或右侧删除一个元素
+		// lrem 从列表中删除元素
+		// ltrim 删除列表中指定索引以外的所有元素，返回保留的元素
+		// rpoplpush 	将一个列表右侧的的元素移入到另一个列表的左侧
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+//========== redis 基本相关操作
+
+
+	//----- redis 下载地址：
+
+		http://redis.io/download
+
+
+
+	//----- redis 的安装 
+
+		tar zxvf redis-3.0.0.tar.gz			//1解压安装包
+
+		cd redis-3.0.0					//进入文件夹
+
+		cd src						//进入src文件夹
+
+		make install					//安装redis
+
+		安装 完成后 输入命令 ： redis-server &
+
+			如果看到 Server started,Redis version 3.x.x	说明安装成功
+
+
+
+
+
+	//----- redis中的五个可执行文件
+
+		编译好的bin文件位于源码的src目录 下，均以redis-xxx命名，其中：可执行的二进制文件共有五个;
+
+		redis_benchmark 	性能测试工具
+		redis-check-aof		aof文件修复工具
+		redis-check-dump	rdb文件检查工具
+		redis-cli			命令行客户端
+		redis-server 		redis服务器
+
+
+		
+	
+	
+	//----- 将可执行文件 拷贝到单独的一个目录
+
+		mkdir -p /usr/local/redis/bin		//创建一个目录
+		
+		cp redis-cli redis-check-aof redis-checkdump redis-benchmark redis-server redis-sentinel redis-trib.rb mkreleosehdr.sh /usr/local/redis/bin		//将可执行文件复制到新建的目录中
+
+
+	
+	
+	
+	//----- 将配置文件拷贝到单独的一个目录中
+
+		mkdir -p /usr/locl/redis/etc
+
+		cp redis.conf sentinel.conf /usr/local/redis/etc		//拷贝配置文件
+		
+
+
+		
+		
+		
+		
+//========== windows上 redis与php 的关联 
+		
+		一：安装好xampp和WAMP的环境后，将 php_igbinary.dll 和 php_redis.dll 两个文件复制到 php/ext 目录下
+
+		二：在php.ini配置文件中 的 Extensions 区域的尾部添加如下两个模块并开启
+			extension=php_igbinary.dll
+			extension=php_redis.dll
+			
+		三：重启Apache 后，运行 redis-server.exe 启动redis服务
+		
+		四：运行 redis-cli.exe 进行命令行的操作
+				
+		
+		
+		
+		
+
+	
+	
+	
+	
+	
+//===========  redis 启动三种方式
+
+		1， redis-server &	直接启动redis	(见下例)
+
+		2， 指定配置文件启动redis方式	(见下例)
+
+		3， 使用redis 启动脚本设置开机自启动方式	(见下例)
+		
+	
+
+	//----- 使用redis 启动脚本设置开机自启动方式
+
+		推荐在生产环境中使用启动脚本方式启动redis服务，启动脚本redis_init_script位于redis/utils/目录下
+
+		cd /opt/redis-3.x.x/utils			//1，进入脚本所在目录
+		
+		vim redis_init_script				//2，编辑脚本文件
+		
+			修改以下内容并保存退出
+				EXEC=/usr/local/redis/bin/redis-server
+				CLIEXEC=/usr/local/redis/bin/redis-cli
+		
+		
+		mkdir -p /etc/redis					//3，创建一个配置文件存放目录
+		
+		cp /opt/reids-3.x.x/redis.conf /etc/redis/6379.conf	//4，将配置文件复制到刚创建的目录中并重命名与端口相同
+
+		vim /etc/redis/6379.conf			//5，编辑该配置文件
+
+				daemonize yes 					//将no 修改成 yes 后台启动
+
+		cp radis_init_script /etc/init.d/redisd		//复制脚本文件到自启动目录中
+
+		sudo update-rc.d redisd defaults			//让自启动生效
+		
+		service redisd start						//启动redis服务
+
+
+
+		
+		
+
+	//----- 指定配置文件启动redis方式
+		
+		vim /usr/local/redis/etc/redis.conf		//编辑该conf文件
+		
+		找到 daemonize no 	 			//将 no 改成 yes  （后台启动）
+
+								保存退出 
+
+		redis-server /usr/local/redis/etc/redis.conf	//启动redis
+
+		redis-cli					//连接redis
+
+		如果 出现： 127.0.1:6379>   说明服务启动成功并以连接
+		
+		showdown					//退出redis
+		
+		
+
+
+
+
+
+
+	//----- redis-server &	直接启动redis 方式 
+
+		redis-server & 				//启动redise服务
+
+		ps -ef | grep redis 			//检测服务 是否启动成功
+
+		netstat -tumpl | grep 6379 		//检测端口是否监听redis服务
+
+		redies-cli				//连接redis
+
+		shutdown				//断开连接，停止服务
+
+		Ctrl+c					//退出redis
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//========== 三种停止退出redis的方式 
+
+		0, quit		退出 
+
+		1，用 Ctrl+c 退出
+		
+		2，用shutdown 退出 
+		
+		3，用 kill -9 PID  杀死进程方式退出 
+			
+				service redisd start	//启动redis
+				
+				ps -ef | grep redis		//查看进程 
+				
+					root 3563 1 0 20:50 ?	00:00:00 /usr/local/redis/bin/redis-server *:6379
+					
+				kill -9 3563			//通过 进程ID杀死服务进程 
+				
+				redis-cli			//这时经以无法再连接redis了
+				
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//========== redis的配置文件
+	
+	
+	
+	
+	//----- redis.conf 相关配置解释
+	
+		redis.conf  是用来设置redis服务相关的配置文件，存放在 /usr/local/redis/etc 下
+	
+		vim redis.conf 
+
+	
+		Persistence 		持久化配项
+			|-databases 		设置数据库的个数据，默认使用下标为0的 ，redis默认有16个数据库
+			|-save				设置redis进行数据库镜像的频率
+			|-rdbcompression 	持久化镜像备份时，是否进行压缩
+			|-dbfilename		数据持久化的镜像文件名
+			|-Dir				数据库镜像备份的文件放置路径 
+		
+		Replication			主服务配置
+		
+		Security	
+			|-requirepass		设置登录时需要使用的密码
+					在 #requirepass foobared 下设置
+					requirepass jkxy 				//修改或设置密码为 jkxy  
+					pkill redis-server				//杀死进程来关闭服务  
+					service redisd start			//启动服务
+	
+		Limit 
+			|-maxclients		客户端的并发连接数，默认10000,(当达到最大连接数据时，redis会关闭最新的连接，并返回超过连接数的错误信息)
+			|-maxmemmory		配置redis Server 可占用的最大内存值 (当到达最大值时，将无法进行写入操作，但依然可以读)
+			
+		SlowLog				慢日志配置
+		
+		Advanced			高级配置
+		
+		INCLUDES			例外配置
+		
+		
+		daemonize 			设置服务是否在后台运行	no:前台，yes:后台
+		
+		pidfile 			配置多个pid的地址，默认在/var/run/redis.pid
+		
+		bind 				绑定IP，设置后只接受来自该 ip的请求.如不设置，则接受所有ip
+		
+		port				监听端口，默认为 6379
+		
+		timeout 			设置客户端连接超时，单位为秒
+		
+		loglevel			日志等级的划分
+			|-debug
+			|-verbose
+			|-notice
+			|-warning
+			
+		logfile						配置日志文件的路径 
+			
+		appendonly  （yes）		是否开启AOF方式的持久化（默认关闭）
+		
+		appendfilename 'appendonly.aof'			//AOF文件名
+		
+		dir ./						//设置AOF文件的存放路径
+
+
+	
+
+	//----- sentinel.conf 	#redis sentinel配置文件，用于监控
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//========== redis 服务器密码的设置与操作授权(登陆)
+	
+
+		
+	//----- 修改 redis 密码
+
+		vim 6379.conf		进入编辑配置文件
+		requirepass			设置登录时需要使用的密码
+			在 #requirepass foobared 下设置
+			requirepass jkxy 				//修改或设置密码为 jkxy  
+			pkill redis-server				//修改密码需要重启服务  
+			service redisd start
+			
+
+
+	//----- redis 操作授权(如何使用密码登陆)
+				
+		设置密码后操作redis 需要进行授权才可以进行操作
+		
+		授权方式一  auth
+			redis-cli 					
+			auth jkxy 				        jkxy 为redis密码
+
+			
+		授权方式二 -a
+		
+			redis-cli -a jkxy
+		
+		
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//========== redis 持久化 
+			
+			
+				
+		持久化就是把内存中的数据保存在硬盘上。根目录下的 dump.rdb 是redis持久化在硬盘上的文件。
+		
+	//----- od -c dump.rdb		查看 持久化文件内容 命令
+		
+		
+	//----- 设置redis持久化配置
+
+		vim /etc/redis/6379.conf 	打开配置文件
+		
+		|-save				设置redis进行数据库镜像的频率
+								
+								save <seconds><changes>
+								禁用快照(持久化)的话就将下面参数全部删除即可
+								save 900 1          //900秒内至少一个键被更改，就进行快照
+								save 30  10			//30秒内至少10个键被更改，就进行快照
+								save 60  10000		//60秒内至少10000个键被更改，就进行快照
+								三个条件是或的关系
+			
+		|-rdbcompression 	持久化镜像备份时，是否进行压缩
+								rdbcompression yes
+		|-dbfilename		数据持久化的镜像文件
+								dbfilename dump.rdb
+		|-Dir				数据库镜像备份的文件放置路径 
+								dir ./
+	
+
+		
+		
+		
+				
+				
+
+	//----- AOF方式 持久化
+		
+		vim /etc/redis/6379.conf 	打开配置文件
+			
+			Appendfsync 
+				|- always 		不停的写入，不停的同步：将aof_buf缓冲区中的所有内容写入并同步到aof文件
+				|- everysec		不停写入，每隔一秒同步一次：将aof_buf 缓冲区中的所有内容写入到aof文件，如果上次同步aof文件的时间距离 现在超过1秒钟，那么再次对aof文件进行同步，并且这个同步操作是由一个线程专门负责执行的.
+				|- no			不停写入，由系统决定何时同步：将aof_ buf缓冲区中的所有内容写入到AOF文件，但并不对AOF文件进行同步，何时同步由操作系统来决定 
+				
+				安全属性上来看，always 最高，但从效率上看no 最高
+						
+					
+	//----- 配置 AOF持久化
+		
+		vim /etc/redis/6379.conf			//打开配置文件
+
+		appendonly yes					//开启AOF持久化
+		
+		appendfilename 'appendonly.aof'			//AOF文件名
+		
+		dir ./						//设置AOF文件的存放路径
+		
+		
+		#appendfsync always
+		appendfsync everysec				//设置AOF持久化的写入及同步方式
+		#appendfsync no
+			
+			
+			
+				
+		
+			
+			
+	//----- 配置 rewrite 重写 (持久化文件的重写)
+
+		vim /etc/redis/6379.conf			//打开配置文件
+
+		auto-aof-rewrite-percentage 100			//当前的aof文件大小超过上一次aof文件大小的百分比时会再次重写
+		auto-aof-rewrite-min-size 64mb			//限制最小aof文件的大小
+
+
+		
+		
+		//手动重写	
+		redis-cli -a jkxy			//登陆redis
+		keys *						//查看 所有的key
+		rpush list A B				//创建一个列表 并压入 A B 两个元素
+		lpop list					//弹出一个元素
+		
+		bgrewriteaof				//重写命令	
+
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//========== redis服务器的 主从复制
+			
+		
+		vim /etc/redis/6379.conf 		配置从服务器配置文件
+		
+			找到  #slaveof <masterip><masterport>
+			
+				slaveof 192.168.23.200 6379				//添加主服务器地址和端口
+				
+				
+			找到 masterauth <master - password>
+			
+				masterauth jkxy 						//添加主服务器redis的密码
+				
+				
+		service redisd start 					//启动从服务器的redis
+				
+		redis-cli -a jkxy						//进入 redis
+		
+		flushall								//清空redis数据
+				
+		//这里回到主redis中添加数据
+		set name mike							//向redis中添加数据 name 为键，mike为值 
+		
+		//这里在redis从库中获取数据
+		keys * 									//到这里主从以经同步，从库中可以获取到主库中数据
+		get name
+				
+				
+		info						//查看当前服务器的信息
+		
+			role:slave						master：主库  slave： 从库
+			master_host:192.168.21.200		显示的是主库的地址
+			master_port:6379				使用的端口
+			master_link_status:up			正在连接状态
+
+
+
+
+				
+			
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+			
+			
+			
+
+
+
+
+
+//===== 特殊删除
+
+		redis-cli keys “*” | xargs redis-cli del
+
+		//如果redis-cli没有设置成系统变量，需要指定redis-cli的完整路径
+
+		//如：/opt/redis/redis-cli keys “*” | xargs /opt/redis/redis-cli del
+
+		 
+
+		如果要指定 Redis 数据库访问密码，使用下面的命令：
+
+		代码如下:
+
+		redis-cli -a password keys “*” | xargs redis-cli -a password del
+
+		如果要访问 Redis 中特定的数据库，使用下面的命令：
+
+		代码如下:
+
+		//下面的命令指定数据序号为0，即默认数据库
+
+		redis-cli -n 0 keys “*” | xargs redis-cli -n 0 del
+
+		删除所有Key
+
+		删除所有Key，可以使用Redis的flushdb和flushall命令：
+
+
+
+
+			
+			
+			
+			
+//==========  string 类型 增删改查 操作命令
+
+		string默认是字符串,被redisObject所引用。当遇到 incr,decr 等操作时会转成数值 型 进行计算，此时 redisObject的encoding字段为int。
+
+		struct sdshdr{
+			long len;		//数组的长度
+			ling free;		//数组中剩余可用字节数
+			char buf[]; 	//char 数组用于存贮实际的字符内容
+		}
+
+	
+
+
+	//----- 增
+
+			// set 添加或更改键值对数据
+			set stu:001:name jack			添加或更改一个键名为 stu:001:name  值为： jack  的键值对
+
+
+			
+			// setnx 创建键值对，当键存在时返回0，键不存在时返回1 
+			setnx stu:002:name				创建键值对  当键存在时返回0，键不存在时返回1 
+			
+			
+			//setex 创建带过期时间的元素
+					单位是秒，如果仅当缓存，这个命令很有用
+			setex stu:002:age 2 18			键名： stu:002:age	值 18 	有效时间为2秒
+			
+			
+			// mset 同时设置多个键值对
+			mset stu:004:name tom stu:004:age 22
+			
+			
+			// msetnx 批量设置键值对		
+						当键都不存时创建成功并返回1 ，当有任何一个键以存在时则创建失败并反回0 
+			msetnx stu:004:birth 1993-12 stu:004:sex male
+			
+			
+			
+			
+			
+	//----- 查
+
+			// get 获取一个key的值
+			get stu:001:name
+			
+			// mget 批量获取key的值
+			mget stu:001:name stu:001:age stu:001:sex stu:001:birth
+			
+			
+			// getrange 按指定长度获取元素中的子串 
+						指定开始下标，指定结束下标， -1 代表最后一个字符.
+			get stu:004:name 0 1			原值为 tom  结果 为to
+			
+
+			// strlen 	获取 key中所存储值的长度
+			strlen stu:001:name			
+			
+			
+
+	//----- 改
+
+			// getset  修改key 的值，并返回key 的旧值
+			getset stu:004:name smith			//修改stu:004:name 的值为smith 并返回其原值 
+			
+			// append 追加值  当key 不存在时，直接创建一个新键值对，并返回值的长度
+			append stu:004:name 01		结果 反回7
+			
+			// setrange  替换指定位置以后的字串
+			setrange stu 1 555		替换值中字串下标注1以后的值为555
+					结果将 abcdefg		修改成了 a555efg
+					
+			// incr /decr 	对整形数值进行递增或递减，返回递增（减）的值，如果key不在，初值为0
+			incr stu:004:age			数值递增
+			decr stu:004:age			数值递减
+			
+			// incrby / decrby 	对数值类型的值进行递增或递减，并指定步长，
+								如果步长为负数，则是递减，实际这两个函数可通用
+			incrby stu:004:age 5		指定递加5
+			incrby stu:004:age -5		指定递减5
+			decrby stu:004:age 5		递减5
+			decrby stu:004:age -5		递加5
+			
+			
+
+	//----- 删
+			
+			// del 删除一个或多个key 
+			del stu:007:age						删除一个key
+			del stu:004:like stu:004:birth		删除多个key
+			
+			flushdb				清s除数据库中所有数据
+			
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//========== hash 数据类型(散列) 增删改查 操作命令
+
+		hash 数据类型：相当于string 的容器。 比如：一个字串中包含多个字段，每个字段对应一个值。较于每个字段都存储成string类型，hash能更节省内存。每个hash可以存储2的32次方-1个键值对
+		
+		
+	//----- 增
+		//hset 添加或修改hash 数据 成功返回1
+		hset stu:001 name zhangsna				stu:001 为key  name 为字段   zhangsan 为值
+
+		
+		//hmset 批量添加hash数据
+		hmset stu:001 age 21 sex male			stu:001 为key  age和sex 为字段  21和male为值
+
+		
+		//hsetnx	当hash的字段不存在时才创建 hash数据
+		hsetnx stu:001 name jack			字段存在时创建失败并返回0，字段不存在时创建成功并返回1
+		
+		
+
+	//----- 查
+		//hlen 获取hash数据中字段的个数
+		hlen stu:001
+
+
+		//hget 获取hash数据中 指定字段的值 
+		hget stu:001 name
+		
+		//hmget 批量获取hash数据的字段值
+		hmget stu:001 name age sex
+		
+		//hgetall  获取hash数据中所有的字段和值 
+		hgetall stu:001
+		
+		//hkeys 只获取hash数据中所有的字段名
+		hkeys stu:001
+
+		
+		//hvals 只获取hash数据中所有字段的值
+		hvals stu:001
+		
+		//hexists 判断hash表中是否存在 某个字段
+		hexists stu:001 sex		 	判断stu:001 中是否有字段 sex  有返回1，没有返回0
+		
+		
+		
+	//----- 改
+		
+		//hincrby 对数值型数据递增或递减，字段如不存在，会创建，初值为0;
+		hincrby stu:001 age 2		递增2
+		hincrby stu:001 age -2		递减2
+		
+
+
+		//hset 添加或修改hash 数据 成功返回1
+		hset stu:001 name zhangsna				stu:001 为key  name 为字段   zhangsan 为值
+
+		
+		
+	//----- 删
+
+		//hdel 删除一个或多个 hash的字段及值 
+		hdel stu:001 sex birth			删除stu:001 中的 sex 和 birth 两个字段
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//========== 集合数据类型 增删改 操作命令
+
+
+		redis集合类型使用两种数据结构作为底层实现
+		1，整数集合
+		2，字典 
+		当集合对象保存的所有元素都是整数值且元素数量不超过512个时使用整数集合，不满足这个条件 的集合对象使用hash table编码 
+		
+		
+		
+		
+	//----- 增
+		
+		//sadd  向集合中添加一个或多个元素并返回元素的数量，如元素已存在则忽略 
+		sadd letters a 			向hash数据集合中添加一个 数据列表 a 
+		
+		sadd letters a b c d e 	向hash数据集合中添加多个 数据列表 
+
+
+		
+	//----- 查
+		
+		// smembers 查看集合中的所有元素
+			smembers letters		获取letters集合中的所有元素
+			
+			
+		// srandmember 从集合中随机获取一个或多个元素，
+						参数count 可选， count>0时，返回集合中count个不重复元素,count<0时，反回其绝对值个数的元素，但这些元素有可能相同 
+			srandmember letter 3		//随机获取letter集合中的3个不重复的元素，
+			
+			srandmember letter -10     //随机获取letter集合中10个元素，随机的元素可重复
+
+		// sismember 判断元素是否存在于集合中，存在返回1 ，不存在 返回0
+			sismember latter a				如果latter 集合中 有a 这个字段，返回1 ，否则返回0 
+
+		// scard 获取集合中元素的个数 
+			scard letters			//获取 letters集合中元素的个数 
+
+		
+		
+
+		
+	//----- 删		
+
+		// srem	从集合中删除一个或多个元素，返回被删除的数量
+			srem letters a				从集合中删除一个元素
+			
+			srem letters a b c d e 		从集合中删除多个元素
+			
+					
+		// spop 从集合中随机删除一个元素	 
+			spop letters 				从letters 集合中随机删除一个元素
+			
+
+		
+		
+		
+		
+	//----- 集合间运算命令
+
+
+		// sdiff 对多个集合执行差集运算
+			sadd setA 1 2 3 
+			sadd setB 2 3 4
+			sdiff setA setB			获取差集返回 A有 B没有的元素
+				//结果 ： ‘1’
+		
+			sdiff setA setB setC 	返回A有，B和C中都没有的元素
+			
+			
+			
+		// sinter 对多个集合执行交集运算
+			sinter setA setB 				返回 A 和 B 相同的元素
+			
+			sinter setA setB setC			返回 A B C 中相同的元素
+			
+			
+		// sunion	并集运算   获取指定集合中的所有元素
+			sunion setA setB 				返回 A 和 B 中所有的元素 
+			sunion setA setB setC			返回 A,B,C 中所有的元素
+		
+		
+		
+		// sdiffstore  集合的差集运算并将结果保存在 指定键中，
+						它与并集运算 sunion一样，只是不会直接显示结果 ，而是将结果保存
+			sdiffstore setD setA setB 	   //将setA setB的差结果存放在 setD集合中
+			smembers setD					//查看setD中的差集结果
+			
+			
+			
+		// sinterstore 集合的交集
+			sinterstore t1 s1 s2 		//将 s1,s2 的交集结果存放 在t1集合中
+			smembers t1					//显示交集的结果
+		
+		
+		// sunionstore 集合的并集
+			sunionstore t2 s1 s2		//将 s1,s2的并集结果存放 在t2集合中
+			smembers t2					//显示并集的结果
+		
+			
+		
+		
+
+	
+	
+	
+	
+	
+	
+
+//========== 有序集合类型 增删改查 操作命令
+
+		有序集合就是在集合之上又多出一个类似索引的数值选项
+		
+		redis 有序集合类型使用两种数据结构作为底层实现 
+		1，压缩列表 
+		2，跳跃表
+		当有序集合对象保存的所有元素数量不起过128且元素成员长度都小于64字节时使用压缩列表，不满足这个条件的集合对象使用跳跃表。
+
+
+	//-----增
+	
+		// zadd	在有序集合中添加或修改一个或多个元素及其分数,返回成功加入的数量 
+		zadd key score member	格式及参数
+								key  	键名
+								score 	类似索引的数值
+								member	与score对应的值
+		
+		zadd list 89 tom 67 peter 100 david		向有序集合中添加三个元素,分数89，值为tom ,分数67，值为peter...
+		
+		zadd list 17E+307 a
+		zadd list 1.5 b
+		zadd list +inf c		正的无穷大
+		zadd list -inf d		负的无穷大
+	
+	
+	
+	
+	
+	
+	//----- 删
+	
+		// zrem  	删除一个或多个元素，返回成功删除的数量 
+		zrem list tom 		删除 集合中的tom
+		
+		
+		// zremrangebyscore 按分数范围删除元素，返回值 是元素的数量
+		zremrangebyscore list -inf (85			删除分数为85分以下的所有元素
+		
+	
+		// zremrangebyrank	删除指定排名范围内的所有元素，返回删除元素的数量
+			zremrangebyrank list 1 2 		//删除按分数排名为 1，2的元素
+			
+		
+		
+		
+	
+	//----- 改 
+	
+		// zincrby 累加或累减一个元素的分数，返回更改后的分数  ,如果元素不存在，会被创建，初值为0；
+		zincrby list 5 peter		//给集合中 peter元素的分数 累加5
+		zincrby list -10 peter		//给集合中 peter元素的分娩 累减10
+
+		
+		
+
+	
+	//----- 查
+	
+		// zcard	获取集合中元素的数量
+		zcard list 			
+
+	
+	
+		// zscore  获取元素的分数 
+		zscore list david			//获取集合中 david 元素的分数 
+
+
+	
+	
+		// zrangebyscore	按大小顺序获取分数为指定区间的元素
+		zrangebyscore key min max [withscores][limit offset count]
+					 
+					 min和max 支持无穷大inf
+					 withscore 返回数据格式为元素+分数
+					 limit 表示在获得元素基础上从offset个开始的count个元素
+					 
+		zrangebyscore list 85 100			//获取list集合中分数为 85到100之间的元素
+		
+		zrangebyscore list 85 100 withscores		//获取list集合中分数为85到100之间的元素及其分数
+		
+		zrangebyscore list 85 100 withscores limit 0 2		//获取list集合中分数为85到100之间的元素及其分数,且从只获取下标0开始的2个元素
+		
+		zrangebyscore list 85 100 withscores limit 1 2		//获取list集合中分数为85到100之间的元素及其分数,且从只获取下标1开始的2个元素
+		
+		zrangebyscore list 75 +inf							//获取list集合中分数为75分以上的所有元素,含75
+
+		zrangebyscore list 75 +inf withscores				//获取list集合中分数为75分以上的所有元素及分数
+		
+		zrangebyscore list (75 +inf							//获取list集合中分数为75分以上的所有元素,且不包含75
+
+
+	
+	
+		// zcount 获取匹配到的指定元素的个数
+		zcount list (75 +inf						//获取list集合中分数在75以上的元素的个数
+		
+		
+		
+		// zrange , zrevrange 按元素分数大小顺序返回指定区间的元素
+		zrange list 0 -1	
+		zrange list 0 -1 withscores		按分数从小到大显示所有元素及分数
+		
+		zrevrange list 0 -1 withscores		按分数从大到小显示所有元素及分数
+	
+		
+	
+		
+		
+		
+		// zrank , zrevrank 获取元素的排名，分数最小（大）的排名为0
+		zrank list rose		// 获取 元素rose 按分数大小的排名
+	
+			
+		// zinterstore	计算多个有序集合的交集并将结果存储在dest键中，并返回dest键中的元素个数
+			zinterstore dest numkeys key [key...] [WEIGHTS weight] [aggregate sum|min|max]
+			
+			例
+			zadd list 99 one 88 two 77 three
+			zadd list1 99 one 88 two 77 three
+			zadd list2 99 one 88 two 77 three		添加三个集合数据
+			
+			zinterstore total 3 one two three		将三个项的分数存放在total里
+			
+			zrange totalscore 0 -1 withscores 		按分数排名显示所有元素
+			
+			zinterstore minscore 3 one two three AGGREGATE min		//获取每个同学得分最少的那个分数
+			
+			zrange minscore 0 -1 withscores  		//显示出该集合的分数
+			
+			
+			zinterstore minscore 3 one two three AGGREGATE max		//获取每个同学得分最多的那个分数
+			
+			zrange minscore 0 -1 withscores  		//显示出该集合的分数
+			
+			zinterstore totalscores2 3 one two three weights 0.4 0.3 0.3   //比重为 0.4 0.3 0.3
+						
+		
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+//========== list 链表 增删改查命令
+
+	//----- 增
+
+		// lpush 在列表左边增加一个或多个元素，返回增加后的列表长度
+			lpush list f			在列表list左边压入一个元素 f
+			
+			lpush letters e d c b a  	在列表letters 左边压入多个元素 
+
+
+		// rpush 向列表右边增加一个或多个元素，
+			rpush letters g			在列表右侧压入元素
+
+			rpush letters h i j k 		在列表letters 右侧压入多个元素
+			
+			
+		// linsert  在元素前面或后面插入一个新元素
+			linsert letters after f G			在列表中元素 f 的后面插入一个 元素 G
+			
+			linsert letters before d D			在列表中元素 d 的前面插入一个元素 D
+			
+			
+		// lset  给指定索引的元素赋值
+			lset numbers 1 8 			将列表 number 中索引为1的元素赋值为 8 
+			
+		
+		
+		
+			
+	//----- 查
+		
+		// lrange	获取列表中某一区间的元素  
+					返回从start到end 之间的所有元素,索引-1表示最右边，-2表示倒数第二个元素
+			lrange letters 2 3 		获取列表 中索引为 2,3 的元素
+			
+			lrange letters 0 -1		获取列表中首到尾的元素
+			
+			
+			
+		// lindex 	获取指定索引的元素值
+			index numbers 2		获取列表中索引为2的元素的值
+			
+			
+		
+		// llen	获取列表中元素的个数，当key 不存在时，会返回0
+			llen numbers				获取列表 中元素的个数
+			
+			
+		
+			
+	//----- 删
+
+		// lpop , rpop 从列表左或右侧删除一个元素
+			lpop letters 			从左侧删除元素
+			rpop leeters			从右侧删除元素
+			
+			
+
+		// lrem 从列表中删除元素
+			从列表中删除count个为指定值的元素,返回被 删除的个数,count >0：从左边删除，<0:从右边删除 ，=0：删除所有匹配的元素
+			lrem number 2 5 	从列表number 左侧删除2 个值 为5的元素
+			
+			lrem numbers -2 4	从列表 number 右侧删除 2 个值为4的元素
+			
+			lrem numbers 0 6 	从列表 number 中删除所有值 为6的元素
+			
+		
+		// ltrim 删除列表中指定索引以外的所有元素，返回保留的元素
+			trim numbers 1 6 	删除numbers列表中 索引1到6 以外的所有元素
+			
+		
+		// rpoplpush 	将一个列表右侧的的元素移入到另一个列表的左侧
+			从一个列表 的右边弹出一个元素，然后将其加入另一个列表的左边，并返回这个元素的值，当把列表当作队列时，rpoplpush可以在多个队列中传递数据，当两个列表名相同时，此命令会不断的将队尾的元素移动 到队首。
+			rpoplpush letters numbers 		将列表 letters 右侧的元素删除并添加到 number 列表的左侧
+			
+			rpoplpush letters letters 		将列表letters 的最右侧元素移动 到最左侧
+			
+			
+			
+		
+
+
+
+
+
+
+
+
+
+
+//========== 其它公共命令
+
+
+	//info		获取数据库当前状态信息		
+		
+			// flushall							//清空所有数据库			
+			flushall							
+		
+			// flushdb							//清空当前数据库
+			flushall
+	
+	
+			// rename 							//更改key的名字
+			rename name a
+	
+	renameNx
+与remane类似，但是，如果重新命名的名字已经存在，不会替换成功
+
+
+
+auth
+密码认证
+$redis->auth('foobared');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		

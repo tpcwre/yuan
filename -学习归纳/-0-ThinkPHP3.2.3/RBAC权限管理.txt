@@ -1,0 +1,220 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+权限表：
+	auth_id		主键
+	auth_name varchar(20)	权限名称（如：产品中心，客户服务，，，）
+	auth_pid smallint(6)	父ID
+	auth_c	varchar(32)	控制器
+	auth_a	varchar(32)	操作方法
+	auth_path varchar(32)	全路径 
+		1，顶级权限，全路径等于本主键值  （如：1 或 3）
+		2，不是顶级，全路径则等于 “父级全路径-本主键值”（如：1-3 或 3-3）
+	auth_level tinyint(4) 	级别 （0，1，2）
+		如：产品中心（0 : 代表顶级目录权限） 
+			->产品展示（1 ： 代表次级目录权限）
+				->添加，删除（2 ： 代表次次级操作权限）
+			->最新产品（1）
+				->添加，删除（2）
+					4,5 .......
+
+
+
+	数据模拟 
+	id,名称，父ID，控制器，方法，递属关系，级别
+	insert into auth values(1,'商品管理',0,'','',1,0);
+	insert into auth values(2,'订单管理',0,'','',1,0);
+	insert into auth values(3,'广告管理',0,'','',1,0);
+	insert into auth values(4,'商品列表',1,'goods','list','1-4',1);
+	insert into auth values(5,'添加商品',1,'goods','add','1-5',1);
+	insert into auth values(6,'商品分类',1,'goods','cate','1-6',1);
+	insert into auth values(7,'用户评论',1,'goods','comment',1-7,1);
+	insert into auth values(8,'订单列表',2,'order','list',2-8,1);
+	insert into auth values(9,'订单打印',2,'order','print',2-9,1);
+	insert into auth values(10,'添加订单',2,'order','add',2-10,1);
+	insert into auth values(11,'广告列表',3,'advert','list',3-11,1);
+	insert into auth values(12,'广告位置',3,'advert','position',3-12,1);
+
+
+
+
+
+
+
+
+
+
+
+角色表：
+	role_id	int			主键
+	role_name varchar(20)		角色名
+	role_auth_ids varcher(123)	指定权限 (权限表id：4,6,7)
+	role_auth_ac text		模块-操作
+		如："goods-list,goods-add,goods-cate"
+
+
+
+	数据模拟
+	insert into role values(1,'经理','1,4,5,6','goods-list,goods-add,godds-cate');
+	insert into role values(2,'主管','2,3,8,11','order-list,advert-list');
+
+
+
+
+
+
+
+
+用户表：
+
+	id int 			主键
+	name	varchar(20)	用户名
+	pwd	varchar(32)	密码
+	time 	int		时间戳
+	role_id	tinyint(2)	权限id  (选择角色)
+
+
+
+
+
+
+
+
+
+
+
+
+
+//== 运行逻辑
+
+
+	//-- 控制器
+	function left(){
+							//查询当前登陆用户的信息
+		$sql = "select * from user where id = ".$_SESSION['id'];	
+		$userinfo = D()->query($sql);		
+
+		$role_id = $userinfo[0]['role_id'];	//提取出用户的角色id
+
+		$sql = "select * from role where role_id =".$role_id;		//根据角色id获取相关权限
+		$roleinfo = D()->query($sql);		//执行 SQL语句获取数据
+
+		$auth_ids = $roleinfo[0]['role_auth_ids'];	//获取角色拥有的权限id列表
+
+								//根据$auth_ids 查询全部顶级权限
+		$sql = "select * from auth where auth_level=0";	
+		if($_SESSION['id'] !=1 ){	//判断当前用户不是管理员时
+			$sql .= '  and auth_id in {$auth_ids}';	  //按非管理查询其相应权限
+		}
+		$authinfo_i = D()->query($sql);
+								//根据$auth_ids 查询全部次顶级权限
+		$sql = "select * from auth where auth_level=1";
+		if($_SESSION['id'] !=1 ){	//判断当前用户不是管理员时
+			$sql .= '  and auth_id in {$auth_ids}';	  //按非管理查询其相就次级权限
+		}	
+		$authinfo_ii = D()->query($sql);
+
+
+		$this->assign('authinfo_i',$authinfo_i);
+		$this->assign('authinfo_ii',$authinfo_ii);
+
+		$this->display();
+
+
+
+	}
+
+
+
+	//-- 模板 
+
+	{foreach $authinfo_i as $k=>$v}
+
+		{$v.auth_name}	遍历出顶级菜单
+		
+			{forach $authinfo_ii as $kk=>$vv}
+				{if $vv.auth_id == $v.auth_id}		判断：用uid来分类，只在自己的父菜单下显示
+					{$vv.auth_name}	遍历出二级菜单 
+				{/if}
+			{/foreach}
+
+	{/foreach}
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 权限控制漏洞（直接输入指定URL访问范围外权限的页面）
+
+	当用户手动改变url地址来访问其权限以外的控制器和方法时，会穿越当前的权限控制，而自行访问。解决方法如下
+
+	给每个权限控制器添加一个父类，在父类的构造方法中判断，当前用户访问的是否是其角色所允许的权限范围之内.
+
+	<?php
+	namespace mytools;
+	use Think\Controller;
+	class AdminController extends Controller{
+		public function __constract(){
+			parent::__constract();		//先运行一个父类的构造，不然会出错
+			$now_ac = CONTROLLER.'-'.ACTION_NAME;	//拼接当前控制器和方法的字串
+			$sql = "select auth_ac from manager a join role b on a.role_id = b.role_id where a.id=".$_SESSION['mg_id'];
+			$auth_ac = D()->query($sql);		//获取数据库中存储权限对应的控制器方法	
+			$auth_ac = $auth_ca[0]['auth_ac'];
+
+			$aloow_ac = array('Index-left','Index-right','Index-head');	//设置被允许的一些公共模块
+			if(!in_array($now_ac,$allow_ac) && $_SESSION['mg_id'] !=0 && strpos($now_ac,$aut_ac) == false){	
+				//判断当前用户不是admin,且控制器方法以是否和数据库中取出的控制器方法相匹配，
+				exit('没有权限访问');
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

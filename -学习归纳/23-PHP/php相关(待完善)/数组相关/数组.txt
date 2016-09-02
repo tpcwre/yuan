@@ -1,0 +1,1260 @@
+
+//===== 数组函数手册位置
+
+//===== 数组的特性
+
+//===== 数组的类型
+
+//===== 显示数组内容的三种方式
+
+//===== 一维数组的六种声明方式与调用
+
+//===== 多维数组的声明与调用
+
+//===== 数组内容的追加与修改
+
+//===== 删除数组中的元素
+
+//===== 数组的遍历
+
+//===== 数组操作符 +, ==, ===,!=,<>,!==
+
+//===== 数组指针类操作函数 
+
+//===== 数组函数 xxx() 与 array_xxx()的区别
+
+//===== 数组函数 （非前缀类）
+
+//===== 数组函数 （array_xxx类）
+
+//===== 数组常量
+
+
+
+
+
+
+
+
+
+
+//===== 数组函数手册位置
+
+PHP Manual => 函数参考 => 变量与类型相关扩展 => 数组 => 数组函数
+
+
+
+
+
+
+//===== 数组的特性
+
+	 1）、声明数组时，索引数组下标可以不连续。指定什么就是什么。
+	 2）、负数可以作为下标，但是没有太大意义。
+	 
+			$arr[0]='a';
+			$arr[2]='b';
+			$arr[4]='c';
+			$arr[-4]='d';
+			echo '<pre>';
+				var_dump($arr);
+			echo '<pre>';
+				
+	 3）、声明关联数组时如果下标不加引号来包含下表，会当作常量来使用。如果连这个常量都没有才会转换为字符串
+	 
+			define('hehe','abc');	//如果不声明常量，那么下面会报错
+			$var[hehe] = 'b';	S	
+			var_dump($var);
+			
+				
+	 4）、如果下标是null，那么下标将为空字符串，如果下标为小数将会舍掉小数位。
+	 
+			$var[null] = 'a';
+			echo $var[null].'<br>';
+			或
+			echo $var[''].'<br>';
+			
+			$var[3.14234]='kdf';
+			echo $var[3].'<br>';
+	 
+	 5）、索引下标和关联下标可以放在同一个数组中，但是我们不经常用。
+	 6）、数组的关联下标和索引下表不会相互影响。关联下标不会影响索引下标的排列规则。
+ 
+			$arr1=array('a','b','c','d'=>'ddd','e','f');
+			var_dump($arr1);
+			
+	 7）、array()没有指定下标，默认是索引数组，从0开始
+	 8）、array()可以指定下标，使用=>操作符来进行声明，索引和关联都这样做
+	 
+	    1、可以使用[]来声明、操作、数组也可以使用{}来声明、操作但是建议使用[ ]<br>
+            2、声明数组时可以不加下标只使用[]。默认为索引数组，下标从0开始。依次自增。<br>
+            3、单独使用[]，而不指定下标的时，索引下标的值将为出现过的最大的下标+1.<br>
+            4、声明数组时，索引数据下标可以不连续<br>
+            5、数组的下标可以为负数，但是没有太大意义<br>
+            6、如果说下标有重复的情况下，那么后面的将会覆盖前面的（索引和关联都是一样的）。<br>
+            7、如果说声明关联数组时不加引号来包含下标，将会当作常量来对待。<br>
+            8、关联数组和索引数组可以同时存在与同一个数组里面（这种情况）<br>
+            9、数组的关联下标不会影响到索引下标的排列规则。	 
+
+
+	 
+ 
+ 
+//===== 数组的类型
+
+	//--- 索引数组	一维数组
+	
+		$arr=array(1,2,3,4,5);		
+
+
+	
+	//--- 关联数组	一维数组
+	
+		$arr=array('a'=>'aa','b'=>'bb');	
+ 
+ 
+	//--- 索引数组	二维数组
+ 
+		$arr=array(							
+			array(1,2,3),
+			array(1,2,3)
+		);
+	
+	
+	
+	//--- 关联数组	二维数组
+	
+		$arr=array(							
+			'a'=>array('a'=>'aa','b'=>'bb'),
+			'a'=>array('a'=>'aa','b'=>'bb')
+		);
+		var_dump($arr);
+ 
+ 
+ 
+ 
+	//--- 索引数组	多维数组
+	
+		$arr=array(	
+			array(
+				array(1,2,3),
+				array(1,2,3)
+			),
+			array(
+				array(1,2,3),
+				array(1,2,3)
+			)
+		);
+	
+	
+	
+	//--- 关联数组	多维数组
+	
+		$arr=array(	
+			'a'=>array(
+				'b'=>array('c'=>'cc','d'=>'dd'),
+			),
+			'b'=>array(
+				'e'=>array('f'=>'ff','g'=>'gg'),
+			),
+		);
+		
+		
+		
+
+		
+		
+//===== 显示数组内容的三种方式
+
+	$arr=array(1,2,3,4,5,'a'=>'aaa');
+	print_r($arr);		//显示数组内容的下标和内容
+	echo '<br>';
+	var_dump($arr);		//显示数组，内容，下标，元素个数，元素的数据类型
+		
+		
+		
+		
+		
+		
+ 
+ 
+//===== 一维数组的六种声明方式与调用
+	
+
+	方式一：	（一维数组）
+	$var[0]='马尧';				
+	$var['name']='于恒鹏';		
+	echo $var[0]."<br>".$var['name'].'<hr>';
+
+	方式二：	（一维数组）
+	$val{0}='aaa';
+	$val{'name'}='bbb';
+	echo '<br>'.$val{0}.'--'.$val{'name'};
+	
+	方式三：	（一维数组）
+	$var[]='hehe';
+	$var[]='hehe';
+	$var[]='hehe';
+	$var[]='hehe';
+	echo "<pre>";
+		var_dump($var);			
+	echo "</pre>";
+	
+	方式四：	（一维数组）
+	$arr11=array('A','B','C');
+	var_dump($arr11);
+	
+
+	方式五：		（一维数组）(适用于php5.4以后)
+	$arr12=['a','c','d'];
+	var_dump($arr11);
+
+
+
+	方式六： range() 	（一维数组）
+
+	$a=range(1,10);			range() 创建数组
+	$a=range('a','z');
+	print_r($a);
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+//===== 多维数组的声明与调用
+
+
+	//--- 二维数组
+
+	$arr=array(				声明
+		"a"=>array(1,2),
+		"b"=>array(3,4)
+	);
+	echo $arr['a'][0];		调用 
+	print_r($arr);
+	var_dump($arr);
+	
+	
+	
+	//--- 多维数组
+
+	$arr = array(					声明
+        'maoxianlei'=>array(
+           array('mingCheng'=>'熊出没','jishu'=>104),
+           array('mingCheng'=>'火影忍者','jishu'=>601),
+           array('mingCheng'=>'死神','jishu'=>366)
+        ),
+        'gaoxiaolei'=>array(
+           array('mingCheng'=>'蜡笔小新','jishu'=>1665),
+           array('mingCheng'=>'哆啦A梦','jishu'=>1760),
+           array('mingCheng'=>'樱桃小丸子','jishu'=>367)
+        )
+    );
+
+    echo "<pre>";
+        var_dump($arr);				调用
+		print_r($arr);				调用
+    echo "</pre>";
+    echo $dongMan['maoxianlei'][2]['mingCheng'];
+    echo $dongMan['gaoxiaolei'][1]['mingCheng'];
+	
+
+
+	
+	
+	
+//===== 数组内容的追加与修改
+
+
+	//--- 追加内容
+	
+		$name=array('a'=>'aaa');	//原数组内容
+		print_r($name);
+		echo '<br>';
+		$name['b']='bbb';		//给数组追加内容
+		$name['c']='ccc';
+		print_r($name);
+
+
+
+		
+		
+	//--- 修改数组内容的值
+
+		$a=array('a','b','c','d','e');
+		print_r($a);
+		echo '<br>'.$a[3].'<br>';
+		$a[3]='hhhh';			修改数组的值
+		echo '<br>'.$a[3].'<br>';
+		print_r($a);
+
+
+		
+		
+
+ 
+//===== 删除数组中的元素
+
+	$arr=array(1,2,3);
+	print_r($arr);
+	unset($arr[1]);	//删除数组中元素
+	echo '<br>';
+	print_r($arr);
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+//===== 数组的遍历
+
+
+	$a=array(
+		array('产品'=>'苹果','数量'=>'3','价格'=>12),
+		array('产品'=>'猪肉','数量'=>'2','价格'=>5.6),
+		array('产品'=>'饼干','数量'=>'1','价格'=>22),
+	);
+	
+	//--list,each方式
+	for($i=0;$i<count($a);$i++){
+		while(!!list($k,$v)=each($a[$i])){	//将数据转换成布尔型
+			echo $k.'=>'.$v.' | ';
+		}
+		echo '<br>';
+	}
+	echo "<br>";
+
+
+
+
+	//--- for循环
+	$a=array('a','b','c','d','e');
+	$count=count($a);				//获取数组内容的个数
+	for($i=0;$i<$count;$i++){		//循环数组内容
+		echo $a[$i].'<br>';
+	}
+	
+	
+	
+
+	//-- foreach方式	foreach只适用于数组
+	
+	$a=array('a','b','c','d','e');
+	if(is_array($a)){				//判断$a是否为一个数组
+		foreach($a as $k=>$v){
+			echo $k.'=='.$v.'<br>'.;
+		}
+	}
+ 
+	
+	
+	//--- 将数组遍历并表格化
+		$dongMan1 = array(
+			'maoxianlei'=>array(
+			   array('mingCheng'=>'熊出没','jishu'=>104),
+			   array('mingCheng'=>'火影忍者','jishu'=>601),
+			   array('mingCheng'=>'死神','jishu'=>366)
+			),
+			'gaoxiaolei'=>array(
+			   array('mingCheng'=>'蜡笔小新','jishu'=>1665),
+			   array('mingCheng'=>'哆啦A梦','jishu'=>1760),
+			   array('mingCheng'=>'樱桃小丸子','jishu'=>367)
+			)
+		);
+		foreach($dongMan1 as $k=>$v){
+			echo "<table border=1 width=200>";
+			echo "<caption><h3>$k</h3></caption>";
+			for($i=0;$i<count($v);$i++){
+				echo "<tr>";
+				echo "<td>{$v[$i]['mingCheng']}</td>";
+				echo "<td>{$v[$i]['jishu']}</td>";
+				echo "</tr>";
+			}
+			echo "</table>";
+		}
+	 
+ 
+ 
+ 
+ 
+ 
+ 
+//===== 数组操作符 +, ==, ===,!=,<>,!==
+
+	+	联合		返回一个包含了$a和$b中所有元素的数组
+
+	==	等价		如果$a和$b具有相同的元素，返回true
+
+	===	恒等		如果$a和$b具有相同的元素以及相同的顺序，返回true
+
+	!=	非等价		如果$a和$b不是等价的，返回true.
+
+	!==	非恒等		如果$a和$b不是恒等的，返回true
+	 
+	 
+ 
+ 
+ 
+ 
+ 
+ 
+//===== 数组指针类操作函数 
+
+	each(),current(),reset(),end(),next(),pos(),prev() 
+
+	这里pos() 和current() 效果相同 都是取出数组当前指针的元素。
+
+	
+
+	//== key()获取数组当前指针元素的键  <br>
+	//=== current()获取数组当前指针元素的值  <br>
+	//== next() 指针向下移动，并返回下一个元素的值，未尾返回false</h1>";		  
+	//== end() 将指针移动到数组中最后一个元素  <br>
+	//== reset() 将指针移动到数组中首个元素<br>
+	//== prev() 将数组指针向前移动，并返回上一个元素的值，到头返回false</h1>";
+
+	$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc');
+	
+	echo key($arr).'--'.current($arr).'<br>';	//获取当前指针元素的键和值
+	next($arr);					//指针下移
+	echo key($arr).'--'.current($arr).'<br>';
+	end($arr);					//指针移到末尾
+	echo key($arr).'--'.current($arr).'<br>';
+	prev($arr); 					//指针上移
+	echo key($arr).'--'.current($arr).'<br>';
+	reset($arr); 					//指针重置，移到首元素
+	echo key($arr).'--'.current($arr).'<br>';
+		
+	
+	
+	//-- while+指针遍历数组 
+	
+		$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc');
+		while(true){
+			echo key($arr).'===>'.current($arr).'<br>';
+			if(!next($arr)){
+				break;
+			}
+		}
+	
+	
+	
+	//-- do while+指针遍历数组
+	
+		$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+		do{
+			echo key($arr).'--'.current($arr).'<br>';
+		}while(next($arr));
+		
+	
+	
+	//-- for+指针遍历数组 
+	
+		$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+		$count=count($arr);
+		for($i=0;$i<$count;$i++){
+			echo key($arr).'--'.current($arr).'<br>';
+			next($arr);
+		}
+
+	
+	
+
+
+//===== 数组函数 xxx() 与 array_xxx()的区别
+
+	一般 xxx() 类型的数组函数，不会产生新变量，它会直接影响原有数组
+
+	而 array_xxx() 函数 会在处理原数组后把结果赋值给一个新的数组变量
+
+
+
+
+	
+	
+	
+ 
+//===== 数组函数 （非前缀类）
+
+
+	 , implode() , split() , preg_split() , and unset() . 未知
+
+
+
+
+
+
+	//-- explode() 将字串以指定字符为界，分隔为多个元素存放在指定数组中。
+
+
+	$mayao='1993-7-17';			//声明一个字符串
+	$arr=explode('-',$mayao);		//将字串以‘-’为界分割成多个字串，并存入指定的数组内
+	echo $arr[0].$arr[1].$arr[2];		//显示数组中分成三个字串的内容
+
+
+
+
+
+
+
+
+
+	//--- in_array() 查看数组中是否有指定的元素 及自制此功能函数</h1>";
+	
+		$arr = array(1,2,3,4,5,2,2,3,4,5,6,7,8); 
+		
+		//系统函数in_array();
+	
+		var_dump(in_array('3',$arr));
+		var_dump(in_array('3',$arr,true));
+		
+		
+		//实现in_array功能，不带第三个参数
+		function test($val,$arr){		//1: 创建函数 并传递形参'查找值'和'查找的目标数组'
+			foreach($arr as $v){		//2: 遍历数组 得到每个元素的值
+				if($v==$val){			//3: 把 '查找值'和 每个元素值相比较
+					return true;    	//4: 如果有匹配结果刚终止函数并返回一个true,
+				}
+			}
+			return false;				//5: 如果匹配不成功则终止函数并返回一个false
+		}
+		var_dump(test(21,$arr));
+
+		
+			
+		//实现in_array功能，带第三个参数
+		
+		function test2($val,$arr,$b=false){		//1: 创建函数，传入'查找值','目标数组','默认不全等'
+			foreach($arr as $k=>$v){			//2: 遍历数组得到数组中每个值
+				if(!$b){						//3: 判断是否启用全等匹配，如果不启用全匹配
+					if($v==$val){				//4: 如果遍历的值中有匹配查找值的
+						return true;			//5: 则终止函数并返回一个true
+					}
+				}else{							//6: 判断是否启用全匹配，如果启用全匹配
+					if($v===$val){				//7: 如果遍历的值中有全匹配查找值的
+						return true;			//8: 则终止函数并返回一个true
+					}
+				}
+			}
+			return false;						//9: 遍历的值没有匹配查找值，就终止函数并返回一个false
+		}
+		
+		var_dump(test2('2',$arr,true));
+		var_dump(test2('2',$arr));
+
+	
+	
+	
+	
+	
+	
+	
+
+	//--- is_array() 判断变量是否为一个数组
+	
+		$a=array(1,2);
+		var_dump(is_array($a));
+
+
+ 
+	//===== count() 获取数组中元素的个数 
+	
+			$arr=array(1,2,array(2,3,array(3,5,8)));
+			//系统函数 
+			var_dump(count($arr));			//不包含多维数组中元素
+			var_dump(count($arr,true));		//可获取多维数组的子元素
+	
+			
+			//自定义函数实现功能1
+			
+			function mycount($arr){		//1：传入参数'目标数组'
+				$num=0;					//2：设置一个变量来存储计数
+				foreach($arr as $v){	//3：遍历数组
+					$num++;				//4：每遍历一个将计算器累加1次
+				}
+				return $num;			//5：终止函数并返回计数变量
+			}
+			var_dump(mycount($arr));
+			
+			
+			//自定义函数实现功能2 (可计算多维数组中子元素的个数)
+
+			function mycount2($arr){			//1：传入参数目标数组
+				$num=0;							//2：创建一个计算变量
+				foreach($arr as $v){			//3：遍历数组
+					$num++;						//4：计数变量每遍历一次累加一
+					if(is_array($v)){			//5：如果遍历的值是一个数组
+						$num += mycount2($v);	//6：计数变更num 累加 值是 递归函数的返回值
+					}
+				}
+				return $num;					//7：终止函数并将计数变量返回给函数
+			}
+			var_dump(mycount2($arr));
+	 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+	//--- getType() 判断变量是否是数组
+	
+		$a=array(1,2,3);
+		if(getType($a)=="array"){
+			echo '$a是一个数组！';
+		}else{
+			echo '$a不是一个数组！';
+		}
+	
+	
+	
+
+
+	//--- each() 取出数组中首个元素，并将指针后移到下一个元素 
+
+		<?php
+			$a=array('a'=>'aaa','b'=>'bbb');
+			$a=array(1,2,3);
+			print_r($a);
+			echo '<br>';
+			print_r(each($a));
+			//结果：Array ( [1] => aaa [value] => aaa [0] => a [key] => a ) 
+				// 	[1] => aaa
+				//	[0] => a
+				//	[value] => aaa
+				//	[key] => a
+			//注解：each是将数组内首个元素取出，并将指针指向下一个元素，each会把一数组中的一个元素同时以索引[0][1]和关
+
+		联[key][value]的两种方式存储，调用时亦可用该两种方法。
+
+			echo "<br><br>";
+			$b=array('a'=>'aa','b'=>'bb','c'=>'cc');
+			$bb=each($b);			//每each一次就会取出首个元素，每二个元素变首个
+			echo $bb[key].'--'.$bb[value].'<br>';	//用关联方式调取
+			$bbb=each($b);
+			echo $bbb[key].'--'.$bbb[value].'<br>';
+			$bbbbb=each($b);
+			echo $bbbbb[key].'--'.$bbbbb[value].'<br>';
+			
+			echo $bb[0].'--'.$bb[1];	//用索引方式调取
+		?>
+
+		<?php
+			$a=array('a5'=>'aaa5','a6'=>'aaa6','a7'=>'aaa7');
+			
+			while(!!$b=each($a)){	//!!是将返回值转换成布尔值
+				echo $b[0].'---'.$b[1].'<br>';
+				echo $b[key].'==='.$b[value].'<br>';
+			}
+
+		?>
+
+
+
+
+
+
+
+	//--- list() 把数组中的值赋给一些变量
+
+		//注意：list() 遍历数组只能针对索引数组，不能对关联数组使用！
+		<?php
+			//--list()的使用
+			$a=array('aaa','bbb','ccc');
+			print_r($a);
+			list($a1,$a2,$a3)=$a;	//将数组$a中的每个元素按下标分别对应赋值给 a1,a2,a3 
+			echo '<br>'.$a1.'<br>'.$a2.'<br>'.$a3.'<br><br><br><br><br>';
+			
+			//--list() 和 each() 结合使用遍历关联数组
+			$b=array('a'=>'aa','b'=>'bb','c'=>'cc');
+			print_r($b);	//数组中有三个关联的元素
+			echo '<br>';
+			$bb=each($b);	//取出首个元素同时以关联和索引方式赋值给新数组$bb
+			print_r($bb);
+			list($k,$v)=$bb; //list会用$bb的索引方式取出元素并赋值给两个新数组。
+			echo '<br>'.$k.'=>'.$v.'<br>';
+
+			也可以这样
+			list($k,$v)=each($b);
+			echo $k.'--'.$v;
+		?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//---ksort() 以键名字母升序对关联数组排序
+	
+		sort()和asort() 是按字母或数字升序来排列索引数组的
+		ksort() 是以元素中的key值字母升序来排序 关联数组 的。
+
+
+	
+	
+	
+	//--- asort() 数组元素排序--以字母或数字升序来排列，但保留原来的索引顺序
+	
+	
+	
+
+	//--- sort()数组元素排序--是以字母或数字升序来排列，索引顺序也会随之改变。
+
+		//汉字也会按拼音的升序来排列
+
+		$sg=array('banana','orange','apple');
+		print_r($sg);	
+				//Array ( [0] => banana [1] => orange [2] => apple )
+		echo '<br>';
+		sort($sg);
+		print_r($sg);
+				//Array ( [0] => apple [1] => banana [2] => orange )
+		
+
+			//sort()有两个可选参数，可以指定按字母或数字形式来排序
+
+		$a=array(2,12);
+		print_r($a);
+		echo '<br>';
+		sort($a,SORT_NUMERIC);	//指定按数字排序
+		print_r($a);
+		echo '<br>';
+		sort($a,SORT_STRING);	//指定按字母排序
+		print_r($a);
+
+
+
+
+
+
+
+	//--- shuffle() 打乱数组中元素的排列顺序
+
+		<?php
+			$a=array('mm1.jpg','mm2.jpg','mm3.jpg','mm4.jpg','mm5.jpg');
+			print_r($a);
+			echo "<br>";
+			shuffle($a);
+			print_r($a);
+
+			//结果：
+		Array ( [0] => mm1.jpg [1] => mm2.jpg [2] => mm3.jpg [3] => mm4.jpg [4] => mm5.jpg ) 
+		Array ( [0] => mm5.jpg [1] => mm1.jpg [2] => mm3.jpg [3] => mm4.jpg [4] => mm2.jpg )
+		?>
+
+
+
+
+
+
+
+	//--- current() 取出数组当前指针元素
+
+		<?php
+			$a=array('aaa','bbb','ccc');	
+			echo current($a);	//结果是 aaa
+		?>
+
+
+
+
+
+
+
+
+	//---next() 取出数组中指针后一位元素,并将指针指向该元素（当前指针后面的元素）
+
+		<?php
+			$a=array('aaa','bbb','ccc');	
+			print_r($a);
+			echo '<br>'.next($a).'<br>';	//结果 bbb 
+			print_r($a);
+			echo '<br>'.current($a);	//结果 bbb ,因为next()把指针指向了第二个元素bbb
+		?>
+
+
+
+
+
+
+
+	//--- prev() 取出数组指针前一位元素，并将指针移到该元素
+
+		<?php
+			$a=array('aaa','bbb','ccc');	
+			print_r($a);
+			echo '<br>'.next($a).'<br>';	// next() 将数组指针后移一位 
+
+			echo prev($a);		// 取出数组指针前一个元素,并将指针移到该元素
+
+			echo '<br>'.current($a);	//结果 aaa
+		?>
+
+
+
+
+
+
+
+
+
+	//--- count(), sizeof() 获取数组中元素的个数
+
+		<?php
+			$a=array('aaa','bbb','ccc');	
+			print_r($a);
+			echo '<br>'.sizeof($a);
+			echo '<br>'.count($a);
+		?>
+
+
+
+
+	//--- extract() 把数组元素key转换成变量名，value转换成变量值。
+
+		<?php
+			$arr=array('a'=>'aa','b'=>'bb','c'=>'cc');	
+			print_r($a);
+			echo '<br>';
+			extract($arr);
+			echo $a.'<br>';
+			echo $b.'<br>';
+			echo $c.'<br>';
+		?>
+
+
+ 
+ 
+ 
+ 
+ 
+ 	//--unset() 删除数组中的元素
+
+		$arr=array(1,2,3);
+		print_r($arr);
+		unset($arr[1]);	//删除数组中元素
+		echo '<br>';
+		print_r($arr);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+//===== 数组函数 （array_xxx类）
+
+	//-- array_search() 查找数组中的值并返回对应的下标
+	
+		//系统函数 array_search()
+		var_dump(array_search('3',$arr));
+		
+		
+		//实现功能的自定义函数
+		function myarray_search($val,$arr){	//0: 传入查找值与目标数组
+			$arr2=array();					//1: 创建一个空数组做容器
+			foreach($arr as $k=>$v){		//2: 遍历数组得到每个元素的下标和值
+				if($val==$v){				//3: 如果查找值匹配到遍历值
+					return $k;				//4: 终止函数并返回当前遍历的下标
+				}
+			}
+			return false;					//5: 当查找值匹配不到遍历值时，终止函数并返回false.
+		}
+		var_dump(myarray_search('ddd',$arr1));
+
+
+		
+		
+		
+		
+	//-- array_key_exists() 查看数组中是否有指定的下标
+	
+	
+		//系统函数 array_key_exists();
+		var_dump(array_key_exists(13,$arr));
+		
+		
+		//实现功能自定义函数
+		function myarray_key_exists($val,$arr){	//1: 传入参数，'查找值'与目标数组
+			foreach($arr as $k=>$v){			//2: 遍历数组得到每个元素的下标与值
+				if($val==$k){					//3: 查找值与遍历的下标相比较
+					return true;				//4: 如果有匹配的值则终止函数并返回true
+				}
+			}
+			return false;						//5: 如果遍历后没有匹配的值，则终止函数并返回false
+		}
+		var_dump(myarray_key_exists(13,$arr));
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+
+	//===== array_count_values() 计算数组中相同元素的个数
+	
+		$arr=array('a','d','c','b','a','c','c','a','b','c');
+
+		// 系统函数
+		var_dump(array_count_values($arr));
+		
+		// 自定义函数 
+		function my_count_values($arr){				//1：传入目标数组
+			$arr2=array();					//2：创建一个空数组做容器存储数据
+			foreach($arr as $key=>$value){			//3：遍历数组得到下标和值
+				if(!array_key_exists($value,$arr2)){	//4：如果容器中没有以遍历的值为下标的元素
+					$arr2[$value]=1;		//5：则创建以遍历值为下标的元素，值为1
+				}else{
+					$arr2[$value] += 1;		//6：如果容器中存在以遍历值为下标的元素 则让其值累加1
+				}
+			}
+			return $arr2;					//7：终止函数并将容器数组返回给函数
+		}
+		var_dump(my_count_values($arr));
+		
+		
+		
+		
+		
+		
+	//--- array_values() 返回这个数组中的所有的值 及自制此功能函数</h1>";
+		
+		$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+		var_dump($arr);
+		echo '<br>';
+		var_dump(array_values($arr));
+		
+		function test1($arr){
+			foreach($arr as $k=>$v){		//第一步，遍历数组 ，得到每个元素的值，
+				$arr2[]=$v;			//第二步，将每个值，放到另一个数组中
+			}
+			return $arr2;				//第三步，将装满值的数组返回给函数
+		}
+		echo '<br>';
+		var_dump(test1($arr));				//第四步，调用函数，显示出来
+
+
+
+
+
+	//---- array_rand() 从数组中随机抽取一个或多个元素和其下标
+
+		<?php
+			$a=array('aaa','bbb','ccc');	
+			print_r($a);
+			echo '<br>';
+			$rand=array_rand($a);	//默认取出1个元素的下标
+			echo $rand.'---'.$a[$rand]."<br>"; //随机取出数组下标和元素
+
+			$rand=array_rand($a,2);	//指定取出2个元素的下标	
+			echo $rand[0].'--'.$rand[1].'<br>';	//随机取出两个元素的下标和元素
+			echo $rand[0].'--'.$a[$rand[0]].'<br>';
+			echo $rand[0].'--'.$a[$rand[1]].'<br>';
+		?>
+
+
+
+
+
+
+	//--- array_pop() 删除数组尾个元素
+
+		<?php
+			$a=array('aaa','bbb','ccc');	
+			print_r($a);
+			echo '<br>';
+			array_pop($a);
+			print_r($a);
+		?>
+
+
+
+
+
+
+
+	//--- array_unshift() 向数组开头插入一个或多个元素
+
+		array_unshift(插入到哪个数组,要插入的内容)   
+		该函数会返回当前操作的数组中的元素个数
+
+		<?php
+			$a=array('aaa');	
+			print_r($a);
+			echo '<br>';
+			array_unshift($a,'bbb');	//插入一个元素
+			print_r($a);
+			echo '<br>';
+			array_unshift($a,'ccc','ddd','eee');	//插入多人元素
+			print_r($a);
+		?>
+
+
+
+
+
+	//--- array_shift() 删除数组首个元素
+
+		<?php
+			$a=array('aaa','bbb','ccc');	
+			print_r($a);
+			echo '<br>';
+			array_shift($a);
+			print_r($a);	
+		?>
+
+
+
+
+
+			
+ 
+	//--- array_unique() 移除数组中value值相同的元素
+	
+		$arr=array('a','d','c','b','a','c','c','a','b','c');
+		//系统函数
+		var_dump(array_unique($arr));
+		
+		//自定义函数
+		function my_unique($arr){			//1：传入参数目标数组
+			$arr2=array();					//2：创建一个容器数组
+			foreach($arr as $key=>$v){		//3：遍历数组得到下标和值
+				if(!in_array($v,$arr2)){	//4：判断容器数组中是否有遍历到的值
+					$arr2[$key]=$v;			//5：如果没有刚将遍历的下标和值转存到容器数组中
+				}
+			}
+			return $arr2;					//6：终止函数并将容器数组返回给函数
+		}
+		echo '<br>';
+		var_dump(my_unique($arr));
+		
+		
+		
+ 
+ 
+ 
+	//--- array_flip() 调换数组中元素的键和值 及自制此功能函数</h1>";
+	
+		$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+		
+		var_dump($arr);
+		echo '<br>';
+		var_dump(array_flip($arr));
+		echo "<br>";
+
+
+		//自定义函数实现
+		var_dump(test3($arr));
+		function test3($arr){
+			foreach($arr as $k=>$v){
+				$arr2[$v]=$k;
+			}
+			return $arr2;
+		}
+	
+	
+	
+	
+	//--- array_reverse() 倒序排列数组中元素
+
+		<?php
+			$a=array('mm1.jpg','mm2.jpg','mm3.jpg','mm4.jpg','mm5.jpg');
+			print_r($a);
+			echo '<br>';
+			$b=array_reverse($a);
+			print_r($b);
+
+			结果：
+		Array ( [0] => mm1.jpg [1] => mm2.jpg [2] => mm3.jpg [3] => mm4.jpg [4] => mm5.jpg ) 
+		Array ( [0] => mm5.jpg [1] => mm4.jpg [2] => mm3.jpg [3] => mm2.jpg [4] => mm1.jpg )
+		?>
+		
+	
+	
+	
+	
+	//--- array_push() 向数组尾部插入一个或多个元素
+
+		<?php
+			$a=array('aaa');	
+			print_r($a);
+			echo '<br>';
+			array_push($a,'bbb');	//尾部插入一个元素
+			print_r($a);
+			echo '<br>';
+			array_push($a,'ccc','ddd','eee');	//尾部插入多个元素
+			print_r($a);
+		?>
+
+		
+		
+	
+	
+	//--- array_keys() 返回数组中的所有的键 及自制此功能函数</h1>";
+		
+		$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+		
+		var_dump($arr);
+		echo '<br>';
+		var_dump(array_keys($arr));
+		
+		
+		function test2($arr){
+			foreach($arr as $k=>$v){
+				$arr2[]=$k;
+			}
+			return $arr2;
+		}
+		
+		echo '<br>';
+		var_dump(test2($arr));
+		
+		
+		
+		
+
+
+	//--- array_xxx 数组函数集合
+	
+		
+		Table of Contents
+		1.array_change_key_case — 返回字符串键名全为小写或大写的数组
+		2.array_chunk — 将一个数组分割成多个
+		3.array_column — 返回数组中指定的一列
+		4.array_combine — 创建一个数组，用一个数组的值作为其键名，另一个数组的值作为其值
+		5.array_count_values — 统计数组中所有的值出现的次数
+		6.array_diff_assoc — 带索引检查计算数组的差集
+		7.array_diff_key — 使用键名比较计算数组的差集
+		8.array_diff_uassoc — 用用户提供的回调函数做索引检查来计算数组的差集
+		9.array_diff_ukey — 用回调函数对键名比较计算数组的差集
+		10.array_diff — 计算数组的差集
+		11.array_fill_keys — 使用指定的键和值填充数组
+		12.array_fill — 用给定的值填充数组
+		13.array_filter — 用回调函数过滤数组中的单元
+		14.array_flip — 交换数组中的键和值
+		15.array_intersect_assoc — 带索引检查计算数组的交集
+		16.array_intersect_key — 使用键名比较计算数组的交集
+		17.array_intersect_uassoc — 带索引检查计算数组的交集，用回调函数比较索引
+		18.array_intersect_ukey — 用回调函数比较键名来计算数组的交集
+		19.array_intersect — 计算数组的交集
+		20.array_key_exists — 检查给定的键名或索引是否存在于数组中
+		21.array_keys — 返回数组中所有的键名
+		22.array_map — 将回调函数作用到给定数组的单元上
+		23.array_merge_recursive — 递归地合并一个或多个数组
+		24.array_merge — 合并一个或多个数组
+		25.array_multisort — 对多个数组或多维数组进行排序
+		26.array_pad — 用值将数组填补到指定长度
+		27.array_pop — 将数组最后一个单元弹出（出栈）
+		28.array_product — 计算数组中所有值的乘积
+		29.array_push — 将一个或多个单元压入数组的末尾（入栈）
+		30.array_rand — 从数组中随机取出一个或多个单元
+		31.array_reduce — 用回调函数迭代地将数组简化为单一的值
+		32.array_replace_recursive — 使用传递的数组递归替换第一个数组的元素
+		33.array_replace — 使用传递的数组替换第一个数组的元素
+		34.array_reverse — 返回一个单元顺序相反的数组
+		35.array_search — 在数组中搜索给定的值，如果成功则返回相应的键名
+		36.array_shift — 将数组开头的单元移出数组
+		37.array_slice — 从数组中取出一段
+		38.array_splice — 把数组中的一部分去掉并用其它值取代
+		39.array_sum — 计算数组中所有值的和
+		40.array_udiff_assoc — 带索引检查计算数组的差集，用回调函数比较数据
+		41.array_udiff_uassoc — 带索引检查计算数组的差集，用回调函数比较数据和索引
+		42.array_udiff — 用回调函数比较数据来计算数组的差集
+		43.array_uintersect_assoc — 带索引检查计算数组的交集，用回调函数比较数据
+		44.array_uintersect_uassoc — 带索引检查计算数组的交集，用回调函数比较数据和索引
+		45.array_uintersect — 计算数组的交集，用回调函数比较数据
+		46.array_unique — 移除数组中重复的值
+		47.array_unshift — 在数组开头插入一个或多个单元
+		48.array_values — 返回数组中所有的值
+		49.array_walk_recursive — 对数组中的每个成员递归地应用用户函数
+		50.array_walk — 使用用户自定义函数对数组中的每个元素做回调处理
+		51.array — 新建一个数组
+		52.arsort — 对数组进行逆向排序并保持索引关系
+		53.asort — 对数组进行排序并保持索引关系
+		54.compact — 建立一个数组，包括变量名和它们的值
+		55.count — 计算数组中的单元数目或对象中的属性个数
+		56.current — 返回数组中的当前单元
+		57.each — 返回数组中当前的键／值对并将数组指针向前移动一步
+		58.end — 将数组的内部指针指向最后一个单元
+		59.extract — 从数组中将变量导入到当前的符号表
+		60.in_array — 检查数组中是否存在某个值
+		61.key_exists — 别名 array_key_exists
+		62.key — 从关联数组中取得键名
+		63.krsort — 对数组按照键名逆向排序
+		64.ksort — 对数组按照键名排序
+		65.list — 把数组中的值赋给一些变量
+		66.natcasesort — 用“自然排序”算法对数组进行不区分大小写字母的排序
+		67.natsort — 用“自然排序”算法对数组排序
+		68.next — 将数组中的内部指针向前移动一位
+		69.pos — current 的别名
+		70.prev — 将数组的内部指针倒回一位
+		71.range — 建立一个包含指定范围单元的数组
+		72.reset — 将数组的内部指针指向第一个单元
+		73.rsort — 对数组逆向排序
+		74.shuffle — 将数组打乱
+		75.sizeof — count 的别名
+		76.sort — 对数组排序
+		77.uasort — 使用用户自定义的比较函数对数组中的值进行排序并保持索引关联
+		78.uksort — 使用用户自定义的比较函数对数组中的键名进行排序
+		79.usort — 使用用户自定义的比较函数对数组中的值进行排序
+			
+		
+	
+	
+	
+	
+	
+	
+
+//===== 数组常量
+
+	PHP：指示支持该常量的最早的 PHP 版本。常量	描述	PHP
+	CASE_LOWER	用在 array_change_key_case() 中将数组键名转换成小写字母。	 
+	CASE_UPPER	用在 array_change_key_case() 中将数组键名转换成大写字母。	 
+	SORT_ASC	用在 array_multisort() 函数中，使其升序排列。	 
+	SORT_DESC	用在 array_multisort() 函数中，使其降序排列。	 
+	SORT_REGULAR	用于对对象进行通常比较。	 
+	SORT_NUMERIC	用于对对象进行数值比较。	 
+	SORT_STRING	用于对对象进行字符串比较。	 
+	SORT_LOCALE_STRING	基于当前区域来对对象进行字符串比较。	4
+	COUNT_NORMAL	 	 
+	COUNT_RECURSIVE	 	 
+	EXTR_OVERWRITE	 	 
+	EXTR_SKIP	 	 
+	EXTR_PREFIX_SAME	 	 
+	EXTR_PREFIX_ALL	 	 
+	EXTR_PREFIX_INVALID	 	 
+	EXTR_PREFIX_IF_EXISTS	 	 
+	EXTR_IF_EXISTS	 	 
+	EXTR_REFS	 
+
+	
+	
+ 

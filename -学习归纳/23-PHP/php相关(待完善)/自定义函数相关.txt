@@ -1,0 +1,449 @@
+
+//=====function 自定义函数及调用
+//=====function 的形参实参 
+//=====function 的默认参数
+//=====func_num_args() 获取函数参数的个数 
+//=====func_get_args() 获得函数中所有参数的集合
+//=====func_get_arg() 获得函数中指定下标的参数
+//===== & 函数中的引用参数
+//===== return 自定义函数中的返回值
+//===== 函数中的变量是局部变量，在函数外部将无法访问
+//===== global 全局变量在函数中的声明,单声，多声
+//===== 函数中声明后的全局变量可在函数中被改变
+//=====$GLOBALS 超全局变量，也可以函数中直接访问及修改
+//===== static 静态变量，会保留在内存中被再次调用
+//===== 变量函数
+//===== 变量形式的回调函数
+//===== 递归函数
+
+
+
+
+
+
+
+	
+//===== 函数中的变量是局部变量，在函数外部将无法访问
+	
+	function yangsu(){
+        $name = '杨粟';//
+    }
+
+    echo $name;
+
+	
+	
+	
+	
+	
+	
+//===== global 全局变量在函数中的声明,单声，多声
+
+
+
+	echo '在函数中是无法直接使用全局变量的，如果想使用，就要使用global在函数中声明全局变量';
+	
+	$name = '于恒鹏';
+    $age = 18;
+    function yangsu1(){
+		echo $name;	  // 没有声明的全局变量是无法使用的
+		//global $name,$age;	//同时声明多个全局变量
+        global $name; 			//声明为了全局变量
+        global $age;
+        echo '我叫'.$name.'今年'.$age.',希望大家喜欢';
+    }
+    yangsu1();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 函数中声明后的全局变量可在函数中被改变
+	
+    $name = '于恒鹏';
+    $age = 18;
+	echo '原name='.$name.'<br>';
+    function yangsu2(){
+        global $name,$age;	//同时声明多个全局变量
+        $name = '韩超';		//全局变量声明后，在函数中是可以更改内容的。
+        echo '我叫'.$name.'今年'.$age.',希望大家喜欢';
+    }
+    yangsu2();
+    echo '<br>现name='.$name;		//全局变量在函数中以经被改变了
+	
+	
+	
+	
+	
+	
+	
+//=====$GLOBALS 超全局变量，也可以函数中直接访问及修改
+	
+	
+    $name = '于恒鹏';
+    $age = 18;
+    echo "<pre>";
+        var_dump($GLOBALS);
+    echo "</pre>";
+    function say(){
+        $GLOBALS['name'] = '杨粟';	//函数中可以改变超全局变量的值
+        echo $GLOBALS['name'].'=>'.$GLOBALS['age'];
+    }
+    say();
+    echo '<br>函数中用超全局变量更改后的name='.$name;
+	
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+//===== static 静态变量，会保留在内存中被再次调用
+   
+   function demo(){
+        static $a = 1;		//初始静态变量值为1
+        $a += 1;			//静态变量累加为2 
+        echo $a.'<br>';
+    }
+	echo $a;		//函数中声明的静态变量只能在函数使用，不可以在外部使用
+    demo();			//第一次初始并累加后为2
+    demo();			//第二次是调用再累加后为3
+    demo();			//第三次是调用再累加后为4，，，
+    demo();			//第四次是调用再累加后为5，，，
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+//===== 变量函数
+   
+    function say3(){
+        echo '杨粟真帅，但是没我帅。';
+    }
+    $func = 'say3'; //声明一个与函数同名的字串变量
+    $func(); //	这里就是字串'say3' 连接了一个 ()   就形成了函数调用  say3()
+   
+   
+   
+   
+   
+   
+   
+   
+//===== 变量形式的回调函数
+	
+	
+	//主体函数 
+	function f($num,$func){
+		for($i=1;$i<$num;$i++){
+			if($func($i)){		//变量形式调用了外部函数，并给入了实参，并判断真假
+				continue;
+			}
+			echo $i.'<br>';
+		}
+	}
+	
+	f(50,'qy1');	//回调变量形函数 ，给定一个字串，然后在函数中加上()就调用了函数
+	echo '<br>';
+	f(30,'qy2');
+
+	function qy1($i){		//规则函数被2整除
+		if($i%2==0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	function qy2($j){		//规则函数 被3整除
+		if($j%3==0){		
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 递归函数
+	
+	function test($num){	//给定一个参数
+		echo $num.'<br>';
+		if($num>0){			//如果条件符合将调用自身函数，否则不再调用。
+			test($num-1);	//调用自身函数，并传入指定变化规则的参数
+		}
+		echo $num.'<br>';
+	}
+	test(3);
+
+   
+  	function test2($num){
+		echo $num.'<br>';
+		if($num<10){
+			test2($num+1);
+		}
+		echo $num.'<br>';
+  	}
+   	test2(3);
+   
+
+
+
+
+	/===== 1-5的累加-递归</h1>";
+	
+	function test($num){
+		if($num>0){
+			return $num += test($num-1);
+		}
+	}
+	echo test(5);
+   
+   
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+//===== return 自定义函数中的返回值
+	
+	
+	
+	function adds2($num1,$num2){
+       		 $total = $num1 + $num2;
+       		 return $total;
+   	 }
+    	$totals = adds2(1,2);
+    	echo $totals;
+	
+	
+	
+	//--自定义函数中 return 后的语句不再执行
+	
+	function adds3($num1,$num2){
+       		 $total = $num1 + $num2;
+        	return false;
+       		 echo '小时候我我妈.,,,,,';
+   	 }
+
+   	 var_dump(adds3(1,2));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== & 函数中的引用参数
+	
+	echo '& 引用参数 ：引用全局变量在函数中使用。引用后的全局变量在函数中是可以被更改的！<br>';
+	
+	$defaulttotal = 0;
+	function adds($num1,$num2,&$total){
+		$total=$num1+$num2;
+	}
+	adds(1,2,$defaulttotal);
+	echo $defaulttotal;		//引用后函数中会改变全局变量
+	
+	
+	
+	
+	//--引用参数的实参必须是一个变量 </h1>";
+	
+	$defaultTotal = 0;
+    	function adds1($num1,$num2,&$total){
+		$total = $num1 + $num2;
+   	 }
+  //  	adds1(1,1,'aaaa');	//必须是变量，字串会出错并终止
+    	echo $defaultTotal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====function 自定义函数及调用
+
+function mytable(){
+	echo "<table border=1 width=500>";
+		for($i=1;$i<5;$i++){
+			echo "<tr>";
+			for($j=1;$j<5;$j++){
+				echo "<td>a</td>";
+			}
+			echo "</tr>";
+		}
+	echo "</table>";
+}
+	
+	mytable();
+	
+	
+	
+
+
+
+
+
+
+
+
+	
+	
+	
+//=====function 的形参实参 
+
+function mytable1($rows,$cols){
+	echo "定义函数时使用的是形参，在调用函数时要对号给定实参";
+	echo "<table border=1 width=500>";
+		for($i=1;$i<=$rows;$i++){
+			echo "<tr>";
+			for($j=1;$j<=$cols;$j++){
+				echo "<td>a</td>";
+			}
+			echo "</tr>";
+		}
+	echo "</table>";
+}
+	mytable1(3,5);
+	
+	
+	
+	
+	
+	
+//=====function 的默认参数
+
+	echo '在自定义函数中，将形参直接赋值，就是给函数添加了默认值，在调用时给定参数值时，就按给定参数实现功能，如果没有给定参数值，那么函数就会按默认值来实现功能<br>';
+function mytable2($rows=5,$cols=5,$str="一：调用时没给定参数，执行时使用的默认参数值"){
+	echo $str;
+	echo "<table border=1 width=500>";
+		for($i=1;$i<=$rows;$i++){
+			echo "<tr>";
+			for($j=1;$j<=$cols;$j++){
+				echo "<td>a</td>";
+			}
+			echo "</tr>";
+		}
+	echo "</table>";
+}
+	mytable2();
+	mytable2(2,10,'二：调用函数时给定指定的参数值');
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//=====func_num_args() 获取函数参数的个数 
+	
+function numargs($a='a',$b='b'){
+	echo "函数本身有两个默认参数 $a 和 $b <br>";
+	echo "这个函数的参数总共有".func_num_args().'个';
+}
+numargs('a','b','c','d','e');
+
+
+
+
+
+
+
+
+
+
+//=====func_get_args() 获得函数中所有参数的集合
+	
+function numargs1($a='a',$b='b'){
+	echo "<pre>";
+		var_dump(func_get_args());
+	
+	echo "<pre>";
+}
+numargs1('a','b','c','d','e');
+
+
+
+
+
+
+
+
+
+
+
+//=====func_get_arg() 获得函数中指定下标的参数
+	
+function numargs2($a='a',$b='b'){
+
+	var_dump(func_get_arg(3));
+	echo '<br>'.func_get_arg(3);
+
+}
+numargs2('a','b','c','d','e');

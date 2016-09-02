@@ -1,0 +1,390 @@
+
+
+
+
+
+
+		
+		
+		
+
+//===== string 字符串方法
+	
+	属性：
+	constructor 属性 | length 属性 | prototype 属性
+
+	
+	//----- escape(),unescape()	将字串中的特殊字符编码与解码
+	
+	slice 方法 (String) 返回字符串的一个片段。  
+	big 方法 在String 对象的文本两端加入 HTML 的<BIG>标识。 
+	blink 方法 将 HTML 的 <BLINK> 标识添加到 String 对象中的文本两端。 
+	bold 方法 将 HTML 的 <B> 标识添加到String 对象中的文本两端。 
+	concat 方法（String） 返回一个包含给定的两个字符串的连接的 String 对象。 
+	valueOf 方法 返回指定对象的原始值。
+	toUpperCase 方法 返回一个所有的字母字符都被转换为大写字母的字符串。 
+	split 方法 将一个字符串分割为子字符串，然后将结果作为字符串数组返回。
+	small 方法 将 HTML 的<SMALL> 标识添加到 String 对象中的文本两端。 
+	search 方法 返回与正则表达式查找内容匹配的第一个子字符串的位置。
+	replace 方法 返回根据正则表达式进行文字替换后的字符串的拷贝。 
+	charAt 方法 返回位于指定索引位置的字符。 
+	charCodeAt 方法 返回指定字符的 Unicode 编码。
+	anchor 方法 在对象的指定文本两端加上一个带 NAME 属性的 HTML 锚点。 
+	decodeURI 方法 返回一个已编码的通用资源标识符 (URI) 的解码版。 
+	decodeURIComponent 方法 返回一个已编码的通用资源标识符 (URI) 的解码版。 。 
+	fixed 方法 将 HTML 的<TT> 标识添加到String 对象中的文本两端。
+	link 方法 将带 HREF 属性的 HTML 锚点添加到 String 对象中的文本两端。 
+	lastIndexOf 方法 返回在 String 对象中子字符串最后出现的位置。  
+	italics 方法 将 HTML的 <I> 标识添加到 String 对象中的文本两端。
+	indexOf 方法 返回在 String 对象中第一次出现子字符串的字符位置。
+	fontcolor 方法 将 HTML 带 COLOR 属性的<FONT>标识添加到 String 对象中的文本两端。 
+	fontsize 方法 将 HTML 带 SIZE 属性的<FONT>标识添加到 String 对象中的文本两端。 
+	fromCharCode 方法 返回 Unicode 字符值的字符串。 
+	localeCompare 方法 返回一个值，表明两个字符串在当前区域设置下是否相等。 
+	strike 方法 将 HTML 的<STRIKE> 标识添加到String 对象中的文本两端。 
+	sub 方法 将 HTML 的 <SUB> 标识放置到 String 对象中的文本两端。 
+	substr 方法 返回一个从指定位置开始并具有指定长度的子字符串。 
+	substring 方法 返回位于 String 对象中指定位置的子字符串。  
+	toString 方法 返回一个对象的字符串表示。 
+	sup 方法 将 HTML 的 <SUP> 标识放置到 String 对象中的文本两端。 
+	toLocaleLowercase 方法 返回一个字符串，其中所有的字母字符都被转换成小写（考虑主机环境的当前区域设置）。
+	toLowerCase 方法 返回一个所有的字母字符都被转换为小写字母的字符串。 
+	toExponential 方法 返回一个字符串，该字符串包含一个以指数形式表示的数字。
+	toFixed 方法 返回一个字符串，表明一个用 fixed-point 形式表示的数字。 
+	match 方法 使用给定的正则表达式对象对字符串进行查找，并将结果作为数组返回。
+
+
+	
+	
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+//===== 数学方法
+	
+	属性：
+	E 属性 | LN2 属性 | LN10 属性 | LOG2E 属性 | LOG10E 属性 | PI 属性 | SQRT1_2 属性 | SQRT2 属性
+	
+	
+	//----- isNaN 判断变量是否为非数值
+	//----- parseInt 将数据转为整形
+	//----- parseFloat 将数据转为浮点型	
+	
+	abs 方法 返回一个数的绝对值。  
+	ceil 方法 返回大于或等于其数值参数的最小整数。 
+	acos 方法 返回一个数的反余弦。  
+	asin 方法 返回一个数的反正弦。  
+	atan 方法 返回一个数的反正切。  
+	atan2 方法 返回从 X 轴到点 （y, x）的角度（以弧度为单位）。 
+	atEnd 方法 返回一个表明枚举算子是否处于集合结束处的 Boolean 值。
+	sqrt 方法 返回一个数的平方根。  
+	tan 方法 返回一个数的正切。 
+	sin 方法 返回一个数的正弦。  
+	pow 方法 返回一个指定幂次的底表达式的值。  
+	floor 方法 返回小于或等于其数值参数的最大整数。 
+	cos 方法 返回一个数的余弦。  
+	dimensions 方法 返回 VBArray 的维数。  
+	exp 方法 返回 e （自然对数的底） 的幂。 
+	isFinite 方法 返回一个 Boolean 值，表明某个给定的数是否是有穷的。 
+	log 方法 返回某个数的自然对数。 
+	max 方法 返回给定的两个表达式中的较大者。 
+	min 方法 返回给定的两个数中的较小者。 
+	random 方法 返回一个 0 和 1 之间的伪随机数。 
+	round 方法 将一个指定的数值表达式舍入到最近的整数并将其返回。
+
+
+
+	
+	
+	
+	
+//===== 数组函数
+
+	属性：
+	constructor 属性 | length 属性 | prototype 属性
+
+	方法：
+	valueOf 方法 返回指定对象的原始值。
+	unshift 方法 返回一个数组，在该数组头部插入了指定的元素。
+	toString 方法 返回一个对象的字符串表示。
+	toLocaleString 方法 返回一个转换为使用当地时间的字符串的日期。
+	splice 方法 从数组中删除元素，若必要，在相应位置处插入新元素，返回被删除的元素。
+	slice 方法 (Array) 返回数组的一个片段
+	shift 方法 删除数组中的第一个元素并返回该值。 。 
+	concat 方法（Array） 返回一个由两个数组合并组成的新数组。
+	join 方法 返回一个由数组中的所有元素连接在一起的 String 对象。  
+	lbound 方法 返回在 VBArray 中指定维数所用的最小索引值。
+	reverse 方法 返回一个元素反序的 Array 对象
+	push 方法 向数组中添加新元素，返回数组的新长度。 
+	pop 方法 删除数组中的最后一个元素并返回该值。
+	sort 方法 返回一个元素被排序了的 Array 对象。
+		
+			
+	
+	
+	
+	
+	
+
+
+	
+	
+//===== date时间方法
+
+	属性
+	constructor 属性 | prototype 属性
+
+	方法：
+	parse 方法 对包含日期的字符串进行分析，并返回该日期与1970年1月1日零点之间相差的毫秒数。。 
+	valueOf 方法 返回指定对象的原始值。
+	toString 方法 返回一个对象的字符串表示。 
+	toGMTString 方法 返回一个转换为使用格林威治标准时间（GMT）的字符串的日期。  
+	toLocaleString 方法 返回一个转换为使用当地时间的字符串的日期。
+	toLocaleDateString 方法 返回一个以字符串形式表示的日期，该日期与主机环境的当前区域设置相适应。 
+	toLocaleLowercase 方法 返回一个字符串，其中所有的字母字符都被转换成小写（考虑主机环境的当前区域设置）。 
+	toLocaleTimeString 方法 返回一个以字符串形式表示的时间，该时间与主机环境当前区域设置相适应。  
+	toPrecision 方法 返回一个字符串，该字符串包含用指定位数的指数或 fixed-point 形式表示的数字。 
+	toTimeString 方法 返回一个以字符串形式表示的时间。 
+	toUTCString 方法 返回一个转换为使用全球标准时间（UTC）的字符串的日期。 
+	UTC 方法 返回 1970年1月1日零点的全球标准时间 （UTC） （或 GMT）与指定日期之间的毫秒数. 
+	setDate 方法 使用当地时间设置 Date 对象的数值日期。  
+	setFullYear 方法 使用当地时间设置 Date 对象的年份。 
+	setHours 方法 使用当地时间设置 Date 对象的小时值。 
+	setMilliseconds 方法 使用当地时间设置 Date 对象的毫秒值。 
+	setMinutes 方法 使用当地时间设置 Date 对象的分钟值。  
+	setMonth 方法 使用当地时间设置 Date 对象的月份。  
+	setSeconds 方法 使用当地时间设置 Date 对象的秒值。  
+	setTime 方法 设置 Date 对象的日期和时间。 
+	setUTCDate 方法 使用全球标准时间（UTC）设置 Date 对象的数值日期。 
+	setUTCFullYear 方法 使用全球标准时间（UTC）设置 Date 对象的年份。 
+	setUTCHours 方法 使用全球标准时间（UTC）设置 Date 对象的小时值。 
+	setUTCMilliseconds 方法 使用全球标准时间（UTC）设置 Date 对象的毫秒值。 
+	setUTCMinutes 方法 使用全球标准时间（UTC）设置 Date 对象的分钟值。 
+	setUTCMonth 方法 使用全球标准时间（UTC）设置 Date 对象的月份。 
+	setUTCSeconds 方法 使用全球标准时间（UTC）设置 Date 对象的秒值。 
+	setYear 方法 使用 Date 对象的年份。   
+	getDate 方法 使用当地时间返回 Date 对象的月份日期值。 
+	getDay 方法 使用当地时间返回 Date 对象的星期几。 
+	getFullYear 方法 使用当地时间返回 Date 对象的年份。 
+	getHours 方法 使用当地时间返回 Date 对象的小时值。 
+	getItem 方法 返回位于指定位置的项。 
+	getMilliseconds 方法 使用当地时间返回 Date 对象的毫秒值。 
+	getMinutes 方法 使用当地时间返回 Date 对象的分钟值。 
+	getMonth 方法 使用当地时间返回 Date 对象的月份。 
+	getSeconds 方法 使用当地时间返回 Date 对象的秒数。 
+	getTime 方法 返回 Date 对象中的时间。 
+	getTimezoneOffset 方法 返回主机的时间和全球标准时间（UTC）之间的差（以分钟为单位）。 
+	getUTCDate 方法 使用全球标准时间（UTC）返回 Date 对象的日期值。 
+	getUTCDay 方法 使用全球标准时间（UTC）返回 Date 对象的星期几。 
+	getUTCFullYear 方法 使用全球标准时间（UTC）返回 Date 对象的年份。 
+	getUTCHours 方法 使用全球标准时间（UTC）返回Date 对象的小时数。 
+	getUTCMilliseconds 方法 使用全球标准时间（UTC）返回Date 对象的毫秒数。 
+	getUTCMinutes 方法 使用全球标准时间（UTC）返回 Date 对象的分钟数。 
+	getUTCMonth 方法 使用全球标准时间（UTC）返回 Date 对象的月份值。 
+	getUTCSeconds 方法 使用全球标准时间（UTC）返回Date对象的秒数。 
+	getVarDate 方法 返回 Date 对象中的 VT_DATE。 
+	getYear 方法 返回 Date 对象中的年份。 
+		
+	
+	
+//===== 布尔方法
+
+
+	属性:
+	constructor 属性 | prototype 属性
+
+	方法：
+	toString 方法 返回一个对象的字符串表示。
+	valueOf 方法 返回指定对象的原始值。
+	
+	
+//===== 正则表达式方法
+
+	属性：
+	lastIndex 属性 | source 属性
+
+	方法：
+	compile 方法 将一个正则表达式编译为内部格式。
+	exec 方法 在指定字符串中执行一个匹配查找
+	test 方法 返回一个 Boolean 值，表明在被查找的字符串中是否存在某个模式。
+	
+	
+	
+	
+	
+	
+//===== 其它方法
+
+
+	//----- eval() 将字串转为执行代码
+	
+    delete	用于删除对象中属性的   如：delete o.name; //删除o对象中的name属性
+	void	void 运算符对任何值返回 undefined。没有返回值的函数真正返回的都是 undefined。
+	apply 方法 应用对象的一个方法，用当前对象代替另一对象。 
+	call 方法 应用对象的一个方法，用当前对象代替另一对象。
+	hasOwnProperty 方法 返回一个 Boolean 值，表明对象是否具有指定的名称。 
+	isPrototypeOf 方法 返回一个 Boolean 值，表明对象是否存在于另一对象的原型链中。 
+	item 方法 返回集合中的当前项。   
+	moveFirst 方法 将集合中的当前项设置为第一项。 
+	moveNext 方法 将当前项设置为集合中的下一项。  
+	toArray 方法 返回一个从 VBArray 转换而来的标准 JScript 数组。 
+	toDateString 方法 返回以字符串形式表示的日期。 
+	toExponential 方法 返回一个字符串，该字符串包含一个以指数形式表示的数字。 
+	toFixed 方法 返回一个字符串，表明一个用 fixed-point 形式表示的数字。 
+	ubound 方法 返回在 VBArray 的指定维中所使用的最大索引值。   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+//----- delete() 删除对象的属性
+	
+    delete	用于删除对象中属性的   如：delete o.name; //删除o对象中的name属性
+	
+	
+	
+	
+	
+//----- document.getElementById()	通过id获取元素
+	
+	document.getElementById('id');
+	
+	
+	
+	
+//----- document.getElementsByTagName() 通过标签名获取元素（数组）
+
+	document.getElementsByTagName('input');		//获取的是所有相同元素的数组
+	
+	
+	
+	
+	
+//----- setTimeout(),clearTimeout()  单次定时执行函数与清除定时 
+
+	myTime = setTimeout("fun()",1000);	在一秒后，执行一次fun()函数
+	clearTimeout(myTime);				清除上面的单次定时 
+	
+	
+//----- setInterval(),clearInterval()  	无限次执行函数与清除
+	
+	myTime = setInterval("fun()",1000);		每隔一秒执行一次fun()函数
+	clearInterval(myTime);					清除上面的无限次定时
+	
+	
+	
+
+	
+	
+//----- escape(),unescape()	将字串中的特殊字符编码与解码
+
+	<script>
+		var str="http://www.baidu.com/index.php?name=pei&age=18";
+		document.write(str+'<br>');
+		var str2 = escape(str);
+		document.write(str2+"<br>");
+		var str3= unescape(str2);
+		document.write(str3+'<br>');
+	</script>
+	
+	结果：
+		http://www.baidu.com/index.php?name=pei&age=18
+		http%3A//www.baidu.com/index.php%3Fname%3Dpei%26age%3D18
+		http://www.baidu.com/index.php?name=pei&age=18
+
+
+
+	
+	
+	
+//----- eval() 将字串转为执行代码
+
+	<script>
+		var str = "var name='peizong';";	//字串中声明一个变量
+		eval(str);					
+		document.write(name+'<br>');
+											//字串中声明一个对象
+		var str2 = "{'name':'pei','age':22,'getInfo':function(){return this.name+':'+this.age;}}";
+		eval("var str3 = "+str2);
+		document.write(str3.name+'<br>');
+		document.write(str3.getInfo());
+	</script>
+	
+	
+	
+	
+	
+	
+//----- isNaN 判断变量是否为非数值 
+
+	<script>
+		var a = 123.123;
+		var b = '123a';
+		document.write(isNaN(a)+'<br>');	//false	(是一个数值反回假)
+		document.write(isNaN(b)+'<br>');	//true	(不是一个数值返回真)
+	</script>
+	
+	
+	
+	
+	
+	
+	
+//----- parseInt 将数据转为整形	
+
+	<script>
+		var a=123.123;
+		document.write('原数值：'+a+'转型后：'+parseInt(a)+'<br>');	//123
+	</script>
+	
+	
+	
+	
+	
+	
+//----- parseFloat 将数据转为浮点型
+
+	<script>
+		var a ='123.123abc';
+		document.write('原值：'+a+'转型后：'+parseFloat(a)+"<br>");	//123.123
+	</script>
+	
+	
+	
+	
+	
+//----- typeof() 获取数据类型
+
+	<script>
+		var tp1=123.123;
+		document.write(typeof(tp1+'<br>'));
+
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	

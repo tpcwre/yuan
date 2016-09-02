@@ -1,0 +1,597 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第37课 知问前端-对话框UI 上 3
+
+
+js页面：
+
+$(function(){
+//-----使用UI插件变换按键的样式
+	$(".search_button").button();
+/*
+//-----同时打开两个对话框
+	$(".reg").dialog();
+	$(".login").dialog();
+
+
+
+
+//-----更改dialog的title和标题背景图片
+想修改dialog的哪个样式，就找到相关元素的CSS操作名，然后进行重写冲突后即可。
+先利用审查元素等查找元素相关的类名然后对其进行重写，如下：
+$(".reg").dialog();
+.ui-dialog-title{
+	color:red;	重写了字体颜色，
+}
+		重写了背景图片
+.ui-widget-header{
+	background:url(bj.png);
+}
+
+
+//-----dialog外观选项(文本)
+属性	默认值/类型		说明
+title	无/字串		对话框的标题，可以直接设置在DOM元素上
+buttons 无/对象 	以对象键值对方式，给dialog添加按钮，键是按钮的名，值是用户点击后调用 的回调函数。
+
+
+
+//-----设置dialog标题内容的方法
+//-----给dialog中加入按钮的方法
+//-----给dialog中加入取消按键
+$(".reg").dialog({
+//这个优先级要大于html 中的title
+    title:"知问注册",  //设置标题
+    buttons:{
+        "确定":function(){
+	    alert("ajax正在提交中.....");
+	},
+	"取消":function(){
+	    $(this).dialog("close");
+    }
+  },
+
+
+
+//-----dialog页面位置选项，设置对话框的坐标
+属性		默认值/类型		说明
+position	center/字串	设置一个对话框窗口的坐标位置，默认为center,其他设置值为：left top , right top , left bottom  , right bottom (四个角)， top , bottom , left , right (上下时，左右居中，左右时，上下居中),center
+ 
+ 
+  position:"left top"
+
+
+//-----dialog大小选项：（文本）
+属性		默认值/类型		说明
+width		300/数值	对话框的宽度，默认为300，单位是像素
+height		auto		对话框的高度，默认为auto
+minWidth	150		对话框的最小宽度，默认150
+minHeight	150		对话框的最小高度
+maxWidth	auto		对话框的最大宽度
+maxHeight	auto		对话框的最大高度
+
+//-----设置对话框的高和宽（大小）这里不用带px 默认是像素。
+  width:500,
+  height:300,
+  
+//-----框体大小变化最小值
+  minWidth:200,
+  minHeight:200,
+
+//-----框体大小变化最大值
+  maxWidth:700,
+  maxHeight:500,
+
+
+
+//-----dialog视觉选项，显示或消失的形式
+属性		默认值/类型		说明
+show		false/布尔值	显示对话框时，默认采用淡入效果。
+hide		false/布尔值	关闭对话框时，默认采用淡出效果。
+
+
+  //show,hide默认为淡入淡出形式
+  //	show:true,
+  //	hide:true
+
+
+//-----show()和hide可选特效
+特效名	: 说明
+blind	: 对话框从顶部显示或消失。
+bounce	: 对话框断断续续地显示或消失，垂直运动。
+clip	: 对话框从中心垂直地显示或消失。
+slide	: 对话框从左边显示或消失。
+drop	: 对话框从左边显示或消失，有透明度变化。
+fold	: 对话框从左上角显示或消失。
+highlight : 对话框显示或消失，伴随着透明度和背景色的变化。
+puff	: 对话框从中心开始缩放，显示时“收缩”，消失时“生长”。
+scale	: 对话框从中心开始缩放，显示时“生长”，消失时“收缩”。	
+pulsate : 对话框以闪烁形式显示或消失。
+	//下显，上隐
+  //	show:"blind",
+  //	hide:"blind",
+	
+	//颤动显示
+//	show:"bounce",
+//	hide:"bounce",
+
+	//从中心横轴垂直上下显示消失
+//	show:"clip",
+//	hide:"clip",
+
+	//从左侧显示消失
+//	show:"slide",
+//	hide:"slide",
+
+	//左侧显示消失，有透明度变化
+//	show:"drop",
+//	hide:"drop",
+
+	//以左上角开始显示消失
+//	show:"fold",
+//	hide:"fold",
+
+	//显示消失，带有透明度和背景色的变化
+//	show:"highlight",
+//	hide:"highlight",
+
+	//四周向中心显示消失
+//	show:"puff",
+//	hide:"puff",
+	
+	//四周向中心显示消失，与puff正好相反
+//	show:"scale",
+//	hide:"scale",
+
+	//以闪烁形式显示和消失
+//	show:"pulsate",
+//	hide:"pulsate",
+	
+/*
+
+
+
+//-----dialog行为选项（文本）
+
+autoOpen	true/布尔值 	默认为true,调用dialog()方法时就会打开对话框；如果为false,对话框不可见，但对话框已创建，可以通过dialog("open")才能看见。
+
+draggable	true/布尔值	默认为true,可以移动对话框，false无法移动。
+
+resizeable	true/布尔值	默认为true,可以调整对话框大小，false无法调整。
+
+modal		false/布尔值	默认为false,对话框外可操作，true对话框会遮罩一层灰纱无法操作
+
+closeText	无/字符串	设置关闭按键的title文字
+
+*/
+
+//-----设置关闭X图标的title显示信息
+  closeText:"关闭对话框",
+
+//-----设置dialog对话框外是否可以操作。会蒙有一层纱
+  modal:true,
+
+//-----设置dialog是否可以调整大小 
+  resizable:false,
+
+//-----设置dialog是否可以移动
+  draggable:false,
+
+//-----隐藏dialog对话框
+ //autoOpen:false,
+});
+
+//-----显示隐藏后的dialog对话框
+	$("#reg_a").click(function(){
+		$(".reg").dialog("open");
+	});
+
+});
+
+
+
+
+
+
+
+
+
+
+css页面：
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+.ui-dialog-title{
+	color:red;
+}
+.ui-widget-header{
+	background:url(bj.png);
+}
+
+
+
+
+
+
+
+
+html页面
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<input type="button" value="查询" class="search_button" />
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<div class="reg" title="会员注册">
+	注册区
+</div>
+<div class="login">
+	登陆区
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第38课 知问前端-对话框UI 下 4
+
+其它页面延用37课
+
+$(function(){
+
+/*
+//-----dialog()方法的事件
+	除了属性设置外，dialog()方法也提供了大量的事件，这些事件可以给各种不同状态时提供回调函数，这些回调函数中的this值等于对话框内容的DIV对象，不是整个对话框的div.
+事件名		说明
+
+
+
+	
+$(".search_button").button();
+
+
+//-----对话框获得焦点事件
+	//focus  :  当对话框被激活时（首次显示以及每次在上面点击）会调用focus方法，该方法有两个	参数（event,ui），此事件中的ui参数为空。
+$(".reg").dialog({
+  focus:function(event,ui){
+	alert("注册获得了焦点");
+  }
+});
+$(".login").dialog({
+  focus:function(event,ui){
+	alert("登陆获得了焦点");
+  }
+});
+
+
+
+//-----对话框创建事件
+	//create  :  当对话框被创建时会调用create方法，该方法有两个参数（event,ui）,此事件中的ui参数为空。
+$(".reg").dialog({
+  autoOpen:false, //只要对话框被创建，即便不显示也会触发创建事件。
+  create:function(event,ui){
+	alert("创建了对话框");
+  }
+});
+
+
+//-----对话框显示事件
+	//open  :  当对话框被显示时（首次显示或调用dialog("open")方法）会调用open方法，该方法有	两个参数（event,ui）,此事件中的ui参数为空。
+$(".reg").dialog({
+  autoOpen:false, //对话框隐藏时，不会触发事件。
+  open:function(event,ui){
+    alert("对话框显示才触发事件");
+  }
+});
+
+//-----对话框关闭事件
+	//close  :  当对话框关闭时（当单击关闭按钮或调用dialog("close")方法），会调用close方法，关闭的对话框可以用dialog("open")重新打开，该方法有两个参数(event,ui),此事件中的ui参数为空。
+$(".reg").dialog({
+  close:function(event,ui){
+    alert("对话框关闭触发事件");
+  }
+});
+
+
+
+//-----对话框将要关闭事件
+	//beforeClose  :  当对话框将要关闭时（当单击关闭按钮或调用dialog("close")方法），会调用beforeclose方法，如果该函数返回false,对话框将不会被关闭，关闭的对话框可以用dialog('open')重新打开，该方法有两个参数（event,ui）,此事件中的ui参数为空。
+	//这个事件可以做一些关闭确认的工作
+$(".reg").dialog({
+  beforeClose:function(event,ui){
+	alert("将要关闭事件");
+	return false;
+  //如果返回false,将取消关对话框。
+  }
+});
+
+
+//-----对话框移动事件
+$(".reg").dialog({
+  drag:function(){
+    alert("对话框每次移动都会触发事件")
+  }
+});
+
+//-----对话框移动事件中ui的坐标属性
+   //--每次移动都触发事件
+$(".reg").dialog({
+  drag:function(event,ui){
+    alert("top"+ui.position.top+"\n"
+	+"left"+ui.position.left);
+  }
+});
+
+    //--只开始移动时触发事件
+$(".reg").dialog({
+  dragStart:function(event,ui){
+    alert("top"+ui.position.top+"\n"
+     	+"left"+ui.position.left);
+  }
+});
+
+
+    //--只移动结束时触发事件
+$(".reg").dialog({
+  dragStop:function(event,ui){
+    alert("top"+ui.position.top+"\n"
+	+"left"+ui.position.left);
+  }
+});
+
+
+//-----调整对话框大小事件
+	//resize,resizeStart,resizeStop都有两个参数（event,ui）,事件中的ui有四个属性对象：1：size,得到对话框的大小，下面又有两个属性：width和height. 2: position,得到对话框的坐标，有两个子属性：top和left。 3：originalSize,得到对话框原始的大小，有两个属性width和height。 4：originalPosition,得到对话框原始的坐标，有两个子属性top和left
+  //--每次改变大小都触发事件
+$(".reg").dialog({
+  resize:function(){
+    alert("改变对话框大小触发事件");
+  }
+});
+
+  //--调整大小事件并显示宽度和高度
+$(".reg").dialog({
+  resize:function(event,ui){
+    alert("width"+ui.size.width+"\n"
+	+"height"+ui.size.height);
+  }
+});
+
+  //--调整大小事件并显示坐标
+$(".reg").dialog({
+  resize:function(event,ui){
+    alert("top"+ui.position.top+"\n"
+	+"left"+ui.position.left);
+  }
+});
+
+  //--调整对话框大小开始时触发事件
+$(".reg").dialog({
+  resizeStart:function(event,ui){
+    alert("调整对话框大小开始时触发事件");
+  }
+});
+
+
+  //--调整对话框大小结束时触发事件
+$(".reg").dialog({
+  resizeStop:function(event,ui){
+    alert("调整对话框大小结束时触发事件");
+  }
+});
+
+dialog("action",param)方法
+方法		    返回值 		  说明
+dialog("open")	  jquery对象	 	打开对话框
+dialog("close")   jquery对象		关闭对话框
+dialog("destroy") jquery对象		删除对话框，直接阻断了dialog
+dialog("isOpen")  布尔值		判断对话框是否打开状态
+dialog("widget")  jquery对象		获取对话框的jquery对象
+dialog("option",param)  一般值		获取option属性的值
+dialog("option",param,value) jquery对象   设置option属性的值
+
+
+//-----显示与关闭对话框
+$(".reg").dialog({
+  autoOpen:false
+});
+$("#reg_a").click(function(){
+  
+  $(".reg").dialog("open");
+});
+$(".reg").click(function(){
+  $(".reg").dialog("close");
+});
+
+
+
+//-----删除对话框
+$("#reg_a").click(function(){
+  $(".reg").dialog();
+});
+$(".reg").click(function(){
+  $(".reg").dialog("destroy");
+});
+
+
+
+
+//-----判断对话框是否以显示
+$(".reg").dialog({
+ // autoOpen:false
+});
+
+  alert($(".reg").dialog("isOpen"));
+
+
+
+//-----widget得到的是对话框整体的对象
+//对话框中所有的方法对应的对象基本都不包括标题头部区域。而widget则包含，它针对的是对话框整体的区域对象。
+$(".reg").dialog();
+//$(".reg").dialog().css("fontSize","50px");
+$(".reg").dialog("widget").css("fontSize","50px");
+
+
+
+
+//-----获取对话框的title值
+$(".reg").dialog();
+//alert($(".reg").dialog("option","title"));
+
+//-----设置对话框的title值
+$(".reg").dialog("option","title","111");
+
+
+//-----获取对话框的autoOpen值
+//alert($(".reg").dialog("option","autoOpen"));
+
+
+
+//-----将指定对话框置前
+$(".reg").dialog();
+$(".login").dialog();
+$("#reg_a").click(function(){
+	$(".reg").dialog("moveToTop");
+});
+$("#login_a").click(function(){
+	$(".login").dialog("moveToTop");
+});
+
+
+
+//-----on()方法触发的对话框事件
+特效名称		说明
+dialogfocus		得到焦点时触发
+dialogopen		显示时解
+dialogbeforeclose	将要关闭时触发
+dialogclose		关闭时触发
+dialogdrag		每一次移动时触发
+dialogdragstart		开始移动时触发
+dialogdragstop		移动结束时触发
+dialogresize		每次调整大小时触发
+dialogresizestart	开始调整大小时触发
+dialogresizestop	结束调整大小时触发
+
+
+
+//-----on方法触发的对话框事件实例（关闭）
+$(".reg").dialog();
+$(".reg").on("dialogclose",function(){
+	alert("对话框以关闭");
+});
+*/
+
+
+});
+
+

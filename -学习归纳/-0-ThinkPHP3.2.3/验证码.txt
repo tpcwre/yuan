@@ -1,0 +1,96 @@
+
+//-- 验证码不显示，提示错误的解决
+
+	//使用ob_clean(); 清除缓冲区内容。如下
+
+           	public function verify(){
+                	ob_clean();
+                	$verify = new \Think\Verify();    //使用默认样式
+                	$verify->entry();       //生成验证码
+            	}
+
+
+
+
+
+
+
+
+
+
+//-- 示例：验证码生成与调用 
+
+     //控制器中生成验证码
+    	public function verify(){
+		$config = array(
+			'imageH'=>50,		//设置图片高度
+			'imagew'=>120,		//设置图片宽度
+			'fontttf'=>'4.ttf',	//设置字体 
+		);
+
+    		//$verify = new \Think\Verify();	//使用默认样式
+    		$verify = new \Think\Verify($config);	//使用自定义样式
+
+		$verify->entry();		//生成验证码
+    	}
+
+
+
+     //模板中调用 
+	<form action='__SELF__' method='post' >
+		输入验证码：<input name='vcode' />
+	<img src='__URL__/verify' alt='验证码'  onclick="this.src='__URL__/verify/id/'+Math.random()"/>			//模板中调用验证码方法
+	<input type='submit' value='提交' />
+	</form>
+
+
+
+     //控制器中验证输入是否正确
+	public function index(){
+		    $verify = new \Think\Verify();
+		    if($verify->check(I('POST.')['vcode'])){		//验证输出字符是否正确
+		    	echo '正确';
+		    }else{
+		    	echo '错误';
+		    }
+		    $this->display();
+	}
+
+
+
+
+
+//-- 验证码类文件
+
+	ThinkPHP/Library/Think/Verify.class.php
+
+
+
+
+
+
+//-- 自定义验证码参数
+
+        'seKey'     =>  'ThinkPHP.CN',   // 验证码加密密钥
+        'codeSet'   =>  '2345678abcdefhijkmnpqrstuvwxyzABCDEFGHJKLMNPQRTUVWXY',             // 验证码字符集合
+        'expire'    =>  1800,            // 验证码过期时间（s）
+        'useZh'     =>  false,           // 使用中文验证码 
+        'zhSet'     =>  '们以我到他。。。',              // 中文验证码字符串
+        'useImgBg'  =>  false,           // 使用背景图片 
+        'fontSize'  =>  25,              // 验证码字体大小(px)
+        'useCurve'  =>  true,            // 是否画混淆曲线
+        'useNoise'  =>  true,            // 是否添加杂点	
+        'imageH'    =>  0,               // 验证码图片高度
+        'imageW'    =>  0,               // 验证码图片宽度
+        'length'    =>  5,               // 验证码位数
+        'fontttf'   =>  '',              // 验证码字体，不设置随机获取
+		在 ThinkPHP/Library/Think/Verify/ttfs 下存放字体文件，可设置相应的
+        'bg'        =>  array(243, 251, 254),  // 背景颜色
+        'reset'     =>  true,           // 验证成功后是否重置
+
+
+
+
+
+
+

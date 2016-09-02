@@ -1,0 +1,65 @@
+<head>
+<script src='../js/jquery-1.11.1.js'></script>
+<script src='../js/jqueryui.js'></script>
+<script src='a.js'></script>
+<link type="text/css" rel="stylesheet" href="../css/ui-lightness/jqueryui.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../img/a.ico" />
+<style>
+	.ui-widget-header{		/*更改对话框标题区背景样式*/
+		background:url(../img/bj2.png);
+	}
+	.ui-dialog-title{		/*更改对话框标题区字体样式*/
+		color:blue;	
+	}
+
+					/*修改全局按钮UI的样式
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+		background:blue;
+	}*/
+
+					/*修改UI局部按钮UI的样式
+	.ui-widget-header{
+		background:blue;
+	}*/
+
+
+
+					/*修改全局按钮hover样式（将上面CSS的default全改成hover）*/
+	.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-default{
+		background:url(../img/bj.png);
+	}
+
+
+					/*修改局部按钮hover样式（将上面CSS的首default改成hover）
+	.ui-state-hover, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+		background:url(../img/bj.png);
+	}*/
+
+
+					/*修改全局按钮的点击后的样式（将全部default改为active）*/
+	.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+		background:url(../img/bj2.png);
+	}
+
+
+					/*修改局部按钮的点击后的样式（将首个default改为active）*/
+	.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-default{
+		background:url(../img/bj2.png);
+	}
+
+
+</style>
+</head>
+<body>
+<button id="but1">按钮</button>
+<div id="dia" title='会员注册'>
+<input type='radio' name='sex' id='mele'><label for='mele'>nan</label></input>
+<input type='radio' name='sex'id='fmele'><label for='fmele'>gril</label></input><br>
+<input type="checkbox" name='box' id="sport"><label for='sport'>运动</label></input>
+<input type="checkbox" name='box' id="song"><label for='song'>唱歌</label></input>
+<input type="checkbox" name='box' id="book"><label for='book'>看书</label></input>
+</div>
+<div id="dia2" >
+</div>
+
+</body>

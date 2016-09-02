@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>JavaScript实例</title>
+        
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2 class="cc">JavaScript实例:Ajax同步和异步</h2>
+		<button onclick="doLoad()">加载</button><br/>
+		<div id="did" style="width:100px;height:100px;background-color:#ddd;"></div>
+        <script type="text/javascript">
+			function doLoad(){
+				var name="lisi";
+				//1. 创建Ajax请求对象
+				var xmlhttp=new XMLHttpRequest();
+				//2. 设置回调函数
+				xmlhttp.onreadystatechange=function(){
+					//判断请求状态为4，响应状态为200
+					if(xmlhttp.readyState==4 && xmlhttp.status==200){
+						name = xmlhttp.responseText;	//获取响应信息	
+					}
+				}
+				//3. 初始化请求信息
+				xmlhttp.open("get","5.php",true); //true为异步,异步就是另开一个线程,两线程同时执行，互不影响无需要等待
+					
+				//xmlhttp.open("get","5.php",false); //false为同步,同步就是一个线程，依次执行多个语句，每个语句的执行要等待上一个语句的结束。
+				
+				//4. 发送请求
+				xmlhttp.send();
+				//alert('ok');  //异步加载时因为当前线程的速度快于新线程所以当没有alert影响时会显示lisi,而当有alert影响时，新线程的结果以返回，所以会显示zhangsan
+				//将name信息放到div中
+				document.getElementById("did").innerHTML=name;
+			}
+        </script>
+    </body>
+</html>

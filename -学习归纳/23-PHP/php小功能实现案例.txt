@@ -1,0 +1,2334 @@
+﻿<?php
+//一:分别用对象和过程的方式来执行 增，删，改,查 操作
+//二:执行mysqli -dml dql批量处理语句
+//三：事务处理账号之间转账。
+//四:事务处理-节点备份与恢复
+//五: mysqli预处理技术-prepare  ---添加内容
+//六: mysqli预处理技术-prepare  ---查询内容
+//七：以表格方式显示数据库内容
+//八:判断接收数据是否为空的两种方式。
+//九：判断request接收数据的方式。
+//十：script-confirm 提示确定或取消功能
+//十一：用数组存放结果集。释放资源的好方法
+//十二： 分页使用案例：两种显示方法。
+	//十二：-----每次滚动十页  
+	//十二：-----分面-每次只向前滚动一页，一点一变化
+	//十二：-----数据转数组并用带索引表格形式显示（严谨）
+//十三： cookie 的创建和获取
+//十四：cookie 检测是否第一次登陆和显示上次登陆时间
+//十五：猜拳-script变换图片
+//十六：四种循环遍历方式
+//十七：利用script在同一区块变换显示不同的内容；
+//十八：记住登陆用户名。
+//十九：Session的启动与使用
+		//-----1,保存数据
+		//-----2,获取数据
+		//-----3,删除数据；
+//二十：使用session 的 crud 操作购物车
+//二十一：cookie禁用后session的操作
+		//----方法一：重定url，连接指定PHPSESSID;
+		//----方法二：使用常量SID 指定session的ID
+//二十二： 简易验证码技术
+//二十三：每次随机抽出一个数，直到抽完。
+		//-----file_get_contents() 函数案例
+		//-----file_put_contents() 函数案例
+		//-----serialize() 函数案例
+		//-----unserialize() 函数案例
+//二十四：文件流--获取文件内容及相关信息的多种方法
+	//-----第一种获取文件信息的方法
+	//-----第二种获取文件信息的方法-直接获取指定信息
+	//-----第一种读取文件内容的方法 fread()
+	//-----第二种读取文件内容的方法
+	//-----第三种读取文件方法。分批读取
+	//-----将有序内容的ini文件直接转化成数组
+	//-----第一种写入方式 fwrite()
+	//-----第二种写入方式 file_put_contents()
+	//=====文件的拷贝
+	//	-----不带中文路径的文件复制
+	//	-----带中文路径的文件复制
+	//-----创建一个文件夹 mkdir()
+	//-----同时创建多层级文件 mkdir($dir,0777,true)
+	//-----删除文件夹 rmdir()
+	//-----创建一个文件并写入内容 
+	//-----删除一个文件  unlink()
+
+//二十五：=====文件的上传
+	//-----文件上传大小的限制
+	//-----文件上传类型的限制
+	//-----防止用户图片覆盖问题及上传文件同名问题
+
+//二十六：PHP绘图实例（直线，圆，字符串等）
+//二十七：PHP绘图圆柱形三块分布图
+//二十八：调用外连带干扰验证码
+	//-----script this.src 点击图片变换图片内容
+//二十九：易宝网上支付系统
+//三十：=====javascript=====
+	-----javascript有alert,document.write两种写入方式
+	-----script可以在任何地方嵌入，但不可在<>内和style中
+	-----href,form,onclick 触发式脚本
+	-----js外连文件也可以互通的，也可以相互调用
+//三十一：javascript各数据类型
+//三十二：script 隔行换色打表格并指行变色
+//三十三：javascript页面显示时间并时时更新函数
+
+//三十四：光标划过，导航栏列表上隐下显
+
+//=====三十五：设置position产生移动动画效果(广告漂浮)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	$mysqli=new mysqli('localhost','root','abcd','dbone')or die('连接失败');	
+	$mysqli->query("set names utf8");
+/*
+function mysqli($db){
+	$mysqli=new mysqli('localhost','root','abcd',$db)or die('failed');
+	$mysqli->query('set names utf8');
+	return $mysqli;
+}
+//  表格显示数据的函数
+function content($db,$tab){
+	$mysqli = mysqli($db);
+	$sql = "select * from $tab";
+	$res = $mysqli->query($sql);
+	echo "共有: $res->num_rows 行, $res->field_count 列";
+	echo "<table border=1><tr>";
+		while($field = $res->fetch_field()){
+			echo "<th>{$field->name}</th>";
+		}
+	echo "<tr>";
+		while($row = $res->fetch_row()){
+			echo "<tr>";
+				foreach($row as $val){
+					echo "<td>$val</td>";
+				}
+			echo "<tr>";
+		}
+	echo "</table>";
+}
+
+content('dbone','tab');
+
+
+
+
+
+//一:分别用对象和过程的方式来执行 增，删，改,查 操作
+	//添加一条数据
+	//$sql=$mysqli->query("insert into tab(name,age) values('小明',28)");
+	//$sql = mysqli_query($mysqli,"insert into tab(name,age) values('大明',31)");
+	//更新一条数据
+	//$sql = $mysqli->query("update tab set name='丽丽',age=21 where id=19");
+	//$sql=mysqli_query($mysqli,"update tab set name='小辉',age=33 where id=20");
+	//删除一条数据
+	//$sql=$mysqli->query("delete from tab where id = 18");
+	//$sql=mysqli_query($mysqli,"delete from tab where id=3");
+
+
+//查看表内容
+	$sql = $mysqli->query("select * from tab");
+	
+	//$sql=mysqli_query($mysqli,"select * from tab");
+	while($row = $sql->fetch_row()){
+		foreach($row as $k=>$v){
+			echo "---".$v;
+		}
+		echo "<br>";
+	}
+	$sql->free();
+*/
+
+
+/*
+//二:执行mysqli -dml dql批量处理语句
+	//增
+	//$sqls="insert into tab(name,age) values('小红',12);";
+        //$sqls.="insert into tab(name,age) values('小丽',13);";
+	//删
+	//$sqls="delete from tab where id=4;";
+	//$sqls.="delete from tab where id=6";
+	//改
+	//$sqls="update tab set name='aaa' where id=41;";
+	//$sqls.="update tab set name='bbb' where id=42;";
+	//查
+	$sqls="select * from tab;";
+	$sqls.="desc tab;";
+	$sqls.="show databases;";
+	
+	$res = $mysqli->multi_query($sqls);
+	
+	if($res){
+		do{
+			$result = $mysqli->store_result();
+			while($row = $result->fetch_row()){
+				foreach($row as $k=>$v){
+					echo "---".$v;
+				}
+				echo "<br>";
+			}
+			echo "<br>";
+			$result->free();
+			if(!$mysqli->more_results()){
+				break;
+			}
+		}while($mysqli->next_result());
+	}else{
+		echo "操作失败".$mysqli->error;
+	}
+	$mysqli->close();
+*/
+
+
+
+/*
+//三：事务处理账号之间转账。
+	$mysqli->autocommit(false);
+	$sql1=$mysqli->query("update account set balance=balance+2 where id=1");
+	$sql2=$mysqli->query("update account set balance=balance-2 where id=2");
+
+	if($sql1 && $sql2){
+		echo "转账成功！";
+		$mysqli->commit();
+	}else{
+		echo "操作失败！回滚!";
+		$mysql->rollback;
+	}
+	$mysqli->close();
+
+*/
+
+
+
+
+/*
+
+//四:事务处理-节点备份与恢复
+	$mysqli->query("start transaction")or die("tran faild");
+	$mysqli->query("savepoint a")or die("point faild");
+	$sql = $mysqli->query("delete from tab where id >20");
+	$mysqli->query("savepoint b")or die("point faild");;
+	$mysqli->query("insert into tab(name,age) values('小影',22)");
+	$mysqli->query("rollback to b")or die("faild");
+	$mysqli->query("rollback to a")or die("faild");
+	$mysqli->query("commit")or die("faild");
+	*/
+	
+/*
+//五: mysqli预处理技术-prepare  ---添加内容
+
+	$sql = "insert into stmt(id,name,age) values(?,?,?)";
+	$stmt = $mysqli->prepare($sql);
+	$id= 6;
+	$name = 'aaa';
+	$age = 111;
+	$stmt->bind_param('isi',$id,$name,$age);
+	$b = $stmt->execute();
+	
+	$id=7;
+	$name='bbb';
+	$age = 222;
+	$stmt->bind_param('isi',$id,$name,$age);
+	$stmt->execute();
+	
+	$id=8;
+	$name="ccc";
+	$age =333;
+	$stmt->bind_param('isi',$id,$name,$age);
+	$stmt->execute();
+	
+	$id=9;
+	$name='ddd';
+	$age = 444;
+	$stmt->bind_param('isi',$id,$name,$age);
+	$stmt->execute();
+	
+	$id=10;
+	$name='eee';
+	$age = 555;
+	$stmt->bind_param('isi',$id,$name,$age);
+	$stmt->execute();
+	if($b){
+		echo "ok";
+	}else{
+		echo "faild".$stmt->error;
+	}
+	$mysqli->close();
+	
+	*/
+	
+
+
+/*
+
+
+//六: mysqli预处理技术-prepare  ---查询内容
+//关键字($mysqli_stmt->bind_param('i',$id)	设置预处理语句)
+//关键字($mysqli_stmt->bind_result($a,$b,$c)    绑定结果集)
+//关键字($mysqli_stmt->execute()		执行语句)
+//关键字($mysqli_stmt->fetch()			逐个获取结果集的行结果)
+//关键字($mysqli_stmt->free_result()		释放预处理资源)
+//关键字($mysqli_stmt->close();			关闭预处理操作)
+//关键字($mysqli->close();			关闭连接)
+
+	$sql="select * from stmt where id>?";
+	$mysqli_stmt=$mysqli->prepare($sql);
+	$id=5;
+	$mysqli_stmt->bind_param('i',$id);	//关键字
+	$mysqli_stmt->bind_result($a,$b,$c);	//关键字
+	$mysqli_stmt->execute();		//关键字
+	while($mysqli_stmt->fetch()){		//关键字
+		echo "<br>--$a--$b--$c";
+	}
+	echo "<br>--------";
+	$id=10;
+	$mysqli_stmt->bind_param('i',$id);
+	$mysqli_stmt->execute();		
+	while($mysqli_stmt->fetch()){		
+		echo "<br>--$a--$b--$c";
+	}
+	$mysqli_stmt->free_result();		//关键字
+	$mysqli_stmt->close();			//关键字
+	$mysqli->close();			//关键字
+	
+	*/
+	
+	
+	
+
+/*
+//七：以表格方式显示数据库内容
+function showTable($table,$mysqli){
+	$res = $mysqli->query("select * from $table");
+	echo "行：$res->num_rows 列：$res->field_count";
+	
+	echo "<table border=1><tr>";
+	while($field=$res->fetch_field()){
+		echo "<th>{$field->name}</th>";
+	}
+	echo "</tr>";
+	while($row = $res->fetch_row()){
+		echo "<tr>";
+			foreach($row as $val){
+				echo "<td>$val</td>";
+			}
+		echo "</tr>";
+	}
+	echo "</table>";
+	
+}
+	showTable('tab',$mysqli);
+	
+	*/
+	
+
+
+/*
+
+
+//八:判断接收数据是否为空的两种方式。
+
+//关键字: empty()	检测是否为空值
+//关键字: isset()	检测是否为空值
+echo "<a href='a.php?name=abc&age=18&sex=nv&contri=china'>传送数据</a><br>";
+if(!empty($_GET['name'])){		//关键字
+	var_dump($_GET)."<br>";
+	print_r($_GET)."<br>";
+	echo "<br>".$_GET['name']."<br>";
+	echo $_GET['age']."<br>";
+	echo $_GET['sex']."<br>";
+	echo $_GET['contri']."<br>";
+}else{
+	echo "没有数据";
+}
+
+if(isset($_GET['name'])){		//关键字
+	var_dump($_GET)."<br>";
+	print_r($_GET)."<br>";
+	echo "<br>".$_GET['name']."<br>";
+	echo $_GET['age']."<br>";
+	echo $_GET['sex']."<br>";
+	echo $_GET['contri']."<br>";
+}else{
+	echo "没有数据";
+}
+	
+
+*/
+	
+
+
+
+/*
+
+
+//九：判断request接收数据的方式。
+
+//关键字：$_SERVER['REQUEST_METHOD']
+//$_REQUEST 即可以接收get 请求数据，也可以接收post请求数据和cookie请求数据。所以这个变量比较不可以信，不建议使用。只适用在不知道接收数据是以什么方式的时候用。
+
+	echo "<pre>";
+	echo print_r($_REQUEST);
+	echo "</pre>";
+	echo $_REQUEST['AA'];
+	//如果不确定 get/post
+	if($_SERVER['REQUEST_METHOD']=='POST'){			//关键字
+		//则用post方式接收
+	}else if($_SERVER['REQUEST_METHOD']=='GET'){
+		//则用GET接收
+	}
+*/
+
+
+
+
+
+	
+/*
+//十一：用数组存放结果集。释放资源的好方法
+	$mysqli=new mysqli('localhost','root','abcd','words');
+	$mysqli->query('set names utf8');
+	$res =$mysqli->query("select * from user1"); //获取一个结果集
+	$arr = array();				//创建一个空数组用来存放结果集
+	while($row = $res->fetch_row()){	//遍历结果集的每一行数据。
+		$arr[] = $row;			//用数组转存结果集每一行数据。
+	}
+	$res->free();				//释放资源内存
+	$mysqli->close();			//关闭连接
+	print_r($arr);
+
+*/
+
+
+
+
+
+
+
+
+//十二： 分页使用案例：两种显示方法。
+
+//十二：-----每次滚动十页  
+			//不严谨案例！！！
+/*
+class table{
+	function link(){
+		$link= mysql_connect('localhost','root','abcd')or die("myslq_error");
+		mysql_select_db('words');
+		mysql_set_charset('utf8');
+	}
+	function count1($user){
+		$sql = "select count(*) from $user";
+		$res=mysql_query($sql);
+		if($row = mysql_fetch_row($res)){
+			return  $row[0];		//总行数
+		}
+	}
+		
+		
+		
+	//--------------------------------------
+	function fy($prow,$pcount,$user,$addres){
+		$pnow=$_GET['pn'];
+		//$prow = 5;					// 每页行数
+		$pnum = ceil($pcount/$prow); //总页数
+		//echo $pnum;
+		if(!$pnow){
+			$pnow = 1;					//当前页数
+		}
+		$page=($pnow-1)*5; 			//显示页在数据库中的条数计算
+		//echo $page;
+		$res=mysql_query("select * from $user limit $page,$prow");
+		//内容表格
+		echo "<table border=1><tr>";
+		echo "<tr>";
+			while($row = mysql_fetch_row($res)){
+				echo "<tr>";
+					foreach($row as $val){
+						echo "<td>$val</td>";
+					}
+					echo "<td><a href='#'>删除用户</a></td>";
+					echo "<td><a href='#'>修改信息</a></td>";
+				echo "</tr>";
+				
+			}
+			
+		echo "</table>";
+		
+		echo "-<a href='$addres?pn=1'>首页</a>-";
+		if($pnow>1){
+			$pn=$pnow-1;
+			echo "-<a href='$addres?pn=$pn'>上一页</a>-";
+		}
+		
+		$pi=$pnow;		//控制显示页数的个数
+		$index=$pi;     //控制显示页数的个数
+		$aa=10;								//控制>>一次跳多少页
+	//	$pi = floor(($pnow-1)/$aa)*$aa+1;	//控制>>一次跳多少页
+		if($pi>10){
+			echo "-<a href='$addres?pn=".($pnow-$aa)."'><<<</a>-";
+		}
+		for(;$pi<$index+$aa;$pi++){
+			if($pnow<$pnum){
+				echo "-<a href='$addres?pn=$pi'>$pi</a>-";
+			}
+		}
+
+		if($pnow<$pnum-10){
+			echo "-<a href='$addres?pn=".($pnow+$aa)."'>>>></a>-";
+		}
+		if($pnow<$pnum){
+			$pn=$pnow+1;
+			echo "-<a href='$addres?pn=$pn'>下一页</a>-";
+		}
+		echo "-<a href='$addres?pn=$pnum'>尾页</a>-";
+		echo "--当前页：$pnow"." --总页数：".$pnum;
+	}
+}	
+
+
+$aa = new table();
+$aa->link();
+$pc = $aa->count1('user1');
+$aa->fy(10,$pc,'user1','aa.php');
+
+
+*/
+
+
+
+
+
+/*
+	//十二：-----每次滚动十页  
+	//十二：-----分面-每次只向前滚动一页，一点一变化
+	$pnow= $_GET['pn'];
+	$count = 1000;			//总行数
+	$row = 5;			// 每页行数
+	$pnum = ceil($count/$row); 	//总页数
+	if(!$pnow){
+		$pnow = 1;					//当前页数
+	}
+	$pi=$pnow;
+	$index=$pi;
+	echo "-<a href='two.php?pn=1'>首页</a>-";
+	for(;$pi<$index+5;$pi++){
+		echo "-<a href='two.php?pn=$pi'>$pi</a>-";
+	}
+	echo "-<a href='two.php?pn=$count'>尾页</a>-";
+
+*/
+?>
+
+
+
+<?php
+	//十二：-----数据转数组并用带索引表格形式显示（严谨）
+	/*
+	header("content-type:text/html;charset=utf-8");
+//以表格显示数据，需传一个数组
+	function table($arr){	
+		echo "<table border=1>";
+		for($i=0;$i<count($arr);$i++){
+			echo "<tr>";
+			$row = $arr[$i];
+			foreach($row as $val){
+				echo "<td>　$val</td>";
+			}
+			echo "</tr>";
+		}
+		echo "</table>";
+		
+	}
+	
+	//带索引的表格显示数组  
+	function index($user,$prow,$pageName){
+		$link = mysql_connect('localhost','root','abcd')or die(mysql_error());
+		mysql_select_db('dbone');
+		mysql_set_charset('utf8');
+		$sqlc = "select count(*) from $user";
+		$res = mysql_query($sqlc)or die(mysql_error());
+		if($row = mysql_fetch_row($res)){
+			$count = $row[0];		//总行数
+		}
+		$pnow = $_GET['pn'];			//接收换页的当前页
+		$prow ;					//每页行数
+		$pnum = ceil($count / $prow); //总页数
+		if(!$pnow){
+			$pnow = 1;	//当前页
+		}
+		$page = ($pnow-1)*$prow;
+		$arr = array();
+		$res =mysql_query("select * from $user limit $page,$prow");
+		if($res){
+			while($row=mysql_fetch_row($res)){
+				$arr[] = $row;
+			}
+		}
+		table($arr);			//表格方式显示数据
+		
+		//索引
+		$i=$pnow;
+		$index=$i+10;
+		if($pnow>10){
+			$c=$pnow-10;
+			echo "<a href='$pageName?pn=$c'><<<</a>-";
+		}
+		for(;$i<$index;$i++){
+			if($i<=$pnum){
+				echo "-<a href='$pageName?pn=$i'>$i</a>-";
+			}else{
+				//echo "-<a href='$pageName?pn=$pnum'>$pnum</a>-";
+				break;
+			}
+		}
+		if($pnow<$pnum-10){
+			$d=$pnow+10;
+			echo "-<a href='$pageName?pn=$d'>>>></a>";
+		}
+		echo "<br>";
+		echo "<br>";
+		echo "-<a href='$pageName?pn=1'>首页</a>-";
+		if($pnow>1){
+			$a = $pnow-1;
+			echo "-<a href='$pageName?pn=$a'>上一页</a>-";
+		}
+		if($pnow<$pnum){
+			$b = $pnow+1;
+			echo "-<a href='$pageName?pn=$b'>下一页</a>-";
+		}
+		echo "-<a href='$pageName?pn=$pnum'>尾页</a>-";
+	}
+index('user',10,'all.php');
+*/
+
+
+
+
+
+
+
+//----------------------------------------------------
+?>
+
+
+
+
+<head>
+	<meta http-eqvie="content-type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript">
+		function confirmadd(val){
+			return confirm("是否要相加?A和B");
+		}
+	</script>
+</head>
+<?php
+//十：script-confirm 提示确定或取消功能
+/*
+	$result=$_GET['result'];
+	echo $result."<br>";
+	$a = 16;
+	$b = 20;
+	
+	$c = $a + $b;
+	echo "16 和 20  <a onclick='return confirmadd($c)' href='all.php?result=$c'>相加结果</a>";
+	*/
+?>
+
+
+
+
+<?php
+/*
+//十三： cookie 的创建和获取
+	
+	//----创建 cookie
+
+	setCookie('name','shunping',time()+3600);
+	echo "保存成功！";
+?>
+
+
+<?php
+	//-----获取cookie 信息	
+
+	echo "<pre>";
+	print_r($_COOKIE);
+	echo "</pre>";
+	$name = $_COOKIE['name'];
+	echo "name---".$name;
+	
+?>
+<?php
+	-----更新 cookie信息
+
+	更新某个cookie key<==>val实际上就是重新设置
+	setCooke();
+?>
+<?php
+	//-----删除 cookie 信息
+	setCookie('name','',time()-1);  //单条删除
+
+	foreach($_COOKIE as $k=>$v){
+		setCookie("$k",'',time()-1);	//删除全部
+	}
+	echo "删除成功！！！！";
+?>
+
+<?php
+
+//十四：cookie 检测是否第一次登陆和显示上次登陆时间
+
+	if(!empty($_COOKIE['lastVisit'])){
+		//这条放在echo下会出错
+		setcookie("lastVisit",date("Y-m-d H:i:s"),time()+24*3600*30); \
+		echo "您上次登陆的时间是：".$_COOKIE['lastVisit'];
+	}else{
+		setcookie("lastVisit",date("Y-m-d H:i:s"),time()+24*3600*30);
+		echo "第一次";   //检测是否为第一次登陆
+	}
+	*/
+?>
+
+
+
+
+<?php
+	//十五：猜拳-script变换图片
+/*
+<head>
+	<script language="javascript">
+		function huan(obj){
+			var val = obj.value; 	//var 相当于public 
+			
+			var pict =document.getElementById("picture");
+			if(val=='st'){
+				pict.src="1.png";
+			}
+			if(val=='jd'){
+				pict.src="2.png";
+			}
+			if(val=='b'){
+				pict.src="3.png";
+			}
+		}
+	</script>
+</head>
+<body>
+	<form action="" method="post">
+		<select name='cq' onchange="huan(this)">
+			<option value="st">石头</option>
+			<option value="jd">剪刀</option>
+			<option value="b">布</option>
+		</select>
+		<img src="4.png" id='picture'/>
+	</form>
+</body>
+	*/
+?>
+
+
+
+
+
+<?php
+	//十六：四种循环遍历方式
+/*
+	echo "for循环遍历索引数组";
+	$a = array(1,3,5,7,9,23,45);
+	for($i=0;$i<count($a);$i++){
+		echo $a[$i]."<br>";
+	}
+	echo "<hr>foreach遍历索引数组<br>";
+	foreach($a as $k=>$v){
+		echo $k."------".$v."<br>";
+	}
+	echo "<hr>foreach遍历关联数组<br>";
+	$b = array('a'=>1,'b'=>2,'c'=>3);
+	foreach($b as $k=>$v){
+		echo $k."--".$v."<br>";
+	}
+	echo "<hr>list(k,v)=each的使用<br>";
+	$c = array('aa'=>111,'bb'=>222,'cc'=>333);
+	list($k,$v)=each($c); 		
+	list($k,$v)=each($c);
+	list($k,$v)=each($c);
+	echo $k."=====".$v;		//上面输出几次，这里就显示第几个下标的键值对。
+	echo "<hr>以索引方式的while循环<br>";
+	$d = array('aaa'=>11111,'bbb'=>22222,'ccc'=>33333);
+	while($d1=each($d)){
+		echo $d1[0]."--------".$d1[1]."<br>";
+	}
+	echo "<br>以关联方式的while循环<br>";
+	$e = array('aaa'=>11111,'bbb'=>22222,'ccc'=>33333);
+	while($e1=each($e)){
+		echo $e1[key]."=====".$e1[value]."<br>";
+	}
+	*/
+	
+?>
+
+
+
+
+
+<?php
+
+//十七：利用script在同一区块变换显示不同的内容；
+
+//注意，表格里不能有其它元素外的东西。不然摄错。
+/*
+<head>
+	<script language="javascript">
+		function huan(val){
+			alert(val);
+			if(val=="one"){
+				t1.style.display="block";
+				t2.style.display="none";
+			}
+			if(val=="two"){
+				t1.style.display="none";
+				t2.style.display="block";
+			}
+		}
+	</script>
+</head>
+<body>
+	<form action="" method="post">
+		<input type="radio" name="sel" onclick="huan('one')"/>aaa
+		<input type="radio" name="sel" onclick="huan('two')"/>bbb
+	</form>
+	<table id="t1" style="display:none">
+		<tr><td>aaaaaaaaaa</td></tr>
+	</table>
+	<table id="t2" style="display:none")">
+		<tr><td>bbbbbbbbbb</td></tr>
+	</table>
+</bdoy>
+
+*/
+
+?>
+
+
+
+
+
+<?php
+	//十八：记住登陆用户名。
+/*
+	$user = $_POST['text'];
+	$jz = $_POST['box'];
+	if($jz){
+		echo "1111111";
+		setCookie('id',$user,time()+9999);
+	}else{
+		setCookie('id','',time()-99);
+		echo "22222222";
+	}
+	$id = $_COOKIE['id'];
+	
+
+
+<body>
+<form action="a.php" method="post">
+	用户名:<input type="text" value="<?php echo $id ?>" name="text" />
+	记住用户名：<input type="checkbox" name="box" value="keep"/>
+	<input type="submit" value="登陆" />
+</form>
+</body>
+
+*/
+?>
+
+
+
+
+<?php
+	//十九：-----Session的启动与使用
+	/*
+
+//-----1,保存数据
+
+	//初始化Session
+	session_start();
+	
+	//保存数据
+	$_SESSION['name'] = "shunping";
+
+	//session文件可以保存double,integer,bool,array,objec
+	$_SESSION['age'] = 100; 	//integer
+	$_SESSION['isBoy']=true;	//bool
+
+	$arr = array('北京','小明','hello');
+	$_SESSION['arr'] = $arr; 	//数组
+
+	//保存对象文件
+	class Dog{
+		private $name;
+		private $age;
+		private $intro;
+		function __construct($name,$age,$intro){
+			$this->name=$name;
+			$this->age = $age;
+			$this->intro = $intro;
+		}
+	}
+	
+	$dog1 = new Dog('小花',18,'女');
+	$_SESSION['dog1']= $dog1;
+	*/
+?>
+
+
+
+
+<?php
+//-----2,获取数据
+/*
+	//require_once 'aa.php';
+	session_start();
+	echo "<hr>获取到的name是：".$_SESSION['name'];
+
+	echo "<hr>获取到的age是：".$_SESSION['age'];
+
+	echo "<hr>获取到的isBoy是：".$_SESSION['isBoy'];
+
+	$arr = $_SESSION['arr'];
+	foreach($arr as $val ){
+		echo "<hr>获取到的数组信息是:".$val;
+	}
+	
+	$go = $_SESSION['dog1'];
+	echo "<hr>获取对象的名字；".$go->getName();
+	echo "<hr>获取对象的年龄：".$go->getAge();
+	echo "<hr>获取对象的intro：".$go->getIntro();
+?>
+
+
+<?php
+//	-----3,删除数据；
+
+	//删除单个SESSION
+	session_start();
+  	unset($_SESSION['name']);
+	echo "删除name成功";
+
+	//删除所有的session
+	//这样会把当前这个浏览器对应的session文件一并删除。
+	session_destroy();
+	*/
+?>
+
+
+
+<?php
+	//二十：使用session 的 crud 操作购物车
+/*
+echo "<h1>百家书籍购物大厅</h1>";
+echo " 《西游记》<a href='all.php?bid=sn1&bname=西游记'>放入购物车</a><br> ";
+echo " 《红楼梦》<a href='all.php?bid=sn2&bname=红楼梦'>放入购物车</a><br> ";
+echo " 《三国演义》<a href='all.php?bid=sn3&bname=三国演义'>放入购物车</a><br> "; 
+echo "《水浒传》<a href='all.php?bid=sn4&bname=水浒传'>放入购物车</a><br><br><hr><br><br> ";
+
+
+	session_start();
+	$bid=$_GET['bid'];
+	$bname=$_GET['bname'];
+	$del=$_GET['del'];
+	$delall=$_GET['delall'];
+	if($delall){
+		session_destroy();
+	}
+	if($del){
+		unset($_SESSION[$del]);
+	}
+	if($_SESSION[$bid]=$bname){
+		echo "《 $bname 》以成功加入购物车！";
+	}
+	echo "<br><br><br>";
+
+echo "<hr><h1>我的购物车</h1>";
+
+	foreach($_SESSION as $key=>$val){
+		if(!empty($_SESSION[$key])){
+			echo "《 $val 》<a href='all.php?del=$key'>从购物车中删除</a><br>";
+		}
+	}
+	echo "<br><a href='all.php?delall=yes'>清空购物车</a>";
+	*/
+
+?>
+
+
+
+
+
+
+
+<?php
+//二十一：cookie禁用后session的操作
+		//----方法一：重定url，连接指定PHPSESSID;
+/*
+	//	购物主页面
+	$sid = $_GET['PHPSESSID']; //这是其它页面传回的sessid 如果没有将会创建新会话。
+	session_start();
+	$sid = session_id();
+	echo "<h1>五味书屋欢乐购</h1>";
+	echo "<a href='two.php?bid=s1&bname=西游记&PHPSESSID=$sid'>西游记</a><br><br>";
+	echo "<a href='two.php?bid=s2&bname=红楼梦&PHPSESSID=$sid'>红楼梦</a><br><br>";
+	echo "<a href='two.php?bid=s3&bname=水浒传&PHPSESSID=$sid'>水浒传</a><br><br>";
+	echo "<a href='three.php?PHPSESSID=$sid'>查看购物车</a>";
+
+	//添加购物车处理页面
+	$bid=$_GET['bid'];
+	$bname=$_GET['bname'];
+	$sid=$_GET['PHPSESSID'];
+	session_start();
+	$_SESSION[$bid]=$bname;
+	echo "《 $bname 》以成功加入购物车！<br><br>";
+	echo "<a href='three.php?PHPSESSID=$sid'>查看购物车</a><br><br>";
+	echo "<a href='one.php?PHPSESSID=$sid'>返回购物主页面</a>";
+
+	//购物车查看处理页面
+	$sid = $_GET['PHPSESSID'];
+	$del = $_GET['del'];
+	$clear=$_GET['clear'];
+	session_start();
+	if($del){
+		unset($_SESSION[$del]);
+	}
+	if($clear){
+		session_destroy();
+	}
+	foreach($_SESSION as $k=>$v){
+		echo $v."<a href='three.php?del=$k&PHPSESSID=$sid'>--从购物车中删除</a><br><br>";
+	}
+	echo "<a href='three.php?clear=yes&PHPSESSID=$sid'>清空购物车</a><br>";
+	echo "<a href='one.php?PHPSESSID=$sid'>返回购物主页</a><br>";
+	*/
+?>
+
+
+
+<?php 
+	//----方法二：使用常量SID 指定session的ID
+	/*
+//首页面
+	$_GET['PHPSESSID'];
+	session_start();
+	echo "<h1>五味书屋购物天堂</h1>";
+	echo "<a href='o2.php?bid=b1&bname=西游记&".SID."'>西游记</a><br><br>";
+	echo "<a href='o2.php?bid=b2&bname=水浒传&".SID."'>水浒传</a><br><br>";
+	echo "<a href='o2.php?bid=b3&bname=红楼梦&".SID."'>红楼梦</a><br><br>";
+	echo "<a href='o3.php?".SID."'>查看我的购物车</a>";
+	
+	
+	
+//处理页面
+	$_GET['PHPSESSID'];
+	$bid=$_GET['bid'];
+	$bname = $_GET['bname'];
+	//ECHO $bname;
+	session_start();
+	$_SESSION[$bid]=$bname;
+	echo "《 $bname 》成功加入购物车!<br><br>";
+	echo "<a href='o3.php?".SID."'>查看我的购物车</a><br><br>";
+	echo "<a href='o1.php?".SID."'>返回购物主页</a>";
+	
+	
+	
+//购物车页面
+	$_GET['PHPSESSID'];
+	session_start();
+	$del=$_GET['del'];
+	if($del){
+		unset($_SESSION[$del]);
+	}
+	$clear=$_GET['clear'];
+	if($clear){
+		session_destroy();
+	}
+	foreach($_SESSION as $k=>$v){
+		echo $v."----<a href='o3.php?del=$k&".SID."'>从购物车中删除</a><br><br>";
+	}
+	echo "<a href='o3.php?clear=yes&".SID."'>清空购物车</a><br><br>";
+	echo "<a href='o1.php?".SID."'>返回购物首页</a>";
+	
+	*/
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+	//二十二： 简易验证码技术
+	
+	//-----验证码的生成
+/*	
+	$code='';
+	for($i=0;$i<8;$i++){	//这里设置位数
+		$code.=dechex(rand(1,15));	//1,15 从1到15 这里设置显示数值的范围。
+	}
+	echo $code;
+	
+	
+	//-----验证码实例
+	*/
+/*	
+
+//   登陆页面；
+<head>
+<style>
+	.one{
+		border:1px blue solid;
+		background:#ccc;
+	}
+</style>
+</head>
+<body>
+<form action='bb.php' method="post">
+	验证码:<input type="text" name="code"/>
+	<span class='one'>
+		<?php
+			$code='';
+			for($i=0;$i<5;$i++){
+				$code.=dechex(rand(5,15));
+			}
+			echo $code;
+			session_start();
+			$_SESSION['code']=$code;
+		?>
+	</span>
+	<input type='submit' value='提交'/>
+</form>
+</body>
+
+
+	$err = $_GET['err'];
+	if($err==1){
+		echo "<br><br><font color='red'>输入的验证码不正确！！！</font>";
+	}
+
+	
+	
+	//验证页面
+	
+		$code = $_POST['code'];
+	session_start();
+	if($code==$_SESSION['code']){
+		echo "验证成功！！！";
+	}else{
+		header("Location: aa.php?err=1");
+	}
+	*/
+?>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php
+/*
+	//二十三：每次随机抽出一个数，直到抽完。
+		//-----file_get_contents() 函数案例
+		//-----file_put_contents() 函数案例
+		//-----serialize() 函数案例
+		//-----unserialize() 函数案例
+
+	$txt = 'e.txt';
+	if(!file_exists($txt)){//不存在这个文件
+		$array = array();
+		for($i=1;$i<=5;$i++){
+			$array[]=$i;
+		}
+	}else{
+		$txt_array = file_get_contents($txt);
+		$array = unserialize($txt_array);
+		if(empty($array)){
+		echo "已经全随机掉了，请删掉".$txt."这个文件，重新再来一遍";
+		die();
+		}
+	}
+	$rand = array_rand($array);
+	echo $array[$rand];//随机出来的内容
+	unset ($array[$rand]);//销毁已经蹦出来的元素
+	file_put_contents($txt,serialize($array));
+	*/
+?>
+		//注释版
+<?php
+	require "mysqltools.php";
+	$mysql=new Mysql();
+	$sql="select ch from query";
+	$arr=$mysql->dql($sql);
+	$arr1=array();
+	for($i=0;$i<count($arr);$i++){
+		$arr1[]=$arr[$i][0];
+	}
+	$txt="aarr.txt";
+	if(!file_exists($txt)){			//如果文件不存在，就创建文件
+		file_put_contents($txt,serialize($arr1));  	//创建这个文件
+	}
+	$txt_array=file_get_contents($txt); //获取文件中的内容
+	$arr2=unserialize($txt_array);	//将内容转换成数组
+	if(empty($arr2)){				//如果数组为空
+		echo '数据浏览完毕，请点击两次后重新浏览！！！';
+		setCookie('del','ok');		//设置一个确认删除的cookie
+		if($_COOKIE['del']){		//如果删除cookie存在
+			unlink($txt);			// 删除文件
+			setCookie('del','',-10); //删除这个确认cookie
+		}
+		exit();
+	}
+						//数组有数据就随机抽取数据
+	$rand=array_rand($arr2);		//随机抽取数组中的元素下标
+	echo $arr2[$rand];				//显示这个数组元素
+	unset($arr2[$rand]);			//删除数组中该元素
+	file_put_contents($txt,serialize($arr2));  //将删除元素后的数组序列化并存放在文件中
+?>
+
+
+
+
+
+
+
+<?php
+		//二十四：文件流--获取文件内容及相关信息的多种方法
+	//-----第一种获取文件信息的方法
+	//-----第二种获取文件信息的方法-直接获取指定信息
+	//-----第一种读取文件内容的方法 fread()
+	//-----第二种读取文件内容的方法
+	//-----第三种读取文件方法。分批读取
+	//-----将有序内容的ini文件直接转化成数组
+	
+	//-----第一种获取文件信息的方法
+	
+	/*
+	$file_path='a.txt'; //设置一个文件的路径
+	if(file_exists($file_path)){	//检验文件是否存在
+		echo "文件存在！<br>";
+		$fp = fopen($file_path,'a+');	//打开这个文件					
+		$arr=fstat($fp);		//把文件大小等相关信息存放到一个数组里   //fstat()
+		echo "<pre>";
+		print_r($arr);		//显示所有文件相关信息
+		echo "</pre>";
+		date_default_timezone_set("Asia/Chongqing");
+		echo "<br>文件上次被访问的时间是: ".date("Y-m-d H:i:s",$arr['atime']);
+		echo "<br>文件内容上次修改时间是：".date("Y-m-d H:i:s",$arr['mtime']);
+		echo "<br>文件上次被移动的时间是：".date("Y-m-d H:i:s",$arr['ctime']);
+	}
+		
+		
+		
+	//-----第二种获取文件信息的方法-直接获取指定信息
+	
+	$txt = "a.txt";
+	echo "<br>文件的大小是：".filesize($txt)."字节！";			   //filesize();
+	date_default_timezone_set("Asia/Chongqing");
+	echo "<br>文件上次被访问的时间是：".date("Y-m-d H:i:s",fileatime($txt));   //fileatime()	
+	echo "<br>文件上次被修改的时间是：".date("Y-m-d H:i:s",filemtime($txt));   //filemtime()
+	echo "<br>文件上次被移动的时间是：".date("Y-m-d H:i:s",filectime($txt));   //filectime()
+	
+	
+	
+	//-----第一种读取文件内容的方法 fread()
+	
+	$txt="a.txt";
+	if(file_exists($txt)){								
+		$fp=fopen($txt,'a+');		//打开一个文件，需要两个参数 文件名和读取方式
+		$fa = fread($fp,filesize($txt)); //把文件内容读取到一个变量内。//fread()
+		echo $fa;				//显示内容
+	}else{
+		echo "文件不存在！";
+	}
+	fclose($fp);				//关闭文件				
+	
+
+	
+	//-----第二种读取文件内容的方法
+	//-----第三种读取文件方法。分批读取
+	//-----将有序内容的ini文件直接转化成数组
+	$txt = "a.txt";			//设置文件的路径
+	$con=file_get_contents($txt);	//把文件内容读取到一个变量中		//file_get_contents()
+	//echo $con;				//显示内容，但这里会忽略空格和换行
+	$con=str_replace("\r\n","<br>",$con);										   //str_replace()将文件中默认的换行符"\r\n"转换成浏览器识别的<br>
+	echo  $con;
+		//这个函数不需要关闭文件
+	
+
+	//-----第三种读取文件方法。分批读取
+	
+		//等全部读完后再显示。
+	$txt="a.txt";
+	if(file_exists($txt)){						//file_exists()
+		$fp=fopen($txt,'a+');
+		$buffer=1024; //设置每次读取字节大小
+		$str ="";		//设置一个用于存放被读取内容的变量
+		while(!feof($fp)){	//只要文件没结束就不断循环读取		//feof()
+			$str.=fread($fp,$buffer);
+		}
+		$str=str_replace("\r\n","<br>",$str);
+		echo $str;
+		fclose($fp);						//fclose()
+	}
+			//读一段，显示一段
+	$txt = "a.txt";
+	if(file_exists($txt)){
+		$fp=fopen($txt,'a+');					//fopen()
+		$str='';
+		$buffer=1024;	
+		while(!feof($fp)){
+			$str=fread($fp,$buffer);			//fread()
+			$str=str_replace("\r\n","<br>",$str);		//str_replace()
+			echo $str;
+		}
+	}else{
+		echo "文件不存在！";
+	}
+	
+
+	
+	//-----将有序内容的ini文件直接转化成数组
+	$txt = "c1.ini";
+	$arr=parse_ini_file($txt);			//parse_ini_file()
+	print_r($arr);
+	*/
+	/*
+		//t.ini文件内容
+		host=localhost
+		user=root
+		psw=abcd
+		db = test
+	*/
+	
+	
+	
+?>
+
+
+
+<?php
+/*
+	//-----第一种写入方式 fwrite()
+
+	$txt = 'b.txt';
+	if(is_file($txt)){
+		$fp=fopen($txt,'a+');
+		fwrite($fp,"helloword\r\n");
+		echo "写入成功！";
+		fclose($fp);
+	}
+
+
+
+	
+	//-----第二种写入方式 file_put_contents()
+
+	$txt="b.txt";
+	$com ="";
+	for($i=1;$i<30;$i++){
+		$com.= "aaaaabbbbb\r\n";
+	}
+	file_put_contents($txt,$com);
+	echo "ok";
+	
+	
+	//=====文件的拷贝
+
+	//-----不带中文路径的文件复制
+
+	if(copy('c:/aa.jpg','d:/aa3.jpg')){
+		echo "ok";
+	}else{
+		echo 'failed';
+	}
+	
+	
+	//-----带中文路径的文件复制
+
+	$img=iconv("utf-8","gbk","c:/一二三/aa.jpg");
+	if(copy($img,"d:/img1.jpg")){
+		echo "ok";
+	}else{
+		echo "failed";
+	}
+	
+	
+	//-----创建一个文件夹 mkdir()
+	$dir1 = "c:/aaa";
+	if(is_dir($dir1)){
+		echo "文件存在";
+	}else{
+		mkdir($dir1);
+		echo "创建成功";
+	}
+	
+	
+	//-----同时创建多层级文件 mkdir($dir,0777,true)
+	$dirs = "C:/b/c/d/e/f";
+	if(is_dir($dirs)){
+		echo "文件夹存在！";
+	}else{
+		if(mkdir($dirs,0777,true)){
+			echo "创建成功！";
+		}
+	}
+	
+	
+	
+	//-----删除文件夹 rmdir()
+	//删除的文件夹必须为空，不然报错！
+	$dir="c:/b";
+	if(is_dir($dir)){
+		if(rmdir($dir)){
+			echo "删除成功";
+		}else{
+			echo "删除失败";
+		}
+	}else{
+		echo "文件夹不存在！";
+	}
+	
+	
+	
+	//-----创建一个文件并写入内容 
+	$path="c:/b/c.txt";
+	if(is_file($path)){
+		echo "文件存在";
+	}else{
+		$fp=fopen($path,'w+');
+		if(fwrite($fp,'北京是一个大城市')){
+			echo "创建并写入成功";
+			fclose($fp);
+		}else{
+			echo "失败";
+		}
+	}
+	
+	
+	
+	//-----删除一个文件  unlink()
+	$con="c:/b/c.txt";
+	if(is_file($con)){
+		if(unlink($con)){
+			echo "删除成功";
+		}else{
+			echo "删除失败";
+		}
+	}else{
+		echo "文件不存在！";
+	}
+	*/
+	
+?>
+
+
+
+
+
+
+
+
+
+<?php
+	//二十五：=====文件的上传
+/*
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org//TR/xhtml1/DTD/xhtml1.transitional-dtd">
+<html>
+<head>
+	<title>aaaaa</title>
+</head>
+<body>
+	<h1>文件上传系统</h1>
+<form action="process.php" method="post" enctype='multipart/form-data' name="myforms">
+	输入用户名<input type="text" name="name"/><br>
+	简介<br>
+<textarea name="intro" cols=20 rows=5>
+</textarea><br>
+	选择文件<input type="file" name="file"/><br>
+	<input type="submit" value="上传"/>
+</form>
+</body>
+</html>
+*/
+/*
+	// -----文件上传大小的限制
+	if($_FILES['file']['size']>2*1024*1024){
+		echo "文件过大！";
+		exit();
+	}
+
+	//-----文件上传类型的限制
+	$type=$_FILES['file']['type']; //文件的类型
+	if($type!="image/jpg" && $type!="image/jpeg"	){
+		echo "文件类型不对！";
+		exit();
+	}
+
+
+	//-----防止用户图片覆盖问题及上传文件同名问题
+	$tmpFile=$_FILES['file']['tmp_name'];	//上传缓存文件
+	$name=$_FILES['file']['name'];		//上传的文件名
+	$toFile=$_SERVER['DOCUMENT_ROOT']."/up/img/".time().rand(1,100).substr($name,strrpos($name,".")); //存放
+
+文件的路径 $_SERVER 是显示根目录函数， time()显示当前时间，rand()随机抽取1-100中的数字。substr()选择字符串中的子
+
+串，strrpos()确定指定的字符的位置。 也可以在路径中加上用户名的变量来区分每个用户的文件上传。
+	echo $name."<br>".strrpos($name,".")."<br>";
+	if(is_uploaded_file($tmpFile)){
+		if(move_uploaded_file($tmpFile,$toFile)){
+			echo "上传成功！";
+		}
+	}
+	*/
+?>
+
+
+
+
+	
+
+
+
+
+
+
+
+<?php
+	//二十六：PHP绘图实例（直线，圆，字符串等）
+
+/*
+	//创建画布，默认的背景是黑色
+	$im=imagecreatetruecolor(400,300);
+	
+	//创建一个颜色
+	$red=imagecolorallocate($im,255,0,0);
+	//圆
+	imageellipse($im,20,20,20,20,$red);
+	
+	//直线
+	imageline($im,0,0,400,300,$red);
+	
+	//空心矩形
+	imagerectangle($im,300,4,350,40,$red);
+	
+	//实心矩形
+	imagefilledrectangle($im,250,60,310,110,$red);
+	
+	//弧线
+	imagearc($im,100,100,60,60,90,180,$red);
+	
+	//扇形	1，IMG_ARC_PIE 2,IMG_ARC_CHORD 3,IMG_ARC_NOFILL 4,IMG_ARC_EDGED
+	imagefilledarc($im,150,150,60,60,180,270,$red,IMG_ARC_PIE);
+//解释(画布，起始X坐标，起始Y坐标，终点x坐标，终点y坐标，起始角度，终点角度，颜色，形式。)
+	
+	//拷贝图片到画布
+	//1.加载图片
+	$srcImage=imagecreatefromgif("cx.gif");
+	//2,拷贝源图片到目标画布
+	imagecopy($im,$srcImage,50,50,10,10,80,31);
+//解释（画布，图片在画布的起始X点，图片在画布的起始y点,截取图片的起始X点，截取图片的起始y点，截取图片的X终点，截取图片的Y终点）
+	//3，可使用函数获取图片信息 getimagesize()
+	$info=getimagesize('cx.gif');
+	imagecopy($im,$srcImage,100,100,0,0,$info[0],$info[1]);
+	
+	//画字符串
+	imagestring($im,5,20,20,"hello吕文",$red);
+//(画布，字体大字，位置X，位置Y，字符串，颜色) imagestring()函数中文会乱码。
+	
+	//画带中文的字符
+	$str="hello,中国地区地区";
+	imagettftext($im,30,30,10,290,$red,"simhei.ttf",$str);
+//(画布，字体大小，旋转角度，位置X，位置Y，颜色，字体选择，字符串) 字体选择去windows/fonts 目录下找。 这个函数可能会不识别utf-8码,要选择utf-8无BOM格式。
+	
+	//输出图象到网页，也可另存
+	header("content-type: image/png");
+	imagepng($im);
+	
+	//销毁该图片（释放内存）
+	imagedestroy($im);
+
+*/
+?>
+
+
+
+
+
+
+
+<?php
+	//二十七：PHP绘图圆柱形三块分布图
+/*
+
+	$bg = imagecreatetruecolor(400,300);
+	//将背景色填充为指定颜色
+	$white = imagecolorallocate($bg,235,235,235); 
+	imagefill($bg,0,0,$white);
+	
+	$red=imagecolorallocate($bg,255,0,0);
+	$gre=imagecolorallocate($bg,0,255,0);
+	$blu=imagecolorallocate($bg,0,0,255);
+	$red1=imagecolorallocate($bg,200,0,0);
+	$gre1=imagecolorallocate($bg,0,200,0);
+	$blu1=imagecolorallocate($bg,0,0,200);
+	//imagefilledarc($bg,100,100,100,50,0,35,$red1,IMG_ARC_PIE);
+	for($i=180;$i>=100;$i--){	//调节高度可以改变$i=180的值。
+		imagefilledarc($bg,100,$i,100,50,0,35,$red1,IMG_ARC_PIE);
+		imagefilledarc($bg,100,$i,100,50,35,70,$gre1,IMG_ARC_PIE);
+		imagefilledarc($bg,100,$i,100,50,70,360,$blu1,IMG_ARC_PIE);
+	}
+	imagefilledarc($bg,100,100,100,50,0,35,$red,IMG_ARC_PIE);
+	imagefilledarc($bg,100,100,100,50,35,70,$gre,IMG_ARC_PIE);
+	imagefilledarc($bg,100,100,100,50,70,360,$blu,IMG_ARC_PIE);
+	
+	header('content-type: image/png');
+	imagepng($bg);
+*/
+?>
+
+
+
+
+
+
+
+
+
+<?php
+//二十八：调用外连带干扰验证码
+	
+	
+	//图片页面
+	/*
+	$str="";
+	for($i=1;$i<5;$i++){
+		$str.=dechex(rand(1,15));
+	}
+	session_start();
+	$_SESSION['code']=$str;
+	$im = imagecreatetruecolor(110,30);
+	$red = imagecolorallocate($im,255,255,255);
+	//加入干扰线
+	for($i=1;$i<20;$i++){
+		imageline($im,rand(0,110),rand(0,110),rand(0,30),rand(0,30),imagecolorallocate($im,rand(0,255),rand(0,255),rand(0,255)));
+	}
+	imagestring($im,rand(1,7),rand(0,80),rand(0,20),$str,$red);
+	header("content-type: image/png");
+	imagepng($im);
+	*/
+?>
+
+
+<?php
+	//验证处理页面
+	// -----script this.src 点击图片变换图片内容
+	//把 ?php 移动到img src下面 
+	/*
+<form action='' method='post'>
+请输入验证码：<input type='text' name='text' />
+	<input type='submit' value="提交" />
+</form>
+<img src="bb.php" onclick="this.src='bb.php?aa='+Math.random()" />
+
+	session_start();
+	$code=$_SESSION['code'];
+	$verify=$_POST['text'];
+	if(!empty($verify)){
+		if($code==$verify){
+			echo "<br><font color='red'>输入正确</font>";
+		}else{
+			echo "<br>输入错误，请重新输入！";
+		}
+	}
+	*/
+
+
+
+
+
+验证码简单案例：
+
+
+验证码画布页面：
+
+<?php
+	$str="";				//声明一个存放验证码的变量
+	for($i=0;$i<4;$i++){
+		$str.=dechex(rand(1,15));	//将转化的十六进制数值累加到上面的变量中
+	}
+	
+	$im=imagecreatetruecolor(50,20);		//创建一张画布
+	$red=imagecolorallocate($im,255,255,255);	//设置一个颜色
+
+	for($i=1;$i<10;$i++){
+		imageline($im,rand(0,50),rand(0,30),rand(0,50),rand(0,30),imagecolorallocate($im,rand(0,255),rand(0,255),rand(0,255)));			//画出10根随机线
+	}
+
+	imagestring($im,5,6,2,$str,$red);		//将上面的验证码画入画布中
+	header('content-type: image/png');		//设置图片的格式
+	imagepng($im);					//保存画布
+?>
+
+
+
+调用验证码页面：
+
+请输入验证码：<input type="text" name="code"/>
+<img src="code.php" onclick="this.src='code.php?new='+Math.random()"/>  //图片连接指向验证码页面并点击会刷新
+
+
+//----------------------------------------------------------------------------------
+?> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+	//二十九：易宝网上支付系统
+
+	//---首页 
+	/*
+<html>
+<head>
+	<title>我的支付系统</title>
+	<meta http-equiv="content-type" content="text/html; charset=gb2312"/>
+</head>
+<body>
+<form action="b.php" method="post">
+<table>
+	<tr>
+		<td colspan="4">
+		订单号：<input type='text' name='p2_Order'/>
+		支付金额:<input type='text' name='p3_Amt'/>
+		</td>
+	</tr>
+	<tr>
+		<td colspan='4'>请选择支付银行</td>
+	</tr>
+	<tr>
+		<td><input type='radio' name='pd_FrpId' value='CMBCHINA-NET' />招商银行</td>
+		<td><input type='radio' name='pd_FrpId' value='ICBC-NET' />工商银行</td>
+		<td><input type='radio' name='pd_FrpId' value='ABC-NET' />农业银行</td>
+		<td><input type='radio' name='pd_FrpId' value='CCB-NET' />建设银行</td>
+	</tr>
+	<tr>
+		<td colspan='4'><input type='submit' value='确认支付'/></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>
+
+
+
+
+	//-----支付处理页面
+	
+<html>
+<head>
+	<title>我的支付系统</title>
+	<meta http-equiv="content-type" content="text/html; charset=gb2312"/>
+</head>
+<?php
+	require_once 'test.php';
+	//获取用户提交的信息
+	$p0_Cmd="Buy";
+	$p1_MerId="10012226645";
+	$p2_Order=$_POST['p2_Order'];
+	$p3_Amt=$_POST['p3_Amt'];
+	$p4_Cur="CNY";
+	$p5_Pid="";
+	$p6_Pcat="";
+	$p7_Pdesc="";
+	$p8_Url="http://localhost/c.php";
+	$p9_SAF='0';
+	$pa_MP="";
+	$pd_FrpId=$_POST['pd_FrpId'];
+	$pr_NeedResponse="1";
+	
+	$data="";
+	$data=$data.$p0_Cmd;
+	$data=$data.$p1_MerId;
+	$data=$data.$p2_Order;
+	$data=$data.$p3_Amt;
+	$data=$data.$p4_Cur;
+	$data=$data.$p5_Pid;
+	$data=$data.$p6_Pcat;
+	$data=$data.$p7_Pdesc;
+	$data=$data.$p8_Url;
+	$data=$data.$p9_SAF;
+	$data=$data.$pa_MP;
+	$data=$data.$pd_FrpId;
+	$data=$data.$pr_NeedResponse;
+	$merchantKey= "w79txMr0ql14p709ADuQ7a9Hk3Dc6G2225021w79ws3G9oPSy20U92QimbLy";
+
+	$t = new test();
+	$hmac=$t->HmacMd5($data,$merchantKey);
+?>
+	你的订单号是<?php echo $p2_Order;?> 支付的金额是<?php echo $p3_Amt ;?>
+<form action="https://www.yeepay.com/app-merchant-proxy/node" method="post">
+	<input type='hidden' name="p0_Cmd" value="<?php echo $p0_Cmd ;?>"/>
+	<input type='hidden' name="p1_MerId" value="<?php echo $p1_MerId ;?>"/>
+	<input type='hidden' name="p2_Order" value="<?php echo $p2_Order ;?>"/>
+	<input type='hidden' name="p3_Amt" value="<?php echo $p3_Amt ;?>"/>
+	<input type='hidden' name="p4_Cur" value="<?php echo $p4_Cur ;?>"/>
+	<input type='hidden' name="p5_Pid" value="<?php echo $p5_Pid ;?>"/>
+	<input type='hidden' name="p6_Pcat" value="<?php echo $p6_Pcat ;?>"/>
+	<input type='hidden' name="p7_Pdesc" value="<?php echo $p7_Pdesc ;?>"/>
+	<input type='hidden' name="p8_Url" value="<?php echo $p8_Url ;?>"/>
+	<input type='hidden' name="p9_SAF" value="<?php echo $p9_SAF ;?>"/>
+	<input type='hidden' name="pa_MP" value="<?php echo $pa_MP ;?>"/>
+	<input type='hidden' name="pd_FrpId" value="<?php echo $pd_FrpId ;?>"/>
+	<input type='hidden' name="pr_NeedResponse" value="<?php echo $pr_NeedResponse ;?>"/>
+	<input type='hidden' name="hmac" value="<?php echo $hmac ;?>"/>
+	<input type="submit" value='确认支付' />
+</form>
+</html>
+
+
+
+
+	//----易宝回调页面
+	
+<html>
+<head>
+	<title>我的支付系统</title>
+	<meta http-equiv="content-type" content="text/html; charset=gb2312"/>
+</head>
+<h1>支付成功！！！</h1>
+</html>
+
+
+
+
+	//----网上支付处理函数
+<?php
+class test{
+	function HmacMd5($data,$key){
+		$key=iconv("GB2312","UTF-8",$key);
+		$data=iconv("GB2312","UTF-8",$data);
+		$b=64;
+		if(strlen($key)>$b){
+			$key=pack("H*",md5($key));
+		}
+		$key=str_pad($key,$b,chr(0x00));
+		$ipad=str_pad('',$b,chr(0x36));
+		$opad=str_pad('',$b,chr(0x5c));
+		$k_ipad=$key ^ $ipad;
+		$k_opad=$key ^ $opad;
+		return md5($k_opad . pack("H*",md5($k_ipad . $data)));
+	}
+}
+*/
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+/*
+
+    //三十：=====javascript=====
+
+	-----javascript有alert,document.write两种写入方式
+。
+<body>
+	<script>
+		alert('aaaaaaaaa');
+		document.write('这是通过javascript写入的内容');
+	</script>
+</body>
+
+
+
+
+	-----script可以在任何地方嵌入，但不可在<>内和style中
+
+<script>
+	alert('aaaaaa'+'111');
+</script>
+<html>
+<script>
+	alert('bbbbbbbbb'+'111');
+</script>
+<head>
+<script>
+	alert('ccccccccc'+'111');
+</script>
+</head>
+<body>
+<script>
+	alert('dddddddd'+'111');
+</script>
+</body>
+</html>
+<script>
+	alert('eeeeeeeee'+'111');
+</script>
+
+
+
+
+
+
+	-----href,form,onclick 触发式脚本
+
+<html>
+<body>
+	<a href="javascript:alert('aaaaaaaaaaaaaa')">demo</a>
+	<form action="javascript:alert('fffffffffffff')" >
+		<input type='submit' value="表单提交"/>
+	</form>
+	<div onclick="alert('ooooooooo')">hello</div>
+	<script>
+		alert(new Date());
+		document.write(new Date());
+	</script>
+	
+</body>
+</html>
+
+
+
+
+
+	-----js外连文件也可以互通的，也可以相互调用
+<html>
+<body>
+	<script src='e1.js'></script> //先在一个JS文件中声明了hello的变量
+	<script src='e2.js'></script> //在e2的js文件中调用了这个变量。
+</body>
+</html>
+	<script>
+		alert(hello);
+		document.write(hello);
+	</script>
+
+
+
+
+	e1.js内容
+var hello="你好";
+
+	e2.js内容
+alert(hello);
+
+*/
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?
+/*
+	//三十一：javascript各数据类型
+
+<script>
+	//number类型包括：整形，double,float
+	var a = 10;
+	alert(typeof(a));
+
+	var a = 1.1;
+	alert(typeof(a));
+
+
+	var a = 10.55;
+	alert(typeof(a));
+
+
+	//string字符串类型
+	var a = "abc";
+	alert(typeof(a));
+
+
+	//boolean布尔型
+	var a = true;
+	alert(typeof(a));
+
+	//object 对象类型，包括object ,array,null	
+	var a = ['11','22'];
+	alert(typeof(a));
+
+	var a = null;
+	alert(typeof(a));
+
+
+
+	//javascript 连接符 +
+  	var a =10;
+	alert("aaa"+a+'bbb');
+</script>
+*/
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+/*
+	//三十二：script 隔行换色打表格并指行变色
+
+<script>
+	var i=0;
+	document.write("<table border='1' width='800' align='center'>");
+	while(i<1000){
+		if(i%20==0){
+			bg='#ccc';
+		}else{
+			bg='#aaa';
+		}
+		if(i%10==0){
+			document.write("<tr onmouseover='show(this)' onmouseout='noshow(this)' bgcolor="+bg+">");
+		}
+		document.write("<td>"+i+"</td>");
+		i++;
+		if(i%10==0){
+			document.write("</tr>");
+		}	
+	}
+	document.write("</table>");
+	function show(obj){
+		bj=obj.bgColor;
+		obj.bgColor="red";
+	}
+	function noshow(obj){
+		obj.bgColor=bj;
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//三十三：javascript页面显示时间并时时更新案例
+
+<script>
+setInterval(function dt(){
+	var dt = new Date();
+	var str="";
+	switch(dt.getDay()){
+		case 0:
+			str="日";
+			break;
+		case 1:
+			str="一";
+			break;
+		case 2:
+			str="二";
+			break;
+		case 3:
+			str="三";
+			break;
+		case 4:
+			str="四";
+			break;
+		case 5:
+			str="五";
+			break;
+		case 6:
+			str="六";
+			break;
+	}
+	var hours=dt.getHours();
+	var minutes=dt.getMinutes();
+	var seconds=dt.getSeconds();	
+	if(hours < 10){
+		hours="0"+hours;
+	}
+	if(minutes <10){
+		minutes="0"+minutes;
+	}
+	if(seconds <10){
+		seconds="0"+seconds;
+	}
+
+
+	var times = "今天是："+dt.getFullYear()+"年"+(dt.getMonth()+1)+"月"+dt.getDate()+"日&nbsp;星期"+str+"&nbsp"+hours+":"+minutes+":"+seconds;
+	document.getElementById('t2').innerHTML=times;
+},1000);
+</script>
+
+<body>
+	<div id="t2"></div>
+</body>
+
+
+
+		-----将JS显示时间封装成函数
+
+
+function time(){
+   setInterval(function dt(){
+	var dt = new Date();
+	var str="";
+	switch(dt.getDay()){
+		case 0:
+			str="日";
+			break;
+		case 1:
+			str="一";
+			break;
+		case 2:
+			str="二";
+			break;
+		case 3:
+			str="三";
+			break;
+		case 4:
+			str="四";
+			break;
+		case 5:
+			str="五";
+			break;
+		case 6:
+			str="六";
+			break;
+	}
+	var hours=dt.getHours();
+	var minutes=dt.getMinutes();
+	var seconds=dt.getSeconds();	
+	if(hours < 10){
+		hours="0"+hours;
+	}
+	if(minutes <10){
+		minutes="0"+minutes;
+	}
+	if(seconds <10){
+		seconds="0"+seconds;
+	}
+
+
+	var times = dt.getFullYear()+"年"+(dt.getMonth()+1)+"月"+dt.getDate()+"日&nbsp;星期"+str+"&nbsp"+hours+":"+minutes+":"+seconds;
+	document.getElementById('t2').innerHTML=times;
+   },1000);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//三十四：光标划过，导航栏列表上隐下显
+
+
+
+
+html页面：
+
+
+<head>
+<script src="jquery.js"></script>
+<script src="b.js"></script>
+<style>
+
+	.list{
+		width:300px;
+		margin:0;
+		padding:0;
+		margin:50px auto;
+		list-style:none;
+		color:#fff;
+	}
+	.list li{
+		background:#333;
+		width:100px;
+		text-align:center;
+		float:left;
+		cursor:pointer;
+	}
+</style>
+</head>
+<body>
+<div class="listd">
+<ul class="list">
+	<li>导航列表
+		<ul class="dnav">
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+		</ul>
+	</li>
+	<li>导航列表
+		<ul class="dnav">
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+		</ul>
+	</li>
+	<li>导航列表
+		<ul class="dnav">
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+		</ul>
+	</li>
+</ul>
+</div>
+</body>
+
+
+
+
+js页面：
+
+$(function(){
+	$(".dnav").css({
+		listStyle:'none',
+		margin:0,
+		padding:0,
+		display:'none'
+	});
+	$(".dnav").parent().hover(function(){
+		$(this).find(".dnav").slideDown(10);
+	},function(){
+		$(this).find(".dnav").stop().slideUp(10);
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+//=====三十五：设置position产生移动动画效果(广告漂浮)
+
+//引入jquery主文件
+//将元素的position设置成绝对定位
+$(":button").eq(0).click(function(){
+	$("#box").animate({
+		left:'400px',
+		top:'400px',
+	},1000,'linear',function xh(){
+	$("#box").animate({
+		left:'800px',
+		top:'200px',
+	},1000,'linear',function(){
+	$("#box").animate({
+		left:'400px',
+		top:0.
+	},1000,'linear',function(){
+	$("#box").animate({
+		left:0,
+		top:'200px',
+	},1000,'linear',function(){
+	$("#box").animate({
+		left:'400px',
+		top:'400px',
+	},1000,'linear',xh);
+});
+});
+});
+});
+});
+
+
+
+

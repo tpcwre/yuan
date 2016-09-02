@@ -1,0 +1,609 @@
+//=====DTD要点提取
+//DTD文件：
+
+<!ELEMENT 班级 (学生+)>
+<!ELEMENT 学生 (名字,年龄,介绍)>
+<!ELEMENT 名字 (#PCDATA)>
+<!ELEMENT 年龄 (#PCDATA)>
+<!ELEMENT 介绍 (#PCDATA)>
+
+
+
+//xml文件：
+
+<?xml version="1.0" encoding="utf-8"?>
+<!- -外部引入DTD- ->
+<!DOCTYPE 班级 SYSTEM "class.dtd">
+<班级>
+	<学生>
+		<名字>周星驰</名字>
+		<年龄>23</年龄>
+		<介绍>学习刻苦</介绍>
+		<面积>20</面积>
+	</学生>
+	<学生>
+		<名字>周润发</名字>
+		<年龄>33</年龄>
+		<介绍>学习刻苦</介绍>
+	</学生>
+</班级>
+
+
+
+//校验文件：
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<script langage="javascript">	
+	//实例化一个XML解析器
+	var xmldoc = new ActiveXObject("Microsoft.XMLDOM");
+	//开启校验功能
+	xmldoc.validateOnParse =true;
+	//指定对哪个XML文件校验
+	xmldoc.load("xml.xml");
+	//如果有错误，则输出 
+	document.write("错误信息："+xmldoc.parseError.reason+"<br>");
+	document.write("错误行号："+xmldoc.parseError.line+"<br>");
+</script>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				======DTD=====
+
+
+一，注：文档规范约束技术不只有DTD,还有另一种 “Schema”.
+
+二，DTD = document type definition :文档类型定义
+
+三，DTD的主要作用是约束 XML ,HTML,XHTML..等文档的书写规范 它不仅运用在PHP,也运用在JAVA,.NET等语言中。
+
+
+
+
+
+
+//=====DTD的组成由-元素，属性，属性类型，属性特点
+//=====元素类型 
+//=====元素属性
+//=====元素属性类型：
+//=====元素属性特点：
+//=====引入DTD的三种方法(外部，内部，内外结合)
+//=====内部DTD的引用 ： 将DTD内容直接写在XML文件内
+//=====外部引用DTD
+//=====DTD的注释 
+//=====ENTITY/ENTITIES - -  引用实体详解
+//=====ENTITY/ENTITIES - -  参数实体详解
+//=====XHTML1.0的三种公开DTD
+//=====DTD约束规范XML的过程
+//=====DTD约束XML的校验文件：
+//=====DTD约束的几个案例
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====DTD的组成由-元素，属性，属性类型，属性特点
+
+<!ELEMENT NAME CONTENT>
+
+ELEMENT : 	关键字
+NAME 	: 	元素名称
+CONTENT : 	元素类型
+
+
+
+
+
+//=====元素类型 
+//=====元素属性
+//=====元素属性类型：
+//=====元素属性特点：
+//=====引入DTD的三种方法(外部，内部，内外结合)
+//=====内部DTD的引用 ： 将DTD内容直接写在XML文件内
+//=====外部引用DTD
+//=====DTD的注释 
+//=====ENTITY/ENTITIES - -  引用实体详解
+//=====ENTITY/ENTITIES - -  参数实体详解
+//=====XHTML1.0的三种公开DTD
+//=====DTD约束规范XML的过程
+//=====DTD约束XML的校验文件：
+//=====DTD约束的几个案例
+
+	作用：用来定义元素的内容，是否包含子元素或内容。
+
+EMPTY 	： 该元素不能包含子元素和文本，但可以有属性-（必为空元素）
+ANY 	： 该元素可以包含任何在DTD中定义的元素内容。注意：一定要是DTD中以经定义过的元素！！！
+#PCDATA ： 可以包含任何字符数据，但是不能在其中包含任何子元素。
+
+
+
+
+//=====元素属性
+	
+	作用：用来定义元素的个数范围及顺序和分组。
+
+“+” ： 表示1 - 多个元素）。 
+“*” ： 表示0 - 多个元素）。
+“?” ： 表示0 - 1个元素
+“,” ： 表示元素的排列必须按此顺序排列。
+“|” ： 表示单选，只能选一种
+“()” ：表示元素分组。
+
+
+
+
+//=====元素属性类型：
+
+	作用：定义元素的属性的类型是字符还是实体还是枚举等。
+
+CDATA 	：  可以是字符或数字
+ID    	：  属性值是唯一的，字母开头
+IDREF/IDREFS	：	id引用 /引用多个
+Enumerated	：	枚举（给出几个，选出其中一个）
+ENTITY/ENTITIES ： 	实体
+
+
+
+
+//=====元素属性特点：
+	
+	作用：定义元素是否可以拥有属性。
+#REQUIRED	: 必须有
+#IMPLIED	: 可有可无
+FIXED		: 该属性值是固定的
+Default value 	: 默认值
+
+
+
+
+
+
+
+
+//=====引入DTD的三种方法(外部，内部，内外结合)
+
+DTD的用法类似CSS 即可写在文档本身内部，也可用外部引用。
+- -内部引用DTD文档
+	<!DOCTYPE 根元素 [定义内容]>
+
+- -外部DTD的引用 ： 引用外部的DTD文件
+<!DOCTYPE 根元素名 SYSTEM "DTD的路径"/>
+
+
+- -内外部DTD文档结合引用 ：
+<!DOCTYPE 根元素 SYSTEM "DTD文件路径" [定义内容]>
+
+
+
+
+
+
+
+
+//=====内部DTD的引用 ： 将DTD内容直接写在XML文件内
+
+<!DOCTYPE 根元素 [定义内容]>
+<?xml version="1.0" encoding="utf-8"?>
+<!- -引入DTD- ->
+<!DOCTYPE 班级 [
+	<!ELEMENT 班级 (学生+)>
+	<!ELEMENT 学生 (名字,年龄,介绍)>
+	<!ELEMENT 名字 (#PCDATA)>
+	<!ELEMENT 年龄 (#PCDATA)>
+	<!ELEMENT 介绍 (#PCDATA)>
+]>
+<班级>
+	<学生>
+		<名字>周星驰</名字>
+		<年龄>23</年龄>
+		<介绍>学习刻苦</介绍>
+		<面积>20</面积>
+	</学生>
+</班级>
+
+
+
+
+
+
+
+
+//=====外部引用DTD
+
+<?xml version="1.0" encoding="utf-8"?>
+<!- -外部引入DTD- ->
+<!DOCTYPE 班级 SYSTEM "class.dtd">
+<班级>
+	<学生>
+		<名字>周星驰</名字>
+		<年龄>23</年龄>
+		<介绍>学习刻苦</介绍>
+		<面积>20</面积>
+	</学生>
+	<学生>
+		<名字>周润发</名字>
+		<年龄>33</年龄>
+		<介绍>学习刻苦</介绍>
+	</学生>
+</班级>
+
+
+
+
+
+
+
+
+
+//=====DTD的注释 
+
+	<!- -注释内容- ->
+
+
+
+
+
+
+//=====ENTITY/ENTITIES - -  引用实体详解
+
+				//引用实体主要是在XML中使用的；
+
+基本原理：
+1，在DTD文档中定义一个引用实体 <!ENTITY 实体名 "内容">
+2，在XML文件中引用 	&实体名;
+
+
+- -在DTD中定义实体
+
+<!ELEMENT 班级 (学生+,班长?)>
+<!ELEMENT intro "这是一个介绍">   //定义了一个实体 intro:是名字， 后面是内容。
+
+
+- -在XML中引用实体
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE 班级 SYSTEM "xxx.dtd">
+<班级>
+	<学生>
+		<介绍>&intro;学习刻苦</介绍>   //引用了实体
+	</学生>
+</班级>
+
+
+
+
+
+
+
+//=====ENTITY/ENTITIES - -  参数实体详解
+
+				//参数实体使用在DTD本身文档中
+
+使用原理：
+在DTD中定义参数实体：
+<!ENTITY % 实体名称 "实体内容">
+
+在DTD中引用实体：
+%实体名称;
+
+例：
+<!ELEMENT 班级 (学生+,班长)>
+<!ENTITY % sName "名字">	//定义了一个参数实体
+<!ELEMENT 学生 (%sName;,年龄，介绍)>  //引用了参数实体
+<!ELEMENT %sName (#PCDATA)>	//引用了参数实体
+<!ELEMENT 年龄 (#PCDATA)>
+<!ELEMENT 介绍 (#PCDATA)>
+<!ELEMENT 班长 (#PCDATA)>
+
+
+
+
+
+
+
+//=====XHTML1.0的三种公开DTD
+
+一：
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+二：
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+三：
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+
+
+
+
+
+
+
+
+
+//=====DTD约束规范XML的过程
+
+DTD规范-》装载到XML或其它文档-》然后再装载到校验文件checkDTD.html来解析
+
+
+例：
+
+//DTD文件：
+
+<!ELEMENT 班级 (学生+)>
+<!ELEMENT 学生 (名字,年龄,介绍)>
+<!ELEMENT 名字 (#PCDATA)>
+<!ELEMENT 年龄 (#PCDATA)>
+<!ELEMENT 介绍 (#PCDATA)>
+
+
+
+//xml文件：
+
+<?xml version="1.0" encoding="utf-8"?>
+<!- -外部引入DTD- ->
+<!DOCTYPE 班级 SYSTEM "class.dtd">
+<班级>
+	<学生>
+		<名字>周星驰</名字>
+		<年龄>23</年龄>
+		<介绍>学习刻苦</介绍>
+		<面积>20</面积>
+	</学生>
+	<学生>
+		<名字>周润发</名字>
+		<年龄>33</年龄>
+		<介绍>学习刻苦</介绍>
+	</学生>
+</班级>
+
+
+
+//校验文件：
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<script langage="javascript">	
+	//实例化一个XML解析器
+	var xmldoc = new ActiveXObject("Microsoft.XMLDOM");
+	//开启校验功能
+	xmldoc.validateOnParse =true;
+	//指定对哪个XML文件校验
+	xmldoc.load("xml.xml");
+	//如果有错误，则输出 
+	document.write("错误信息："+xmldoc.parseError.reason+"<br>");
+	document.write("错误行号："+xmldoc.parseError.line+"<br>");
+</script>
+</head>
+
+
+
+
+
+
+//=====DTD约束XML的校验文件：
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<script langage="javascript">	
+	//实例化一个XML解析器
+	var xmldoc = new ActiveXObject("Microsoft.XMLDOM");
+	//开启校验功能
+	xmldoc.validateOnParse =true;
+	//指定对哪个XML文件校验
+	xmldoc.load("xml.xml");
+	//如果有错误，则输出 
+	document.write("错误信息："+xmldoc.parseError.reason+"<br>");
+	document.write("错误行号："+xmldoc.parseError.line+"<br>");
+</script>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====DTD约束的几个案例
+
+
+例二：
+
+- -DTD页面：
+
+<!ELEMENT TVSCHEDULE (CHANNEL+)> //声明根元素，1-N个一级子元素
+<!ELEMENT CHANNEL (BANNER,DAY+)> //一级子元素中再次声明，两个二级子元素，DAY可有1到多个
+<!ELEMENT BANNER (#PCDATA)>	 //规范二级子元素BANNER 不能有子元素只能有字符或数字
+<!ELEMENT DAY (DATE,(HOLIDAY|PROGRAMSLOT+)+)> //声明DAY下有两个子元素，后面的为枚举选一个，+：1到多
+<!ELEMENT HOLIDAY (#PCDATA)>	 // 不能有子节点，内容为字符或数字
+<!ELEMENT DATE (#PCDATA)>	 // 不能有子节点，内容为字符或数字
+<!ELEMENT PROGRAMSLOT (TIME,TITLE,DESCRIPTION?)> //声明PROGRAMSLOT下有三个子元素，DESCRIPTION可有1或0个
+<!ELEMENT TIME (#PCDATA)>	//不能有子节点，内容为字符或数字
+<!ELEMENT TITLE (#PCDATA)> 	//不能有子节点，内容为字符或数字
+<!ELEMENT DESCRIPTION (#PCDATA)>	//不能有子节点，内容为字符或数字
+
+<!ATTLIST TVSCHEDULE NAME CDATA #REQUIRED> //TVSCHEDULE下NAME 属性是数字或字符形式，可有可无
+<!ATTLIST CHANNEL CHAN CDATA #REQUIRED>		//CHANNEL下CHN 属性是数字或字符形式，可有可无
+<!ATTLIST PROGRAMSLOT VTR CDATA #IMPLIED>	//PROGRAMSLOT下VTR 属性是数字或字符形式，可有可无
+<!ATTLIST TITLE RATING CDATA #IMPLIED>		//TITLE下RATING 属性是数字或字符形式，可有可无
+<!ATTLIST TITLE LANGUAGE CDATA #IMPLIED>	//TVSCHEDULE下LANGVAGE 属性是数字或字符形式，可有可无	
+
+
+
+- -XML页面：
+<?xml version="1.0" encoding="utf-8"?>		// XML文件头
+<!DOCTYPE TVSCHEDULE SYSTEM "a.dtd">		// 引入外部DTD文件
+<TVSCHEDULE NAME="lee">				
+	<CHANNEL CHAN="eee">
+		<BANNER>aaa</BANNER>
+		<DAY>
+			<DATE>BBB</DATE>
+			<PROGRAMSLOT VTR="222">
+				<TIME>ccc</TIME>
+				<TITLE RATING="555">ddd</TITLE>
+				<DESCRIPTION>ddd</DESCRIPTION>
+			</PROGRAMSLOT>
+		</DAY>
+	</CHANNEL>
+</TVSCHEDULE>
+
+
+- -校验页面：
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<script langage="javascript">	
+	//实例化一个XML解析器
+	var xmldoc = new ActiveXObject("Microsoft.XMLDOM");
+	//开启校验功能
+	xmldoc.validateOnParse =true;
+	//指定对哪个XML文件校验
+	xmldoc.load("a.xml");
+	//如果有错误，则输出 
+	document.write("错误信息："+xmldoc.parseError.reason+"<br>");
+	document.write("错误行号："+xmldoc.parseError.line+"<br>");
+
+</script>
+</head>
+
+
+
+
+
+
+
+
+例三：
+
+- -dtd页面
+
+<!ELEMENT NEWSPAPER (ARTICLE+)>
+<!ELEMENT ARTICLE (HEADLINE,BYLINE,LEAD,BODY,NOTES)>
+<!ELEMENT HEADLINE (#PCDATA)>
+<!ELEMENT BYLINE (#PCDATA)>
+<!ELEMENT LEAD (#PCDATA)>
+<!ELEMENT BODY (#PCDATA)>
+<!ELEMENT NOTES (#PCDATA)> 
+
+<!ATTLIST ARTICLE AUTHOR CDATA #REQUIRED>
+<!ATTLIST ARTICLE EDITOR CDATA #IMPLIED>
+<!ATTLIST ARTICLE DATE CDATA #IMPLIED>
+<!ATTLIST ARTICLE EDITION CDATA #IMPLIED>
+
+<!ENTITY NEWSPAPER "Vervet Logic Times">		//引用实体
+<!ENTITY PUBLISHER "Vervet Logic Press">		//引用实体
+<!ENTITY COPYRIGHT "Copyright 1998 Vervet Logic Press">	//引用实体
+
+
+
+- -xml页面
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE NEWSPAPER SYSTEM "b.dtd">
+<NEWSPAPER>
+
+	<ARTICLE AUTHOR="lee" EDITOR="A" DATE="2012" EDITION="B">
+		<HEADLINE>&NEWSPAPER;aaa</HEADLINE>		//调用了引用实体
+		<BYLINE>bbb</BYLINE>
+		<LEAD>ccc</LEAD>
+		<BODY>ddd</BODY>
+		<NOTES>eee</NOTES>
+	</ARTICLE>
+</NEWSPAPER>
+
+
+
+- -校验
+
+
+
+
+
+
+
+
+
+例四：
+
+- -DTD页面：
+<!ENTITY AUTHOR "John Doe">
+<!ENTITY COMPANY "JD Power Tools, Inc.">
+<!ENTITY EMAIL "jd@jd-tools.com">
+
+<!ELEMENT CATALOG (PRODUCT+)>
+
+<!ELEMENT PRODUCT
+(SPECIFICATIONS+,OPTIONS?,PRICE+,NOTES?)>
+<!ATTLIST PRODUCT
+NAME CDATA #IMPLIED
+CATEGORY (HandTool|Table|Shop-Professional) "HandTool"
+PARTNUM CDATA #IMPLIED
+PLANT (Pittsburgh|Milwaukee|Chicago) "Chicago"
+INVENTORY (InStock|Backordered|Discontinued) "InStock">
+
+<!ELEMENT SPECIFICATIONS (#PCDATA)>
+<!ATTLIST SPECIFICATIONS
+WEIGHT CDATA #IMPLIED
+POWER CDATA #IMPLIED>
+
+<!ELEMENT OPTIONS (#PCDATA)>
+<!ATTLIST OPTIONS
+FINISH (Metal|Polished|Matte) "Matte" 
+ADAPTER (Included|Optional|NotApplicable) "Included"
+CASE (HardShell|Soft|NotApplicable) "HardShell">
+
+<!ELEMENT PRICE (#PCDATA)>
+<!ATTLIST PRICE
+MSRP CDATA #IMPLIED
+WHOLESALE CDATA #IMPLIED
+STREET CDATA #IMPLIED
+SHIPPING CDATA #IMPLIED>
+
+<!ELEMENT NOTES (#PCDATA)>
+
+
+
+
+- -XML页面：
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE PRODUCT SYSTEM "c.dtd">
+<PRODUCT CATEGORY="Table" PLANT="Milwaukee" INVENTORY="Backordered">
+	<SPECIFICATIONS>aaa</SPECIFICATIONS>
+	<PRICE MSRP="a">222</PRICE>
+</PRODUCT>
+
+
+
+- -校验页面：
+......

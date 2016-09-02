@@ -1,0 +1,4819 @@
+﻿//===== 常用命令
+	df -ah				查看磁盘空间使用情况
+
+	du -sh *			查看当前目录下所有目录与文件的大小
+
+	cat /etc/passwd			查看用户列表 | 查看指定文件内容
+
+	cat /etc/passwd | grep root	查年指定用户 | 查看匹配关键字的那行文本内容
+
+	adduser xxx			添加用户
+
+	userdel	xxx			删除用户
+
+	passwd xxx yyy			给用用户xxx 设置密码
+
+	echo 3 > /proc/sys/vm/drop_caches	清除内存
+
+	top				查看CPU,内存使用情况
+	ps				查看静态进程
+
+	chmod 777 -R xdir 		给文件或目录修改权限
+	chmod 755 2.txt
+
+	chown user2 yum.log	更改文件的所有者为uesr2
+	chown :user1 b.txt	更改文件的所属组为 user1
+	chown user2:user2 c.txt	同时更改文件的所有者和所属组
+
+	/etc/passwd 			-shell 禁用指定用户的shell登陆
+		git:x:1001:1001:,,,:/home/git:/bin/bash 改成 git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+		
+
+
+
+
+//=====  Linux释放内存的命令及原理
+
+//===== lamp 环境各软件的存放位置
+
+//===== linux 下的服务的启动，停止，重启
+
+//===== linux 安装程序时的参数解释
+
+//===== 命令rz， 在windows中将文件上传的linux 
+
+
+
+
+
+//===== 异常与错误的解决
+
+	//-- linux 中 php缓存 的去除
+		在php.ini 配置文件中找到  opcache.enable=0   将其打开即可
+
+	//-- vim 使用 ctrl + s 假死的解决
+
+		全用 ctrl + q 	即可
+	
+
+
+
+
+	
+//===== 其它特殊效果
+
+
+
+	//--md5sum xxx	获取(计算)某个文件的md5值
+
+		[root@iZ28ervcw15Z bin]# md5sum mongo
+		941b6141e307dde799bf01599f326816  mongo
+
+
+
+	//-- netstat -an 	查看当前连接到服务器的IP 及相应端口
+	     netstat -anb 	-b附带进程号
+
+		连接状态解释：
+		CLOSED：无连接是活动的或正在进行
+
+		LISTEN：服务器在等待进入呼叫
+
+		SYN_RECV：一个连接请求已经到达，等待确认
+		
+		SYN_SENT：应用已经开始，打开一个连接
+
+		ESTABLISHED：正常数据传输状态
+
+		FIN_WAIT1：应用说它已经完成
+
+		FIN_WAIT2：另一边已同意释放
+
+		ITMED_WAIT：等待所有分组死掉
+
+		CLOSING：两边同时尝试关闭
+
+		TIME_WAIT：另一边已初始化一个释放
+
+		LAST_ACK：等待所有分组死掉
+
+		另外很多人会用到TCP SYN Flood透过网路底层对服务器Server进行攻击的，我可以用Iptables防范下：
+
+		防止同步包洪水（Sync Flood）
+
+
+	//-- ntsysv	设置开机自启动（图形界面）
+
+
+	//-- 让全程序可以全局使用
+		将可执行命令 软链接到 /usr/local/bin 目录下  如：
+			ln -s /usr/local/php/bin/php /usr/local/bin/php		//如此 php命令即可全局使用了
+
+
+	//-- 查看用记的登陆及历史操作
+	
+			查看某用户 cat /home/username/.bash_history 的操作历史
+		　　使用root登陆使用last -x可查看用户登陆历史。
+		　　last 命令：
+		　　功能说明：列出目前与过去登入系统的用户相关信息。
+		　　语 法：last [-adRx][-f ][-n ][帐号名称…][终端机编号…]
+		　　补充说明：单独执行last指令，它会读取位于/var/log目录下，
+		　　名称为wtmp的文件，并把该给文件的内容记录的登入系统的用户名单全部显示出来。
+		　　参 数：
+		　　-a 把从何处登入系统的主机名称或IP地址，显示在最后一行。
+		　　-d 将IP地址转换成主机名称。
+		　　-f 指定记录文件。
+		　　-n 或- 设置列出名单的显示列数。
+		　　-R 不显示登入系统的主机名称或IP地址。
+		　　-x 显示系统关机，重新开机，以及执行等级的改变等信息。
+		　　lastlog可简单查看所有用户最后一次的登陆时间
+
+
+	//-- /usr/bin/ 目录可以简化命令及服务
+
+		mv composer.phar /usr/bin/composer
+
+		把这个文件移到bin目录下，它允许你简化命令。	composer install
+
+
+	//-- linux 修改host 文件
+		
+		sudo vim /etc/hosts
+
+			127.0.0.1 	www.baidu.com	将指定的域名绑定到本机IP
+			127.0.0.1 	www.sina.com	将指定的域名绑定到本机IP
+			127.0.0.1 	www.163.com	将指定的域名绑定到本机IP
+
+
+
+
+	//-- 创建隐藏文件或目录
+	
+		mkdir .ssh
+		
+
+	//-- 密钥的创建
+
+		cd /			//进入根目录
+
+		mkdir .ssh		//创建隐藏目录 .ssh
+
+		ssh-keygen -t rsa	//创建密钥
+
+					//为创建的公钥和私钥起名
+		Enter file in which to save the key (/root/.ssh/id_rsa):
+
+					//设置密码
+		Enter passphrase (empty for no passphrase): 
+		 
+		Enter same passphrase again:	//再次输入密码
+
+	
+
+
+	//===== SSH登陆限制，服务的启用禁用安全设置
+
+	//-- selinux	防护的关闭
+		//===== 关闭selinux
+
+
+	//-- 存放开机自动执行命令的文件
+		可以将命令加到/etc/rc.d/rc.local文件中，以使每次系统重启后自动执行该命令。
+	
+	//-- 限制Shell记录的历史命令条数
+		/etc/profile
+			HISTSIZE=1000	改成30
+
+
+
+	//--  禁用服务器ping 响应
+		echo '1' > /proc/sys/net/ipv4/icmp_echo_ignore_all	禁用
+		echo '0' > /proc/sys/net/ipv4/icmp_echo_ignore_all	开启
+
+
+
+	//-- alias cp='cp -i' 			//给命令创建别名
+	     unalias vi				//删除别名
+
+	//-- iptables –F  和  # setenforce 0 即可清除iptables表和设置selinux为可访问。
+
+
+	//--- chkconfig mysqld on		//设置程序为开机启动
+	      chkconfig --add memcached 	//添加开机启动项
+
+
+	//--- 查看一个目录的权限
+	echo substr(sprintf('%o', fileperms('../admin')), -4);			//查看一个目录的权限
+
+
+	//--- rz， 在windows中将文件上传的linux  
+		上传文件使用rz与sz命令,远程linux系统上需要安装lrzsz工具包
+		安装如下：
+		[xxxx@xxxx /]# yum install lrzsz
+		注意：我使用的命令是yum，如果你的是其他的请在网上查找相关的资料，只要install 后面加上 lrzsz都可以，单独的rz或sz是不行的
+		上传文件执行命令如下
+		[xxxx@xxxx /]# rz
+		此时会弹出一个windowns的对话框，选择你要上传的文件就可以了，注意文件不能为空文件，也就是大小为0字节的文件，文件为空文件是不行的，会一直处于上传的状态
+
+		ubantu 上安装lrzsz
+			apt-get install lrzsz
+		
+
+	//--- screen -S 开启一个远程后端执行，不会因断网或关闭窗口而终断程序的执行
+		screen -S lnmp
+		如果提示screen: command not found 命令不存在可以执行：yum install screen 或 apt-get install 
+
+
+
+	//--- whereis 查询某命令的位置
+		whereis ls 		//查询ls 命令位置
+			结果：
+			ls：/bin/ls /usr/share/man/man1/ls.1.gz 	显示命令所在位置
+
+
+	//--- lsb_release -a	查看系统型号版本及相关参数
+
+
+
+	//--- linux scp 服务器间文件的传输
+
+		scp /home/test/test.txt root@192.168.1.5:/home/root		将文件从本地复制到远程		
+
+		scp root@/full.tar.gz 192.168.1.5:/home/root/full.tar.gz home/test/full.tar.gz	将文件从远程复制到本地
+
+		scp -r local_folder remote_username@remote_ip:remote_folder		复制目录
+		
+		[root@iZ28jm7ijkbZ ~]# scp -r c.php root@dongchenggroup.cn:/home/www
+					scp    	拷贝命令
+					-r 	表示递归copy，若source中含有目录名，则将目录下之档案亦皆依序拷贝至目的地；
+					c.php  	指定文件名也可以是*代表所有
+					root	目标主机用户名
+					dongchenggroup.cn 	目标主机域名或ip
+					:/home/www		目标目录
+					cp 	本机上的文件拷贝
+					scp 	不同机器间的文件拷贝
+					-a same as -dpR 尽可能将源文件状态、权限等资料都照原装予以复制，并且是递归copy；
+					-f 表示force，若目的地已经有相同档名的档案存在，则在复制前先予以删除再行复制；
+					-v 和大多数 linux 命令中的 -v 意思一样 , 用来显示进度 . 可以用来查看连接、认证、 或是配置错误
+					-C 使能压缩选项
+					-P 选择端口 . 注意 -p 已经被 rcp 使用 
+
+
+	//--- crontab 		定时计划任务的使用
+
+		简单使用示例：
+		yum install -y vixie-cron  	// yum 安装
+		crontab -e 
+			*/1 * * * * echo 3 > /proc/sys/vm/drop_caches		//设置每分钟清除内存一次
+		service crond start		//运行计划任务
+		service crond status 		//查看计划任务运行状态
+
+
+		crontab -e	执行文字编辑器来编辑crontab，内定的文字编辑器是VI
+			-r	删除目前的crontab
+			-l	列出目前的crontab(查看专用)
+			-i	会和-r 配合使用，在删除当前的crontab时询问，输入y 则删除
+
+		service crond start		启动计划任务
+		/sbin/service crond start
+		/sbin/service crond stop //关闭服务
+		/sbin/service crond restart //重启服务
+		/sbin/service crond reload //重新载入配置
+
+		service crond status		查看运行状态
+
+		crontab特殊的符号说明：
+ 
+			“*”代表所有的取值范围内的数字。特别要注意哦！
+			“/”代表每的意思，如”*/5″表示每5个单位
+			“-”代表从某个数字到某个数字
+			“,”分散的数字
+ 
+
+
+		crontab文件的使用示例：
+
+			30 21 * * * 表示每晚的21:30
+			45 4 1,10,22 * * 表示每月1、10、22日的4 : 45
+			10 1 * * 6,0 表示每周六、周日的1 : 10
+			0,30 18-23 * * * 表示在每天18 : 00至23 : 00之间每隔30分钟
+			0 23 * * 6 表示每星期六的11 : 00 pm
+			* */1 * * * 每一小时
+			* 23-7/1 * * * 晚上11点到早上7点之间，每隔一小时
+			* 8,13 * * 1-5 从周一到周五的上午8点和下午1点
+			0 11 4 * mon-wed 每月的4号与每周一到周三的11点
+			0 4 1 jan * 一月一号的4点
+			30 21 * * * /usr/local/etc/rc.d/lighttpd restart	上面的例子表示每晚的21:30重启apache。
+			45 4 1,10,22 * * /usr/local/etc/rc.d/lighttpd restart	上面的例子表示每月1、10、22日的4 : 45重启apache。
+			10 1 * * 6,0 /usr/local/etc/rc.d/lighttpd restart	上面的例子表示每周六、周日的1 : 10重启apache。
+			0,30 18-23 * * * /usr/local/etc/rc.d/lighttpd restart	上面的例子表示在每天18 : 00至23 : 00之间每隔30分钟重启apache。
+			0 23 * * 6 /usr/local/etc/rc.d/lighttpd restart		上面的例子表示每星期六的11 : 00 pm重启apache。
+			* */1 * * * /usr/local/etc/rc.d/lighttpd restart	每一小时重启apache
+			* 23-7/1 * * * /usr/local/etc/rc.d/lighttpd restart	晚上11点到早上7点之间，每隔一小时重启apache
+			0 11 4 * mon-wed /usr/local/etc/rc.d/lighttpd restart	每月的4号与每周一到周三的11点重启apache
+			0 4 1 jan * /usr/local/etc/rc.d/lighttpd restart	一月一号的4点重启apache 
+ 
+		如何查看crontab的日志记录
+ 
+			昨天crontab中的同步任务没有执行，不知道是什么原因没有执行，貌似任务hang住了，想查询一下crontab到底问题出在哪里，或者hang在了什么地方。
+ 
+			1. linux
+			看 /var/log/cron这个文件就可以，可以用tail -f /var/log/cron观察
+ 
+			2. unix
+			在 /var/spool/cron/tmp文件中，有croutXXX001864的tmp文件，tail 这些文件就可以看到正在执行的任务了。
+ 
+			3. mail任务
+			在 /var/spool/mail/root 文件中，有crontab执行日志的记录，用tail -f /var/spool/mail/root 即可查看最近的crontab执行情况。
+
+
+		示例：
+			此命令将打开一个文本编辑器以添加新任务。
+			* 20 * * * rm -rf /root/febhost/dat/* /root/febhost/log/*
+
+			用对应的文本编辑器命令保存退出（vi编辑器是按esc后打:wq）
+
+			如果你对这种方式不熟悉，也可以直接改/etc/crontab，我看到你是要删除root文件夹内的目录，假设你有root权限（因为/etc/crontab所有者是root，			并且只有以root身份执行删除命令才能删除root home内的文件），用以下命令打开此文件：
+			vi /etc/crontab
+			将光标移动至最后一行，按o键新开一行输入以下内容：
+			* 20 * * *  root rm -rf /root/febhost/dat/* /root/febhost/log/*
+
+			给你解释下此行的含义吧，前五个以4个空格分隔开的值依次表示：分、时、日、月、周，如果取所有值就是打*号，如果你想周期性的运行一个任务，crontab也接受范围指定，比如说一天中的早8点到晚6点每隔一小时（就是每两小时，将会在8,10,12,14,16,18执行）执行你这个删除命令这样写：
+			* 8-18/2 * * *  root rm -rf /root/febhost/dat/* /root/febhost/log/*
+			第一个字段是分钟，取值范围：0-59
+			第二个字段是小时。取值范围：0-23
+			第三个字段是一个月中的第几天，取值范围：1-31
+			第四个字段是一年中的第几个月，取值范围：1-12
+			最后一个字段是一个星期中的第几天，以星期天开始依次的取值为0～7，0、7都表示星期天。
+			下一个字段是执行该命令的用户身份，这里是root用户，最后一个字段就是定时运行的命令
+
+
+				
+
+
+	//--- 设置service服务 启动脚本 
+
+		运行脚本命令	service xxx xxx 		如 service nginx stop 		停止nginx
+		
+		在 /etc/rc.d/init.d/ 	下添加相关程序的启动脚本		具体示例参见：  //===== nginx  service启动脚本示例
+					
+
+		//--脚本内容
+		
+				PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+				NAME=nginx
+				NGINX_BIN=/usr/local/nginx/sbin/$NAME
+				CONFIGFILE=/usr/local/nginx/conf/$NAME.conf
+				PIDFILE=/usr/local/nginx/logs/$NAME.pid
+							
+				case "$1" in   
+						/*	$1 表示运行该脚本时的第一个命令行参数
+							${1##*.tar.} 表示第一个命令行参数去掉*.tar.后剩下的部分。
+							比如运行脚本时用 ./mytar.sh  bak.tar.gz, 那么$1就是指bak.tar.gz, ${1##*.tar.} 就是gz  	*/
+				stop)
+					echo -n "Stoping $NAME... "						//运行时显示信息
+
+					if ! netstat -tnpl | grep -q nginx; then		// 如果没有监听到相关进程 或 没有匹配到nginx相关信息(grep -q 匹配到会返回0)   则执行下面代码
+						echo "$NAME is not running."				// 显示指定内容
+						exit 1										// 强制退出  0 正常结束  1 强制结束
+					fi
+
+					$NGINX_BIN -s stop								//停止nginx
+
+					if [ "$?" != 0 ] ; then							// $? 是上一个程序执行是否成功的标志，如果执行成功则$? 为0，否则 不为0
+						echo " failed. Use force-quit"
+						exit 1
+					else
+						echo " done"								//显示的内容
+					fi
+					;;
+
+
+
+
+
+
+
+
+
+
+				
+				
+
+//===== 文件及目录相关操作命令
+	//--- du 统计目录及文件的空间占用情况 
+	//--- df -hT 	查看磁盘及目录的使用情况
+	//--- mount	挂载硬件到指定目录
+	//--- find 	查找命令
+	//--- ln		为文件或目录建立链接
+	//--- .zip .gz .bz2	压缩和解压缩
+	//--- tar	将文件打包，解包
+	//--- | 	管道符号，在首次筛选结果中再次筛选
+	//--- touch	创建文件或刷新文件的时间戳
+	//--- echo >	给文件添加内容
+	//--- rm	删除文件或目录 
+	//--- mv	移动或重命名文件或目录(move的缩写)
+	//--- cat	查看文件内容及合并文件
+	//--- more	查看大容量的文件内容
+	//--- head  	显示文件内容的前十行（默认为前十行） 
+	//--- tail  	显示文件内容的最后十行（默认为最后十行）
+	//--- grep		筛选出文件中有指定字符的那行内容
+	//--- wc 		统计文件中单词的数量等信息
+	//--- mkdir	创建文件夹
+	//--- cp	复制或删除目录(copy的缩写)
+	//--- rm	删除文件或目录 
+	//--- cd		切换目录 
+	//--- pwd 显示当前所在目录
+	//--- ls 查看当前目录的内容(目录和文件)
+
+	//--- chmod 	给文件修改使用权限
+	//--- chown	更改文件的宿主和改组
+	//--- chgrp	更改文件的所属组
+	//--- umask 	权限机制 
+
+
+	//--- shutdown  关机和重启
+	//--- 多终端切换
+	//--- uname -r 查看内核版本及版本订制规则
+	//--- cat /proc/meminfo	查看内存信息
+	//--- setup			更改ip地址
+	//--- which 		搜索一个命令
+	//--- -help		查看内部命令帮助
+	//--- !$	调用上一条命令的参数
+
+
+
+	
+	
+	
+//===== 用户及权限相关
+
+	//--- 添加用户	useradd name
+	//--- 删除用户	userdel name
+	//--- su 切换到另一个用户
+	//--- groupadd gname	添加一个用户组 
+	//--- groupdel gname	删除一个用户组
+	//--- id xxx 查看用户ID 和组ID
+	//--- w, who 	查询以登陆主机的用户信息
+	//--- users, whoami	查询当前登陆的用户
+	//--- usermod	更改用户名及其它设置
+	//--- passwd 设置密码及查看用户状态
+	//--- gpasswd 设置组账号
+	//--- chmod 更改用户权限
+	//--- getfacl	给用户添加额外的权限
+
+	//--- 保存用户名的文件 	/etc/passwd
+	//--- 保存用户密码文件	/etc/shadow
+	//--- 保存组账号和密码的文件 /etc/group
+	//--- 保存组密码的文件 /etc/gshadow
+
+
+
+
+//===== 网络及主机名相关
+	//--- 临时修改主机名
+	//--- 固定修改ip和固定主机名
+	//--- hosts 保存主机名与IP地址的映射记录
+	//--- 查看临时修改ip
+	//--- windows中设置双IP
+	//--- linux 中配置双IP
+	//--- 重启网络服务
+	//--- 重启网卡
+	//--- 查看网关和子网掩码
+	//--- 临时设置网关和子网掩码 route
+	//--- 永久网关配置文件：
+	//--- DNS配置文件
+	//--- nslookup 测试DNS域名解析
+	//--- netstat 查看系统的网络连接状态
+	//--- traceroute 测试从当前主机到目的主机之间经过的网络节点
+	//--- tcp协议和UDP协议的区别 
+	//--- 修改网卡配置文件，允许网卡能随着系统开机一起启动
+	//--- linux下最直接限制ip访问的两种方式
+	//--- arp 查看与本机连接的主机IP及MAC地址
+	//--- ping 		测试网络连通性
+	
+	
+	
+	
+	
+	
+	
+//=====  ftp 相关操作
+	//--- 匿名权限控制：
+	//--- 网络的配置本地用户权限控制：
+	//--- 常用的全局配置项：
+	//--- 访问限制	
+
+
+
+
+	
+	
+	
+//===== linux 特殊效果及注意要点
+	
+	//--- 让别名永久生效
+	//--- linux脚本-将多个包同时解压
+	//--- 将执行结果输出到指定日志
+	//--- 安装 linux 时引导程序存放位置注意事项 
+	//--- linux文件夹挂载时，内容暂不可用
+	//--- 命令无法回删时全用 ctrl + 回删		特殊
+	//--- Linux 中的辅助快捷键					特殊 
+	//--- 将光标移出虚拟机						特殊
+	//--- 桥接，nat, hostonly 三种网络的区别	特殊
+	//--- 创建一个脚本文件						特殊
+
+	
+//===== nginx  service启动脚本示例
+	
+	
+	
+	
+	
+//===== liunx 其它
+
+	//--- liunx软件安装的两种方式
+	//--- 服务的开启重启的两种方式 				
+	//--- chkconfig-list	查看服务的自启动状态
+	//--- inittab	设置服务的运行级别
+	//--- chkconfig 设置服务的开机自启动
+	//--- reload 重新加载服务配置
+	
+	//--- yum 的安装配置						
+	//--- at 单次计划任务
+	//--- linux中几种常见的文件系统
+	//--- linux的目录类别
+	//--- 安装linux时的分区配额
+	//--- 用户操作环境解释
+	//--- Linux命令的输入格式
+	//--- 其它注意事项 
+	//--- 让程序在后台运行
+	
+	//--- PS	查看静态的进程统计信息
+	//--- top	查看动态的进程统计信息
+	//--- kill,killall 终止进程
+	//--- pkill	特定条件下终止程序
+	
+	//--- 设置SELinux防护，允许防火墙80端口访问
+	//--- setenforce 0		临时关闭SElinux 防护
+	//--- 关闭防火墙Netfilter/iptables
+	
+	
+	
+	
+	
+//===== apache 配置相关
+
+	//--- 默认网页保存位置：
+	//--- apache服务器的重启
+	//--- apache服务器的配置文件位置
+	//--- 日志的存放位置
+	//--- apache 环境的基本配置
+	//--- serverRoot 设置服务器的主目录(存放和服务相关配置文件)
+	//--- listen 	设置服务器使用的端口
+	//--- LoadModule...	加载的相关模块
+	//--- <IfModule unixd_module>  定义服务器的默认用户 (基本用不上)
+	//--- ServerAdmin you@xamp.com	定义服务器邮箱
+	//--- <Directory />	定义全局读写的权限
+	//--- DocumentRoot 设置网页的存放根目录
+	//--- <IfModule dir_module> 	设置自动识别打开的网页类型
+	//--- ErrorLog 错误日志存放设置
+	//--- CustomLog "logs/access_log" common	设置正确日志的存放位置
+	//--- <IfModule log_config_module> 设置日志的保存格式 
+	//--- <IfModule alias_module> 定义目录别名 (完善)
+	//--- 限制特定目录，只允许指定用户可以访问
+	//--- <Directory "/usr/local/apache2//htdocs"> 	设置目录的访问权限
+	//--- <IfModule mime_module>   识别文件类型的设置 
+	//--- 域名解析
+	//--- 配置虚拟主机	(完善)
+	//--- rewrite 重写功能 (须开启虚拟主机)
+	
+	
+	
+	
+			
+
+//===== 虚拟机及linux系统安装步骤
+//===== 设置虚拟机IP 及远程连接
+//===== 配置 yum 环境及 图形桌面软件安装流程
+//===== 安装 apache 流程
+//===== 磁盘操作
+	//--- fdisk 简易磁盘操作步骤
+	//--- fdisk 完全操作步骤
+	//--- 硬盘的分区
+	//--- 分区的命名
+//===== 搭建ftp环境
+//===== linux 下安装redis
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 网络及主机名相关
+		
+	//--- 临时修改主机名
+
+			hostname xiaoming			//临时修改主机名
+			hostname 					//查看主机名
+
+	//--- 查看临时修改ip
+
+			ifconfig eth0 192.168.113.68		//临时配置主机ip
+			ifconfig 
+			
+
+	//--- 固定修改ip和固定主机名
+		
+			vim /etc/sysconfig/network		//打开网络配置文件
+			
+				NETWORKING=192.168.113.68	//修改成固定IP
+				HOSTNAME=MING			//修改固定的主机名
+
+
+
+
+
+
+
+
+
+
+	//--- windows中设置双IP
+				1,	先将常规中的IP设置成自动获得IP
+				2,	在备用配置中设置IP
+		
+
+	//--- linux 中配置双IP
+			1): 设置第一个IP
+			 vim /etc/sysconfig/network-scripts/ifcfg-eth0    //网络参数配置文件
+
+				DEVICE=eth0				//第几块网卡
+				BOOTPROTO=none
+				HWADDR=00:0c:29:1d:ef:04		//MAC
+				NM_CONTROLLED=yes
+				ONBOOT=yes				//随机启动
+				TYPE=Ethernet				//网络类型
+				UUID="fe1ad9bf-f8ed-4b2a-a6b9-e11cbcedc608"	//硬件ID
+				IPADDR=192.168.113.68			// ip
+				NETMASK=255.255.255.0			// 子网掩码 
+				GATEWAY=192.168.113.1			// 网关
+				IPV6INIT=no
+				USERCTL=no
+			
+			2): 设置第二个IP
+				ifconfig eth0:0 192.168.113.69 network 255.255.255.0
+
+	//--- 重启网络服务	
+			
+			service network restart		重启网络服务
+
+	//--- 重启网卡
+
+			ifconfig eth0 up		启动网卡
+			ifup eth0 
+
+			ifconfig eth0 down		关闭网卡
+			ifdown eth0
+
+
+
+
+
+	//--- 查看网关和子网掩码
+
+			route
+				gateway 192.168.113.1		//显示的是网关
+				germask 255.255.255.0		//显示的子网掩码
+
+
+		
+	//--- 临时设置网关和子网掩码 route
+
+			route add default gw 192.168.113.2			//添加网关
+			
+			route del default gw 192.168.113.2			//删除网关
+
+			route add -net 192.168.114.0/24 gw 192.168.113.1	//让两个网通信 ，设置相同的网关(添加网段)
+
+			route del -net 192.168.114.0/24				//删除共用网关
+
+
+	//--- 永久网关配置文件：
+			
+				vim /etc/sysconfig/network-scripts/ifcfg-eth0
+				
+					GATEWAY=xxx.xxx.xxx.xxx	
+
+
+
+	//--- DNS配置文件
+			
+			/etc/resolv.conf
+
+			
+
+	//--- nslookup 测试DNS域名解析
+
+			nslookup 目标主机地址 [DNS服务器地址]
+
+
+
+
+	//--- hosts 保存主机名与IP地址的映射记录
+
+			/etc/hosts
+
+				XX.XX.XX.XX     www.lampbrother.net
+
+				hosts文件只对当前的主机有效
+				hosts文件可减少DNS查询过程，从而加快访问速度
+
+
+
+	//--- netstat 查看系统的网络连接状态
+			
+			-a (all)显示所有选项，默认不显示LISTEN相关
+			-t (tcp)仅显示tcp相关选项
+			-u (udp)仅显示udp相关选项
+			-n 拒绝显示别名，能显示数字的全部转化成数字。以数字形式显示
+			-l 仅列出有在 Listen (监听) 的服務状态
+
+			-p 显示建立相关链接的进程信息
+			-r 显示路由信息，路由表
+			-e 显示扩展信息，例如uid等
+			-s 按各个协议进行统计
+			-c 每隔一个固定时间，执行该netstat命令。
+
+				natstat -antp | grep "vsftpd"		//查看vsftpd相关的连接信息
+
+
+
+
+	//--- traceroute 测试从当前主机到目的主机之间经过的网络节点
+
+			traceroute 目标主机地址
+			
+
+
+
+
+
+
+	//--- tcp协议和UDP协议的区别 
+			
+			TCP协议需要一送一回再一送的三次会话才算成功，俗称三次握手的双向协议
+			UDP协议是只送不需要回的单身协议
+
+
+
+			
+			
+			
+	
+	//--- 修改网卡配置文件，允许网卡能随着系统开机一起启动
+
+			vim /etc/sysconfig/network-scripts/ifcfg-eth0 
+			将文件中的ONBOOT=no   修改为ONBOOT=yes
+			（修改流程： vim 打开文件后，先按下i 键 进入编辑模式，进行内容修改。修改完成后按下esc键退出编辑模式，然后按shift+：（冒号键）在后面直接输入wq，回车并退出了修改）
+
+		
+			service  network  restart  	重新启动网卡的服务
+
+
+
+
+
+			
+			
+			
+			
+			
+	//--- linux下最直接限制ip访问的两种方式
+
+			linux下最直接限制ip访问的方式有两种：
+			1.使用hosts.allow和hosts.deny来设置ip白名单和黑名单，/etc/目录下
+			 
+			Java代码  
+			<span style="color: #003366;">优先级为先检查hosts.deny，再检查hosts.allow，   
+			后者设定可越过前者限制，   
+			例如：   
+			1.限制所有的ssh，   
+			除非从216.64.87.0 - 127上来。   
+			hosts.deny:   
+			in.sshd:ALL   
+			hosts.allow:   
+			in.sshd:216.64.87.0/255.255.255.128  
+			   
+			2.封掉216.64.87.0 - 127的telnet   
+			hosts.deny   
+			in.sshd:216.64.87.0/255.255.255.128  
+			   
+			3.限制所有人的TCP连接，除非从216.64.87.0 - 127访问   
+			hosts.deny   
+			ALL:ALL   
+			hosts.allow   
+			ALL:216.64.87.0/255.255.255.128  
+			   
+			4.限制216.64.87.0 - 127对所有服务的访问   
+			hosts.deny   
+			ALL:216.64.87.0/255.255.255.128  
+			   
+			其中冒号前面是TCP daemon的服务进程名称，通常系统   
+			进程在/etc/inetd.conf中指定，比如in.ftpd，in.telnetd，in.sshd   
+			   
+			其中IP地址范围的写法有若干中，主要的三种是：   
+			1.网络地址--子网掩码方式：   
+			216.64.87.0/255.255.255.0  
+			2.网络地址方式（我自己这样叫，呵呵）   
+			216.64.（即以216.64打头的IP地址）   
+			3.缩略子网掩码方式，既数一数二进制子网掩码前面有多少个“1”比如：   
+			216.64.87.0/255.255.255.0 -- 216.64.87.0/24  
+			   
+			设置好后，要重新启动  
+			# /etc/rc.d/init.d/xinetd restart  
+			# /etc/rc.d/init.d/network restart</span>  
+			 
+			 2.使用iptables命令
+			Java代码  
+			<span style="color: #003366;">单个IP的命令是  
+			iptables -I INPUT -s 81.241.219.171 -j DROP  
+			   
+			封IP段的命令是  
+			iptables -I INPUT -s 97.47.225.0/16 -j DROP  
+			iptables -I INPUT -s 97.47.225.0/16 -j DROP  
+			iptables -I INPUT -s 97.47.225.0/16 -j DROP  
+			   
+			封整个段的命令是  
+			iptables -I INPUT -s 97.47.225.0/8 -j DROP  
+			   
+			封几个段的命令是  
+			iptables -I INPUT -s 97.47.225.0/24 -j DROP  
+			iptables -I INPUT -s 97.47.225.0/24 -j DROP   
+			   
+			   
+			服务器启动自运行  
+			有三个方法：  
+			1、把它加到/etc/rc.local中  
+			2、vi /etc/sysconfig/iptables可以把你当前的iptables规则放到/etc/sysconfig/iptables中，系统启动iptables时自动执行。  
+			3、service   iptables   save 也可以把你当前的iptables规则放/etc/sysconfig/iptables中，系统启动iptables时自动执行。  
+			后两种更好些，一般iptables服务会在network服务之前启来，更安全  
+			   
+			解封：  
+			iptables -L INPUT  
+			iptables -L --line-numbers 然后iptables -D INPUT 序号   
+			   
+			   
+			iptables 限制ip访问  
+			通过iptables限制9889端口的访问（只允许192.168.1.100、192.168.1.101、192.168.1.102）,其他ip都禁止访问  
+			iptables -I INPUT -p tcp --dport 9889 -j DROP  
+			iptables -I INPUT -s 192.168.1.100 -p tcp --dport 9889 -j ACCEPT  
+			iptables -I INPUT -s 192.168.1.101 -p tcp --dport 9889 -j ACCEPT  
+			iptables -I INPUT -s 192.168.1.102 -p tcp --dport 9889 -j ACCEPT</span>  
+
+		
+		
+		
+		
+	//--- arp 查看与本机连接的主机IP及MAC地址
+
+			[root@localhost ~]# arp
+			
+			
+			
+			
+	//--- ping 		测试网络连通性
+
+
+			ping 192.168.113.80				无限ping一个ip
+			
+			ping -c 5 192.168.113.80 			只ping 5次
+
+			ping -i 0.1 192.168.113.80			ping的间隔为 0.1秒	
+
+			ping -w 3 192.168.113.68			ping等待的过期时间
+
+
+			停止 ping 行为  ctrl + c 
+
+			-c: 	ping的次数
+			-i:	指定ping的间隔
+			-W:	ping的等待时间(过期就停止)
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+
+
+
+//=====  ftp 相关操作
+
+		匿名用户： 	anonymous或ftp
+		官方站点:	http://vsftpd.beasts.org/
+		主程序：	/usr/sbin/vsftpd
+		服务名：	vsftpd
+		用户控制列表文件  	/etc/vsftpd/ftpusers
+					/etc/vsftpd/user_list	(禁用的用户名，添加会即时生效)
+		主配置文件	 	/etc/vsftpd/vsftpd.conf
+
+	//--- 匿名权限控制：		
+
+			anon_upload_enable=YES：	允许上传文件			27	
+			anon_mkdir_write_enable=YES：	允许创建目录			31
+			anonymous_enable=YES：		启用匿名访问			12	
+			anon_umask=022：		匿名用户所上传文件的权限掩码	22
+			anon_root=/var/ftp：		匿名用户的FTP根目录				
+			anon_other_write_enable=YES：	开放其他写入权			
+			anon_max_rate=0：		限制最大传输速率（字节/秒）
+
+	//--- 网络的配置本地用户权限控制：	
+			local_enable=YES：		是否启用本地系统用户		1
+			local_umask=022：		本地用户所上传文件的权限掩码	1	
+			local_root=/var/ftp：		设置本地用户的FTP根目录		
+			chroot_local_user=YES：		是否将用户禁锢在主目录		
+			local_max_rate=0：		限制最大传输速率（字节/秒）
+
+	//--- 常用的全局配置项：	
+			listen_address=192.168.4.1：	设置监听的IP地址(就是允许可访问的IP段)
+			listen_port=21：		设置监听FTP服务的端口号
+			write_enable=YES：		是否启用写入权限		1
+			download_enable＝YES：		是否允许下载文件
+			max_clients=0：			限制并发客户端连接数
+			max_per_ip=0：			限制同一IP地址的并发连接数
+			Pasv_min_port=50000  		将客户端的数据连接端口改在
+			Pasv_max_port=60000      	50000—60000之间）
+
+	//--- 访问限制：
+			userlist_enable=YES：		是否启用user_list列表文件
+			userlist_deny=YES：		是否禁用user_list中的用户
+			Userlist_deny=NO;
+
+
+
+
+
+
+
+
+
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- 让别名永久生效
+
+		vim .bashrc 	配置用户家目录下的 .bashrc 文件
+
+			# .bashrc
+			# Source global definitions
+			if[ .f /etc/bashrc ]; then
+
+			fi
+			alias vi='vim'				//在文件中添加使用的别名
+			# User specific aliases and functions
+								//文件配置好后，需要重启才会生效，
+			alias vi='vim'				//外面再设置一下，即可直接生效
+			alias laravel='cd /home/wwwroot/default/laravel'	指定目录别名
+
+			unalias vi				//删除别名
+
+
+
+
+
+
+
+
+
+	//--- linux脚本-将多个包同时解压
+
+		vim tar.sh		//创建一个脚本文件
+		bash tar.sh		//执行脚本
+
+		(内容)
+
+		#!/bin/bash
+		cd /lamp			//进入到一个指定目录
+		/bin/ls *.tar.gz > ls.list	//运行bin下的ls命令， 将所有以tar.gz结尾的文件名写入到 ls.list文件中
+		/bin/ls *.tgz >> ls.list	//运行bin下的ls命令，将所有的以tgz结尾的文件名追加到 ls.list文件中
+		for TAR in `cat ls.list` 	//用for循环遍历 ls.list文件内容并将结题赋值到TAR变量中
+		do 
+		/bin/tar -zxf $TAR		//解压变量中每个文件名
+		done
+		/bin/rm ls.list			//解压完成后删除该文件
+
+
+
+
+
+
+	//--- 将执行结果输出到指定日志
+
+
+		make install  >>  /root/zlib.log
+
+
+
+
+		 # 安装zlib			
+		zlib是提供数据压缩用的函式库，由Jean-loup Gailly与Mark Adler所开发，初版0.9版在1995年5月1日发表。zlib使用DEFLATE算法，最初是为libpng函式库所写的，后来普遍为许多软件所使用。此函式库为自由软件，使用zlib授权
+		 cd /lamp/zlib-1.2.3			
+		　./configure
+		 make
+		 make install  >>  /root/zlib.log		//指定写入日志文件
+		 * zlib指定安装目录可能造成libpng安装失败，故不指定，为卸载方便，建议make install执行结果输出到安装日志文件，便于日后卸载
+
+
+
+
+
+
+
+
+
+
+	//--- 安装 linux 时引导程序存放位置注意事项 
+
+		注意：
+		在安装linux步骤中的 "在/dev/sda 中安装引导装载程序 更换设备"  那一步时要注意！ 当使用U盘的时候，U盘的优先级会比较高，这里要修改一下，不然引导程序安装到U盘里，一旦u盘不在，系统就无法启动了
+
+
+
+
+
+
+
+
+
+
+
+	 
+
+
+	//--- linux文件夹挂载时，内容暂不可用
+
+
+		linux 文件夹被 光驱或其它东西挂载时，该文件夹的内容将暂时不可用
+
+
+
+
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== liunx 其它
+
+
+
+
+
+	//--- diff 比较两个文本文件 (网上摘录，不一定准)
+
+		$ diff -u hello world > diff.txt
+
+
+
+	//--- linux中几种常见的文件系统
+		
+		EXT4 	第四代扩展文件系统 (除交换分区外的所有分区使用的默认文件系统)
+		
+		SWAP	交换文件系统(供交换分区使用，相当于虚拟内存)
+
+
+
+
+
+
+	//--- linux的目录类别
+
+		/dev	存放硬件相关的文件，如硬盘，分区，光驱等
+		/etc	存放配置文件的目录
+		/bin	存放普通用户命令的目录
+		/sbin	存放管理员root可以执行的命令的目录
+		/home	存放普通用户的家目录(分配各用户可增删改查最大权限的目录)
+		/root	管理员的家目录
+		/media	存放多媒体资料的目录
+		/proc	存放硬件信息的目录
+
+
+
+
+	//--- 安装linux时的分区配额
+
+		/boot  		存放启动系统时的配置文件目录 	大小 200M+
+		/swap		交换文件目录(类似虚拟内存)	物理内存的2倍
+		/分区		剩余空间可全部分配给根目录
+
+
+
+
+
+
+	//--- 用户操作环境解释
+
+		[使用者@主机名 工作目录]提示符 
+		[root@localhost ~]#	//#为管理员
+		[root@localhost ~]$	//$为普通用户
+				
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- Linux命令的输入格式
+
+
+			[root@localhost ~]# ls -l /boot
+		或
+			[root@localhost ~]# ls /boot -l 
+
+
+			命令 [选项] [参数]
+		或
+			命令 [参数] [选项]
+
+			参数 - 命令操作的对象，如文件，目录名等
+
+			选项 - 用于调节命令的具体功能
+				1, '-'	表示选项的简写 如 '-a' 	 代表all
+				2, '--'	表示选项的全写 如 '--all'	
+				3, 多个短格式选项可连写  如 '-al' 等同于 '-a -l'
+
+		如：
+
+
+
+
+
+
+
+
+	//--- 命令无法回删时全用 ctrl + 回删				特殊
+
+
+
+
+
+
+	//--- Linux 中的辅助快捷键						特殊 
+
+		tab		自动补齐(辅助命令)
+					该命令会自动搜寻并显示与敲入命令相似的所有命令供用户操作
+						1, 可以减少用户对命令的记忆量
+						2，可以验证输入命令是否正确
+
+
+		\		强制换行
+				当一行命令过长时，普能换行后，会所该命令当做两条命令来处理，用 '\' 就是告诉电脑，该换行的命令与上面是一条，不要分开处理
+
+				如：下面两行是一句命令
+				LD_LIBRARY_PATH=/usr/local/libmcrypt/lib:/usr/local/lib  \
+				./configure --with-libmcrypt-prefix=/usr/local/libmcrypt
+
+
+
+		Ctrl + U 	光标处清空至行首
+		
+		Ctrl + K	光标处清空至行尾
+
+		Ctrl + L 	清屏   (命令行代码 clear 效果相同)
+		
+		clear   	清屏 与 Ctrl + L 效果相同
+
+		Ctrl + C 	取消本次命令的编辑
+
+		shift + pageUp	字符界面时上下翻页
+		pageDown
+
+
+
+
+
+
+
+
+	//--- 将光标移出虚拟机							特殊
+
+		Ctrl + Alt 
+
+
+
+
+
+
+
+
+	//--- 桥接，nat, hostonly 三种网络的区别
+
+
+
+		桥接:	可以让虚拟机加入实体机的局域网段，实现虚拟机与局域网内的其它终端或外网通信。但实体机如果是括号上网的话，就不可以连外网了。
+			桥接的虚拟机网段要和实体机网段相同。
+
+		nat   : 可以让本机下所有的虚拟机处于一个网段中连通，并可上外网，其原理是：让所有虚拟机通过vm8网卡运行在虚拟的网段中，实体机当路由，来实现通信，可连外网。 所有的虚拟机网段要相同
+
+		hostonly : 实体机与虚拟机单独连接，但虚拟机之间不可连接
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- 其它注意事项 
+
+
+		Logical	Volume Manager		逻辑卷管理
+
+			动态调整磁盘容量，提高磁盘管理灵活性
+
+			/boot 分区用于存放引导文件，不能甘于LVM创建
+
+		system-config-lvm		图形界面管理工具
+
+
+		PV (Physical Volume,物理卷)	整个硬盘，或使用fdisk等工具建立的普通分区，包括许多默认4mb大小的PE（Physical Extent,基本单元）
+
+		VG (Volume,Group, 卷组)		一个或多个物理卷组合而成的整体
+
+		LV (Logical Volume, 逻辑卷)	从卷组中分割出一块空间，用于建立文件系统
+
+
+
+
+
+
+
+
+
+
+
+	//--- liunx软件安装的两种方式
+
+		一：源码包安装方式 
+			./configure --prefix=/usr/local/xxx --user=xxx --group=xxx --with=xxx....		
+				//安装到指定目录
+			make && make install 		
+				//编译成二进制，并安装 
+
+		二：yum 包安装方式
+
+			yum install xxxxx
+			yum -y install xxxx
+
+
+
+
+
+
+	//--- 服务的开启重启的两种方式 							特殊
+
+		yum版
+			service httpd restart
+			service httpd stop
+
+		源码版
+			/usr/local/apache2/bin/apachectl stop
+			/usr/local/apache2/bin/apachectl start
+
+
+
+
+
+
+
+
+	//---= yum 的安装配置											特殊
+
+		文件位置  ： /etc/yum.repos.d
+		
+			/etc/yum.repos.d/CentOS-Base.repo   远程安装源配置文件，优先级最高，需要转移或重命名让其失效。
+
+			/etc/yum.repos.d/CentOS-Media.repo  本地安装源配置文件 
+			
+			修改以下内容：
+
+					baseurl=file:///mnt/cdrom   		设置光驱载目录(主挂载点)
+						file:///mnt/cdrom1/				(次挂载点)
+					gpgcheck=0				关闭检查
+					enabled=1  				启用本配置功能
+
+
+
+
+
+
+
+
+	//--- 创建一个脚本文件						特殊
+
+
+		vim tar.sh	//创建脚本命令
+		bash tar.sh	//调用脚本命令 
+				
+		#!/bin/bash
+		cd /lamp			//语句-进入到一个指定目录
+		/bin/ls *.tar.gz > ls.list	//语句-运行bin下的ls命令， 将所有以tar.gz结尾的文件名写入到 ls.list文件中
+		/bin/ls *.tgz >> ls.list	//语句-运行bin下的ls命令，将所有的以tgz结尾的文件名追加到 ls.list文件中
+		for TAR in `cat ls.list` 	//用for循环遍历 ls.list文件内容并将结题赋值到TAR变量中
+		do 
+		/bin/tar -zxf $TAR		//解压变量中每个文件名
+		done
+		/bin/rm ls.list			//解压完成后删除该文件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- at 单次计划任务
+		
+		这里编辑内容如果出错了，删除时需要加上Ctrl
+
+		at 	创建计划任务
+
+			date				//查看当前时间
+			at 17:42 2015-08-14		//创建单个任务
+			at echo 'aaa'			//添加任务内容
+
+		atq	查看任务
+
+		atrm 	删除任务
+
+			atrm 4				//删除任务号为4 的任务
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- PS	查看静态的进程统计信息
+		
+		
+		a	显示前台所有进程
+		u	根据指定用户相关的进程
+		x	后台进程也显示
+		e	显示所有的进程
+		%CPU	cpu占用百分比
+		%MEM	内存占用百分比
+		VSZ	虚拟内存占用量
+		RSS	因定内存占有量
+		tty	登录终端
+
+
+		ps aux			//显示前后台指定的相关进程
+
+
+
+
+
+
+	//--- top	查看动态的进程统计信息
+		
+		p	根据CPU使用量排序
+		M	根据内存使用量排序
+		T	根据运行时间排序
+		q	退出 
+			以上参数需要在运行时输入
+
+		top		//查看动态进程信息
+		top pux
+
+
+
+
+
+
+
+
+	//--- kill,killall 终止进程
+		
+		-9	强制终止
+		
+		kill -9 1690	强制终止进程
+
+
+
+	//--- pkill	特定条件下终止程序
+
+		-U
+		-t
+
+		pkill -t pts/0  终止终端连接的进程 
+
+
+
+
+
+
+
+
+	//--- inittab	设置服务的运行级别
+
+		0	关机
+		1	单用户模式(相当于XP的安全模式)
+		2	不完整的多用户模式(功能不全的系统)
+		3	完整的多用户模式(基础功能比较完善的系统)
+		4	未分配
+		5	图形界面
+		6	重启
+
+			vim /etc/inittab
+
+				id:3:initdefault:	//这里表示系统运行的是第3个模式，完整的多用户模式
+
+
+
+
+
+
+
+
+
+
+
+	//--- chkconfig 设置服务的开机自启动
+
+		　chkconfig  --level  2345  httpd（mysqld）  off/on
+
+
+
+
+
+
+
+	//--- chkconfig-list	查看服务的自启动状态
+
+		chkconfig --list		//查看系统服务状态
+		
+			chkconfig --level 2 sssd on	//开启 sssd服务，设置为不完整的多用户模式
+
+			
+		临时开启服务
+			/etc/init.d/ssd restart		//临时开启sssd服务
+
+
+
+
+
+
+
+
+
+
+	//--- reload 重新加载服务配置
+
+		service network reload
+
+
+
+
+
+
+
+
+
+	//--- 设置SELinux防护，允许防火墙80端口访问
+
+		vim /etc/selinux/config
+
+			SELINUX=enforcing	开启防护
+			SELINUX=disabled	关闭防护
+
+			修改后需重新启动Linux方可生效！
+
+
+
+
+
+
+
+
+
+	//--- setenforce 0		临时关闭SElinux 防护
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- 关闭防火墙Netfilter/iptables
+
+
+			iptables -F     	临时关闭防火墙,如果没有禁用防火墙，默认80端口禁止访问
+			iptables -Z		
+			iptables -X
+		
+
+
+
+
+
+
+
+
+	//--- 让程序在后台运行
+
+			在语句后面加上 &
+
+
+
+
+
+
+
+
+							
+			
+
+
+
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 文件及目录相关操作命令
+
+
+
+	//--- touch	创建文件或刷新文件的时间戳
+		
+			如：	[root@localhost ~]# touch a.txt			(创建一个文件)
+
+				
+
+				年，月，日，时，分钟	. 秒	如： 		00 01 01 01 01 . 00
+
+			如：	[root@localhost ~]# touch -t 0001010101.00 a.txt	(将a.txt文件的时间修改成指定的日期)
+
+
+
+
+
+
+
+
+	//--- echo >	给文件添加内容
+
+			[root@localhost ~]# echo '222' > c.txt		创建c.txt文件并写入内容 或 将 c.tct中内容覆盖
+
+			
+			[root@localhost ~]# echo '222' > c.txt		创建c.txt文件并写入内容 或 将内容追加
+
+
+
+
+
+
+
+
+
+	//--- rm	删除文件或目录 
+
+			[root@localhost /]# rm a.txt		删除一个文件
+			[root@localhost /]# rm -r aa		删除一个目录
+			[root@localhost /]# rm -f aa		删除一个目录不提示
+			[root@localhost /]# rm -r aa		删除一个目录会提示
+
+			-r:	递归删除整个目录树
+			-i:	删除文件或目录时进行提醒
+			-f:	强制删除目录，不提醒
+
+
+
+
+
+
+
+						
+
+
+
+
+	//--- mv	移动或重命名文件或目录(move的缩写)
+
+			
+			[root@localhost /]# mv a.txt /var		移动一个文件到 var文件夹下
+			[root@localhost /]# mv a.txt b.txt		将a.txt 生命名为 b.txt
+						mv abc.txt /tmp/bb	移动文件
+						mv cc /tmp		移动目录
+		
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- cat	查看文件内容及合并文件
+	//--- more	查看大容量的文件内容
+
+			[root@localhost ~]# cat a.txt 		查看内容比较少的命令
+
+			[root@localhost ~]# more a.txt		查看内容比较多的命令
+
+			[root@localhost ~]# cat a.txt b.txt > c.txt	将a,b文件的内容合并到c 文件中
+		
+			回车：	查看下一行内容
+			空格：	查看下一页内容
+			q 或 Ctrl+c 退出
+
+
+
+
+
+
+
+
+
+	//--- head  	显示文件内容的前十行（默认为前十行） 
+
+			[root@localhost ~]# head /etc/a.txt		显示文件内容的前十行
+
+			[root@localhost ~]# head -3 /etc/a.txt		显示文件内容的前三行
+
+
+
+
+	//--- tail  	显示文件内容的最后十行（默认为最后十行）
+
+			[root@localhost ~]# tail /etc/a.txt		显示文件内容的最后十行
+
+			[root@localhost ~]# tail -3 /etc/a.txt		显示文件内容的最后三行
+
+			// tail -f	在文件更新时，它也会动态的显示出来		
+			[root@localhost ~]# tail -f a.txt		动态显示文件内容的最后十行
+
+
+
+
+
+
+
+
+
+
+
+	//--- grep		筛选出文件中有指定字符的那行内容
+
+			[root@localhost ~]# grep "root" /etc/passwd		筛选出etc/passwd文件中有root字符的那行内容
+
+				// ^  搜索以root字符开头的那行内容  $ 以指定字符结尾
+			[root@localhost ~]# grep "^root" /etc/passwd		筛选出etc/passwd文件中以root字符开头的那行内容
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- | 	管道符号，在首次筛选结果中再次筛选
+
+			[root@localhost ~]# grep "root" /etc/passwd | grep "^o"		
+				//筛选出文件中包含root字符的一行内容,并且再次筛选，找出以o开头的。
+
+					
+			[root@localhost ~]# grep "root" /etc/passwd | grep -v "^o"		-v 去除字串中含有指定字符的那行
+				//筛选出文件中包含root字符的一行内容,并且再次筛选，去除以o开头的。
+
+
+
+			[root@localhost ~]# grep "root" /etc/passwd | grep -vi "^o"		-i 忽略大小写
+				//筛选出文件中包含root字符的一行内容,并且再次筛选，去除以o开头的。
+
+
+
+			-i	忽略大小写
+			-v	反向选取
+			"^xxx"	搜索以指定字符开头的行
+			"xxx$"	搜索以指定字符结尾的行
+			"^$"	搜索空行
+			
+
+
+
+
+
+
+
+
+
+	//--- wc 		统计文件中单词的数量等信息
+
+			[root@localhost ~]# wc a.txt		//获取文件的行数，单词数，字节数
+				结果： 38	64	1869	a.txt
+
+
+			[root@localhost ~]# wc -l a.txt		//指定获取文件内容的行数
+				结果： 38	a.txt
+
+
+			-l:	统计行数
+			-w:	统计单词个数
+			-c:	统计字节数
+
+
+
+
+
+
+
+
+	//--- find 	查找命令
+
+		-name:	按文件名查找
+		-size:	按文件大小查找
+		-user:	按文件履主(创建者)查找
+		-type:	按文件类型查找
+
+
+			find -type f | wc -l		//计算目录中文件的个数
+
+
+		
+		-name 	根据文件名查找
+			* 	任意字符
+			? 	1个字符
+			[]	指定范围内的值
+			^	反向匹配
+			|	分割多个情况 
+		
+				find /etc -name init	精确查找init文件
+				find /etc -name init*	查找以init开关的文件（*代表0-多个任意字符）
+				find /etc -name init??? 查找init且后面带有三个字符的文件(?代表任意一个字符)
+				find /root -name "*.log" 	查找后缀名为log的文件
+
+
+		-size	根据大小查找文件
+			find /etc -size -2M	查找小于2M的文件
+			find /etc -size +2m	查找大于2M的文件
+			find /etc -size +2M -o -size -1M	查找大于2M 或小于1M的文件
+			find /etc -size +2M -a -size -1M	查找大于2M 并且小于1M的文件
+
+
+		-user	根据用户名查找文件
+
+			find /tmp -user root	查找root创建的文件
+
+		
+
+		-time,min	按时间查找文件
+			 按天		ctime atime mtime
+			 按分钟		cmin  amin   mmin
+				c  change 改变	表示属性被修改过：所有者、所属组、权限
+				a  access 访问	被访问过(被查看过)
+				m  modify 修改	表示内容被修改过
+
+					find /etc -mmin -120		查找120分钟内被修改过的
+					find /etc -mtime +7		超过7天没有改过的文件
+
+
+		-type	根据文件类型查找
+			
+			find / -type f		查找二进制类型的文件
+			find / -type d		查找文件夹类型的文件
+			find / -type l		查找链接类型的文件
+
+		
+
+
+		find 查找名字中带有空格的文件
+
+			find /tmp -name "a b"
+
+
+
+		find 查找连接符（逻辑连接符: -a -o  命令执行连接符: -exec  -ok）
+
+
+			
+		
+			-a , -o 逻辑连接符:   -a (and 逻辑与 )    -o   (or 逻辑或)
+							
+				find / -name "*.txt" -a -size +1M -exec ls -l {} \;
+				find /etc -size +163840 -a -size -204800	在/etc下查找大于80M小于100M的文件
+					find /etc -size +1k -a -size -10k  		在etc目录下查找大于1k并且小于10k的文件
+		
+			-exec 	对查找到的文件，进一步处理
+				find  ...  -exec 命令 {}  \;
+				{}表示find查询的结果集
+				\是转义符  表示一个命令或符号使用其本身的意义，不使用别名
+				;分号是表示语句的结束
+				是固定格式，只能这样写。注意中间的空格。
+
+					find /etc -name inittab -exec ls -l  {}  \;
+					find /etc -name init* -a -type f -exec ls -l {} \;
+
+
+
+
+
+
+
+		grep	查找文件中符合条件的那行字串
+
+			-v		反向选择
+				grep -v "ef" /tmp/abc.txt
+			-i 		忽略大小写
+				grep -i "ef" /tmp/abc.txt
+
+
+
+
+
+		|  	管道符
+
+			cat abc.txt | grep 'HI'		查找abc文件，且只显示带有 HI 字符的那一行
+
+			ls  -l  /etc  |  more		分屏显示ls内容
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- ln		为文件或目录建立链接
+
+			ln 1.txt 2.txt  	将2.txt 硬链接到1.txt 	相当于复制 ,即使1.txt不存在，也不会影响 2.txt
+
+			ln -s 1.txt 2.txt 	将2.txt 软链接到1.txt 	如果1.txt 不存在，则2.txt 会报错
+
+
+			[root@localhost ~]# ln -s a.tat b.txt 	 软连接(将 b 连接到 a 文件)
+					//软链接：当a文件不存在时,b 文件将报错
+
+			
+			[root@localhost ~]# ln a.tat b.txt 	 硬连接(将 b 连接到 a 文件)
+					//硬链接：相当于b复制了a，当a删除后，不会影响b
+
+
+			-s:	建立符号链接文件（省略此项则建立硬链接）
+
+			硬连接不要操作目录，不要跨盘
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- .zip .gz .bz2	压缩和解压缩
+
+			.zip 	压缩后保留源文件
+
+				zip yum.zip yum.log		压缩文件
+				zip -r zuan.zip zuan/		压缩目录
+				unzip yum.zip			解压
+
+
+			.gz	压缩后不保留源文件
+				
+				gzip 1.txt				压缩
+				gzip -9 1.txt			高比压缩
+				gzip -d c.gz			解压
+				gunzip b.gz				解压
+
+
+			.bzip2
+
+				bzip2 b					压缩
+				bzip2 -9 abc.txt		高比压缩压
+				bzip2 -d b.bz2			解压
+				bunzip2 abc.txt.bz2		解压
+
+
+
+			-9: 表示高压缩比，多大创建压缩包时用，
+			-d: 用于解压文件
+
+				linux下的压缩类型
+					bzip		#.gz
+					bzip2		#.bz2
+
+
+
+
+
+
+
+
+	//--- tar	将文件打包，解包
+
+			tar -vjcf a.tar.bz2 *.txt		bz2 格式打包   (注：-f 一定要放在最后)
+			tar -vjxf a.tar.bz2 			解压bz2包
+			tar -vjxf a.tar.bz2  -C /user/src	解压bz2包至指定目录
+
+			tar -vzcf aa.tar.gz aa			gz格式压缩并打包
+			tar -vzxf aa.tar.gz			解压gz格式的包
+
+			tar -tf a.tar.bz2			列表形式查看包文件中的内容
+
+
+
+			-c 	压缩
+			-x 	解压缩
+			-v 	显示压缩过程
+			-f:	表示使用归档文件,指定压缩包名
+			-p:	打包时保留原始文件及目录的权限
+			-t:	列表方式查看包内文件但不解压
+			-C:	指定解压位置
+			-z:	gzip(gz)格式压缩或解压
+			-j:	bzip2(bz2)格式压缩或解压
+
+
+
+		
+			
+			
+			
+		
+
+
+	//--- mkdir	创建文件夹
+
+		-v 显示创建过程
+		-p (递归)同时创建多级目录
+				
+			如：	[root@localhost ~]# mkdir movie			(mkdir只能创建单级目录)
+
+			如：	[root@localhost ~]# mkdir -p movie/cang		(mkdir -p 可创建多级目录)
+
+
+
+
+
+
+
+
+
+	//--- cp	复制或删除目录(copy的缩写)
+
+			
+			[root@localhost /]# cp a.txt /var/		复制a.txt到 文件夹var下
+			[root@localhost /]# cp -i a.txt /var/		复制a.txt到 文件夹var下 如有同名，提示是否覆盖
+			[root@localhost /]# cp -f a.txt /var/		复制a.txt到 文件夹var下 如有同名，强制覆盖
+			[root@localhost /]# cp -r aa /var/		复制目录到文件夹var下 (复制目录必须在前面加上-r)
+
+			[root@localhost /]# cp -rp aa cc		复制目录aa 为cc 目录
+					注释：当复制一个目录时，复制后的目录所在的组可能会不是原来的用户组，想保留原来的组时就要用-p
+
+		
+			-r:	递归复制整个目录树
+			-p:	保持源文件的属性不变
+			-i:	需要覆盖文件或目录时进行提醒
+			-f:	强制覆盖目标同名文件或目录
+				强制覆盖也会提示，去除提示的方法如下：
+				
+				1：运行 alias 查看该文件的别名
+					会有一行 alias cp='cp -i' 
+				2：[root@localhost /]# unalias cp		将别名删除掉
+					
+				
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- rm	删除文件或目录 
+
+			[root@localhost /]# rm a.txt		删除一个文件
+			[root@localhost /]# rm -r aa		删除一个目录
+			[root@localhost /]# rm -f aa		删除一个目录不提示
+			[root@localhost /]# rm -r aa		删除一个目录会提示
+
+			rm a.txt		删除文件，会提示
+			rm -f a.txt		强删文件，不提示
+		
+			rm -r a			删除目录，会提示
+			rm -rf a		强删目录，不提示
+
+
+			-r:	递归删除整个目录树
+			-i:	删除文件或目录时进行提醒
+			-f:	强制删除目录，不提醒
+
+
+
+
+
+
+
+
+				
+
+
+
+
+	//--- cd		切换目录 
+
+			如	[root@localhost ~]# cd /root/movie/cang/	(进入指定文件夹)
+			如	[root@localhost ~]# cd /movie/cang/		(进入指定文件夹)
+			如	[root@localhost ~]# cd yi/			(进入指定文件夹)
+			如	[root@localhost ~]# cd..			(上一层文件夹)
+			如	[root@localhost ~]# cd.				(当前文件夹)
+			如	[root@localhost ~]# cd -			(返回之前所在目录)
+			如	[root@localhost ~]# cd ~			(返回家目录)
+			如	[root@localhost ~]# cd !$			(调用上一条命令的参数)
+			相对路径：以当前目录为起点
+			绝对路径：以根作为起点
+				
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- pwd 显示当前所在目录
+
+			如：[root@laoclahost ~]# pwd
+				/root			(结果)
+				/home/zhangsan 		(结果)
+
+
+
+
+
+
+
+	//--- ls 查看当前目录的内容(目录和文件)
+
+			[root@localhost ~]# ls -a 		'-'  查看目录中所有文件的简写形式
+			[root@localhost ~]# ls -al /boot	'-' 简写格式可以连写，将-a和-l连接起来一起写
+			[root@localhost ~]# ls --all	'--'	查看目录中所有文件的全写开式
+
+
+
+			[root@localhost ~]# ls		(查看目录中文件和文件夹的简要信息)
+			[root@localhost ~]# ls -l	(查看目录中文件和文件夹的详细信息,默认按首字母排序)
+			[root@localhost ~]# ls -a	显示隐藏文件
+			[root@localhost ~]# ls -A	显示隐藏文件，不显示".和..";
+			[root@localhost ~]# ls -d	显示目录本身的信息
+						   -ld	(等同于 -l -d   查看目录本身的详细信息)
+			[root@localhost ~]# ls -S	按文件所占空间从大到小排列
+						   -laS     (查看目录中隐藏文件的详细信息，并从大到小排列)
+
+
+			[root@localhost ~]# ls -r	反向
+						   -laShr   (查看隐藏文件,从小到大排列,并显示大小单位);
+			[root@localhost ~]# ls -t	按创建日期排序
+			[root@localhost ~]# ls -h	显示文件大小的单位(正常状态下是不显示大小单位的，加上h才会显示大小单位)
+						   -ldh	(等同于 -l -d -h 查看目录本身详细信息，并显示相应的大小单位)
+						   -laSh    (查看隐藏文件,从大到小排列,并显示大小单位);
+						   -lath    (查看隐藏文件，按时间排列，显示大小单位)
+			[root@localhost ~]# ls -R	递归(显示目标目录及其子目录里的内容)
+
+			[root@localhost ~]# ls -alh | more	| more  分屏显示文件夹中内容的详细信息
+
+
+			* [root@localhost ~]# ll			(上面 ls -l  的简写，使用非常频繁)
+
+			-rw-r--r--. 1 root root 1575 9月 25 05：54 anaconda-ks.cfg
+
+				-rw-r--r--	文件读写的执行权限
+						首位：d ：文件夹	- ：文件	l：链接
+						2-4位：文件所有者权限
+						5-7位：文件所有组权限
+						8-10位：其它用户权限
+								权限解读：
+									读 	  写	   执行
+									r 	  w	   x		字符形式显示权限
+									4 	  2 	   1  	 	数值形式显示权限
+						
+				1		连接的次数
+				root		文件的创建者
+				root		文件所在的组
+				1575		文件的大小
+				9月 05：54	文件的创建时间
+				anaconda-ks.cfg	文件名
+
+
+
+			参数：
+
+			
+			
+			
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+	//--- du 统计目录及文件的空间占用情况 
+
+			[root@localhost ~]# du -ah /boot	查看boot目录下每个文件的大小，及所有文件目录总大小
+			[root@localhost ~]# du -sh /boot	只查看boot目录的总大小
+					    du -sh *		查看当前目录下所有目录与文件的大小
+
+			-a:	同时统计目录和文件(总大小)
+			-h:	实际的单位(k,m等)显示大小信息
+			-s:	只统计指定文件或目录占用空间的总大小
+
+		
+
+
+
+
+
+
+
+	//--- chmod 	给文件修改使用权限
+		-rwx------	
+		chmod  u+x  aa		增加文件所有者的执行权限
+		chmod  u-x  aa		送去文件所有者的执行权限
+		chmod  g+w,o+w  aa	增加所有组与其它用记的执行权限
+		chmod  u=rwx  aa	设置文件所有者对文件有读写执行的最高权限
+		chmod  755  aa		
+		chmod  644  aa
+				
+			7	读，写，执行
+			6	读，写
+			5	读，执行
+			4	读
+			3	写，执行
+			2	写
+			1	执行	
+		
+
+
+		文件夹的权限设置优先级高于文件，当文件夹允许其它用户删除时，即使文件夹内的文件设置了不允许，也是可以删除的
+
+
+
+
+
+
+	//--- chown	更改文件的宿主和改组
+
+		chown user2 yum.log	更改文件的所有者为uesr2
+
+		chown :user1 b.txt	更改文件的所属组为 user1
+
+		chown user2:user2 c.txt	同时更改文件的所有者和所属组
+
+			-c或--changes 　效果类似"-v"参数，但仅回报更改的部分。 
+	　		-f或--quite或--silent 　不显示错误信息。 
+	　		-h或--no-dereference 　之对符号连接的文件作修改，而不更动其他任何相关文件。 
+	　		-R或--recursive 　递归处理，将指定目录下的所有文件及子目录一并处理。 
+	　		-v或--version 　显示指令执行过程。 
+	　		--dereference 　效果和"-h"参数相同。 
+	　		--help 　在线帮助。 
+	　		--reference=<参考文件或目录> 　把指定文件或目录的拥有者与所属群组全部设成和参考文件或目　录的拥有者与所属群组相同。 
+	　		--version 　显示版本信息。
+
+
+
+
+
+
+
+	//--- chgrp	更改文件的所属组
+
+		chgrp root c.txt
+
+
+
+
+
+
+
+
+
+	//--- umask 	权限机制 
+
+		umask 就是用文件的顶级权限减去 umask的 默认值 ，得到的结果就是文件的当前权限。如
+		管理员的umask默认值是0022 	那么管理员所创建的文件就是  
+										777
+										   -022
+										   =755	（所有者顶权，组-读执，其它-读执）
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- mount	挂载硬件到指定目录
+
+		mount  -t  文件系统  设备  挂载点（已经存在空目录）
+		mount  -t  iso9660  /dev/cdrom  /mnt/cdrom
+
+		mount /dev/sdb5 /c	将硬盘的某个分区挂载到 c 目录
+
+		umount /c		将c 目录中的硬件卸载
+
+
+
+
+
+
+
+
+
+
+
+	//--- df -hT 	查看磁盘及目录的使用情况
+
+			[root@localhost ~]# df -hT				df -hT 查看磁盘及目录的使用情况
+
+
+
+
+
+
+
+
+
+
+
+	//--- shutdown  关机和重启
+			
+		-h	关机
+			shutdown -h now		正常关机 
+			halt			强制关机，程序会出错
+			init 0			强制关机，程序会出错
+
+		-r	重启
+			shutdown -r now		重启
+			reboot			重启
+			init 6
+
+
+
+
+
+
+
+
+
+	//--- 多终端切换
+
+		字符-图形	alt+F7	或	alt+F1
+		字符-字符	alt+Fn			
+		图形-字符	ctrl+alt+Fn
+
+				n为2-7
+
+
+
+
+
+
+
+
+
+	//--- uname -r 查看内核版本及版本订制规则
+
+		6.5.8
+		主版本号.次版号.修订版本号
+			次版本号为偶数时，代表稳定版
+			次版本号为奇数时，代表开发版
+
+		uname -r 		查看系统内核版本
+						i386 i686 代表内核为32位操作系统
+						x86 64	  代表内核为64位操作系统
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- cat /proc/meminfo	查看内存信息
+
+
+
+
+
+	//--- setup			更改ip地址
+
+
+
+
+
+	//--- which 		搜索一个命令
+
+			如：	[root@localhost ~]# which reboot 		//搜索一个叫'reboot' 的命令
+					/sbin/reboot		结果
+
+			如：	[root@localhost ~]# which cd		//搜索一个叫'cd'的命令
+					/usr/bin		结果
+
+
+
+
+
+
+
+
+			
+
+
+	//--- -help		查看内部命令帮助
+		--help		查看外部命令帮助
+		man		查看所有命令帮助
+
+				如：	[root@localhost ~]# man cd 		(查看目录切换命令帮助)
+					[root@localhost ~]# man touch 		(查看创建文件命令帮助)
+			
+					空格是翻页，回车是换行, q 是退出 
+
+					
+
+
+
+
+
+		partprobe / 	更新内核中磁盘分区信息
+
+			[root@localhost ~]# partprobe /dev/sdb			partprobe / 更新内核中磁盘分区信息
+
+
+
+
+			
+
+
+
+
+	//--- !$	调用上一条命令的参数
+
+			如：
+			[root@localhost ~]# ls /root/movie/	(查看了'root/movie' 下的内容)
+			[root@localhost ~]# cd !$		(进入到上次查看操作的'root/movie'的目录里)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+
+	
+	
+	
+	
+//===== 用户及权限相关
+		
+		
+	//-- 示例：创建mysql用户及组，并将用户添加到组，并设置其权限为不能登陆	
+		# groupadd mysql 
+		# useradd mysql -g mysql -M -s /sbin/nologin 
+		#增加一个名为 mysql的用户。
+		-g：指定新用户所属的用户组(group)
+		-M：不建立根目录
+		-s：定义其使用的shell，/sbin/nologin代表用户不能登录系统
+
+
+
+
+	//--- su 切换到另一个用户
+						
+
+		如：[root@localhost ~]# su - zhangsan
+
+
+
+
+
+
+
+
+
+
+
+	//--- 保存用户名的文件 	/etc/passwd
+
+
+		root:x:0:0:root:/root:/bin/bash
+			共七位，每位用 ‘:’来分隔
+
+			第一位：用户名
+			第二位：占位符(原来是占位符)
+			第三位：UID(用户ID)
+			第四位：GID(用户组ID)
+			第五位：用户说明
+			第六位：家目录
+			第七位：shell登陆权限
+
+
+			root:x:0:0:root:/root:/sbin/nologin	以nologin结尾的 是系统用户，不可以登陆
+
+			root:x:0:0:root:/root:/bin/bash		以bash结尾的是普通用户，可以登陆
+
+
+
+
+
+	//--- 保存用户密码文件	/etc/shadow
+
+		root:$6$twvWdK/.KLXq.:16657:0:99999:7:::
+		bin:*:15513:0:99999:7:::	第二位的密码为*时，用户为不可登陆
+		bin:!:15513:0:99999:7:::	第二位的密码为!时，禁止登陆
+
+			第一位：用户名
+			第二位：加密密码(密码位是*表示为系统用户，不可以登陆)
+			第三位：密码最近修改时间(时间戳)
+			第四位：密码最短有效期
+			第五位：密码最长有效期
+			第六位：密码到期前警告天数
+			第七位：密码到期后的宽限天数
+			第八位：密码失效时间
+			第九位：保留
+
+				
+
+
+
+
+
+	//--- 保存组账号和密码的文件 /etc/group
+
+		bin:x:1:bin,daemon
+			第一列：组名
+			第二列：组密码位
+			第三列：GID
+			第四列：组成员
+
+
+
+
+	//--- 保存组密码的文件 /etc/gshadow
+
+		bin:::bin,daemon
+
+			第一列：组名
+			第二列：组加密密码
+			第三列：组管理员
+			第四列：组成员
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- id xxx 查看用户ID 和组ID
+
+		id user5
+
+
+
+
+
+
+	//--- w, who 	查询以登陆主机的用户信息
+
+		who
+			root     pts/2    192.168.113.70   07:13    4:06   0.04s  0.04s -bash
+			bbb      pts/3    192.168.113.70   07:46    0.00s  0.08s  0.05s w
+			第一位	连接的用户名
+			第二位	连接的方式
+			第三位	连接者的IP
+			第四位	连接时间
+			第五位	CPU刷新时间
+			第八位	登陆的用户名
+
+
+
+
+
+
+
+
+
+	//--- users, whoami	查询当前登陆的用户
+
+		whoami			//查看当前登陆用户
+			root		//显示当前登陆用户为root
+
+		users			//查看所有登陆的用户
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- 添加用户	useradd
+
+		useradd [选项] 用户名
+	
+		useradd -M -s /sbin/nologin mysql
+
+		-s /sbin/nologin	表示该用户不能登陆到系统
+
+		-M	不为该用户创建其对应的家目录
+		
+
+		-u 	指定uid号
+			useradd -u 520 user3		//指定用户uid为520
+				vim /etc/passwd			//查看用户名配置文件
+						user3:x:520:520::/home/user3:/bin/bash	 //结果同时创建了用户ID与组ID为520
+		-d 	指定用户的家目录
+			useradd -d /home/u4 user4	//强制让用户使用指定的u4家目录(该目录必须以存在)
+				注：正常添加的用户会拷贝skel用户模板，而指定家目录的用户不会自动拷贝。
+				
+		-e	指定账号失效时间
+			useradd -e 081415 user6		//时间格式 mmddyy
+						user6:!!:16660:0:99999:7::14290:		//14290为时间戳
+		-g	指定用户的初始组名
+			useradd -g user1 user5		//指定用户5的组为user1
+		-G	指定用户的附加组名
+			useradd -G user1 user6		//指定用户的附加组为user1
+		-s	指定用户登录shell
+			
+
+		vim /etc/passwd			//查看修改后的用户名配置文件
+
+
+
+
+
+	//--- usermod	更改用户名及其它设置
+
+		usermod [选项]... 用户名
+
+		-l	更改用户账号和登陆名
+			usermod -l u1 user1		//将用户名user1 改为 u1
+		-L	锁定用户账户
+			usermod -L aaa			//锁定用户
+				aaa:$6VuZo1:16660:0:99999:7:::		//锁定前
+				aaa:!$6VuZo1:16660:0:99999:7:::		//锁定后
+		-U	解锁用户账户
+			usermod -U aaa			//解锁用户
+
+		-u,-d,-e,-g,-G,-s 与useradd 命令中选项含义相同
+
+
+
+
+
+
+
+	//--- passwd 设置密码及查看用户状态
+
+		passwd [选项]... 用户名
+
+		passwd user1 	给用户user1 设置密码
+
+		-d	清空用户密码，空密可登陆
+			passwd -d user2			//清空user2用户的密码
+		-l	锁定用户
+			passwd -l user1			//锁定用户不可登陆
+		-S	查看用户状态
+			passwd -S user1			//查看用户的状态
+		-u	解锁用户
+			passwd -uf user1		//强制解锁用户
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- 删除用户	userdel
+
+		-r	包括家目录一起删除
+
+		userdel -r user6	//连同家目录一起删除用户
+
+
+
+
+
+
+
+
+
+	//--- groupadd 添加一个用户组 
+
+		groupadd  [-g GID] 组账号名
+
+			groupadd -g 200 users1		//添加了一个名为users1的用户组
+
+
+
+
+
+
+
+
+
+	//--- gpasswd 设置组账号
+
+		-a	向组内添加一个用户
+		-d 	从组内删除一个用户
+		-M	定义组成员列表，以逗号分隔
+
+
+
+
+
+
+
+	//--- chmod 更改用户权限
+
+		chmod [ugoa] [+-=] [rwx] 文件或目录
+			ugoa，属主，属组，其它用户，所有用户	
+			+-=	增加，去除，设置权限
+			
+			-r	递归修改指定目录下所有子项的权限
+		
+			chmod a=rwx aaa
+			chmod -R 700 aaa
+
+
+
+
+
+
+
+
+	//--- getfacl	给用户添加额外的权限
+
+		setfacl [-bRd] [-mx参数] 文件名
+		
+		-m	新建
+		-x	删除某项ACL
+		-b	删除所有ACL
+		-R	递归设定
+		-d	设定默认ACL参数
+
+			setfacl -m user1:rwx aaa	//aaa的文件上给用户user1所有权限 
+			setfacl -d aaa			//设置
+
+			getfacl aaa			//查看aaa这个文件的权限信息
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+			
+			
+			
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== apache 配置相关
+
+
+
+
+
+
+
+
+	//--- 默认网页保存位置：
+
+				源码包：/usr/local/apache2/htdocs/
+				rpm包安装：/var/www/html/
+
+
+
+
+
+
+	//--- apache服务器的重启
+
+		yum版
+			service httpd restart
+			service httpd stop
+
+		源码版
+			/usr/local/apache2/bin/apachectl stop
+			/usr/local/apache2/bin/apachectl start
+
+
+
+
+
+
+
+	//--- apache服务器的配置文件位置
+
+				源码包安装：/usr/lcoal/apache2/etc/httpd.conf
+						/usr/local/apache/etc/extra/*.conf
+						
+				rpm包安装：/etc/httpd/conf/httpd.conf
+
+
+
+
+
+
+
+	//--- 日志的存放位置
+
+		源码版：	/usr/local/apache2/logs/
+					access_log	正确的日志文件
+					error_log	错误的日志文件
+
+		yum版：		/var/log/http/
+					access_log	
+					error_log
+
+
+
+
+
+	//--- apache 环境的基本配置
+
+			ServerRoot		apache主目录
+			Listen			监听端口
+			LoadModule		加载的相关模块
+			
+			User
+			Group			用户和组
+			ServerAdmin		管理员邮箱
+			ServerName		服务器名（没有域名解析时，使用临时解析。不开启）
+			ErrorLog "logs/error_log	错误日志
+			CustomLog "logs/access_log" common		正确访问日志
+			DirectoryIndex index.html index.php		默认网页文件名,优先级顺序
+			Include  etc/extra/httpd-vhosts.conf		子配置文件中内容也会加载生效
+
+
+
+
+
+
+
+
+
+
+
+	//--- serverRoot 设置服务器的主目录(存放和服务相关配置文件)
+
+			serverRoot "/usr/local/apache2"	
+
+				软件安装时 ./configure --prefix=/usr/local/apache2		时指定的就是该目录
+
+
+
+
+
+
+
+
+	//--- listen 	设置服务器使用的端口
+
+		listen 80		默认使用端口
+
+
+
+
+	//--- LoadModule...	加载的相关模块
+
+		LoadModule authz_module modules/mod-authz-owner.so
+		LoadModule php5_module modules/libphp5.so	
+
+
+
+
+
+
+
+	//--- <IfModule unixd_module>  定义服务器的默认用户 (基本用不上)
+
+		<IfModule unixd_module> 
+			User:daemon
+			Group:daemon
+		</IfModule>
+
+
+
+
+	//--- ServerAdmin you@xamp.com	定义服务器邮箱
+
+
+
+
+
+
+	//--- <Directory />	定义全局读写的权限
+
+		<Directory />
+			AllowOverride none
+			Require all denied
+		</Directory>
+
+
+
+
+
+	//--- DocumentRoot 设置网页的存放根目录
+		
+		DocumentRoot "/usr/local/apache2//htdocs"
+		<Directory "/user/local/apache2//htdocs">
+			Options Indexes FollowSymLinks
+			AllowOverride None
+			Require all granted
+		</directory>
+
+
+
+
+
+
+	//--- <IfModule dir_module> 	设置自动识别打开的网页类型
+
+		<IfModule dir_module>
+			DirectoryIndex index.html index.php  
+		</IfModule>
+
+
+
+
+
+
+
+
+
+
+	//--- ErrorLog 错误日志存放设置
+
+		ErrorLog "Logs/error_log"
+		
+			#Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+			
+			LogLevel warn 		//设置指定级别以上的错误才会记录
+			
+
+
+
+	//--- CustomLog "logs/access_log" common	设置正确日志的存放位置
+
+
+
+	//--- <IfModule log_config_module> 设置日志的保存格式 
+
+		<IfModule log_config_module>
+			.......
+
+		</IfModule>
+
+
+
+
+
+
+
+	//--- <IfModule alias_module> 定义目录别名 (完善)
+
+		修改配置文件： vim /usr/local/apache2/etc/httpd.conf
+			1, 开启子文件引用模块
+				Include etc//extra/httpd-autoindex.conf
+
+			2, 在 <IfModule alias_module> 中 将其它目录映射到别名
+
+				Alias /icons /tmp/tpcw		
+
+
+			3，找到 <IfModule "/xxx/xxx/"> 模块 进行配置权限
+
+				<Directory "/tmp/tpcw">   	//这里的路径要和映射的一致
+					Options Indexes MultiViews
+					AllowOverride All
+					Require all granted | denied		//设置访问权限
+					Require ip 192.168.113.2		//指定IP或网段访问权限
+					Require ip 192.168.113.0/24		
+					Require not ip 192.168.113.232		//禁止IP或网段访问	
+					Require not ip 192.168.113.0/24
+				</Directory>
+
+
+			
+			6, 重启apache服务器   
+					/usr/local/apache2/bin/apachectl stop		关闭服务
+					/usr/local/apache2/bin/apachectl start		开启服务
+
+
+
+
+
+
+
+
+
+
+
+
+	//--- 限制特定目录，只允许指定用户可以访问
+
+
+			1, 修改配置文件： vim /usr/local/apache2/etc/httpd.conf
+				
+				Include etc//extra/httpd-autoindex.conf		开启子文件引用模块
+
+			2, 在 <IfModule alias_module> 中 将其它目录映射到别名
+
+				Alias /icons /tmp/tpcw		
+
+
+			3，创建 <IfModule "/tmp/tpcw"> 模块 进行配置权限
+
+				<Directory "/tmp/tpcw">   	
+					Options Indexes MultiViews
+					AllowOverride All		//开启权限认证文件 .htaccess
+					Require all granted		
+				</Directory>
+
+
+
+		在/tmp/tpcw创建 .htaccess文件 内容如下：
+
+			AuthName "50 docs"
+				#提示信息
+			AuthType basic
+				#加密类型
+			AuthUserFile /share/apache.passwd
+				#密码文件，文件名自定义。
+			require valid-user
+				#允许密码文件中所有用户访问
+
+
+
+		建立密码文件，加入允许访问的用户。用户和系统用户无关
+			/usr/local/apache2/bin/htpasswd  -c  /tmp/tpcw/pw  test1    //这是个命令直接打在linux命令行下
+				-c  建立密码文件，只有添加第一个用户时，才能-c
+			/usr/local/apache2/bin/htpasswd  -m  /tmp/tpcw/pw  test2
+				-m  再添加更多用户时，
+
+
+
+			6, 重启apache服务器   
+					/usr/local/apache2/bin/apachectl stop		关闭服务
+					/usr/local/apache2/bin/apachectl start		开启服务
+
+		视频位置  1小时47分钟
+
+
+
+
+
+
+
+
+
+
+
+	//--- <Directory "/usr/local/apache2//htdocs"> 	设置目录的访问权限
+
+		<Directory "/usr/local/apache2//htdocs">
+			Options Indexes FollowSymLinks		//允许软连接到其他目录
+					None			//没有任何权限
+					All			//拥有所有权限
+			AllowOverride None			
+					None		//.htaccess文件中权限不生效
+					All		//.htaccess文件中所有权限都生效	
+					Authconfig	//文件中只有网页认证的权限生效
+			Require all granted		//允许所有访问
+			Require all denied		//拒绝所有访问
+
+			Require ip 192.168.113.123	//限制只允许指定IP访问
+			Require ip 192.168.0.0/24	//限制只允许指定网段访问
+
+			Require not ip 192.168.113.123	//禁止指定IP访问
+			Require not ip 192.168.0.0/24	//禁止指定网段访问
+
+		</Directory
+
+		
+
+
+
+
+
+
+
+
+
+	//--- <IfModule mime_module>   识别文件类型的设置 
+
+		<IfModule mime_module>
+			Typesconfig etc//mime.types
+			AddType application/x-compress .Z
+			AddType application/x-gzip .gz .tgz
+			AddType application/x-httpd-php .php .phtml .phps
+		</IfModule>
+
+
+
+
+
+
+
+
+
+	//--- 域名解析
+		
+		本地有个hosts文件
+
+		C:/windows/system32/drivers/etc/hosts		windows
+		/etc/hosts					linux
+		
+			192.168.113.251 	www.baidu.com
+			192.168.113.252		book.baidu.com
+
+
+		
+
+
+
+	//--- 配置虚拟主机	(完善)
+
+		虚拟主机的类型
+
+			1，基于IP的虚拟主机： 一台服务器，多个IP，搭建多个网站
+			2，基于端口的虚拟主机，一台服务器，一个IP，搭建多个网站，每个网络使用不同端口
+			3，基于名字的虚拟主机，一台服务器，一个IP，搭建多个网站，每个网站全用不同域名访问
+
+		
+
+		虚拟主机的配置
+
+			1，配置文件  vim /usr/local/apache2/etc/httpd.conf		
+			
+				Include etc/extra/httpd-vhosts.conf		//关联虚拟主机配置文件
+
+
+		
+
+			2, 给主机再添加一个IP
+				ifconfig eth0:0 192.168.113.231
+
+			3, 配置文件 vim /usr/local/apache2/etc/extra/httpd-vhosts.conf
+				
+
+				<VirtualHost 192.168.150.230>				//这里只能写IP
+					ServerAdmin webmaster@sina.com 			//管理员邮箱
+					DocumentRoot "/usr/local/apache2/baidu"		//网站主目录
+					ServerName www.sina.com				//完整域名
+					Errorlog "logs/sina-error_log"			//错误日志
+					CustomLog "logs/sina-access_log" common		//访问日志
+				</VirtualHost>
+
+				<VirtualHost 192.168.150.231>				//第二个虚拟主机
+					...
+
+
+
+			4， 创建与虚拟配置中相就的文件目录
+
+
+			5, 设置windows 中的hosts 和  linux 中的hosts
+
+			验证：   elinks www.baidu.com | book.baidu.com
+
+
+			6, 重启apache服务器   
+					/usr/local/apache2/bin/apachectl stop		关闭服务
+					/usr/local/apache2/bin/apachectl start		开启服务
+
+
+
+			7, elinks www.baidu.com | www.sina.com		测试是否成功
+
+
+
+
+
+
+	//--- rewrite 重写功能 (须开启虚拟主机)
+
+		重写：就是在URL中输入一个地址，会自动跳转到另一个地址 ,必须开启虚拟主机
+
+		
+
+		// 域名跳转	如输入 www.sina.con 	会跳转到 www.sohu.con
+
+			1, 先到主配置文件中开启模块
+			LoadModule rewrite_module modules/mod_rewrite.so
+
+			2, 修改虚拟主机配置文件
+				vim extra/httpd-vhosts.conf
+
+				<Directory "/usr/local/apache2/htdocs/sina">
+					Options Indexes FollowSymlinks
+					AllowOverride All
+					Require all granted
+				</Directory>
+					修改或创建配置文件.htaccess
+						vim /usr/local/apache2/htdocs/sina/.htaccess
+							RewriteEngine on	开启rewrite功能
+							RewriteCond %{HTTP_HOST} www.sina.com
+								把以www.sina.con开头的内容赋值给HTTP_HOST变量
+							RewriteRule .* http://www.sohu.com
+								.* 输入任何地址，都跳转到http://www.sohu.com
+				
+				
+				<Directory "/usr/local/apache2/htdocs/sohu">
+					Options Indexes FollowSymlinks
+					AllowOverride All
+					Require all granted
+				</Directory>
+						修改或创建配置文件.htaccess
+						vim /usr/local/apache2/htdocs/sina/.htaccess
+							RewriteEngine on	开启rewrite功能
+							RewriteRule index(\d+).html index.php?id=$1
+
+
+			
+			
+			
+			
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 虚拟机及linux系统安装步骤
+
+
+	1.	新建虚拟机-》自定义（高级）
+
+	2，	下一步
+
+	3，	我以后再安装操作系统
+
+	4,	选择linux	
+		
+		选择CentOS
+
+	5,	设置主机名及存放位置
+
+	6,	选择处理器及内核数
+
+	7,	设置虚拟机内存为1G
+
+	8,	使用桥接网络
+
+	9,	选择LSI Logic（推荐）
+
+	10, 	创建一个新的虚拟磁盘
+
+	11,	选择磁盘类型	SCSI(推荐)
+
+	12,	设置磁盘空间	默认即可
+			选择 	虚拟磁盘拆分多个文件
+
+	13，	设置磁盘文件名称
+
+	14，	定制硬件	按实际需要设置	
+	
+	虚拟机环境搭建完成 ，开始安装系统
+
+
+	15，	在右侧大窗口选择硬件中的CD/DVD,双击打开
+
+	16，	选择CD/DVD ,选择使用ISO镜像文件，
+			浏览打开指定的系统IOS镜像文件 后确定
+
+	17，	打开该虚拟机电源
+
+			
+	18,	虚拟机选择第一项，物理机选择第二项
+
+		Install or upgrade an existing system		虚拟机里使用，不检测显设备驱动
+		Install system with basic video driver		实际服务器中使用，检测显示设备驱动
+		Rescue installed system				救援模式
+		Boot from local system
+		Memory test
+
+
+
+
+	19,	检测  选择 skip
+
+	20,	选择 next
+
+	21,	选择简体中语言
+
+	22，	选择美国英语式
+
+	23， 	选择	=》	基本存储设备
+			
+
+			如果选择“指定的存储设备” 可以将系统安装到远端设备上
+		
+
+	24,	选择  	是，忽略所有数据 
+
+	25,	设置主机名
+
+	25,	选择时区	上海
+	
+	26，	设置根密码
+
+
+	27,	选择创建自定义布局
+
+	28，  	创建 分区
+
+	29，	选择标准分区
+
+	30，	创建一个 boot 启动文件分区
+
+			挂载点：	/boot
+
+			文件系统类型：	ext4
+
+			大小：		200 +
+
+			选择	固定大小
+
+	31,	创建一个交换文件分区
+
+			文件系统类型	：	swap
+			大小 		：	2048
+			固定大小
+
+
+	32，	将剩余空间全部创建为根分区
+			
+			挂载点  	/
+			文件系统类型	ext4
+			使用全部空间
+
+
+	33，		格式化磁盘 并将修改写入磁盘
+			
+
+
+
+	34,		在/dev/sda 中安装引导装载程序	更改设备
+			注意：这里如果有U盘的话，因为U盘的优先级高，所以会自动将引导程序安装到U盘中，所以要修改指定安装到硬盘中，不然U盘不在就不能启动。
+
+
+
+
+	35，		选择	Basic Server	附带基本配置的系统环境	
+					这里会带一些常用 的软件
+
+
+
+
+
+	36,		安装Xshell 远程连接工具
+
+
+	37，		安装WinSCP 远程文件上传工具
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 设置虚拟机IP 及远程连接
+
+
+
+
+
+
+	1	输入命令	 setup		
+	
+		选择 	Firewall configuration		
+				将 Firewal 中的*改成空格 然后点 ok 再点 yes 
+
+		选择	Network configration -> Device configuration -> eth0(eth0) - Advanced .......
+			设置
+			Use DHCP		将*改成空格　
+			Static IP		192.168.113.X
+			Netmask			255.255.255.0
+			Default gateway IP	192.168.113.1
+			
+			修改完点 	OK -> 	Save	->   Save&Quit	-> Quit	
+
+
+
+	2	输入命令	vim /etc/sysconfig/network-scripts/ifcfg-eth0
+
+		修改	ONBOOT=yes	保存退出
+	
+
+	
+	
+	3	输入命令	service network restart
+			
+			如果全部显示ok便成功了
+
+
+
+	4	安装	Xshell	和 WinSCP 软件
+
+		填入虚拟机的 ip 用户名和密码进行登陆，即可操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 配置 yum 环境及 图形桌面软件安装流程
+
+
+
+
+
+
+	1	cd /etc/yum.repos.d				//进入yum 目录
+
+	2	mv CentOS-Base.repo CentOS-Base.repo.bak	//屏蔽远程配置文件
+
+	3	vim CentOS-Media.repo				//编辑本地软件安装配置文件
+
+		a	删除	file:///media/cdrom/	
+		b	删除	file:///media/cdrecorder/
+
+		c	修改	
+				baseurl=file:///mnt/m0		//设置光驱的挂载目录
+					file:///mnt/m1		//设置光驱的挂载目录
+				gpgcheck=0			//让rpm验证失效
+				enabled=1			//让yum源文件生效
+
+			修改完保存并退出 
+
+
+	4	关闭虚拟机	-》 	选择编辑虚拟机设置
+			
+			添加 CD/DVD设备 =》 使用ISO镜像文件 并选择相应的ISO文件
+
+				设置好后开机
+
+
+
+	5	输入	cd /mnt				//进入mnt目录
+
+			输入	mkdir m0			//创建光驱挂载目录
+			输入	mkdir m1			//创建光驱挂载目录
+			
+			输入	cd				//退回到要目录
+
+
+
+	6	输入	mount /dev/sr0 /mnt/m0			//将第一个光盘挂载到mnt/m0目录下
+		输入	mount /dev/sr1 /mnt/m1			//将第二个光盘挂载到mnt/m1目录下
+		输入	df -h					//查看挂载是否成功
+
+			注意：这里挂载了两个光驱，不要挂错了，sr1和sr0只是光驱序号排列，不是文件的排列，这里要先挂载3.5G的那个文件
+
+
+
+	7	输入 	yum install -y gcc*			//安装 gcc相关软件
+
+		输入	yum -y install xorg*			//安装图形界面 1
+
+		输入 	yum -y groupinstall "X Window System"	//...2
+
+		输入 	yum -y groupinstall Desktop		//...3
+
+		输入 	yum -y groupinstall "Deskgop Platform"  //...4
+
+		输入    yum -y install tree			//安装目录树软件
+
+
+		输入	startx					//启动图形界面 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 安装 apache 流程
+
+
+
+
+
+
+	1	运行WinSCP 并登陆服务器，将安装包上传到服务器的/tmp目录中
+
+
+	2	输入 	tar -vzxf httpd-2.2.9.tar.gz 			//解压安装包
+
+
+	3  	输入	cd httpd-2.2.9					//进入软件安装目录			
+
+
+	4	输入	./configure --prefix=/usr/local/apache2		//安装文件到指定目录
+
+
+	5	输入	make						//将安装文件进行二进制转换
+
+
+	6	输入	make install					//转换二进制后进行软件安装
+
+
+	7	输入	/usr/local/apache2/bin/apachectl start		//启动软件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 磁盘操作
+
+	free		查看内存及swap交换文件目录使用情况
+
+	mkswap /dev/sdb5	将分区格式化成swap文件系统格式
+
+	swapon /dev/sdb5	将格式化后的swap分区挂载到 swap交换文件目录中。(成功添加了交换容量)
+
+	swapoff /dev/sdb5	将分区从swap交换目录中卸载
+
+
+	//--- fdisk 简易磁盘操作步骤
+
+		fdisk -l /dev/sda	查看磁盘基本信息
+		fdisk /dev/sda		进入指定磁盘的分区管理界面
+			m	查看分区操作参数
+			n	创建一个分区
+			p	创建主分区
+				e	创建扩展分区
+				l	创建逻辑分区
+			p	查看分区信息
+			w	保存分区设置
+		mkfs 		磁盘文件系统格式化
+				mkfs -t ext4 /dev/sda1		格式化为ext4文件系统格式
+		mkswap 		磁盘交换文件系统格式化
+				mkswap /dev/sda1		格式化为swap文件交换系统格式
+		swapon 		挂载交换文件分区
+				swapon /dev/sda5	将指定分区挂载到交换分区
+		swapoff		卸载交换文件分区
+				swapoff /dev/sdb5	将指定分区从交换分区中卸载
+		free 		查看内存及交换文件目录
+		partprobe /dev/sda	更新内核中磁盘信息
+
+
+
+
+
+
+
+
+
+	//--- fdisk 完全操作步骤
+
+		[root@localhost ~]# fdisk -l		fdisk -l 查看磁盘个数及基本信息
+
+		[root@localhost ~]# fdisk /dev/sdb	fdisk / 进入指定磁盘的分区管理界面
+	
+			Command (m for help): m 	m 查看分区管理的操作参数
+
+			Command (m for help): n		在磁盘上新建一个分区 
+
+				显示(
+					Commend action
+						e extended
+						p primary partition (1-4)
+				    )
+					
+			p				根据提示选择输入 'p' 建立主分区 
+
+
+				显示(
+					Partition number (1-4);
+				    )
+				
+			1				创建1个主分区
+
+				显示(
+					First cylinder (1-2510,default 1):
+					//设置起始的簇位置，默认为1
+				    )
+
+			回车				选择默认的簇起始位置
+
+				显示(
+					Using default value 1
+					Last cylinder, +cylinders or +size{K,M,G} (1-2610,default 2610):
+					//选择结束的簇位置，可以选位置(2610以内) 也可先大小(多少 k或m或G)
+				    )
+
+			Last cylinder, +cylinders or +size{K,M,G} (1-2610,default 2610): +1G		设置磁盘主分区为1G
+
+			
+			Command (m for help): p					查看磁盘分区信息
+			
+
+			Command (m for help): n					再创建一个分区
+
+				显示(
+					Commend action
+						e extended
+						p primary partition (1-4)
+				    )
+
+			e							选择扩展分区类型
+
+
+			Partition number (1-4); 4				创建一个扩展分区
+
+
+			First cylinder (133-2510,default 133):			回车	选择默认的簇起始位置
+	
+
+			Last cylinder, +cylinders or +size{K,M,G} (1-2610,default 2610): +10G		设置扩展分区为10G
+
+			Command (m for help): p					查看磁盘分区信息
+
+
+			Command (m for help): n					再次创建新分区
+
+				显示(
+					Commend action
+						l	logical (5 or over)
+						p 	primary partition (1-4)
+				    )
+
+			l							创建一个逻辑分区
+
+			First cylinder (133-1438,default 133);			回车，使用默认分区起始位置
+
+			Useing default value 133
+
+			Last cylinder, +cylinders or +size{K,M,G} (1-1438,default 1438): +1G		设置逻辑分区为1G
+	
+			Command (m for help): w					保存分区信息并退出
+
+			the partition table has been altered
+			Syncing disks.
+	
+			[root@localhost ~]# partprobe /dev/sdb			partprobe / 更新内核中磁盘分区信息 ，分区成功
+		
+			[root@localhost ~]# mkfs -t ext4 /dev/sdb1		用ext4文件系统格式将磁盘分区格式化 
+					//注意： linux下分区是不可以直接写入数据的，要把分区挂载到一个目录下才可以读写操作	
+
+			[root@localhost ~]# mkdir /c				mkdir 创建一个新目录 ‘c’
+
+			[root@localhost ~]# mount /dev/sdb1 /c			mount 将磁盘挂载到 ‘c’目录下
+
+			[root@localhost ~]# df -hT				df -hT 查看磁盘及目录的使用情况
+
+			[root@localhost ~]# cd /c				进入c 目录
+	
+			[root@localhost ~]# touch 1.txt				创建一个文件
+			
+			[root@localhost ~]# ls 					查看 c 目录中所有内容,会看到刚创建 的1.txt
+			
+			[root@localhost ~]# umout /c				将挂载到c 目录的磁盘卸载
+		
+				//注： 当磁盘从目录中卸载后， 目录中是查看不到任何数据的，如果想再查看磁盘中的内容，就再次将磁盘挂载到目录上，就可以查看磁盘中的内容了
+				//也就是说，linux下的磁盘是要挂载到目录下才可以进行读写操作.
+
+	
+				
+	//--- 硬盘的分区
+	
+		主分区(4)-》扩展分区-》(1)逻辑分区(不限)	//主分区最多4个，扩展分区只能有1个，逻辑分区可以有无数个
+		主分区：	可安装操作系统
+		扩展分区：	用来存放逻辑分区(扩展分区不能直接存储数据)
+		逻辑分区：	用来存储数据
+		主分区+扩展分区的总数最多为4个
+
+
+
+	//--- 分区的命名
+	
+		/hda3		// 第一块IDE硬盘的第3个主分区
+		/sdb7		// 第二块SCSI硬盘的第7个逻辑分区
+
+		
+		hd	代表IDE接口的硬盘
+		sd	代表SCSI接口的硬盘
+
+		a	代表第一块硬盘
+		b	代表第二块硬盘
+		
+		1	代表第一个主分区
+		2	代表第二个主分区
+		3	代表第三个主分区
+		4	代表第四个主分区或扩展分区
+		5	代表第一个逻辑分区
+		6	代表第二个逻辑分区
+			.....以此类推
+
+
+	//-- 分区参数解释
+
+	　　　　1. 输入 m 显示所有命令列示。
+
+　　　　　　　　2. 输入 p 显示硬盘分割情形。
+
+　　　　　　　　3. 输入 a 设定硬盘启动区。
+
+　　　　　　　　4. 输入 n 设定新的硬盘分割区。
+
+　　　　　　　　　4.1. 输入 e 硬盘为[延伸]分割区(extend)。
+
+　　　　　　　　　4.2. 输入 p 硬盘为[主要]分割区(primary)。
+
+　　　　　　　　5. 输入 t 改变硬盘分割区属性。
+
+　　　　　　　　6. 输入 d 删除硬盘分割区属性。
+
+　　　　　　　　7. 输入 q 结束不存入硬盘分割区属性。
+
+　　　　　　　　8. 输入 w 结束并写入硬盘分割区属性
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 搭建ftp环境
+
+	安装vsftpd
+	安装ftp 客户端
+	修改 /etc/vsftpd/vstpd.conf 配置文件
+
+	1,	vim /etc/vsftpd/vsftpd.conf	//打开vsftop配置文件
+
+		2,	yum install vsftpd		//安装vsftpd软件
+	
+		3，	yum install ftp			//安装ftp客户端
+
+		4,	anon_upload_enable=YES		//开启 用户上传
+
+		5,	anon_mkdir_write_enable=YES	//允许用户创建文件
+
+	6,	service vsftpd restart			//重启FTP服务	
+
+	6,	iptables -F				//临时关闭防火墙
+
+	7,	setenforce 0				//临时关闭防护
+
+	8,	cd /var/ftp				//进入上传文件的根目录
+
+	9,	chown ftp pub				//将pub文件夹的属主改为ftp  让ftp 匿名账户对该目录有所有权限
+
+
+
+
+	//ftp相关配置
+
+	匿名用户： 	anonymous或ftp
+	官方站点:	http://vsftpd.beasts.org/
+	主程序：	/usr/sbin/vsftpd
+	服务名：	vsftpd
+	用户控制列表文件  	/etc/vsftpd/ftpusers
+			 	/etc/vsftpd/user_list	(禁用的用户名，添加会即时生效)
+	主配置文件	 	/etc/vsftpd/vsftpd.conf
+
+
+	匿名权限控制：		
+
+		anon_upload_enable=YES：	允许上传文件			27	
+		anon_mkdir_write_enable=YES：	允许创建目录			31
+		anonymous_enable=YES：		启用匿名访问			12	
+		anon_umask=022：		匿名用户所上传文件的权限掩码	22
+		anon_root=/var/ftp：		匿名用户的FTP根目录				
+		anon_other_write_enable=YES：	开放其他写入权			
+		anon_max_rate=0：		限制最大传输速率（字节/秒）
+
+	本地用户权限控制：	
+		local_enable=YES：		是否启用本地系统用户		1
+		local_umask=022：		本地用户所上传文件的权限掩码	1	
+		local_root=/var/ftp：		设置本地用户的FTP根目录		
+		chroot_local_user=YES：		是否将用户禁锢在主目录		
+		local_max_rate=0：		限制最大传输速率（字节/秒）
+
+
+
+	常用的全局配置项：	
+		listen_address=192.168.4.1：	设置监听的IP地址(就是允许可访问的IP段)
+		listen_port=21：		设置监听FTP服务的端口号
+		write_enable=YES：		是否启用写入权限		1
+		download_enable＝YES：		是否允许下载文件
+		max_clients=0：			限制并发客户端连接数
+		max_per_ip=0：			限制同一IP地址的并发连接数
+		Pasv_min_port=50000  		将客户端的数据连接端口改在
+		Pasv_max_port=60000      	50000—60000之间）
+
+
+
+
+	访问限制：
+		userlist_enable=YES：		是否启用user_list列表文件
+		userlist_deny=YES：		是否禁用user_list中的用户
+		Userlist_deny=NO;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== lamp 环境各软件的存放位置
+
+	apache目录		
+		/usr/local/apache2/htdocs/	apache 源码包：
+		/var/www/html/			apache rpm包安装：
+				
+
+
+
+
+
+	php目录
+		/usr/local/php				php安装目录：
+
+		/usr/local/php/etc/php.ini		php.ini配置文件路径：
+
+		/usr/local/nginx			Nginx安装目录：
+
+		/usr/local/nginx/html			Nginx网站根目录：
+
+
+
+
+
+
+
+
+
+
+//===== linux 下的服务的启动，停止，重启
+
+	通用关闭程序的方法
+
+		ps -aux | grep mysql		查看指定程序的进程号
+		kill -9 mysql			强制关闭指定进程
+		
+
+
+
+
+	nginx相关
+		源码启动方式
+		/usr/local/nginx/sbin/nginx		//使用默认配置文件启动
+		或	
+		/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf   //指定配置文件启动
+
+		./nginx -s stop			停止 nginx 服务
+		./nginx 			开启 nginx 服务
+		./nginx -s reload		平滑重启
+		service nginx restart | start | stop 		#重启nginx
+
+		查看nginx 配置文件及文件根目录
+			vi /usr/local/nginx/conf/nginx.conf		配置文件
+				root  /home/wwwroot/default;		根目录
+
+
+
+	apache相关：
+		yum版
+			service httpd restart	
+			service httpd stop
+			service httpd start 
+
+		源码版
+			/usr/local/apache2/bin/apachectl stop
+			/usr/local/apache2/bin/apachectl start
+			/usr/local/apache2/bin/apachectl restart 
+			/usr/local/sbin/apachectl graceful 	不中断的重启
+			
+		设置随系统引导启动
+			echo "/usr/local/apache2/bin/apachectl start" >> /etc/rc.d/rc.local
+
+
+
+
+
+				
+			
+	mysql相关
+		/usr/local/php/etc/php.ini		配置文件
+
+		mysqld_safe&				开启mysql
+
+		service mysqld restart | start | stop
+
+		 /usr/local/mysql/bin/mysql -u root -p		进入mysql
+		
+		1、查看mysql版本
+		方法一：status;
+		方法二：select version();
+
+		2、Mysql启动、停止、重启常用命令
+		a、启动方式
+		1、使用 service 启动：
+		[root@localhost /]# service mysqld start (5.0版本是mysqld)
+		[root@szxdb etc]# service mysql start (5.5.7版本是mysql)
+
+		2、使用 mysqld 脚本启动：
+		/etc/inint.d/mysqld start
+
+		3、使用 safe_mysqld 启动：
+		safe_mysqld&
+
+		b、停止
+		1、使用 service 启动：
+		service mysqld stop
+
+		2、使用 mysqld 脚本启动：
+		/etc/inint.d/mysqld stop
+
+		3、mysqladmin shutdown
+
+		c、重启
+		1、使用 service 启动：
+		service mysqld restart
+		service mysql restart (5.5.7版本命令)
+
+		2、使用 mysqld 脚本启动：
+		/etc/init.d/mysqld restart
+
+
+
+		
+		
+		
+		
+		
+	PHP相关
+		service php-fpm restart | start | stop  		#重启php-fpm
+
+		
+		
+		
+	redis相关
+		service redis start &,  | ctrl+c
+		service redis start | stop	
+		
+		redis-server redis.conf		开启服务端	
+		redis-cli 			开启客户端
+		auth root1234			验证用户密码
+		
+	
+		
+		
+//===== linux 下安装redis
+
+
+
+		说明：
+			   操作系统：CentOS
+
+		php安装目录：/usr/local/php
+
+		php.ini配置文件路径：/usr/local/php/etc/php.ini
+
+		Nginx安装目录：/usr/local/nginx
+
+		Nginx网站根目录：/usr/local/nginx/html
+
+		系统运维  www.osyunwei.com  温馨提醒：qihang01原创内容 版权所有,转载请注明出处及原文链接
+
+		1、安装编译工具
+
+		yum install wget  make gcc gcc-c++ zlib-devel openssl openssl-devel pcre-devel kernel keyutils  patch perl
+
+		2、安装redis
+
+		下载：https://github.com/nicolasff/phpredis/archive/2.2.4.tar.gz
+
+		上传phpredis-2.2.4.tar.gz到/usr/local/src目录
+
+		cd /usr/local/src #进入软件包存放目录
+
+		tar zxvf phpredis-2.2.4.tar.gz #解压
+
+		cd phpredis-2.2.4 #进入安装目录
+
+		/usr/local/php/bin/phpize #用phpize生成configure配置文件
+
+		./configure --with-php-config=/usr/local/php/bin/php-config  #配置
+
+		make  #编译
+
+		make install  #安装
+
+		安装完成之后，出现下面的安装路径
+
+		/usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/
+
+		3、配置php支持
+
+		vi /usr/local/php/etc/php.ini  #编辑配置文件，在最后一行添加以下内容
+
+		添加
+
+		extension="redis.so"
+
+		:wq! #保存退出
+
+		4、测试
+
+		vi /usr/local/nginx/html/index.php   #编辑
+
+		<?php
+
+		phpinfo();
+
+		?>
+
+		:wq! #保存退出
+
+		浏览器打开index.php 如下图所示，可以看到redis相关信息
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== linux 安装程序时的参数解释
+	
+	./configure --prefix=/home/reetsee/environment/php  --enable-fpm --with-mcrypt \
+	--enable-mbstring --disable-pdo --with-curl --disable-debug  --disable-rpath \
+	--enable-inline-optimization --with-bz2  --with-zlib --enable-sockets \
+	--enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex \
+	--with-mhash --enable-zip --with-pcre-regex --with-mysql --with-mysqli \
+	--with-gd --with-jpeg-dir --with-openssl
+
+
+	./configure			//安装程序 
+	--prefix=/...			//prefix 指定程序的安装目录
+	--enable-fpm			//开启某功能的支持
+	--with-openssl			// -with 指定所依赖的程序
+	--with-mysql=/usr/local/mysql 	// -with-mysql=/.. 指定所依赖程序的目录
+	
+
+
+
+	yum install --installroot=/usr/src/ vim
+
+	--installroot			//指定yum 安装的路径 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== nginx  service启动脚本示例
+
+		在启动目录中创建启动脚本如：  vim /etc/rc.d/init.d/nginx
+
+			#! /bin/sh
+			# chkconfig: 2345 55 25
+			# Description: Startup script for nginx webserver on Debian. Place in /etc/init.d and
+			# run 'update-rc.d -f nginx defaults', or use the appropriate command on your
+			# distro. For CentOS/Redhat run: 'chkconfig --add nginx'
+
+			### BEGIN INIT INFO
+			# Provides:          nginx
+			# Required-Start:    $all
+			# Required-Stop:     $all
+			# Default-Start:     2 3 4 5
+			# Default-Stop:      0 1 6
+			# Short-Description: starts the nginx web server
+			# Description:       starts nginx using start-stop-daemon
+			### END INIT INFO
+
+			# Author:   licess
+			# website:  http://lnmp.org
+
+			PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+			NAME=nginx
+			NGINX_BIN=/usr/local/nginx/sbin/$NAME
+			CONFIGFILE=/usr/local/nginx/conf/$NAME.conf
+			PIDFILE=/usr/local/nginx/logs/$NAME.pid
+
+			case "$1" in
+				start)
+					echo -n "Starting $NAME... "
+
+					if netstat -tnpl | grep -q nginx;then
+						echo "$NAME (pid `pidof $NAME`) already running."
+						exit 1
+					fi
+
+					$NGINX_BIN -c $CONFIGFILE
+
+					if [ "$?" != 0 ] ; then
+						echo " failed"
+						exit 1
+					else
+						echo " done"
+					fi
+					;;
+					
+				stop)
+					echo -n "Stoping $NAME... "
+
+					if ! netstat -tnpl | grep -q nginx; then
+						echo "$NAME is not running."
+						exit 1
+					fi
+
+					$NGINX_BIN -s stop
+
+					if [ "$?" != 0 ] ; then
+						echo " failed. Use force-quit"
+						exit 1
+					else
+						echo " done"
+					fi
+					;;
+
+				status)
+					if netstat -tnpl | grep -q nginx; then
+						PID=`pidof nginx`
+						echo "$NAME (pid $PID) is running..."
+					else
+						echo "$NAME is stopped"
+						exit 0
+					fi
+					;;
+					
+				force-quit)
+					echo -n "Terminating $NAME... "
+
+					if ! netstat -tnpl | grep -q nginx; then
+						echo "$NAME is not running."
+						exit 1
+					fi
+
+					kill `pidof $NAME`
+
+					if [ "$?" != 0 ] ; then
+						echo " failed"
+						exit 1
+					else
+						echo " done"
+					fi
+					;;
+
+				restart)
+					$0 stop
+					sleep 1
+					$0 start
+					;;
+
+				reload)
+					echo -n "Reload service $NAME... "
+
+					if netstat -tnpl | grep -q nginx; then
+						$NGINX_BIN -s reload
+						echo " done"
+					else
+						echo "$NAME is not running, can't reload."
+						exit 1
+					fi
+					;;
+
+				configtest)
+					echo -n "Test $NAME configure files... "
+
+					$NGINX_BIN -t
+					;;
+
+				*)
+					echo "Usage: $0 {start|stop|force-quit|restart|reload|status|configtest}"
+					exit 1
+					;;
+
+			esac
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====  Linux释放内存的命令及原理
+
+sync
+echo 1 > /proc/sys/vm/drop_caches
+
+drop_caches的值可以是0-3之间的数字，代表不同的含义：
+0：不释放（系统默认值）
+1：释放页缓存
+2：释放dentries和inodes
+3：释放所有缓存
+
+释放完内存后改回去让系统重新自动分配内存。
+echo 0 >/proc/sys/vm/drop_caches
+
+free -m #看内存是否已经释放掉了。
+
+如果我们需要释放所有缓存，就输入下面的命令：
+echo 3 > /proc/sys/vm/drop_caches
+
+######### Linux释放内存的相关知识 ###############
+
+在Linux系统下，我们一般不需要去释放内存，因为系统已经将内存管理的很好。但是凡事也有例外，有的时候内存会被缓存占用掉，导致系统使用SWAP空 间影响性能，例如当你在linux下频繁存取文件后,物理内存会很快被用光,当程序结束后,内存不会被正常释放,而是一直作为caching。，此时就需 要执行释放内存（清理缓存）的操作了。
+
+Linux系统的缓存机制是相当先进的，他会针对dentry（用于VFS，加速文件路径名到inode的转换）、Buffer Cache（针对磁盘块的读写）和Page Cache（针对文件inode的读写）进行缓存操作。但是在进行了大量文件操作之后，缓存会把内存资源基本用光。但实际上我们文件操作已经完成，这部分 缓存已经用不到了。这个时候，我们难道只能眼睁睁的看着缓存把内存空间占据掉吗？所以，我们还是有必要来手动进行Linux下释放内存的操作，其实也就是 释放缓存的操作了。/proc是一个虚拟文件系统,我们可以通过对它的读写操作做为与kernel实体间进行通信的一种手段.也就是说可以通过修改 /proc中的文件,来对当前kernel的行为做出调整.那么我们可以通过调整/proc/sys/vm/drop_caches来释放内存。要达到释 放缓存的目的，我们首先需要了解下关键的配置文件/proc/sys/vm/drop_caches。这个文件中记录了缓存释放的参数，默认值为0，也就 是不释放缓存。
+
+一般复制了文件后,可用内存会变少，都被cached占用了，这是linux为了提高文件读取效率的做法：为了提高磁盘存取效率, Linux做了一些精心的设计, 除了对dentry进行缓存(用于VFS,加速文件路径名到inode的转换), 还采取了两种主要Cache方式：Buffer Cache和Page Cache。前者针对磁盘块的读写，后者针对文件inode的读写。这些Cache有效缩短了 I/O系统调用(比如read,write,getdents)的时间。"
+
+释放内存前先使用sync命令做同步，以确保文件系统的完整性，将所有未写的系统缓冲区写到磁盘中，包含已修改的 i-node、已延迟的块 I/O 和读写映射文件。否则在释放缓存的过程中，可能会丢失未保存的文件。
+
+[root@fcbu.com ~]# free -m
+             total       used       free     shared    buffers     cached
+Mem:          7979       7897         82          0         30       3918
+-/ buffers/cache:       3948       4031
+Swap:         4996        438       4558
+
+第一行用全局角度描述系统使用的内存状况：
+total 内存总数
+used 已经使用的内存数，一般情况这个值会比较大，因为这个值包括了cache 应用程序使用的内存
+free 空闲的内存数
+shared 多个进程共享的内存总额
+buffers 缓存，主要用于目录方面,inode值等（ls大目录可看到这个值增加）
+cached 缓存，用于已打开的文件
+
+第二行描述应用程序的内存使用：
+-buffers/cache 的内存数:used - buffers - cached
+buffers/cache 的内存数:free buffers cached
+前个值表示-buffers/cache 应用程序使用的内存大小，used减去缓存值
+后个值表示 buffers/cache 所有可供应用程序使用的内存大小，free加上缓存值
+
+第三行表示swap的使用：
+used 已使用
+free 未使用 
+
+可用的内存=free memory buffers cached。
+
+为什么free这么小，是否关闭应用后内存没有释放？
+但实际上，我们都知道这是因为Linux对内存的管理与Windows不同，free小并不是说内存不够用了，应该看的是free的第二行最后一个值：-/ buffers/cache:       3948       4031 ，这才是系统可用的内存大小。
+实际项目中的经验告诉我们，如果因为是应用有像内存泄露、溢出的问题，从swap的使用情况是可以比较快速可以判断的，但free上面反而比较难查看。我觉得既然核心是可以快速清空buffer或cache，但核心并没有这样做（默认值是0），我们不应该随便去改变它。
+一般情况下，应用在系统上稳定运行了，free值也会保持在一个稳定值的，虽然看上去可能比较小。当发生内存不足、应用获取不到可用内存、OOM错 误等问题时，还是更应该去分析应用方面的原因，如用户量太大导致内存不足、发生应用内存溢出等情况，否则，清空buffer，强制腾出free的大小，可 能只是把问题给暂时屏蔽了，所以说一般情况下linux都不用经常手动释放内存。
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 关闭selinux
+
+　　SELinux是 Security-Enhanced Linux的简称，是一种内核强制访问控制安全系统，目前SELinux已经集成到Linux 2.6内核的主线和大多数Linux发行版上，由于SELinux与现有Linux应用程序和Linux内核模块兼容性还存在一些问题，因此建议初学者先关闭selinux，等到对linux有了深入的认识后，再对selinux深入研究不迟!
+
+　　查看linux系统selinux是否启用，可以使用getenforce命令：
+
+　　代码如下:
+
+　　[root@localhost ~]# getenforce
+
+　　Disabled
+
+　　关闭selinux，在redhat系列发行版中，可以直接修改如下文件：
+
+　　代码如下:
+
+　　[root@localhost ~]#vi /etc/sysconfig/selinux
+    # This file controls the state of SELinux on the system.
+
+　　# SELINUX= can take one of these three values:
+
+　　# enforcing - SELinux security policy is enforced.
+
+　　# permissive - SELinux prints warnings instead of enforcing.
+
+　　# disabled - SELinux is fully disabled.
+
+　　SELINUX=enforcing
+
+　　# SELINUXTYPE= type of policy in use. Possible values are:
+
+　　# targeted - Only targeted network daemons are protected.
+
+　　# strict - Full SELinux protection.
+
+　　SELINUXTYPE=targeted
+
+　　将SELINUX=enforcing修改为SELINUX=disabled, 重启系统后将会停止SElinux。
+
+
+
+
+
+
+
+
+
+
+//===== SSH登陆限制，服务的启用禁用安全设置
+
+tcp_wrappers防火墙的设置
+
+　　Tcp_Wrappers是一个用来分析TCP/IP封包的软件，类似的IP封包软件还有iptables，linux默认都安装了此软件，作为一个安全的系统，Linux本身有两层安全防火墙，通过IP过滤机制的iptables实现第一层防护，iptables防火墙通过直观地监视系统的运行状况，阻挡网络中的一些恶意攻击，保护整个系统正常运行，免遭攻击和破坏。关于iptables的实现，将在下个章节详细讲述。如果通过了第一层防护，那么下一层防护就是tcp_wrappers了，通过Tcp_Wrappers可以实现对系统中提供的某些服务的开放与关闭、允许和禁止，从而更有效地保证系统安全运行。
+
+　　Tcp_Wrappers的使用很简单，仅仅两个配置文件：/etc/hosts.allow和/etc/hosts.deny(1) 查看系统是否安装了Tcp_Wrappers
+
+　　[root@localhost ~]#rpm -q tcp_wrappers 或者[root@localhost ~]#rpm -qa | grep tcp
+
+　　tcp_wrappers-7.6-37.2
+
+　　tcpdump-3.8.2-10.RHEL4
+
+　　如果有上面的类似输出，表示系统已经安装了tcp_wrappers模块。如果没有显示，可能是没有安装，可以从linux系统安装盘找到对应RPM包进行安装。
+
+　　(2)tcp_wrappers防火墙的局限性
+
+　　系统中的某个服务是否可以使用tcp_wrappers防火墙，取决于该服务是否应用了libwrapped库文件，如果应用了就可以使用tcp_wrappers防火墙，系统中默认的一些服务如：sshd、portmap、sendmail、xinetd、vsftpd、tcpd等都可以使用tcp_wrappers防火墙。
+
+　　(3) tcp_wrappers设定的规则
+
+　　tcp_wrappers防火墙的实现是通过/etc/hosts.allow和/etc/hosts.deny两个文件来完成的，首先看一下设定的格式：
+
+　　service:host(s) [:action]
+
+　　l service：代表服务名，例如sshd、vsftpd、sendmail等。
+
+　　l host(s)：主机名或者IP地址，可以有多个，例如192.168.60.0、www.ixdba.netl action：动作， 符合条件后所采取的动作。
+
+　　几个关键字：
+
+　　l ALL：所有服务或者所有IP。
+
+　　l ALL EXCEPT：所有的服务或者所有IP除去指定的。
+
+　　例如：ALL:ALL EXCEPT 192.168.60.132
+
+　　表示除了192.168.60.132这台机器，任何机器执行所有服务时或被允许或被拒绝。
+
+　　了解了设定语法后，下面就可以对服务进行访问限定。
+
+　　例如互联网上一台linux服务器，实现的目标是：仅仅允许222.90.66.4、61.185.224.66以及域名softpark.com通过SSH服务远程登录到系统，设置如下：
+
+　　首先设定允许登录的计算机，即配置/etc/hosts.allow文件，设置很简单，只要修改/etc/hosts.allow(如果没有此文件，请自行建立)这个文件即可。
+
+　　只需将下面规则加入/etc/hosts.allow即可。
+
+　　sshd: 222.90.66.4 61.185.224.66 softpark.com接着设置不允许登录的机器，也就是配置/etc/hosts.deny文件了。
+
+　　一般情况下，linux会首先判断/etc/hosts.allow这个文件，如果远程登录的计算机满足文件/etc/hosts.allow设定的话，就不会去使用/etc/hosts.deny文件了，相反，如果不满足hosts.allow文件设定的规则的话，就会去使用hosts.deny文件了，如果满足hosts.deny的规则，此主机就被限制为不可访问linux服务器，如果也不满足hosts.deny的设定，此主机默认是可以访问linux服务器的，因此，当设定好/etc/hosts.allow文件访问规则之后，只需设置/etc/hosts.deny为“所有计算机都不能登录状态”即可。
+
+　　sshd:ALL
+
+　　这样，一个简单的tcp_wrappers防火墙就设置完毕了。
+
+
+
+
+
+
+
+
+
+

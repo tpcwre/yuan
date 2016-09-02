@@ -1,0 +1,56 @@
+
+
+//-- 案例一
+
+	//控制器
+
+		<?php
+		namespace Admin\Controller;
+		use Think\Controller;
+		class IndexController extends Controller{
+
+			function index(){
+				$this->display();
+			}
+			function head(){
+				$this->display();
+			}
+			function left(){
+				$this->display();
+			}
+			function right(){
+				$this->assign('a','aaaaaaaaaaaaaa');
+				$this->display();
+			}
+		}
+
+
+
+	//模板
+
+		<frameset rows='60,*' frameborder=1 framespacing=0>
+			<frame name='head' src='__APP__/Admin/Index/head' frameborder=1 noresize scrolling=no>
+			<frameset cols='170,*'>
+				<frame name='left' src='/one/index.php/Admin/Index/left' noresize frameborder=1>
+				<frame name='right' src='__APP__/Admin/Index/right' noresize frameborder=1>
+			</frameset>	
+		</frameset>
+		
+		
+	//left 页面
+		<p><a href='right.html' target='right'>right1</a></p>
+		<p><a href='right2.html' target='right'>right2</a></p>
+		<p><a href='right3.html' target='right'>right3</a></p>
+		<p><a href='right4.html' target='right'>right4</a></p>
+		<p><a href='right5.html' target='right'>right5</a></p>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

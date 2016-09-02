@@ -1,0 +1,97 @@
+
+
+
+
+
+		第53课 知问前端-cookie插件
+课程笔记（图片）
+学习要点：
+	1，使用cookie插件
+	2，注册直接登陆
+
+
+
+
+$(function(){
+  $.cookie("user","bnbbs",{		//===创建一个cookie 
+
+	expires:7,			//===设置cookie存储的有效期
+
+	path:"/",			//===设置cookie存放的路径
+
+	domain:"www.ycku.com",		//===限制在指定的域名中才生成cookie
+
+	secure:true,			//===限制在https加密连接时才生成cookie
+  });	
+
+
+
+
+
+
+
+
+  $.cookie.raw=true,			//===关闭解码/编码
+					  		//默认为false(开启状态)
+例：
+  $.cookie("ccc","李炎恢");
+  alert($.cookie("ccc")); 
+如开启编/解码功能，那么中文会被编码，调用时会自动解码，这样可以防止乱码。
+如关闭编/解码功能，那么存储与调用时都会直接用中文，这样会容易出现乱码。 
+  
+
+
+
+  alert($.cookie());			//===获取所有的cookie值 
+
+  alert($.cookie("aaa"));		//===普通方式获取指定cookie值
+
+  alert($.cookie().ccc);		//===对象方式获取指定cookie值
+
+  $.removeCookie("user");		//===删除当前目录下的某cookie
+
+  $.removeCookid("suer",{		//===删除指定目录下的某cookie
+	path:"/",
+  });
+
+
+					//===用cookie控制登陆，注册状态
+  //-在提交注册的时候生成cookie
+  //-以表单的用户名生成cookie
+  $.cookie("user",$("#user").val());
+  //$("#user").val();获取到的是用户名元素的值。
+
+  //-隐藏用户名和退出项
+  $("#用户名， #退出").hide();
+
+  //-控制登陆，注册的状态
+  if($.cookie("user")){ //如果cookie存在
+	$("#用户名, #退出").show();  //显示用户名与退出项
+	$("#注册, #登陆").hide();  //隐藏注册与登陆状态
+	$("#用户名").html($.cookie("user")); //以cookie值重写用户名
+  }else{  //如果cookie不存在
+	$("#用户名, #退出").hide();  //隐藏用户名与退出项
+	$("#注册, #登陆").show();    //显示注册登陆项
+  }
+
+
+  //-ajax提交注册成功后再次调取cookie并隐藏注册登陆项
+success:function(response){
+	$("#注册, #登陆").hide();  //隐藏注册与登陆状态
+	$("#用户名").html($.cookie("user")); //以cookie值重写用户名
+}
+
+
+//-退出登陆状态
+  //点击退出按钮
+  $("#退出").click(function(){ 
+//-删除cookie  
+	$.removeCookie("user");
+//-跳转到首页
+	window.location.href="首页";
+  });
+
+
+});
+
+

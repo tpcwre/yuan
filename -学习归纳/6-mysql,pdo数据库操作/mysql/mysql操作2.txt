@@ -1,0 +1,975 @@
+
+
+//===== 未解答题
+		13、编写一个在线留言本，实现用户的在线留言功能，留言信息存储到数据库？
+		14、实现无限级分类的数据库设计
+
+
+		mysql 的备份与恢复
+
+		
+		
+		
+
+		
+		
+
+//===== 使用explain语句去查看分析结果
+//===== MYSQL中的组合索引
+//===== 使用慢查询分析
+//===== MYISAM和INNODB的锁定
+//===== MYSQL的事务配置项
+	
+
+
+//===== 相关网址
+	
+	http://www.cnblogs.com/kissdodog/p/4159176.html 	mysql 数据类型
+
+		
+		
+		
+//===== MYSQL中的组合索引
+
+		假设表有id,key1,key2,key3,把三者形成一个组合索引，则
+
+		如：
+
+			where key1=....  
+			   where key1=1 and key2=2  
+			   where key1=3 and key3=3 and key2=2 
+
+		根据最左原则，这些都是可以使用索引的，如from test where key1=1 order by key3，用explain分析的话，只用到了normal_key索引，但只对where子句起作用，而后面的order by需要排序。
+
+		
+		
+		
+//===== 使用慢查询分析
+
+		在my.ini中：
+
+		long_query_time=1
+
+		log-slow-queries=d:\mysql5\logs\mysqlslow.log
+
+		把超过1秒的记录在慢查询日志中
+
+		可以用mysqlsla来分析之。也可以在mysqlreport中，有如
+
+		DMS分别分析了select ,update,insert,delete,replace等所占的百份比
+
+		
+		
+//===== MYISAM和INNODB的锁定
+
+		myisam中，注意是表锁来的，比如在多个UPDATE操作后，再SELECT时，会发现SELECT操作被锁定了，必须等所有UPDATE操作完毕后，再能SELECT
+
+		innodb的话则不同了，用的是行锁，不存在上面问题。
+
+		
+		
+//===== MYSQL的事务配置项
+
+		innodb_flush_log_at_trx_commit=1
+
+		表示事务提交时立即把事务日志写入磁盘，同时数据和索引也更新。
+
+		innodb_flush_log_at_trx_commit=0
+
+		事务提交时，不立即把事务日志写入磁盘，每隔1秒写一次
+
+		innodb_flush_log_at_trx_commit=2
+
+		事务提交时，立即写入磁盘文件（这里只是写入到内核缓冲区，但不立即刷新到磁盘，而是每隔1秒刷新到盘，同时更新数据和索引
+
+
+		
+		
+		
+		
+		
+//===== 使用explain SQL语句的性能分析		**
+
+		如explain select * from test1 where id=1;会出现：id  selecttype  table  type possible_keys  key key_len  ref rows  extra各列。
+
+		其中，
+
+		type=const表示通过索引一次就找到了；
+
+		key=primary的话，表示使用了主键；
+
+		type=all,表示为全表扫描；
+
+		key=null表示没用到索引。type=ref,因为这时认为是多个匹配行，在联合查询中，一般为REF。
+
+		EXPLAIN tbl_name或：EXPLAIN [EXTENDED] SELECT select_options
+
+		前者可以得出一个表的字段结构等等，后者主要是给出相关的一些索引信息，而今天要讲述的重点是后者。
+
+		举例
+
+			mysql> explain select * from event;  
+			+—-+————-+——-+——+—————+——+———+——+——+——-+  
+			| id | select_type | table | type | possible_keys | key | key_len | ref | rows | Extra |  
+			+—-+————-+——-+——+—————+——+———+——+——+——-+  
+			| 1 | SIMPLE | event | ALL | NULL | NULL | NULL | NULL | 13 | |  
+			+—-+————-+——-+——+—————+——+———+——+——+——-+  
+			1 row in set (0.00 sec) 
+
+		各个属性的含义
+
+		id
+
+		select查询的序列号
+
+		select_type
+
+		select查询的类型，主要是区别普通查询和联合查询、子查询之类的复杂查询。
+
+		table
+
+		输出的行所引用的表。
+
+		type
+
+		联合查询所使用的类型。
+
+		type显示的是访问类型，是较为重要的一个指标，结果值从好到坏依次是：
+
+		system > const > eq_ref > ref > fulltext > ref_or_null > index_merge > unique_subquery > index_subquery > range > index > ALL
+
+		一般来说，得保证查询至少达到range级别，最好能达到ref。
+
+		possible_keys
+
+		指出MySQL能使用哪个索引在该表中找到行。如果是空的，没有相关的索引。这时要提高性能，可通过检验WHERE子句，看是否引用某些字段，或者检查字段不是适合索引。
+
+		key
+
+		显示MySQL实际决定使用的键。如果没有索引被选择，键是NULL。
+
+		key_len
+
+		显示MySQL决定使用的键长度。如果键是NULL，长度就是NULL。文档提示特别注意这个值可以得出一个多重主键里mysql实际使用了哪一部分。
+
+		ref
+
+		显示哪个字段或常数与key一起被使用。
+
+		rows
+
+		这个数表示mysql要遍历多少数据才能找到，在innodb上是不准确的。
+
+		Extra
+
+		如果是Only index，这意味着信息只用索引树中的信息检索出的，这比扫描整个表要快。
+
+		如果是where used，就是使用上了where限制。
+
+		如果是impossible where 表示用不着where，一般就是没查出来啥。
+
+		如果此信息显示Using filesort或者Using temporary的话会很吃力，WHERE和ORDER BY的索引经常无法兼顾，如果按照WHERE来确定索引，那么在ORDER BY时，就必然会引起Using filesort，这就要看是先过滤再排序划算，还是先排序再过滤划算。
+
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+//===== 数据库设计时，常遇到的性能瓶颈有哪些，常有的解决方案？
+
+		瓶颈有：大存储，大访问量，大数据量。
+		解决方案有：表的划分。关联  采用第三范式，集群，主从，读写分离。
+
+
+
+
+
+
+
+
+
+//===== 什么是数据库索引，主键索引，唯一索引的区别，索引的缺点是什么？
+		聚集索引和非聚集索引
+
+		什么是索引：
+			索引是对数据库表中一列或多列的值进行排序的一种结构。使用索引可以快速访问表中的特定信息。
+		
+		主键索引和唯一索引的区别：
+			主键是一种约束，而唯一索引只是一种索引
+			唯一索引允许空值，而主键索引不允许空值
+			主键可以被其它表引用为外键，而唯一索引不可以
+			一个表可以创建多个唯一索引，但主键只能创建一个
+			在RBO模式下，主键执行优先级要高于唯一索引
+		
+		
+		索引的缺点：	
+			1，创建和维护索引会耗费时间，
+			2，索引会占据物理空间 
+			3，当对数据增删改操作进索引也要动态维护，会降低数据维护的速度
+
+
+
+
+
+
+
+//===== 数据库的优化有哪些
+	
+	1，结构的优化，如字段的类型选择
+	2，操作优化，如sql查询等语句的优化
+	3，配置的优化，如数据库自身的缓存，连接数以及主从和集群
+	4，外部的优化，如程序对数据的缓存，硬件的内存
+
+
+//===== 如何判断SQL语句的运行效率？如何优化一个查询语句？
+
+	通过 show status 命令了解各种SQL人执行频率
+	
+	
+	
+//===== 数据删除后的ID变化	
+	在空表News中,字段ID为自增主键,批量插入17条记录之后,发现最后三条数据有误,删除此三条记录后重启Mysql数据库,再重新插入三条记录,请问最后一条记录的ID值是多少？（5分）MyISAM:20  InnoDB:17
+
+
+//===== 设定网站的用户数量在千万级，但是活跃用户的数量只有1%，如何通过优化数据库提高活跃用户的访问速度？
+
+	对用户信息添加判断是否活跃的字段（如最后登陆，登陆次数），做数据分享，对活跃用户做缓存
+
+
+
+//===== 服务器在运行的过程中，随着用户访问数量的增长，如何通过优化，保证性能？
+    如果数据库已经达到最优化，请设计出继续升级的解决方案？
+
+	通过集群，主从，读写分享，硬件继续提升
+
+
+	
+	
+	
+	
+
+
+//===== 写出常用的SQL操作关键字
+
+		SELECT　　　--从数据库表中检索数据行和列
+		INSERT　　　--向数据库表添加新数据行
+		DELETE　　　--从数据库表中删除数据行
+		UPDATE　　　--更新数据库表中的数据
+		REPLACE	    --替换修改表中数据
+		--数据定义
+		CREATE TABLE　　--创建一个数据库表
+		DROP TABLE　　 --从数据库中删除表
+		ALTER TABLE　　 --修改数据库表结构
+		CREATE VIEW　　 --创建一个视图
+		DROP VIEW　　 --从数据库中删除视图
+		CREATE INDEX　　--为数据库表创建一个索引
+		DROP INDEX　　 --从数据库中删除索引
+		CREATE PROCEDURE　 --创建一个存储过程
+		DROP PROCEDURE　　--从数据库中删除存储过程
+		CREATE TRIGGER　　--创建一个触发器
+		DROP TRIGGER　　--从数据库中删除触发器
+		CREATE SCHEMA　　--向数据库添加一个新模式
+		DROP SCHEMA　　 --从数据库中删除一个模式
+		CREATE DOMAIN　　--创建一个数据值域
+		ALTER DOMAIN　　--改变域定义
+		DROP DOMAIN　　 --从数据库中删除一个域
+		--数据控制
+		GRANT　　　--授予用户访问权限
+		DENY　　　--拒绝用户访问
+		REVOKE　　　--解除用户访问权限
+		--事务控制
+		COMMIT　　　--结束当前事务
+		ROLLBACK　　 --中止当前事务
+		SET TRANSACTION　　--定义当前事务数据访问特征
+		--程序化SQL
+		DECLARE　　　--为查询设定游标
+		EXPLAN　　　--为查询描述数据访问计划
+		OPEN　　　--检索查询结果打开一个游标
+		FETCH　　　--检索一行查询结果
+		CLOSE　　　--关闭游标
+		PREPARE　　　--为动态执行准备SQL 语句
+		EXECUTE　　　--动态地执行SQL 语句
+		DESCRIBE　　 --描述准备好的查询
+		---局部变量
+		declare @id char(10)
+		--set @id = ’10010001’
+		select @id = ’10010001’
+
+		---全局变量
+		---必须以@@开头
+
+
+
+
+
+
+
+
+
+
+
+//===== php操作mysql常用函数
+
+		mysql_connect 			— 打开一个到 MySQL 服务器的连接
+		mysql_select_db 		— 选择 MySQL 数据库
+		mysql_set_charset		— 设置客户端的字符集
+			或 
+		mysql_query('SET NAMES UTF8')
+
+		mysql_query 			— 发送执行一条 MySQL 语句 
+
+		create database dbname 		创建一个数据库
+		create table user1() 		创建一个数据表，以及相关内容
+		drop database dbname 		删除一个数据库
+		drop table tbname			删除一个数据表
+
+		mysql_fetch_assoc 		— 从结果集中取得一行作为关联数组
+		mysql_fetch_row 		— 从结果集中取得一行作为枚举数组
+		mysql_fetch_array 		— 从结果集中取得一行作为关联数组与索引数组二者兼有的数组
+		mysql_fetch_object		-- 以对象的形式返回数据，使用方法为： echo $row->xx 
+		mysql_fetch_field 		— 从结果集中取得列信息并作为对象返回
+
+		mysql_num_rows — 取得结果集中行的数目,用于判断$res是否有数据
+			$res=mysql_qurey($sql);
+			if($res && mysql_num_rows($res)>0){
+				echo '结果集中有数据';
+			}else{
+				echo '结果集是空的';
+			}
+		mysql_affected_rows() 		— 取得前一次 MySQL 操作所影响的记录行数
+			if(mysql_affected_row()>0 ){}
+		mysql_insert_id() 		— 取得上一步 INSERT 操作产生的 ID
+		mysql_free_result()		— 释放结果内存
+		mysql_error() 			— 返回上一个 MySQL 操作产生的文本错误信息
+		mysql_close() 			— 关闭 MySQL 连接
+
+		mysql_create_db 		— 新建一个 MySQL 数据库
+		mysql_client_encoding — 返回字符集的名称
+		mysql_data_seek — 移动内部结果的指针
+		mysql_db_name — 取得结果数据
+		mysql_db_query — 发送一条 MySQL 查询
+		mysql_drop_db — 丢弃（删除）一个 MySQL 数据库
+		mysql_errno — 返回上一个 MySQL 操作中的错误信息的数字编码
+		mysql_escape_string — 转义一个字符串用于 mysql_query
+		mysql_fetch_lengths — 取得结果集中每个输出的长度
+		mysql_fetch_object — 从结果集中取得一行作为对象
+		mysql_field_flags — 从结果中取得和指定字段关联的标志
+		mysql_field_len — 返回指定字段的长度
+		mysql_field_name — 取得结果中指定字段的字段名
+		mysql_field_seek — 将结果集中的指针设定为制定的字段偏移量
+		mysql_field_table — 取得指定字段所在的表名
+		mysql_field_type — 取得结果集中指定字段的类型
+		mysql_get_client_info — 取得 MySQL 客户端信息
+		mysql_get_host_info — 取得 MySQL 主机信息
+		mysql_get_proto_info — 取得 MySQL 协议信息
+		mysql_get_server_info — 取得 MySQL 服务器信息
+		mysql_info — 取得最近一条查询的信息
+		mysql_list_dbs — 列出 MySQL 服务器中所有的数据库
+		mysql_list_fields — 列出 MySQL 结果中的字段
+		mysql_list_processes — 列出 MySQL 进程
+		mysql_list_tables — 列出 MySQL 数据库中的表
+		mysql_num_fields — 取得结果集中字段的数目
+		mysql_pconnect — 打开一个到 MySQL 服务器的持久连接
+		mysql_ping — Ping 一个服务器连接，如果没有连接则重新连接
+		mysql_real_escape_string — 转义 SQL 语句中使用的字符串中的特殊字符，并考虑到连接的当前字符集
+		mysql_stat — 取得当前系统状态
+		mysql_tablename — 取得表名
+		mysql_thread_id — 返回当前线程的 ID
+		mysql_unbuffered_query — 向 MySQL 发送一条 SQL 查询，并不获取和缓存结果的行
+
+
+	
+
+	
+	
+	
+	
+	
+	
+	
+//===== MySQL数据类型表达的意义
+
+
+		//-- enum() 枚举型数据 
+
+			create table t1(
+				id int,
+				sex enum('a'),
+				sex2 enum('a','b','c')	(单选)
+				);
+
+			insert into t1(sex,sex2) values('b','b');
+			结果	sex	空
+				sex2	b
+				
+			注解： enum() 枚举就是单选，在预设值范围内，只能选一个
+
+
+
+		//-- set() 集合型数据
+
+			create table t2(
+				id int,
+				type set('a'),
+				type2 set('a','b','c')	(多选)
+				);
+
+			insert into t2(type,type2) values('a,b,c','a,b,c');
+			结果：	type	a		//这里会过滤掉不符合的字串
+				type2 	a,b,c
+
+
+
+		//-- 空数据的 null 与not null
+
+			create table t5(
+				id int,
+				name1 char(22),			//设置了not null 当数据为空什么都不显示 
+				name2 char(22) not null		//默认当数据为空时会显示null
+				);				
+
+			insert into t5(id) values(1);		
+			结果：	name1	null
+				name2	空
+
+
+
+		//--  default 数据添加时的默认值
+
+			create table t6(
+				id int,
+				name char(55) not null default 'hehe'
+				);
+
+			insert into t6(id) values(1);
+			结果：	id	1
+				name	'hehe'
+
+
+
+		//-- zerofill 数据内容前部用0填充
+
+			create table t8(
+				id int,
+				id2 int(5) zerofill,
+				id3 int zerofill
+				);
+
+			insert into t8(id,id2,id3) values(1,1,1);
+			结果：id			1
+				  id2	00001
+				  id3	0000000001
+				  
+
+		//-- unsigned 无符号 设置整形数值是否可带负号
+
+			create table t9(
+				id int,
+				id2 int unsigned
+			);
+
+			insert into t9(id,id2) values(-100,-100);
+			结果：	id	-100
+				id2	0
+
+
+		//-- auto_increment 自增 在产生唯一标识或顺序值时使用
+
+			create table t10(
+				id int unique auto_increment,
+				id2 int,
+				id3 int
+			);
+			insert into t10(id3) values(1);
+
+			结果：	id	1	2 	3		//唯一，自增
+				id2	null	null	null
+				id3	1	1	1
+
+
+
+		//-- 常规索引 index 的创建和删除
+
+			一，直接创建常规索引
+			create table t11(
+				id int,
+				id2 int,
+				id3 int,
+				index sy(id)
+			);
+
+
+			二：删除常规索引
+			drop index sy on t11;
+
+			三：追加索引
+			create index sy1 on t11(id2);
+
+
+		//-- 唯一索引 unique 的创建和删除
+
+			一：直接创建唯一索引
+			create table t12(
+				id int,
+				id2 int,
+				id3 int,
+				unique sy(id3)
+			);
+
+			二：删除唯一过目
+			drop index sy on t12;
+
+			三：追加唯一索引
+			create unique index sy on t12(id2);
+
+
+		//-- primary key 主键索引 表中只能有一个
+
+			一：主键的创建
+			create table t13(
+				id3 int unsigned primary key auto_increment
+			);
+
+			二：主键的删除
+				1,如有自增得先删除自增
+				alter table 表名 change 字段名 字段名 int
+				alter table t13 change id3 id3 int;
+				
+				2,删除主键
+				alter table 表名 drop primary key;
+				alter table t13 drop primary key;
+				
+		//-- comment 描述
+			CREATE TABLE `student` (
+				 `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '学生证号',
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8
+					
+
+
+
+
+
+					
+					
+//===== 经典精典SQL语句集合
+
+
+		1，有两张数据表，表user(id, name)记录了用户的ID和昵称，表article(id,uid,title, content, time)记录了用户发表的文章标题.内容和时间，写一个SQL语句打印出每个用户的昵称及其发表的文章总数
+	
+			Select  u.name,count(a.id) from user u,article a where u.id=a.uid group by u.name;
+			或使用左连接查询 (以左为主)
+			select u.name,count(a.id) from user u left join article a on u.id=a.uid group by u.id;
+
+
+			
+			
+		2，有A(id,sex,par,c1,c2),B(id,age,c1,c2)两张表,其中A.id与B.id关联,现在要求写一条SQL语句,将B中age>50的记录的c1.c2更新到A表中统一记录中的c1.c2字段中.
+			
+			replace into a(id,c1,c2) select id,c1,c2 from b where age>50;
+			或
+			update A a,B b set a.c1=b.c1,a.c2=b.c2 where a.id=b.id and b.age>50;
+
+
+
+
+			
+		3，	(一)创建新闻发布系统，表名为message有如下字段 (3分)
+				id 文章id
+				title 文章标题
+				content 文章内容
+				category_id 文章分类id
+				hits 点击量
+			(二)同样上述新闻发布系统：表comment记录用户回复内容，字段如下 (4分)
+				comment_id 回复id
+				id 文章id，关联message表中的id
+				comment_content 回复内容
+				现通过查询数据库需要得到以下格式的文章标题列表,并按照回复数量排序，回复最高的排在最前面
+				文章id 文章标题 点击量 回复数量
+				用一个SQL语句完成上述查询，如果文章没有回复则回复数量显示为0
+			
+			select m.id,m.title,m.hit,count(c.id) from message m,comment c where m.id=c.id group by id order by count(c.id) desc;   （该方式不会有0）
+			或左连接
+			select m.id,m.title,m.hit,count(c.id) from message m left join comment con m.id=c.id group by id order by count(c.id) desc;		(该方式会有0)
+			
+	
+	
+			(三)上述内容管理系统，表category保存分类信息，字段如下 (3分)
+				category_id int(4) not null auto_increment;
+				categroy_name varchar(40) not null;
+				用户输入文章时，通过选择下拉菜单选定文章分类
+				写出如何实现这个下拉菜单
+
+				
+				$sql = "select categroy_name from category";
+				$res=mysql_query($sql);
+				
+				while($row=mysql_fetch_row($res)){
+					$arr[]=$row;
+				}
+			
+				
+				
+				
+				
+				
+				
+//===== 产品表的创建与字段划分 ,及产品的关联查询
+		表1
+		Category(类别表)
+			id		类别ID
+			pid		上一级类别ID
+			name	类别名称
+			
+		表2
+		Products (产品表)
+			id 			产品ID
+			name		产品名称 
+			categoryid	产品类别ID
+			input_date 	录入日期
+			
+		表3
+		Product_hit	(产品点击表)
+			product_id		点击的产品
+			hit_time		点击的时间
+			hit_ip			点击的ip
+			
+			
+
+		A.写SQL语句，显示所有的产品的：产品名称、类别名称、录入日期
+
+		Select p.name,c.name,p.input_date from category c,products p where p.categoryid=c.id
+
+
+		B.写SQL语句，要求统计点击数前十位的：产品名称和产品点击数量。
+		Select p.id,p.name, count(h.product_id) from products p ,product_hit h 
+		where p.id=h.product_id  group by  p.id  order by count(h.product_id) desc limit 10
+		或
+		Select p.id,p.name, count(h.product_id) num from products p ,product_hit h 
+		where p.id=h.product_id  group by  p.id  order by num desc limit 10
+						
+		
+		C 写出所有类别为5的商品类别ID,产品名,点击时间和IP		
+		mysql> select c.id,p.name,p.categoryid,p.input_date,p.id,h.hit_time,count(h.hit_ip) num from category c,products p,product_hit h where c.id=p.categoryid and p.id=h.product_id group by p.name;		
+		
+		mysql> select c.id,p.name,p.categoryid,p.input_date,p.id,h.hit_time,h.hit_ip num from category c,products p,product_hit h where c.id=p.categoryid and p.id=h.product_id;
+				
+				
+		关键字：where + and + group + having + order by + limit
+		mysql> select c.id,p.name,p.categoryid,p.input_date,p.id,h.hit_time,h.hit_ip num from category c,products p,product_hit h where c.id=p.categoryid and p.id=h.product_id group by p.name having count(h.hit_time)>2 order by p.id desc limit 5;
+				
+				
+			
+
+
+//===== 书刊与用户表的创建与字段划分 
+		
+		mysql> create table user(
+			-> id int primary key auto_increment,		//用户ID
+			-> name varchar(32) not null,				//用户名
+			-> phone int(13) not null,					//电话号
+			-> addr varchar(255),						//地址
+			-> post int(6) not null);					//邮编
+		Query OK, 0 rows affected (0.25 sec)
+
+		mysql> create table zhazhi(
+			-> id int primary key auto_increment,	//有键ID
+			-> name varchar(32) not null,			//杂志名
+			-> type varchar(10) not null,			//杂志类别
+			-> zpost int(6) not null;				//杂志编号	
+		Query OK, 0 rows affected (0.28 sec)
+
+		mysql> create table ding(					
+			-> id int primary key auto_increment,	//订单ID
+			-> uid int not null,					//关联的用户ID
+			-> zid int not null);					//关联的杂志ID
+		Query OK, 0 rows affected (0.27 sec)	
+				
+				
+				
+				
+//===== 学生与课程表的创建，字段的划分
+
+		关系S（s#, sname, sex), C (c#, cname), SC(s#, c#) .,其中S#为学生号，sname为学生姓名，sex为性别，c#为课程号，cname为课程名。
+		
+		mysql> create table s(
+			-> id int primary key auto_incremen
+			-> name varchar(32) not null,
+			-> sex enum('0','1') default '1');
+		Query OK, 0 rows affected (0.28 sec)
+
+		mysql> create table c(
+			-> id int primary key auto_incremen
+			-> name varchar(32) not null);
+		Query OK, 0 rows affected (0.41 sec)
+
+		mysql> create table sc(
+			-> sid int,
+			-> cid int);
+		Query OK, 0 rows affected (0.62 sec)
+				
+		写出查询选修"计算机"课的全体女学生姓名的SQL语句。
+		Select  S.s#，S.sname,S.sex from S,SC WhereS.s#=SC.s# and S.sex=”女” and SC.c# in(select c# from C where cname=”计算机”)
+		或
+		select s.name,s.sex,c.name from s,c,sc where s.id=sc.sid and c.id=sc.cid and s.sex='0' and c.name='computer';
+				
+		选出选修‘hongloumeng’ 的全体女学生名单 
+		select s.name,s.sex,c.name from s,c,sc where s.id=sc.sid and c.id=sc.cid and s.sex='0' and c.name='hongloumeng';
+				
+		写出查询没有选修"数学"课的学生姓名的SQL语句
+		select * from S where S.s# not in(Select  S.s# from S,SC WhereS.s#=SC.s# and SC.c# in(Select c# from C where cname=” 数学”))
+				
+				
+		//--关联查询
+		表1message		
+		id	自增id
+		title	标题
+		content	内容
+		category_id	分类id
+		hits	点击量
+
+		表2 字段如下comment
+		comment_id	回复id
+		id	关联message表中的id
+		comment_content	回复内容
+
+		先通过查询数据库需要得到以下格式的列表，并按照回复数量排序，回复最高的排在最前面。
+		“文章id 文章标题 点击量 回复数量 ：
+		select m.id，m.title,m.hits,count(c.id) num from message m left join comment c on m.id=c.id group by m.id order by num desc;
+				
+				
+				
+				
+		
+		
+		//--带if判断的语句			
+		在数据库test中的一个表student，字段是name，class，score。分别代表姓名、所在班级，分数。
+	  
+	   查出每个班的及格人数和不及格人数，格式为：class、及格人数、不及格人数；
+	   
+		select class,count(if(score>=60,score,null)),count(if(score<60,score,null)) from student group by class
+
+		select class,sum(score>=60), sum(score<60) from student group by class
+					
+				
+				
+		A、增加一个字段性别sex，写出修改语句
+		alter table user add sex tinyint not null default 1；
+		
+		B、查询出年龄介于20岁到30岁之间的用户
+		select * from user where age between 20 and 30；
+		
+		C、如果是一个Web频繁访问的查询，上题的查询如何优化？(为age字段添加索引)
+		alter table user add index index_age（age）;
+				
+				
+				
+				
+				
+				
+				
+//===== 事务处理:
+
+	   a.保证数据完整性,例如添加和修改同时,两者成立则都执行,一者失败都失败
+	   mysql_query("BEGIN");		//开启事务
+	   mysql_query("INSERT INTO customerinfo (name) VALUES ('$name1')";
+	   mysql_query("SELECT * FROM `orderinfo` where customerid=".$id");
+	   mysql_query("rollback");		//回滚
+	   mysql_query("COMMIT");		//提交
+	   
+   
+   
+//===== 锁定表,优化事务处理:
+
+	   a.我们用一个 SELECT 语句取出初始数据，通过一些计算，用 UPDATE 语句将新值更新到表中。
+		 包含有 WRITE 关键字的 LOCK TABLE 语句可以保证在 UNLOCK TABLES 命令被执行之前，
+		 不会有其它的访问来对 inventory 进行插入、更新或者删除的操作
+	   mysql_query("LOCK TABLE customerinfo READ, orderinfo WRITE");
+	   mysql_query("SELECT customerid FROM `customerinfo` where id=".$id);
+	   mysql_query("UPDATE `orderinfo` SET ordertitle='$title' where customerid=".$id);
+	   mysql_query("UNLOCK TABLES");		
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
+//===== 选择适当结构创建数据表
+		
+		选择合适数据库类型写出建立如下学生信息表的SQL语句
+		表名(Student)
+		字段名称	描述	要求	数据类型
+		ID	学生证号	主键	整数
+		Name	姓名	不能为空	字符串
+		Birth	生日	不能为空	时间 date
+		Gender	性别	默认为男	整数
+		Desc	备注信息		文本
+			
+		1.写出统计 1989-1-1后出生的女生数量的SQL语句
+		Select count(*) from stu where birth >’1989-1-1’ and gender=0; 
+		2.用户前台表单添加学生信息 如何防止SQL注入, 
+		采用预处理 或 检测转义添加的内容后再拼装sql语句	
+				
+		mysql> create table student(
+			-> id int unsigned not null primary key comment '学生证号',
+			-> name varchar(15) not null comment '姓名',
+			-> birth char(12) not null comment '生日',
+			-> gender enum('男','女') default '男' comment '性别'),
+			-> descs text comment '备注自信');
+		Query OK, 0 rows affected (0.29 sec)
+				
+				
+				
+				
+		1.写出统计 1989-1-1后出生的女生数量的SQL语句
+			Select count(*) from stu where birth >’1989-1-1’ and gender=0; 
+				
+		2.用户前台表单添加学生信息 如何防止SQL注入, 
+			采用预处理 或 检测转义添加的内容后再拼装sql语句
+			
+			
+			
+			
+			
+			
+//===== sql语句的预处理
+			//设置预处理语句
+			mysql> prepare s2 from "insert into student values(7,?,now(),?,?)";		
+			Query OK, 0 rows affected (0.00 sec)
+
+			//设置对应第一个?的变量
+			mysql> set @name='peizong';
+			Query OK, 0 rows affected (0.00 sec)
+			
+			//设置对应第二个?的变量
+			mysql> set @gender='0';
+			Query OK, 0 rows affected (0.00 sec)
+			
+			//设置对应第三个?的变量
+			mysql> set @descs='this is a woman';
+			Query OK, 0 rows affected (0.00 sec)
+
+			//执行预处理并指定用哪些变量
+			mysql> execute s2 using @name,@gender,@descs;
+			Query OK, 1 row affected, 1 warning (0.05 sec)
+					
+				
+			
+				
+		有一个新用户(手机号=139000000000,通讯地址=A,邮编=P,用户姓名=N),要订阅某本杂志(杂志编号=100001)
+				
+			
+			
+			
+//===== MySQL服务器的用户权限管理 
+
+
+		-- 授权一个用户（zhangsan）密码123，可以对所有的库，所有的表做所有操作。
+		mysql>grant all privileges on mydb.* to root@192.168.1.1 identified by '';
+		Query OK, 0 rows affected (0.17 sec)
+
+		--刷新生效，否则就要重启MySQL服务才可以。
+		mysql> flush privileges;
+		Query OK, 0 rows affected (0.00 sec)
+
+		--浏览当前MySQL用户信息
+		mysql> select user,host,password from mysql.user;
+		+----------+-----------------+-------------------------------------------+
+		| user     | host            | password                                  |
+		+----------+-----------------+-------------------------------------------+
+		| root     | localhost       | *23AE809DDACAF96AF0FD78ED04B6A265E05AA257 |
+		| root     | 127.0.0.1       |                                           |
+		|          | localhost       |                                           |
+		| zhangsan | %               | *23AE809DDACAF96AF0FD78ED04B6A265E05AA257 |
+		| admin    | 192.168.112.132 | *23AE809DDACAF96AF0FD78ED04B6A265E05AA257 |
+		+----------+-----------------+-------------------------------------------+
+		5 rows in set (0.00 sec)
+
+		-- 移除一些权限
+		-- revoke:只删除了用户权限，但没有删除这个用户
+		mysql> revoke insert,delete on *.* from admin@192.168.112.132 identified by'123';
+
+		-- 查看指定用户的权限信息
+		mysql> show grants for xbb@localhost;
+		+------------------------------------------------------------------------------------------------------------+
+		| Grants for xbb@localhost                                                                                   |
+		+------------------------------------------------------------------------------------------------------------+
+		| GRANT USAGE ON *.* TO 'xbb'@'localhost' IDENTIFIED BY PASSWORD '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257' |
+		+------------------------------------------------------------------------------------------------------------+
+
+		--drop user:删除了整个用户及其权限（包括数据字典中的数据）
+		mysql> drop user 'xbb'@'localhost';
+		Query OK, 0 rows affected (0.00 sec)
+
+		mysql> select user,host from mysql.user;
+		+------------------+-----------+
+		| user             | host      |
+		+------------------+-----------+
+		| root             | 127.0.0.1 |
+		| debian-sys-maint | localhost |
+		| root             | localhost |
+		| root             | wangxg    |
+		+------------------+-----------+
+		4 rows in set (0.00 sec)
+
+
+
+
+		
+		
+		
+
+
+
+		
+		
+		
+		
+//===== PHP网页的容易受到攻击的方面有哪些
+
+		针对PHP的网站主要存在下面几种攻击方式:
+		1.命令注入(Command Injection)
+		2.eval注入(Eval Injection)
+		3.客户端脚本攻击(Script Insertion)
+		4.跨网站脚本攻击(Cross Site Scripting, XSS)
+		5.SQL注入攻击(SQL injection)
+		6.跨网站请求伪造攻击(Cross Site Request Forgeries, CSRF)
+		7.Session 会话劫持(Session Hijacking)
+		8.Session 固定攻击(Session Fixation)
+		9.HTTP响应拆分攻击(HTTP Response Splitting)
+		10.文件上传漏洞(File Upload Attack)
+		11.目录穿越漏洞(Directory Traversal)
+		12.远程文件包含攻击(Remote Inclusion)
+		13.动态函数注入攻击(Dynamic Variable Evaluation)
+		14.URL攻击(URL attack)
+		15.表单提交欺骗攻击(Spoofed Form Submissions)
+		16.HTTP请求欺骗攻击(Spoofed HTTP Requests)
+
+
+			
+				
+				
+
+				

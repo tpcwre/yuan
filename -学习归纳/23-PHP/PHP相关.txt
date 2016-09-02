@@ -1,0 +1,3804 @@
+
+
+
+
+
+
+
+
+
+
+
+
+======多维数组-二维数组
+
+-----二维数组的基本语法：
+
+$arr=array(array(1,2,3),array(5,6,7));
+
+$arr[0] = array(1,2);
+
+快速入门案例：
+
+请用二维数组，输出如下图形：
+
+0 0 0 0 0 0 
+0 0 1 0 0 0
+0 2 0 0 3 0
+0 0 0 0 0 0
+
+//定义一个二维数组
+
+$arr=array(
+	array(0,0,0,0,0,0),
+	array(0,0,1,0,0,0),
+	array(0,2,0,0,3,0),
+	array(0,0,0,0,0,0),
+	);
+//遍历二维数组(行)；
+	for($i=0;$i<count($arr);$i++){
+		for($j=0;$j=count($arr[$i]);$j++){
+			echo $arr[$i][$j]."&nbsp";
+		}
+		echo "<br>";
+	}
+
+
+
+
+=====作业
+
+
+
+------游戏机
+
+
+---以知手掌游戏机一台320元，mp3一台260元。
+公司举行抽奖大会，公司有18人，一等奖游戏机，二等奖mp3.
+购入5台游戏机，13台mp3.
+问总价为多少，公司实际平均给每人花费了多少钱。(4980，276。6666)
+<?php
+	$gamerPrice=320;
+	$mp3Price=260;
+	$gamerNum=5;
+	$mp3Num=13;
+
+	$totalPrice = $gamerPrice * $gamerNum + $mp3Price * $mp3Num;
+	$avgPrice = $totalPrice / 18;
+
+?>
+
+
+
+
+
+
+
+------跳水比赛
+8个评委打分，运动员的成绩是8个成绩去掉一个最高分，去掉一个最低分，剩下的6个分数的平均分就是最后得分，使用一维数组实现打分功能。
+解题：
+<?php
+	$arr=array(90,23,89,100,2,5,89,44);
+	//这里有一个思路，如果只想知道最低分和最高分是多少，则可以排序
+	//找出给出最低分的裁判
+	//该函数可以返回给出最低分的裁判的下标
+function findMin($arr){
+	$minFen=$arr[0];
+	$minIndex=0;
+	for($i=1;$i<count($arr);$i++){
+		//下面条件成立，说明$i裁判给出的成绩更低。
+		if($minFen>$arr[$i]){
+			$minFen=$arr[$i];
+			$minIndex=$i;
+		}
+	}
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	PHP面向对象编程：
+--类和对象的区别和联系：
+	1， 类是抽象的，概念的，代表一类事物，比如人类，猫类。	
+	2， 对象是具体的，实际的，代表一个具体事物。
+	3， 类是对象的模板，对象是类的一个个体实例。
+
+
+快速体验案例；
+<?php
+	class Cat{
+		public $name;
+		public $age;
+		public $color;
+
+	//创建一只猫
+	$cat1=newCat();
+	$cat1->name="小白";
+	$cat1->age=3;
+	$cat1->color="白色";
+	$cat2=newCat();
+	$cat2->name="小花";
+	$cat2->age=100;
+	$cat2->color="花色";
+	//如果我们找到一只猫，只要找到$cat1,那么该变量所有相关的属性都通通的找到
+	$findCatName="小花";
+	if($cat2->name=$findCatName){
+		echo $cat2->name."||".$cat2->age."||".$cat2->color;
+	}
+}
+		//定义一个人类
+	claa Person{
+		public $height;
+		public $weight;
+		public $age;
+		//,,,,,
+	}
+	$p1=new Person();
+	$p1->height=189;
+	$p1->weight=100;
+	$p1->age=20;
+
+
+
+?>
+
+
+
+	
+
+
+====面向对象编程：
+
+
+-----成员属性的说明：
+
+1，成员属性是从某个事物提取出来的，它可以是，基本数据类型（整数，小数，字符，布尔等）,
+	也可以是复合数据类型（数组，对象）
+
+<?php
+	class Cat{
+		public $name;
+		public $age;
+	}
+	//创建对象：
+	$cat1=new Cat;
+或
+	$cat1=new Cat();
+	
+
+?>
+
+
+
+
+
+2, 怎样访问一个成员属性（其它成员属性是public）
+基本语法是:
+	$对象名->属性名;
+
+	如果一个文件，专门用于定义类，则命名规范应当这样。
+	
+		类名.class.php  如: cat.class.php
+
+
+
+-----分析对象在内存中存在的形式：
+
+class Person{
+	public $name;
+	public $age;
+}
+
+$a=new Person();
+$a->name="小明";
+$a->age=18;
+
+$b=$a;
+echo $b->name;  //结果：小明
+echo $b->age;   //结果：18
+
+从上述实例来看，当把$a的值赋给了$b后，其实，$a与$b在内存中所指向的地址是相同的，所以结果也是相同的！
+
+
+
+再次说明：
+	$a=78;
+	$b=$a;
+	$b=&$a;
+	$b=$b+8;
+	echo $a.$b;   当&$a时，结果会相同，因为引用了地址。然则不同。
+
+
+如果给一个函数传递一个对象，实际上是传递的一个地址：例：
+
+class Person{
+	public $name;
+	public $age;	
+}
+$p1=new Person();
+$p1->name="aaa";
+$p1->age=33;
+//函数接收对象时候，究竟是传入值，还是地址？
+
+function test1($p){
+	$p->name="小明";
+}
+test1($p1);
+echo $p1->name;
+
+
+
+
+--如果给函数传递的是基本数据类型（整数，小数，布尔，字符），会传递什么呢？
+
+结论：在默认的情况下是传递的值，如果你希望传入地址就在变量前加上 &  .  如下
+
+function test(&$a){
+
+}
+
+在PHP中如果，给一个函数传递的是数组，则默认情况下是传递值（拷贝了新的数组），
+如果希望传入地址，则应当，&$数组：
+
+
+
+另外：
+$a1=array(1,3,5);
+$a2=array(2,4,6);
+$a=array($a1,$a2);
+var_dump($a);
+结果：array(2) { [0]=> array(3) { [0]=> int(1) [1]=> int(3) [2]=> int(5) } [1]=> array(3) { [0]=> int(2) [1]=> int(4) [2]=> int(6) } }
+
+
+
+$a=array($a1,$a2);
+$a1=array(1,3,5);
+$a2=array(2,4,6);
+var_dump($a);
+结果：array(2) { [0]=> NULL [1]=> NULL }
+
+从以上案例来看，一定要注意上下次序的排列！
+
+
+
+
+
+
+
+
+
+
+
+-----成员方法的讲解：
+函数和成员方法关系：
+当我们把一个函数写到某个类中，则该函数可以称为成员方法。
+
+成员方法基本语法：
+	访问修饰符    function   函数名(形参列表){
+	//函数体；
+	//return语句（可有可无）
+}
+
+
+
+
+
+
+
+
+====构造方法====
+
+
+<?
+classPerson{
+	public $name;
+	public $age;	
+}
+
+$p1=new Person();
+//再给属性赋值
+$p1->name='宋江';
+$p1->age=33;
+
+//需求在创建一个“人”的对象时，就初始化name 和 age 的构造方法以。
+
+
+快速入门案例：
+
+class Person{
+	public $name;
+	public $age;
+	public function __construct(){
+		echo "我是构造方法";
+	}
+}
+
+$p1=new Person();
+
+//结果会显示“我是构造方法以”.这里一旦new的类中有了构造方法，就会被直接调用，
+构造方法没有返回值，它是自动被调用的。
+
+
+
+
+----构造方法的两个版本
+
+在php5中一个类可以同时拥有两种形式的构造方法。一种是PHP4版本的，一种是PHP5版本的。
+	如：
+class Person{
+ function __construc(){}   //PHP5版本构造方法
+ 和  
+ function Person(){}	//php4版本构造方法
+}
+
+	当两个构造方法同时存在时，优先调用 __construct(). 请大家以后使用 __counstruct
+因为老版本的构造方法名必需与类名一致，而新版的__construct 不需要和类名一致！
+
+
+
+
+
+——this的理解
+class Person{
+	public $name;
+	public $age;
+	public function __construct($name,$age){
+		//下面的$name和$age认为是一个新的变量。不会影响类中上面的name,age.
+		//$name=$name;
+		//$age=$age;
+		$this->name=$name;
+		$this->age=$age;
+	}
+}
+$p1=new Person('张清',39);
+echo $p1->name;	    结果：张清
+$p2=new Person('宋江',30);
+echo $p2->name;     结果：宋江
+
+综上，
+1，this所指向的是当前对象！
+2，this本质可以理解就是这个对象的地址；
+3，哪个对象使用到$this,就是哪个对象的地址；
+4，$this不能在类外部使用。
+
+
+
+
+
+
+----构造方法注意事项：
+	1，一旦定义了一个构造函数，默认的构造函数就被覆盖了，
+这时在创建对象的时候就要使用自定义的构造函数了。
+	2，一个类只能有一个构造函数（不能重载）.
+
+
+
+
+
+
+-----构造方法的八点说明：
+1，构造方法和类名相同（PHP4），PHP5版的构造方法驹可以和类同名，也可以是__construct()
+2, 构造方法没有返回值。
+3，主要作用是完成对新对象的初始化，并不是创建对象本身。
+4，在创建新对象后，系统自动的调用该类的构造方法。
+5，一个类有且只有一个构造方法，在PHP5后虽然__construct()和 类名() 可以共存，但实际也只能使用一个。
+6，如果没有给类自定义构造方法，则该类使用系统默认的构造方法。
+7，如果给类自定义了构造方法，则该类的默认构造方法被告覆盖。
+8，构造方法的默认访问修饰符是public.
+
+
+
+-----构造方法案例
+<?php
+
+//一：构造方法的PHP5版
+class Person{
+	public $name;
+	public $age;
+	public function __construct($a,$b){
+		$this->name=$a;
+		$this->age=$b;
+		echo "我是构造方法";
+	}
+}
+
+$a = new Person('aaa',88);
+echo $a->name;
+echo $a->age;
+echo "<br>";
+$b = new Person('bbb',22);
+echo $b->name;
+echo $b->age;
+echo "<hr><hr><hr>";
+
+
+?>
+// 构造方法的PHP4版
+<?php
+class One{
+	public $name;
+	public $age;
+	public function One($aaa,$bbb){
+		echo "这是PHP4版的构造方法！";
+		$this->name=$aaa;
+		$this->age=$bbb;
+	}
+}
+
+$a=new One('li',83);
+echo "<br>";
+echo $a->name."<br>";
+echo $a->age;
+
+?>
+
+
+
+
+
+=====析构方法 __destruct====
+
+析构方法(__destruct)的作用主要用于，释放资源（比如释放数据库的链接，图片资源，销毁某个对象）。
+
+快速入门：
+<?php
+	class Person{
+		public $name;
+		public $age;
+		//构造方法
+		public function __construct(){
+			$this->name=$name;
+			$this->age=$age;
+		}
+		//写一个析构方法 __是两个下划线
+		function __destruct(){
+			echo $this->name."销毁资源<br>";
+		}
+		$p1=new Person('贾宝玉',16);
+		$p2=new Person('林黛玉',14);
+	
+	}
+?>
+
+	运行代码我们得出：
+1，析构方法会自动调用
+2，析构方法主要用于销毁资源
+3，析构方法调用顺序是，先创建的对象后被销毁，
+4，析构方法什么时候被调用？
+	A：当程序（进程结束）退出时。
+	B：当一个对象称为垃圾对象的时候，该对象的析构方法也会被调用。
+	C：所谓垃圾对象，就是指，没有任何变量再引用它。
+	D：一旦一个对象成为垃圾对象，析构方法就会立即调用。
+
+
+类的析构方法小结：
+1，PHP5加入的析构方法 function __destruct()
+2, 析构方法没有返回值。
+3，主要作用是释放资源的操作，并不是销毁对象本身。
+4，在销毁对象前，系统自动调用该类的析构方法。
+5，一个类最多只有一个析构方法。
+
+
+
+
+
+
+
+
+
+
+====静态变量====
+提出一个问题
+说：有一群小孩在玩堆雪人，不时有新的小朋友加入，请问如何知道现在有多少人在玩？
+请用面向对象的思想，编写程序解决。
+
+思路：
+----使用全局变量
+----使用静态变量。
+
+	全局变量案例：
+<?php
+	//定义，玩游戏的全局变量
+	global $global_nums;
+	$global_nums=0;     //全局变量要先初始化后赋值，不然报错。
+	class Child{
+		public $name;
+		function __construct($name){
+			$this->name=$name;
+		}
+
+		public function join_game(){
+			global $global_nums;
+			$global_nums += 1'
+			echo $this->name."加入堆雪人游戏";
+		}
+	}
+	//创建三个小孩
+	$child1=new Child('aaa');
+	$child1->join_game();
+	$child2=new Child('bbb');
+	$child2->join_game();
+	$child3=new Child('ccc');
+	$child3->join_game();
+	
+	//看看有多少人在玩游戏
+	echo "<br>有".$global_nums;
+?>
+
+
+
+	静态变量案例：
+<?php
+	class Child{
+		public $name;
+		//这里定义并初始化一个静态变量 $nums;
+		public static $nums=0;
+		function __costruct($name){
+			$this->name=$name;
+		}
+		
+		public function join_game(){
+			//self::$nums 使用静态变量
+			self::$nums += 1;
+			echo $this->name."加入堆雪人游戏";
+		}
+		//创建三个小孩
+
+		$child1=new Child('aaa');
+		$child1->join_game();
+		$child2=new Child('bbb');
+		$child2->join_game();
+		$child3=new Child('ccc');
+		$child3->join_game();
+		//看看有多少人玩
+		echo "<br>有".Child::$nums;
+	}
+?>
+
+	静态变量案例2；
+
+
+<?php
+class Person{
+	public $name;
+	public static $nums;
+	public function join($aaa){
+		$this->name=$aaa;
+		self::$nums +=1;
+		echo $this->name.'加入了游戏<br>';
+		echo "现在有 ".self::$nums." 人在游戏<br>";
+	}
+}
+$a=new Person();
+$a->join('aaa');
+$a->join('bbb');
+$a->join('ccc');
+?>
+
+
+
+
+
+
+
+
+	静态变量是该类的所有对象共享的变量，任何一个该类的对象去访问它时，取到的都是相同的值，同样任何一个该类的对象去修改它时，修改的也是同一个变量。
+
+----如何定义静态变量----
+	 
+		访问修饰符 static 变量名：
+
+----如何访问静态变量----
+
+在类外部: 	类名::$类变量名
+在类内部:	self::$变量名 或者 类名::$类变量名
+如果在类中访问，有两种方法 (self::$静态变量名,  类名::$静态变量名)
+如果在类外访问，有一种方法 ( 类名::$静态变量名	)
+
+public static $nums=0;  //这里定义一个静态变量，并初始化。
+self::$ums +=1;  //这里是使用了静态变量。
+
+
+
+
+
+
+
+
+
+
+
+=====静态方法
+
+需求：当我们操作静态变量的时候，我们可以考虑使用表态方法，比如统计所有学生交的学费。
+在我们编程中，我们往往使用静态方法去操作静态变量。
+
+静态方法的特点：
+1，静态方法去操作静态变量，
+2，静态方法不能操作非静态变量。
+
+这里请注意，普通的成员方法即可以操作非静态变量，也可以操作静态变量。
+
+
+----什么时候需要用到表态变量？
+	案例：定义学生类，统计学生共交多少学费，用类变量（静态变量），属于公共类的属性。
+
+----表态变量与普通变量的区别：
+1，加上static称为类变量或静态变量。否则称为实例变量或普通变量。
+2，类变量是与类相关的，公共的属性。
+3，实例变量属于每个对象个体的属性。
+4，类变量可以通过，类名::$类变量名 或 self::$类变量名称  直接访问。
+
+<?php
+class Student{
+	public static $name;
+	public static $price;
+	public static $count;
+	function __construct($name){
+		self::$name = $name;
+	}
+	public static function counts($price){
+		self::$price += $price;
+		echo self::$name."上交的学费是 ".$price;
+		echo "<br>学生们交的费用总共为：".Student::$price."<br>";
+	}
+}
+$s = new Student('小红');
+$s->counts(123);
+$s1 = new Student('小丽');
+$s1->counts(222);
+?>
+
+
+
+
+
+
+
+
+
+
+=====面向对象的三大特征
+
+1，封装 
+2，继承
+3，多态
+
+
+====封装====
+
+
+-----php的三种访问控制：
+1，public 表示全局中，可以在本类，外部类，子类，中使用。
+2，protected 表示受到保护，可以在本类，子类中使用
+3，private 表示私有，只能在本类中使用
+
+这三个控制修饰符号不仅可以修饰，属性，也可以修饰方法。
+	1，如果一个方法没有访问修饰符，则默认是public 
+	2, 属性，必须指定访问修饰符。不加则默认为私有。	
+
+
+
+
+----封装的访问控制修饰符：
+如果要访问protected和private 修饰成员变量，我们也可以用下面的方法以；
+	PHP为我们提供了一对方法:
+		: __set(), __get()
+
+	__set()对protected 或是private属性，进行赋值操作。
+		如：__set($name,$value);
+
+	__get()读取protected或者private属性的值
+		如: __get($name)
+
+
+
+
+ ?我们现在就想去访问protected 变量或者private 变量,通常的做法是提供public 函数去访问这些变量。
+一般有三种形式：
+	一：public function setXxx($val){
+	    }
+	
+	二：public function getXxx(){
+	    }
+
+	三：-----用__set方法管理所有属性（魔术方法）见下例
+	
+
+
+
+
+
+
+
+<?php
+class Person{
+	public $name;
+	protected $age;
+	private $salary;
+//获取这个人受保护的薪水信息
+	public function getSalary($user,$pass){
+		if($user=="abc" && $pass=="123"){
+			return $this->$salary;
+		}else{
+			return "sorry,你无法看";
+		}
+	}
+
+//修改年龄，对输入信息，进行校验
+	public function setAge($age){
+		if($age>1 && $age<100){
+			$this->age=$age;
+		}else{
+			echo "年龄范围不对";
+		}
+	}
+//查看年龄
+	public function getAge(){
+		return $this->age;
+	}
+$p1 = new Person();
+echo $p1->name;
+echo $p1->getSalary('abc','123';
+}
+
+?>
+
+
+
+
+-----成员方法间的调用要以$this的方式
+
+<?php
+class One{
+	function test1(){
+		echo "这是方法test1<br>这是调用了，，，";
+		$this->test2();
+	}
+	function test2(){
+		echo "这是方法test2<br>";
+	}
+}
+
+$a = new One();
+$a->test1();
+?>
+
+
+
+
+
+
+
+-----用__set方法管理所有属性（魔术方法）
+这两个方法是为在类和他们的父类中没有声明的属性而设计的。
+__get( $property ) 当调用一个未定义的属性时，此方法会被触发，传递的参数是被访问的属性名。
+__set( $property, $value ) 给一个未定义的属性赋值时，此方法会被触发，传递的参数是被设置的属性名和值。
+这里的没有声明包括当使用对象调用时，访问控制为proteced,private的属性(即没有权限访问的属性)。
+总结： 
+1. 从一个难以访问的属性读取数据的时候 __get() 方法被调用 
+2. 向一个难以访问的属性赋值的时候 __set() 方法被调用 
+3. 难以访问包括：（1）私有属性，（2）没有初始化的属性 
+4. __isset() __unset() 也类似 
+
+<?php
+class One{
+	private $n1;
+	private $n2;
+	function __set($pro_name,$pro_val){
+		$this->pro_name=$pro_val;
+	}
+	function __get($pro_name){
+		if(isset($pro_name)){
+			return $this->pro_name;
+		}else{
+
+			return null;
+		}
+	}
+}
+$a = new One();
+$a->n1="aaaaaaaa";
+echo $a->n1;
+$a->n2="bbbbbbbb";
+echo "<br>".$a->n2;
+?>
+
+
+
+
+
+
+
+
+
+=====继承=====
+所谓继承就是一个子类，通过 extends 父类，把父类的(public / protected) 属性和方法继承下来，
+但不可以继承私有的属性和方法(private)
+
+继承的基本语法是：
+
+class 类名 extends 父类名{
+	//加入自己需要的属性和方法
+}
+
+
+
+----继承的细节：
+	1，父类的 public,protected 的属性和方法被继承 private 的属性和方法没有被继承。
+	2，一个类只能继承一个父类，（直接继承）,如果你希望继承多个类的属性和方法，则使用多层继承。
+	例：
+class A{
+	public $n1=90;
+}
+class B extends A{
+	public $n2='hello';
+}
+class C extends B{
+		
+}
+$c = new C():
+echo $c->n1;
+echo $c->n2;
+
+	3, 当创建子类对象的时候，默认情况下，不会自动调用父类的构造方法。
+<?php
+class A{
+	public function __construct(){
+		echo "A __construct()";
+	}
+}
+class B extends A{
+	function __construct(){
+		echo "B __construct()";
+	}
+}
+$b = new B();
+?>
+
+	4,如果我们希望去调查用父类的构造方法，或者其它的方法(public/protected)
+可以这样处理：
+		1，类名::方法名();
+		2, parent::方法名();
+如：
+
+<?php
+class A{
+	public $n1=90;
+	public function __construct(){
+		echo "A __construct()";
+	}
+}
+class B extends A{
+	function __construct(){
+		echo "B __construct()";
+		//A::__construct(); 	//调用父类的构造方法1
+		parent::__construct();  //调用父类的构造方法2
+	}
+}
+$b = new B();
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+====魔术方法（函数）与魔术常量====
+
+	----魔术方法（函数）
+
+1. __construct() 	实例化对象时被调用；
+	当__construct和以类名为函数名的函数同时存在时，__construct将被调用，另一个不被，，
+
+2. __destruct()		
+	当删除一个对象或对象操作终止时被调用；
+
+3. __call()
+	对象调用某个方法,若方法存在，则直接调用，若方法不存在，则会调用__call函数。
+
+4. __get()
+	读取一个对象的属性时，若属性存在，则直接返回属性值；若不存在，刚会调用__get函数。
+
+5. __set()
+	设置一个对象的属性时，若属性存在，则直接赋值。若属性不存在，则会调用 __set()函数。
+
+6. __toString()
+	打印一个对象的时候被调用。 如echo $ohj;或pring $obj;
+
+7. __clone()
+	克隆时被调用。如: $t = new Test();$t1=clone$t;
+
+8. __sleep()
+	serialize之前被调用。若对象比较大，想删减一点东西再序列化，可考虑一下此函数。
+
+9. __wakeuo()
+	unserialize时被调用，做些对象的初始化工作。
+
+10. __isset()
+	检测一个对象的属性是否存在时被调用。 如: isset($c->name);
+
+11. __unset()
+	unset一个对象的属性时被调用，如: unset($c->name);
+
+12. __set_state()
+	调用var_export时，被调用，用__set_state的返回值做为var_export的返回值.
+
+13. __autoload()
+	实例化一个对象时，如果对应的类不存在，则该方法被调用。
+
+
+
+
+	----魔术常量:
+
+1. __LINE__
+	返回文件中的当前行号。
+
+2. __FILE__
+	返回文件的完整路径和文件名。如果用在包含文件中，则返回包含文件名。自php4.0.2起，__FILE__总是包含一个绝对路径（如果是符号连接，则是解析后的绝对路径），而在此之前的版本有时会包含一个相对路径。
+
+3. __FUNCTION__
+	返回函数名称（PHP 4.3.0 新加）. 自PHP5起本常量返回该函数被定义时的名字（区分大小写）.在PHP4中该值总是小写字母的。
+
+4. __CLASS__
+	返回类的名称（PHP4.3.0新加）.自PHP5起本常量返回该类被定义时的名字（区分大小写）。在PHP4中该值总是小写字母的。
+
+
+5. __METHOD__
+	返回类的方法名(PHP5.0.0新加).返回该方法被定义时的名字（区分大小写）。	
+
+6. __DIR__
+	文件所在目录。如果用在被包括文件中，则返回被包括的文件所在目录。它等价于dimame(__FILE__).除非是根目录，否则目录中名不包括末尾的斜杠。（PHP 5.3.0 中新增）
+
+7. __NAMESPACE__ 
+	当前命名空间的名称（大小写敏感）。这个常量是在编译时定义的（PHP 5.3.0 新增）
+
+
+--------------------------------------------------------------
+
+从PHP 5以后的版本，PHP中的类就可以使用魔术方法了。其规定以两个下划线(__)开头的方法都保留为魔术方法，所以建议大家函数名最好不用__开头，除非是为了重载已有的魔术方法。
+
+
+	----	__get、__set
+
+这两个方法是为在类和他们的父类中没有声明的属性而设计的。
+__get( $property ) 当调用一个未定义的属性时，此方法会被触发，传递的参数是被访问的属性名。
+__set( $property, $value ) 给一个未定义的属性赋值时，此方法会被触发，传递的参数是被设置的属性名和值。
+这里的没有声明包括当使用对象调用时，访问控制为proteced,private的属性(即没有权限访问的属性)。
+
+
+
+	----	__isset、__unset
+
+__isset( $property ) 当在一个未定义的属性上调用isset()函数时调用此方法。
+__unset( $property ) 当在一个未定义的属性上调用unset()函数时调用此方法。
+与__get方法和__set方法相同，这里的没有声明包括当使用对象调用时，访问控制为proteced,private的属性(即没有权限访问的属性)。
+
+
+
+	----	__call
+
+__call( $method, $arg_array ) 当调用一个未定义的方法是调用此方法。
+这里的未定义的方法包括没有权限访问的方法;如果方法不存在就去父类中找这个方法，如果父类中也不存在就去调用本类的__call()方?法，如果本类中不存在__call()方法就去找父类中的__call()方法。
+
+
+	----	__autoload
+
+__autoload 函数，它会在试图使用尚未被定义的类时自动调用。通过调用此函数，脚本引擎在 PHP 出错失败前有了最后一个机会加载所需的类。
+如果要定义一个全局的自动加载类，则必须用spl_autoload_register()方法将处理类注册到PHP标准库：
+
+
+复制代码 代码如下:
+<?php
+class Loader   
+ {          
+    static function autoload_class($class_name)        {          
+    //寻找正确的$class_name类，并引入，没有则抛出异常          
+     }         
+ }      
+/** 
+*  设置对象的自动载入        
+*  spl_autoload_register — Register given function as __autoload() implementation       
+*/   
+spl_autoload_register(array(‘Loader', ‘autoload_class'));   
+ $a = new Test();//Test没用require就实例化，实现自动加载，很多框架就用这种方法自动加载类
+
+注意: 在 __autoload 函数中抛出的异常不能被 catch 语句块捕获并导致致命错误，所以应该在函数本身做捕获。
+
+
+	----	__construct、__destruct
+
+__construct 构造方法，当一个对象创建时调用此方法，相对于PHP4使用此方法的好处是：可以使构造方法有一个独一无二的名称,无论它所在的类的名称是什么.这样你在改变类的名称时,就不需要改变构造方法的名称。
+__destruct 析构方法，PHP将在对象被销毁前(即从内存中清除前)调用这个方法。默认情况下,PHP仅仅释放对象属性所占用的内存并销毁对象相关的资源，析构函数允 许你在使用一个对象之后执行任意代码来清除内存。当PHP决定你的脚本不再与对象相关时,析构函数将被调用。
+在一个函数的命名空间内，这会发生在函数return的时候。对于全局变量,这发生于脚本结束的时候。如果你想明确地销毁一个对象,你可以给指向该对象的变量分配任何其它值.通常将变量赋值勤为NULL或者调用unset。
+
+	----	__clone
+
+PHP 5中的对象赋值是使用的引用赋值，如果想复制一个对象则需要使用clone方法，在调用此方法是对象会自动调用__clone魔术方法，如果在对象复制需要执行某些初始化操作，可以在__clone方法实现。
+
+
+	----	__toString
+
+__toString方法在将一个对象转化成字符串时自动调用，比如使用echo打印对象时。
+如果类没有实现此方法，则无法通过echo打印对象，否则会显示：Catchable fatal error: Object of class test could not be converted to string in，此方法必须返回一个字符串。
+在PHP 5.2.0之前，__toString方法只有结合使用echo() 或 print()时 才能生效。PHP 5.2.0之后，则可以在任何字符串环境生效(例如通过printf()，使用%s修饰符)，但 不能用于非字符串环境(如使用%d修饰符)。从PHP 5.2.0，如果将一个未定义__toString方法的对象 转换为字符串，会报出一个E_RECOVERABLE_ERROR错误。
+
+	----	__sleep、__wakeup
+
+__sleep 串行化的时候用
+__wakeup 反串行化的时候调用
+serialize() 检查类中是否有魔术名称__sleep 的函数。如果这样，该函数将在任何序列化之前运行。它可以清除对象并应该返回一个包含有该对象中应被序列化的所有变量名的数组。
+使用__sleep 的目的是关闭对象可能具有的任何数据库连接，提交等待中的数据或进行类似的清除任务。此外，如果有非常大的对象而并不需要完全储存下来时此函数也很有用。
+相反地，unserialize() 检查具有魔术名称 __wakeup 的函数的存在。如果存在，此函数可以重建对象可能具有的任何资源。使用 __wakeup 的目的是重建在序列化中可能丢失的任何数据库连接以及处理其它重新初始化的任务。
+
+
+	----	__set_state
+
+当调用var_export()时，这个静态 方法会被调用(自PHP 5.1.0起有效)。
+本方法的唯一参数是一个数组，其中包含按array('property' => value, …)格式排列的类属性。
+
+
+	----	__invoke(PHP 5.3.0以上版本有效)
+
+当尝试以调用函数的方式调用一个对象时，__invoke 方法会被自动调用。
+
+
+	----__callStatic(PHP 5.3.0以上版本有效)
+
+它的工作方式类似于__call() 魔术方法，__callStatic() 是为了处理静态方法调用。
+PHP 确实加强了对 __callStatic() 方法的定义;它必须是公共的，并且必须被声明为静态的。同样，__call() 魔术方法必须被定义为公共的，所有其他魔术方法都必须如此
+
+
+
+
+
+
+
+
+
+
+
+
+
+====重载=====
+	基本概念：函数名一样，通过函数的参数个数或者是参数类型不同，达到调用同一个函数名，但是可以区分不同的函数。
+
+
+class A{
+	public function test1(){
+		echo "test1";
+	}
+	publc function test1($a){
+		echo "test1 hello";
+	}
+}
+$a = new A();
+$a->test1();
+$a->test1(456);
+
+上面的用法是不对的,PHP5中如何通过魔术函数来实现方法重载的效果，如下！
+
+
+<?php
+class A{
+	public function test1($p){
+		echo "$p是一个数组，接收一个参数<br>";
+		var_dump($p);
+	}
+	public function test2($p){
+		echo "<br>$p接收两个参数<br>";
+		var_dump($p);
+	}
+	//当对象调用某个方法，而该项方法不存在时，则系统会自动调用__call
+	function __cal($method,$p){
+		var_dump($p);		//这里看一下传进来的值是什么。
+		if($method=="test"){
+			if(count($p)==1){
+				$this->test1($p);
+			}else if(count($p)==2){
+				$this->test2($p);
+			}
+			
+		}
+
+	}
+}
+$a =new A();
+$a->test(1);
+$a->test(56,90);
+
+
+?>
+
+重载的小结：
+	1,php5默认情况下不直接支持方法重载。
+	2，php5可以用__call魔术方法，模拟一个方法效果的效果。
+
+
+
+
+
+
+
+
+
+
+
+=====方法的重写/方法的覆盖(override)
+
+1，重写时，子类的方法的名和参数列表要与父类相同。
+2，如果子类要调用父类的某个方法时，必须是public或protected级别的，有两种方式：
+	A： parent::方法名；
+	B： 父类名::方法名(参数);
+3, 在实现方法覆盖时，访问修饰符可以不一样，但子类的访问权限必须大于或等于父类的权限。
+
+
+
+
+
+<?php
+	echo "方法的重写<br>";
+class Animal{
+	function cry(){
+		echo "动物的叫声<br>";
+
+	}
+}
+class Cat extends Animal{
+	function cry(){
+		echo "小猫喵喵叫<br>";	//这里覆盖了父类的此方法。
+		parent::cry();		//调用父类方法一;
+	}
+}
+class Dog{
+	function cry(){
+		echo "小狗汪汪叫<br>";
+		Animal::cry();		//调用父类方法二;
+	}
+}
+$cat = new Cat();
+$cat->cry();
+$dog = new Dog();
+$dog->cry();
+?>
+
+
+
+
+
+
+
+
+
+
+
+=====抽象类=====
+
+为什么设计抽象类这个技术？
+	在实际开发中，我们可能有这样一类，是其它类的父类，但是它本身并不需要实例化，主要用途是用于让子类继承，这样可以达到代码复用，同时利于项目设计者，设计类。
+
+	1,基本用法：
+		abstract class 类名{
+			// 方法（可以是抽象方法，也可以是普通方法）
+			// 属性
+		}
+	2，如果一个类使用abstract 来修饰，则该类就是抽象类，如果一个方法被abstract修饰，则该方法叉是抽象方法.(抽象方法不能有方法体)
+	3, 抽象类可以没有抽象方法，同时还可以有实例化的普通方法。
+	4, 如果一个类中，只要有抽象方法，则该类必须声明为abstract.
+	5, 如果A类继承了一个抽象类B，则要求A类实现从B类继承的所有抽象方法。
+
+
+
+abstract class Animal{
+	public $name;
+	protected $age;
+	abstract public function cry();
+}
+class Cat extends Animal{
+	public function cry(){
+		echo "猫猫叫，，，";
+	}
+}
+$cat = new Cat();
+$cat->cry();
+
+
+
+
+
+
+
+
+
+
+
+
+=====接口=====
+	1，接口的使用基本语法：
+		interface 接口名{
+			//属性
+			//方法
+		}
+
+
+	2, 接口的方法都不能方法体：
+	
+	3，如何实现接口
+		class 类名 implement 接口名称，接口名2，，，{
+
+		}
+
+接口：它的作用就是声明一些方法，供其它类来实现，接口还体现编程中我们希望的效果，高内聚低耦合的特点。
+
+	4, 什么情况下可以考虑使用接口：
+		A；定规范，
+		B：定下规范，让其它程序员来实现。比如；
+
+interface StuManageInterface{
+	public function addStudent($stu);
+	public function delStudent($id);
+	public function updStudent($stu);
+}
+//给张三去实现
+class Stu implements StuManageInterface{
+	public function addStudent($stu){
+		//实现过程
+	}
+	public function delStudent($id){
+		//实现过程
+	}
+	public function updStudent($stu){
+		//实现过程
+	}
+}
+
+	5, 当多个类，他们之间是平级的关系，且这些类都会去实现某个功能，只是实现的方式不一样，这时就要考虑为这个类定义一个接口。
+
+	6， 接口不能实例化。
+	7， 接口中所有的方法，都不能有方法体。
+	8， 一个类可以去实现多个接口，每个接口间用豆号隔开  
+		如：class 类名 implements 接口1，接口2，，，，{}
+	9, 接口中可以有属性，但必需是常量，默认是public 如下：
+		interface iUsb{
+			const A = 90;
+		}
+			echo "ok".iUsb::A;
+		
+	10, 接口中的方法都必须是public的，默认就是public.
+	11, 一个接口不能继承其它的类，但是可以继承别的接口。但实现该接口的类要把所有继承的方法都实现。
+	12, 一个类在实现接口的时，也可以同时去继承一个类。
+
+
+<?php
+interface  A{
+	function aa();	
+}
+interface B{
+	function bb();
+}
+interface C extends A,B{
+	function cc();
+}
+abstract class F{
+	abstract function ff();
+}
+class D extends F implements C{ //D继承F并实现C
+	function aa(){echo "aa";}
+	function bb(){echo "bb";}
+	function cc(){echo "cc";}
+	function ff(){echo "ff";}
+}
+
+//$d = new D();
+D::aa();
+D::bb();
+D::cc();
+D::ff();
+?>
+
+
+
+
+	-----继承和实现接口的比较:
+1, 可以认为实现接口是对单一继承的补充。
+2，可以在不破坏类层级关系的前提下，对某个类功能扩展。
+
+
+
+
+
+	-----final 关键字:
+1, 如果我们希望某个类不被其它类所继承（因某些因素）,可以使用final.
+<?php
+	final calss A{}
+	class B extendsA{}
+	echo "ok";   //结果提示错误，B不能继承A
+?>
+
+2, 如果我们希望某个方法，比如计算个人所得税的方法，不能被子类改写，可以使用final来修饰方法。
+
+class A{
+	final public function getRate($salary){
+		return $salary * 0.08;
+	}
+}
+class B extends A{
+	//不能去重写父类的getRate方法
+	function getRate($sal){
+		return $sal*0.01;
+	}
+}
+$b = new B ();
+echo $b->get$ate(100);
+
+
+
+
+
+
+
+
+
+
+	-----常量：const 关键字
+1， 常量名一般字母全部大写 如： TAXRATE
+2， 在定义常量的同时，必须赋初值 如 const TAXRATE=1.1;
+3， const关键字前不能public /protected/private 修饰。
+4， 访问常量
+	在类外部用	类名::常量名；
+	在类内部用	类名::常量名 	或 	self::常量名;
+5， 常量的值在定义的时候就初始化，以后就不能修改。
+6， 常量可以被子类继承。
+7， 一个常量是属于一个类的，而不是某个对象的。
+
+	----const 什么时候用
+1， 某些值是固定不变的，比如圆周率3.1415926等。
+
+
+基本用法：
+<?php
+	class A{
+		const 常量名= 初值;
+	}
+	interface 接口名{
+		const 常量名 = 初值;
+	}
+?>
+
+
+常量是public 级别的,调用的方式为
+	类名::常量名;
+或
+	接口名::常量名;
+或
+	self::常量名；  //意思是调用本类或本接口的常量
+
+
+
+案例：
+class A{
+	//常量在定义的时候，必须给初值
+	//const 关键字前面不要带修饰符。
+
+	const RATE = 0.08;
+
+	public function payRate($val){
+		//常量不能修改
+		// A::RATE=0.01;
+		//return $val * A::RATE;	调用常量的一种方式
+		return $val * self::Rate;  //调用常量的self方式
+	}
+	$a = new A();
+	echo $a->payRate();
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------
+
+
+
+=====用面向对象的方式做计算器项目====
+----script函数-isNaN 检测是否为一个数值----
+
+	面向对象设计的浅显解析：
+		A:由一个前台页面来面向客户操作；
+		B:由一个中间控制页面，来接收数据并调用相应的对象方法；
+		C:由一个或多个页面以对象的方式封装类和方法，供中间控制页面调用。
+		案例如下：
+
+	一：前台页面文件：
+<html>
+<head>
+	<title>计算器</title>
+	<script language="javascript">
+		function check(){
+			var num1val=document.getElementById("num1").value;
+			var num2val=document.getElementById("num2").value;
+			//alert(num1val+" "+num2val);  获取两个输入框的值。
+			//isNaN检测该值是否为数值，不是数值返回true.
+			if(isNaN(num1val) || isNaN(num2val) ){	
+				alert("请输入正确的数值");
+				//如果返回false就不提交了
+				return false;
+			} 
+		}
+	</script>
+</head>
+<body>
+	<h1>四则运算器</h1><br>
+	<form action="console.php" method="post" onsubmit="return check()">
+第一个数值<input type="next" id="num1" name="num1" /><br>
+第二个数值<input type="next" id="num2" name="num2" /><br>
+选择运算符<select name="oper">
+			<option value="+">+</option>
+			<option value="-">-</option>
+			<option value="*">*</option>
+			<option value="/">/</option>
+		</select><br>
+			<input type="submit" name="sub" value="提交"/>
+	</form>
+<body>
+</html>
+
+
+		二：接收控制页面
+
+<?php
+	$num1 = $_REQUEST['num1'];
+	$num2 = $_REQUEST['num2'];
+	$oper = $_REQUEST['oper'];
+	require_once 'arithmitec.class.php';
+	$ari=new Arithmitec();
+	echo $ari->cast($num1,$num2,$oper);
+?>
+<br><a href="desk.php">返回</a>
+
+
+		三：对象方法封装类页面
+
+<?php
+class Arithmitec{
+	function cast($num1,$num2,$oper){
+		switch($oper){
+			case '+':
+				return $num1+$num2;
+				break;
+			case '-';
+				return $num1-$num2;
+				break;
+			case '*';
+				return $num1*$num2;
+				break;
+			case '/';
+				return $num1/$num2;
+				break;
+			default:
+				echo "输入错误，请重新输入！";
+				break;
+		}
+	}
+}
+?>
+
+---------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+		=====php中错误和异常处理的机制=====
+
+
+-----什么是相对路径和绝对路径；
+	绝对路径：是从C盘开始出发向下依次找到当前文件如：
+		“c:/aaa/bbb/a.jpg” 
+
+	相对路径：是从文件所在当前文件夹出发开始找目标文件，如：
+		"../../aaa/bbb/b.mp3"	 “../”代表向上一级文件夹。
+
+
+
+
+-----如果没有错误处理机制怎样？
+
+<?php
+	$fp = fopen("aaa.txt","r");  //这里是打开一个文件。
+	echo "ok";
+?>
+
+	上面代码没有处理错误，应当这样写程序更加键壮。
+
+<?php
+	if(!file_exists("aaa.txt")){
+		echo "文件不存在！";
+	}else{
+		echo "文件打开成功";
+		//...关闭
+		fclose($fp);
+	}
+?>	
+
+
+-----PHP处理错误的三种方法：
+
+	1。使用简单的 die 语句
+		使用方法如下：
+die()的第一种方式：
+	if(!file_exists("aaa.txt")){
+		die("文件不存在！");
+	}else{
+		//打开文件操作
+		echo "文件找到了<br>";
+		$a = fopen("../function.php","r");
+	}
+	echo "ok";
+die()的第二种方式：
+	file_exists("aaa.txt") or die("文件不存在·");
+
+
+
+
+
+
+	-----PHP自定义错误处理
+	w3c手册位置--服务器脚本--PHP--PHP高级--PHP错误处理
+
+在php中对错误有不同的级别区分大体可分为两种，一种是普通警告型，虽会报错但它不阻断程序的运行。
+而另一种是致使错误，一旦出现就程序会被立刻中断。
+
+案例入门：
+
+<?php
+	//定义一个函数
+	function my_error($errno,$errmes){  //这两个变量代表的一个是错误号，一个是错误信息
+		echo "<font size='5' color='red'>$errno</font><br>";
+		echo "错误信息是：$drrmes";
+		exit();
+	}
+	function my_error2($errno,$errmes){  //这两个变量代表的一个是错误号，一个是错误信息
+		echo "<font size='5' color='red'>$errno</font><br>";
+		echo "错误信息是：$drrmes";
+		exit();
+	}
+	//改写 set_error_handler处理器
+	set_error_handler("my_error",E_WARNING);
+	set_error_handler("my_error2",E_NOTICE);
+	$fp = fopen("aa.txt","r");
+?>
+
+
+
+
+
+
+
+
+	-----错误触发器
+需求：有一段代码，如果接受一个年龄，如果年龄输入>120.我认为就是一个错误。
+如：
+//传统方法
+if($age>120){
+	echo "年龄过大";
+	exit();
+}
+或需求：输入一个薪水，如果大于10000,我认为有错误
+if($salary>10000){
+	echo "薪水多";
+	exit();
+}
+
+
+	现在我们可以使用自定义错误触发器来完成。
+
+function error3($errno,$errmes){
+	echo "错误号是".$errno;
+}
+
+function error4($errno,$errmes){
+	echo "出大事了".$errno;
+}
+//指定E_USER_WARNING错误级别的函数
+set_error_handler("error3",E_USER_WARNING);
+set_error_handler("error4",E_USER_ERROR);
+
+$age=700;
+if($age>120){
+	//调用触发器时候同时指定错误级别
+	trigger_error("输入年龄过大".E_USER_ERROR);
+	exit();
+}
+echo "ok";
+
+
+
+		错误处理器及触发器综合案例
+
+<?php
+//$num代表错误代号，$for代表错误信息，$file代表错误文件，
+//$line代表错误行数,$con代表发生错误时所用的每个变量和值。
+	//以下是定义错误的函数
+	function ewarning($num,$for,$file,$line,$con){
+		echo "错误代号：".$num;
+		echo "<br>错误信息：".$for;
+		echo "<br>错误文件名为：".$file;
+		echo "<br>错误行数为：".$line;
+		echo "<br>错误内容：".$con;
+	}
+	function enotice($num,$for,$file,$line,$con){
+		echo "错误代号：".$num;
+		echo "<br>错误信息：".$for;
+		echo "<br>错误文件名为：".$file;
+		echo "<br>错误行数为：".$line;
+		echo "<br>错误内容：".$con;
+	}
+	function eerror($num,$for,$file,$line,$con){
+		echo "错误代号：".$num;
+		echo "错误信息：".$for;
+		echo "错误文件名为：".$file;
+		echo "错误行数为：".$line;
+		echo "错误内容：".$con;
+		exit();
+	}
+	//以下是启用自定义错误的函数
+	set_error_handler("ewarning",E_USER_WARNING);
+	set_error_handler("enotice",E_USER_NOTICE);
+	set_error_handler("eerror",E_USER_ERROR);
+
+	//以下是在实际应用中触发了自定义的错误函数
+	if(file_exists("one1.txt")){
+		echo "文件以打开";
+		$a = fopen("one.txt","r");
+	}else{
+		//错误触发器的应用
+		
+		trigger_error("warning级警告！，文件未找到！",E_USER_WARNING);
+		trigger_error("notice级注意！没有此文件！",E_USER_NOTICE);
+		trigger_error("error级文件找不到",E_USER_ERROR);
+	}
+	echo "<br>试验自定错误及触发器··！";
+?>
+
+
+
+
+
+
+
+
+
+	====php错误日志的保存====
+
+基本用法是使用：error_log来实现
+
+function err($errno,$errmes){
+	$err_info="错误号是".$errno."--".$errmes;
+	echo $err_info;
+	//把这个错误信息保存.
+	// \r\n表示向文件输入一个回车，一个换行。
+	error_log($err_info."\r\n",3,"d:/myerr.txt");
+
+
+}
+
+	----保存日志时间----
+	date_default_timezone_set("Asia/chongqing")
+<?PHP
+	function en($a,$b){
+		$info = "错误代号=".$a."错误信息=".$b;
+		echo $info;
+		date_default_timezone_set("Asia/Chongqing");
+		error_log($info.date("Y-m-d G-i-s")."\r\n",3,"D:/one.txt");
+	}
+	set_error_handler('en',E_USER_NOTICE);
+
+	if(file_exists('two.php')){
+		$f = fopen('two.php');
+	}else{
+		trigger_error('notice，无此文件！',E_USER_NOTICE);
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+	=====PHP中的异常处理=====
+	php手册：语言参考--异常处理；
+
+class Exception{
+	protected	$message = "Unknown exception"; //异常信息
+	protected	$code = 0; 			//用户自定义异常代码
+	protected	$file;				//发生异常的文件名
+	protected	$line;				//发生异常的代码行号
+	function __construct($message = null,$code = 0);
+	final function getMessage();			//返回异常信息
+	final function getCode();			//返回异常代码
+	final function getFile();			//返回发生异常的文件名
+	final function getLine();			//返回发生异常的代码行号；
+	final function getTrace();			//backtrace()数组
+	funal function getTraceAsString();		//已格成化成字符串的getTrace()信息。
+
+
+}	
+
+
+
+1,基本语法：
+	try{
+		可能出现错误或异常的代码
+	}catch(Exception e){
+		//对异常的处理有两种方式
+			1,自己处理。
+			2，自己不处理，将其抛出。
+	}
+
+
+思考一个问题？
+	怎样可以去有效的控制多条可能出现错误或是异常的代码？
+	现在我们看看使用异常处理机制。怎样做！！！
+
+
+try{
+	addUser("aaaa");
+	updateUser('bbbb');
+}
+//catch 捕获  Exception是异常类(php定义好一个类)
+catch(Exception $e){
+	echo "失败信息".$e->getMessage();
+}
+
+function addUser($username){
+	if($username=="shunping"){
+		//添加成功
+	}else{
+		//添加error
+		//抛出异常
+		throw new Exception("添加失败");
+	}
+}
+function updateUser($username){
+	if($username=="xiaoming"){
+		//正常修改
+	}else{
+		throw new Exception("修改失败");
+	}
+}
+
+
+
+
+	----异常使用的注意事项；
+1，通过上面的案例，我们看出，使用
+	try{代码}catch(Exception $e){处理异常}
+这种方式，可以更有效的控制错误，所以在开发中大量的使用。
+
+2，当捕获到一个异常后，try()块里的后续代码就不继续执行了。
+3，如果有一个异常发生，但是你没有 catch 捕获，则提示一个Uncatched Exception 或Uncaught Exception
+4, 当cacth 一个异常，你可以处理，也可以不处理，再次抛出。如下：
+	try{
+		a2("hello");
+	}catch(Exception $e){
+		echo $e->getMessage();
+		throw $e;
+	}
+
+5, 你可以自定义异常类
+	class MyException extends Exception{}
+
+6,使用多个catch 代码块可以捕获不同种类的异常。
+	class MyException1 extends Exception{}
+	class MyException2 extends Exception{}
+	function A(){
+		throw new Exception1("a");
+	}
+	function B(){
+		throw new Exception2("b");
+	}
+	function C(){
+		try{
+			A();
+			B();
+		}catch(Exception1 $e1){
+			$e1->getMessage();
+		}catch(Exception2 $e2){
+			$e2->getMessage();
+		}
+	}
+
+
+7, ---对于一些老版本的代码，异常捕获机制，并不会抛出异常。
+
+	try{
+		$i=8/0;
+		$f = fopen("sss.txt");//并没有这个文件
+	}catch(Exception $e){
+		ehco "ok";
+		echo $e->getMessage();
+	}
+	上面的代码并不会执行“OK”，原因是$i=8/0,并没有抛出异常。所以，能不能catch 到异常，要取决于有没有真的抛出异常！
+
+
+
+
+
+function checkNum($val){
+	if($val>100){
+		throw new Exception("err_no1:这个数过大");
+	}else{
+		echo "输入的值是正常的";
+	}
+}
+try{
+	checkNum(300);
+}catch(Exception $e){
+	echo $e->getMessage()."--".$e->getLine();
+}
+
+
+
+
+
+
+
+	-----定义及修改默认顶级异常处理器
+	function my_exception(){			//定义一个顶级异常处理器
+		echo "我的顶级异常处理器！";
+	}
+	set_exception_handler("my_exception");		//设置启用自定义处理器
+	function aa($a){
+		if($a<100){
+			echo $a;
+		}else{
+			throw new Exception("数值太大");
+		}
+	}
+	try{
+		aa(200);
+	}catch(Exception $e){
+		//echo $f->getMessage()."----".$f->getLine();
+		throw $e;			//当出现异常再次抛出，把问题交给了顶级异常处理器
+	}
+
+
+
+
+
+
+
+
+
+
+	=====php数据库编程=====
+
+	-----php操作mysql数据库的三种方式
+1, mysql扩展库
+2, mysqli扩展库
+3, pdo
+
+
+	-----mysql扩展库和mysql数据库的区别
+1, mysql数据库是用于存放数据的.
+2, mysql数据库操作有三个层面
+	A层：编辑指令发送到数据库管理系统。
+	B层：数据库管理系统进行解析，调用数据库中的数据
+	C层：找到相应数据后再返回给客户端。
+	也就是说以数据库管理系统为中间层，操作界面为右层，数据库为左层。
+3，mysql扩展是一堆函数，是PHP设计者提供给程序员用于完成对mysql数据库的各种操作(CRUD).
+
+
+
+
+
+
+	-----数据有符号和无符号的区别；
+
+	数据库表中建立数据项时，有符号和无符号的含意就是是否带有负号。带符号的就是正负各占一半，不带符号就会为正。默认应该是有符号，无符号用 unsigned 表示.
+
+
+	
+
+	-----字符串char 和varchar的区别
+
+ 	char 的长度是固定的，如：指定一个char 值长度为12,那么即使它只用了8个，也会占用12个长度的位置
+
+	varchar 的长度是不固定的，如指定一个varchar 的长度为12 ,但只用了8个，其它的4个位置便被回收了。
+
+
+
+
+
+
+		-----mysql环境的搭建
+
+1, 启用mysql扩展库
+	在php.ini 文件中找到: extension=php_mysql.dll 去掉前面的分号 以启用它。
+		通过<?php phpinfo() ?>可以查看当前php都有支持哪些扩展库!
+
+	
+		-----数据库（cmd）操作命令：
+数据库操作指令分为四种：
+	ddl 	数据定义语句
+	dml	数据操作语句	如： update  insert   delete
+	dql	数据选择语句	如： select
+	dtl	数据事务语句	如： rollback   commit,,,
+		
+1，insert into tab(name,age) select name,age from tab;	数据内容自我复制。
+
+
+
+2, 创建一张用户表或库,
+	create database words;  //创建一个库
+
+	//创建一个user1表，以及相关内容。  
+	create table user1(
+	id int primary key auto_increment,
+	name varchar(32) not null,
+	password varchar(64) not null,
+	email varchar(128) not null,
+	age tinyint unsigned not null
+	)	
+	;
+
+
+3, 删除一个表：
+ 	drop table xxxx;	//xxx是一个表名，如: user1  
+	注：delete 是用来删除数据的  drop 是用来删除表的 
+
+
+
+
+	-----用md5加密数据库中的密码；
+
+4, 插入一组数据 ：
+	insert into user1(name,password,email,age) values('wnag',md5('123'),'zs@sohu.com',30);
+
+
+
+
+	-----解决数据库与网页乱码问题（Data too long）
+
+5， show variables like "%char%";
+原因，cmd 的操作系统只认GBK的编码，而在文档中的ANSY码有时也是GBK码，所以有时在文档中粘到CMD中的数据可以使用，而直接在CMD中输入的字符却会出错。，，
+	解决方法一：要么在文档中以GBK编码先写好代码，然后粘到CMD中。
+	解决方法二： set character_set_clinet=gbk;  (可以调用上面的variable like命令查看一下)
+		     set character_set_results=gbk;
+	    或直接： set names gbk; 即可
+	容易出错的地方： 设置好 mysql_set_charset('utf8');  有时忘记设置这里就会出现乱码！
+	mysqli 中的编码设置  $mysqli->set_charset('utf8');  
+
+
+
+
+
+6,  查询当前表所在哪个数据库中    \s    用此命令可查询所在表属于哪一个库
+	show tables;  	命令也可能查询当前库； 在其返回的表单头部会显示当前库的名.
+
+
+7, mysql_query()函数：向mysql数据库发送指令函数。此函数有两个参数如：
+	mysql_query($sql,$link) 这里把连接数据库的$link添加进去，就会省去它自动查找是否以有连接或在没有连接时自动建立连接时的麻烦！以后最好是把这个参数带上！
+	
+
+
+8， mysql_affected_rows($link)  查看上一次操作的行数是否受到影响。用来检验上次操作是否成功。如下
+	if(mysql_affected_rows($conn)>0){
+		echo "操作成功";
+	}else{
+		echo "没有受到影响的行数";
+	}
+
+
+
+9, mysql_fetch_field()  取出表头信息   如：
+	while($into=mysql_fetch_field($res)){
+		echo $into->name;
+	}
+结果会显示：一个表的表头如： id  name  password age  等
+
+	----$field = $res->fetch_field() 面向对象的方式
+	
+
+
+				
+
+10,  $cols=mysql_num_fields($res);
+	echo $rows = $cols;
+	显示一个表的内容有多少行和多少列
+-----$res->num_rows  对象方式获得行数。
+-----$res->field_count 对象方式获得字段的列数
+
+
+11, mysql_insert_id($link);
+	显示上一次添加或操作内容的ID号
+
+
+
+12，mysql_field_name($res,$i) 取出结果中指定字段的字段名，（取出表头信息）$i是下标
+
+
+
+
+13, $res = $mysqli->multi_query($sqls); 批量发送sql语句
+
+14-1 $sqls.="xxxx;";	批量语句，语句中的点和分号都不能少。
+
+14, $result = $mysqli->store_result(null); 当批量查询时，此句将逐个取出查询的结果集
+
+
+15, $mysqli->more_result(null);   查询当前结果的后面是否还存在结果集
+
+
+16, $mysqli->next_result();	执行下一条结果集。
+
+
+17，$result->free()；		释放当前资源内存，$result要实因际对象而改变！
+
+
+18，$mysqli->autocommit(false);	设置自动提交 可选false 和true;
+
+
+19, $mysqli->commit;	提交
+
+
+20， $mysqli->close();	关闭连接；
+
+
+21， $mysqli->rollback;		回滚
+
+
+22,	"start transaction "		启动事务处理
+
+
+23,	"savepoint a;"		备份姨个事务节点
+
+
+24，	"rollback to a;"	恢复(回滚)到A节点
+
+
+25，	"commit"	提交保存事务操作。
+
+
+26, 	数据库预处理
+
+	$sql="insert into stmt(id,name,age) values(?,?,?)";  预处理设置
+
+
+	 $stmt = $mysqli->prepare($sql);	启动预处理
+
+
+	$id=6;    $name='aaa';   $age=18;
+ 	$stmt->bind_param('isi',$id,$name,$age);	 设置参数，并绑定参数。i=int, s=string
+ 	$stmt->execute(); 		执行预处理操作
+
+
+27,	$_SERVER['REQUEST_METHOD']	检测request 接收数据时是以什么方式(post/get/cookie)
+	if($_SERVER['REQUEST_METHOD']=='POST'){		
+		//则用post方式接收
+	}else if($_SERVER['REQUEST_METHOD']=='GET'){
+		//则用GET接收
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	-----数学函数 
+
+1, ceil()  进一取整 
+	<?php
+		$count = 7;
+		$size =3;
+		echo ceil($count/$size);    //结果等于3   (2,1=3; 2.8=3; 只要有小数就进位1)
+	?>
+
+
+2, floor() 向下取整
+<?php
+	$b = 3.8;
+	echo floor($b)."<br>";
+	$a = 9.9;
+	$d = floor($a);
+	echo $d;
+?>
+
+
+3, dechex() -十进制转换成为十六进制。 比如说把10转成a
+
+<?php
+	$code='';
+	for($i=0;$i<8;$i++){
+		$code.=dechex(rand(1,15));	//1,15 从1到15 
+	}
+	echo $code;
+?>
+
+
+
+
+
+
+	-----其它函数
+
+1，explode()   字符串分割函数
+<?php
+$str = "Hello world. It's a beautiful day.";
+print_r (explode(" ",$str));
+?>
+
+
+2，array_rand()  从数组中取出一个或多个单元！
+<?php
+$input  = array( "Neo" ,  "Morpheus" ,  "Trinity" ,  "Cypher" ,  "Tank" );
+$rand_keys  =  array_rand ( $input ,  2 );
+echo  $input [ $rand_keys [ 0 ]] .  "\n" ;
+echo  $input [ $rand_keys [ 1 ]] .  "\n" ;
+?> 
+
+
+
+
+3，file_get_contents()	将整个文件读入一个字符串
+
+4, file_put_contents()    将一个字符串写入文件
+
+5, serialize — 产生一个可存储的值的表示 
+		自己理解：把一个数组转化成一个可以转化成文件的字符串。
+
+6, unserialize — 从已存储的表示中创建 PHP 的值
+		自己理解：把一个转化成字符串的文件，再次转化成一个PHP数组
+serialize和un..一个是序列化一个是反序列化，就像加密和解密的关系一样。
+干嘛用的呢？举个例子，比如你一个数组或者对象要存在数据库里，应该要怎么存？我不知道其他方法，我知道的是把数组或者对象映射成一个字符串，然后把这个字符串存到数据库里。用的时候从数据库里读取，然后把字符串映射回原数组或对象。serialize和un..就是做这个工作的，具体它们的映射方法建议你看看资料，很简单。ser..把数组映射成字符串，un..把字符串变成数组
+
+	3,4,5 见下例
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php
+	$txt = 'e.txt';
+	if(!file_exists($txt)){//不存在这个文件
+		$array = array();
+		for($i=1;$i<=5;$i++){
+			$array[]=$i;
+		}
+	}else{
+		$txt_array = file_get_contents($txt);
+		$array = unserialize($txt_array);
+		if(empty($array)){
+		echo "已经全随机掉了，请删掉".$txt."这个文件，重新再来一遍";
+		die();
+		}
+	}
+	$rand = array_rand($array);
+	echo $array[$rand];//随机出来的内容
+	unset ($array[$rand]);//销毁已经蹦出来的元素
+	file_put_contents($txt,serialize($array));
+?>
+
+
+7, unset()  释放销毁一个变量
+	$a="aaa";
+	unset($a);
+
+
+
+
+8，文件操作相关函数
+
+parse_ini_file()	解析一个ini配置文件
+str_replace()		子字符串替换
+fread()			读取文件（可安全用于二进制文件）
+fopen()			打开文件或者 URL
+fclose()		关闭文件
+feof()			测试文件指针是否到了文件结束的位置
+file_exists()		检测文件是否存在
+file_get_contents()	 将整个文件读入一个字符串
+filectime()		 取得文件的 inode 修改时间
+fileatime()		取得文件的上次访问时间 
+filemtime()		取得文件的上次修改时间
+filesize()		取得文件的大小
+fstat()			通过已打开的文件指针取得文件相关信息
+
+以上函数请参考 -----文件操作相关函数实例 
+
+
+
+
+9，strrpos — 计算指定字符串在目标字符串中最后一次出现的位置
+<?php
+		 |	   |         |
+$foo  =  "0123456789a123456789b123456789c" ;
+
+var_dump ( strrpos ( $foo ,  '7' , - 15 ));   // 从尾部往回倒着数第 5 个位置开始查找, 倒着数的下一个 7 是在第17位上，其结果就是 int(17)
+
+var_dump ( strrpos ( $foo ,  '7' ,  20 ));   // 从第 20 个位置开始查找,那么下一个 7 出现在了第 27 的位置上，其结果就是 int(27)
+
+var_dump ( strrpos ( $foo ,  '7' ,  28 ));  //从第28个位置开始找，但后面没有 7 了。所以结果为 false
+
+?> 
+
+
+
+
+10，substr — 返回字符串的子串
+<?php
+$rest  =  substr ( "abcdef" , - 1 );     // 返回 "f"
+$rest  =  substr ( "abcdef" , - 2 );     // 返回 "ef"
+$rest  =  substr ( "abcdef" , - 3 ,  1 );  // 返回 "d"
+?> 
+
+
+
+	-----mysql取出查询结果的四种方法
+1, mysql_fetch_row	返回索引数组，取出结果的下标以0,1,2,数字的形式显示。
+2, mysql_fetch_assoc	返回关联数组，取出结果的下标以，数组本身KEY字串的形式显示。
+3, mysql_fetch_array	同时返回索引与关联数组，内存多占用一倍。
+4, mysql_fetch_object	以对象的形式返回数据，使用方法为： echo $row->xx 
+			因为这时对象把数据当做一个属性.
+
+
+
+
+mysql扩展库操作mysql数据库步骤：
+<?php
+	$link = mysql_connect('127.0.0.1,'root','abcd');     //1,获取连接
+	if(!$link){
+		die("连接失败".mysql_error());	//检测连接是否成功，并指出错误的信息
+	}	
+	mysql_select_db('test');	//2,选择数据库
+	//mysql_query('set names utl8');  	//3,设置操作编码
+	mysql_set_charset('utf8');  //两种设置编码方式，保证程序按照utf8.
+	$sql = "select * from user1"; //4，发送查询指令,这里也可发送其它语句如：insert,delete,等
+	$res=mysql_query($sql,$link); //$res 表示结果集，可以理解是一张表，$link 指定连接，可减少浪费。
+		//这里的$res 是一个返回的资源型的结果集	.	
+
+
+		//5，接收返回结果并处理（显示）
+		//mysql_fecth_row会依次取出$res结果集的下一行数据，赋值给$roww
+		
+		//mysql_close($link); //如果在这里把连接断开或置空的话，PHP依然可以进行下面的操作，因
+		//$link=null;  //为PHP以把数据取回到内存当中，现在只是对内存数据操作。
+	
+	while($row=mysql_fetch_row($res)){
+		//第一种取法
+		echo "<br>$row[0]--$row[1]--$row[2]<br>";
+		//第二种取法
+		foreach($row as $key=>$val){
+			echo "$key==>$val";
+		}
+		echo "<br>";
+	}
+	//6,释放资源
+	mysql_free_result($res);
+	//7,关闭连接，这句话可有可无，因为它会自动关闭，但建议有。
+	mysql_close($link);
+
+
+
+?>
+
+
+
+	-----数据类型的种类
+PHP的数据类型分为三大类 
+	一：数值型	小数，整数，布尔，字符串，等
+	二：复合型	数组，对象
+	三：特殊类型	null, 资源型
+
+
+
+
+
+		-----exit()调试使用函数;
+执行它时，后面的代码就不执行了，用在调试的时候，当不希望执行后面代码就用这个函数。
+
+
+
+
+
+		-----往mysql数据库插入中文字串的方法
+当一个变量是中文字串时，不能直接用双引号“”来注释此变量，
+得先加一层单引号，再加双引号，然后，再加一层点如： '".$a."'	案例如下：
+$ins = mysql_query("inser
+
+
+
+
+		-----mysqli 的释放内存和关闭连接
+1, mysqli 面对对象的方式
+	//释放内存
+	$res->free();
+	//关闭连接
+	$mysqli->close();
+
+2，mysqli 面向过程的方式
+	//6,释放资源
+	mysqli_free_result($res);
+	//关闭连接
+	mysqli_close($mysqli);
+
+3，mysql 的方式
+	//6,释放资源
+	mysql_free_result($res);
+	//7,关闭连接，这句话可有可无，因为它会自动关闭，但建议有。
+	mysql_close($link);
+
+
+
+
+
+
+
+
+	-----总结实例
+
+
+<?php
+
+class sqlToor{
+	private $er="mysql_error";
+	public $link;
+	function __construct($host,$root,$psw,$db){
+		$this->link = mysql_connect($host,$root,$psw)or die($er);
+
+		mysql_select_db($db)or die("$er");
+		mysql_set_charset("utf8");
+		
+	}
+	//函数-获取dql操作结果集并显示
+	function fetch($res){
+		while($row = mysql_fetch_row($res)){
+			foreach($row as $k=>$v){
+				echo "---$v";
+			}
+			echo "<br>";
+		}
+	
+	}
+	//函数-查询dml操作是否成功
+	function affc($link,$res){
+		$affc = mysql_affected_rows($this->link);
+		if($res){
+			if($affc>0){
+				echo "操作成功<br>";
+			}else{
+				echo "没有受到影响的行数！<br>";
+			}
+		}else{
+			echo '操作失败<br>';
+		}
+	}
+}
+	$sq=new sqlToor('localhost','root','abcd','threephp');
+	//$tab=mysql_query("show tables");
+	//fetch($sdb);
+	echo "<hr>";
+	//fetch($tab);
+	
+	//添加内容
+	//$ins = mysql_query("insert into user1(name,password,email,age) values('刘军',md5('abc'),'wg@163.com',34)");
+
+	//删除内容
+	//$del = mysql_query("delete from user1 where id in(15,16,17,18,19,20,21)");
+
+
+	//更新内容
+	//$upd = mysql_query("update user1 set name='那英',email='ny@163.com',age=43 where id = 9");
+	//$sq->affc($link,$upd);
+	
+	//显示表中内容
+	//$sel=mysql_query("select * from user1");
+	//$sq->fetch($sel);
+
+	//获取表头的方法
+	/*
+	$rows = mysql_affected_rows($sq->link);
+	echo $rows;
+	$cols = mysql_num_fields($sel);
+	echo $cols;
+	for($i=0;$i<$cols;$i++){
+		echo mysql_field_name($sel,$i)."---";
+	}
+	$a = 0;
+	while($a<$cols){	
+		echo mysql_field_name($sel,$a)."--";
+		$a++;
+	}
+	*/
+
+
+	/*
+	//-----把数据库中的数据以列表的形式显示出来
+	$sel=mysql_query("select * from user1");
+	$rows = mysql_affected_rows($sq->link);
+	$cols = mysql_num_fields($sel);
+	
+	
+	echo "<table border=1><tr>";
+		for($i=0;$i<$cols;$i++){
+			echo "<th>".mysql_field_name($sel,$i)."</th>";
+		}
+		echo "</tr>";
+		while($row = mysql_fetch_row($sel)){
+			echo "<tr>";
+				foreach($row as $k=>$v){
+					echo "<td>".$v."</td>";
+				}
+			echo "</tr>";
+		}
+	echo "</table>";
+	*/
+
+	$ins = mysql_query("insert into user1(id,name,password,email,age) values(2,'刘刚',md5('abc'),'lg@163.com',22)");
+	$sel=mysql_query("select * from user1");
+	$sq->fetch($sel);
+	$sq->affc($sq->link,$sq);
+	$id = mysql_insert_id($sq->link);
+	echo "<br>上次操作的ID号是 $id";
+
+
+?>
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+
+
+
+
+		=====使用php的mysqli扩展库操作mysql数据库
+
+简单介绍：
+	mysqli(mysql improve )mysql扩展库的增强版
+	mysql扩展库和mysqli扩展库的比较
+1, mysqli 的稳定性和安全性，效率有所提高，
+2，mysqli支持面向对象编程，同时mysqli扩展库考虑到老程序员，同时提供面向过程的编程风格。
+
+
+	mysqli 快速入门
+编写一个程序，这个程序从user1表中读取数据，并打印在网页中，使用mysqli完成
+
+1,先使用mysqli面向对象的风格，完成案例
+2，配置PHP。INI文件让PHP支持mysqli扩展库: extension=php_mysqli.dll
+3, 建库，建表，
+
+
+
+
+
+	-----mysqli操作数据库（对象与过程的区别）
+
+<?php
+	//mysqli用面向过程的方式操作数据库
+	$mysqli = mysqli_connect('localhost','root','abcd','words')or die('连接失败');
+	mysqli_set_charset($mysqli,'utf8');
+	
+	//创建一个表
+	//$sql = "create table order1(id int primary key auto_increment,name varchar(32) not null,age int(16) not null )";
+	
+	
+	//插入一条数据
+	//$sql="insert into order1(name,age) values('小王',18)";
+	
+	//删除一条数据
+	//$sql="delete from order1 where id = 8";
+	
+	//更新一条数据；
+	$sql="update order1 set name='屁的',age=33 where id = 2";
+	
+	
+	$res = mysqli_query($mysqli,$sql);
+	$showtable= mysqli_query($mysqli,"show tables");
+	while($row=mysqli_fetch_row($showtable)){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+	echo "<hr>";
+	$sel =mysqli_query($mysqli,"select * from order1");
+	while($row=mysqli_fetch_row($sel)){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+	echo "<hr>";
+	
+	$id=mysqli_insert_id($mysqli);
+	echo "上次操作的ID是: $id";
+	
+
+
+
+	
+/*	//mysqli用面向对象的方式来操作数据库
+	$mysqli=new mysqli('localhost','root','abcd','words');
+	$mysqli->query("set names utf8");
+
+	//创建一个表	
+	//$sql="create table test(id int primary key auto_increment,name varchar(32) not null,age int(32) not null,sex varchar(8) not null)";
+	
+	//添加一条数据：
+	//$sql="insert into test(name,age,sex) values('don1',18,'nv')";
+	
+	//删除一条数据：
+	//$sql="delete from test where id = 4";
+	
+	//更新一条数据；
+	$sql="update test set name='bbbb',age=88,sex='nan' where id=9";
+	
+	$res = $mysqli->query($sql);
+
+	//查看操作的行数是否受的影响：
+
+	if($res){
+		if($mysqli->affected_rows>0){
+			echo "操作成功";
+		}else{
+			echo "没有受到影响的行数";
+		}
+	}else{
+		echo "操作失败！";
+	}
+	
+	//查看表的内容
+	echo "<br>";
+	$sel=$mysqli->query("select * from test");
+	while($row=$sel->fetch_row()){
+		foreach($row as $k=>$v){
+			echo "--$v";
+		}
+		echo "<br>";
+	}
+	$sel->free();
+	$mysqli->close();
+	*/
+?>
+
+
+
+
+
+
+
+
+	-----mysqli 批量执行sml语句
+
+
+
+//关键字（$sqls.="xxxx;";  - 点和等号中不能有空格，后面的两个分号不能少）
+//关键字($mysqli->multi_query($sqls)  -- 批量发送及接收返回值)
+//关键字($result=$mysqli->store_result() -- 调取结果集,每调一次$result指针就会向后移一位！)
+
+
+
+批量执行 dml语句,可以同时操作 删除，添加，更新，但不能同时操作select 语句
+基本语法	注意第二条语句的等号前面要加一个点 '.'
+	$sqls="sql1,,,;";
+	$sqls.="sql1,,,;";
+	$sqls.="sql1,,,;";
+	mysqli::nulti_query($sqls);
+
+案例；使用mysqli的 mysqli::multi_query()一次性添加三个用户 
+<?php
+	//header("content-type:text/html;charset=utf-8");
+	$mysqli =new mysqli('localhost','root','abcd','test');
+	$mysqli->query("set names utf8");
+
+	$sqls = "insert into user1(name,age) values('宋江',20);";
+	$sqls.= "insert into user1(name,age) values('吴用',30);";
+		//关键字（$sqls.="xxxx;";  - 点和等号中不能有空格，后面的两个分号不能少）
+	$sqls.= "insert into user1(name,age) values('林冲',40);";
+	$res = $mysqli->multi_query($sqls);
+		//关键字($mysqli->multi_query($sqls)  -- 批量发送及接收返回值)
+	if($res){
+		echo "操作成功";
+	}else{
+		echo "操作失败";
+	}
+?>
+
+
+
+
+	-----mysqli批量执行dml语句
+
+
+<?php
+	$mysqli= new mysqli('localhost','root','abcd','dbone');
+	$mysqli->query("set names utf8");
+	
+	$sqls = "select * from tab;";
+	$sqls.="select * from tabone;";
+	$sqls.="select * from tabtwo;";
+	$sqls.="select * from tabthree;";
+	$sqls.="show databases;";
+	$sqls.="show tables;";
+	$sqls.="desc tab;";
+	if($res=$mysqli->multi_query($sqls)){
+		do{
+//关键字($result=$mysqli->store_result() -- 调取结果集,每调一次$result指针就会向后移一位！)
+			$result=$mysqli->store_result();
+			while($row=$result->fetch_row()){
+//关键字($res->fetch_row()  -- 取出当前行的结果集相当一个数组)
+				foreach($row as $k=>$v){
+					echo "--".$v;
+				}
+				echo "<br>";
+			}
+			echo "<br>";
+			$result->free();
+//关键字($result->free()  -- 释放当前资源的内存)
+			if(!$mysqli->more_results()){
+//关键字($mysqli->more_results()  -- 查询后面是否还有结果集)
+				break;
+			}
+		}while($mysqli->next_result());
+//关键字($mysqli->next_result()  --  操作下一个结果集)
+	}else{
+		echo "faild....";
+	}
+?>
+
+
+
+
+
+	=====mysqli事务类型处理=====
+
+	事务用于保证数据的一致性，它由一组相关的dml语句组成，该组的dml语句要么全部成功，要么全部失败。如网上转账就是典型的要用事务来处理，用以保证数据的一致性。
+
+
+	-----mysqli 事务控制 acid
+
+原子性-Atomicity : 原子性是指事务是一个不可分割的工作单位，事务中的要么都发生，要么都不发生。比如说一个事务由几名代码完成，要么全部成立，要么有一个失败，就全部失败。
+
+一致性-Consistency:事务必须使数据库从一个一致性状态变换到另外一个一致性状态。
+
+隔离性-Isolation: 事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其它事务的操作数据所干扰，多个并发事务之间要相互隔离。	
+
+
+持久性-Durability: 持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响。
+
+
+
+
+
+	-----事务处理-账号转账案例
+<?php
+	$mysqli=new mysqli('localhost','root','abcd','dbone')or die('连接失败');
+	$mysqli->query("set names utf8");
+//关键字($mysqli->query("set names utf8")  -- mysqli面向对象的形式设置数据库的编码格式)
+
+	//将提交设置为false ,不让其自动提交。
+	$mysqli->autocommit(false);			
+//关键字($mysqli->autocommit(false)  -- 设置自动提交为非自动)
+	$sql1="update accounta set balance = balance-2 where id=1"; 
+	$sql2="update account set balance = balance+2 where id=2";
+//关键字(balance+2  -- 设置表中 balance 项 增加2)
+				
+//关键字($mysqli->query($sql) - 发送并获得返回值)
+	$res1=$mysqli->query($sql1);	
+	$res2=$mysqli->query($sql2);
+	if($res1 && $res2){
+		echo "操作成功----";
+		$mysqli->commit();			
+//关键字(commit - 提交)
+	}else{
+		echo "操作失败,回滚";
+		$mysqli->rollback;			
+//关键字(rollback - 回滚)
+	}
+	$mysqli->close();				
+//关键字($mysqli->close - 关闭连接)
+?>
+
+
+
+
+
+	-----事务处理-节点备份与恢复
+基本流程：
+	1，关键字(start transaction - 启动事务处理)
+	2，关键字(savepoint a - 备份一个事务节点，以便恢复)
+	3，关键字(rollback to a - 恢复到 a 事务节点)
+	4，关键字(commit - 提交并保存事务操作)
+
+
+<?php
+	//header("content-type:text/html;charset=utf-8");
+	$mysqli= new mysqli('localhost','root','abcd','dbone')or die('连接失败');
+	$mysqli->query("set names utf8");
+
+	$sql =$mysqli->query("start transaction");	
+//关键字(start transaction - 启动事务处理)
+	$sql =$mysqli->query("savepoint a");
+//关键字(savepoint a - 备份一个事务节点，以便恢复)
+	$sql =$mysqli->query('insert into account(id,balance) values(115,50)');
+	$sql=$mysqli->query("rollback to a");
+//关键字(rollback to a - 恢复到 a 事务节点)
+	$sql=$mysqli->query("commit");
+//关键字(commit - 提交并保存事务操作)
+
+	$sql=$mysqli->query("select * from account");
+	while($row=$sql->fetch_row()){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+?>
+
+
+
+
+
+
+
+
+
+	=====mysqli stmt 预处理技术 
+
+
+
+	-----使用预处理语句有什么好处？
+1，效率高，执行速度快
+2，安全性高，可以防止sql注入
+
+
+问题的提出？
+	现在需要向mysql数据库添加100个用户，请问如何实现
+
+
+	-----mysql工作原理及预处理技术
+
+PHP发送数据到mysql的工作原理  
+	1, 建立连接
+	2，发送指令
+	3, mysql进行编译进行接收
+	4，断掉连接
+所以，当PHP操作数据库时，每发送一次数据都会建立一次连接，进行一次编译。这样很浪费资源.而预处理技术就会大大减少这样的资源浪费。
+
+预处理就是提出预编译，把sql第一次发送的语句做好编译，后面只需要发送数据，而且不会断掉连接。这样只用一个连接，只作一次编译就把成百上千条语句完成了。不然成百上千次的连接，编译会浪费很多的资源。
+
+
+
+
+
+	-----mysqli预处理技术prepare  添加实例
+
+<?php
+		
+			$sql = "insert into stmt(id,name,age) values(?,?,?)";
+//关键字($sql = "insert into stmt(id,name,age) values(?,?,?)";  --  预处理设置)
+			$stmt = $mysqli->prepare($sql);
+//关键字($stmt = $mysqli->prepare($sql);   --  预处理语句)
+			$id= 6;
+			$name = 'aaa';
+			$age = 111;
+			$stmt->bind_param('isi',$id,$name,$age);
+//关键字($stmt->bind_param('isi',$id,$name,$age);   -- 绑定参数)
+			$b = $stmt->execute();
+//关键字($b = $stmt->execute();   -- 执行预处理功能)
+			
+			$id=7;
+			$name='bbb';
+			$age = 222;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=8;
+			$name="ccc";
+			$age =333;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=9;
+			$name='ddd';
+			$age = 444;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=10;
+			$name='eee';
+			$age = 555;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			if($b){
+				echo "ok";
+			}else{
+				echo "faild".$stmt->error;
+			}
+			$mysqli->close();
+			
+?>
+
+
+
+
+
+
+	-----mysqli预处理技术-prepare  ---查询实例
+
+<?php
+//关键字($mysqli_stmt->bind_param('i',$id)	设置预处理语句)
+//关键字($mysqli_stmt->bind_result($a,$b,$c)    绑定结果集)
+//关键字($mysqli_stmt->execute()		执行语句)
+//关键字($mysqli_stmt->fetch()			逐个获取结果集的行结果)
+//关键字($mysqli_stmt->free_result()		释放预处理资源)
+//关键字($mysqli_stmt->close();			关闭预处理操作)
+//关键字($mysqli->close();			关闭连接)
+
+	$sql="select * from stmt where id>?";
+	$mysqli_stmt=$mysqli->prepare($sql);
+	$id=5;
+	$mysqli_stmt->bind_param('i',$id);	//关键字
+	$mysqli_stmt->bind_result($a,$b,$c);	//关键字
+	$mysqli_stmt->execute();		//关键字
+	while($mysqli_stmt->fetch()){		//关键字
+		echo "<br>--$a--$b--$c";
+	}
+	echo "<br>--------";
+	$id=10;
+	$mysqli_stmt->bind_param('i',$id);
+	$mysqli_stmt->execute();		
+	while($mysqli_stmt->fetch()){		
+		echo "<br>--$a--$b--$c";
+	}
+	$mysqli_stmt->free_result();		//关键字
+	$mysqli_stmt->close();			//关键字
+	$mysqli->close();			//关键字
+
+
+?>
+
+
+
+
+
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+
+	-----预编译可以自动防止sql（结构化查询语句）注入攻击
+
+//关键字 password='aa' or 1='1';
+
+-----sql注入漏洞，使用万能密码攻击：
+以下是利用数据库万能密码进入数据库：
+select * from user1 where name='gao1' and password='aa' or 1='1';
+
+//看看有没查询到用户
+if(查询到){
+	header(“其它页面”);
+}else{
+	header(“其它页面”);
+}
+
+
+	-----防攻击的解决方案
+
+1, 使用预处理编译
+2，改变验证数据库用户逻辑
+$sql = "select password from user1 where name='xx'";
+ //先看看有没有查询的记录，如果有，说明用户存在。
+
+if(从数据库查询的密码==用户输入的密码){
+	//用户名和密码合法
+	header("其它页面");
+}else{
+	header('其它页面');
+}
+
+
+
+
+
+
+
+
+	实例-----用表格的方式显示数据表的信息和内容
+	
+
+//关键字($res->num_rows		获得数据表的行数)
+//关键字($res->field_count	获得数据表的列数)
+//关键字($field = $res->fetch_field()	获取表的信息)
+//关键字($field->name		获取表信息--表头的名字)
+
+<?php
+function showTable($table_name){
+	$mysqli=new mysqli('localhost','root','abcd','words')or die('failed');
+	$mysqli->query('set names utf8');
+	$sql = "select * from $table_name";
+	//$sql = "desc user1";
+	$res = $mysqli->query($sql);
+	//如何获取返回总行数和列数
+	echo "共有 $res->num_rows 行 $res->field_count 列";	//关键字
+
+	echo "<table border=1><tr>";
+	while($field=$res->fetch_field()){		//关键字
+		echo "<th>{$field->name}</th>";		//关键字
+
+	}
+	echo "</tr>";
+	while($row=$res->fetch_row()){
+		echo "<tr>";
+			foreach($row as $val){
+				echo "<td>$val</td>";
+			}
+		echo "</tr>";
+	}
+	echo "</table>";
+}
+	showTable('user1');
+
+?>
+
+
+
+
+
+
+---------------------------------------------------------------------
+		
+
+		=====超全局变量=====
+
+
+
+php手册--语言参考--预定义变量---超全局变量
+
+超全局变量： 是在全部作用域中始终可用的内置变量。
+PHP中的许多预定义变量都是“超全局的”，这意味着它们在一个脚本的全部作用域中都可用，在函数或方法台无需执行 global $variable; 来访问它们。
+
+
+
+         -----全局变量:
+
+<?php
+	$a=23;	//这就是全局变量，因为该变量在整个作用域（这个PHP文件中）,都可用.
+	function test(){
+		//如果希望使用到全局$a.
+		global $a;
+		$a=45;
+	}
+	test();
+	echo $a;
+?>
+
+
+
+
+
+	-----超全局变量(9种)：
+
+
+php提供了九种超全局变量：
+1，$_GET
+2, $_POST
+3, $_REQUEST
+4, $_ENV
+5, $_SERVER
+6, $_FILE
+7, $_COOKIE
+8, $_SESSION
+9, $_GLOBALS
+
+
+
+超全局变量除了有全局变量的特点外，可无须申明，直接使用。
+提供全局变量数组的原因是为了让程序员更方便快捷的写出PHP程序。
+
+
+<?php
+	echo "<pre>";
+		echo print_r($_SERVER);    //这就是全局变量
+	echo "</pre>";
+	$_SERVER['hsp'] = '韩顺平';	//全局变量还可以自定义添加
+	
+?>
+
+
+
+
+
+
+	-----$_GET 实际使用
+
+关键字：<a href='a.php?city=北京好&name=xiaoming'>传送数据</a> 		超连接中直接以传值到另一页面
+
+
+客户机（浏览器）通过超链接传送信息给服务器
+案例1 
+
+test.php页面
+<?php
+	echo "<a href='a.php?city=北京好&name=xiaoming'>传送数据</a>";   //关键字
+?>
+
+a.php页面
+<?php
+	echo "<pre>";
+	echo	print_r($_GET);
+	echo "</pre>";
+	//如果希望指定取出某个数据，则可以通过下标名	
+	echo $_GET['name'];
+?>
+
+
+
+
+
+	-----解决GET在传送中文时出现错误的方法GET法1：
+
+//关键字： urlencode()	urldecode()	对中文编码，解码。适用于GET地址传值。
+给奇数中文加一个全角空格，然后到服务器接收时，用 trim() 去掉两头的空行 
+
+
+解决方法2:
+使用 urlencode 和 urldecode 函数
+
+例：
+test.php页面
+<?php
+	//这句话是对中文url编码
+	$str = urlencode("北京好");
+	echo "<a href='a.php?city=".$str."&name=xiaoming'>传送数据</a>";
+
+?>
+
+a.php页面
+<?php
+	echo "<pre>";
+	echo print_r($_GET);
+	echo "</pre>";
+	echo $_GET['CITY'];
+//如果希望指定取出某个数据，则可通过下标名。如果PHP版本较低，可能看到乱码，则用urldecode()
+?>
+
+
+
+
+	-----如何判断是否接收到数据（值）
+
+//关键字: empty()	检测是否为空值
+//关键字: isset()	检测是否为空值
+
+有些老版本可能不认isset(),所以尽量使用empty()方法，
+
+方法一： empty()
+	if(empty($_GET['city'])){		//关键字
+		echo "没有收到";
+	}else{
+		echo "收到数据 city";
+		echo $_GET['city'];
+	}
+
+
+方法二：isset()
+	if(isset($_GET['city'])){		//关键字
+		echo "收到数据city";
+		echo $_GET['city'];
+	}else{
+		echo "没有收到数据";
+	}
+
+
+
+
+
+
+	----- 在apache的conf.ini中不要启用register_globals
+关键字：register_globals       注册全局变量。
+
+b.php页面：
+
+<?php
+	echo $name.'--'.$age;
+?>
+
+http://xxxx/b.php?name=kk&age=99
+如果开启register_globals 会有SQL注入风险
+
+
+所以绝对不要启用register_globals 需要 register_globals = off
+
+
+
+
+
+
+	-----超全局量--POST和GET以及它们的区别：
+	-----超全局变量--$_REQUEST
+
+1. 安全性 POST 大于 GET
+2. 数据传输大小 POST 大于 GET ,PHP本身对两种方式的传输并没有限制，而是不同的浏览器的限制不同。
+3. GET更方便保存到收藏夹 
+4, GET传输是以地址栏的明文方式传输，POST则不是。
+
+
+
+
+	-----超全局变量--$_REQUEST
+
+//关键字：$_SERVER['REQUEST_METHOD']	检测request接收数据时是以什么方式（post/get/cookie）
+
+$_REQUEST 中可以接收包括 $_GET, $_POST, $_COOKIE 数组的信息.
+
+快速入门：
+
+<?php
+	echo "<pre>";
+	echo print_r($_REQUEST);
+	echo "</pre>";
+	//如何取出某个值
+	//$_REQUEST 即可以接收get 请求数据，也可以接收post请求数据和cookie请求数据。所以这个变量比较不可以信，不建议使用。只适用在不知道接收数据是以什么方式的时候用。
+	echo $_REQUEST['AA'];
+	//如果不确定 get/post
+	if($_SERVER['REQUEST_METHOD']=='POST'){			//关键字
+		//则用post方式接收
+	}else if($_SERVER['REQUEST_METHOD']=='GET'){
+		//则用GET接收
+	}
+?>
+
+
+
+----------------------------------------------------------------------------------------
+
+
+
+		2014.8.18号开始全部由此记录
+
+
+
+
+
+
+
+
+
+	-----超全局变量--$_SERVER
+
+$SERVER 中主要包含了http请求行和消息头的信息，同时还有服务器自己的一些信息，
+	比如DOCUMENT_ROOT	SCRIPT_FILENAME.
+举例说明：
+1，请获取请求该页面的客户机ip地址
+$_SERVER[REMOTE_ADDR]
+
+2,请显示服务器端apache 的版本号和php版本号
+$_SERVER[]SERVER_SOFTWARE]
+
+
+
+
+
+
+	-----超全局变量--$_ENV
+该全局变量数组可以获取环境变量，在php5.3中默认禁用，但是你可以在php.ini中启用
+
+环境变量： 当我们希望获取服务器端的环境信息时，可以使用$_ENV
+在PHP5.35中，默认情况下不能使用$_ENV你会得到空值，这是出于对安全的考虑，如果希望使用$ENV可以通过修改php.ini的variables含义]，但是在开发环境，不建议这样配置。
+ 
+
+
+
+
+
+
+	-----超全局变量--$GLOBALS
+一个包含了全部变量的全局组合数组，变量的名字就是数组的键, 同时一个自定义的全局变量，也会自动的被$_GLOBALS管理，具体看案例，
+
+<?php
+	echo "aaa";
+	echo "<pre>";
+	echo print_r($GLOBALS);
+	echo "</pre>";
+?>
+
+当你定义一个全局变量，该变量也会被$GLOBALS管理
+<?php
+	$a = 900;
+	echo "<pre>";
+	print_r($GLOBALS);
+	echo "</pre>";
+?>
+
+
+
+
+
+
+
+
+	=====IDE集成开发工具 zend studio =====
+
+zend studio 是以工程的方式来管理php/js/css,,,,等文件的
+使用流程：
+1，创建一个项目。
+2，设置该项目的路径
+	取消 use default 默认路径的选项，然后自行设置。
+3，创建一个文件
+
+
+ 	-----zend studio设置编码格式：
+工具栏 --> windows --> preferences --> general --> content Type --> text  设置成utf-8
+
+
+	
+	-----zend studio快捷键设置
+自定义设置快捷键：工具栏 --> windows --> preferences --> general --> Keys -->
+	点击上面unbind解除，自定义后点击右侧apply 保存设置。
+
+
+1, 快捷助手：（->content Assist ）
+	alt + /
+	
+
+2, 删除当前行
+	ctrl + d 
+
+3, 复制当前行
+	ctrl + alt + 下光标
+
+3, 区块注释
+	shfit + ctrl +\   取消 shift + ctrl + /
+
+4, 行注释
+	ctrl| + /  再按一次则取消 
+	
+
+5, 调试PHP代码的快捷键
+	F5 跳入
+	F6 跳过（按顺序执行）
+	F7 跳出（跳出函数）
+
+6, 更改字体颜色：
+windows --> preferences--> php --> editor --> Syntax Coloring;
+
+
+
+	-----断点：
+所谓断点，就是指当我们的程序执行到这里的时候，就会停止执行，等待程序员下一步指令。
+
+	调试：我们为了发现代码的错误，可以逐行执行代码，同时看到，变量的变化，这个过程称之为调试，调试的目的，就是为了发现隐藏的错误。
+
+	-----建立断点：
+在运行语句前面的坚排区内，双击相应的语句。
+
+	-----删除断点：
+对相应的语句再次双击。
+
+	-----删除全部断点：
+在PHP Debug模式下的Breakpoints 区中可以删除指定或全部断点。
+
+
+
+
+
+
+
+
+
+	-----编写雇员管理系统
+
+主要目的：
+	1，培养编写项目的感觉
+	2，认识我们的MVC模式
+	3，规划项目
+	4，融入各个知识点（PHP基础，HTML，数据库，开发模式，cookie,seession等）
+
+
+
+
+	-----原型开发：
+
+
+需求分析 - 设计阶段 - 编码阶段 - 测试阶段 - 发布阶段 - 维护阶段
+
+需求阶段：需要设计人员/项目经理 对客户（领导）->需求文档
+设计阶段：技术人员（架构师，组长，程序员）-> 设计数据库
+开发阶段：组长，程序员
+测试阶段：测试人员
+发布阶段：实施人员（实施工程师）
+维护阶段：往往是从开发人员中调.
+
+美工（PS画图）-》网页前端人员（HTML） 完成原型 -》客户签字 -》程序开发。
+
+
+
+
+
+		-----雇员关系系统开发文档
+一：需求分析：
+	该项目完成如下功能：
+	1，管理员可以登录到管理界面
+	2，可以对雇员进行增加
+	3，可以对雇员进行修改
+	4，可以查看雇员信息（分页显示）
+	5，可以删除雇员信息	
+	附带：可以实现用户在一定时间不用反扑登录，可以统计网站访问的次数。
+二：画出uml时序图
+三：设计界面
+四：设计数据库
+
+
+
+
+
+
+	-----设计代码：
+1，要求大家先完成，不到数据库验证，就可以登陆成功，如果不成功，给出提示。
+2，要求到数据库去验证，该用户是否存在。
+3，在管理页面显示登陆成功的人名字。
+	思路，通过跳转把用户名递给 另一页面
+4, 在用户列表页面 显示所有的用户信息
+5，考虑分页显示我们的用户信息。
+
+
+
+
+
+
+
+	
+
+		-----网站的开发经过的三个阶段
+
+model1 -> 分层(mv) ->mvc模式
+
+
+
+model1:基本概念是：
+	把界面和业务放在一个页面完成
+
+分层模式：基本概念是：
+	把界面和业务分开编写，好处是结构清晰，利于分工开发。
+
+mvc模式：基本概念：
+	强制把数据的输入，数据的处理，数据的显示分开。
+
+
+
+	分层的核心思想： 就是把界面和业务分离，具体做法是：每张实体表会对应两个文件，一个admin.class.php,一个adminService.class.php
+
+
+
+
+
+
+
+	-----使用分层模式来完成雇员信息分页的功能
+1,在什么文件中去封装我们的分页代码（哪个表就操作相对应的对象类文件）
+2,通过分析我们知道为了完成分页我们的文件需要两个重要的数据，一个是count 一个是数据$res
+
+
+
+
+
+
+
+	-----MVC开发模式：
+	模型（m-modle）-视图（V-view）-控制器（C-controller） MVC是Xerox PARC施乐帕克研究中心在八十年代为编程语言Smalltalk-80发明的一种软件设计模式，至今已被广泛使用。
+	MVC是一个设计模式（核心思想），它强制性的使应用程序的输入，处理和输出分开.
+	使用MVC应用程序被分成三个核心部件，模型，视图，控制器，它们各自处理自己的任务。
+	M 主要由类为做，用于处理具体的业务逻辑
+	V 由PHP来做，主要用于做界面（即显示数据）
+	C 有PHP来做，用于去响应用户的各种请求（比如，增删改）
+
+
+
+	-----MVC处理过程：
+1，首先控制器接收用户的请求，并决定应该调用哪个模型（service）来进行处理
+2, 然后调用模型来处理用户的请求并返回数据。
+3，最后控制器用相应的视图显示模型返回的数据，并通过浏览器呈现给用户。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	=====cookie 和cession=====
+什么是会话：
+	打开浏览器，访问某个网站的很多页面（通过点击超链接），当你关闭浏览器后，一个会话结束。
+思考一个问题？
+	在一个会话过程中，用户会产生一些数据，比如购物车，每个用户查看购物车的时候，看到自己的选择怎么实现？
+
+	
+再思考一个问题？
+	为什么youku可以保存你上次看过的电影？
+
+解决之道
+	会话技术 cookie,session =>http协议
+
+
+
+
+	-----coolie的初步介绍
+
+cookie是保存在客户端的，cookie都可以做什么呢：
+1, 保存上次登陆时间等信息。
+2，保存用户名，密码，在一定时间不用重新登陆。
+3，记录用户访问网站的喜好（比如有无背景音乐，网面的背景色是什么）。
+4，网站的个性化，比如定制网站的服务。等内容。
+
+当cookie 被设置后，便可以在其它页面通过 $_COOKIE 或 SHTTP_COOKIE_VARS 数组取得其值，需要注意的是，autoglobals的 $_COOKIE 形式适用于 php4.1.0或更高版本,而$http_COOKIE_VARS则从PHP3起就可以使用，Cookie 的值也会被保存到 $_REQUEST数组中。
+
+
+	-----setcookie()参数 ；
+name  	cookie的名字
+value  	cookie的值
+expire 	cookie过期的时间  	例：time()+60*60*24*30将cookie30天后失效。如未设定，cookie 将在会话	后失效。一般是浏览器关闭。
+path	cookie 在服务器端的有效路径     例：如果该参数设定为“/”的话,cookie就在整个domain内有效，	如果设为"/foo",cookie 就只在domain下的/foo/目录及其子目录内有效，如/foo/bar/.默认为设定	cookie的当前目录。
+domain	指明cookie是否仅通过安全的HTTPS连接传送，当设成true时，cookie仅在安全的连接中被设置，默认为	false  0或者。
+
+
+	-----cookie的基本使用
+php manual  其它服务-Network-Network 函数 - setcookie
+
+1, Cookie在客户机（浏览器） 就是一个字符串，其形式如下：
+	name2 shuping localhost/cookie/1024412349874823743823749284293492409*
+
+2: 如何创建一个Cookie(在服务端创建的)
+bool setcookie (string name [,string value [,int expire [,string path [,string domain [,bool secure]]]]])
+
+3,如何读取cookie（从客户端读到服务器）
+	$_COOKIE['cookie的名字'];
+
+4, 如何删除一个cookie值；
+	要删除cookie需要确保它的失效期是在过去，才能触发浏览器的删除机制。
+
+
+
+
+	-----创建cookie信息：
+
+//把用户名和密码保存到客户端的cookie
+//这个函数用于保存cookie
+//第一个参数表示cookie 的key  ，第二个参数表示对应的val值，第三个参数表示 保存时间
+//客户端保存时间以秒计算.
+
+
+<?php
+	setCookie('name','shunping',time()+3600); 	//time()是当前时间的意思
+	setCookie('password','123456',time()+3600);	//第二条键值对
+	setCookie('address','北京',time()+3600);	//第三条键值对
+	echo "保存成功！";
+?>
+
+
+保存的cookie页面：
+
+name			//保存的key名
+shunping		//保存的key值
+localhost/cookie/	//cookie所在的主机
+1024			//以下都是时间代码。
+1784433024
+30177331
+149791392
+30177323
+*
+
+
+
+对代码说明
+1, 当浏览器访问cookie.php页面的时候，我们的服务器就会以 set-cookie: name=shunping,expire=@ed,1_Sep-2011 07:53:24 GMT 回送http响应，当浏览器获取到该信息后，就会保存该cookie的新到本机的 C:/xxx.admin/cookies文件。
+
+2, 如果我们如果没有设置时间参数(第三个参数)
+cookie 不会保存到客户端，当浏览器的会话结束，我们的cookie就失效。
+
+3，cookie 能保存什么样的信息，就是字符串。
+4, cookie 的有效保存时间如果过期则无法取到cookie结果/
+5, cookie 可以保存多个健值对
+
+	
+
+
+	-----cookie 信息的创建，获取，更新，删除，
+
+	//创建cookie信息
+<?php
+	setCookie('name','shunping',time()+3600); 	//time()是当前时间的意思
+	setCookie('password','123456',time()+3600);	//第二条键值对
+	setCookie('address','北京',time()+3600);	//第三条键值对
+	echo "保存成功！";
+?>
+
+
+	-----获取 cookie 信息
+<?php
+	echo "<pre>";
+	print_r($_COOKIE);
+	echo "</pre>";
+	
+	//获取指定的key对应的值；
+	$name=$_COOKIE['name'];
+	echo "name=".$name;
+
+?>
+<?php
+	-----更新 cookie信息
+
+	更新某个cookie key<==>val实际上就是重新设置
+	setCooke();
+?>
+
+
+
+<?php
+	//-----删除 cookie 信息
+	setCookie('name','',time()-1);  //单条删除
+
+	foreach($_COOKIE as $k=>$v){
+		setCookie("$k",'',time()-1);	//删除全部
+	}
+	echo "删除成功！！！！";
+?>
+
+
+
+
+
+	-----显示上次登陆时间（不严谨）
+
+<?php
+	if(empty($_COOKIE[lastVisit])){
+		echo "首次登陆";
+		setCookie('lastVisit',date("Y-m-d H:i:s"),time()+9999);
+	}else{
+		echo "您上次登陆的时间是:".$_COOKIE[lastVisit];
+		setCookie('lastVisit',date("Y-m-d H:i:s"),time()+9999);
+	}
+?>
+
+
+
+
+
+
+
+
+
+	-----解决时差问题的两种方案
+
+方案一：
+	在PHP文件中设置：
+	date_default_timezone_set("Asia/Chongqing");
+
+
+方案二：
+	在php.ini 文件中找到下列代码：
+[Date]
+; Defines the default timezone used by the date functions
+;date.timezone =
+
+	添加如下内容：
+	date.timezone = Aisa/Chongqing
+
+
+
+
+	-----php出现Cannot modify header information问题的解决方法
+	-----cookie 或header出现information错误的解决方法
+
+查找网上解决此问题的方法多是一样的，不过今天又遇到了这样的问题。试过之后发现可行： 
+在C盘的WINDOWS中找到php.ini 这个配置文件，然后查找一项：output_buffering将其值由原来的off改为on，重新启动Apache就ok了。 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		=====Session====
+---php Manual ---函数参考---Session扩展---Session---Session函数
+
+
+
+1, Session是服务器端技术
+2, 原理： 每个浏览器都会对应一个Session 当浏览器浏览众多的资源时，都会对同一个Session进行读写。
+3, Session 保存路径默认是C:/windows/temp 文件夹，但在php.ini中可以改变其它保存路径
+	改变路径：打开php.ini找到Session区：的 session.save_path = "" 来更改。	
+
+4， Session的基本用法（crud）增删改查
+	保存数据的格式；
+	name|s:8:"shunping";
+name就是key ; s:表示数据类型（string） ; 8:表示数据的大小 ; shunping是数据的value 
+
+5, Session 的操作都要先初始化 Session_start();   之后才能生效。
+6, 一个会话对应一个session文件（就是每打开一次浏览器才会对应一个SESSION，而有一个浏览器的多页面共用一个SESSION）
+7，SESSION的数据默认存在时间为1440s(即24分钟)，但可在php.ini 的[session]节中可以进行调整设置.
+	找到： session.gc_maxlifetime = 1440   		可根据需要将1440改为其它值。
+  	注意：SESSION的保存时间是发呆时间，原理是当SESSION文件24分钟内没有被访问就会自动删除。如果在23分时被访问过一次，那么这个保存时间就会被重新计算。	
+
+
+
+
+
+//===== cookie 和 session 在php.ini中的设置：
+
+1，session.name
+	该配置用于设置session的名字 就是PHPSESSID  这个值可以通过session_name()来获取
+在php.ini文件中找到 session.name = PHPSESSID    这里可以把PHPSESSID 指定为自己希望的名字。
+
+
+2，session.use_trans_sid=0
+	给每个URL启用 session名=sessionId,安全有影响，不推荐开启。
+
+
+
+3,session.save_path="C:/mysession"
+	设置session的保存路径
+
+
+4, session.gc_maxlifetime=1440 		默认最大生命周期（发呆时间，不是到时间就删）
+5, session.gc_probability = 1
+6, session.gc_divisor = 1000 
+	4，5,6,是垃圾删除机制，它们组合在一起使用。垃圾的回收机率是由5,6来决定的。当divisor / probability 的结果越大，说明处理的概率越高。如 1000/1000就是百分百处理，每当有人运行session_start()时都会启动垃圾回收机制。
+如果是1 / 1000说明机率是千分之一，意思就是说每1000位用户运行session_start()时才会运行一次回收机制。当一个网站规模越大时，这个机率就要设的越小。不然经常启动回收机制，服务器会受不了！ 
+
+7，session.Use_cookies = 1 	是否使用cookie
+
+8, session.cookie_lifetime=0 	cookie保存时间，默认0，关闭浏览器就失效。
+也可以这样设置 如：
+setcookie('名字','val',time()+3600);   这里的time()+3600 就是设置了保存时间为3600秒
+setcookie('名字',');	这里就是默认0保存时间，关闭浏览器就cookie就会失效。
+
+
+
+		-----session 数据可以存放的位置
+1,文件
+2，数据库
+3,内存 (memcache)
+4, 网络文件 nfs  network file system
+
+
+		-----php.ini 配置选项
+php manual ---附录 ---php.ini配置选项
+
+
+
+
+	-----session设置实例:
+
+<?php
+	//初始化Session
+	//session start();
+	session_start();
+	
+	//	-----保存session数据
+	$_SESSION['name'] = "shunping";
+
+	//session文件可以保存double,integer,bool,array,objec
+	$_SESSION['age'] = 100; 	//integer
+	$_SESSION['isBoy']=true;	//bool
+
+	$arr = array('北京','小明','hello');
+	$_SESSION['arr'] = $arr; 	//数组
+
+	//保存对象文件
+	class Dog{
+		private $name;
+		private $age;
+		private $intro;
+		function __construct($name,$age,$intro){
+			$this->name=$name;
+			$this->age = $age;
+			$this->intro = $intro;
+		}
+		function getName(){
+			return $this->name;
+		}
+		function getAge(){
+			return $this->age;
+		}
+		function getIntro(){
+			return $this->intro;
+		}
+	}
+	
+	$dog1 = new Dog('小花',18,'这是一个可爱的狗狗');
+	$_SESSION['dog1']= $dog1;
+	
+?>
+
+结果为：
+name|s:8:"shunping";age|i:100;isBoy|b:1;arr|a:3:{i:0;s:4:"北京";i:1;s:4:"小明";i:2;s:5:"hello";}dog1|O:3:"Dog":3:{s:9:" Dog name";s:4:"小花";s:8:" Dog age";i:18;s:10:" Dog intro";s:18:"这是一个可爱的狗狗";}
+
+解释： 
+	s 代表字符串 string
+	i 代表整数 integer
+	b 代表布尔型  1 = true ; 0 = false;
+	arr 代表数组
+	0 代表对象
+name|s:8:"shunping"	key 为 name 的值为：字符串:8字节:"shunping"
+age|i:100		key 为 age  的值为：整数型: 100
+isBoy|b:1		key 为 isBoy的值为: 布尔型: 1 (true)
+arr|a:3:		key 为 arr  的值为: 数组：有3 组数据
+	{i:0;s:4:"北京";i:1;s:4:"小明";i:2;s:5:"hello";}分别为：
+		i:0;s:4:'北京'		含意是 下标i(整数型)为0的内容是 S(string字符串):4字节:值为"北京"
+		i:1;s:4:"小明"		整数型的下标1,是4字节的字符串，值为'小明'.
+		i:2;s:5:'hello'		整数型的下标2,是5字节的字符串，值为‘hello’。
+dog1|0:3:"Dog":3: 	key 为 dog1 的值为: 对象: 3字节: 值为'Dog' : 对象包含3个属性
+	{s:9:" Dog name";s:4:"小花";s:8:" Dog age";i:18;s:10:" Dog intro";s:18:"这是一个可爱的狗狗";}分别为：
+		s:9:"Dog name"; 	字符串: 9字节:"Dog name"
+		s:4:"小花";		字符串: 4字节:"小花"
+		s:8:"Dog age";		字符串: 8字节:"Dog age"
+		i:18;			整数型: 18
+		s:10:"Dog intro";	字符串: 10字节:"Dog intro"
+		s:18:"这是一个可爱的狗狗";	字符串:18字节:"这是一个可爱的狗狗"	
+
+
+
+

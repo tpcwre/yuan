@@ -1,0 +1,129 @@
+
+
+
+//=====discuz论坛系统 安装流程
+下载地址： 
+http://www.discuz.com
+http://www.comsenz.com/		北京康盛
+
+1：解压安装包后，将 Upload  改名为 discuz 复制到 服务器目录下
+ 
+2：运行 http://localhost/discuz/install.php  即可直接安装
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====ecshop商城系统 安装流程
+下载地址：http://www.ecshop.com
+
+1：解压安装包后，将 Upload  改名为 ecshop 复制到 服务器目录下
+ 
+2：运行 http://localhost/ecshop		即可直接安装
+
+
+
+
+
+
+
+
+//----- ecshop 错误 集合
+
+
+错误提示：Strict Standards: Non-static method cls_image::gd_version() should not be called statically in D:\wamp\Apache24\htdocs\ecshop\install\includes\lib_installer.php on line 31
+
+				//--以试过，问题以解决
+
+将install/includes/lib_installer.php中的第31行return cls_image::gd_version();改成：
+$p = new cls_image();
+return $p->gd_version();	
+
+
+
+
+
+	解决方法原文：
+
+　在安装Ecshop的时候，遇到两个问题：
+
+　　1.Strict Standards: Non-static method cls_image::gd_version() should not be called statically in D:\X\www\ecshop\install\includes\lib_installer.php on line 31
+
+　　解决：找到install/includes/lib_installer.php中的第31行   return cls_image::gd_version();然后在找到include/cls_image.php中的678行，发现gd_version()方法未声明静态static，所以会出错。这时候只要：
+
+　　1）将function gd_version()改成static function gd_version()即可。
+
+　　2）或者将install/includes/lib_installer.php中的第31行return cls_image::gd_version();改成：
+
+$p = new cls_image();
+return $p->gd_version();
+　　2.检测环境的时候提示：是否支持 JPEG是不支持的。
+
+　　解决：查看发现有libjpeg.lib库，GD2库也有，都加载了，也都正常。查看ecshop源代码发现install/includes/lib_installer.php中第100行,JPEG写成了JPG，正确的应该是：
+
+ 
+
+$jpeg_enabled = ($gd_info['JPEG Support']        === true) ? $_LANG['support'] : $_LANG['not_support'];
+ 
+
+　　为何说Ecshop写错了，因为我打印数组$gd_info的时候，里面的键名是：JPEG Support。而$gd_info数组里的值都是直接调用系统环境变量的。
+
+ 
+
+　　3.默认时区问题：Warning: date_default_timezone_get(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in D:\X\www\ecshop\install\includes\lib_installer.php on line 225
+
+　　解决：方法1，将php.ini里是date.timezone前的";"去掉，改成：date.timezone = PRC;
+
+　　方法2，在页头使用 ini_set('date.timezone','Asia/Shanghai');
+
+　　方法3，在页头使用date_default_timezone_set()设置 date_default_timezone_set('PRC'); //东八时区 echo date('Y-m-d H:i:s');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-----错误提示2 ：Warning: date_default_timezone_get(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in D:\wamp\Apache24\htdocs\ecshop\install\includes\lib_installer.php on line 225
+
+			//--试过如下方法，以解决
+2.php 5.3也可能出这个问题,需要修改php.ini文件 找到date.timezone
+将它的改为 date.timezone=utc
+
+
+
+
+
+解决方法原文：
+
+今天在安装ecshop时候，报了上面的警告，
+出现这个可能是以下原因
+1.如果装xampp,可能是xampp没装好或者有问题,需要重装
+2.php 5.3也可能出这个问题,需要修改php.ini文件 找到date.timezone
+将它的改为 date.timezone=utc 将前面的分号去掉,重启服务器
+或者在index.php中加上 date_default_timezone_set('UTC');
+3.可以将index.php里面的
+error_reporting(7);
+改为
+error_reporting(0);
+即可避免它们的出现。
+
+
+

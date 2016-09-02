@@ -1,0 +1,1822 @@
+
+
+
+
+//===== mysql的配置文件与服务启动
+
+	local/mysql/support-files	目录下 
+		my-default.cnf 		为默认配置文件的模板，可以将其复制并改名到 /etc/my.cnf	做为主配置文件
+
+		mysql.server		为mysql服务启动程序，可以将其复制并改名到 /etc/init.d/mysqld 做成服务启动 ,
+					这里需要提升权限 chmod a+x /etc/init.d/mysqld  ,就可以 /etc/init.d/mysqld start 启动了
+
+
+
+
+
+//===== 把/usr/local/mysql/bin/路径加入到系统的环境变量中
+
+	echo $PATH
+
+	echo PATH=$PATH:/usr/local/mysql/bin >>/etc/profile
+
+	source /etc/profile
+
+	mysql -u root -p
+
+
+
+
+
+
+
+
+//===== mysql 相关参数解释
+
+	//-- 安装时的参数
+		./configure --prefix=/usr/local/mysql --datadir=/usr/local/mysql/data1 --sysconfdir=/etc 
+
+			--prefix将MYSQL安装到/usr/local/mysql, 
+
+			--datadir将数据库生成/usr/local/mysql/data1 
+
+			--sysconfdir是指定mysql使用到的my.cnf配置文件的搜索路径为/etc  
+
+			
+
+
+
+
+
+
+//===== mysql 数据库的标准登陆方式
+
+		mysql -u root -p 				本地登陆方式
+		mysql -u root -h localhost -P 3306 -p		远程登陆方式
+		mysql -u root -h localhost -P 3306 -b -p	全写方式
+
+			-u  用户名  root（最高权限）
+			-p  密码
+			-h  主机名  localhost
+			-P  端口号  3306
+			-b  关掉beep    蜂鸣器
+			
+		
+
+
+
+
+		
+			
+//=====  mysql退出，取消，语句结束符等特殊命令
+
+        quit			//退出
+        exit			//退出
+        \q				//退出
+		ctrl+c			//退出
+		
+		\c 				//取消未完成的操作
+
+		\g 				//代替结束符
+		\G				//可以让数据坚排显示的有条理
+
+		\d |			//将结束符改为 |
+
+		\s				查看mysql相关的信息
+				
+				
+			
+			
+			
+			
+
+
+//===== 环境变量的设置
+
+
+	属性-》高级-》环境变量-》系统变量-》path-》在后面加上 ";C:\xampp\mysql\bin" (mysql的绝对路径)
+		   
+		注意：一定要英文的分号。
+		
+
+
+
+
+
+
+
+
+
+
+
+//===== innoDB 表数据的恢复
+
+	因为innoDB数据表的原理在删除操作时，只会删除对应的索引不会删除数据。所以删除的数据可以找回。
+
+	相关文章：http://www.cnblogs.com/liukemng/p/3423264.html	
+		
+	
+
+
+	
+
+
+
+		
+		
+//=====  删除mysql数据库的匿名用户
+
+		mysql> drop user ''@'localhost';	
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+
+//=====  mysql 修改密码
+	
+		mysqladmin -u root -p password a3		密码修改 外部方式
+		mysqladmin -u 用户名 -p password 新密码
+
+
+		set password for "root"@"localhost" =password("a6");	密码修改 内部方式
+		set password for "用户名"@"服务器地址" =password("新密码");
+			
+			
+			
+			
+			
+			
+
+
+//=====  MySQL忘记密码如何解决
+
+            步骤：
+                1、关闭正在运行的mysql
+                2、打开dos切换到mysql的bin目录下
+                cd  你的路径
+                cd C:\xampp\mysql\bin
+
+                3、输入mysqld --skip-grant-table 回车
+                4、再打开一个dos窗口进入到mysql的bin目录下
+                5、输入mysql回车
+                6、进入到mysql的mysql库中  use mysql
+                7、update user set password=password('新密码') where
+                user="root";
+                8、刷新权限
+                flush privileges 
+
+
+
+				
+				
+				
+				
+//===== mysql 在 cmd  中声明变量
+
+			set @a=10;		mysql 设置变量		
+				
+		
+
+
+
+
+		
+
+//===== % 变量对应查询 SQL语句
+
+		<?php
+			$a=111.24;
+			$tablename='user';
+			$strSql = sprintf('select %s from %g',$tablename,$a);	//$s 和变量的位置是对应的
+			echo $strSql;
+
+			//string 	s 
+			//integer 	d, u, c, o, x, X, b  
+			//double 	g, G, e, E, f, F  
+		?> 
+					
+					
+		
+		
+		
+		
+//===== mysql 的数据类型
+
+
+	一：整形数据
+		注意：
+			1、整数指定的后面的括号里面的数值实际上指的是显示的宽度。而不是存储的最大值。
+			2、默认使用整形时候是有符号的类型
+			3、如果值超出了该类型的最大值，将会取该类型的最大值。
+			4、可以省略数值类型值的显示宽度
+
+	二：浮点型、定点型数据
+		注意：
+			1、浮点数、定点数可以用类型名称后面加(M,D)方式来表示，M表示一共多少位置。D表示该值小数点后面几位。
+			2、超过了D的位数后将会进行四舍五入。
+			3、浮点数如果不写精度（M）和标度（D），会按照实际精度值显示。
+			4、定点数如果不写精度和标度，会按照decimal(10,0)来显示。
+			5、浮点数和定点数，超过指定的精度、标度后会都会进行四舍五入，但是浮点数是及其不准确的。
+			6、浮点数没有定点数准确，同样是四舍五入，但是浮点数有时候会出问题。
+
+		使用定点数和浮点数的一些规则:
+			1、浮点数会存在一些误差，是因为存储的方式的不同。
+			2、对于精度敏感的数据应该使用定点数来表示或者存储。不要使用浮点数。
+
+	三：字符型数据
+		注意：
+		1、text与blob的区别是，blob用来保存二进制数据，text只能保存字符数据（文本）。
+			blob和text在经过大量的删除操作后会引起性能问题（删除后会在数据表中留下‘空洞’，以后在插入操作时引起性能问题。）
+			optimize table 表名   使用该命令将以前的空间进行回收。
+
+		2、char和varchar很相似，可以用来存储MySQL中较短的字符串：
+			区别：
+				1、char类型（定长）的长度固定为创建表时，指定的长度，可以为最大到255。
+				2、varchar(变长)的值是可变的长度，长度为65535之间的。
+				3、char和varchar在超出长度时候都会被截取字符串到指定的长度。
+				4、char字段会自动将尾部的空格去掉，varchar会保留这些空格。
+				5、char长度是固定的，所以处理速度快，对于一些长度变化不大，查询速度有较高要求的数据可以考虑使用char类型来存储。
+
+
+
+	
+		
+//===== double与decimal的区别，deciaml一般应用在财务上
+
+	create table t35(
+		d1 double(10,3),
+		d2 decimal(10,3)
+	);
+
+	insert into t35 values(54.55556,54.55556);
+	insert into t35 values(54.55545,54.55545);
+
+	 select * from t35;
+	--------+--------+
+	 d1     | d2     |
+	--------+--------+
+	 54.556 | 54.556 |
+	 54.555 | 54.555 |
+	--------+--------+
+	select d1*0.75,d2*0.75 from t35;
+
+	---------------+--------------+
+	 d1*0.75       | d2*0.75      |
+	---------------+--------------+
+	 40.917        | 40.91700     |
+	 40.916        | 40.91625     |
+	---------------+--------------+
+
+
+	从上面可以看出 浮点数与定点数的区别，浮点数是不可信的，如果做精确数字如财务等要使用定点数。
+			
+			
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== 开启mysql远程登陆账号及设置权限
+//===== flush 刷新某些功能
+
+	方法一：创建一个远程专用账号：
+
+	grant all privileges on *.* to 'aaa'@"%" identified by '1234567' with grant option;flush privileges;
+	select host,user,password from user;
+		grant		授权
+		all			所有操作可指定增删改查
+		*.*			库名/表名
+		aaa			用户名可以是root或其它
+		'%' 		表示可以远程登陆
+		1234567		密码
+		flush privileges		刷新数据库的权限
+		
+	实例：
+	// 向user表里添加一个可以远程登陆的用户用和密码
+	mysql> grant all privileges on *.* to 'aaa'@"%" identified by '1234567' with grant option;flush privileges;
+			
+	Query OK, 0 rows affected (0.02 sec)
+
+	Query OK, 0 rows affected (0.00 sec)
+		// 查看是否添加成功 （那条带host为%的便是添加成功的用户）
+	mysql> select host,user,password from user;
+	+-----------+------+-------------------------------------------+
+	| host      | user | password                                  |
+	+-----------+------+-------------------------------------------+
+	| localhost | root | *6A7A490FB9DC8C33C2B025A91737077A7E9CC5E5 |
+	| linux     | root | *6A7A490FB9DC8C33C2B025A91737077A7E9CC5E5 |
+	| localhost |      |                                           |
+	| linux     |      |                                           |
+	| localhost | pma  |                                           |
+	| %         | aaa  | *6A7A490FB9DC8C33C2B025A91737077A7E9CC5E5 |
+	+-----------+------+-------------------------------------------+
+
+
+	方法二：授权用户远程权限
+
+		一：授权指定用户远程权限
+		mysql> use mysql		
+		mysql> update user set Host='%' where User='root';  
+
+		二：授权所有用户远程权限
+		mysql> GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'%' IDENTIFIED BY 'mypwd' WITH GRANT OPTION; 
+		mysql> FLUSH PRIVILEGES
+
+
+
+
+
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== sql 注入原理 
+
+		在提交sql脚本语句，使其与后台语句拼装后会达到另一种效果。如
+
+		select * from user where name= $name;		//原句
+
+		当$name = "'' or ''=''";	时 
+
+		select * from user where name = '' or ''='';	这样就会把单条查询变成的所有查询 也可以拼装其它功能。
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== 事务机制 与 表锁
+
+		事务机制：就是在交易的时候如果遇到异常情况，那么将会还原到没有进行交易之前的状态。
+		表锁：开销小，锁定粒度大，加锁速度快，发生锁冲突的概率高。
+		行锁：开销大，锁定粒度小，枷锁速度慢，发生冲突的概率低。
+			
+			
+			
+		//--表操作锁  
+
+			lock table test1 read;			//锁住指定表只可读不可写
+			unlock tables;					//将锁定的表解锁
+				
+				
+			
+		
+		
+		
+		
+		
+
+//===== 数据库语法的特点：
+
+	1、每个SQL命令都需要使用分号来完成.
+	2、可以将一行命令分成多行来写，最后写一个分号。
+	3、-> 表示MySQL需要你继续输入命令。
+	4、' 表示等待下一行，等待以单引号开始的字符串让他结束
+	5、查询命令不区分大小写，一般来说我们用大写字母来写出SQL的关键字，用小写字母写出数据库、数据表、和数据列的名字
+
+			
+				
+		
+		
+		
+		
+		
+
+
+
+
+
+//===== trigger 触发--将删除的数据备份到另一个表
+
+	注意两个表的结构要相同
+	
+	\d |				//1 ，先把结束符改成 ‘|’
+
+					//2 ，设置trigger 事件触发
+	>create trigger stu_del before delete on stu
+	>for each row begin
+	>insert into stubak values(old.id,old.name,odl.sex,old.age,old.classid);
+	>end;
+	> |
+
+
+
+	//当删除test2中数据时，会自动在test3中添加被删除的数据
+	delete from stu where id=61;	//3， 触发
+			
+
+
+
+			
+			
+			
+			
+			
+
+
+
+
+
+
+	
+	
+	
+
+
+//===== mysql help 帮助的使用
+
+	>? 			//查看基本的帮助信息
+	>? cre%			//查看 cre 开头的命令帮助
+	>? contents		//查看 contents 的相关命令帮助
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== mysql 常用函数
+
+			加密类型
+
+		select md5(1);				//md5方式加密
+
+		select password(1);			//password方式加密
+
+		
+
+
+		
+		select database();			//查看当前库名
+
+		select curdate();			//查看当前的年月日
+
+		select curtime();			//蜥当前的时分秒
+
+		select unix_timestamp('2015-01-01 12:12:12');	
+							//查看当前的时间戳
+
+		select year("2016-02-18 12:22:28");	//获取时间的年
+
+		select monthname("2016-02-18 12:22:28"); //获取时间的月份
+
+		select week("2016-03-05 22:22:22");	//获取当前是一年中的第几个星期
+
+		select hour("2016-02-18 12:22:28");	//获取时间的小时
+
+		select minute("2016-02-18 12:22:28");	//获取时间的分钟
+
+		select datediff("2017-01-01 10:10:10","2016-02-18 12:22:22");
+							//获取时间差
+							
+		select now();						// now() 获取当前的时间戳
+		
+		select date(now());					// date() 获取时间戳的年月日
+							
+		select datediff(date_format(from_unixtime(647588432),"%y-%m-%d %h:%i:%s"),now());
+							//获取指定时间到当前时间的时间差
+
+		date_format(date,fmt);			//返回按fmt格式化的日期
+
+
+
+
+
+			数学类型
+		
+		select rand();						// rand() 产生一个随机数
+
+		select floor(rand()*1000);			// floor() 向下取整
+
+		select ceil(rand()*1000);			// ceil() 向上取整
+
+		select round(3.15);					// round() 四舍五入
+
+		select sqrt(9);						// sqrt() 求平方根
+
+			其它数学函数参见php 手册中 函数参考-》数学扩展-》Math
+		
+		
+		
+		
+			字串类型
+			
+		select strcmp('abc','bcd');			// strcmp 比较两个字串
+			结果： -1		注：比较有差异的字符的二进制值 str1 大于 str2，返回正数；二者相等则返回 0。
+		
+		select length('abc');				// length 获取字串的长度	
+			结果：3
+		
+		select substring('abcdefg',2,3);	// substring 获取字串指定长度的内容 	
+			结果：bcd     
+			
+			
+		select lower("Z");					// lower字符转换为小写
+			结果：z
+			
+		select upper('z');					// upper 字串转换为大写
+			结果：Z
+			
+
+		select substring(name,1,2) from tt1;		// substring() 截取字串
+		
+		原
+		+----------+
+		| name     |
+		+----------+
+		| aaaaaaaa |
+		| aaaaaaa  |
+		| aaaaaa   |
+		| aaaaa    |
+		| aaaa     |
+		| aaa      |
+		| aa       |
+		| a        |
+		+----------+
+		结果 
+		+---------------------+
+		| substring(name,1,2) |
+		+---------------------+
+		| a                   |
+		| aa                  |
+		| aa                  |
+		| aa                  |
+		| aa                  |
+		| aa                  |
+		| aa                  |
+		| aa                  |
+		+---------------------+
+		8 rows in set (0.00 sec)
+		
+		
+		
+		
+											// concat 多个字段合拼查询
+											// as 	给查询的字段赋值别名
+										
+		select concat(name,':',gonzhi) as cname from t2 limit 5;	
+		
+		+------+---------+--------+--------+------+
+		| id   | name    | gonzhi | zhiwei | uid  |
+		+------+---------+--------+--------+------+
+		|    2 | abcdefg |    100 | a      |    3 |
+		|    2 | abcdefg |    100 | b      |    2 |
+		|    2 | abcdefg |    300 | a      |    3 |
+		|    5 | abcdefg |   1100 | b      |    1 |
+		|    6 | abcdef  |    100 | l      |    1 |
+		|    1 | abcdefg |    100 | b      |    2 |
+		|    3 | abcdefg |    200 | b      |    3 |
+		|    6 | abcdefg |    100 | l      |    1 |
+		|    1 | abcdefg |    100 | b      |    2 |
+		+------+---------+--------+--------+------+
+		9 rows in set (0.00 sec)
+
+		+-------------+
+		| cname       |
+		+-------------+
+		| abcdefg100  |
+		| abcdefg100  |
+		| abcdefg300  |
+		| abcdefg1100 |
+		| abcdef100   |
+		+-------------+
+		5 rows in set (0.00 sec)
+		
+		
+		
+		
+		
+		
+		
+
+			其它字串参看php手册-》函数参考-》文本处理-》字符串
+			
+			
+			
+				
+		
+		
+		
+//===== mysql 操作符：
+
+	is null 	a is null  	若操作数a为null ,为真
+	is not null 	a is not null 	若操作数a不为null,为真
+	between		a between b and c  若a 在b 和c 之间，为真
+	not betww	a not between b and c  若操作数不在b和c 之间，为真
+	like		a like b 	SQL模式匹配，若a 匹配b,为真
+	not like 	a not like b 	SQL模式匹配，若a不匹配b,则为真
+	in		a in(b1,b2...)  若a等于b1,b2,b3...中的某一个，则为真.
+
+
+	and 或 && 	a and b 或 a && b	逻辑与，若两个操作数同时为真，则为真，
+	or 或 || 	a or b 或 a || b 	逻辑与，只要有一个操作数为真，则为真。
+	xor		a xor b 	逻辑异或,若有且仅有一个操作数为真，则为真(或两个值相同时为假,或两值不同时为真)
+	not 或!  	not a 或!a	逻辑非,若操作数为假，则为真。
+
+	
+
+	
+		
+		
+		
+		
+
+
+//===== update 更新语句
+
+		update 表名 set 字段名=值,字段名=值..... where 条件
+
+		update t1 set name='aaa',age=22 where id=12;
+
+
+
+
+	
+	
+
+
+
+//===== delete 删除语句
+
+		delete from 表名 where 条件
+	
+		delete from t1 where id=12;
+
+		注意：
+			1、不加where条件后果就是全部删除。
+			2、如果要删除重要数据的时候，最好先查出来。查看查出来的数据是否正确，然后再执行删除。
+			3、如果要删除所有的数据，不要使用delete。truncate table
+			表名(这种比delete快，他是将表删除后然后重新建表。而不是逐行删除。)
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== insert 添加语句
+
+		insert into a2(id,name,sex,age) values(3,'lily',1,19);			// 插入全部数据全写
+
+		insert into a2 values(5,'xiaogang','0',22);						// 插入全部数据简写
+
+		insert into a2(name,age) values('xiaoming',18);					// 插入局部数据
+
+		insert into a2(name,sex,age) values('a1','1',22),('a2','0',21);	// 同时插入多条数据
+
+		insert into a2(name,sex,age) select name,sex,age from a2;		// 复制并插入自身数
+
+		insert into a2 set name='mayao',sex='0',age=88;					// 插入单条数据 
+
+				
+		
+		
+		
+
+
+		
+		
+	
+//===== select 查询语句
+
+		a.最好在相同字段进行比较操作,在建立好的索引字段上尽量减少函数操作
+		例子1:
+		SELECT * FROM order WHERE YEAR(orderDate)<2008;(慢)
+		SELECT * FROM order WHERE orderDate<"2008-01-01";(快)
+		例子2:
+		SELECT * FROM order WHERE addtime/7<24;(慢)
+		SELECT * FROM order WHERE addtime<24*7;(快)
+		例子3:
+		SELECT * FROM order WHERE title like "%good%";
+		SELECT * FROM order WHERE title>="good" and name<"good";
+
+
+		
+		
+
+//===== select 查询命令
+
+
+		select * from stus where id<10 union select * from stus where id<15;
+						// 同时处理两条查询的结果加起来，处理重复项。删除相同的
+						// union 是排重
+
+		select * from stus where id<10 union all select * from stus where id<15;
+						// 同时处理两条查询的结果加起来，并且不处理重复项。
+
+
+		select concat(id,"-",name,"-",sex,"-",age) from user;		//concat 拼接字段
+
+		select 1+2;									// select 可计算数值 
+
+		select * from test order by rand();			//随机顺序查询表中所有数据
+
+		select * from test order by rand() limit 2;	//随机查询2条数据
+
+		select age-2 from user;						//获取所有age 字段减去2 的值
+
+
+		select t1.name,count(t2.tie) from t1,t2 where t1.id=t2.uid group by age;
+			//以age相同的为一组，查询t1表name 相关联的t2表中的tie 数量
+
+		select t1.name,count(t2.age) from t1,t2 where t1.id=t2.uid group by age having age>18;
+			//查询
+
+		select * from lamp.t2;							//在不选择数据库的情况下选择lamp库中的goods表中的所有数据	
+
+
+		select * from a2;								// 查询表中所有数据
+
+		select name from a2 where id = 3;				// 查询指定id的名字
+
+		select * from a2 where id=3 and name='lily' or id=5 and name='xiaogang';	//混合式查询
+		select * from user where id=3 or (id=1 and name='马尧');			
+		select * from user where (id=3 or id=1) and name='马尧';
+
+		select * from s2 where id in(2,4,6,8,10);			// in() 查询指定范围内数据
+
+		select * from s2 where id between 2 and 5;			// between 查询指定范围内数据
+
+		select * from s2 where id not between 2 and 12;		// not 查询指定值以外的数据 经常和in或between综合使用
+		select * from s2 where id not in(2,4,6,8,10,12);	// not 查询指定值以外的数据 经常和in或between综合使用
+
+
+
+		select * from s2 where name like 'aaa';				// like % 模糊查询
+		select * from s2 where name like '%a';
+		select * from s2 where name like 'a%';
+		select * from s2 where name like '%a%';
+		select * from s2 where name like '_a_';
+									_，用途和%一样，但是表示任意字符出现一次。
+
+
+		select * from s2 order by age desc limit 1;			// order 排序 desc(倒序)
+									// limit 限制只显示一条
+
+		select * from s2 order by age desc limit 1,3;		// limit 限制从第1条开始，共查询几条
+
+
+		select count(*) from s2;						// count(*) 查询数据总条数
+		select count(name) from s2;				
+
+		select max(id) from s2;							// max() 求最大值
+		select min(id) from s2;							// min() 求最小值
+		select avg(id) from s2;							// avg() 求平均值
+		select sum(age) from s2;						// sum() 求总和
+
+
+		select avg(id) from s2 group by name;			// group by 分组计算平均值
+		select avg(age) from s2 group by name;
+
+
+		select avg(age) from s2 where name !='aaa' group by name;	
+											
+														//  ! group by取指定值以外的 分组平均值
+
+		select avg(age) from s2 where name !='bbb' group by name having avg(age) > 18;  // having  语句中的后置过滤
+			注意：where条件是对数据先进行过滤，而group by中的having是对分组后的数据再次进行过滤（where是前置过滤，having是后置过滤）
+			select 字段名 ===》from 表名===》 where===》 group by having ===》 order by ===》limit	从句的顺序
+
+
+
+
+
+		select * from score, student where score.id=student.id;  	// 数据表关联查询						*
+
+		select * from score, student where score.id=student.id and ....;  
+		
+		select u.id,u.name,u.sex,u.age,l.name from user1 as u,level as l where u.level=l.id;		
+					
+																		// as 给字段起别名					*
+
+
+		mysql> select * from user where userName regexp '[a-z]{2}';		// regexp 正则查询					*
+
+
+
+
+
+	//--- 关联查询与 having 查询中的二次筛选
+
+
+			mysql> select * from t1;
+			+----+------+------+
+			| id | name | id3  |
+			+----+------+------+
+			|  1 | a    |   11 |
+			|  2 | b    |   22 |
+			|  3 | c    |   33 |
+			|  4 | d    |   44 |
+			|  5 | e    |   55 |
+			+----+------+------+
+			5 rows in set (0.00 sec)
+
+
+
+			mysql> select * from t2;
+			+------+------+--------+--------+------+
+			| id   | name | gonzhi | zhiwei | uid  |
+			+------+------+--------+--------+------+
+			|    2 | aA   |    100 | a      |    3 |
+			|    1 | aA   |    100 | b      |    2 |
+			|    2 | cA   |    300 | a      |    3 |
+			|    5 | dA   |   1100 | b      |    1 |
+			|    6 | bA   |    100 | l      |    1 |
+			|    1 | aA   |    100 | b      |    2 |
+			|    3 | bA   |    200 | b      |    3 |
+			|    6 | bA   |    100 | l      |    1 |
+			|    1 | aA   |    100 | b      |    2 |
+			+------+------+--------+--------+------+
+			9 rows in set (0.00 sec)
+
+			
+							//以t2表的 gonzhi 相同的为一组，查询与t1表的name相关联的 gonzhi总个数
+			
+			select t1.name,t2.gonzhi,count(t2.gonzhi) from t1,t2 where t1.id=t2.uid group by zhiwei;
+			
+			+------+--------+------------------+
+			| name | gonzhi | count(t2.gonzhi) |
+			+------+--------+------------------+
+			| c    |    100 |                2 |
+			| a    |   1100 |                5 |
+			| a    |    100 |                2 |
+			+------+--------+------------------+
+
+						//以t2表的 gonzhi 相同的为一组，查询与t1表的name相关联的 gonzhi总个数 并用having 进行二次筛选出gonzhi > 100的数据
+			select t1.name,t2.gonzhi,count(t2.gonzhi) from t1,t2 where t1.id=t2.uid group by zhiwei having gonzhi>100;
+			+------+--------+------------------+
+			| name | gonzhi | count(t2.gonzhi) |
+			+------+--------+------------------+
+			| a    |   1100 |                5 |
+			+------+--------+------------------+
+
+
+
+
+
+	//--- 按倒数的字串长度排序来获取name值
+	
+			select name from tt1 order by length(name) desc limit 10;
+			
+			+----------+
+			| name     |
+			+----------+
+			| aaaaaaaa |
+			| aaaaaaa  |
+			| aaaaaa   |
+			| aaaaa    |
+			| aaaa     |
+			| aaa      |
+			| aa       |
+			| a        |
+			+----------+
+
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//====== 关联查询的三种方式 
+
+
+		mysql> select * from score;  
+		+----+-------+  
+		| id | score |  
+		+----+-------+  
+		|  1 |    60 |  
+		|  2 |    75 |  
+		|  4 |    90 |  
+		+----+-------+  
+		3 rows in set (0.00 sec)  
+		  
+		mysql> select * from student;  		
+		+----+--------+  
+		| id | name   |  
+		+----+--------+  
+		|  1 | 张三   |  
+		|  2 | 李四   |  
+		|  3 | 王五   |  
+		+----+--------+  
+		3 rows in set (0.00 sec)  
+							//关联查询方式一(标准)
+		mysql> select * from score, student where score.id=student.id;  	
+		+----+-------+----+--------+  
+		| id | score | id | name   |  
+		+----+-------+----+--------+  
+		|  1 |    60 |  1 | 张三   |  
+		|  2 |    75 |  2 | 李四   |  
+		+----+-------+----+--------+  
+		2 rows in set (0.09 sec)  
+							//关联查询方式二
+		mysql> select * from score join student on score.id=student.id;  
+		+----+-------+----+--------+  
+		| id | score | id | name   |  
+		+----+-------+----+--------+  
+		|  1 |    60 |  1 | 张三   |  
+		|  2 |    75 |  2 | 李四   |  
+		+----+-------+----+--------+  
+		2 rows in set (0.00 sec)  
+							//关联查询方式三
+		mysql> select * from score join student using(id);  
+		+----+-------+--------+  
+		| id | score | name   |  
+		+----+-------+--------+  
+		|  1 |    60 | 张三   |  
+		|  2 |    75 | 李四   |  
+		+----+-------+--------+  
+		2 rows in set (0.00 sec)  
+
+
+
+
+		
+			
+			
+			
+			
+
+//===== 左右连接查询
+
+
+		create table test1(
+			   id int,             
+			   name varchar(10)
+		)
+
+		create table test2(
+			   id int,             
+			   name varchar(10)
+		)
+
+		INSERT INTO `test1` VALUES (1,'2');
+		INSERT INTO `test1` VALUES (1,'2');
+		INSERT INTO `test1` VALUES (2,'1');
+		INSERT INTO `test1` VALUES (2,'2');
+		INSERT INTO `test1` VALUES (3,'1');
+
+		INSERT INTO `test2` VALUES (1,'2');
+		INSERT INTO `test2` VALUES (2,'1');
+		INSERT INTO `test2` VALUES (2,'2');
+		--------------------------------------------------
+
+		左连接：select * from  test1 a left join test2 b on a.id=b.id 
+
+
+		右连接：select * from test1 a right join test2 b on a.id= b.id;
+
+		内连接：
+			select * from  test1 a  join test2 b on a.id=b.id 
+			select * from  test1 a inner join test2 b on a.id=b.id 
+			select * from  test1 a , test2 b where a.id=b.id  
+
+
+			
+			
+			
+			
+
+//=====子查询语句
+
+			需求：我要找出保健人员都是谁？
+			mysql> select * from level where name="保健";
+			mysql> select * from user1 where level=3;
+			mysql> select * from user1 where level=(select id from level where name="保健");
+						//这种子查询就是用查询出来的结果作为条件来使用.
+
+
+			mysql> select *,(select gz from level where user1.level=level.id) as gz from user1;
+						//当作输出的字段来使用了
+
+
+			注意：
+				1、子查询总是从内向外进行处理。
+				2、因为是查询语句里面还有查询语句上面的语句实际上执行了两条SQL查询语句
+				3、实际上对于能够嵌套多少层子语句没有一个完全的限制，但是尽量少用。
+				4、子查询如果作为条件来使用的时候，通常和in操作符搭配使用。也可以使用=
+				或!=
+		
+				
+				
+			
+			
+			
+
+			
+			
+			
+			
+//===== mysql 的预处理
+			
+		mysql> prepare stmt1 from 'select * from t1 where id=?';			//设置处理
+	
+		mysql> set @id=1;													//设置变量
+		mysql> set @id2=3;
+			
+		mysql> execute stmt1 using @id;							//使用 @id变量值来执预处理语句
+			结果：
+			+----+------+------+
+			|  1 | a    |   11 |
+			+----+------+------+
+
+		mysql> execute stmt1 using @id2;						//使用变量 @id2 来执预处理语句
+			结果：
+			+----+------+------+
+			| id | name | id3  |
+			+----+------+------+
+			|  3 | c    |   33 |
+			+----+------+------+
+			
+			
+		drop prepare stmt1;										//删除 指定的预处理
+			
+		
+
+			
+			
+			
+//===== 字段与表的别名
+
+								//字段别名
+		mysql> select concat(id,"-",name,"-",sex,"-",age) as cons from user;
+		mysql> select concat(id,"-",name,"-",sex,"-",age) cons from user;
+								//表别名
+		mysql> select concat(id,"-",name,"-",sex,"-",age) as cons from user as u where u .id=1;
+
+		注意：
+			1、别名可以给字段起别名也可以给表起别名
+			2、表起别名主要用在联合（关联）查询
+				
+
+
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 数据库乱码情况的解决方法：
+
+		1、你的代码的存储字符集是否为utf-8无bom
+		2、你的浏览器强制解析字符集是否为UTF-8
+		3、你的链接数据库的客户端的字符集是否为utf8
+		4、你的数据表的存储字符集是否为utf8
+
+						
+						
+						
+						
+						
+						
+				
+				
+				
+
+//===== 库,表的创建与删除，字符集,引擎的设置
+
+		create database lamp113;			//创建数据库
+
+		create database if not exists mydb; 		//判断如果库不存在则创建
+		
+		drop database lamp113;				//删除该数据库
+
+		show databases;						//显示当前数据库服务器下所有的数据库
+		
+		show engines;						//获取数据库支持哪些引擎
+		
+		show variables like 'default_storage_engine';    
+											//获取数据库当前使用引擎
+		
+		use lamp113;						//选择数据库
+
+		select database();					//查看当前所选择的数据库
+
+		show char set;						//查看系统中的字符集
+
+		ci(不区分大小写)，cs(区分大小写)	//看后缀区分是否大小写敏感
+
+		show create database lamp;			//查看数据库使用的字符集
+
+		create database lamp2 default character set utf8;	
+											// 设置数据库使用指定字符集
+
+		show create table a1;				//查看数据表使用的字符集
+			
+		show tables;						// 查看当前数据库中所有的数据表
+		
+		desc user;							// 查看指定表的结构
+		show columns from stu 				// 查看表结构，与desc效果一样
+											
+		show create table user;				// 查看指定数据表的建表语句(系统格式)
+		show create table user \g       	// 查看指定数据表的建表语句(规整格式,可让数据显示的有条理)
+				
+		drop table a4;						//删除数据表
+		
+		truncate table t1;					//清空数据表内容(id会重新排列)
+
+		alter table a1 change id reid char(33) not null;	// 修改字段名,类型,约束
+
+		alter table a1 modify reid int auto_increment;		// 修改字段类型,约束
+
+		alter table a1 add sex enum('0','1');			// 向表中末尾添加一个新字段
+
+		alter table a1 add id int first;			// 向表中最前面添加一个新字段
+
+		alter table a1 add age int after name;			// 在指定字段后面添加一个新字段
+
+		alter table a1 drop sex;				// 删除指定字段
+
+		alter table a1 rename as newa1;				// 修改表名
+
+		alter table user add index index_age（age）;		//给字段添加一个索引
+		
+		
+		
+	create table new1(					建表并指定引擎和编码		
+		id int primary key auto_increment, 主键，自增
+		id int unique,			唯一索引
+		id int unsigned,		无符号
+		id int(5) zerofill,		0填充
+		name char(32),			
+		name char(32) not null,		非空
+		name char(32) default 'hehe',	默认值	
+		sex enum('a','b','c'),		枚举
+		type set('a','b','c'),		集合
+	)engine=myisam default charset=utf8;	引擎为 myisam 编码   utf8
+		
+		
+		
+		
+		
+
+//===== 复制数据表
+
+		create table test4 select * from test2;		复制数据表(带数据)
+
+		create table test6 select * from test2 where 1=2;	复制数据表（不带数据）
+		或
+		create table t2 like t1;			//复制表结构
+		insert into t2 select * from t1;	//复制数据
+	
+	
+
+		
+		
+
+//===== 建表的数据类型与索引
+
+
+	//-- enum() 枚举型数据
+
+		create table t1(
+			id int,
+			sex enum('a'),
+			sex2 enum('a','b','c')
+			);
+
+		insert into t1(sex,sex2) values('b','b');
+		结果	sex	空
+			sex2	b
+			
+		注解： enum() 枚举就是单选，在预设值范围内，只能选一个
+
+
+
+	//-- set() 集合型数据
+
+		create table t2(
+			id int,
+			type set('a'),
+			type2 set('a','b','c')
+			);
+
+		insert into t2(type,type2) values('a,b,c','a,b,c');
+		结果：	type	a		//这里会过滤掉不符合的字串
+			type2 	a,b,c
+
+
+
+	//-- 空数据的 null 与not null
+
+		create table t5(
+			id int,
+			name1 char(22),			//设置了not null 当数据为空什么都不显示 
+			name2 char(22) not null		//默认当数据为空时会显示null
+			);				
+
+		insert into t5(id) values(1);		
+		结果：	name1	null
+			name2	空
+
+
+
+	//--  default 数据添加时的默认值
+
+		create table t6(
+			id int,
+			name char(55) not null default 'hehe'
+			);
+
+		insert into t6(id) values(1);
+		结果：	id	1
+			name	'hehe'
+
+
+
+	//-- zerofill 数据内容前部用0填充
+
+		create table t8(
+			id int,
+			id2 int(5) zerofill,
+			id3 int zerofill
+			);
+
+		insert into t8(id,id2,id3) values(1,1,1);
+		结果：id	1
+			  id2	00001
+			  id3	0000000001
+
+
+			  
+
+	//-- unsigned 无符号 设置整形数值是否可带负号
+
+		create table t9(
+			id int,
+			id2 int unsigned
+		);
+
+		insert into t9(id,id2) values(-100,-100);
+		结果：	id	-100
+			id2	0
+
+
+
+
+
+
+
+	//-- auto_increment 自增 在产生唯一标识或顺序值时使用
+
+		create table t10(
+			id int unique auto_increment,
+			id2 int,
+			id3 int
+		);
+		insert into t10(id3) values(1);
+
+		结果：	id	1	2 	3		//唯一，自增
+			id2	null	null	null
+			id3	1	1	1
+
+
+
+
+
+	//-- 常规索引 index 的创建和删除
+
+		一，直接创建常规索引
+		create table t11(
+			id int,
+			id2 int,
+			id3 int,
+			index sy(id)
+		);
+
+
+		二：删除常规索引
+		drop index sy on t11;
+
+		三：追加索引
+		create index sy1 on t11(id2);
+
+
+
+
+
+	//-- 唯一索引 unique 的创建和删除
+
+		一：直接创建唯一索引
+		create table t12(
+			id int,
+			id2 int,
+			id3 int,
+			unique sy(id3)
+		);
+
+		二：删除唯一索引
+		drop index sy on t12;
+
+		三：追加唯一索引
+		create unique index sy on t12(id2);
+
+
+
+
+	//-- primary key 主键索引 表中只能有一个
+
+		一：主键的创建
+		create table t13(
+			id int,
+			id2 int,
+			id3 int unsigned primary key auto_increment
+		);
+
+		二：主键的删除
+			1,如有自增得先删除自增
+			alter table 表名 change 字段名 字段名 int
+			alter table t13 change id3 id3 int;
+			
+			2,删除主键
+			alter table 表名 drop primary key;
+			alter table t13 drop primary key;
+
+
+
+	//-- comment 描述
+
+		CREATE TABLE `student` (
+			 `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '学生证号',
+			 `name` varchar(30) NOT NULL COMMENT '姓名',
+			 `birth` date NOT NULL COMMENT '时间',
+			 `gender` tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别',
+			 `desc` text NOT NULL COMMENT '文本',
+			 PRIMARY KEY (`id`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8
+				
+				
+				
+	
+		
+		
+		
+		
+
+//===== 查看mysql 中有哪些数据库的方法
+
+
+		mysql中有一个数据库information_schema,这张数据库中有一张表SCHEMATA，是用来存储其他数据库信息的，
+
+		SELECT SCHEMA_NAME FROM SCHEMATA;	可以查看mysql 中都 有哪些数据库
+
+
+
+
+		
+		
+		
+//===== 库与表的导出和导入
+
+		// 库和表的导出
+
+		mysqldump -u root -p lamp113 > c:/aaa.sql  	数据库导出  (需退出mysql)
+
+		mysqldump -u root -p lamp113 user > c:/aaa.sql  数据表导出  (需退出mysql)
+
+		mysqldump -u root -p -d lamp113 user > c:/aaa.sql  数据表导出(只导结构)  (需退出mysql)
+
+
+
+
+		// 库和表的导入
+
+		mysql -u root -p lamp113 < c:/mysql.sql		数据表外部导入
+
+		source c:/mysql.sql;				数据表内部导入
+
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+//=====用别名关联数组方式直接获取数据内容
+
+		$sqlc='select count(*) as count from t1';
+		$resc = mysql_query($sqlc);
+		
+		$pnum=mysql_fetch_assoc($resc)['count'];
+		
+		echo $pnum;
+
+
+
+
+
+
+
+
+//===== php 连接mysql 操作
+
+											// mysql_connect() 连接数据库 
+		$con=mysql_connect("localhost","root","a1");	
+											// mysql_select_db() 选择数据库
+		mysql_select_db("lamp");			
+											// mysql_set_charset() 设置字符集
+		mysql_set_charset("utf8");			
+											// 准备sql语句
+		$sql="select * from t2";			
+											// mysql_query() 执行语句并得到结果集
+		$result=mysql_query($sql);			
+											//mysql_num_rows($result)  取得结果集中的行数
+		if(mysql_num_rows($result)>0){		
+											//mysql_fetch_assoc 按索引数组方式处理结果
+			while($array=mysql_fetch_assoc($result)){
+				echo "<pre>";
+				var_dump($array);
+			}
+		}					
+											// mysql_affected_rows() 取得前一次 MySQL 操作所影响的记录行数	
+		if(mysql_affected_rows() >0){
+			echo "插入成功";
+		}
+											// mysql_insert_id() 取得上一步 INSERT 操作产生的 ID 
+
+		if(mysql_affected_rows() >0 ){
+			echo "插入成功，插入的id是：".mysql_insert_id();
+		}
+											//mysql_close() 关闭数据库连接
+		mysql_close();	
+
+
+
+
+
+
+
+//===== php 中 mysql 操作相关函数
+
+		mysql_result — 取得结果数据
+			$result = mysql_query($sql,$this->link);
+			$total = mysql_result($result,0,0); 
+
+
+
+
+		mysql_connect 			— 打开一个到 MySQL 服务器的连接
+		mysql_select_db 		— 选择 MySQL 数据库
+		mysql_set_charset		— 设置客户端的字符集
+			或 mysql_query('SET NAMES UTF8')
+
+		mysql_query 			— 发送执行一条 MySQL 语句 
+
+		create database dbname 		创建一个数据库
+		create table user1() 		创建一个数据表，以及相关内容
+		drop database dbname 		删除一个数据库或数据表
+
+		mysql_fetch_assoc 		— 从结果集中取得一行作为关联数组
+		mysql_fetch_row 		— 从结果集中取得一行作为枚举数组
+		mysql_fetch_array 		— 从结果集中取得一行作为关联数组，或数字数组，或二者兼有
+		mysql_fetch_object		-- 以对象的形式返回数据，使用方法为： echo $row->xx 
+		mysql_fetch_field 		— 从结果集中取得列信息并作为对象返回
+
+		mysql_num_rows — 取得结果集中行的数目,用于判断$res是否有数据
+			$res=mysql_qurey($sql);
+			if($res && mysql_num_rows($res)>0){
+				echo '结果集中有数据';
+			}else{
+				echo '结果集是空的';
+			}
+		mysql_affected_rows() 		— 取得前一次 MySQL 操作所影响的记录行数
+			if(mysql_affected_row()>0 ){}
+		mysql_insert_id() 		— 取得上一步 INSERT 操作产生的 ID
+		mysql_free_result()		— 释放结果内存
+		mysql_error() 			— 返回上一个 MySQL 操作产生的文本错误信息
+		mysql_close() 			— 关闭 MySQL 连接
+
+		mysql_create_db 		— 新建一个 MySQL 数据库
+		mysql_client_encoding — 返回字符集的名称
+		mysql_data_seek — 移动内部结果的指针
+		mysql_db_name — 取得结果数据
+		mysql_db_query — 发送一条 MySQL 查询
+		mysql_drop_db — 丢弃（删除）一个 MySQL 数据库
+		mysql_errno — 返回上一个 MySQL 操作中的错误信息的数字编码
+		mysql_escape_string — 转义一个字符串用于 mysql_query
+		mysql_fetch_lengths — 取得结果集中每个输出的长度
+		mysql_fetch_object — 从结果集中取得一行作为对象
+		mysql_field_flags — 从结果中取得和指定字段关联的标志
+		mysql_field_len — 返回指定字段的长度
+		mysql_field_name — 取得结果中指定字段的字段名
+		mysql_field_seek — 将结果集中的指针设定为制定的字段偏移量
+		mysql_field_table — 取得指定字段所在的表名
+		mysql_field_type — 取得结果集中指定字段的类型
+		mysql_get_client_info — 取得 MySQL 客户端信息
+		mysql_get_host_info — 取得 MySQL 主机信息
+		mysql_get_proto_info — 取得 MySQL 协议信息
+		mysql_get_server_info — 取得 MySQL 服务器信息
+		mysql_info — 取得最近一条查询的信息
+		mysql_list_dbs — 列出 MySQL 服务器中所有的数据库
+		mysql_list_fields — 列出 MySQL 结果中的字段
+		mysql_list_processes — 列出 MySQL 进程
+		mysql_list_tables — 列出 MySQL 数据库中的表
+		mysql_num_fields — 取得结果集中字段的数目
+		mysql_pconnect — 打开一个到 MySQL 服务器的持久连接
+		mysql_ping — Ping 一个服务器连接，如果没有连接则重新连接
+		mysql_real_escape_string — 转义 SQL 语句中使用的字符串中的特殊字符，并考虑到连接的当前字符集
+		mysql_stat — 取得当前系统状态
+		mysql_tablename — 取得表名
+		mysql_thread_id — 返回当前线程的 ID
+		mysql_unbuffered_query — 向 MySQL 发送一条 SQL 查询，并不获取和缓存结果的行
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 开启 bin-log 日志 （运行的网站都需要开启该 项）
+	
+	该日志会记录，增删改的操作记录以及报错的记录
+
+	vi/etc/my.cnf
+	[mysqld]
+	port=3306
+	socket=/var/lib/mysql/mysql.sock
+	log-slow-queries=mysql-slow.log
+	log-error=mysql.err
+	log=mysql.log
+	log-bin=mysql-bin	//开启bin-log日志
+
+
+
+	mysql>show variables like "%log%";		//查看 bin-log日志
+		log_bin		为 ON时表示开启
+		
+	mysql>flush logs;				//刷新日志
+
+	mysql>show master status;			//查看最后一个日志
+
+	mysql>reset master;				//清空所有的bin-log日志
+
+
+	mysql>show master status			//查看bin-log日志
+
+
+
+
+//===== mysql 备份后生成新的bin-log日志
+
+	mysqldump -uroot -pwei test -l -F "/tem/test.sql";   	// -F 备份数据时生成新的日志文件(刷新日志)
+
+	
+
+
+
+//===== mysql 备份与恢复
+
+	恢复相关文章 ：http://orangeholic.iteye.com/blog/1698736
+
+	show variables like  '%bin%'		查看bin-log是否开启
+
+    show binlog events;			只查看第一个binlog文件的内容
+
+    show binlog events in 'mysql-bin.000002';  查看指定binlog文件的内容
+
+    show master status\G			查看当前正在写入的binlog文件
+
+    show binary logs;		获取binlog文件列表
+
+
+
+	mysql>mysql -uroot -pwei test -v -f < /tmp/test/sql			//恢复数据库数据
+		-v 查看导入的详细信息
+		-f 如中间有错误，可以skip(跳)过去，继续执行
+
+	mysql>mysqlbinlog --no-defaults binlog-file |mysql -uroot -pwei 	//恢复binlog日志
+	
+
+	数据库恢复方案：
+		定期(每周)做一次完全备份，
+\		每天做一次增量备份（bin-log日志备份）。		//bin-log会记录每次增删改的操作记录	
+
+		假设周三数据库坏掉了，那么就可以用上周的完全备份来恢复，然后再用这三天的bin-log日志来恢复到当前的数据
+
+		
+		恢复命令:
+
+		#10112 23:55:35 server id 2 end_log_pos 617 Query inser into t1 values(6)
+		#10112 23:55:35 server id 2 end_log_pos 655 Xid=55 COMMIT/*!*/;
+	
+		可以用bin-log 恢复到655即可
+
+		mysql>mysqlbinlog --no-defaults --stop-position='644' mysql-bin.0000004|mysql -uroot -pwei test   //恢复bin-log
+			//切记，如果数据被黑，记得要查看最后面的破坏性语句不要一同恢复了！
+
+	
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+//===== mysql 的主从库设置
+//===== lock 表锁（能读不能写）
+//===== flush  刷新mysql中指定的功能项
+//===== 服务器授权用户的设置与查看
+
+	1：设置授权账号
+	mysql> grant all on *.* to user@192.168.11.2 identified by "pass";		//1.设置授权账号
+	或
+	mysql> grant replication slave on *.* to user@192.168.23.22 identified by "pass";
+
+	mysql> flush privileges;							//刷新状态
+
+	mysql> select user.host,password from mysql.user;				//查看授权用户
+
+
+	2：修改my.ini文件，开启binlog日志，设置server-id值 保证服务器id的唯一性
+
+
+	log-bin=mysql-bin	//开启binlog日志
+	server-id=1		//这个要保证唯一性
+
+
+	3:主库上设置读锁
+	mysql>flush tables with read lock;		//表的读锁
+	mysql>unlock tables;				//表的解锁
+
+
+
+
+	4: 配置从库的配置文件
+	server-id=2
+	master-host=192.168.x.x
+	master-user=授权的用户
+	master-password=密码
+	master-port=3306
+	log-bin=mysql-bin
+	#replicate-do-db=test
+	#replicate-do-table=test.t1
+
+	设置好从库后重启服务
+	pikk mysqld
+	/usr/local/mysql/bin/mysqld_safe --user=mysql &
+
+
+	从库常用命令
+		start slave			//启动复制线程
+		stop slave			//停止复制线程
+		show slave status		//查看从库状态
+		show master logs		//查看主库binlog日志
+		change master to		//动态改变到主服务器的配置
+		show processlist		//查看从库运行进程 
+
+	或直接用命令修改从服务器配置
+		change master to master_host='120.27.124.48',master_user='aaa',master_password='123',master_log_file='mysql-bin.000014',master_log_pos=120;
+
+
+
+	主从库无法同步的解决方案：
+		show slave status 显示 slave_SQL_Running 为 No,Seconds Behind Master 为 null
+		原因：
+			a:程序可能在slave上进行了写操作
+			b:也可能是slave机器重启后，事务回滚造成的。
+		解决：
+			方法一：
+			mysql>slave stop;
+			mysql>set GLOBAL SQL_SLAVE_SKIP_COUNTER=1;
+			mysql>slave start;
+
+			方法二：
+			mysql>slave stop;		//停掉slave服务 (Slave库)
+			mysql>show master status;	//master库
+			得到主服上当前的二进制日志和偏移量
+
+				+-----------+---------+----------+------------+
+				| File	|Position | Binlog_Do_DB |	
+				   bINLOG_LGNORE_DB
+				+-----------+---------+----------+------------+
+				| mysql-bin.000006 | 106	|	|
+				+-----------+---------+----------+------------+
+			查看状态，然后到slave服务器上执行手动同步，然后通过 show slave status 查看 Slave_SQL_Running 为 yes, SEconds_Behind_Master 为0，即为正常
+			
+			
+
+
+
+
+
+
+
+
+//===== mysql 如何解决大数据量的性能问题
+
+	1,拆分表：
+		如将原有的30个字段的表拆分成两个表，一个存放10个字段，另一个存放 20+1个字段
+		再另如：用户量大的网站将用户名和密码单独存放在一个表中。
+	
+
+
+
+
+
+
+

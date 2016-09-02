@@ -1,0 +1,287 @@
+
+
+
+
+//===== font 字体属性
+//===== (文本)color 设置字体颜色
+//===== (文本)rgba() 设置字体颜色透明度
+//===== (文本)overflow	显示超出元素宽度的文本的方式
+//===== (元素)display:table-cell 将元素表格化，可以设置元素的上下剧中
+//===== (文本)word-break  设置元素中的英文文本顶格自动换行
+//===== (文本)text-align 块元素中内容的左右剧中
+//===== (文本)text-transform	文本字母的大小写
+//===== (文本)text-decoration 	文本的上中下划线
+//===== (文本)letter-spacing	文本的间距
+//===== (文本)text-shadow	设置文本阴影
+//===== (文本)text-align	文本的对齐方式
+//===== (文本)text-indent	文本缩进
+//===== (文本)white-space	文本间的空白处理
+//===== (文本)direction + unicode-bidi 让文字倒序排列
+
+
+
+       
+  
+
+
+
+
+
+
+
+//===== font 字体属性
+							设置字体类型
+	font-family:sams-serif
+	font-family:黑体;		
+	font-family:黑体,楷体,,,,,;		字体可设置多个备用字体
+
+
+	font-size:20px;			字体大小
+		  em				1em=16px
+		  n%				按百分比设置大小
+		
+	font-style:italic;		字体风格	斜体
+			normal			默认 常态
+			oblique
+
+	font-weight:bold;		字体粗细	加粗
+				normal		默认 常态
+
+	font-variant: small-caps/normal		设置小一号的大写字母
+	
+	
+	
+	line-height:50px;		行高	
+		    em				1em=16px
+			
+
+	font:style weight size/line-height family;	字体的连写方式
+	font:italic bold 20px/50px 黑体;
+
+
+
+
+
+
+
+	
+
+	
+
+	
+
+
+
+
+
+
+//===== (文本)color 设置字体颜色
+
+	color 			
+    	color:red;      
+	color:#aaa;
+	color:#ffffff;
+	color:rgba(255,255,0,.5);	
+   		 CSS中的颜色：
+      		  	1）十六进制的数字
+        		2）颜色的单词
+        		3）、rgb颜色值：格式为rgb(红,绿,蓝);   red green blue
+       			4）、rgba颜色值：格式为:rgb(红,绿,蓝,透明度) 值为0~1之间 0为完全透明
+        		通常我们使用.5 来表示透明读(IE8或更早的浏览器中不支持)
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== (文本)rgba() 设置字体颜色透明度
+ 
+
+        color:rgb(255,255,0);//
+        color:rgba(255,255,0,.5);//
+
+        IE8不支持rgba,但是支持rgb会忽略rgba，其他的浏览器先解析rgb，然后用rgba进行覆盖。这样可以做到不同浏览器的兼容
+
+
+
+
+
+
+
+//===== (文本)overflow	显示超出元素宽度的文本的方式
+
+	当文本长度超出元素的宽度时，中文一般会自动换行，而不带空格等符号的纯英文不会自动换行，使用用overflow可以设置超出元素的文本是隐藏，还是显示 ，以及显示的方式。
+
+	width:50px;
+	height:50px;
+	border:1px solid;
+	overflow:hidden;	/*隐藏超出元素宽度的文本*/
+	overflow:visible;	/*显示超出元素宽度的文本,会呈现在元素框之外。*/
+	overflow:scroll;	/*以滚动条方式显示超出元素宽度的文本*/
+	overflow:auto;		/*自动检测是否显示滚动条*/
+	overflow:inherit 	/*规定应该从父元素继承 overflow 属性的值。*/
+
+
+	注意：当overflow相关的元素如果使用了 position定位时。那么当前这个使用overflow的元素也需要用position定位一下
+
+
+
+
+
+
+
+//===== (元素)display:table-cell 将元素表格化，可以设置元素的上下剧中
+//===== (文本)word-break  设置元素中的英文文本顶格自动换行
+
+	当文本长度超出元素的宽度时，中文一般会自动换行，而不带空格等符号的纯英文不会自动换行，使用用word-break可以让其自动换行。
+	<style>
+		.c{
+			height:200px;
+			width:50px;
+			border:1px solid;
+			word-break:break-all;
+			display:table-cell;
+			vertical-align:middle;
+		}
+	</style>
+	<div class='c'>
+		<span>aaaaaasdf</span>
+	</div>
+
+
+
+
+
+
+
+
+//===== (文本)text-align 块元素中内容的左右剧中
+//===== (字体)line-height 设置字体的行高
+
+	<style>
+		.b{
+			height:100px;
+			border:1px solid;
+			line-height:100px;		/*块元素中单行内容上下剧中 px/em*/
+			text-align:center;		/*块元素中内容左右剧中*/
+		}
+	</style>
+	<div class='b'>当块元素中内容只有一行时，用line-height将内容上下剧中</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== (文本)text-transform	文本字母的大小写
+
+	text-transform:uppercase;	/*字母全部大写*/
+	text-transform:lowercase;	/*字母全部小写*/
+	text-transform:none;		/*默认字母大小写*/
+	text-transform:capitalize;	/*单词首字母大写*/
+
+
+
+//===== (文本)text-decoration 	文本的上中下划线
+
+ 	text-decoration:underline;	/*加下划线*/
+	text-decoration:overline;	/*加上划线*/
+	text-decoration:line-through;	/*加删除线*/
+	text-decoration:none;		/*默认样式*/
+
+
+
+
+
+//===== (文本)letter-spacing	文本的间距
+
+	letter-spacing:50px;		字体间距加宽
+	letter-spacing:-5px;		字体间距缩小
+				em			1em=16px
+
+
+
+
+//===== (文本)text-shadow	设置文本阴影
+
+	text-shadow:50px 50px 5px blue;		给文本加阴影
+			参数一：左右位置 正数为右，负数为左
+			参数二：上下位置 正数为下，负数为上
+			参数三：阴影大小 
+			参数四：字体颜色
+
+
+
+//===== (文本)text-align	文本的对齐方式
+
+	text-align:left;		左对齐  默认
+	text-align:center;		中间对齐
+	text-align:right;		右对齐
+	此文字剧中的效果只可应用在区块元素上，如p ,div 。而在span ,a ,中则无效
+
+
+
+//===== (文本)text-indent	文本缩进
+
+	text-indent:100px;		按指定像素缩进
+	text-indent:2em;		1em=16px
+	text-indent:50%;		按百分比缩进
+
+
+
+
+
+
+
+//===== (文本)white-space	文本间的空白处理
+	
+	normal 	默认。空白会被浏览器忽略。
+	pre 	空白会被浏览器保留。其行为方式类似 HTML 中的 <pre> 标签。
+	nowrap 	文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+	pre-wrap 	保留空白符序列，但是正常地进行换行。
+	pre-line 	合并空白符序列，但是保留换行符。
+	inherit 	规定应该从父元素继承 white-space 属性的值。
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== (文本)direction + unicode-bidi 让文字倒序排列
+	<style>
+		div{
+			direction:rtl;
+			unicode-bidi:bidi-override;
+		}
+	</style>
+	<div id='a'  class='a'>abcdefghijklmn</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

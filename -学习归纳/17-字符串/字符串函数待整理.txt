@@ -1,0 +1,129 @@
+
+
+
+	// 解析URL的组成部分
+	$u="http://www.baidu.com/in.php?s=kljf&sf=8328";
+	var_dump(parse_url($u));
+	结果：
+		array (size=4)
+		  'scheme' => string 'http' (length=4)
+		  'host' => string 'www.baidu.com' (length=13)
+		  'path' => string '/in.php' (length=7)
+		  'query' => string 's=kljf&sf=8328' (length=14)
+
+
+
+
+
+
+
+	// 2. 统计字符串长度
+		$str = 'abcdefg';
+		echo strlen($str);
+		echo '<hr/>';
+
+	// 15. 去除字符串首尾处指定字符
+		$str  = '##aabbcc##';
+		$aa = trim($str);  //  'aabbcc'
+
+		$str = 'aa/bb/cc/';
+		$aa = rtrim($str); // 'aa/bb/cc'
+
+		echo '<hr/>';
+
+
+	// 16. 返回文件路径信息
+		pathinfo('aa/bb/cc/xxoo.php',PATHINFO_BASENAME);   // xxoo.php
+		pathinfo('aa/bb/cc/xxoo.php',PATHINFO_FILENAME);     // xxoo
+		pathinfo('aa/bb/cc/xxoo.php',PATHINFO_EXTENSION);  // php
+		echo pathinfo('aa/bb/cc/xxoo.php',PATHINFO_DIRNAME); //  aa/bb/cc
+		echo '<hr/>';
+
+
+	// 17. 返回路径中的目录部分
+		echo dirname("c:/testweb/home.php"); //  c:/testweb
+		echo '<br/>';
+		echo dirname('aa/bb/cc/dd/');  // 返回父目录  aa/bb/cc
+		echo '<hr/>';
+
+	// 18. 使用另一个字符串填充字符串为指定长度
+		$str = 'abcd';
+		$aa = str_pad($str,8,'#',STR_PAD_LEFT);  // $aa='####abcd';
+		$aa = str_pad($str,8,'#',STR_PAD_BOTH);  // $aa='##abcd##';
+		echo '<hr/>';
+
+	
+	// 19. 重复一个字符串
+		echo str_repeat('*',4);
+
+	
+	// 20. 反转字符串
+		$str = 'abcd';
+		echo strrev($str);  //  'dcba'
+
+	
+	// 21. 使用一个字符串分割另一个字符串
+		$str = 'aa##bb##cc';
+		$arr = explode('##',$str);  // array('aa','bb','cc')
+		$arr = explode('#',$str);    // array('aa','','bb','','cc')
+		$arr = explode('#','abcd');     // array('abcd')
+		$arr = explode('#','');             // array('')
+		
+	
+	// 22. 将一个一维数组的值转化为字符串
+		$arr = array('a','b','c','d');
+		$str = implode($arr);  // 'abcd'
+
+	
+	// 23. 字符串替换操作  str_ireplace()  区分大小写
+		$str = 'xyxyxyxy';
+		$aa = str_replace('y','o',$str); //  $aa = 'xoxoxoxo';
+		echo '<hr/>';
+
+		$a = array('x','y');
+		$b = array('a','b');
+
+		$bb = str_replace($a,$b,$str,$num); // $bb='abababab' ;  $num=8;
+
+	
+	// 24. 截取字符串      源字符串,起点,长度
+		 substr('abcdef',1,2);   //  'bc'  
+		 substr('abcdef',-3,2);  //  'de'
+		 substr('abcdef',3);      //  'def'
+
+		// mb_substr();
+
+	
+	// 25.  替换字符串中某串为另一个字符串
+		 //参数： 源、替换、起始、长度
+		substr_replace('abcde','x',1,2);   //  'axde'
+
+
+	// 26. 返回一个字符串在另一个字符串中开始位置到结束的字符串
+		strstr('aa/bb/cc/dd','/');   //返回   /bb/cc/dd
+		strstr('aa/bb/cc/dd','/',true);   //返回   aa
+
+	
+	// 27. 返回一个字符串在另一个字符串中最后一次出现位置开始到末尾的字符串
+		strrchr('aa/bb/cc/dd','/');  //返回   /dd
+		
+	
+	// 28. 寻找字符串中某字符最先出现的位置
+		strpos('abcdcef','c');   //   2
+
+	
+	// 29. 寻找某字符串中某字符最后出现的位置
+	           strrpos('abcdcef','c');   //   4
+
+	
+	// 30. 计算字串出现的次数
+	           substr_count('aa#bb#cc#dd','#');  // 3
+
+	
+	// 31. 将字符串分割成小块
+	           	$str='abcdefghijklmnopqrstuvwxyz';
+		$result = chunk_split($str,4,'-');
+		//1.要分隔的字符串
+		//2.每几位一分隔
+		//3.用什么分隔
+		//   $result = "abcd-efgh-ijkl-mnop-qrst-uvwx-yz-"

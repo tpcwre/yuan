@@ -1,0 +1,28 @@
+
+二十：Discuz论坛
+1，到 www.comsenz.com 下载 discuz
+2, 解压到htdocs目录下。
+3，把discuz下的upload文件拷贝到discuz文件夹下。然后删除upload文件夹。
+4，修改文件 config.inc.php
+
+	[CH]以下变量请根据空间商提供的账号参数修改，如有疑问，请联系服务器提供商
+
+	$dbhost = 'olcalhost' //数据库服务器
+	$dbuser = 'root' 	//数据库用户名            这里的用户名和密码需要改动一下
+	$dbpw = 'root'		//数据库密码
+	$dbname = 'discuz' 	//数据库名称
+	$pconnect = 0 ;		//数据库持久连接 0=关闭，1=打开；
+
+
+
+	[CH]论坛安全设置，调整以下设置，可以增强论坛的安全性能和防御性能。
+	$adminemail = 'admin@your.com';		//系统管理员Email
+	$forumfounders = 'admin';				//  这里要添加一个管理员
+
+5, http://localhost/discuz  访问站点
+
+	如果提示：对不起请将php.ini中的short_open_tag设置为On,否则无法继续安装论坛，。
+		就按照提示修改。  
+
+
+

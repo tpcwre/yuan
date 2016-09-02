@@ -1,0 +1,96 @@
+﻿<?php
+
+//===== 工厂模式
+
+
+		abstract class Figure{
+			public abstract function getValue($a,$b);
+		}
+		class add extends figure{
+			public function getValue($a,$b){
+				return $a + $b;
+			}
+		}
+		class minus extends figure{
+			public function getValue($a,$b){
+				return $a - $b;
+			}
+		}
+		class multip extends figure{
+			public function getValue($a,$b){
+				return $a * $b;
+			}
+		}
+		class divisor extends figure{
+			public function getValue($a,$b){
+				return $a / $b;
+			}
+		}
+		class count{
+			public static function figure($figure){
+				switch($figure){
+					case 'add':
+						return new add();
+					break;
+					case 'minus':
+						return  new minus();
+					break;
+					case 'multip':
+						return new multip();
+					break;
+					case 'divisor':
+						return new divisor();
+					break;
+				
+				}
+			}
+		}
+		$c = count::figure('minus');
+		echo $c->getValue(22,5);
+			结果：17
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 类的单例（单态）设计模式
+
+
+
+	class Danli{
+							//保存类实例在此属性中
+		private static $stat=null;		
+							//构造方法声明为private，防止直接创建对象
+		private function __construct(){} 
+							//用于获取对象静态方法
+		public static function makeObject(){
+			if(self::$stat==null){		//判断状态是否为空
+				self::$stat=new Danli(); //状态为空时可实例化自身的对象，并赋值给状态的静态属性.
+			}
+			return self::$stat; //将赋值后的属性返回给方法
+		}
+		
+		//下面定义其他方法.....
+	}
+
+
+	//单例模式，只能生成一个对象 
+	$d1 = Danli::makeObject();
+	$d2 = Danli::makeObject();
+	var_dump($d1);
+	var_dump($d2);
+
+	echo "<hr>";

@@ -1,0 +1,79 @@
+	负载均衡：就是让用户的每次访问都被分配到集群中的指定服务器上，让多台服务器来分配处理众多的请求！
+	正向代理：A不能直接访问 C，但B可以访问C.这时A通过B来间接访问C，这种明确访问关系的方式就是正向代理。	
+	反射代理：A访问C时，C并没有实质的内容，但C将A的请求分配到了后台集群中的某一个服务器B上来处理,B处理完后再将结果返回给C,C再返回给A.这种模式就是反向代理。
+
+
+
+
+//===== 负载均衡
+注意： 配置反向负载时重启时需要使用源码方式并加载负载均衡的配置文件来重启nginx
+
+进入配置文件目录  cd /usr/local/nginx/conf
+
+创建新的配置文件  touch fzjh.con  并编辑
+
+user nobody;			//声明用户为 nobody
+worker_processes 4;		//开启的进程数为4个
+events{
+	worker_connections 1024;	//设置最大并发数
+	}
+http{				//实现负载均衡的核心模块
+	upstream myproject{		//服务器列表   名为 myproject
+		ip_hash;		//开启用户ip绑定服务器，一个用户始终访问同一个服务器（需手动添加）
+		server 182.18.18.1;	//均衡服务器地址可内，可外
+		server 118.11.12.2;
+		server 182.18.18.3 weight=2;	//设置负载服务器权重，默认为1
+	}
+	server{
+		listen 8080;		//监听当前服务器的端口   只有访问127.0.0.1:8080 才会触发负载均衡
+		location /{		//监听根目录
+			proxy_pass http://myproject	//选择负载列表 myproject (就是上面的)
+		}
+		//注： 当访问根目录时启用myproject负载列表,访问将被分载到列表中的ip或域名上
+	}
+
+}
+
+
+
+配置好负载均衡配置文件后进行加载 
+	/usr/local/nginx/sbin/nginx					//启动基本配置服务
+	/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/fzjh.conf  //另行加载负载配置
+
+
+
+
+
+
+//===== upstream模块中设置权重及用户在负载均衡时绑定同一个服务器
+
+	ip_hash 指令 	用户与服务器绑定，每次都访问相同的服务器
+		//开启用户ip绑定服务器，一个用户始终访问同一个服务器（需手动添加)
+			upstream myproject{		
+				ip_hash;		
+				server 182.18.18.1;	
+				server 118.11.12.2;
+			}
+
+	server 指令	分配负载服务器的权重
+		upstream myproject{				
+			server 182.18.18.1 weight=2;	//设置权重为2 
+			server 118.11.12.2;		//默认权重为1
+		}
+	upstream 指令
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

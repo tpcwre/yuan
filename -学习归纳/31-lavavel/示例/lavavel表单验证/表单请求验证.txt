@@ -1,0 +1,199 @@
+
+
+
+
+
+	//-- 路由页面
+	
+		Route::get('/', function () {
+			return view('home/index');
+		});
+		Route::post('/reg',"UserController@reg");
+		Route::get('/404',function(){
+
+			echo 11;
+		});
+			
+
+
+
+	//-- 模板页面
+	
+		<center>
+			<form action='{{url('reg')}}' method='post'>
+				<input type='hidden' name='_token' value="<?php echo csrf_token(); ?>" />
+				<p>用户名：<input name='user'/></p>
+				<p>密码：<input type="password" name='pass'/></p>
+				<p>重复密码：<input type='password' name='rpass'/></p>
+				<p>邮箱：<input name='email'/></p>
+				<p>验证码：<input name='code'/></p>
+				<p>
+					<input type="text" name="cpt" value="" />
+					<img src="{{ url('captcha/mews') }}" onclick="this.src='{{ url('captcha/mews') }}?r='+Math.random();" alt="">
+				</p>
+				<p><input type="submit" value='注册' /></p>
+			</form>
+		</center>
+		
+		
+		
+	//-- 模板页面2
+	
+		{{$info}}
+	
+	
+	
+	
+	
+	
+	
+	//-- 请求层
+	
+		<?php
+
+			namespace App\Http\Requests;
+
+			use App\Http\Requests\Request;
+
+			class RegRequest extends Request
+			{
+				public function authorize()
+				{
+					return true;
+				}
+				public function rules()
+				{
+					return [
+																 //当user传过来的值是yes,on,1 时才会通过验证
+					   // 'user'=>'required | min:2 | max:5',
+					   // 'pass'=>'required | min:6',
+
+					   // 'code'=>'',
+					];
+				}
+			}
+			/*
+			// 字段验证规则
+
+					手册位置：系统服务-》表单验证-》可用验证规则
+
+					required        必填字段
+					min:2           最小长度
+					max:5           最大长度
+					accepted        接收到的值为 yes, on, 或是 1 时，验证才会通过。这在确认"服务条款"是否同意时很有用。
+			*/
+
+	
+	
+	
+	
+	
+	
+	//-- 控制器
+	
+		<?php
+
+			namespace App\Http\Controllers;
+
+			use Illuminate\Http\Request;
+			use App\Http\Requests;
+			use App\Http\Controllers\Controller;
+
+			class Usercontroller extends Controller
+			{
+			/*
+				public function reg(Request $request)   //参数   Request ：指定请求层类型  $request ：数据
+				{                                           //类型有：中间件，控制器，请求层
+			//- 方式一 Request 接收表单的数据
+					echo $request->input('user').'<br>';   
+					echo $request->input('pass').'<br>';
+					echo $request->input('rpass').'<br>';
+					echo $request->input('email').'<br>';
+					echo $request->input('code').'<br>';
+
+
+			//- 方式二 \Request 接收表单数据
+					echo \Request::input('user').'<br>';
+					echo \Request::input('pass').'<br>';
+					echo \Request::input('rpass').'<br>';
+					echo \Request::input('email').'<br>';
+					echo \Request::input('code').'<br>';
+				}
+
+
+
+
+			//- 方式三 \Requests\RegRequest 继承Request 接收表单数据
+				public function reg(Requests\RegRequest $request) //
+				{
+					echo \Request::input('user').'<br>';
+					echo \Request::input('pass').'<br>';
+					echo \Request::input('rpass').'<br>';
+					echo \Request::input('email').'<br>';
+					echo \Request::input('code').'<br>';
+				}
+
+
+
+
+			//- 方式四 \Requests\RegRequest 继承Request 并为表单字段设置验证规则
+				public function reg(Requests\RegRequest $request) //
+				{
+					//这时以经在Requests\RegRequest 请求层中设置了表单字段的验证，验证成功后才能跳转到这里！
+
+					echo \Request::input('user');
+					echo \Request::input('pass');
+					echo \Request::input('rpass');
+					echo \Request::input('email');
+					echo \Request::input('code');
+				}
+			*/
+
+
+
+			//- 验证码接收并验证
+
+				public function reg() //
+				{
+					echo \Request::getClientIp();
+					die();
+					\Session::put('code','abc');     //\Session::put() 
+					$data=\Input::all();            //接收所有表单数据
+				   // dd($data);                      //dd() 相当于 pre + var_dump + die
+				   
+
+					if($data['code']!=\Session::get('code')){   // 判断验证码是否正确，并给出提示信息
+					   // return view("/404")->with('info',"你输入的验证码有误，请重新输入");
+														//向404.blade.php 页面注册一个变量 并让其显示出来
+					}
+				}
+
+
+
+			//- 自带表单验证
+				public function regs(){
+					\Session::put('code','abc');     //\Session::put() 
+					$data=\Input::all();            //接收所有表单数据
+
+					$rules = array(                 //创建验证规则的数组
+						'user' => 'required|alpha_dash|min:1|max:32',
+						'pass'  => 'required|min:1|max:18'
+					);
+
+
+					$validator=\Validator::make($data,$rules);  //创建验证对象并把要验证的数据和验证规则导入 
+					if($validator->passes()){           //判断所要验证的数据是否通过验证
+						echo '验证成功';
+					}else{
+						echo '验证失败';
+					}
+				}
+
+			}
+
+	
+	
+	
+	
+	
+	

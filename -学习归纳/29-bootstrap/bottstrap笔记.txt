@@ -1,0 +1,405 @@
+
+
+//===== bootstrap 引入样板
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">				//设置兼容
+        <meta name="viewport" content="width=device-width, initial-scale=1">		//设置绽放
+        <title>Bootstrap的HTML标准模板</title>   
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">				//引入bootstrap的CSS
+        <!--你自己的样式文件 -->
+        <link href="css/your-style.css" rel="stylesheet">    				//引入自定义CSS    
+        <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+        <!--[if lt IE 9]>								//兼容IE9以下浏览器
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <h1>Hello, world!</h1>								//正文
+        
+        <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+        <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>			//引入JQUERY
+        <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 	//引入bootstrap.js
+    </body>
+</html>
+
+
+
+
+//===== 其它特殊
+
+	<form role="form">	role属性 是给浏览器和搜索引擎看的,不影响其它
+
+	class="sr-only"		将元素隐藏，只给浏览器和搜索引擎看的
+
+
+
+
+
+
+
+//===== 特殊类标签 
+
+	<b>		字体加粗
+	<strong>	字体加粗
+	
+	<em>		斜体
+	<i>		斜体
+
+	<dl><dt><dd>	定义列表
+
+	<code>		显示单选灰底代码
+
+	<pre>		显示多行灰底代码
+
+	<kbd>		显示单选黑底代码
+
+	<label>		<label><input type="checkbox"> 记住密码</label> 
+	
+	<fieldset disabled>	设置禁用表单控件
+
+
+
+//===== class 标记属性
+
+	p:nth-child(n/odd/even/3n)				其父元素下的第几个或成双数的p元素			
+
+
+字体与文本
+	class='h1/h2/h3/h4/h5/h6'			标题效果，等同于 <h1></h1> ....
+
+	class='small'					副标题效果	字号与颜色都较小于主题字体
+
+	class='lead'					强调文本	字号与间距变大突出
+
+	class='small'					缩小文本
+
+	class='text-muted'				字体浅灰色
+
+	class='text-primary'				字体蓝色
+
+	class='text-success'				字体浅婚绿色
+
+	class='text-info'				浅蓝色
+	
+	class='text-warning'				黄色
+
+	class='text-danger'				褐色
+
+	class='text-left'				文本左对齐
+
+	class='text-right'				文本右对齐
+
+	class='text-center'				文本剧中
+
+	class='text-justify'				文本两端对齐
+
+	class='pre-scrollable'				使<pre>的代码块区域最大高度为340px，一旦超出这个高度，就会在Y轴出现滚动条。
+
+列表
+
+	class="list-unstyled"				不带前缀的列表 （并与前端对齐）
+
+	class="list-inline"				内联列表 （水平式列表）
+
+	class="dl-horizontal"				水平定义列表
+
+
+表格
+
+	class='table'					基础表格 (不添加此类的表格是没有任何样式的)
+
+	class='table-hover'				表格悬浮状态(需加在table标签中)
+
+	class='table-striped'				隔行换色表格
+
+	class='table-bordered'				带边框表格
+
+	class='table-hover'				悬停高亮表格
+
+	class='table-condensed'				紧凑表格
+
+	class='table-responsive'			响应式表格
+
+	class="active"					颜色--表格浅灰蓝色
+
+	class="success"					颜色--表格浅绿蓝色			
+
+	class="info"					颜色--表格浅蓝色
+
+	class="warning"					颜色--表格白色
+
+	class="danger"					颜色--表格浅蓝绿色
+
+
+
+
+表单
+
+	class="form-group"				给每组表单项的下方添加15PX的间距(DIV标签中)
+
+	class='form-control'				设置表单控件100%长度，浅灰色，圆角等	
+
+	class='form-horizontal'				让表单控件与label项目名水平排列
+
+	class="form-inline"				让表单项全部在一行中水平排列(form标签中)	
+
+	class="checkbox"				适用DIV,处理对齐方式的兼容性
+	
+	class='radio'					适用DIV,处理对齐方式的兼容性
+
+	class="radio-inline"				设置单选水平排列样式 （适用label标签中）
+
+	class="checkbox-inline"				设置多选水平排列样式 （适用label标签中）
+
+	class="input-lg"				将表单控件变大一号
+
+  	class="input-sm"				将表单控件变小一号
+
+	class='has-feedback'				设置表单项的验证状态 (适用DIV)
+
+	class="has-warning"				表单警告状态 需要has-feedback (适用DIV)
+
+	class='has-success'				表单成功状态 需要has-feedback (适用DIV)
+	
+	class='has-error'				表单错误状态 需要has-feedback (适用DIV)
+
+
+
+
+	class="glyphicon glyphicon-remove"		错误--表单状态配置的icon图片，需要 form-control-feedback（设置icon位置为右侧）适用span ,需要父级DIV元素中有has-feedback
+			glyphicon-warning-sign		警告--表单状态配置的icon图片 
+			glyphicon-ok 			成功--表单状态配置的icon图片 
+
+
+
+	class='btn'					声明按钮元素
+	class='btn-default'				按键默认样式 需要有 btn	
+	class='btn-primary'				按键主要样式 需要有 btn	
+	class='btn-success'				按键成功样式 需要有 btn
+	class='btn-info'				按键信息样式 需要有 btn
+	class='btn-warning'				按键警告样式 需要有 btn
+	class='btn-danger'				按键危险样式 需要有 btn
+	class='btn-link'				按键链接样式 需要有 btn
+
+	class='btn-lg'					按键大一号 需要有btn
+	class='btn-sm'					按键小一号 需要有btn
+	class='btn-xs'					按键小两号 需要有btn
+
+	class='btn-block'				让按键宽度100%
+
+	class='active'					按键活动状态
+	class='disabled'				按键禁用状态
+	
+
+
+
+图片
+
+	class="img-rounded" 				圆角图片
+	class="img-circle"				圆形图片
+	class="img-thumbnail"				缩略图片（图片四周带边框）
+	class="img-responsive"				响应式图片
+
+
+
+
+
+图标
+	
+	class="glyphicon"				只是用来图标声明
+	class='glyphicon-home'				房子形图标，需要 glyphicon
+		.....					其它图标参见 http://getbootstrap.com/components/#glyphicons
+
+
+
+
+网格系统 
+
+	class='row'					行的声明
+
+	class='col-xs-n'				列的声明
+		col-sm-n
+		col-md-n
+		col-lg-n
+		说明：列默认为12格，col-xs-1 说明占12格中的1格，col-xs-4 说明占12格中的4格
+			xs：小于768	
+			sm：大于768且小于992
+			md：大于992且小于1220
+			lg：大于1220					
+
+	class='col-md-offset-4'				列偏移，向右偏移4个单元 
+
+	class='col-md-push-6'				往右位移浮动
+	
+	class='col-md-pull-5'				往左位移浮动
+
+
+
+
+
+//===== 下拉菜单
+
+	class='dropdown'				声明下拉菜单，适用DIV
+	class='dropup'					声明上拉菜单 ，适用DIV
+	class="caret"					下拉菜单的倒三角图形 必须放在<button>标签中
+	class="dropdown-toggle"				下拉按钮，适用button
+	class='dropdown-menu'				下拉菜单，适用ul
+	data-toggle='dropdown'				菜单属性，适用于buuton
+	class='divider'					下拉菜单中的分隔线
+	class='dropdown-header'				下拉菜单中的标题	
+	class='pull-right'				下拉菜单与父容器右边对齐，适用于ul
+	class='dropdown-menu-right'			同上
+	class='dropdown-menu-left'			下拉菜单与父容器左边对齐
+	class='active'					深蓝色的当前中状态 ，适用于li标签
+	class='disabled'				浅灰色的不可用状态，适用于li标签
+
+
+
+
+
+
+
+
+
+//===== 按钮
+
+	class="btn-toolbar"				富按钮分组
+	class="btn-group"				按钮容器
+	class='btn-group-lg'				大号按钮组
+	class='btn-group-sm'				小号按钮组
+	class='btn-group-xs'				小两号按钮组
+	class='glyphicon'				图标类的声明
+	class='glyphicon-xxxx'				具体的图标，必须有glyphicon,适用于span
+	class='btn'					按钮声明
+	class='btn-xxx'					按钮样式，必须有btn
+	class='btn-lg'					大号按钮
+	class='btn-sm'					小一号按钮
+	class='btn-xs'					小两号按钮
+	class='btn-group-vertical'			垂直按钮分组,适用DIV
+	class="btn-group-justified"			等分按钮，适用DIV
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 导航
+	class='nav nav=tabs'			声明导航,ul
+	class="nav nav-pills"			胶囊样式导航,ul
+	class="nav nav-pills nav-stacked"	垂直堆叠导航,ul
+	class="nav nav-tabs nav-justified"	自适应导航,ul
+	class='breadcrumb'			面包屑导航
+	class='active'				选中状态的标签,li
+	class='disabled'			禁用状态的标签,li
+	
+
+
+
+
+
+
+//===== 导航条
+
+	class="navbar navbar-default"				导航条声明,默认浅灰主题,div
+	class="navbar navbar-inverse"				导航条声明，深黑色主题
+	class='nav navber-nav'					导航条中的导航，ul
+	class="navbar-header"					导航标题
+	class="navbar-brand"					导航标题
+	class="nav navbar-nav"					导航条中的导航部分
+	class="navbar-form navbar-left"				导航条中的表单
+	class="form-group"					导航条中的表单分组
+	class="navbar-text"					导航条中的文本
+	class="navbar-btn"					导航条中的按钮
+	class="navbar-link"					导航条中的普通链接
+	class="navbar-fixed-top"				导航条固定到顶部
+	class="navbar-fixed-bottom"				导航条固定到底部
+	class="navbar-toggle"					导航条切换
+	data-toggle="collapse"					切换方式 折叠
+	data-target=".navbar-responsive-collapse"		指定切换的目标
+	class="icon-bar"					icon图标
+	class="collapse navbar-collapse navbar-responsive-collapse"	响应式导航切换
+
+	class="pagination"					分页码导航条
+	class='pagination-lg'					大号分页
+	class='pagination-sm'					小号分页
+
+	class="pager"						上下翻页式导航,ul
+	class="previous"					顶左边对齐,li
+	class="next"						顶右边对齐,li
+
+
+//===== 标签
+	class="label"						标签
+	class="label-default"					默认标签，深灰色
+	class="label-primary"					主要标签，深蓝色
+	class="label-success"					成功标签，绿色
+	class="label-info"					信息标签，浅蓝色
+	class="label-warning"					警告标签，橙色
+	class="label-danger"					错误标签，红色
+
+
+//===== 徽章
+
+	class="badge"						徽章声明,绿底白字，span	(如信件数通知)	
+	class="badge pull-right"				徽章声明，白底蓝字，span
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例 弹出框
+
+<button class="btn btn-primary" type="button">点击我</button>
+<div class="modal fade" id="mymodal" tabindex="-1">
+    <div class="modal-dialog">
+    	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title">模态弹出窗标题</h4>
+		</div>
+		<div class="modal-body">
+			<p>模态弹出窗主体内容</p>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			<button type="button" class="btn btn-primary">保存</button>
+		</div>
+	</div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+  $(function(){
+    $("button.btn").click(function(){
+    	$('#mymodal').modal();
+    });
+  });
+
+	

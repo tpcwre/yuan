@@ -1,0 +1,265 @@
+
+//=====!! 将数据转换成布尔值来显示
+//=====PHP会自动转换数据类型
+//=====单引与双引号对变量的影响
+//=====PHP获取表单值的三种方法
+//=====超全局变量 $GLOBALS,$_SERVER,$_GET,$_POST,$_COOKIE,$_FILES,$_ENV,$_REQUEST,$_SESSION
+//===== php中的注释
+//===== 变量的类型
+//===== 函数中使用全局变量要使用 global 才可能
+//===== 设置字符集编码的两种方式
+//===== & 引用变量
+//===== include,require 加载文件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== include,require 加载文件
+   
+	include 'other.php';
+	include 'other.php';
+	
+	echo '<br>include 可以多次加载。加载文件时如果出错，后面的代码会继续执行<hr>';
+   
+   
+	include_once 'other.php';
+   
+	echo '<br>include_once 检测本页面中是否以加载了指定的页面，有则跳过，无则加载！因需要检测，所以在效率方面要比include低，如出错，后面代码会继续执行<hr>';
+	
+	
+	require 'other.php';
+	require 'other.php';
+	echo '<br>require 可以多次加载，加载文件时如果出错，将会终止程序，后面的代码不再执行<hr>';
+   
+	require_once 'other.php';
+	
+	echo 'require_once 检测本页面中是否以加载了指定页面，有则路过，无则加载，因需要检测，所在效率会比require效率低。如果出错，程序终止，后面的代码不再执行';
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== & 引用变量
+	
+	
+	$yy='aaaaa';
+	echo $yy.'<br>';
+	$yy2=&$yy;
+	echo $yy2."<br>";
+	
+	$yy2='bbbb';
+	echo $yy.'<br>'.$yy2.'<br>';
+	unset($yy);
+	echo $yy2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 设置字符集编码的两种方式
+	
+	echo "<meta charset='utf-8'> html设置编码方式<br>";
+	
+	header("tontent-type:text/html;charset=utf-8");
+
+
+
+
+
+
+
+
+
+
+/===== 数值的类型</h1>"; 
+	
+	echo "十进制：直接以数字开头如	12345<br>";
+	$num1=0x12a;
+	echo "十六进制：以0x开头 如	0x123a={$num1}<br>";
+	$num2=0123;
+	echo "八进制：以0开头 如	0123={$num2}<br>";
+	$num3=0101;
+	echo "二进制：以0b开头 如  	0b0101={$num3}<br>";
+
+
+
+
+
+
+
+
+
+
+
+
+
+/===== php的八种数据类型</h1>';
+
+	$a=123;		整形
+	$b='abc';	字符串
+	$c=3.1415926;	是浮点型
+	array		数组
+	object		是对象型
+	resource 	是资源型
+	null		空数据类型
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 函数中使用全局变量要使用 global 才可能
+
+<?php
+	$arr=array('a','b');
+	function demo(){
+		global $arr;
+		print_r($arr);
+	}
+	demo();
+?>
+
+
+
+
+
+//=====!! 将数据转换成布尔值来显示
+
+<?php
+	$a=array('a5'=>'aaa5','a6'=>'aaa6','a7'=>'aaa7');
+	
+	//echo each($a).'<Br>';		//结果显示：Array
+	//echo !each($a);		//结果显示：空
+	echo !!each($a);		//结果显示：1
+?>
+
+
+
+
+
+
+
+
+
+
+//=====PHP会自动转换数据类型
+
+	$a='5a';
+	$b=71+$a;
+	echo $b.'<br>';	//结果：76  在数值运算中，自动将$a的字串转换成数值
+	
+
+
+
+
+
+
+
+//=====单引与双引号对变量的影响
+
+双引号会解析变量和转义字符，而单引号不会解析，但如果双引号中的变量与汉字参杂就会出错。如下，
+<?php
+	$name='吴祁';
+	echo "my name is $name,my age is 19<br>";	//英文中夹变量，正常
+	echo "我的名字叫：$name<br>";			//前面中文，后面变量 ，正常
+	echo "我的名字叫$name我今年19"; 		//中文中夹变量，或变量后有中文，错误
+	//注：当双引号中混杂着英文与变量时，可以正常解析，但如果是汉字时，就会出错。	解决：可以用字符串连接的方式来解决，如
+	echo "<br>我的名字叫$name".'我今年19';		//保持变量后面没有中文，正常
+?>
+
+
+
+
+
+
+
+
+
+//=====PHP获取表单值的三种方法
+
+<input type='text' name='userName'/>
+
+$userName;			//简短风格
+
+$_POST['userName'];		//中等风格
+$_GET['userName'];
+
+$HTTP_POST_VARS['userName'];	//冗长风格
+
+
+
+
+
+
+
+
+
+
+
+
+//=====超全局变量 $GLOBALS,$_SERVER,$_GET,$_POST,$_COOKIE,$_FILES,$_ENV,$_REQUEST,$_SESSION
+
+
+
+
+
+
+
+
+
+//===== php中的注释
+
+//内容	 	两个斜杠代表单行注释	
+		多行同步快捷键：  ctrl + /
+
+#内容		井号也代表单行注释
+
+/*内容*/ 	这个代表多行注释 
+
+
+
+
+//===== 变量的类型
+
+变量可以是 null(空), 整形，浮点型，布尔型，数组型，对象型，资源型。
+
+
+

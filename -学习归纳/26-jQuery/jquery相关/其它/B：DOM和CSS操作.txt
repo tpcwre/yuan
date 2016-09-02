@@ -1,0 +1,295 @@
+
+		第十集
+	=====基础DOM和CSS操作
+
+-----alert($('#two').html());			//获取指定元素中的内容（包括标签）
+
+-----alert($('#two').text());			//获取指定元素中文本内容 （不包括标签）
+
+-----$('#one').html('<u>aaaaaaaa</u>'); 	//替换添加指定元素中的内容 会解析标签
+
+-----$('#two').text('<a href="#">www.klsdfs.com</a>');  
+						//替换指定元素文本内容，不会解析标签
+
+-----alert($('input').eq(1).val()); 		//获取表单value值
+
+-----$('input').eq(1).val('ddddddddd');		//替换表单value值
+
+-----$('input').eq(2).val('女');		//替换radio表单值
+
+-----alert($('input').eq(2).val());
+	//if($('input').eq(2).val()=='女'){
+		//$('#four').text('女');	//替换radio关联文本内容
+	//}
+
+-----$('input').val(['男','女','编程']);	//设置表单选择项自动选择
+	
+-----alert('#one').attr('id');			//获取元素的ID或类名 
+
+-----$('div').attr('title','我是域名'); 	//设置指定元素的属性名和属性值。
+	
+						//为指定元素同时赋值多个属性
+-----  $('div').attr({			
+		'title':'aaaaaa',
+		'class':'red',
+		'data':'1111'
+       });
+	
+
+-----	$('div').attr('title',function(index,value){	 //为元素添加属性的方法
+		return "以前的title是："+value+",现在的title是"+(index+1)+"号域名";
+	});
+
+
+-----$('div').html($('div').html()+'<em>www.li.com</em>');  	//追加内容
+
+							
+-----$('div').html(function(index,value){		//为元素添加内容的方法
+		return value+ '<em>www.lksjd.cn</em>';
+     });
+
+-----$('div').removeAttr('title');		//清除元素的属性
+
+
+
+
+
+
+
+
+		第十一课
+	=====基础DOM和CSS操作=====
+
+学习要点：
+	1.	DOM简介
+	2.	设置元素及内容
+	3.	元素属性操作
+	4。	元素样式操作
+
+
+-----$('div').css('width',function(index,value){	//用匿名函数计算操作CSS属性值的方法   %%%%
+		return parseInt(value)-100+'px';
+	});
+
+-----$('div').addClass('red');				//给元素添加一个CSS类
+
+-----$('div').addClass('bg size');			//给元素同时添加多个CSS类
+
+-----$('div').removeClass('bg');			//删除元素中指定的一个CSS类
+
+-----$('div').removeClass('red size');			//同时删除元素中多个CSS类
+
+-----$(this).toggle(3000)				//点击后消失
+	toggle()不加参数一点就没，加参数3000就是三秒种内消失
+
+-----$('div').click(function(){				//点击元素触发事件改变元素（多个）CSS属性
+		$(this).toggleClass('red size');	
+	});
+
+
+							//利用true和false原理的算法设置点击不同次数来切换CSS属性
+-----  var count=0;
+	$('div').click(function(){
+		alert(' ');
+		$(this).toggleClass('red size',count++ %3==0);		
+	});
+
+
+							//切换元素不同的CSS样式类
+-----  $('div').click(function(){
+		$(this).toggleClass('red');
+		if($(this).hasClass('red')){
+			$(this).removeClass('yellow');
+		}else{
+			//$(this).toggleClass('yellow');
+			$(this).addClass('yellow');
+		}
+	});
+
+
+							//用三目方法切换元素的类属性(有缺点)
+-----   $('div').click(function(){
+		$(this).toggleClass(function(){
+			return $(this).hasClass('red') ? 'yellow':'red';
+		});
+	});
+
+
+							
+-----   $('div').click(function(){			//切换元素类属性的方法（优化）	 %%%%%
+		$(this).toggleClass(function(){
+			if($(this).hasClass('red')){
+				$(this).removeClass('red');
+				return 'yellow';
+			}else{
+				$(this).removeClass('yellow');
+				return 'red';
+			}
+		});
+	});
+
+
+	
+-----   var a = 0;					//切换元素的class类属性(带bool算法)
+	$(document).click(function(){
+		$('div').toggleClass(function(index,className,switchBool){
+			alert(index + className + switchBool);
+			if($(this).hasClass('red')){
+				$(this).removeClass('red');
+				return 'yellow';
+			}else{
+				$(this).removeClass('yellow');
+				return 'red';
+			}
+		},a++ %2==0);
+	});
+
+
+
+
+
+
+
+
+
+
+		第12课
+		
+
+
+-----alert($('div').width());			//获取元素宽度
+
+-----alert($('div').innerWidth());		//获取元素宽度，包含内边距padding
+
+-----alert($('div').outerWidth());		//获取元素宽度，包含border和padding
+
+-----alert($('div').outerWidth(true));		//获取元素宽度, 同上且包含外边距
+
+-----$('div').width('500pt');			//设置其它长度单位时需要指定
+
+-----$('div').width(function(index,width){	//设置元素宽度（带回调函数）
+
+-----alert($('div').offset().top);		//获取元素相对于视口的偏移位置
+
+-----alert($('strong').position().top);		//获取元素相对于父元素的偏移位置
+
+-----alert($(window).scrollTop());		//获取垂直滚动条的值
+
+-----$(window).scrollTop();			//设置垂直滚动条的值
+
+-----alert($(window).scrollLeft());		//获取水平滚动条的值
+
+-----$(window).scrollLeft();			//设置水平滚动条的值
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第13课 DOM节点操作
+学习要点：
+	1。创建节点
+	2，插入节点
+	3，包裹节点
+	4，节点操作
+
+-----var aa = $('<i>这是一个在JS中创建的节点</i>');		//创建节点
+
+-----$('body').append(aa);					//插入节点
+
+-----$('div').append($('<u>DOM</u>'));				//向指定元素内部后面插入节点内容
+
+-----$('div').append(function(index,html){			//用匿名函数向指定元素内部后面插入节点内容
+		return '<u>uuuuuu</u>'+index+html;  //这里的html代表div的内容
+	});
+
+-----$('u').appendTo('div');					//将指定节点移入到另一节点内部的后面
+
+-----$('div').prepend(aa);					//向指定元素内容前面插入节点内容
+	
+-----$('div').prepend(function(index,html){  			//用匿名函数向指定元素内部前面插入节点内容
+		return 'aaaaa'+index+html;
+	});
+
+-----$('u').prependTo('div');					//将指定节点移入到另一节点内部的前面
+
+-----$('div').after('<i>iiii</i>');				//向指定节点后面插入一个兄弟节点
+
+-----$('div').after(function(index,html){			//用匿名函数向指定节点后加一个兄弟节点
+		return '<u>uuuuu</u>'+index+html;
+	});
+
+-----$('div').before('<i>iiii</i>');				//向指定节点前面插入一个兄弟节点
+
+-----$('div').before(function(index,html){			//用匿名函数向指定节点前面加一个兄弟节点
+		return '<u>uuuu</u>'+index+html;
+	});
+
+-----$('u').insertAfter('div');					//把指定节点移动到另一兄弟节点后面
+
+-----$('div').insertBefore('u');				//把指定节点移动到另一兄弟节点前面
+
+
+
+
+
+
+
+
+	第14课
+
+-----$('div').wrap('<strong></strong>');			//给指定的节点包裹添加一层html父节点
+-----$('div').wrap('<strong/>');
+-----$('div').wrap('<strong>1111</strong>');
+
+-----$('div').wrap('<strong><em></em></strong>');		//给指定节点同时包裹添加多层html父节点
+
+-----$('div').wrap(document.createElement('strong')); 		//通过创建DOM节点对象给指定节点包裹添加html父节点
+
+-----$('div').unwrap();						//移除一层包裹的html父节点（只对用wrap添加的有效）
+-----$('div').unwrap();						//移除多层时需多次操作
+
+-----$('div').wrapAll('<u/>');					//把所有指定类型的节点包裹在一个html节点中
+-----$('div').wrapAll(document.createElement('u')); 		//创建DOM对象 (同上)
+
+-----$('div').wrapInner('<u/>');				//向指定节点的内容和子节点包裹添加一层html元素
+-----$('div').wrapInner(document.createElement('u'));		//通过DOM对象给指定节点内容包裹添加HTML元素(同上)
+
+-----$('div').wrap(function(index){				//为指定节点包裹添加HTML父节点元素的方法
+	//	return "<u>"+index+"</u>";
+	});
+
+-----$('div').wrapInner(function(index){			//为指定节点的内容元素包裹HTML元素的方法
+	//	return '<u>'+index+'</u>';
+	});
+	
+-----$('p').clone(true).prependTo('body');			//复制节点，参数true可选,表示连同事件一并复制
+	
+-----$('p').remove();						//删除一个节点元素
+
+-----$('p').remove('.one');					//删除满足指定参数条件的节点，（可指定带某个类名的节点）
+-----$('p').eq(1).remove();
+
+-----alert($('strong').remove().get(0));  			//获取被删除的元素名
+
+-----$('p').remove().appendTo('body');				//删除后再添加的节点元素不保留事件行为
+
+-----$('p').detach().prependTo('body');				//删除后再添加的节点元素会保留事件行为
+
+-----$('p').empty();						//清空指定节点内容，并保留节点
+
+-----$('p').replaceWith('<span>DOM</span>');			//替换节点
+
+-----$('<span>DOM</span>').replaceAll('p');			//替换节点

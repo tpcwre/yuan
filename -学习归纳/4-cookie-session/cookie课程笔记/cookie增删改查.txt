@@ -1,0 +1,11 @@
+<?php
+	setCookie("a","aaa",time()+3600);	//Ôö
+
+	echo $_COOKIE["a"]."<br>";		//²é
+
+	setCookie("a","bbb",time()+3600);	//¸Ä
+
+	echo $_COOKIE["a"];
+
+	setCookie("a","",time()-10);		//É¾
+?>

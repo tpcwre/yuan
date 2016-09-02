@@ -1,0 +1,6378 @@
+http://www.php-open.com/
+2014.8.11号充的液化气 100元，12.5kg
+
+
+Robots协议   关于搜索引擎，查看一下！
+
+
+重点练习：  	手机号码归属地查询：
+		设置调用函数打印三角，金字塔，空棱形，
+		四种循环遍历方法：
+		冒泡，选择，插入，快速，排序法；
+		区块的相对，绝对，固定，定位，以及层叠优先级设置
+		猜拳游戏及script设置图片变换
+		顺序，二分查找法；
+		学生成绩管理系统。参下面实例
+		在线翻译(可添加删除,用数据库和XML分别操作)
+		以面对对象形式架设十二生肖下载页面
+		-----mysqli 对象方式操作数据库实例
+		
+
+
+	HTML部分
+
+一：乱码解决与兼容性
+0: 解决乱码-ANSI。
+   ----<meta>头部相关元素：
+15: 浏览器兼容性。
+26: <!DOCTYPE...>几种头部兼容体。
+
+链接相关：
+9: imagemap图像映射和script-click脚本。
+-----script可以直接用于页面打开
+----script函数-isNaN 检测是否为一个数值----
+	背景图片以及img设置
+8: embed音频视频嵌入连接。
+7: 滤镜和伪类使超链接图片变色。
+4: a:link,a:hover超链接（包括图片）样式变换。
+	-1:  a:link 因浏览器版本问题的解决
+			text-decoration:none ,line-through,undeline,overline;
+	-----base设置target本页超连接在新窗口打开的默认属性
+				
+二：元素设置相关:
+5: HR水平线的设置。
+22: border元素边属性设置：
+23: text-align,line-height,12px/30px这个行高调整文字的位置
+25: alt 和 title关于说明提示，它俩效果等同，title更兼容！
+2: ol有序列表和ul无序列表：
+    ---list-style-type去除边饰
+3: 合并CSS中相同的属性。
+14: 各属性的简写顺序。
+------选择器与父子选择器：
+
+
+三：行内元素与区块元素：
+6: 行内元素和块元素可以相互转换；
+17: 当span加上float或display时就会变成块元素；
+24: 行内元素如span,a等只有设置了display:block后才能设置宽高成为区块加背景.
+======隐藏内容-display:none=====(说见案例:====聪明小猫的计算====)
+31: 从indent看display:block-inline与行内元素的关系：
+1: 将区块居中显示，如<div>等
+12: 盒子模型。
+18: 字包图的实现-就是把图片浮动。
+19：浮动的定位；
+20: z-index区块上下层叠的优先级别：
+10: frameset框架。
+11: iframe网页嵌入。
+
+
+四：表单：
+21: 表单项的风格设置。
+-----form表单 及 post 和get 的传值示例
+	16: 表单中<input>中输入限定设置-pattern。
+   	 表单中if(isset($_POST['sub'])){)的应用
+表单中区分不同的提交行为用隐藏域--hidden 参看====学生成绩管理系统=====
+====聪明小猫的计算====
+
+
+	PHP部分：
+
+
+38: 函数的调用requery_once,include_once：
+40; global函数调用全局变量
+39: php的数组相关的函数说明count,is_array,explode,unset,abs
+	-----file_exists()判断文件是否存在
+	-----filesize()检查文件的大小
+	-----exit()调试使用函数;
+46: request 接收POST数据：
+42： php引用（地址）传递，可以使用 &变量名
+49: 二进制的位运算 & | ^ ~ >>  <<
+50：运算符 ++ -- += -= /= %= && || and or instanceof
+52: 显示数组的几种方式：echo ,print_r(),var_dump()
+53： 如何关闭notice级别的提示。
+32: table 表格元素与--隔行换色:
+	----table隔行换色
+54: 冒泡排序法，选择排序法,插入排序法,快速排序法及函数封装。
+45: 猜拳script-change-onchange选择同时换图片功能
+9: imagemap图像映射和script-click脚本。
+41:-------------
+43: break和continue-单层跳出和多层跳出循环。
+44: goto跳转语句：------三元运算法（三目运算法）
+47: 用循环语句打印出 三角形，金字塔，和空心凌形。
+48: do while的使用；
+51: foreach()-list()数组的几种遍历形式：
+====顺序查找，二分查找===
+====学生成绩管理系统=====
+====聪明小猫的计算====
+	内容包括：表单-数据传输-函数方法调用-区块内空的显示与隐藏（display:none-block）
+13:   常量：
+37: 常量的定义与使用define--const
+====静态变量的声明和使用-self::
+====全局变量的定义和使用-global
+-----关键字final
+=====析构方法 __destruct====
+====构造方法的两个版本-construct(){}
+	-----成员方法间的调用要以$this的方式
+=====get,set设置访问权限====
+	-----用__set方法管理所有属性（魔术方法）
+====魔术方法大全====
+	----魔术方法（函数）
+	----魔术常量:
+	----	__get、__set
+	----	__call
+		----__call的使用（相当于重载）:
+	----	__clone
+	----	__toString
+	----	__sleep、__wakeup
+	----	__construct、__destruct
+	----	__autoload
+	----	__isset、__unset
+	----	__set_state
+	----	__invoke(PHP 5.3.0以上版本有效)
+	----	__callStatic(PHP 5.3.0以上版本有效)
+
+=====方法的重写/方法的覆盖(override)====
+
+====抽象类和抽象方法（abstract）====
+
+=====用面向对象的方式做计算器项目====
+
+
+=====错误处理器及触发器=====
+		----保存日志时间----
+		----显示时间---
+
+=====PHP的异常处理====
+
+	-----异常处理机制--------
+	-----自定义异常处及多catch处理------
+	-----老版本的参数不适用try-----
+	-----自定义顶级异常处理！-----
+
+=====xml=====
+	-----XML的特性和应用
+	-----XML语法
+	-----xml标签的两种形式（标签区分大小写）
+	-----xml中的换行的空格会被处理
+	-----XML中标签元素的命名规范
+	-----xml的标签属性
+	-----特殊符号的实体字符
+	-----XML特殊字符处理CDATA
+	-----xml处理指令PI,可连接css
+	-----xml约束的两种方式；
+	-----xml,dtd,html 架接实例：
+
+
+=====DTD文档的声明及引用
+	-----DTD文档分内部，外部和内外结合结合三种方式：
+	-----DTD声明的两种方式：
+	-----DTD语法及元素：
+	-----元素属性列表说明：
+	-----实体定义分为引用实体和参数实体，
+
+	=====按照DTD格式编写XML并以及检验实例=====
+
+
+=====使用PHP技术对XML文件进行操作=====
+	-----三种XML操作技术;
+	-----DOM说明：
+	-----DOM命令及查找案例：
+	-----DOM 增删改查 crud 案例集合 -----
+
+header('Location:xx.php')  
+上面这句话会向客户端发送一个302状态码，告诉浏览器重新访问被指定的网页。
+header可以向http响应头写入信息。
+它也可以让其跳转到外网去如：header("Location:http://www.sohu.com");
+php Manual-其它服务-Network-Network函数
+
+=====xpath====
+
+=====simplexml=====
+	-----simplexml的使用:
+	-----simple可以结合xpath一起使用！
+	-----simple装载DOM对象；
+	-----simplexml_load_string()加载<<<字符串
+	-----simplexml元素值比较：
+
+-----利用$_SERVER['HTTP_REFERER'] 和 strpos()函数防盗连
+-----header() 重定向页面；
+
+-----文件下载的设置;
+
+-----用面向对象方式处理下载管理-案例
+	-----header()设置页面默认编码 与<meta>设置编码同效
+		注：header()报错两点原因:1,上面有空行或echo 	2，编码不对。
+	-----在href连接中php?可直接向另一页面传送数据
+	-----禁止页面缓存
+	-----通过http响应，控制浏览器间隔一定时间去跳转(页面刷新)
+
+
+
+
+
+
+
+
+
+	数据库
+		sql 是结构化查询语句
+	-----数据库sql注入漏洞
+
+27: apache的相关命令与配置：
+	一：命令行的启动与关闭：
+	二：apache 可以同时监听多个端口。
+	三：apache 各目录的含意。
+	四，apache 配置虚拟目录。
+28: 修改hosts文件给域名重定向：
+29: 虚拟主机的配置文件：
+30: php-WAMP环境的配置.
+	-----mysql在安装时出错的解决
+
+33: 解决-无法加载mcrypt扩展,请检查您的php配置
+34:-------------------------
+35: 虚拟主机-单IP绑定多域名-端口绑定和域名绑定
+36: 调整设置 mysql 数据传输大小
+	------PHP连接数据库：
+	------mysql相关命令
+
+
+=====php数据库编程=====
+	-----php操作mysql数据库的三种方式
+	-----mysql扩展库和mysql数据库的区别
+	-----数据有符号和无符号的区别；
+	-----字符串char 和varchar的区别
+	-----mysql环境的搭建
+	-----数据库（cmd）操作命令：
+	-----用md5加密数据库中的密码；
+	-----解决数据库与网页乱码问题（Data too long）
+	-----mysql取出查询结果的四种方法
+	-----数据类型的种类
+	-----exit()调试使用函数;
+	-----往mysql数据库插入中文字串的方法
+	-----mysqli 的释放内存和关闭连接
+	-----总结实例
+	-----把数据库中的数据以列表的形式显示出来
+	-----mysqli面向对象与面向过程语句对照
+
+
+=====使用php的mysqli扩展库操作mysql数据库
+	-----mysqli操作数据库（对象与过程的区别）
+	-----mysqli 批量执行sml语句
+	-----mysqli批量执行dml语句
+
+
+
+=====mysqli事务类型处理=====
+	-----mysqli 事务控制 acid
+	-----事务处理-账号转账案例
+	-----事务处理-节点备份与恢复
+
+
+=====mysqli stmt 预处理技术 
+	-----mysql工作原理及预处理技术
+    例子-----mysqli预处理技术prepare实例
+	-----预编译可以自动防止sql（结构化查询语句）注入攻击
+	-----防攻击的解决方案
+    实例-----用表格的方式显示数据表的信息和内容
+
+
+
+
+=====超全局变量=====
+        -----全局变量:
+	-----超全局变量(9种)：
+	-----$_GET 实际使用
+	-----解决GET在传送中文时出现错误的方法
+	-----如何判断是否接收到数据（值）
+	----- 在apache的conf.ini中不要启用register_globals
+
+
+
+
+
+
+	-----2014.8.18开始没有记录
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+============================================================================================================
+
+0: 解决乱码-ANSI。
+在保存文件时，将最下面的“编码”一栏的“ANSI”改成“UTF-8”。
+因为ANSI在不同版本的系统中它也是不一样的。所以会导致出现乱码！
+
+
+   ----<meta>头部相关元素：
+
+在文档顶部加写两句代码可以解决90%的问题。
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+	<title>LAMP兄弟连</title>
+	<meta http-equiv="Content-Type" content="text/html;	charset=gb2312"/>
+		//定义字符集编码的，告诉浏览器本档所使用的编码格式
+	<meta name="keywords" content="PHP培训|LAMP培训|就业培训"/>
+		//网站的关键字内容，  搜索引擎会对它很关注的。
+	<meta name="description" content="LAMP兄弟连致力于PHP培训"/>
+		//网站的描述，介绍网站是干什么的，这个也是搜索引擎比较关注的。
+	<link type="text/css" rel="stylesheet" href="./css/index.css"/>
+		//连接外部的CSS样式，
+	<style>
+		//这里边可以嵌入样式
+		body{
+			margin:0px;
+			padding:0px;
+			background:red;
+			color:green;
+		}
+	</style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+1: 将区块居中显示，如<div>等  
+	margin:0 auto;
+//注意在用这个设置居中的时候要注意<html>文档的 !DOCTYPE..头部要写上去
+	还有就是一定要设定一个宽度才能居中！
+
+
+
+2: ol有序列表和ul无序列表：
+  ---list-style-type去除边饰
+<style>
+	ul, ol{
+		list-style-type:none; 
+	}
+</style>
+<body>
+	<ol>
+		<li>aaa</li>
+		<li>aaa</li>
+		<li>aaa</li>
+	</ol>
+	<hr>
+	<ul> //去掉边饰功能只能在style中应用：
+		<li>bbb</li>
+		<li>bbb</li>
+		<li>bbb</li>
+	</ul>
+</body>
+
+
+
+
+3: 合并CSS中相同的属性。
+.one, .two, .three{
+	width:500px;
+	height:400px;
+}
+
+
+
+
+4: a:link,a:hover超链接（包括图片）样式变换。
+
+a{       //超链接常态下的显示属性。
+	color:blue;
+	text-decoration:none;
+}
+a:hover{  //当鼠标悬停在超链接上方时的属性。
+	color:red;
+	text-decoration:underline; 
+}
+a:visited{  //当超链接被点击后的属性。
+	color:black;
+}
+//也可以作用于图片等元素上：如：
+	a:hover img{
+		width:150px;
+		height:50px;
+		background:url("./img/bs.jpg");
+		background-position:0 -50px;
+	}
+
+	-1:  a:link 因浏览器版本问题的解决
+		如：a:link{
+			text-decoration:none  //在IE7以前的版本不认
+		}
+		a{
+			text-decoration:none //那么就直接在A这里设置。
+		}
+
+选择器与父子选择器：
+选择器有 id选择器(#id)，元素选择器(p,body,a)，类选择器(.div)，通配符选择器(*{}).
+
+父子选择器实例：
+<style>
+	p{
+		color:blue;
+	}
+	p .fz {
+		color:pink;
+	}
+	p .fz #coo{
+		color:red;
+	}
+	p .fz #coo a{
+		color:yellow;
+		text-decoration:none;
+	}
+	a:hover{
+		color:red;
+		font:italic bold 30px normal;
+	}
+</style>
+
+<body>
+	<p>
+AAA<span class="fz">AAAAA<span id="coo">AAAAAA<a href="#">AAAAAAAAAAA</a>AAAAAAAAAA</span>AAAAAAAA</span>AAAAA	
+	</p>
+	<a href="#">www.baidu.com</a>
+</body>
+
+
+
+
+	-----base设置target本页超连接在新窗口打开的默认属性
+让本页所有的超连接在新窗口打开页面 
+<base target="_blank">
+<body>
+	<a href="http://www.baidu.com">超级连接</a><br><br>
+	<a href="http://www.baidu.com">超级连接</a><br><br>
+<body>
+
+
+
+
+
+
+
+
+
+
+5: HR水平线的设置。
+
+hr{
+	background-color:green;  
+	border:5px solid black;
+	height:10px;
+}
+
+
+
+
+
+6: 行内元素和块元素可以相互转换；
+.s1{
+	display:block;  //使用s1类选择器的元素，将按照块元素来显示。
+}
+.s2{
+	display:inline; //使用s2类选择器的元素，将按照行内元素来显示。
+}
+	行内外元素改变 dispaly只能在一个标签内应用一次！！！
+
+
+
+
+
+7: 滤镜和伪类使超链接图片变色。
+	a:link img{
+		filter:gray;
+	}
+	a:hover img{
+		filter:"";
+	}
+	<a href="#"><img src="../img/img/11.jpg" /></a>
+	<a href="#"><img src="../img/img/22.jpg" /></a>
+
+
+
+
+8: embed音频视频嵌入连接。
+	<embed src="../audio/windows.wav" hidden="true" autostart="true" loop="infinite" />
+	<img src="11.jpg" dynsrc="../audio/windows.wav" loop="2" start="mouseover" />
+	<p class="one"><embed src="../audio/xdl.mp4" width="400" height="300" /></p>
+
+autostart 是否自动播放，“true”为音乐文件读取完后立即播放，“false”则不立即播放，默认值为“false” 
+hidden 隐藏界面
+loop 循环次数，设置为“true”为永远循环，“false”为仅播放一次，若设为任意一正整数，则循环所输入的次数。 
+volume 设置音量，取值范围是“0-100”，默认值为系统当前音量。 
+starttime 设置音乐开始播放的时间，格式是“分：秒”， 
+如：starttime＝"00:10"，就是从第10秒开始播放。 
+endtime 设置音乐结束播放的时间，具体格式同上。 
+width 设置音乐播放控制面板的宽度。 
+height 设置音乐播放控制面板的高度。 
+controls 设置音乐播放控制面板的外观， 
+“console”为通常面板； 
+“smallconsole”为小型面板。 
+“playbutton”为是否显示播放按钮； 
+“pausebutton”为是否显示暂停按钮； 
+“stopbutton”为是否显示停止按钮； 
+“volumelever”为是否显示音量调节按钮，
+
+
+
+
+
+9: imagemap图像映射和script-click脚本。
+	<script>
+		function on(){
+			alert("您点击了这里！！！");
+		}
+	</script>
+	<body>
+		<img src="zy2.jpg" usemap="#one" />
+		<map name="one">
+			<area shape="rect" onclick="on()" href="#" coords="0,0,200,200" />
+		</map>
+	</body>
+
+插入图片：
+	<img src="..." whdth=""  height="" border="1px" />
+
+背景图片的设置
+			body{
+				background-color:black;
+				background-image:url(./img/tit.png);
+				background-repeat:no-repeat;  (repeat-x;repeat-y)
+				background-attachment:fixed;  (scrool)
+			}
+			.di{
+				width:70;
+				height:25;
+				background-image:url(./img/bg.gif);
+				background-repeat:no-repeat;
+				background-position:0 -218px;
+			}
+
+
+
+-----script可以直接用于页面打开
+<?php
+	echo "<script>alert('lskjdf')</script>";
+?>
+
+
+
+
+
+
+
+10: frameset框架。
+<frameset rows="15%,*,10%">
+	<frame src="top.html" noresize />
+	<frameset cols="20%,*" >
+		<frame src="left.html" noresize />
+		<frame name="frame2" src="right.html" noresize />  //把显示所有内容的板面设置一个名称：frame2
+	</frameset>
+	<frameset cols="50%,*" >
+		<frame src="bottom.html" noresize />
+		<frame src="bottomright.html" noresize />
+	</frameset>
+</frameset>
+<body>
+	<a href="yxzy.html" target="frame2">邮箱主页</a><br>   // 设置超链接并把开启目标指向上面设置的板面frame2
+	<a href="sjx.html" target="frame2">收件箱</a><br>    //以下同上。
+	<a href="fjx.html" target="frame2">发件箱</a><br>
+	<a href="cgx.html" target="frame2">草稿箱</a><br>
+</body>
+
+
+
+
+
+
+
+11: iframe网页嵌入。
+	//当点击超链接时，打开的页面在下方指定的网页嵌入框架iframe页面中打开.
+<a href="http://www.hao123.com" target="iframe">好123</a><br/>
+<iframe name="iframe" src="http://www.baidu.com" width=300 height=300 ></iframe>
+	//下面是在body体中嵌入另一个网页。
+<iframe src="http://www.hao123.com" width=300 height=300 ></iframe>
+<iframe src="http://www.taobao.com" width=300 height=300 /> 
+
+
+
+
+
+
+12: 盒子模型。
+
+	<body>
+		<div class="box">
+			<ul class="ul">
+				<li class="tleft">明星空间</li>
+				<li class="tright"><a href="#">更多空间</a></li>
+			</ul>
+			<ul class="ul">
+				<li class="tleft">优酷公益</li>
+				<li class="trightb"><a href="#">更多公益官网</a></li>
+				
+			</ul>
+		</div>
+	</body>
+
+
+
+
+
+
+
+13: 常量：
+常量可以理解成是一种特殊的变量，一旦被定义，就不能再改变或者取消定义。
+常量和变量有如下不同；
+1,常量前面没有美元符$.
+2,常量一旦定义就不能被重新定义或者取消定义。
+3,常量在定义的时候，就需要给它赋初值。
+4，常量通过define 或者const定义。
+5，常量名称一般全部大写，然后用下划线间隔。
+6，在程序中我人不希望某个值变化，则考虑用常量。比如圆周率等。
+7，常量可以不用理会变量的作用域而在任何地方定义和访问。
+8，常量的值是标量(基本数据类型)string,integer,float,boolean.
+<?php
+	//第一种方法：
+	difine("TAX_RATE",0.08);
+	echo TAX_RATE;
+	结果： 0.08
+
+	//第二种方法；只适用于php5.3版本以后，以前的会报错
+	const TAX_RATE2=0.1;
+	echo "--".TAX_RATE2;
+	结果：0.1
+?>
+
+
+
+
+
+
+
+14: 各属性的简写顺序。
+  一：背景-background:
+		    颜色    图片     重复       是否固定     设定位置
+	background:color || image || repeat || attachment || position
+	repeat: repeat  no-repeat  repeat-x   repeat-y
+	attachment: fixed scroll
+	position: x x x x ;
+  二: 边框-border:
+	border:1px solie blue;
+
+
+
+
+
+
+
+15: 浏览器兼容性。
+.rank_more{
+	width:141px !important;
+	width /**/: 150px;
+}
+
+
+
+
+
+
+
+
+
+16: 表单中<input>中输入限定设置-pattern。
+
+<input type="text" class="text" name="text" value="请输入手机号..." pattern="[0-9]{11}"/>
+
+    表单中if(isset($_POST['sub'])){)的应用
+	if(isset($_POST['sub'])){
+		echo "姓名：".$_POST['name']."<br/>";
+		echo "年龄：".$_POST['age']."<br/>";
+		echo "性别：".$_POST['sex']."<br/>";
+		echo "出生日期：".$_POST['year']."年";
+		echo $_POST['month']."月";
+		echo $_POST['day']."日";
+		var_dump ($_POST['ah[]']);
+	}
+
+
+
+
+17: 当span加上float或display时就会变成块元素；
+.d1{
+	display:block; //当span加上block时,span就会变成不会浮动的块元素。
+	float:left;  //当span加上浮动时，span就会变成可以浮动块元素。
+}
+<span class="d1"></span>
+
+
+
+
+
+
+
+18: 字包图的实现-就是把图片浮动。
+字包图-简单来说，字包图的形成就是让图片浮动起来，成为一个区块，让出行内其它空间!
+<img style="float:left;margin:5px" src="url.jpg" /> //测试用jpg好使，gif失效。
+	注意：字包图时，用汉字可以自动换行，但用字符时要手动换行，字母包不了图，会跑到图下面。
+
+
+
+
+
+
+19：浮动的定位；
+
+position: static |  absolute | fixed | relative  
+static:静态定位-是默认的正常定位，left,top对它不生效。
+absolute: 绝对定位-是在同样也脱标的父元素中改变自身位置的定位，如果没有父元素或父元素属于标准流时	，则对页面的左上角定位。它移动后的空间会被其它区块占用。 类似于被浮动了！
+fixed:固定定位-就是只针对页面(不是body)的左上角来定位。这没有父区块。或唯一父区块就是页面。
+	它移动后的位置也会被占用，也类似于浮动。即使不移动加上此属性，位置也会被占用。出现重叠。
+relative: 相对定位-是针对自己原位做的定位改变，它脱离标准流后的空间，不能被占用，依然要保留。
+		相对定位会随着父区块的改变而改变，最终父区块为body.
+
+	.div1{
+		float:left;
+		width:30px;
+		height:30px;
+		background:#ccc;	
+	}
+	#spe{
+		position:relative;
+		top:40px;
+		left:40px;
+	}
+
+
+
+20: z-index区块上下层叠的优先级别：
+		.two{
+			background:yellow;
+			position:absolute;
+			top:20px;
+			left:210px;
+			z-index:2;
+		}
+		
+
+
+
+
+
+
+
+21: 表单项的风格设置。
+<style>
+	.sub{
+		width:50px;
+		border-width:4px 1px 1px 1px;
+		border-color:#999;
+		background:blue;
+		border-style:solid;
+	}
+</style>
+<body>
+	<a href="#"><img src="" /></a>
+	<form action="" method="post" >
+	<input type="text" class="tt" name="text" /><br>
+	<input type="submit" class="sub" name="sub" value="提交" />
+	</form>
+</body>
+
+
+
+
+-----form表单 及 post 和get 的传值示例
+
+<?php
+	if(isset($_GET['sub'])){ 			 //可以把GET改成POST
+	echo "姓名：".$_GET['name']."<br/>";		 //可以把GET改成POST
+	echo "年龄：".$_GET['age']."<br/>";		 //可以把GET改成POST
+	echo "性别：".$_GET['sex'];			 //可以把GET改成POST
+	}
+?>
+<html>
+	<head>
+		<title>one</title>
+		<meta http-equiv="content-type" content="text/html;	charset=gb2312" />
+	<head>
+	<body>
+		<form action="" method="post">  
+			<input type="text" name="name" /><br/>
+			<input type="password" name="psd" /><br />
+			<input type="radio" name="sex" />男
+			<input type="radio" name="sex" />女<br />
+			<select name="sel">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select><br />
+			<input type="checkbox" name="aihao[]" value="book" />看书
+			<input type="checkbox" name="aihao[]" value="net" />上网
+			<input type="checkbox" name="aihao[]" value="sport" />运动
+			<input type="checkbox" name="aihao[]" value="girl" />泡妞<br />
+			<td>自我评价</td><br />
+			<td>
+				<textarea name="jieshao" cols="40" rows="4">
+				</textarea>
+			</td><br />
+			<input type="submit" name="sub" value="提交" />
+			<input type="reset" name="reset" value="重置" />
+		</form>
+
+	</body>
+</html
+
+
+
+
+
+
+
+
+
+
+22: border元素边属性设置：
+border-width:2px 1px 1px 1px;
+border-color:black;
+border-style:solid;
+或：
+border:1px blue solid;
+
+
+
+
+
+
+23: text-align,line-height,12px/30px这个行高调整文字的位置
+	.one{
+		width:300px;
+		height:300px;
+		text-align:right;
+		line-height:50px;
+	}
+...只对文字有效果！！
+font:normal normal 12px/30px normal 中那个30px设置行高来调整文字的高低。
+
+
+
+
+
+
+
+
+
+
+24: 行内元素如span,a等只有设置了display:block后才能设置宽高成为区块加背景.
+
+//想要变换超链接的背景图片，如果在行内元素，就要加入display:block改变元素成的
+	区块元素，然后才可以设置宽高和背景图片。
+<style>
+	*{
+		border:1px blue solid;
+		margin:0;
+		padding:0;
+	}
+	a{
+		color:black;
+		font:italic bold 30px normal;
+		text-decoration:none;
+		width:100px;
+		height:50px;
+		display:block;
+		background:url(./img/bs.jpg);
+		text-align:center;
+		line-height:46px;
+		float:left;
+		margin-top:20px;
+		margin-left:50px;
+		border-width:1px 5px 3px 1px;
+		border-color:gray;
+		border-style:solid;
+	}
+	a:hover{
+		color:blue;
+		background-position:0 -50;
+	}
+
+	
+</style>
+
+<body>
+	<div>
+		<a href="#">首页</a>
+		<a href="#">首页</a>
+		<a href="#">首页</a>
+		<a href="#">首页</a>
+		<a href="#">首页</a>
+	</div>
+</body>
+
+
+
+
+======隐藏内容-display:none-block=====
+如此将隐藏区块或元素中的内容
+none为隐藏，block为显示.
+<body>
+	<div style="display:none"">
+		aaaaaaaaaaaaaaaaaaa
+	</div>
+</body>
+
+
+
+
+25: alt 和 title关于说明提示，它俩效果等同，title更兼容！
+
+这两项的功能是，当鼠标放在相应的元素上时，会出现提示信息。alt在IE8中就不显示了，面title而会显示，所以title更兼容！
+<body>
+	<img src="xx.jpg" alt="这是一个提示" />
+	<img src="xx.jpg" title="这是一个提示" />
+	<input type='button" title="这是一个按钮" value="登陆" />
+</body>
+
+
+
+
+
+
+
+
+26: <!DOCTYPE...>几种头部兼容体。
+①DOCTYPE是document type（文档类型）的简写，在web设计中用来说明你用的XHTML或者HTML是什么版本。要建立符合标准的网页，DOCTYPE声明是必不可少的关键组成部分！
+②看看下面的代码，是不是很熟悉？像这样的，在文档最顶端，所有代码之上的乱七八糟的东西，就是用来声明DOCTYPE的！
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+③你有三种选择，用来声明DOCTYPE
+* 过渡的(Transitional)：要求非常宽松的DTD，它允许你继续使用HTML4.01的标识(但是要符合xhtml的写法)，完整代码如下：
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+* 严格的(Strict)：要求严格的DTD，你不能使用任何表现层的标识和属性，例如<br>，完整代码如下：
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+* 框架的(Frameset)：专门针对框架页面设计使用的DTD，如果你的页面中包含有框架，需要采用这种DTD，完整代码如下：
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+一般使用过度的就可以了。。
+如果你的margin:0 atuo;不起作用，不能居中的话，看你的文档最顶端有没有声明DOCTYPE！在你的网页顶端加上声明，看看行不行哦……嘿嘿，我就犯这样的错误。
+
+
+
+
+
+
+
+
+
+
+27: apache的相关命令与配置：
+一：命令行的启动与关闭：
+	httpd -k -stop | shutdown  关闭服务
+	httpd -k start  开启服务
+	httpd -k restart  重启服务
+
+	netstat -an 查看机器有哪些端口在监听。
+	netstat -anb 扫描开放端口与相应的服务程序。
+
+二：apache 可以同时监听多个端口。
+	配置conf文件夹下的 httpd.conf文件。找到Listen 80 字样的内容并改写如下：
+	
+	Listen 80
+	Listen 81
+	Listen 82  //这里代表同时监听 80 81 82三个端口。
+
+
+三：apache 各目录的含意。
+
+bin 	: 该目录下存放apache的常用命令。比如httpd.exe
+cgi-bin	: 该目录下存入LinuxG下的常用命令 如.sh
+conf 	: 存放配置文件，如httpd.conf
+error	: 存放错误记录。
+htdocs	: 默认情况下，存入我们的站点文件。站点文件可以通过文件夹的形式来分类。
+icons	: 存放图标。
+logs	: 存放apache 的相关日志。
+manual	: 手册
+modules	: apache 模块。
+
+
+四，apache 配置虚拟目录。
+1,找到这个节点
+<IfModule dir_module>
+	DirectoryIndex ....
+</IfModule>
+
+2,添加以下内容：
+<IfModule dir_module>
+	DirectoryIndex index.html....   //这里添加自动识别打开的的主页文档
+	Alias /yyy "X:/yyyy">		//yyy是目录名称，X是盘符 如 c 或 d
+	<Directory "x:/yyy">
+	Order allow, deny	//这里设置了文件夹的访问权限为“先允许，再拒绝”
+	Allow from all		//这里设置允许所有IP可以访问
+	Deny from xxx.xxx	//这里设置某段IP不可以访问
+	</Directory>
+</IfModule>
+
+3,设置apache的访问映射。 
+apache 的访问映射目录黑认为htdocs，这可以通过httpd.conf文件来更改。
+找到 DocumentRoot 节点，把后面类似 'D:/AppSev/www' 这样的内容改成，自己想要的目录路径。
+然后再找到 <Directory ""> 在双引号间也改成同上一样的路径。
+
+
+4，如果不想要哪些东西，可以在配置文件中通过 # 符号来注销.  加在某节点的字段前头即可。
+
+
+
+
+	自己领悟的一些要点：
+  		1：映射站点文件夹 : 修改 DocumentRoot "x:/yyy"  中的指定路径
+			然后再找到<Directory "x:/yyy"> 设置同样的路径和权限
+		2: 映射欢迎主页（就是打开一直IP或域名直接显示的页面）
+			找到<IfModule dir_module>
+				DirectoryIndex index.html....    //在这里添上你想要显示的主页
+			    </IfModule>
+		3：在其它盘中映射虚拟目录 : 
+			找到<IfModule dir_module>
+					DirectoryIndex index.html index.htm index.php
+			    </IfModule>
+			然后在其下面添加如下代码；
+			<IfModule dir_module>
+				DirectoryIndex index.html index.htm index.php alipay.html
+				Alias /alipay "C:/alipay"
+				<Directory "C:/alipay">
+					Order deny,allow
+					Deny from all
+					Allow from all
+				</Directory>
+			</IfModule>
+	
+
+
+
+
+
+
+
+
+28: 修改hosts文件给域名重定向：
+在C:\WINDOWS\system32\drivers\etc下打开 hosts文件
+
+编辑如下内容：
+对应的IP        对应的域名：
+127.0.0.1       localhost
+
+
+
+29: 虚拟主机的配置文件：
+	1: 在httpd.conf 文件中找到 Virtual host 节点并启用该功能，（去掉模块的#号,如下）
+# Virtual hosts
+Include conf/extra/httpd-vhosts.conf
+
+
+	2: 配置httpd-vhosts.conf文件：添加如下代码。并关闭报错的模块。
+<Virtualhost 192.168.137.81:80>
+	DocumentRoot "d:/two"
+	DirectoryIndex index.html
+	<Directory />
+	Options FollowSymLinks
+	AllowOverride None
+	Order deny,allow
+	Allow from all
+	</Directory>
+</virtualhost> 
+
+
+
+
+
+
+30: php-WAMP环境的配置.
+一：安装apache 
+二：解压php
+三：修改及配置文件；
+1， 修改文件;
+	a:在ini 文件中 找到 extension_dir = "./" 加入路径如："C:/php/ext "
+	b:取消 extension=php_mysql.dll 前分号
+	  取消 extension=php_mysqli.dll 前分号
+	c:取消 extension=php_mbstring.dll 前分号
+	d:把php.ini-dist  名字改为 php.ini    
+		d-注释；其它版本不一定是ini-dist 要找到带ini的文件，查看其内容是否有上面三条。
+
+2,把 ../mysql/bin/libmySQL.dll   拷贝到 php5.0 下面，还有拷贝到 php5.0/ext 目录下//这条不准
+然后把php.ini复制到C盘windows下.把 php5ts.dll 和libmysql.dll复制到 c:/windows/system32下
+	
+3.修改httpd.conf文件
+	a:在	LoadModule ssl-module modules/mod_ssl.so  的下一行加上如下代码：
+		LoadModule php5_module c:/php/php5apaceh2_2.dll   //2.0版的就改成php5apache2.dll
+	b:在 	AddType application/x-gzip.gz.tgz  的下一行加上
+		AddType application/x-httpd-php .php    //识别并解析.php的文件 也可加入其它类型。
+		增加PHPIniDir "php安装目录"
+
+	保存后关闭
+4.写一个PHP文件<?php phpinfo() ?> 放到htdocs下，浏览localhost 看是否成功.
+
+
+四：安装mysql 
+	运行index.php时不要在同层级，要在上一层级.不然会报错！
+	建一个 <?php  $link = mysql_connect(); ?> 连接PHP文件测试
+五：解压安装myadmin;
+	将文件直接解压到apache指定的web目录下即可。
+	!!!注：有时myadmin 会莫明出现错误，需要清空一下缓存就会解决问题！
+
+
+
+
+
+31: 从indent看display:block-inline与行内元素的关系：
+
+<style>	
+	a{	text-indent:10px;	}
+	.ab{	text-indent:100px;	display:block;	}
+</style>
+<boyd>
+<a>aaaaaaa</a><br>
+<a class="ab">bbbbbb</a>
+</body>
+从上可以看出，有些属性在行内元素是不生效的，当用display改变了其行内属性时，装饰效果就会产生！
+
+
+
+
+
+32: table 表格元素与--隔行换色:
+
+
+----表格table属性
+table 标签属性；
+width -- 代表表格的宽度，
+height -- 代表表格的高度。
+border --用来设置表格边框尺寸大小。CSS来实现
+cellspacing -- 代表表格边框与表格内容填充的距离，也是内容填充之间的距离，CSS来实现。
+cellpadding -- 代表内容填充的宽度，CSS来实现。
+
+
+th -- 标题栏。//  标题一行用th,标题会自动居中，内容就要用td了
+<td></td>定义列。
+<tr></tr>定义行.   行  row
+align="center"  //把这行的内容显示形式为居中。
+align="right"  //右对齐，
+align 默认的是左对齐；
+width 与height 代表宽度与高度。
+colspan -- 一行跨越多行
+rowspan -- 一列跨越多列
+align -- 代表队水平对齐方式--left，左对齐,| center，居中|right右对齐|justify ，两端对齐，CSS来实现
+valign -- 代表垂直对齐方式 --top,顶部对齐| middle,中部对剂| bottom，下部对齐|baseline,基线对齐,CSS来实现。
+
+----table隔行换色
+<html>
+<body>
+<table width="600" border="1px" bordercolor="blue" align="center">
+	<?php
+		for($i=1;$i<11;$i++){
+			if($i%2==1){
+				$bg= "#aaa";
+			}else{
+				$bg= "#eee";
+			}
+			echo "<tr bgcolor=$bg>";       //表格的背景色在<tr>中设置
+				for($j=1;$j<11;$j++){
+					echo "<td align=center style=color:red>aaa</td>";
+						//表格中字体的颜色在<td>中设置
+				}
+			echo "</tr>";
+		}
+	?>
+</table>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+33: 解决-无法加载mcrypt扩展,请检查您的php配置
+
+应该打开下面的配置行，PHP.INI里面：
+extension=php_mysql.dll
+
+你那个php_mcrypt.dl与mysql无关。
+
+另外应该mysqll相关的文件。
+评论 | 1 0
+2009-12-24 14:07 三山湖 | 五级
+出现以下几种情况后可能会造成运行phpmyadmin程序提示“无法载入 mcrypt 扩展，
+请检查 PHP 配置”的 错误提示
+
+1、没有正确安装Mysql数据库，在系统服务中Mysql相关的服务没有启动 （请查看正确安装Mysql的方法）
+
+2、在系统的 system32（C:\windows\system32） 目录下缺少 libmcrypt.dll文件，解决方法是找到php目录下的libmcrypt.dll，并将libmcrypt.dll复制到C:\windows \system32目录中，然后重新启动Web服务。
+
+3、在C:\windows目录下的php.ini文件中，没有将“;extension=php_mcrypt.dll”中的前面一个“;”去掉，所以不能使用相应功能，解决方法是打开php.ini文件
+找到
+;extension=php_mcrypt.dll
+改成
+extension=php_mcrypt.dll //去掉前面的;使之生效
+
+4、Mysql目录没有读取权限，正确的目录权限如下：
+administrator 完全控制
+system 完全控制
+
+5,清除缓存
+user 读取加运行
+其他的用户权限全部删除（也可保留，但安全性不高，建议删除），然后重启MYsql服务和Web服务（建议修改此项后重启一下服务器）
+当你试过所有办法之后还是不行,其实还有一步,网上很少有说,解决办法,我的是2003+IIS+PHP5+MYSQL5
+
+桌面>我的电脑>右键属性>高级>环境变量>系统变量>新建
+
+名：phprc
+值：D:\Server\php(你的PHP在什么目录就是什么)
+
+
+
+
+
+
+
+
+
+
+
+
+34: 解决-您可能正在上传很大的文件，请参考文档来寻找解决方法
+
+检查php.ini 配置文件中的以下三个地方，upload_max_filesize, memory_limit 和post_max_size，并且推荐修改的值要稍大于导入的巨大sql数据库文件；依照这个提示，修改后，重启了php环境,OK
+
+
+
+
+
+35: 虚拟主机-单IP绑定多域名-端口绑定和域名绑定
+
+<VirtualHost *:80>
+	DocumentRoot "x:/yyyy"
+	ServerName www.xxx.com
+	DirectoryIndex index.html
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+		Order deny,allow
+		Allow from all
+	</Directory>
+</Virtualhost>
+
+
+开启81 端口
+<Virtualhost 127.0.0.1:81>
+	DocumentRoot "x:/yyy"
+	DirectoryIndex index.html
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+		Order deny,allow
+		Allow from all
+	</Directory>
+</Virtualhost>
+
+
+
+
+
+
+
+
+36: 调整设置 mysql 数据传输大小
+在php.ini中设置下面三个参数
+upload_max_filesize, memory_limit 和post_max_size
+
+
+
+
+----PHP连接数据库：
+<?php
+	$link = mysql_connect('localhost','root','abcd');   //连接数据库，（）中指定路径，账户，密码。
+	mysql_select_db('threephp'); 			    //选择数据库，（）中指定哪一个库的库名。
+	mysql_set_charset('utf-8');			    //设置使用编码是什么。
+					//到这里，数据库就连接成功了。
+	$sql = "select id,name,age,sex from user where id = 10"; //查一条时用 $row形式，
+	$res = mysql_query($sql);                           //这条语句就是把数据库内容$sql发送了。
+	//var_dump($res);	//查看发送是否成功，打开网页显示：resource(3) of type (mysql result)  表示成功。
+	//$row = mysql_fetch_assoc($res);
+	//var_dump($row);
+	while(list($id,$name,$age,$sex) = mysql_fetch_row($res)){  //查多条时用这种while 形式/
+		echo "{$id}--{$name}--{$age}--{$sex}--<br/>";
+	}
+
+?>
+
+
+
+
+
+
+
+---mysql相关命令：
+进入数据库： mysql -uroot -p  
+ 
+显示库内容：show databases;
+
+进入数据库：  use threephp    	//threephp为数据库的名字
+
+显示库中的表: show tables;  	
+
+看表的内容结构： desc user;
+
+退出： exit; 或  quit;
+
+ // user 为表名，name 和value 要一一对应
+插入内容： insert into user(name,age,sex) value('zhangsan',20,'nan');   
+插入多条内容：insert into user(name,age,sex) value('zhangsan',20,'nan')，(name,age,sex) value('zhangsan',20,'nan')，，，，依次类推，就是name等字段名，输入一次，后面的值多闪重复写，间隔用逗号隔开。
+
+	update语句更新数据表中已存在的数据
+update 表名 set 字段名=表达式[,....][where 条件]
+[order by 字段][limit 行数]
+
+//更新示例；
+update user set name = 'wangjun';  //这里不加参数where会改变表中所有该名字的内容。
+update user set name = 'zhangsan' where id = 1;  //这样就会只改变第一个字段内容了。
+
+
+ Delete 删除数据：
+delete from 表名 [where 条件] [order by字段] [limit 行数]
+delete from user where id = 3;                      //user 是表名，where必须有的参数，
+
+
+
+
+//查询相应字段同容；
+select name from user;    //只查name;
+
+select name,age from user; //同时查name 和age 两项。
+
+select * from user;        //查询user 表中所有的内容
+
+select id,name,age,sex from user where id = 33;    //查询id为33的具体内容;
+
+select id,name,age,sex from user where id < 10;    //查询id小于10的所有内容；
+
+select id,name,age,sex from user where id between 15 and 25;   // 查询id从15到25之间的内容.
+
+select id,name,age,sex from user where id in (4,6,32,53,57,60);  //同时显示多条不同的内容。
+
+select id,name,age,sex from user where name like '%a%'; //模糊查找，带某个字符段的。
+select id,name,age,sex from user where name like '%g'; //模糊查找，以某个字段开头的，
+select id,name,age,sex from user where name like 'w%'; //模糊查找，以某个字段结尾的。
+
+select id,name,age,sex from user order by id;  //正序排列显示，可以用name,age,等其它。后面省略了asc 因为是默认的.
+select id,name,age,sex from user order by id desc;  //倒序排列显示，，，，其它同上。
+
+select * from user limit 3;  //limit 限制最多输出三行，
+select * from user limit 7,3;  //限制 从第七行开始，最多输出三行。
+
+select count(*) from user; //查询user表里有多少条内容。
+
+select sum(age) from user;  //计算总和：计算user表下的 age 年龄的总和是多少。
+select avg(age) from user;  //求平均数； 计算user表下的age 年龄的平均值是多少。
+select max(age) from user;  //求最大值； 显示user 表中age年龄最大的。
+select min(age) from user;  //求最小值； 显示user表中age年龄最小的。
+
+select version();        //查询版本；
+
+select 1+1;              //可以计算；
+进入数据库： 
+显示库内容：
+进入数据库：
+显示库中的表: 	
+看表的内容结构：
+退出： exit; 或  quit;
+插入内容：
+更新数据
+删除数据
+同时查name 和age 两项。
+查询id为33的具体内容;
+查询id小于10的所有内容；
+查询id从15到25之间的内容.
+同时显示多条不同的内容。
+模糊查找，带某个字符段的。
+模糊查找，以某个字段开头的，
+模糊查找，以某个字段结尾的。
+正序排列显示，
+倒序排列显示
+限制最多输出三行，
+限制 从第七行开始，最多输出三行
+查询user表里有多少条内容。
+计算总和：计算user表下的 age 年龄的总和是多少。
+求平均数； 计算user表下的age 年龄的平均值是多少。
+求最大值； 显示user 表中age年龄最大的。
+求最小值； 显示user表中age年龄最小的。
+查询版本；
+可以计算；
+
+
+
+
+
+
+
+
+
+
+
+37: 常量的定义与使用define--const
+<?php
+	//第一种方法
+	define("MAX_REDA",0.08);
+	ECHO MAX_REDA;
+	结果：0.08;
+
+	//第二种方法 只适用于php5.3版本以后，以前的会报错
+	const MAX_REDA2=0.1;
+	ECHO MAX_REDA2;
+	结果：0.1
+?>
+
+-----常量的定义与使用：
+
+<?php
+	define ('AAA','23489jelkwjer');
+	echo "类外define定义的全局常量：AAA-".AAA."<BR>";
+	echo "它只能在类外定义，属于全局常量！<hr>";
+class One{
+	const BBB="222";
+	//const它只能在类中定义，属于成员常量！但它可以同时被类的内部和外部调用。
+	public $a;
+	public function __construct($aaa){
+		$this->a=$aaa;
+		echo $this->a;
+		echo "<hr>".self::BBB."类中定义的常量，在本类中的调用！<hr>";
+	}	
+}
+echo "类中const定义的常量".One::BBB."<br>";
+echo "<hr>";
+$a=new One(AAA);
+?>
+
+
+echo "<hr>----常量关键字const<br>";
+
+class E{
+	const ABC = 0.05;
+	function rate($rate){
+		//return $rate * self::ABC;  第一种方法。
+		return $rate * E::ABC;  //第二种方法。
+	}
+}
+$e = new E();
+echo $e->rate(200);
+echo "<BR>".E::ABC;
+echo "<br>".E::rate(300);
+
+
+
+
+
+38: 函数的调用requery_once,include_once：
+如：a.php页面调用b.php定义的函数
+
+实例；
+
+b.php   	//被调用的页面
+<?php
+	function abc(){ 
+		echo "这是b.php的页面";
+	}
+?> 
+
+a.php
+<?php
+//第一种方式：直接调用；
+	//这里调用了b.php 页面
+	require "b.php";    
+	//这里是调用了b.php 页面的函数 abc();
+	abc();
+
+//第一种方式：通过变量引入；
+	$fileName = "b.php";   
+	abc();
+
+//第三种方式； 和第一种差不多，只是加个括号；
+ 	require ("b.php");
+	abc():
+?>
+
+
+
+
+
+
+
+
+
+39: php的数组相关的函数说明count,is_array,explode,unset,abs
+	1，count($arr) :可以统计该数组共有多少元素。
+	2，is_array($arr) :判断变量名是否为一个数组。 
+	3, print_r()和var_dump() 可以同时显示数据类型及内容 
+	4, explode("&",$arr);以&符号为标记，拆分字符串,
+		如：
+		$str="北京&顺平&天津";
+		$arr=explode("&",$str);
+		print_r($arr);
+		结果：Array([0]=>北京 [1]=>顺平 [2]=>天津);
+	5, sort 函数 用于排序。
+	6,释放删除一个函数用unset($a);
+		<?php
+			$a = 34;
+			unset($a);  //$a以被释放或删除
+			$b = 22;
+			$res = $a+$b;
+			echo $res;  //结果是22.
+		?>
+	7, abs 返回参数的绝对值：
+		<?php
+			$abs = abs(-4.2); $abs = 4.2; (double/float)
+			$abs2 = abs(5);	  $abs2 = 5; (integer)
+			$abs3= abs(-5);	  $abs3 = 5; (integer)
+		?>	
+
+
+
+
+
+
+
+
+40; global函数调用全局变量
+<?php
+	$a = 34;
+	function abc(){
+		global $a;
+		$a += 22;
+	}
+	abc();
+	echo $a;  //结果等于56;
+?>
+
+
+
+
+
+
+41: 
+
+
+
+
+
+
+42： php引用（地址）传递，可以使用 &变量名
+<?php
+	$a = 55;
+	function abc($b){
+		$b += 33;
+	}
+	abc($a);
+	echo $a; 	//正常运算-结果：55
+?>
+<?php
+	$a = 55;
+	function abc(&$b){
+		$b += 33;
+	}
+	abc($a);
+	echo $a; 	//当用&引用传递时-结果：88
+?>
+
+
+
+
+43: break和continue-单层跳出和多层跳出循环。
+ break-单层跳出和多层跳出循环。
+break语句，后面带的数字，不能超过实际可以跳出的循环层数，否则报错！
+<?php
+	while(++$a){
+		switch($a){
+			case 4:
+				echo "这是第四次循环<br>";
+			break;
+			case 6:
+				echo "这是第六次循环<br>";
+			break;
+			case 8:
+			break 2;  // 当循环到第八次时，break2会直接跳出switch和while两层外面。
+		}
+	}
+	echo '$a='.$a;
+?>
+
+continue-单层跳出和多层跳出循环。
+<?php
+	for($i=0;$i<2;$i++){
+		for($j=1;$j<4;$j++){
+			if($j==2){
+				continue 2;
+			}
+		}
+	}
+	echo '$i='.$i.'$j='.$j."<br>";
+?>
+
+
+
+
+
+44: goto跳转语句：
+The goto 操作符仅在 PHP 5.3及以上版本有效.
+goto操作符可以用来跳转到程序中的某一指定位置。该目标位置可以用目标名称 加上冒号来标记。PHP中的goto有一定限制，只能在同一个文件和作用域中跳转， 也就是说你无法跳出一个函数或类方法，也无法跳入到另一个函数。你也无法跳入到任何循环或者switch 结构中。常见的用法是用来跳出循环或者switch，可以代替多层的break。
+
+
+Example #1 goto 示例
+
+<?php
+goto a;
+echo 'Foo';
+ 
+a:
+echo 'Bar';
+?>
+以上例程会输出：Bar
+
+Example #2 goto 跳出循环示例
+
+<?php
+for($i=0,$j=50; $i<100; $i++) {
+  while($j--) {
+    if($j==17) goto end; 
+  }  
+}
+echo "i = $i";
+end:
+echo 'j hit 17';
+?>
+以上例程会输出： j hit 17
+
+
+Example #3 以下写法无效
+
+<?php
+goto loop;
+for($i=0,$j=50; $i<100; $i++) {
+  while($j--) {
+    loop:
+  }
+}
+echo "$i = $i";
+?>
+以上例程会输出：
+ Fatal error: 'goto' into loop or switch statement is disallowed in
+script on line 2
+
+
+
+
+    ------三元运算法（三目运算法）
+<?php
+	$a = 90;
+	$b = 80:
+	$c = $a>$b ? (12-10) : "hello word";
+	echo $c ;    //结果为 2 
+?>
+
+
+
+
+
+
+
+
+
+
+
+45: 猜拳script-change-onchange选择同时换图片功能
+
+<html>
+	<head>
+		<title>猜拳游戏</title>
+<script lauguage="javascript">
+	function mychange(obj){
+		<!--window.alert('变化');//成功会弹出提示框-->
+		<!--var val=obj.value;-->
+		<!--window.alert(val);  //这两句是把选项的(qt,jd,b)值取到-->
+		<!--val() 只会对第一个元素起作用.-->	
+	var val=obj.value;
+	var myimage=document.getElementById("myimg");
+		if(val=="qt"){
+			myimage.src="1.png";
+		}else if(val=="jd"){
+			myimage.src="2.png";
+		}else if(val=="b"){
+			myimage.src="3.png";
+		}
+	}
+</script>		
+	</head>
+	<body bgcolor="#ccc">
+	<select name="you" onchange="mychange(this);">
+		<option value="qt">石头</option>
+		<option value="jd">剪刀</option>
+		<option value="b">布</option>
+	</select>
+	<img src="4.png" id="myimg"/>
+	</body>
+</html>
+
+
+
+
+
+
+
+46: request 接收POST数据：
+request 是用来接收POST和GET的传值信息的。接收时的name 要与发送的name 完全一致！当name值不同的，结果会以null 或 "" 的形式表示。
+
+
+rithmetic.php
+
+<html>
+	<head>
+		<title>计算器与request接收</title>
+		<meta http-requiv="content-type" content="text/html charset=utf-8" />
+	</head>
+	<body>
+		<form action="request.php" method="post" />
+			<table width="400" >
+				<tr>
+					<td>请输入一个数值</td>
+					<td><input type="text" name="num1" /></td>
+				</tr>
+				<tr>
+					<td>再输入一个数值</td>
+					<td><input type="text" name="num2"/></td>
+				</tr>
+				<tr>
+					<td>请选择运算符</td>
+					<td>
+						<select name="operator">
+							<option value="+">+</option>
+							<option value="-">-</option>
+							<option value="*">*</option>
+							<option value="/">/</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" name="sub" value="计算结果" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>
+
+
+result.php
+
+<?php
+	$num1 = $_REQUEST["num1"];
+	$num2 = $_REQUEST["num2"];
+	$oper = $_REQUEST["operator"];
+	switch($oper){
+		case "+";
+			$res = $num1+$num2;
+			break;
+		case "-";
+			$res = $num1-$num2;
+			break;
+		case "*";
+			$res = $num1*$num2;
+			break;
+		case "/";
+			$res = $num1/$num2;
+			break;
+
+	}
+	echo "计算结果等于：".$res ;
+	
+?><br>
+<a href="rithmetic.php">返回计算页面</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+47: 用循环语句打印出 三角形，金字塔，和空心凌形。
+
+1。直角三角形：
+	for($i=1;$i<5;$i++){
+		for($j=1;$j<$i;$j++){
+			echo "*";
+		}
+		echo "<br>";
+	}
+2.金字塔；
+ 一：自己的做法；
+	$n = 10;
+	for($i=1;$i<$n;$i++){
+		for($k=1;$k<=$n-$i;$k++){
+			echo "&nbsp";
+		}
+		for($j=1;$j<=($i-1)*2+1;$j++){
+			echo "*";
+		}
+		echo "<br>";
+	}
+
+3,空凌形
+<?php
+	$b=15;
+	for($i=1;$i<$b;$i++){
+		for($k=1;$k<$b-$i+40;$k++){
+			echo "&nbsp";
+		}
+		echo "*";
+		for($j=1;$j<$i*2-2;$j++){
+			echo "&nbsp";
+		}
+		if($i!=1){
+		echo "*";
+		}
+		echo "<br>";
+
+	}
+	for($i=1;$i<$b;$i++){
+		for($k=1;$k<$i+40;$k++){
+			echo "&nbsp";
+		}
+		echo "*";
+		for($j=1;$j<($b-$i)*2-2;$j++){
+			echo "&nbsp";
+		}
+		if($b-$i!=1){
+		echo "*";
+		}
+
+		echo "<br>";
+	}
+?>
+
+  二：老师的做法；
+	$n = 10;
+	for($i=1;$i<$n;$i++){
+		for($k=1;$k<=$n-$i;$k++){ 	 //打*前，先打空格。
+			echo "&nbsp";
+		}
+		for($j=1;$j<=($i-1)*2+1;$j++){ 	 // 每层*的个数
+			if($i==1 || $i==$n){
+				echo "*";
+			}else{
+				if($j==1 || $j==($i-1)*2_1){
+					echo "*";
+				}else{
+					echo "&nbsp";
+				}
+			}
+
+		}
+		echo "<br>";
+	}
+
+
+
+
+
+
+
+48: do while的使用；
+do while 是先执行，后判断！
+<?php
+		$a=10;
+		do{
+			echo "aaaaaaaaa<br>";
+			$a--;
+		}
+		while($a>3)
+?>
+
+
+
+
+
+
+
+
+
+
+49: 二进制的位运算 & | ^ ~ >>  <<
+二进制数由四个字节组成 00000000 00000000 00000000 00000001
+第一位是符号位，0代表正数，1代表负数。
+它的三个属性： 原码，反码，补码：
+
+所在二进制的数值运算都是基于补码来运算的。对于负数运算完成后再转回原码来显示。
+
+一个正数的原码，反码，补码都一样。
+负数的原码第一位是1 代表是一个负数， 
+负数的反码就是把除了符号位以外的其它位取反
+负数的被码就是在反码的基础上再最后一位加 1。
+
+实例：
+5 & 7;
+00000000 00000000 00000000 00000101  5原码，反码，补码；
+00000000 00000000 00000000 00000111  7原，反，补。
+00000000 00000000 00000000 00000101  结果等于 5;
+-3 & 9;
+10000000 00000000 00000000 00000011   -3原
+11111111 11111111 11111111 11111100   -3反
+11111111 11111111 11111111 11111101   -3补
+00000000 00000000 00000000 00001001   9原，反，补
+00000000 00000000 00000000 00001001   结果等于9,这里是正数就不用再取反和减1了。只有负值才需要
+
+3 | 5;
+00000000 00000000 00000000 00000011  	3原，反，补
+00000000 00000000 00000000 00000101	5原，反, 补
+00000000 00000000 00000000 00000111     结果:7 
+-8 | 2;
+10000000 00000000 00000000 00001000  	-8原
+11111111 11111111 11111111 11110111	-8反
+11111111 11111111 11111111 11111000	-8补
+00000000 00000000 00000000 00000010   	2原，反，补
+11111111 11111111 11111111 11111010	补码运算结果
+11111111 11111111 11111111 11111001	减1转成反码
+10000000 00000000 00000000 00000110	取反转成原码,结果等于-6
+
+
+
+00000000 00000000 00000000 00000000
+11111111 11111111 11111111 11111111
+4 ^ 9;
+00000000 00000000 00000000 00000100  4原，反，补
+00000000 00000000 00000000 00001001  9原，反，补
+00000000 00000000 00000000 00001101  结果：13
+
+-8 ^ 4;
+10000000 00000000 00000000 00001000   	-8 原
+11111111 11111111 11111111 11110111	-8 反
+11111111 11111111 11111111 11111000 	-8 补
+00000000 00000000 00000000 00000100 	4原，反，补
+11111111 11111111 11111111 11111100	补结果
+11111111 11111111 11111111 11111011 	减1转成反码
+10000000 00000000 00000000 00000100	取反转成原码 结果：-4;
+
+
+~8;
+00000000 00000000 00000000 00001000     8 原，反，补
+11111111 11111111 11111111 11110111	取反
+11111111 11111111 11111111 11110110     -1:正数取返需要减1 ，负数取反需加1。
+10000000 00000000 00000000 00001001     结果等于9;
+
+~-3;
+10000000 00000000 00000000 00000011 	-3 原
+11111111 11111111 11111111 11111100 	-3 反码
+11111111 11111111 11111111 11111101     +1:正数取返需要减1 ，负数取反需加1。
+00000000 00000000 00000000 00000010	结果等于2
+
+
+8>>3;
+00000000 00000000 00000000 00001000     8原反补
+10000000 00000000 00000000 00000001     结果1
+
+
+-9>>2;
+10000000 00000000 00000000 00001001      -9原
+11111111 11111111 11111111 11110110	 -9反
+11111111 11111111 11111111 11110111      -9补
+11111111 11111111 11111111 11111101      右移2位
+11111111 11111111 11111111 11111100      减1 转成反码
+10000000 00000000 00000000 00000011	 结果等于-3
+
+
+3<<3;
+00000000 00000000 00000000 00000011	3原，反，补
+00000000 00000000 00000000 00011000      结果：24
+
+-5<<4;
+10000000 00000000 00000000 00000101 	-5原
+11111111 11111111 11111111 11111010     -5反
+11111111 11111111 11111111 11111011     -5补
+11111111 11111111 11111111 10110000     补结果
+11111111 11111111 11111111 10101111     减1转反
+10000000 00000000 00000000 01010000     结果80
+
+
+
+
+
+
+
+
+
+
+
+50：运算符 ++ -- += -= /= %= && || and or instanceof
+	 运算符：
+
+
+	$a = 3;
+	$b = $a++ *3;
+	echo  $b;     //求$b的结果
+
+	$a = 3;
+	$b = ++$a *3;
+	echo $b ;	//求$b的结果
+
+
+--------------------------------------------------
+
+  	$a = 10 ; $b = 7;
+	if($a++>8 || $b++>7){
+		echo "ok";  
+	}
+	echo $a.$b;   	//求结果
+--------------------------------------------------
+
+	$a = 10 ;  $b = 7;
+	if($a++>10 && $b++>7){  
+		echo 'ok';
+	}
+	echo $a.$b;  //求$a 和$b  结果
+---------------------------------------------------
+
+	$e = false || true ;   // $e 结果是什么？
+	$f = false or true ;   // $f 结果是什么？
+----------------------------------------------------
+	$a=56;
+	$b=90;
+	
+	$a -= 34 ;
+	$b %= $a;
+	结果：
+	echo $a.$b  // 求$a,$b 结果
+
+-----------------------------------------------------
+类型运算符：
+	instanceof 用于确定一个PHP变量是否属于某一类class 的实例
+
+class Dog{}
+class Cat{}
+
+$cat1 = new Cat;
+
+if($cat1 instanceof Cat){
+	echo "$cat1 是一只猫";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+51: foreach()-list()数组的几种遍历形式：
+<?php
+echo "<br/>";//一;foreach索引遍历的显示方式
+	$a =array(1,3,5,6,7,8);
+	foreach($a as $k=>$v){
+		echo $k." => ".$v."\n";	
+	}
+
+echo "<br/>";
+	$b = array("a"=> 1,"b"=> 2,"c" =>3);
+	foreach($b as $k => $v){
+		echo $k." => ".$v."\n";
+	}	
+echo "<br/>"; //二：list+each遍历关联数组 每输出一次变换一次的示例。
+	$c = array("aa"=>11,"bb"=>22,"cc"=>33);
+	echo '	$c = array("aa"=>11,"bb"=>22,"cc"=>33);'."<br/>";
+	list($k,$v)=each($c);
+	list($k,$v)=each($c);
+	list($k,$v)=each($c);
+		echo $k." => ".$v;
+
+echo "<br/>";//三：while+list+each组合遍历关联数组,用a=b的转等的方式显示
+ 	$d = array("aaa"=>111,"bbb"=>222,"ccc"=>333);
+	while(list($k,$v)=each($d)){
+		echo $k." => ".$v."\n";
+	}
+
+echo "<br/>"; //四：while+list+each组合遍历关联数组，用[0][1]方式和[key][value]方式显示
+	$e = array("aaaa"=>1111,"bbbb"=>2222,"cccc"=>3333);
+	while($ee=each($e)){
+		echo $ee[0]." => ".$ee[1]."<br/>";
+	}
+?>
+
+
+
+
+
+
+
+52: 显示数组的几种方式：echo ,print_r(),var_dump()
+	echo 只显示指定下标相关的值。
+	如：
+	echo $arr[0];
+
+	print_r() 同时显示下标与相应的值。
+	如：
+	print_r($arr);
+	Array([1]=>hello [0]=>world []=>北京 [123]=>hhh)
+
+	var_dump() 显示更细致的内容信息
+	如：
+	var_dump($arr);
+array(4) {[1]=>string(5)"hello [0]=>string(5)"world" [""]=>string(6)"北京" [123]=>string(3)"hhh"}
+
+
+
+
+
+
+
+53： 如何关闭notice级别的提示。
+	1，在PHP.ini文件中改动error_reporting
+	改为：error_reporting = E_ALL & ~E_NOTICE
+如果你不能操作php.ini文件，你可以用下面的方法来实现。
+
+	2，在你想禁止notice错误提示的页面中加入下面代码
+/* Report all errors except E_NOTICE */
+error_reporting(E_all ^ E_NOTICE);
+
+	3，在$_REQUEST['XXX'];或$_POST前面加上一个@ 
+		如：
+		$grades=@$_REQUEST['XXX'];
+
+
+
+
+
+
+
+
+54: 指定小数点后的位数-round(1.95583,-2)指定精度。
+将数值指定精度 例：
+<?php
+echo round(3.4);   //3
+echo round(3.5);   //4
+echo round(3.6);   //4
+echo round(3.6,0);   //4
+echo round(1.95583, -2);   //1.96
+echo round(1241757, -3);   //1242000
+echo round(5.045, 2);   //5.05
+echo round(5.055, 2);   //5.06
+?>
+
+
+
+
+
+
+
+
+
+
+54: 冒泡排序法，选择排序法,插入排序法,快速排序法及函数封装。
+
+
+	冒泡排序法；
+<?php
+//函数封装
+function bubble($arr){
+	$temp=0;
+	for($i=0;$i<count($arr)-1;$i++){
+		for($j=0;$j<count($arr)-1-$i;$j++){
+			if($arr[$j]<$arr[$j+1]){
+				$temp = $arr[$j+1];
+				$arr[$j+1]=$arr[$j];
+				$arr[$j]=$temp;
+			}
+		}
+		//冒泡的优化，当数组是有排列时，可以加入以下代码进行优化。
+		if(!$flag){
+			//以经是有序
+			break;
+		}
+		$flag=false;
+	}
+
+}
+	$abc=array(32,4,838,22,-35,89,43,0,345,2,5,7,88);
+	//调用冒泡函数进行排序，，&符号重点，没有&将无法实现调用函数来完成对$abc的排序。
+	bubble(&$abc);
+	foreach($abc as $k=>$v){
+		echo $v."<br>";
+	}
+	
+?>
+
+
+
+	选择排序法：
+
+<?php
+	
+function selectSort(&$arr){
+	$temp=0;
+	
+	for($i=0;$i<count($arr)-1;$i++){
+		$minVal=$arr[$i];    //假设$i是最小值，或是设定一个基值。
+		$minKey=$i;	    //记录最小数的下标,或记录基值的下标.
+
+		for($j=$i+1;$j<count($arr);$j++){
+			if($minVal<$arr[$j]){
+				$minVal=$arr[$j];
+				$minKey=$j;
+			}
+		}
+		$temp=$arr[$i];
+		$arr[$i]=$arr[$minKey];
+		$arr[$minKey]=$temp;
+	}	
+}
+	$aaa=array(22,88,39,83,2,84,7,49,72);
+	selectSort($aaa);
+	foreach($aaa as $k=>$v){
+		echo "$v<br>";
+	}
+?>
+
+
+
+
+
+
+
+
+	插入排序法；
+
+<?php
+function insertSort(&$arr){
+	for($i=1;$i<count($arr);$i++){
+		$val=$arr[$i];
+		$key=$i-1;
+
+		while($key>=0&&$val<$arr[$key]){
+			$arr[$key+1] = $arr[$key];
+			$key--;
+		}
+		$arr[$key+1] = $val;
+	}
+}
+
+
+$abc=array(82,3,25,87,35,72,9,337,45,62);
+insertSort($abc);
+print_r($abc);
+?>
+
+
+
+
+
+	快速排序法：
+
+<?php
+function quickSort($left,$right,&$array){
+	$l=$left;
+	$r=$right;
+	$pivot = $array[($left+$right)/2];
+	$temp=0;
+
+	while($l<$r){
+		while($array[$l]<$pivot) $l++;
+		while($array[$r]>$pivot) $r--;
+		
+		if($l>=$r) 
+		break;
+	
+		$temp=$array[$l];
+		$array[$l]=$array[$r];
+		$array[$r]=$temp;
+
+		if($array[$l]==$pivot) --$r;
+		if($array[$r]==$pivot) ++$l;
+
+
+	}
+	if($l==$r){
+		$l++;
+		$r--;
+	}
+
+	if($left<$r) quickSort($left,$r,$array);
+	if($right>$l) quickSort($l,$right,$array);
+}
+
+
+	$aaa=array(1,3,88,2,55,42,983,98,873,27);
+	quickSort(0,count($aaa)-1,$aaa);
+	print_r($aaa);
+?>
+
+
+
+
+
+
+
+
+
+====顺序查找，二分查找===
+
+
+--1，顺序查找：
+	对某个数组，按照顺序，一个一个比较，然后找到你要的数据：
+案例：
+	要求从一个数组 中查找 一个数，如果查找到则输出该数的下标，如果
+找不到则输出，查无此数！
+
+<?php
+	$arr=array(46,900,0,-1,-1);
+
+function search(&$arr,$findVal){
+	$flag=false;	
+	for($i=0;$i<count($arr);$i++){
+		if($findVal==$arr[$i]){
+			echo "找到了，下标为：$i";
+			$flag=true;
+			break; //这里如果只想找一个就加break,想找更多就不加break.
+		}
+	}
+	if(!$flag){
+		echo "查询不到";
+	}
+}
+search(&$arr,0);
+
+?>
+
+
+
+
+	---二分查找法（必须掌握）
+	所谓二分查找，它有一个重要的前提，该项数组本身以经是一个有序数组，如果该数组不是有序的，则必须先排序再查找。
+
+
+<?php
+	$arr=array(1,2,3,4,5,6,7,8,9);
+function search(&$arr,$v,$l,$r){
+	//当$r>$l说明没有数
+	if($l>$r){
+		echo "查无此数";
+		return;
+	}
+	//找到中间这个数
+	$m=round(($r+$l)/2);
+	//查找数如果大于中间数，则向后找，
+		
+	if($v>$arr[$m]){
+		search($arr,$v,$m+1,$r);
+	}
+	//查找数如果小于中间数，则向前找，
+	else if($v<$arr[$m]){
+		search($arr,$v,$l,$m-1);
+	}
+	else{
+		echo "找到这个数，下标是$m";
+	}
+}
+
+search($arr,83,0,count($arr));
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+====学生成绩管理系统=====
+-------游戏机------
+-------跳水比赛-------
+
+--html页面--
+
+<html>
+<head>
+	<title>学生成绩查询系统Mini版</title>
+	<style>
+		.all{
+			width:400px;
+			border:1px blue solid;
+			margin:0 auto;
+			padding:40px 100px;
+		}
+	</style>
+</head>
+<body>
+	<div class="all">
+		<h1>学生成绩查询系统Mini版</h1>
+		<form action="student.php" method="post">
+			<input type="text" name="xh" value="输入学号查询成绩..." /> 
+			<input type="hidden" name="doing" value="xh" />
+			<input type="submit" name="sub" value="查询成绩" />
+		</form>
+		<form action="student.php" method="post">
+			<input type="text" name="cj" value="输入成绩查询学号，，" /> 
+			<input type="hidden" name="doing" value="cj" />
+			<input type="submit" name="sub" value="查询成绩" />
+		</form>
+		<form action="student.php" method="post">
+			<input type="text" name="del" value="输入学号删除成绩，，" /> 
+			<input type="hidden" name="doing" value="del" />
+			<input type="submit" name="sub" value="删除成绩" />
+		</form>
+		<form action="student.php" method="post">
+			<input type="hidden" name="doing" value="tj" />
+			<input type="submit" name="sub" value="统计学生各分数段成绩" />
+		</form>
+	</div>
+</body>
+</html>
+
+
+
+--PHP接收页面--
+
+<?php
+	$arr=array(49,79,89,79,59,69,79,49,79,89,79,89,99,100,49,79,89,79,79,89,79,59,69,79,49,79,89,79,89,99,100,49,79,89,79);
+	$doing=$_REQUEST["doing"];
+	function ret(){
+		echo "<br><a href=student.html>返回</a>";
+	}
+	if($doing=="xh"){
+		$xh = $_REQUEST["xh"];
+		$xha = $xh-1;
+		if($arr[$xha] && $xh!=0){
+			echo "学号为 ".$xh." 的学生成绩为：".$arr[$xha]."分";
+			ret();
+		}else{
+			echo "此学号不存在,请重新输入!!!";
+			ret();
+		}
+	}
+	if($doing=="cj"){
+		$cj=$_REQUEST["cj"];
+		$a=0;
+		
+		for($i=0;$i<count($arr);$i++){
+			if($cj==$arr[$i]){
+				echo "成绩为 ".$cj." 分的同学有 ".($i+1)." 号同学.<br>";
+				$a=1;
+			}
+		}
+		if($a==0){
+			echo "暂时还没有此成绩的学生，请重新输入!!!";
+		}
+		ret();
+	}
+	if($doing=="del"){
+		$del=$_POST['del'];
+		$d=$del-1;
+		if($arr[$d]){
+			unset($arr[$d]);
+			if($arr[$d]==0){
+				echo "删除成功";
+				echo $arr[$d];
+			}
+			ret();
+		}else{
+			echo "没有此学号，请输入正确的学号!!!";
+			ret();
+		}
+	}	
+	if($doing=="tj"){
+		$tj = array('b'=>0,'c'=>0,'z'=>0,'l'=>0,'y'=>0);
+		for($i=0;$i<count($arr);$i++){
+			if($arr[$i]<60){
+				$tj[0]++;
+				echo "学生 ".($i+1)." 成绩为 ".$arr[$i]." 分,不及格!<br>";
+			}else if($arr[$i]<70){
+				$tj[1]++;
+				echo "学生 ".($i+1)." 成绩为 ".$arr[$i]." 分,表现差!<br>";
+			}else if($arr[$i]<80){
+				$tj[2]++;
+				echo "学生 ".($i+1)." 成绩为 ".$arr[$i]." 分,表现中等!<br>";
+			}else if($arr[$i]<90){
+				$tj[3]++;
+				echo "学生 ".($i+1)." 成绩为 ".$arr[$i]." 分,表现良好!<br>";
+			}else{
+				$tj[4]++;
+				echo "学生 ".($i+1)." 成绩为 ".$arr[$i]." 分,表现优秀!<br>";
+			}
+		}
+		echo "共有学生 ".count($arr)." 名<br>";
+		echo "不及格的有 ".$tj[0]." 名<br>";
+		echo "表现差的有 ".$tj[1]." 名<br>";
+		echo "表现中等的有 ".$tj[2]." 名<br>";
+		echo "表现良好的有 ".$tj[3]." 名<br>";
+		echo "表现优秀的有 ".$tj[4]." 名<br>";
+		ret();
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+====聪明小猫的计算====
+
+
+----界面页：
+
+<html>
+	<head>
+		<title>聪明小猫的计算</title>
+		<meta http-equiv="content-type" content="text/html charset=utf-8" />
+		<meta name="keywords" content="available,various,general,consideration,archive" />
+		<meta name="description" content="range,effect,affected,reverse,wrapper" />
+		<link type="text/css" rel="stylesheet" href="../css.css"/>
+		<script language="javascript">
+			function huan(val){
+				alert('你点中了:'+val);
+				if(val=="szys"){
+					table1.style.display="block";
+					table2.style.display="none";
+					table3.style.display="none";
+				}
+				if(val=="yxmj"){
+					table1.style.display="none";
+					table2.style.display="block";
+					table3.style.display="none";
+				}
+				if(val=="jxmj"){
+					table1.style.display="none";
+					table2.style.display="none";
+					table3.style.display="block";
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h1>聪明小猫的计算器</h1>
+		<form action="" method="post">
+			<input type="radio" name="sel"  onclick="huan('szys')" />四则运算 
+			<input type="radio" name="sel"  onclick="huan('yxmj')"/>圆形面积 
+			<input type="radio" name="sel"  onclick="huan('jxmj')" />矩形面积 
+		</form>
+		<form action="catrequest.php" method="post">
+			<table id="table1" style="display:block">
+			  <tr>
+				<td colspan="2"><h3>四则运算</h3></td>
+			  </tr>
+			  <tr>
+				<td>请输入第一个数值：</td>
+				<td><input type="text" name="num1" /></td>
+			  </tr>
+			  <tr>
+				<td>请输入第二个数值：</td>
+				<td><input type="text" name="num2" /></td>
+			  </tr>
+			  <tr>
+				<td>请选择运算符</td>
+				<td>
+					<select name="oper">
+						<option value="+">加</option>
+						<option value="-">减</option>
+						<option value="*">乘</option>
+						<option value="/">除</option>
+					</select>
+				</td>
+			  </tr>
+			  <tr>
+				 <td colspan="2">
+				 <input type="hidden" name="doing" value="szys" />
+				 <input type="submit" name="sub" value="计算四则运算" /></td>
+			  </tr>
+			</table>
+		</form>
+		<form action="catrequest.php" method="post">
+			<table id="table2" style="display:none">
+				<tr>
+					<td colspan="2"><h3>圆形面积计算</h3></td>
+				</tr>
+				<tr>
+					<td>请输入一个半径：</td>
+					<td>
+						<input type="text" name="num1" >
+					</td> 
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="hidden" name="doing" value="yxmj"/>
+						<input type="submit" name="sub" value="计算圆形面积" />
+				</tr>
+			</table>
+		</form>
+		<form action="catrequest.php" method="post">
+			<table id="table3" style="display:none">
+				<tr>
+					<td colspan="2"><h3>计算矩形面积</h3></td>
+				</tr>
+				<tr>
+					<td>请输入矩形的长度：</td>
+					<td><input type="text" name="num1" /></td>
+				</tr>
+				<tr>
+					<td>请输入矩形的高度：</td>
+					<td><input type="text" name="num2" /></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+					<input type="hidden" name="doing" value="jxmj"/>
+					<input type="submit" name="sub" value="计算矩形面积" />
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>
+
+
+
+
+
+----接收页：
+
+<?php
+	require_once 'cat.class.php';
+	$doing=$_REQUEST['doing'];
+	$p=new Cat();
+	if($doing=="szys"){
+		$num1=$_POST["num1"];
+		$num2=$_POST["num2"];
+		$oper=$_POST["oper"];
+		$res=$p->add($num1,$num2,$oper);
+		echo "运算结果为：".$res;
+	}
+	if($doing=="yxmj"){
+		$num=$_POST["num1"];
+		$res=$p->ovalSuper($num);
+		echo "您指定圆的面积为：".$res;
+
+	}
+	if($doing=="jxmj"){
+		$num1=$_POST["num1"];
+		$num2=$_POST["num2"];
+		$res=$p->rectangleSuper($num1,$num2);
+		echo "您指定的矩形面积为：".$res;
+	}
+	
+?>
+<br>
+<a href="cat.php">返回主界面</a>
+
+
+----函数方法页：
+
+<?php
+	class Cat{
+		public function add($num1,$num2,$oper){
+			$res;
+			if($oper=="+"){
+				$res=$num1+$num2;
+			}
+			if($oper=="-"){
+				$res=$num1-$num2;
+			}
+			if($oper=="*"){
+				$res=$num1*$num2;
+			}
+			if($oper=="/"){
+				$res=$num1/$num2;
+			}
+			return $res;
+		}
+		public function ovalSuper($num){
+			$res;
+			$res=3.14*$num*$num;
+			return $res;
+		}
+		public function rectangleSuper($num1,$num2){
+			$res;
+			$res=$num1*$num2;
+			return $res;
+		}
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+====静态变量的声明和使用-self::
+
+在类外部: 	类名::$类变量名
+在类内部:	self::$变量名 或者 类名::$类变量名
+如果在类中访问，有两种方法 (self::$静态变量名,  类名::$静态变量名)
+如果在类外访问，有一种方法 ( 类名::$静态变量名	)
+
+<?php
+class Student{
+	public static $name;
+	public static $price;
+	public static $count;
+	function __construct($name){
+		self::$name = $name;
+	}
+	public static function counts($price){
+		self::$price += $price;
+		echo self::$name."上交的学费是 ".$price;
+		echo "<br>学生们交的费用总共为：".Student::$price."<br>";
+	}
+
+}
+$s = new Student('小红');
+$s->counts(123);
+$s1 = new Student('小丽');
+$s1->counts(222);
+?>
+
+
+
+
+====全局变量的定义和使用-global
+
+----定义：
+	global $global_nums;
+	$global_nums=0;     //全局变量要先初始化后赋值，不然报错。
+----使用：
+	function join_game(){
+		global $global_nums;
+		$global_nums += 1'
+		echo $this->name."加入堆雪人游戏";
+	}
+
+
+
+
+
+
+
+=====析构方法 __destruct====
+
+析构方法(__destruct)的作用主要用于，释放资源（比如释放数据库的链接，图片资源，销毁某个对象）。
+
+快速入门：
+<?php
+	class Person{
+		public $name;
+		public $age;
+		//构造方法
+		public function __construct(){
+			$this->name=$name;
+			$this->age=$age;
+		}
+		//写一个析构方法 __是两个下划线
+		function __destruct(){
+			echo $this->name."销毁资源<br>";
+		}
+		$p1=new Person('贾宝玉',16);
+		$p2=new Person('林黛玉',14);
+	
+	}
+?>
+
+
+
+
+
+====构造方法的两个版本-construct(){}
+
+在php5中一个类可以同时拥有两种形式的构造方法以。一种是PHP4版本的，一种是PHP5版本的。
+	如：
+class Person{
+ function __construc(){}   //PHP5版本构造方法
+ 和  
+ function Person(){}	//php4版本构造方法
+}
+
+	当两个构造方法同时存在时，优先调用 __construct(). 请大家以后使用 __counstruct
+因为老版本的构造方法名必需与类名一致，而新版的__construct 不需要和类名一致！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====get,set设置访问权限====
+
+<?php	
+class Person{
+	public $name;
+	protected $age;
+	private $salary;
+	public function __construct($name,$age,$salary){
+		$this->age=$age;
+		$this->salary=$salary;
+		$this->name=$name;
+	}
+	public function getage($a,$b){
+		if($a=='abc' && $b==123){
+			echo $this->age;
+		}else{
+			echo "您无权访问！！！";
+		}
+	}
+	public function setage($c,$user){
+		if($user=='abc'){
+		$this->age=$c;
+		echo $this->age;
+		}
+	}
+}
+$a = new Person('机吧',19,10000);
+$a->getage('abc',122);
+$a->setage(99,'abc');
+?>
+
+
+
+
+
+
+
+
+
+
+-----成员方法间的调用要以$this的方式
+
+<?php
+class One{
+	function test1(){
+		echo "这是方法test1<br>这是调用了，，，";
+		$this->test2();
+	}
+	function test2(){
+		echo "这是方法test2<br>";
+	}
+}
+
+$a = new One();
+$a->test1();
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----用__set方法管理所有属性（魔术方法）
+
+<?php
+class One{
+	private $n1;
+	private $n2;
+	function __set($pro_name,$pro_val){
+		$this->pro_name=$pro_val;
+	}
+	function __get($pro_name){
+		if(isset($pro_name)){
+			return $this->pro_name;
+		}else{
+
+			return null;
+		}
+	}
+}
+$a = new One();
+$a->n1="aaaaaaaa";
+echo $a->n1;
+$a->n2="bbbbbbbb";
+echo "<br>".$a->n2;
+?>
+
+
+
+
+
+
+
+
+
+=====70:继承====
+ 	一个类可以通过 extends 来继承另一个类的public,protected 成员方法和属性，PHP中只能单继承，但可以多层继承。
+
+
+
+	----成员属性的继承：
+class A{
+	public $name="wang";
+	protected $age=18;
+	private $salary=1000;
+}
+class B extends A{		//这里B继承了A，就相当拥有了A中的有的public,protected的成员属性。
+	function showage(){
+		echo $this->age;
+	}
+}
+$b = new B(); 
+echo $b->name;  //B继承了A中public的$name属性。所以可以直接调用。
+echo $b->showage(); //因为B继承了A的$age是protected属性，不能直接调用。所以要写一个方法来间接调用！
+
+
+
+
+	----方法的继承：
+<?php
+class C{
+	public function one(){
+		echo "function one";
+	}
+	protected function two(){
+		echo "function two";
+	}
+	private function three(){
+		echo "function three";
+	}
+}
+class D extends C{
+	function showTwo(){
+		self::two();
+	}
+}
+$d = new D(); 		//这里NEW了一个D的新对象
+$d->one();		//D继承了C，便拥有了C的public 的one()方法，所以可以直接调用。
+echo "<br>";
+$d->showTwo(); //D继承了C中的two()方法为protected，不能直接调用，所以要在D中现写一个showTwo方法来间接调用
+?>
+
+
+
+
+
+	----构造方法的继承：
+	当继承后，子类不会自动调用父类的构造方法，如果想要调用父类的构造方法有丙种方式；
+		1， 类名::__construct();
+		2， parent::__construct();
+
+<?php
+class E{
+	function __construct(){
+		echo "aaaaa<br>";
+	}
+}
+class F extends E{
+	function __construct(){
+		echo "bbbbbb<br>";
+		 E::__construct(); 	//调用父类的构造方法的第一种方式.
+		parent::__construct();	//调用父类的构造方法的第二种方式。
+	}
+}
+$f = new F();  //这时会同时显示出父类和子类的构造方法的内容。
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+====魔术方法大全====
+
+从PHP 5以后的版本，PHP中的类就可以使用魔术方法了。其规定以两个下划线(__)开头的方法都保留为魔术方法，所以建议大家函数名最好不用__开头，除非是为了重载已有的魔术方法。
+
+
+	----	__get、__set
+
+这两个方法是为在类和他们的父类中没有声明的属性而设计的。
+__get( $property ) 当调用一个未定义的属性时，此方法会被触发，传递的参数是被访问的属性名。
+__set( $property, $value ) 给一个未定义的属性赋值时，此方法会被触发，传递的参数是被设置的属性名和值。
+这里的没有声明包括当使用对象调用时，访问控制为proteced,private的属性(即没有权限访问的属性)。
+
+
+
+	----	__isset、__unset
+
+__isset( $property ) 当在一个未定义的属性上调用isset()函数时调用此方法。
+__unset( $property ) 当在一个未定义的属性上调用unset()函数时调用此方法。
+与__get方法和__set方法相同，这里的没有声明包括当使用对象调用时，访问控制为proteced,private的属性(即没有权限访问的属性)。
+
+
+
+	----	__call
+
+__call( $method, $arg_array ) 当调用一个未定义的方法时调用此方法。
+这里的未定义的方法包括没有权限访问的方法;如果方法不存在就去父类中找这个方法，如果父类中也不存在就去调用本类的__call()方?法，如果本类中不存在__call()方法就去找父类中的__call()方法。
+
+
+	----	__autoload
+
+__autoload 函数，它会在试图使用尚未被定义的类时自动调用。通过调用此函数，脚本引擎在 PHP 出错失败前有了最后一个机会加载所需的类。
+如果要定义一个全局的自动加载类，则必须用spl_autoload_register()方法将处理类注册到PHP标准库：
+
+
+复制代码 代码如下:
+<?php
+class Loader   
+ {          
+    static function autoload_class($class_name)        {          
+    //寻找正确的$class_name类，并引入，没有则抛出异常          
+     }         
+ }      
+/** 
+*  设置对象的自动载入        
+*  spl_autoload_register — Register given function as __autoload() implementation       
+*/   
+spl_autoload_register(array(‘Loader', ‘autoload_class'));   
+ $a = new Test();//Test没用require就实例化，实现自动加载，很多框架就用这种方法自动加载类
+
+注意: 在 __autoload 函数中抛出的异常不能被 catch 语句块捕获并导致致命错误，所以应该在函数本身做捕获。
+
+
+	----	__construct、__destruct
+
+__construct 构造方法，当一个对象创建时调用此方法，相对于PHP4使用此方法的好处是：可以使构造方法有一个独一无二的名称,无论它所在的类的名称是什么.这样你在改变类的名称时,就不需要改变构造方法的名称。
+__destruct 析构方法，PHP将在对象被销毁前(即从内存中清除前)调用这个方法。默认情况下,PHP仅仅释放对象属性所占用的内存并销毁对象相关的资源，析构函数允 许你在使用一个对象之后执行任意代码来清除内存。当PHP决定你的脚本不再与对象相关时,析构函数将被调用。
+在一个函数的命名空间内，这会发生在函数return的时候。对于全局变量,这发生于脚本结束的时候。如果你想明确地销毁一个对象,你可以给指向该对象的变量分配任何其它值.通常将变量赋值勤为NULL或者调用unset。
+
+	----	__clone
+
+PHP 5中的对象赋值是使用的引用赋值，如果想复制一个对象则需要使用clone方法，在调用此方法是对象会自动调用__clone魔术方法，如果在对象复制需要执行某些初始化操作，可以在__clone方法实现。
+
+
+	----	__toString
+
+__toString方法在将一个对象转化成字符串时自动调用，比如使用echo打印对象时。
+如果类没有实现此方法，则无法通过echo打印对象，否则会显示：Catchable fatal error: Object of class test could not be converted to string in，此方法必须返回一个字符串。
+在PHP 5.2.0之前，__toString方法只有结合使用echo() 或 print()时 才能生效。PHP 5.2.0之后，则可以在任何字符串环境生效(例如通过printf()，使用%s修饰符)，但 不能用于非字符串环境(如使用%d修饰符)。从PHP 5.2.0，如果将一个未定义__toString方法的对象 转换为字符串，会报出一个E_RECOVERABLE_ERROR错误。
+
+	----	__sleep、__wakeup
+
+__sleep 串行化的时候用
+__wakeup 反串行化的时候调用
+serialize() 检查类中是否有魔术名称__sleep 的函数。如果这样，该函数将在任何序列化之前运行。它可以清除对象并应该返回一个包含有该对象中应被序列化的所有变量名的数组。
+使用__sleep 的目的是关闭对象可能具有的任何数据库连接，提交等待中的数据或进行类似的清除任务。此外，如果有非常大的对象而并不需要完全储存下来时此函数也很有用。
+相反地，unserialize() 检查具有魔术名称 __wakeup 的函数的存在。如果存在，此函数可以重建对象可能具有的任何资源。使用 __wakeup 的目的是重建在序列化中可能丢失的任何数据库连接以及处理其它重新初始化的任务。
+
+
+	----	__set_state
+
+当调用var_export()时，这个静态 方法会被调用(自PHP 5.1.0起有效)。
+本方法的唯一参数是一个数组，其中包含按array('property' => value, …)格式排列的类属性。
+
+
+	----	__invoke(PHP 5.3.0以上版本有效)
+
+当尝试以调用函数的方式调用一个对象时，__invoke 方法会被自动调用。
+
+
+	----__callStatic(PHP 5.3.0以上版本有效)
+
+它的工作方式类似于__call() 魔术方法，__callStatic() 是为了处理静态方法调用。
+PHP 确实加强了对 __callStatic() 方法的定义;它必须是公共的，并且必须被声明为静态的。同样，__call() 魔术方法必须被定义为公共的，所有其他魔术方法都必须如此
+
+
+
+---------------------------------------------------------------------
+	----魔术方法（函数）
+
+1. __construct() 	实例化对象时被调用；
+	当__construct和以类名为函数名的函数同时存在时，__construct将被调用，另一个不被，，
+
+2. __destruct()		
+	当删除一个对象或对象操作终止时被调用；
+
+3. __call()
+	对象调用某个方法,若方法存在，则直接调用，若方法不存在，则会调用__call函数。
+
+4. __get()
+	读取一个对象的属性时，若属性存在，则直接返回属性值；若不存在，刚会调用__get函数。
+
+5. __set()
+	设置一个对象的属性时，若属性存在，则直接赋值。若属性不存在，则会调用 __set()函数。
+
+6. __toString()
+	打印一个对象的时候被调用。 如echo $ohj;或pring $obj;
+
+7. __clone()
+	克隆时被调用。如: $t = new Test();$t1=clone$t;
+
+8. __sleep()
+	serialize之前被调用。若对象比较大，想删减一点东西再序列化，可考虑一下此函数。
+
+9. __wakeuo()
+	unserialize时被调用，做些对象的初始化工作。
+
+10. __isset()
+	检测一个对象的属性是否存在时被调用。 如: isset($c->name);
+
+11. __unset()
+	unset一个对象的属性时被调用，如: unset($c->name);
+
+12. __set_state()
+	调用var_export时，被调用，用__set_state的返回值做为var_export的返回值.
+
+13. __autoload()
+	实例化一个对象时，如果对应的类不存在，则该方法被调用。
+
+
+
+
+	----魔术常量:
+
+1. __LINE__
+	返回文件中的当前行号。
+
+2. __FILE__
+	返回文件的完整路径和文件名。如果用在包含文件中，则返回包含文件名。自php4.0.2起，__FILE__总是包含一个绝对路径（如果是符号连接，则是解析后的绝对路径），而在此之前的版本有时会包含一个相对路径。
+
+3. __FUNCTION__
+	返回函数名称（PHP 4.3.0 新加）. 自PHP5起本常量返回该函数被定义时的名字（区分大小写）.在PHP4中该值总是小写字母的。
+
+4. __CLASS__
+	返回类的名称（PHP4.3.0新加）.自PHP5起本常量返回该类被定义时的名字（区分大小写）。在PHP4中该值总是小写字母的。
+
+
+5. __METHOD__
+	返回类的方法名(PHP5.0.0新加).返回该方法被定义时的名字（区分大小写）。	
+
+6. __DIR__
+	文件所在目录。如果用在被包括文件中，则返回被包括的文件所在目录。它等价于dimame(__FILE__).除非是根目录，否则目录中名不包括末尾的斜杠。（PHP 5.3.0 中新增）
+
+7. __NAMESPACE__ 
+	当前命名空间的名称（大小写敏感）。这个常量是在编译时定义的（PHP 5.3.0 新增）
+
+
+
+
+	----__call的使用（相当于重载）:
+<?php
+class A{
+	function text1(){
+		echo "111111";
+	}
+	function text2($a){
+		echo "2222222";
+	}
+	function __call($m,$v){
+		if($m=="text"){
+			if(count($v)==0){
+				$this->text1($v);
+			}
+			if(count($v)==1){
+				$this->text2($v);
+			}
+		}
+	}
+}
+$aa = new A();
+$aa->text();
+?>
+以下是自己理解的另一中方式：
+<?php
+class A{
+	function test1($p){
+		echo "1111111111";
+	}
+	function test2($p){
+		echo "222222222";
+	}
+}
+$a = new A();
+$arr= array(1,35);
+if(count($arr)==1){
+	$a->test1($arr);
+}
+if(count($arr)==2){
+	$a->test2($arr);
+}
+?>
+
+
+
+
+
+
+
+====面向对象的三大特性之----封装====
+
+	----封装的三个控制属性：
+
+	1, public: 表示全局权限，可以在本类，外部类，子类中使用。
+	2, protected 表示受到保护，可以在本类和子类中使用。
+	3, private 表示私有，只能在本类中使用.
+	4, 一般情况下protected和private属性不能被外部类直接访问和调用，但能过public函数(方法)或get,set方法以及（__）魔术方法也可以调用和访问该两种属性的数据。		
+
+
+
+
+	----通过公开方法或get,set方法来访问受保护数据:
+
+class A{
+	protected $name = "wang";
+	private $age = 22;
+	function showname(){
+		echo "以下wang,22，是通过公开方法来调用保护与私有数据的<br>";
+		echo $this->name."<br>";
+		echo $this->age;
+	}
+	function getage(){
+		echo $this->age;
+	}
+	function setage($v){
+		$this->age=$v;
+		echo $this->age;
+	}
+}
+$a=new A();
+$a->showname();
+echo "<br>以下是通过get方法来获取了private级别的age<br>";
+$a->getage();
+echo "<br>以下是通过set方法把private的age的内容从22修改成了20<br>";
+$a->setage(20);
+
+
+
+
+
+	----利用get,set形式达到验证身份的效果：
+
+class B{
+	protected $aa=111;
+	private $bb=222;
+	function getab($a,$b){
+		if($a=='abc'&&$b==123){
+			echo "以下是用get验证成功后方法获取的数据!<br>";
+			echo '$aa的值是：'.$aa."<br>";
+			echo '$bb的值是：'.$bb."<br>";
+		}else{
+			echo "您无权查看！";
+		}
+	}
+	function setab($a,$b,$c){
+		if($c==123){
+			echo "<br>以下是用set验证成功后对保护和私有级别的数据进行操作！<br>";
+			$this->aa=$a;
+			$this->bb=$b;
+			echo $this->aa."||".$this->bb."<br>";
+		}else{
+			echo "您无权对此操作！";
+		}
+	}
+}
+$b=new B();
+$b->getab('abc',123);
+echo "<br>";
+$b->setab('a=100','b=200',123);
+
+
+
+
+
+	----成员方法之间的相互调用以$this->的形式：
+
+class C{
+	static $name = 'abcdefg';
+	function a(){
+		echo "aaaaaaa<br>";
+		//$this->b();
+	}
+	function b(){
+		echo "bbbbbbb<br>";
+		echo "<br>以下是方法b中调用了方法a----<br>";
+		$this->a();
+	}
+}
+$c = new C();
+$c->a();
+$c->b();
+
+
+
+
+
+	----get,set的魔术方法操作所有受保护数据：
+
+class D{
+	protected $a;
+	private $b;
+	function __set($pro_name,$pro_val){
+		$this->pro_name=$pro_val;
+	}
+	function __get($pro_name){
+		if(isset($pro_name)){
+			return $this->pro_name;
+		}else{
+			return null;
+		}
+	}
+}
+$d = new D();
+ $d->b='aaaaaa';
+echo "<br>";
+ $d->a=123456;
+ echo  $d->a;
+
+
+
+
+
+
+
+=====方法的重写/方法的覆盖(override)====
+
+1，重写时，子类的方法的名和参数列表要与父类相同。
+2，如果子类要调用父类的某个方法时，必须是public或protected级别的，有两种方式：
+	A： parent::方法名；
+	B： 父类名::方法名(参数);
+3, 在实现方法覆盖时，访问修饰符可以不一样，但子类的访问权限必须大于或等于父类的权限。
+
+<?php
+	echo "方法的重写<br>";
+class Animal{
+	function cry(){
+		echo "动物的叫声<br>";
+
+	}
+}
+class Cat extends Animal{
+	function cry(){
+		echo "小猫喵喵叫<br>";	//这里覆盖了父类的此方法。
+		parent::cry();		//调用父类方法一;
+	}
+}
+class Dog{
+	function cry(){
+		echo "小狗汪汪叫<br>";
+		Animal::cry();		//调用父类方法二;
+	}
+}
+$cat = new Cat();
+$cat->cry();
+$dog = new Dog();
+$dog->cry();
+?>
+
+
+
+
+
+
+
+
+====抽象类和抽象方法（abstract）====
+1，抽象类和方法是以 abstract 关键字为开头的。
+2，抽象类中，可以有抽象方法，也可以有普通方法。
+3，拥有抽象方法的类，必须是抽象类。
+4，抽象类一旦被继承，其类中的抽象方法必须全部实现。
+5，抽象类中的普通方法可以被直接调用。
+
+<?php
+abstract class A{	//类中有抽象方法，类也必须是抽象的
+		public $name;
+		public $age;
+		public abstract function aa(); //抽象方法不能有主体。
+		public function bb(){	//抽象类中可以存在普通方法。
+			echo "<br>这是抽象类中的普通方法！<br>";
+		}
+}
+class B extends A{
+	function aa(){	//抽象类一旦被继承，父类中的抽象方法必须全部实现。
+		echo "实现了A的抽象方法aa()";
+	}
+}
+$b = new B();
+echo $b->aa();
+A::bb(); //这里可以直接调用抽象类中的普通方法！
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====接口=====
+	
+a. 接口基本语法： interface 接口名 { 属性 方法}
+b. 接口中可以有属性，但必需是常量，默认是public 
+	如：interface A{	const A=90;	} 
+c. 接口中的方法不能有方法体,且必须都是public级别，默认是public.
+d. 一个类可以实现多个接口，
+e. 接口的实现： class 类名 implements 接口1，接口2，，，{ 方法}
+f. 一个接口不能继承其它类，但是可以继承其它接口，但实现接口的类要实现此接口中包括继承到的所有的方法。
+g. 一个类在实现接口时，也可以同时去继承一个类。
+h. 接口用来制定规范，让其它程序员来实现。
+i. 当多个平级的类要去实现同一功能，但实现的方式不一样时就要考虑使用接口。
+
+
+<?php
+interface  A{
+	function aa();	
+}
+interface B{
+	function bb();
+}
+interface C extends A,B{
+	function cc();
+}
+abstract class F{
+	abstract function ff();
+}
+class D extends F implements C{ //D继承F并实现C
+	function aa(){echo "aa";}
+	function bb(){echo "bb";}
+	function cc(){echo "cc";}
+	function ff(){echo "ff";}
+}
+
+//$d = new D();
+D::aa();
+D::bb();
+D::cc();
+D::ff();
+?>
+
+
+
+
+
+
+-----关键字final
+
+当用final修饰类的时候，则该类不能再被其它类继承。
+当用final修饰方法的时候，则该方法不能再被重写覆盖。
+
+echo "----关键字final<br><br>";
+final class A{
+	function aa(){
+		echo "当类前面被 final修饰后，则此类不能被继承！<br>";
+	}
+}
+class B{
+	final function rate($rate){ 
+		echo "在方法前面加上final 说明此方法不能被重写，<br>";
+		return $rate * 0.08;
+	}
+}
+class C extends B{
+	//function rate($rate){
+		//return $rate * 0.01; 因为父类的此方法被 final 所以不能重写。
+	//}
+}
+$c = new C();
+echo $c->rate(100);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====用面向对象的方式做计算器项目====
+----script函数-isNaN 检测是否为一个数值----
+
+	面向对象设计的浅显解析：
+		A:由一个前台页面来面向客户操作；
+		B:由一个中间控制页面，来接收数据并调用相应的对象方法；
+		C:由一个或多个页面以对象的方式封装类和方法，供中间控制页面调用。
+		案例如下：
+
+	一：前台页面文件：
+<html>
+<head>
+	<title>计算器</title>
+	<script language="javascript">
+		function check(){
+			var num1val=document.getElementById("num1").value;
+			var num2val=document.getElementById("num2").value;
+			//alert(num1val+" "+num2val);  获取两个输入框的值。
+			//isNaN检测该值是否为数值，不是数值返回true.
+			if(isNaN(num1val) || isNaN(num2val) ){	
+				alert("请输入正确的数值");
+				//如果返回false就不提交了
+				return false;
+			} 
+		}
+	</script>
+</head>
+<body>
+	<h1>四则运算器</h1><br>
+	<form action="console.php" method="post" onsubmit="return check()">
+第一个数值<input type="next" id="num1" name="num1" /><br>
+第二个数值<input type="next" id="num2" name="num2" /><br>
+选择运算符<select name="oper">
+			<option value="+">+</option>
+			<option value="-">-</option>
+			<option value="*">*</option>
+			<option value="/">/</option>
+		</select><br>
+			<input type="submit" name="sub" value="提交"/>
+	</form>
+<body>
+</html>
+
+
+		二：接收控制页面
+
+<?php
+	$num1 = $_REQUEST['num1'];
+	$num2 = $_REQUEST['num2'];
+	$oper = $_REQUEST['oper'];
+	require_once 'arithmitec.class.php';
+	$ari=new Arithmitec();
+	echo $ari->cast($num1,$num2,$oper);
+?>
+<br><a href="desk.php">返回</a>
+
+
+		三：对象方法封装类页面
+
+<?php
+class Arithmitec{
+	function cast($num1,$num2,$oper){
+		switch($oper){
+			case '+':
+				return $num1+$num2;
+				break;
+			case '-';
+				return $num1-$num2;
+				break;
+			case '*';
+				return $num1*$num2;
+				break;
+			case '/';
+				return $num1/$num2;
+				break;
+			default:
+				echo "输入错误，请重新输入！";
+				break;
+		}
+	}
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	=====错误处理器及触发器=====
+
+错误报告级别:
+	E_NOTICE	E_WARNING	E_ALL	是系统错误信息
+	E_USER_NOTICE	E_USER_WARNING	E_USER_ERROR 	是用户自定义的逻辑错误信息
+	以上错误级别都可以自定义！可根据如下安全进行操作！
+
+	-----file_exists()判断文件是否存在
+
+<?php
+//$num代表错误代号，$for代表错误信息，$file代表错误文件，
+//$line代表错误行数,$con代表发生错误时所用的每个变量和值。
+	//以下是定义错误的函数
+	function ewarning($num,$for,$file,$line,$con){
+		echo "错误代号：".$num;
+		echo "<br>错误信息：".$for;
+		echo "<br>错误文件名为：".$file;
+		echo "<br>错误行数为：".$line;
+		echo "<br>错误内容：".$con;
+	}
+	function enotice($num,$for,$file,$line,$con){
+		echo "错误代号：".$num;
+		echo "<br>错误信息：".$for;
+		echo "<br>错误文件名为：".$file;
+		echo "<br>错误行数为：".$line;
+		echo "<br>错误内容：".$con;
+	}
+	function eerror($num,$for,$file,$line,$con){
+		echo "错误代号：".$num;
+		echo "错误信息：".$for;
+		echo "错误文件名为：".$file;
+		echo "错误行数为：".$line;
+		echo "错误内容：".$con;
+		exit();
+	}
+	//以下是启用自定义错误的函数
+	set_error_handler("ewarning",E_USER_WARNING);
+	set_error_handler("enotice",E_USER_NOTICE);
+	set_error_handler("eerror",E_USER_ERROR);
+
+	//以下是在实际应用中触发了自定义的错误函数
+	if(file_exists("one1.txt")){
+		echo "文件以打开";
+		$a = fopen("one.txt","r");
+	}else{
+		//错误触发器的应用
+		
+		trigger_error("warning级警告！，文件未找到！",E_USER_WARNING);
+		trigger_error("notice级注意！没有此文件！",E_USER_NOTICE);
+		trigger_error("error级文件找不到",E_USER_ERROR);
+	}
+	echo "<br>试验自定错误及触发器··！";
+?>
+
+
+
+
+	-----filesize()检查文件的大小
+
+<?php
+	$file_name = "aa.jpg";
+	$fp = fopen($file_name,"r");
+	$file_size= filesize($file_name);
+	echo "文件大小为：$file_size";
+?>
+
+
+
+
+
+		----保存日志时间----
+		----显示时间---
+	date_default_timezone_set("Asia/chongqing")
+	date("Y-m-d G-i-s")
+
+<?PHP
+	function en($a,$b){
+		$info = "错误代号=".$a."错误信息=".$b;
+		echo $info;
+		date_default_timezone_set("Asia/Chongqing");
+		error_log($info.date("Y-m-d G-i-s")."\r\n",3,"D:/one.txt");
+	}
+	set_error_handler('en',E_USER_NOTICE);
+
+	if(file_exists('two.php')){
+		$f = fopen('two.php');
+	}else{
+		trigger_error('notice，无此文件！',E_USER_NOTICE);
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	=====PHP的异常处理====
+
+	-----异常处理机制--------
+
+
+	try{
+		addUser("abc");
+		upUser("defd");
+	}catch(Exception $e){
+		echo "失败信息=".$e->getMessage()."line---".$e->getLine();
+	}
+	function addUser($user){
+		if($user=="abc"){
+			echo "用户添加成功<br>";
+		}else{
+			throw new exception('添加失败！');
+		}
+	}
+	function upUser($up){
+		if($up=="def"){
+			echo "修改成功<br>";
+		}else{
+			throw new exception("修改失败！");
+		}
+	}
+
+
+
+	
+
+	
+
+
+
+	-----自定义异常处及多catch处理------
+
+
+	class MyException1 extends Exception{}
+	class MYException2 extends Exception{}
+	
+	function a(){
+		throw new MyException1("异常aaaaaaaa");
+	}
+	function b(){
+		throw new MyException2("异常bbbbbbbb");
+	}
+	
+	function c(){
+		try{
+			a();
+			b();
+		}catch(MyException1 $a1){
+			echo $a1->getMessage();
+		}catch(MyException2 $a2){
+			echo $a2->getMessage();
+		}
+	}
+	c();
+	
+
+
+
+
+	-----老版本的参数不适用try-----
+
+	try{
+		$a = 8/0;
+		$f = fopen("aaa.php");
+	}catch(Exception $e){
+		echo $e->message();
+	}
+
+
+
+
+
+
+		-----自定义顶级异常处理！-----
+
+	function my_exception(){		//自定义的顶级异常处理器
+		echo "我的顶级异常处理器--------！";
+	}
+	set_exception_handler("my_exception");//设置启用自定义的处理器
+	function aa($a){
+		if($a<100){
+			echo $a;
+		}else{
+			throw new Exception("数值太大");
+		}
+	}
+	function bb(){	
+		try{
+			aa(190);
+		}catch(Exception $e){
+			//echo $e->getMessage()."----".$e->getLine();
+			throw $e;	//出现异常时，可选择上面的处理行为，也可如此再次把异常抛出
+							//让顶级处理器来处理！
+		}
+	}
+	bb();
+	
+	echo "<br>abcd";
+?>
+
+
+
+
+
+
+
+
+
+
+
+		=====xml=====
+
+<?php
+echo "--------XML的特性和应用<br>";
+	echo "一：可以作为程序间通讯的标准。<br>";
+	echo "二：可以做为配置文件。<br>";
+	echo "三：可以做小型数据库<br>";
+	echo "配置文件的应用实例如下：<br>";
+/*
+	$link = mysq_connect('localhost','root','abcd');
+	<dbinfo>
+		<host>11.11.11.11</host>
+		<user>user</user>
+		<password>1234</password>
+		<type>mysql</type>
+	</dbifo>
+
+
+
+
+
+
+
+
+*/
+echo "<hr>--------XML语法<br>";
+/*
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+	<grade>
+		<stu>
+			<name>aaa</name>
+			<sex>nv</sex>
+			<age>20</age>
+		</stu>
+		<stu>
+			<name>aaa</name>
+			<sex>nv</sex>
+			<age>20</age>
+		</stu>
+	</grade>
+
+*/
+
+
+
+
+
+
+
+echo "<hr>--------xml标签的两种形式（标签区分大小写）";
+
+/*
+		一：<aa>aaaaaa<aa>
+		二：<aaa/>
+
+*/
+
+
+
+
+
+
+
+echo "<hr>-------xml中的换行的空格会被处理！";
+
+/*
+  如下：
+	<name>宋江</name>
+	与
+	<name>
+		宋江
+	</name>
+	以上两种形式会出现不同结果！要注意！
+*/
+
+
+
+
+
+
+echo "<hr>--------XML中标签元素的命名规范！<br>";
+
+echo "<br>1,区分大小写<br>";
+echo "<br>2，不能以数字和下划线开头<br>";
+echo "<br>3,不能用XML的字样开头<br>";
+echo "<br>4,标签元素中不能包含空格<br>";
+echo "<br>5,名称中不能有冒号<br>";
+
+
+
+
+
+
+
+echo "<hr>--------xml的标签属性<br>";
+echo "一个元素可以有多个属性，用单引或双引标注，中间不能有<,>,&,如下例<br>"; 
+echo "<元素名 属性名='属性值' 属性名='属性名' >";
+/*
+	<stu id='100' weight='120'>
+		<name>tom</name>
+	</stu>
+*/
+
+
+
+
+
+
+
+
+echo "<hr>--------特殊符号的实体字符<br>";
+echo "如果我们属性值中有一些敏感特殊字符，可以使用实体字符来解决！";
+echo "注意！实体字符后面一定要有分号!<br>";
+
+/*
+如：<stu num="a0&apos;0&quot;1">;
+	&lt --- <
+	&qt --- >
+	&amp -- &
+	&apos - '
+	&quot - "
+
+*/
+
+
+
+
+
+
+
+
+echo "<hr>--------XML特殊字符处理CDATA<br>";
+echo "XML文件中的某个标签内包含了特殊字符就可以用CDATA来处理<br>";
+	echo "CDATA的基本语法：<br>";
+	/*
+		<![CDATA[
+			内容
+		]]>
+
+		例：
+			<介绍><![CDATA[*((*&^^%^$$#]]></介绍>
+			<头像><![CDATA[this((&^EWQlksjdWQE*#$]]></头像>
+	*/
+
+
+
+
+
+
+
+echo "<hr>--------xml处理指令PI,可连接css<br>";
+echo "处理指令简称PI(process instrution),处理指令用来指挥解析引擎如何";
+echo "解析几何XML文档内容。<br>";
+echo "例如，在XML文档中可以使用 xml-stylesheet 指令,通知XML解析引擎，应";
+echo "用CSS文件显示XML文档中内容,使用语法：<br>";
+echo "《?xml-stylesheet type='text/css' href='css.css'》";
+
+echo "<br>例子如下：<br>";
+/*
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/css" href="css.css"?>
+<all>
+	内容
+</all>
+和html的CSS用法基本相似
+*/
+
+
+
+
+
+
+echo "<hr>------xml约束的两种方式；<br>";
+echo "约束技术有两种方式,一种是DTD，另一种是schema<br>";
+echo "什么是XML约束：<br>";
+echo "在XML技术里，可以编写一个文档来约束一个XML文档的书写规范，称之为XML约束!";
+
+
+
+
+
+
+
+echo "<hr>--------DTD讲解<br>";
+echo "DTD主要用途是约束XML文件，也可去约束html,xhtml...<br>";
+echo "DTD引入格式<br>";
+echo "《！DOCTYPE 根元素名 SYSTEM “DTD文件的路径”》---如下例";
+
+
+
+
+
+
+
+
+echo "<hr>-----xml,dtd,html 架接实例：<br>";
+
+echo "实例如下：或见处外部实例<br>";
+
+/*
+
+one.dtd页面
+
+<!ELEMENT 班级 (stu+)>
+<!ELEMENT stu (name,age)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT age (#PCDATA)>
+
+
+
+two.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE 班级 SYSTEM "one.dtd">
+<班级>
+	<stu>
+		<name>aaa</name>
+		<age>22</age>
+	</stu>
+</班级>
+
+
+
+three.htaml
+
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;	charset=utf-8"/>
+	<script language="javascript">
+		<!--
+			var xmldoc = new ActiveXObject("Microsoft.XMLDOM");
+			xmldoc.validateOnParse = true;
+			xmldoc.load("two.xml");
+			document.write("错误信息="+xmldoc.parseError.reason+"<br/>");
+			document.write("错误的行号="+xmldoc.parseError.line+"<br/>");
+		-->
+	</script>
+</head>
+</html>
+<br>";
+
+*/
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====DTD文档的声明及引用
+
+
+	-----DTD文档分内部，外部和内外结合结合三种方式：
+
+一：内部DTD文档：
+	<!DOCTYPE 根元素 [定义内容]>
+
+二：外部DTD文档：
+	<!DOCTYPE 根元素 SYSTEM "DTD文档路径">
+
+三：内外部DTD文档结合:
+	<!DOCTYPE 根元素 SYSTEM "DTD文件路径" [定义内容]>
+
+
+内部DTD案例：
+
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE class [
+	<!ELEMENT class (stu+)>
+	<!ELEMENT stu (name,age,js)>
+	<!ELEMENT name (#PCDATA)>
+	<!ELEMENT age (#PCDATA)>
+	<!ELEMENT js (#PCDATA)>
+]>
+<class>
+	<stu>
+		<name>zxc</name>
+		<age>18</age>
+		<js>bbb</js>
+	</stu>
+</class>
+
+
+
+	
+
+
+
+		-----DTD声明的两种方式：
+XML文件使用DOCTYPE声明语句来指明它所遵循的DTD文件，DOCTYPE声明语句有两种形式。
+
+	一：当引用的文件在本地时，采用如下方式：
+<!DOCTYPE 文档根结点 SYSTEM "DTD文件的URL">
+	例如：<!DOCTYPE 书架 SYSTEM "book.dtd">
+
+	二：当引用的文件是一个公共的文件时，采用如下方式：
+<!DOCTYPE 文档根结点 PUBLIC "DTD名称" "DTD文件的URL">
+	例如：
+	<!DOCTYPE HTML PUBLIC "-//WEC//DTD HTML 4.01 Transitionall//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">	
+
+
+
+
+
+
+	-----DTD语法及元素：
+语法：
+	<!ELEMENT NAME CONTENT> 
+EMPTY	- 该元素不能包含子元素和文本，但可以有属性-（空元素）
+ANY	- 该元素可以包含任何在DTD中定义的元素内容。注意！！！是定义过的，没有定义过的是不行的！
+#PCDATA	- 可以包含任何字符数据，但是不能在其中包含任何子元素其它类型（组合）
+	
+例：
+
+<!ELEMENT 班级 (学生+)>
+<!ELEMENT 学生 (名字,年龄,姓别)>
+<!ELEMENT 名字 (#PCDATA)>
+<!ELEMENT 年龄 (#PCDATA)>
+<!ELEMENT 性别 (#PCDATA)>
+
+
+判断题：
+	<!ELEMENT 人 EMPTY>
+1:
+<家庭>
+	<人 名字='皮特' 性别='男' 年龄='6' />
+</家庭>	
+	这道题是对的!
+
+2.
+<家庭>
+	<人>皮特</人>
+	<人><大人> 皮特的爸爸</大人></人>
+</家庭>	
+
+
+
+
+
+
+
+
+
+		-----元素修饰符：
+() --- 用来给元素分组 	 如：(古龙|金庸|梁羽生)		分成了三组
+ | --- 在列出的对象中选择一个.		如:(男|女)	表示男和女必须先一个。 
+ + --- 该对象出现至少 1 次或多次  	如:(成员+)	表示成员必须出现，可出现多个.
+ * --- 该对象允许出现0到任意次数	如:(爱好*)	爱好可以出现0到任意次
+ ? --- 该对象可以出现0到1次		如:(菜鸟?)	可以不出现，如出现最多只能一次.
+ , --- 对象必须按指定的顺序出现	  如:(西瓜,苹果,香蕉)	表示必须按照规定的顺序出现。
+
+
+
+
+
+		-----元素属性列表说明：
+基本语法：
+<!ATTLIST 元素名称
+	属性名 属性类型 属性的特点
+	属性名 属性类型 属性的特点
+>
+
+
+属性类型有：
+	CDATA		表示属性可以是字符或者是数字
+	ID		属性是唯一的，字母开头
+	IDREF/IDREFS	id引用 （只能引用以被声明的ID）
+	Enumerated	枚举-在几个中选一个，如 男/女 选一个
+	ENTITY/ENTITIES	实体
+
+属性的特点：
+	#REQUIRED	该属性必须有值
+	#IMPLIED	该属性的值可有可无
+	#FIXED value 	该属性的值是固定的
+	DEFAULT value	如果不给值系统会给一个默认值。
+
+
+
+实例：
+
+
+<学生 住址='香港' 大佬='a002 a003' 国籍="中国" 学号="a001">
+	<名字>周星驰</名字>
+	,,,,,,,,,,,,,
+</学生>
+
+
+对应的DTD
+
+<!ELEMENT 班级 (学生+，班长)>
+	<!ATTLIST 学生
+		住址 CDATA #IMPLIED
+		学号 ID #REQUIRED
+		大佬 IDREFS #REQUIRED
+		婚姻状态 (单身|结婚|离婚) #REQUIRED
+		国籍 CDATA #FIXED "中国"
+	>
+<!ELEMENT 学生 (姓名,年龄,介绍)>
+<!ELEMENT 姓名 (#PCDATA)>
+<!ELEMENT 年龄 (#PCDATA)>
+<!ELEMENT 介绍 (#PCDATA)>
+
+
+
+
+
+
+		-----实体定义分为引用实体和参数实体，
+1,实体定义用于为一段内容创建一个别名，以后在XML文档中就可以使用别名引用这段内容了。像$str="abcd";
+
+2,在DTD定义中，一条<!ENTITY...>语句用于定义一个实体。
+
+3，实体可分为两种类型：引用实体和参数实体。
+
+
+一：引用实体：就是在DTD中定义了一个引用实体--<!ENTITY 实体名 "内容">--，
+	然后在XML中使用引用实体 --&实体名--。
+例子：
+	在DTD中定义
+		<!ELEMENT 班级 (学生+,班长)>
+		<!ENTITY info "引用内容">   
+	在xml文件中引用   
+		<介绍>&info;学习刻苦</介绍> //注意！！！引用后面要有分号.
+
+
+二：参数实体：在DTD中定义实体-<!ENTITY % 实体名称 "实体内容">-
+	在DTD文件中自己使用	-&实体名称-
+例子：
+
+<!ELEMENT 班级 (学生+)>
+<!ENTITY % stu "名字">
+<!ELEMENT 学生 (%stu;,年龄,介绍)>
+<!ELEMENT %stu; (#PCDATA)>
+<!ELEMENT 年龄 (#PCDATA)>
+<!ELEMENT 介绍 (#PCDATA)>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	=====按照DTD格式编写XML并以及检验实例=====
+
+
+dtd 页面：
+
+
+<!ENTITY AUTHOR "John Doe">
+<!ENTITY COMPANY "JD Power Tools, Inc.">
+<!ENTITY EMALL "jd@jd-toole.com">
+<!ELEMENT CATALOG (PRODUCT+)>
+<!ELEMENT PRODUCT (SPECIFICATONS+,OPTIONS?,PRICE+,NOTES?)>
+<!ATTLIST PRODUCT
+NAME CDATA #IMPLIED
+CATEGORY (HandTool|Table|shop-Frofessional) "HandTool"
+PARTNUM CDATA #IMPLIED
+PLANT (Pittsburgh|Milwaukee|Chicago) "Chicago"
+INVENTORY (InStock|Backordered|Discontinued) "InStock">
+<!ELEMENT SPECIFICATONS (#PCDATA)>
+<!ATTLIST SPECIFICATONS
+WEIGHT CDATA #IMPLIED
+POWER CDATA #IMPLIED>
+<!ELEMENT OPTIONS (#PCDATA)>
+<!ATTLIST OPTIONS
+FINISH (Hetal|Polished|Matte) "Matte"
+Adapter (Included|Optional|NotApplicable) "Included"
+CASE (HardShell|Soft|NotApplicable) "HardShell">
+<!ELEMENT PRICE (#PCDATA)>
+<!ATTLIST PRICE
+MSRP CDATA #IMPLIED
+WHOLESALE CDATA #IMPLIED
+STREET CDATA #IMPLIED
+SHIPPING CDATA #IMPLIED>
+<!ELEMENT NOTES (#PCDATA)>
+
+
+
+
+xml 页面：
+
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE CATALOG SYSTEM "dtd.dtd">
+<CATALOG>
+	<PRODUCT NAME='Wang' CATEGORY="Table" PLANT="Milwaukee" INVENTORY='Backordered'>
+		<SPECIFICATONS WEIGHT="100GK" POWER="a1000W">
+				AAAAAAAA
+		</SPECIFICATONS>
+		<OPTIONS FINISH='Hetal' Adapter='Included' CASE='Soft'>
+				BBBBBBBB
+		</OPTIONS>
+		<PRICE MSRP='OK' WHOLESALE="LiFeng">
+				CCCCCCC
+		</PRICE>
+		<NOTES>
+				DDDDDDD
+		</NOTES>
+	</PRODUCT>
+</CATALOG>
+
+
+
+check 页面：
+
+
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;	charset=utf-8"/>
+	<script language="javascript">
+		<!--
+			var xmldoc=new ActiveXObject("Microsoft.XMLDOM");
+			xmldoc.validateOnParse = true;
+			xmldoc.load("xml.xml");
+			document.write("错误信息="+xmldoc.parseError.reason+"<br/>");
+			document.write("错误行号="+xmldoc.parseError.line+"<br/>");
+
+		-->
+	</script>
+</head>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	=====使用PHP技术对XML文件进行操作=====
+
+	-----三种XML操作技术;
+1, php dom
+2, php 结合 xpath 操作 xml
+3, SimpleXml
+
+	----增删改查 术语 C R U D 
+
+C - create 	R - read 	u - update	d - delete
+$del->parentNode->removeChild($del);  parent - 父节点。
+$del->firstChild->removeChild($del);	firstChild - 前一个兄弟节点。
+$del->lastChild->removeChild($del);	lastchild - 后一个兄弟节点。
+
+
+
+	-----DOM说明：
+	dom (document object model) 文档-对象-模型，核心思想是把一个XML文件，看成一个对象 模型，然后通过对象的方式来操作XML文件。
+
+
+
+	-----DOM命令及查找案例：
+	
+
+DOM.PHP 页面
+
+<html>
+<?php
+/*
+	//解析一个文件的步骤
+	
+
+	//1，创建一个DOMDocument对象，表示文档。
+	$xmldoc=new DOMDocument();
+	//2, 指定加载哪个XML，并解析。
+	$xmldoc->load("xml.xml");
+	//3, 获取想要的节点。
+	$stus = $xmldoc->getElementsByTagName('stu');
+	//4, 遍历。
+	for($i=0;$i<$stus->length;$i++){
+		//取出学生；
+		$stu = $stus->item($i);
+		//各个信息；
+		echo getNodeVal($stu,"name");
+	}
+
+	function getNodeVal(&$MyNode,$tagName){
+	//这句话，获取到$MyNode节点下面的所有$tagName节点
+	//$nodeList=$MyNode->getElementsByTagName($tagName);
+	//var_dump($nodeList);
+	//取出第一个
+	//$node=$nodeList->item(0);
+	//var_dump($node);
+	//取出值
+	//$nodeVal=$node->nodeValue;
+	//var_dump($nodeVal);
+	return $MyNode->getElementsByTagName($tagName)->item(0)->nodeValue;
+	}
+*/
+	$xmldoc = new DOMDocument();
+	$xmldoc->load('xml.xml');
+	$n1 = $xmldoc->getElementsByTagName('stu');
+	function getVal($n1,$b,$i){
+	return $n1->item($i)->getElementsByTagName("$b")->item(0)->nodeValue;
+	}
+	for($i=0;$i<$n1->length;$i++){	
+			echo getVal($n1,'sex',$i)."<br>";
+	}
+?>
+</html>
+
+
+
+
+xml.xml页面：
+
+<?xml version="1.0" encoding="utf-8"?>
+<class>
+	<stu>
+		<name>
+			<aaa>
+				<bbb>111</bbb>
+				<bbb>222</bbb>
+				<bbb>333</bbb>
+			</aaa>
+			<aaa>
+				<bbb>444</bbb>
+				<bbb>555</bbb>
+				<bbb>666</bbb>
+			</aaa>
+			<aaa>
+				<bbb>777</bbb>
+				<bbb>888</bbb>
+				<bbb>999</bbb>
+			</aaa>
+		</name>
+		<age>18</age>
+		<sex>nv</sex>
+	</stu>
+	<stu>
+		<name>
+			<aaa>
+				<bbb>aaaa</bbb>
+				<bbb>bbbb</bbb>
+				<bbb>cccc</bbb>
+			</aaa>
+			<aaa>
+				<bbb>dddd</bbb>
+				<bbb>eeee</bbb>
+				<bbb>ffff</bbb>
+			</aaa>
+			<aaa>
+				<bbb>gggg</bbb>
+				<bbb>hhhh</bbb>
+				<bbb>iiii</bbb>
+			</aaa>
+		</name>
+		<age>23</age>
+		<sex>nv</sex>
+	</stu>
+	<stu>
+		<name>
+			<aaa>
+				<bbb>jjjj</bbb>
+				<bbb>kkkk</bbb>
+				<bbb>llll</bbb>
+			</aaa>
+			<aaa>
+				<bbb>mmmm</bbb>
+				<bbb>nnnn</bbb>
+				<bbb>oooo</bbb>
+			</aaa>
+			<aaa>
+				<bbb>777</bbb>
+				<bbb>888</bbb>
+				<bbb>999</bbb>
+			</aaa>
+		</name>
+		<age>46</age>
+		<sex>nan</sex>
+	</stu>
+</class>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	-----DOM 增删改查 crud 案例集合 -----
+
+php页面：
+
+<?php
+	echo "改";
+	$xmldoc = new DOMDocument();
+	$xmldoc->load('two.xml');
+	$up_name = $xmldoc->getElementsByTagName('name')->item(0);
+	$up_name->nodeValue= "张月辉";
+	$up_age =$xmldoc->getElementsByTagName('age')->item(0);
+	$up_age->nodeValue += 10;
+	$xmldoc->save('two.xml');
+/*
+	echo '增';
+	$xmldoc = new DOMDocument();
+	$xmldoc->load('two.xml');
+	$root = $xmldoc->getElementsByTagName('class')->item(0);
+	$stu_node = $xmldoc->createElement('stu');
+	$root->appendChild($stu_node);
+	$stu_node_name = $xmldoc->createElement('name');
+	$stu_node_name->nodeValue= "a11";
+	$stu_node->appendChild($stu_node_name);
+	$stu_node_age = $xmldoc->createElement('age');
+	$stu_node_age->nodeValue=  99;
+	$stu_node->appendchild($stu_node_age);
+	$xmldoc->save("two.xml");
+
+
+	echo "删";
+	$xmldoc = new DOMDocument();
+	$xmldoc->load('two.xml');
+	$del = $xmldoc->getElementsByTagName('stu')->item(5);
+	$del->parentNode->removeChild($del);
+	$xmldoc->save('two.xml');
+*/
+?>
+
+
+
+xml页面：
+
+<?xml version="1.0" encoding="utf-8"?>
+<class>
+	<stu>
+		<name>aaa</name>
+		<age>22</age>
+	</stu>
+	<stu>
+		<name>bbb</name>
+		<age>22</age>
+	</stu>
+	<stu>
+		<name>ccc</name>
+		<age>22</age>
+	</stu>
+	<stu>
+		<name>ddd</name>
+		<age>22</age>
+	</stu>
+	<stu>
+		<name>eee</name>
+		<age>22</age>
+	</stu>
+<stu><name>a11</name><age>99</age></stu></class>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	=====xpath====
+
+
+使用xpath有什么好处？
+PHP DOM技术可以中层取出，但是不能保持层次关系，使用xpath可以更好解决！
+
+例子：
+
+<?php
+	$xmldoc = new DOMDocument();
+	$xmldoc->load('two.xml');
+	$xpath = new DOMXPath($xmldoc);
+	
+	$p1 = $xpath->query("//*");
+	echo $p1->length;
+	for($i=0;$i<$p1->length;$i++){
+		$p2 =  $p1->item($i);
+		echo $p2->tagName."<br>";
+	}
+?>
+
+
+
+
+
+/aaa/ddd/bbb	--选择aaa的子元素ddd下的bbb元素。
+//bbb 		--选择所有bbb元素
+//ddd/bbb 	--选择所有父元素是ddd的bbb元素
+/aaa/ccc/ddd/* 		--选择所有路径依附于/aaa/ccc/ddd的元素
+/*/*/*/bbb	--选择所有的有3个祖先元素的bbb元素(或所有第四级bbb元素)
+//* 		--选择所有元素
+/aaa/bbb[1]	--选择aaa的第一个bbb子元素
+/aaa/bbb[last()] 	--选择aaa的最后一个bbb子元素
+//@id		--选择所有的id属性
+//bbb[@id]	--选择有id属性的bbb元素。
+//bbb[@name]	--选择有name属性的bbb元素。
+//bbb[@*] 	--选择所有有任意属性的bbb元素。
+//bbb[not(@*)]		--选择没有属性的bbb元素
+//bbb[@id='b1'] 	--选择含有属性id其值为‘b1’的bbb元素
+//bbb[@name='bbb']	--选择含有name属性值为'bbb'的bbb元素.
+//bbb[normalize-space(@name)='bbb']
+	--选择含有属性name且值(在用normalize-space函数去掉前后空格后)为bbb的bbb元素。
+//*[count(bbb)=2]	--选择含有2个bbb子元素的元素.
+//*[count(*)=2]		--选择含有2个子元素的元素。
+//*[count(*)=3]		--选择含有3个子元素的元素。
+//*[name()='bbb']	--选择所有名称为bbb的元素（这里等价于//bbb）
+//*[starts-with(name(),'b')] 	--选择所有名称以'b'起始的元素。
+//*[contains(name(),'C')]	--选择所有名称包含‘C’的元素
+//*[string-length(name())=3]	--选择名字长度为3的元素.
+//*[string-length(name())<3]	--选择名字长度小于3的元素。
+//*[string-length(name())>3]	--选择名字长度大于3的元素。
+//ccc | //bbb		--选择所有的ccc和bbb元素。
+/aaa/eee | //bbb	--选择aaa下为eee的所有子元素以及所有的bbb元素。
+/aaa/eee | //ddd/ccc | /aaa | //bbb	--可以合并的路径数目没有限制。
+/child::aaa		--等价于 /aaa
+/aaa		--等价于/child::aaa
+/aaa/bbb	--等价于/child::aaa/child::bbb
+/child::aaa/child::bb	--等价于/aaa/bbb
+/child::aaa/bbb		--二者都可以合并
+
+/descendant::*		--选择文档根元素的所有后代，即所有的元素被选择。
+/aaa/bbb/descendant::* 	--选择/aaa/bbb的所有后代元素.
+//ccc/descendant::*	--选择所有ccc元素下的子元素。
+//ccc/descendant::ddd	--选择所有为ccc元素下为ddd的子元素。
+//ddd/parent::* 	--选择所有ddd元素的父节点。
+/aaa/bbb/ddd/ccc/eee/ancestor::*	--选择一个绝对路径上的所有节点。
+//fff/ancestor::*	--选择fff元素的祖先节点。
+ 	
+--following-sibling轴,包含上下文节点之后的所有兄弟节点。
+	/aaa/bbb/following-sibling::*
+	//ccc/following-sibling::*
+
+--preceding-sibling轴(axis)包含上下文节点之前的所有兄弟节点
+	/aaa/xxx/preceding-sibling::*
+	//ccc/preceding-sibling::*
+
+
+
+
+
+
+
+
+
+
+
+
+	=====simplexml=====
+simplexml 可以有三种形式来装载XML文件
+	1， 直接装载xml文件。
+	2， 装载DOM对象。
+	3， 装载一个XML格式的字符串。(装载string该string要求按照XML文件的标准写)
+
+
+
+<?php
+	//-----simplexml的使用:
+	$a = simplexml_load_file("xml.xml");	//装载文件
+	$word = $a->word;	//$word 现在是一个数组，装载所有的word元素。
+	for($i=0;$i<count($word);$i++){
+		$a = $word[$i];		//遍历并把每一个word元素保存到$a
+		echo $a['type'].$a['type2']."<br>";//查看父元素属性值,可以查看多个属性。
+		echo $a->en['type'].$a->ch['type']."<br>"; //查看子元素属性值
+		echo $a->en.$a->ch."<br>";
+	}
+
+
+
+/*
+
+	//-----simple可以结合xpath一起使用！
+	$en = $a->xpath("//en");
+	foreach($en as $val){
+		echo $val."<br>";
+	}
+
+
+
+
+
+
+		//-----simple装载DOM对象；
+	$xmldoc = new DOMDocument();
+	$xmldoc->load('xml.xml');
+	$lib = simplexml_import_dom($xmldoc);
+	$a = $lib->word;
+	echo $a->en;
+
+
+
+
+
+
+	-----simplexml_load_string()加载<<<字符串
+//下面的 三行，必须顶头写。
+$str=<<<kk
+<?xml version='1.0'?> 
+	<document>
+	<title>forty what?</title>
+	<from>joe</from>
+	<to>jane</to>
+	<body>
+	 I know that's the answer -- but what's the question?
+	</body>
+	</document>
+kk;
+	$a = simplexml_load_string($str);
+	foreach($a->xpath("//*") as $val){
+		echo "<br>".$val."<br>";
+	}
+	print_r($str);
+*/
+/*
+	-----simplexml元素值比较：
+if((string)$book->code=="p698")
+	echo "[new]";
+if($book->pric<580)
+	echo "[low]";
+上述两个IF条件比较code和price元素值，因为code是字符串，所以
+使用（string）执行类型转换后，才进行了比较！  */
+
+	$a='body';
+	$lib = simplexml_load_file("xml.xml");
+	$words = $lib->word;
+	$word = $words[0];
+	if($word->en==$a){
+		echo "结果相同！成功！！！";
+	}else{
+		echo "结果失败";
+	}
+?>
+
+
+
+
+
+
+
+	-----通过http响应，控制浏览器间隔一定时间去跳转(页面刷新)
+
+<?php
+	header("Refresh: 3; url=http://localhost/xxx.php");
+?>
+
+
+
+
+	-----禁止页面缓存
+在默认情况下，浏览器会缓存页面。
+
+通过header禁用缓存案例：
+
+<?php
+	header("Expires: -1");
+	header("Cache-Control: no_cache");
+	header("Pragma: no-cache");
+	echo "hello";
+?>
+
+Cache -Control指定请求和响应遵循的缓存机制。在请求消息或响应消息中设置 Cache-Control并不会修改另一个消息处理过程中的缓存处理过程。请求时的缓存指令包括no-cache、no-store、max-age、 max-stale、min-fresh、only-if-cached，响应消息中的指令包括public、private、no-cache、no- store、no-transform、must-revalidate、proxy-revalidate、max-age。各个消息中的指令含义如 下： 
+
+　　Public指示响应可被任何缓存区缓存。 
+
+　　Private指示对于单个用户的整个或部分响应消息，不能被共享缓存处理。这允许服务器仅仅描述当用户的部分响应消息，此响应消息对于其他用户的请求无效。 
+
+　　no-cache指示请求或响应消息不能缓存 
+
+　　no-store用于防止重要的信息被无意的发布。在请求消息中发送将使得请求和响应消息都不使用缓存。 
+
+　　max-age指示客户机可以接收生存期不大于指定时间（以秒为单位）的响应。 
+
+　　min-fresh指示客户机可以接收响应时间小于当前时间加上指定时间的响应。 
+
+　　max-stale指示客户机可以接收超出超时期间的响应消息。如果指定max-stale消息的值，那么客户机可以接收超出超时期指定值之内的响应消息。
+
+
+
+
+
+
+
+
+
+	-----利用$_SERVER['HTTP_REFERER'] 和 strpos()函数防盗连
+	-----header() 重定向页面；
+
+
+防盗页面：
+<?php
+	//获取REFERER
+	if(isset($_SERVER['HTTP_REFERER'])){
+		//取出来,并判断是不是以http://localhost,,开始的
+		if(strpos($_SERVER['HTTP_REFERER'],"http://localhost")==0){
+			echo "是自己人，允许放行，，，，，";
+		}else{
+			//跳转到警告页面
+			header("Location:warning.php");
+		}
+	}else{
+		//跳转到警告页面
+		header("Location:warning.php");
+	}
+?>
+
+
+
+访问页面之本地面页：
+	本地页面的连接是以本地盘符路径的形式来访问的，会被放行！
+<a href="D://edu/one.php">我是自己人</a>
+
+
+
+访问页面之外部面页：
+	外部连接是以http的形式路径来访问的，当直接访问时会被阻拦！
+<a href="http://localhost/one.php">我是自己人</a>
+
+
+
+
+
+	
+
+
+
+	-----文件下载的设置;
+	
+实例一：简单文件下载
+
+<?php
+	$file_name= "aa.wmv";   //关联一个要下载的文件
+	if(!file_exists($file_name)){	//如果此文件不存在，则显示下面信息，并结束！
+		echo "文件不存在！！";
+		return ;
+	}
+	$fp = fopen($file_name,'r');	//打开这个文件
+	$file_size=filesize($file_name);	//读取这个文件的大小
+	header("Content-Type: application/octet-stream"); //设置下载文件类型
+	header("Content-Ranges: bytes");		//设置字节类型（字节）
+	header("Content-Length: $file_size");		//设置下载文件的大小
+	header("Content-Disposition: attchment; filename=".$file_name); //设置文件名，可指定！
+	$buffer=1024;	//设置文件下载时每次读取量的大小。
+	while(!feof($fp)){	//如果文件没有读取结束
+		$file_data=fread($fp,$buffer);	//当前读取量是多少
+		echo "$file_data";	//把当前读取量返回给页面
+	}	
+	fclose($fp);	//下载完成，关闭文件。
+?>
+
+
+
+实例二： 
+
+<?php
+function fileLoad($file_name,$path){
+	$file_name = iconv("utf-8","gb2312",$file_name);
+	$file_path = $path.$file_name;
+	if(!file_exists($file_path)){
+		echo "文件不存在！！！";
+		return ;
+	}
+	$fp = fopen($file_path,'r');
+	$file_size = filesize($file_path);
+	header("content-type: application/octet-stream");
+	header("content-ranges: bytes");
+	header("content-length: $file_size");
+	header("content-disposition: attachment; filename=".$file_name);
+	$buffer = 1;
+	$count = 0 ;
+	while(!feof($fp) && $count-$file_size<0){
+		$file_data=fread($fp,$buffer);
+		$count += $buffer;
+		echo $file_data;
+	}
+	fclose($fp);
+}
+fileLoad('顺平.jpg','c:/down/');
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		-----用面向对象方式处理下载管理-案例
+
+
+主面页：
+<?php 
+	for($i=0;$i<12;$i++){
+		// -----在href连接中php?可直接向另一页面传送数据
+		echo "<a href='downloadfile.php?file_name=0.png'>点击下载</a>";
+		echo "<img src='../../../../img/$i.png' width='30'/><br><br><br>";
+	}
+?>
+
+
+中间处理页面：
+
+<?php
+		// -----header()设置页面默认编码 与<meta>设置编码同效
+	header("Content-Type:text/html;charset=utf-8"); 
+	$file_name=$_REQUEST['file_name'];	//这里接收了上面页面发送的数据
+	include_once('down.php');
+	$path="d:/edu/img/";
+	down($file_name,$path);
+?>
+
+
+
+
+函数页面：
+
+<?php
+	header("Content-Type:text/html;charset=utf-8");
+   function down($file_name,$path){
+	$file_name = iconv("utf-8","gb2312",$file_name);
+	$file_path =$path.$file_name;
+	$fp = fopen($file_path,"r");
+	$file_size=filesize($file_path);	
+	header("Content-Type: application/octet-stream");
+	header("Content-Ranges: bytes");
+	header("Content-Length: $file-size");
+	header("Content-Disposition: attachment; filename=".$file_name);
+	$buffer = 1;
+	$count = 0;
+	while(!feof($fp) && $count-$file_size<0){
+		$file_data =fread($fp,$buffer);
+		$count += $buffer;
+		echo $file_data;
+	}
+	fclose($fp);
+  }
+?>
+
+
+
+
+
+
+		-----exit()调试使用函数;
+执行它时，后面的代码就不执行了，用在调试的时候，当不希望执行后面代码就用这个函数。
+
+
+		-----往mysql数据库插入中文字串的方法
+当一个变量是中文字串时，不能直接用双引号“”来注释此变量，
+得先加一层单引号，再加双引号，然后，再加一层点如： '".$a."'	案例如下：
+$ins = mysql_query("insert into word(en,ch) values('".$adden."','".$addch."')")or die(mysql_error());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		=====案例-----英汉双语在线翻译====
+
+
+
+1,首页面：
+
+<html>
+<head>
+	<title>英汉词典</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+</head>
+<body>
+	<h1 style="color:blue">英汉双语翻译</h1>
+	<form action="control.php" method="post">
+		<h3>翻译词语</h3>
+		<h5>输入要翻译的词语</h5>
+		<input type="text" name="fy" />
+		<input type="hidden" name="type" value="fy"/>
+		<input type="submit" value="翻译"/>
+	</form>	<form action="control.php" method="post">
+		<h3>添加词语</h3>
+		<h5>输入要添加的英语</h5>
+		<input type="text" name="adden" />
+		<h5>输入要添加的汉语</h5>
+		<input type="text" name="addch" />
+		<input type="hidden" name="type" value="add"/>
+		<input type="submit" value="添加"/>
+	</form>
+	<form action="control.php" method="post">
+		<h3>删除词语</h3>
+		<h5>输入要删除的英语</h5>
+		<input type="text" name="delen" />
+		<input type="hidden" name="type" value="del"/>
+		<input type="submit" value="删除"/>
+	</form>
+</body>
+</html>
+
+
+
+2，管理操作页面
+
+<?php
+	require "sqlTool.class.php";
+	require_once 'Handle.class.php';
+	$sq = new sqlTool('localhost','root','abcd','words');
+	$handle=new Handle();
+	$link =$sq->link;
+
+	$fy = $_REQUEST['fy'];
+	$adden = $_POST['adden'];
+	$addch = $_POST['addch'];
+	$delen = $_POST['delen'];
+	$type = $_POST['type'];
+	
+	$usedb = mysql_query("use words");
+	
+	$handle->fy($type,$fy);
+	$handle->add($type,$adden,$addch,$link);
+	$handle->del($type,$delen,$link);
+
+?><br><br>
+<a href="desk.html">返回</a>
+
+
+
+3，数据库工具函数页面：
+
+
+<?php
+class sqlTool{
+	private $er="mysql_error";
+	public $link;
+	function __construct($host,$root,$psw,$db){
+		$this->link = mysql_connect($host,$root,$psw)or die($er);
+
+		mysql_select_db($db)or die("$er");
+		mysql_set_charset("utf8");
+		
+	}
+	//函数-获取dql操作结果集并显示
+	function fetch($res){
+		while($row = mysql_fetch_row($res)){
+			foreach($row as $k=>$v){
+				echo "---$v";
+			}
+			echo "<br>";
+		}
+	}
+	//函数-查询dml操作是否成功
+	function affc($link,$res){
+		$affc = mysql_affected_rows($this->link);
+		if($res){
+			if($affc>0){
+				echo "操作成功<br>";
+			}else{
+				echo "没有受到影响的行数！<br>";
+			}
+		}else{
+			echo '操作失败<br>';
+		}
+	}
+}
+?>
+
+
+
+
+4， 操作函数页面：
+
+<?php
+class Handle{
+	//翻译
+	function fy($type,$fy){
+		if($type=="fy"){
+			if($fy==null){
+				echo "请输入要翻译的词语！";
+				return ;
+			}
+			$sqlen = mysql_query("select * from word where en = '".$fy."'");
+			$sqlch = mysql_query("select * from word where ch like  '%".$fy."%'");
+			if($sqlen && mysql_num_rows($sqlen)){
+				$row = mysql_fetch_assoc($sqlen);
+				echo "英文： $row[en] <br>   中文： $row[ch]";
+			}else if($sqlch && mysql_num_rows($sqlch)){
+				while($row = mysql_fetch_assoc($sqlch)){
+				echo "中文： $row[ch] <br>   英文： $row[en] <br>";
+				}
+			}else{
+				echo "查无此词，请重新查找！！！";
+			}
+		}
+	}
+		//添加
+	function add($type,$adden,$addch,$link){
+		if($type=="add"){
+			$aa = mysql_query("select en from word where en = '".$adden."'");
+			if($aa && mysql_num_rows($aa)){
+				echo "请不要重复添加！";		
+			}else{
+				if($adden && $addch){
+					$inen = mysql_query("insert into word(en,ch) values
+	('".$adden."','".$addch."')");
+					if(mysql_affected_rows($link)){
+						echo "$adden -- $addch 添加成功！";
+					}else{
+						echo "添加失败！";
+					}
+				}else{
+					echo "请正确添加！！！";
+				}
+			}
+		}
+	}
+		//删除
+	function del($type,$delen,$link){
+		if($type=="del"){
+			$del = mysql_query("delete from word where en = '".$delen."'");
+			if($del && mysql_affected_rows($link)>0){
+				echo "删除成功！";
+			}else{
+				echo "删除失败！";
+			}
+		}
+	}
+
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	=====php数据库编程=====
+
+	-----php操作mysql数据库的三种方式
+1, mysql扩展库
+2, mysqli扩展库
+3, pdo
+
+
+	-----mysql扩展库和mysql数据库的区别
+1, mysql数据库是用于存放数据的.
+2, mysql数据库操作有三个层面
+	A层：编辑指令发送到数据库管理系统。
+	B层：数据库管理系统进行解析，调用数据库中的数据
+	C层：找到相应数据后再返回给客户端。
+	也就是说以数据库管理系统为中间层，操作界面为右层，数据库为左层。
+3，mysql扩展是一堆函数，是PHP设计者提供给程序员用于完成对mysql数据库的各种操作(CRUD).
+
+
+
+
+
+
+	-----数据有符号和无符号的区别；
+
+	数据库表中建立数据项时，有符号和无符号的含意就是是否带有负号。带符号的就是正负各占一半，不带符号就会为正。默认应该是有符号，无符号用 unsigned 表示.
+
+
+	
+
+	-----字符串char 和varchar的区别
+
+ 	char 的长度是固定的，如：指定一个char 值长度为12,那么即使它只用了8个，也会占用12个长度的位置
+
+	varchar 的长度是不固定的，如指定一个varchar 的长度为12 ,但只用了8个，其它的4个位置便被回收了。
+
+
+
+
+
+
+		-----mysql环境的搭建
+
+1, 启用mysql扩展库
+	在php.ini 文件中找到: extension=php_mysql.dll 去掉前面的分号 以启用它。
+		通过<?php phpinfo() ?>可以查看当前php都有支持哪些扩展库!
+
+	
+		-----数据库（cmd）操作命令：
+数据库操作指令分为四种：
+	ddl 	数据定义语句
+	dml	数据操作语句	如： update  insert   delete
+	dql	数据选择语句	如： select
+	dtl	数据事务语句	如： rollback   commit,,,
+		
+
+2, 创建一张用户表或库,
+	crate database words;  //创建一个库
+
+	//创建一个user1表，以及相关内容。  
+	create table user1(
+	id int primary key auto_increment,
+	name varchar(32) not null,
+	password varchar(64) not null,
+	email varchar(128) not null,
+	age tinyint unsigned not null
+	)	
+	;
+
+
+3, 删除一个表：
+ 	drop table xxxx;	//xxx是一个表名，如: user1  
+	注：delete 是用来删除数据的  drop 是用来删除表的 
+
+
+
+
+	-----用md5加密数据库中的密码；
+
+4, 插入一组数据 ：
+	insert into user1(name,password,email,age) values('wnag',md5('123'),'zs@sohu.com',30);
+
+
+
+
+	-----解决数据库与网页乱码问题（Data too long）
+
+5， show variables like "%char%";
+原因，cmd 的操作系统只认GBK的编码，而在文档中的ANSY码有时也是GBK码，所以有时在文档中粘到CMD中的数据可以使用，而直接在CMD中输入的字符却会出错。，，
+	解决方法一：要么在文档中以GBK编码先写好代码，然后粘到CMD中。
+	解决方法二： set character_set_clinet=gbk;  (可以调用上面的variable like命令查看一下)
+		     set character_set_results=gbk;
+	    或直接： set names gbk; 即可
+	容易出错的地方： 设置好 mysql_set_charset('utf8');  有时忘记设置这里就会出现乱码！
+	mysqli 中的编码设置  $mysqli->set_charset('utf8');  	以面对对象的方式
+			     mysqli_set_charset($mysqli,"utf8");   以面对过程的方式
+			     $this->mysqli->query("set name utf8");
+			
+
+
+
+
+
+6,  查询当前表所在哪个数据库中    \s    用此命令可查询所在表属于哪一个库
+	show tables;  	命令也可能查询当前库； 在其返回的表单头部会显示当前库的名.
+
+
+7, mysql_query()函数：向mysql数据库发送指令函数。此函数有两个参数如：
+	mysql_query($sql,$link) 这里把连接数据库的$link添加进去，就会省去它自动查找是否以有连接或在没有连接时自动建立连接时的麻烦！以后最好是把这个参数带上！
+	
+
+
+8， mysql_affected_rows($link)  查看上一次操作的行数是否受到影响。用来检验上次操作是否成功。如下
+	if(mysql_affected_rows($conn)>0){
+		echo "操作成功";
+	}else{
+		echo "没有受到影响的行数";
+	}
+
+
+
+9, mysql_fetch_field()  取出表头信息   如：
+	while($into=mysql_fetch_field($res)){
+		echo $into->name;
+	}
+结果会显示：一个表的表头如： id  name  password age  等
+
+	
+
+
+				
+
+10, $rows=mysql_affected_rows($link);
+    $cols=mysql_num_fields($res);
+	echo $rows = $cols;
+	显示一个表的内容有多少行和多少列
+
+
+11, mysql_insert_id($link);
+	显示上一次添加或操作内容的ID号
+
+
+
+12，mysql_field_name($res,$i) 取出结果中指定字段的字段名，（取出表头信息）$i是下标
+
+
+
+
+	-----mysql取出查询结果的四种方法
+1, mysql_fetch_row	返回索引数组，取出结果的下标以0,1,2,数字的形式显示。
+2, mysql_fetch_assoc	返回关联数组，取出结果的下标以，数组本身KEY字串的形式显示。
+3, mysql_fetch_array	同时返回索引与关联数组，内存多占用一倍。
+4, mysql_fetch_object	以对象的形式返回数据，使用方法为： echo $row->xx 
+			因为这时对象把数据当做一个属性.
+
+
+
+
+mysql扩展库操作mysql数据库步骤：
+<?php
+	$link = mysql_connect('127.0.0.1,'root','abcd');     //1,获取连接
+	if(!$link){
+		die("连接失败".mysql_error());	//检测连接是否成功，并指出错误的信息
+	}	
+	mysql_select_db('test');	//2,选择数据库
+	//mysql_query('set names utl8');  	//3,设置操作编码
+	mysql_set_charset('utf8');  //两种设置编码方式，保证程序按照utf8.
+	$sql = "select * from user1"; //4，发送查询指令,这里也可发送其它语句如：insert,delete,等
+	$res=mysql_query($sql,$link); //$res 表示结果集，可以理解是一张表，$link 指定连接，可减少浪费。
+		//这里的$res 是一个返回的资源型的结果集	.	
+
+
+		//5，接收返回结果并处理（显示）
+		//mysql_fecth_row会依次取出$res结果集的下一行数据，赋值给$roww
+		
+		//mysql_close($link); //如果在这里把连接断开或置空的话，PHP依然可以进行下面的操作，因
+		//$link=null;  //为PHP以把数据取回到内存当中，现在只是对内存数据操作。
+	
+	while($row=mysql_fetch_row($res)){
+		//第一种取法
+		echo "<br>$row[0]--$row[1]--$row[2]<br>";
+		//第二种取法
+		foreach($row as $key=>$val){
+			echo "$key==>$val";
+		}
+		echo "<br>";
+	}
+	//6,释放资源
+	mysql_free_result($res);
+	//7,关闭连接，这句话可有可无，因为它会自动关闭，但建议有。
+	mysql_close($link);
+
+
+
+?>
+
+
+
+	-----数据类型的种类
+PHP的数据类型分为三大类 
+	一：数值型	小数，整数，布尔，字符串，等
+	二：复合型	数组，对象
+	三：特殊类型	null, 资源型
+
+
+
+
+
+		-----exit()调试使用函数;
+执行它时，后面的代码就不执行了，用在调试的时候，当不希望执行后面代码就用这个函数。
+
+
+
+
+
+		-----往mysql数据库插入中文字串的方法
+当一个变量是中文字串时，不能直接用双引号“”来注释此变量，
+得先加一层单引号，再加双引号，然后，再加一层点如： '".$a."'	案例如下：
+$ins = mysql_query("inser
+
+
+
+
+		-----mysqli 的释放内存和关闭连接
+当一个资源是添加，更新，删除时。不需要关资源，因为它返回的不是一个结果集！
+1, mysqli 面对对象的方式
+	//释放内存
+	$res->free();
+	//关闭连接
+	$mysqli->close();
+
+2，mysqli 面向过程的方式
+	//6,释放资源
+	mysqli_free_result($res);
+	//关闭连接
+	mysqli_close($mysqli);
+
+3，mysql 的方式
+	//6,释放资源
+	mysql_free_result($res);
+	//7,关闭连接，这句话可有可无，因为它会自动关闭，但建议有。
+	mysql_close($link);
+
+
+
+
+
+
+
+
+
+	-----总结实例
+
+
+<?php
+
+class sqlToor{
+	private $er="mysql_error";
+	public $link;
+	function __construct($host,$root,$psw,$db){
+		$this->link = mysql_connect($host,$root,$psw)or die($er);
+
+		mysql_select_db($db)or die("$er");
+		mysql_set_charset("utf8");
+		
+	}
+	//函数-获取dql操作结果集并显示
+	function fetch($res){
+		while($row = mysql_fetch_row($res)){
+			foreach($row as $k=>$v){
+				echo "---$v";
+			}
+			echo "<br>";
+		}
+	
+	}
+	//函数-查询dml操作是否成功
+	function affc($link,$res){
+		$affc = mysql_affected_rows($this->link);
+		if($res){
+			if($affc>0){
+				echo "操作成功<br>";
+			}else{
+				echo "没有受到影响的行数！<br>";
+			}
+		}else{
+			echo '操作失败<br>';
+		}
+	}
+}
+	$sq=new sqlToor('localhost','root','abcd','threephp');
+	//$tab=mysql_query("show tables");
+	//fetch($sdb);
+	echo "<hr>";
+	//fetch($tab);
+	
+	//添加内容
+	//$ins = mysql_query("insert into user1(name,password,email,age) values('刘军',md5('abc'),'wg@163.com',34)");
+
+	//删除内容
+	//$del = mysql_query("delete from user1 where id in(15,16,17,18,19,20,21)");
+
+
+	//更新内容
+	//$upd = mysql_query("update user1 set name='那英',email='ny@163.com',age=43 where id = 9");
+	//$sq->affc($link,$upd);
+	
+	//显示表中内容
+	//$sel=mysql_query("select * from user1");
+	//$sq->fetch($sel);
+
+	//获取表头的方法
+	/*
+	$rows = mysql_affected_rows($sq->link);
+	echo $rows;
+	$cols = mysql_num_fields($sel);
+	echo $cols;
+	for($i=0;$i<$cols;$i++){
+		echo mysql_field_name($sel,$i)."---";
+	}
+	$a = 0;
+	while($a<$cols){	
+		echo mysql_field_name($sel,$a)."--";
+		$a++;
+	}
+	*/
+
+
+	/*
+	//-----把数据库中的数据以列表的形式显示出来
+	$sel=mysql_query("select * from user1");
+	$rows = mysql_affected_rows($sq->link);
+	$cols = mysql_num_fields($sel);
+	
+	
+	echo "<table border=1><tr>";
+		for($i=0;$i<$cols;$i++){
+			echo "<th>".mysql_field_name($sel,$i)."</th>";
+		}
+		echo "</tr>";
+		while($row = mysql_fetch_row($sel)){
+			echo "<tr>";
+				foreach($row as $k=>$v){
+					echo "<td>".$v."</td>";
+				}
+			echo "</tr>";
+		}
+	echo "</table>";
+	*/
+
+	$ins = mysql_query("insert into user1(id,name,password,email,age) values(2,'刘刚',md5('abc'),'lg@163.com',22)");
+	$sel=mysql_query("select * from user1");
+	$sq->fetch($sel);
+	$sq->affc($sq->link,$sq);
+	$id = mysql_insert_id($sq->link);
+	echo "<br>上次操作的ID号是 $id";
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+	-----mysqli 对象方式操作数据库实例
+
+<?php
+	$mysqli= new mysqli('localhost','root','abcd','words')or die($mysqli->connect_error());  //连接数据库
+	$mysqli->set_charset('utf8');	//设置编码
+	$sql= "select * from word";		//自定义语句
+	$res = $mysqli->query($sql);	//调用对象命令
+	while($row = $res->fetch_row()){  //用对象方式拿取数据
+		foreach($row as $k=>$v){
+			echo "----$v";
+		}
+		echo "<br>";
+	}
+	$res->free();				//对象方式释放内存
+	$mysqli->close();			//对象方式关闭连接
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+	-----mysql在安装时出错的解决
+
+
+一： 要注意是否有多个用户，最好把其它用户删除
+二： 先关闭杀毒软件
+安装、重装MySQL时,出现could not start the service mysql error:0的解决办法
+当各位在安装、重装时出现could not start the service mysql error:0
+原因: 卸载mysql时并没有完全删除相关文件和服务，需要手动清除。
+
+安装到最后一步execute时不能启动服务的解决方法：
+首先，在管理工具->服务里面将MySQL的服务给停止(有的是没有安装成功,有这个服务,但是已经停止了的)，win+R—>cmd,打开命令提示符窗口，
+输入命令：sc delete mysql(查看服务，此时服务中已没有mysql),将已停的服务删除,卸载MySQL记得选择remove。最后将MySQL安装目录删除，还有数据库的目录也删除。
+
+解决的方法：命令提示符下输入regedit,打开注册表
+把注册表
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services
+HKEY_LOCAL_MACHINE/SYSTEM/ControlSet001/Services/Eventlog/Applications/MySQL
+HKEY_LOCAL_MACHINE/SYSTEM/ControlSet002/Services/Eventlog/Applications/MySQL
+HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services/Eventlog/Applications/MySQL
+将相关目录下的键值，如果有相关mysql键值(mysql、mysqladmin)则删掉
+注册表中有关MySQL的东西可能删除的不彻底,ctrl+F查找mysql,之后用F3循环查找,将有关MySQL这个软件的全部有关项删除
+ 
+注意(删除项时出错):
+无法删除 LEGACY_MYSQL51(自己建数据库时置的用户名): 删除项时出错。解决办法:注册表项里右键增加administrators所有权限
+ 
+之后打开360安全卫士或金山卫士清理一下注册表！
+
+删除MYSQL数据表目录（C:/Documents and Settings/All Users/Application Data/MySQL/MySQL Server 5.1/Data/）(Application Data是隐藏的,要在查看里面将其设置为显示
+win7下一般在C:\ProgramData\MySQL目录下,注意ProgramData这个文件夹默认是隐藏的)，
+
+最后重启计算机,重新安装mysql. 运行向导Server Instance Configuration wizard，进行相关设置即可。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	-----mysqli面向对象与面向过程语句对照
+
+//mysqli 面向过程的语句
+
+$mysqli = mysql_connect('localhost','root','abcd','words'); //连接数据库
+mysqli_set_charset($mysqli,"utf8");		//设置编码
+$sql=",,,,,";					//dml,dql语句
+$res = mysqli_query($mysqli,$sql);		//query语句
+$row = mysqli_fetch_row($res);			//fetch语句
+mysqli_free_result($res);			//释放资源
+mysqli_close($mysqli);				//关闭连接
+
+
+//mysqli 面向对象的语句
+$mysqli = new mysqli('localhost','root','abcd','words');  //连接数据库
+$mysqli->query("set names utf8");			//设置编码
+$sql=",,,,";						//dml,dql语句
+$res=$mysqli->query($sql);				//query语句
+$row=$res->fetch_row()					//fetch语句
+$res->free();						//释放资源
+$mysqli->close();					//关闭连接
+
+
+
+
+
+
+
+
+
+
+
+
+		=====使用php的mysqli扩展库操作mysql数据库
+
+简单介绍：
+	mysqli(mysql improve )mysql扩展库的增强版
+	mysql扩展库和mysqli扩展库的比较
+1, mysqli 的稳定性和安全性，效率有所提高，
+2，mysqli支持面向对象编程，同时mysqli扩展库考虑到老程序员，同时提供面向过程的编程风格。
+
+
+	mysqli 快速入门
+编写一个程序，这个程序从user1表中读取数据，并打印在网页中，使用mysqli完成
+
+1,先使用mysqli面向对象的风格，完成案例
+2，配置PHP。INI文件让PHP支持mysqli扩展库: extension=php_mysqli.dll
+3, 建库，建表，
+
+
+
+
+
+	-----mysqli操作数据库（对象与过程的区别）
+
+<?php
+	//mysqli用面向过程的方式操作数据库
+	$mysqli = mysqli_connect('localhost','root','abcd','words')or die('连接失败');
+	mysqli_set_charset($mysqli,'utf8');
+	
+	//创建一个表
+	//$sql = "create table order1(id int primary key auto_increment,name varchar(32) not null,age int(16) not null )";
+	
+	
+	//插入一条数据
+	//$sql="insert into order1(name,age) values('小王',18)";
+	
+	//删除一条数据
+	//$sql="delete from order1 where id = 8";
+	
+	//更新一条数据；
+	$sql="update order1 set name='屁的',age=33 where id = 2";
+	
+	
+	$res = mysqli_query($mysqli,$sql);
+	$showtable= mysqli_query($mysqli,"show tables");
+	while($row=mysqli_fetch_row($showtable)){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+	echo "<hr>";
+	$sel =mysqli_query($mysqli,"select * from order1");
+	while($row=mysqli_fetch_row($sel)){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+	echo "<hr>";
+	
+	$id=mysqli_insert_id($mysqli);
+	echo "上次操作的ID是: $id";
+	
+
+
+
+	
+/*	//mysqli用面向对象的方式来操作数据库
+	$mysqli=new mysqli('localhost','root','abcd','words');
+	$mysqli->query("set names utf8");
+
+	//创建一个表	
+	//$sql="create table test(id int primary key auto_increment,name varchar(32) not null,age int(32) not null,sex varchar(8) not null)";
+	
+	//添加一条数据：
+	//$sql="insert into test(name,age,sex) values('don1',18,'nv')";
+	
+	//删除一条数据：
+	//$sql="delete from test where id = 4";
+	
+	//更新一条数据；
+	$sql="update test set name='bbbb',age=88,sex='nan' where id=9";
+	
+	$res = $mysqli->query($sql);
+
+	//查看操作的行数是否受的影响：
+
+	if($res){
+		if($mysqli->affected_rows>0){
+			echo "操作成功";
+		}else{
+			echo "没有受到影响的行数";
+		}
+	}else{
+		echo "操作失败！";
+	}
+	
+	//查看表的内容
+	echo "<br>";
+	$sel=$mysqli->query("select * from test");
+	while($row=$sel->fetch_row()){
+		foreach($row as $k=>$v){
+			echo "--$v";
+		}
+		echo "<br>";
+	}
+	$sel->free();
+	$mysqli->close();
+	*/
+?>
+
+
+
+
+
+
+
+
+	-----mysqli 批量执行sml语句
+
+
+
+//关键字（$sqls.="xxxx;";  - 点和等号中不能有空格，后面的两个分号不能少）
+//关键字($mysqli->multi_query($sqls)  -- 批量发送及接收返回值)
+//关键字($result=$mysqli->store_result() -- 调取结果集,每调一次$result指针就会向后移一位！)
+
+
+
+批量执行 dml语句,可以同时操作 删除，添加，更新，但不能同时操作select 语句
+基本语法	注意第二条语句的等号前面要加一个点 '.'
+	$sqls="sql1,,,;";
+	$sqls.="sql1,,,;";
+	$sqls.="sql1,,,;";
+	mysqli::nulti_query($sqls);
+
+案例；使用mysqli的 mysqli::multi_query()一次性添加三个用户 
+<?php
+	//header("content-type:text/html;charset=utf-8");
+	$mysqli =new mysqli('localhost','root','abcd','test');
+	$mysqli->query("set names utf8");
+
+	$sqls = "insert into user1(name,age) values('宋江',20);";
+	$sqls.= "insert into user1(name,age) values('吴用',30);";
+		//关键字（$sqls.="xxxx;";  - 点和等号中不能有空格，后面的两个分号不能少）
+	$sqls.= "insert into user1(name,age) values('林冲',40);";
+	$res = $mysqli->multi_query($sqls);
+		//关键字($mysqli->multi_query($sqls)  -- 批量发送及接收返回值)
+	if($res){
+		echo "操作成功";
+	}else{
+		echo "操作失败";
+	}
+?>
+
+
+
+
+	-----mysqli批量执行dml语句
+
+
+<?php
+	$mysqli= new mysqli('localhost','root','abcd','dbone');
+	$mysqli->query("set names utf8");
+	
+	$sqls = "select * from tab;";
+	$sqls.="select * from tabone;";
+	$sqls.="select * from tabtwo;";
+	$sqls.="select * from tabthree;";
+	$sqls.="show databases;";
+	$sqls.="show tables;";
+	$sqls.="desc tab;";
+	if($res=$mysqli->multi_query($sqls)){
+		do{
+//关键字($result=$mysqli->store_result() -- 调取结果集,每调一次$result指针就会向后移一位！)
+			$result=$mysqli->store_result();
+			while($row=$result->fetch_row()){
+//关键字($res->fetch_row()  -- 取出当前行的结果集相当一个数组)
+				foreach($row as $k=>$v){
+					echo "--".$v;
+				}
+				echo "<br>";
+			}
+			echo "<br>";
+			$result->free();
+//关键字($result->free()  -- 释放当前资源的内存)
+			if(!$mysqli->more_results()){
+//关键字($mysqli->more_results()  -- 查询后面是否还有结果集)
+				break;
+			}
+		}while($mysqli->next_result());
+//关键字($mysqli->next_result()  --  操作下一个结果集)
+	}else{
+		echo "faild....";
+	}
+?>
+
+
+
+
+
+	=====mysqli事务类型处理=====
+
+	事务用于保证数据的一致性，它由一组相关的dml语句组成，该组的dml语句要么全部成功，要么全部失败。如网上转账就是典型的要用事务来处理，用以保证数据的一致性。
+
+
+	-----mysqli 事务控制 acid
+
+原子性-Atomicity : 原子性是指事务是一个不可分割的工作单位，事务中的要么都发生，要么都不发生。比如说一个事务由几名代码完成，要么全部成立，要么有一个失败，就全部失败。
+
+一致性-Consistency:事务必须使数据库从一个一致性状态变换到另外一个一致性状态。
+
+隔离性-Isolation: 事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其它事务的操作数据所干扰，多个并发事务之间要相互隔离。	
+
+
+持久性-Durability: 持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响。
+
+
+
+
+
+	-----事务处理-账号转账案例
+<?php
+	$mysqli=new mysqli('localhost','root','abcd','dbone')or die('连接失败');
+	$mysqli->query("set names utf8");
+//关键字($mysqli->query("set names utf8")  -- mysqli面向对象的形式设置数据库的编码格式)
+
+	//将提交设置为false ,不让其自动提交。
+	$mysqli->autocommit(false);			
+//关键字($mysqli->autocommit(false)  -- 设置自动提交为非自动)
+	$sql1="update accounta set balance = balance-2 where id=1"; 
+	$sql2="update account set balance = balance+2 where id=2";
+//关键字(balance+2  -- 设置表中 balance 项 增加2)
+				
+//关键字($mysqli->query($sql) - 发送并获得返回值)
+	$res1=$mysqli->query($sql1);	
+	$res2=$mysqli->query($sql2);
+	if($res1 && $res2){
+		echo "操作成功----";
+		$mysqli->commit();			
+//关键字(commit - 提交)
+	}else{
+		echo "操作失败,回滚";
+		$mysqli->rollback;			
+//关键字(rollback - 回滚)
+	}
+	$mysqli->close();				
+//关键字($mysqli->close - 关闭连接)
+?>
+
+
+
+
+
+	-----事务处理-节点备份与恢复
+基本流程：
+	1，关键字(start transaction - 启动事务处理)
+	2，关键字(savepoint a - 备份一个事务节点，以便恢复)
+	3，关键字(rollback to a - 恢复到 a 事务节点)
+	4，关键字(commit - 提交并保存事务操作)
+
+
+<?php
+	//header("content-type:text/html;charset=utf-8");
+	$mysqli= new mysqli('localhost','root','abcd','dbone')or die('连接失败');
+	$mysqli->query("set names utf8");
+
+	$sql =$mysqli->query("start transaction");	
+//关键字(start transaction - 启动事务处理)
+	$sql =$mysqli->query("savepoint a");
+//关键字(savepoint a - 备份一个事务节点，以便恢复)
+	$sql =$mysqli->query('insert into account(id,balance) values(115,50)');
+	$sql=$mysqli->query("rollback to a");
+//关键字(rollback to a - 恢复到 a 事务节点)
+	$sql=$mysqli->query("commit");
+//关键字(commit - 提交并保存事务操作)
+
+	$sql=$mysqli->query("select * from account");
+	while($row=$sql->fetch_row()){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	=====mysqli stmt 预处理技术 
+问题的提出？
+	现在需要向mysql数据库添加100个用户，请问如何实现
+
+
+	-----mysql工作原理及预处理技术
+
+PHP发送数据到mysql的工作原理  
+	1, 建立连接
+	2，发送指令
+	3, mysql进行编译进行接收
+	4，断掉连接
+所以，当PHP操作数据库时，每发送一次数据都会建立一次连接，进行一次编译。这样很浪费资源.而预处理技术就会大大减少这样的资源浪费。
+
+预处理就是提出预编译，把sql第一次发送的语句做好编译，后面只需要发送数据，而且不会断掉连接。这样只用一个连接，只作一次编译就把成百上千条语句完成了。不然成百上千次的连接，编译会浪费很多的资源。
+
+
+
+
+
+		-----mysqli预处理技术prepare实例
+<?php
+		
+			$sql = "insert into stmt(id,name,age) values(?,?,?)";
+//关键字($sql = "insert into stmt(id,name,age) values(?,?,?)";  --  预处理设置)
+			$stmt = $mysqli->prepare($sql);
+//关键字($stmt = $mysqli->prepare($sql);   --  预处理语句)
+			$id= 6;
+			$name = 'aaa';
+			$age = 111;
+			$stmt->bind_param('isi',$id,$name,$age);
+//关键字($stmt->bind_param('isi',$id,$name,$age);   -- 绑定参数)
+			$b = $stmt->execute();
+//关键字($b = $stmt->execute();   -- 执行预处理功能)
+			
+			$id=7;
+			$name='bbb';
+			$age = 222;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=8;
+			$name="ccc";
+			$age =333;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=9;
+			$name='ddd';
+			$age = 444;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=10;
+			$name='eee';
+			$age = 555;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			if($b){
+				echo "ok";
+			}else{
+				echo "faild".$stmt->error;
+			}
+			$mysqli->close();
+			
+?>
+
+
+
+
+
+		-----sql注入漏洞
+
+//关键字 password='aa' or 1='1';
+
+以下是利用数据库万能密码进入数据库：
+select * from user1 where name='gao1' and password='aa' or 1='1';
+
+
+
+
+
+
+
+	-----预编译可以自动防止sql（结构化查询语句）注入攻击
+
+//关键字 password='aa' or 1='1';
+
+-----sql注入漏洞，使用万能密码攻击：
+以下是利用数据库万能密码进入数据库：
+select * from user1 where name='gao1' and password='aa' or 1='1';
+
+//看看有没查询到用户
+if(查询到){
+	header(“其它页面”);
+}else{
+	header(“其它页面”);
+}
+
+
+	-----防攻击的解决方案
+
+1, 使用预处理编译
+2，改变验证数据库用户逻辑
+$sql = "select password from user1 where name='xx'";
+ //先看看有没有查询的记录，如果有，说明用户存在。
+
+if(从数据库查询的密码==用户输入的密码){
+	//用户名和密码合法
+	header("其它页面");
+}else{
+	header('其它页面');
+}
+
+
+
+
+
+
+
+
+	实例-----用表格的方式显示数据表的信息和内容
+	
+
+//关键字($res->num_rows		获得数据表的行数)
+//关键字($res->field_count	获得数据表的列数)
+//关键字($field = $res->fetch_field()	获取表的信息)
+//关键字($field->name		获取表信息--表头的名字)
+
+<?php
+function showTable($table_name){
+	$mysqli=new mysqli('localhost','root','abcd','words')or die('failed');
+	$mysqli->query('set names utf8');
+	$sql = "select * from $table_name";
+	//$sql = "desc user1";
+	$res = $mysqli->query($sql);
+	//如何获取返回总行数和列数
+	echo "共有 $res->num_rows 行 $res->field_count 列";	//关键字
+
+	echo "<table border=1><tr>";
+	while($field=$res->fetch_field()){		//关键字
+		echo "<th>{$field->name}</th>";		//关键字
+
+	}
+	echo "</tr>";
+	while($row=$res->fetch_row()){
+		echo "<tr>";
+			foreach($row as $val){
+				echo "<td>$val</td>";
+			}
+		echo "</tr>";
+	}
+	echo "</table>";
+}
+	showTable('user1');
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		=====超全局变量=====
+
+
+
+php手册--语言参考--预定义变量---超全局变量
+
+超全局变量： 是在全部作用域中始终可用的内置变量。
+PHP中的许多预定义变量都是“超全局的”，这意味着它们在一个脚本的全部作用域中都可用，在函数或方法台无需执行 global $variable; 来访问它们。
+
+
+
+         -----全局变量:
+
+<?php
+	$a=23;	//这就是全局变量，因为该变量在整个作用域（这个PHP文件中）,都可用.
+	function test(){
+		//如果希望使用到全局$a.
+		global $a;
+		$a=45;
+	}
+	test();
+	echo $a;
+?>
+
+
+
+
+
+	-----超全局变量(9种)：
+
+
+php提供了九种超全局变量：
+1，$_GET
+2, $_POST
+3, $_REQUEST
+4, $_ENV
+5, $_SERVER
+6, $_FILE
+7, $_COOKIE
+8, $_SESSION
+9, $_GLOBALS
+
+
+
+超全局变量除了有全局变量的特点外，可无须申明，直接使用。
+提供全局变量数组的原因是为了让程序员更方便快捷的写出PHP程序。
+
+
+<?php
+	echo "<pre>";
+		echo print_r($_SERVER);    //这就是全局变量
+	echo "</pre>";
+	$_SERVER['hsp'] = '韩顺平';	//全局变量还可以自定义添加
+	
+?>
+
+
+
+
+
+
+	-----$_GET 实际使用
+
+关键字：<a href='a.php?city=北京好&name=xiaoming'>传送数据</a> 		超连接中直接以传值到另一页面
+
+
+客户机（浏览器）通过超链接传送信息给服务器
+案例1 
+
+test.php页面
+<?php
+	echo "<a href='a.php?city=北京好&name=xiaoming'>传送数据</a>";   //关键字
+?>
+
+a.php页面
+<?php
+	echo "<pre>";
+	echo	print_r($_GET);
+	echo "</pre>";
+	//如果希望指定取出某个数据，则可以通过下标名	
+	echo $_GET['name'];
+?>
+
+
+
+
+
+	-----解决GET在传送中文时出现错误的方法GET法1：
+
+//关键字： urlencode()	urldecode()	对中文编码，解码。适用于GET地址传值。
+
+给奇数中文加一个全角空格，然后到服务器接收时，用 trim() 去掉两头的空行 
+
+
+解决方法2:
+使用 urlencode 和 urldecode 函数
+
+例：
+test.php页面
+<?php
+	//这句话是对中文url编码
+	$str = urlencode("北京好");
+	echo "<a href='a.php?city=".$str."&name=xiaoming'>传送数据</a>";
+
+?>
+
+a.php页面
+<?php
+	echo "<pre>";
+	echo print_r($_GET);
+	echo "</pre>";
+	echo $_GET['CITY'];
+//如果希望指定取出某个数据，则可通过下标名。如果PHP版本较低，可能看到乱码，则用urldecode()
+?>
+
+
+
+
+	-----如何判断是否接收到数据（值）
+
+//关键字: empty()	检测是否为空值
+//关键字: isset()	检测是否为空值
+
+有些老版本可能不认isset(),所以尽量使用empty()方法，
+
+方法一： empty()
+	if(empty($_GET['city'])){		//关键字
+		echo "没有收到";
+	}else{
+		echo "收到数据 city";
+		echo $_GET['city'];
+	}
+
+
+方法二：isset()
+	if(isset($_GET['city'])){		//关键字
+		echo "收到数据city";
+		echo $_GET['city'];
+	}else{
+		echo "没有收到数据";
+	}
+
+
+
+
+
+
+	----- 在apache的conf.ini中不要启用register_globals
+关键字：register_globals       注册全局变量。
+
+b.php页面：
+
+<?php
+	echo $name.'--'.$age;
+?>
+
+http://xxxx/b.php?name=kk&age=99
+如果开启register_globals 会有SQL注入风险
+
+
+所以绝对不要启用register_globals 需要 register_globals = off
+

@@ -1,0 +1,517 @@
+//===== 定义函数的三种方式
+//===== 全局变量与局部变量的区别
+//===== arguments 获取函数中可变的参数个数
+//===== 用递归累加   
+//===== escape,unescape 将字串殇符号编码与反编码
+//===== eval 将参数字串作为脚本代码执行	
+//===== isNaN 判断变量是否为非数值 
+//===== parseInt 转型为整形	 
+//===== parseFloat 转型为浮点型	
+//===== 创建对象的三种方式
+//===== delete 删除对象的属性 
+//===== 倒计时让失效同意按钮可用 
+//===== 可暂停的时分秒倒计时 
+//===== 全选/全不选/反选 
+//===== 显示进度条
+//===== 下拉菜单效果 
+
+
+
+
+
+
+//===== 定义函数的三种方式
+
+		<script>
+			一：-标准方式	
+			
+				function add(){
+					document.write('标准方式');
+				}
+				add();
+			
+			二：构造方式
+			
+				var add2 = new Function('x','y','return x*y');
+				document.write(add2(5,6));
+			
+			三：匿名函数方式
+			
+				var add3 = function(m){
+					var res = 0;
+					for(var i=0;i<=m;i++){
+						res += i;
+					}
+					return res;
+				}
+				document.write(add3(100));、
+		</script>
+		
+	
+	
+	
+	
+//===== 全局变量与局部变量的区别
+	
+	<script>
+		var a1 = 123;
+		function vars(){
+			document.write('函数外定义的变量是全局变量：'+a1+'<br>');
+			var a2=234;
+			document.write('函数内用var定义的变量是局部变量，'+a1+'<br>');
+			a3=456;
+		}
+		vars();
+		//document.write('函数内用var定义的变量是局部变量，在外部无法访问:'+a2);
+		document.write('函数不用var定义变量也是全局变量:'+a3+'<br>');
+	</script>
+
+
+
+
+	
+//===== arguments 获取函数中可变的参数个数
+
+	<script>
+		function add5(){
+			document.write('第二参数是：'+arguments[1]+'<br>');
+			var len = arguments.length;	//获取参数的个数
+			var res = 0;
+			for(var i=0;i<len;i++){
+				res += arguments[i];
+			}
+			return res;
+		}
+		document.write('参数和为：'+add5(1,2,3,4,5));
+	</script>
+
+
+
+	
+	
+	
+//===== 用递归累加                                      
+
+	<script>
+		function res(m){
+			if(m==1){
+				return 1;
+			}
+			return m += res(m-1);
+		}
+		document.write(res(100));
+	</script>
+
+
+
+	
+	
+
+//===== escape,unescape 将字串殇符号编码与反编码 
+		
+	<script>
+		var str="http://www.baidu.com/index.php?name=pei&age=18";
+		document.write(str+'<br>');
+		var str2 = escape(str);
+		document.write(str2+"<br>");
+		var str3= unescape(str2);
+		document.write(str3+'<br>');
+	</script>
+	
+	
+	
+	
+
+//===== eval 将参数字串作为脚本代码执行	
+	
+	<script>
+		var str = "var name='peizong';";
+		eval(str);
+		document.write(name+'<br>');
+		
+		var str2 = "{'name':'pei','age':22,'getInfo':function(){return this.name+':'+this.age;}}";
+		eval("var str3 = "+str2);
+		document.write(str3.name+'<br>');
+		document.write(str3.getInfo());
+	</script>
+
+
+
+	
+	
+	
+	
+//===== isNaN 判断变量是否为非数值            
+	<script>
+		var a = 123.123;
+		var b = '123a';
+		document.write(isNaN(a)+'<br>');
+		document.write(isNaN(b)+'<br>');
+	</script>
+
+
+	
+	
+//===== parseInt 转型为整形	                 
+	<script>
+		var a=123.123;
+		document.write('原数值：'+a+'转型后：'+parseInt(a)+'<br>');
+	</script>
+	
+	
+	
+	
+	
+//===== parseFloat 转型为浮点型	
+	         
+	<script>
+		var a ='123.123abc';
+		document.write('原值：'+a+'转型后：'+parseFloat(a)+"<br>");
+	</script>
+
+	
+	
+	
+	
+	
+	
+//===== 创建对象的三种方式
+
+		一：原始方式	                    
+			<script>
+				var ob = new Object();
+				ob.name='aaa';
+				ob.age=73;
+				ob.getInfo=function(){
+					return this.name+':'+this.age;
+				}
+				document.write(ob.name+'<br>');
+				document.write(ob.getInfo()+'<br>');
+			</script>
+
+
+		二：构造函数方式
+			<script>
+				function ob2(name,age){
+					this.name=name;
+					this.age=age;
+					this.getInfo=function(){
+						return this.name+':'+this.age;
+					}
+				}
+				ob3=new ob2('bbb',33);
+				document.write(ob3.name+'<br>');
+				document.write(ob3.getInfo()+"<br>");
+			</script>
+
+
+		三： 直接创建自定义对象	       
+			<script>
+				var ob5 = {'name':'ccc','sex':'nan','getInfo':function(){return this.name+':'+this.sex}};
+				document.write(ob5.name+'<br>');
+				document.write(ob5.getInfo());
+			</script>
+	
+	
+	
+	
+	
+	
+	
+//===== delete 删除对象的属性 
+                       
+		<script>
+			document.write(ob3.age+'<br>');
+			delete(ob3.age);
+			document.write(ob3.age);
+		</script>
+	
+	
+	
+	
+	
+	
+
+//===== 倒计时让失效同意按钮可用 
+      
+		<button id = 'ty'>同意</button>
+		<button onclick='toStart(5)'>开始</button>
+		<script>
+			m=0;
+			myTime=null;
+			function toStart(m){
+				this.m = m;
+				if(myTime==null){
+					running();
+				}
+			}
+			function running(){
+				m--;
+				document.getElementById('ty').disabled=true;
+				document.getElementById('ty').innerHTML='同意'+m;
+				if(m<0){
+					document.getElementById('ty').disabled=false;
+					document.getElementById("ty").innerHTML='同意';
+					return;
+				}
+				myTime=setTimeout("running()",300);
+			}
+		</script>
+		
+
+
+
+
+		
+	
+//===== 可暂停的时分秒倒计时    
+	
+		<form name='mForm'>
+			倒计时：
+			<input name='h' size=4 value='1'/>
+			<input name='i' size=4 value='1'/>
+			<input name='s' size=4 value='16'/>
+		</from>
+		<button onclick='toStart1()' type='button'>开始</button>
+		<button onclick='toStop1(this)' type='button'>暂停</button>
+		<div id='did1'>a</div>
+		<script>
+			var hh=ii=ss=0;
+			myTime2=null;
+			function toStart1(){
+				hh = document.mForm.h.value;
+				ii = document.mForm.i.value;
+				ss = document.mForm.s.value;
+				if(myTime2==null){
+					running2();
+				}
+			}
+			function toStop1(ob2){
+				if(ob2.innerHTML=='暂停'){
+					ob2.innerHTML='继续';
+					clearTimeout(myTime2);
+					mytime2=null;
+				}else{
+					ob2.innerHTML='暂停';
+					running2();
+				}
+			}
+			function running2(){
+				ss--;
+				if(ss<0){
+					ss=59;
+					ii--;
+					if(ii<0){
+						ii=59;
+						hh--;
+						if(hh<0){
+							alert('时间到！');
+							return;
+						}
+					}
+				}
+				var str = (hh<10?'0'+hh:hh)+":"+(ii<10?'0'+ii:ii)+':'+(ss<10?"0"+ss:ss);
+				document.getElementById('did1').innerHTML=str;
+				myTime2=setTimeout("running2()",500);
+			}
+		</script>
+
+		
+		
+		
+		
+		
+		
+		
+		
+//===== 全选/全不选/反选    
+
+		<button onclick='sel(1)' type="button">全选</button>
+		<button onclick='sel(2)' type="button">全不选</button>
+		<button onclick='sel(3)' type="button">反选</button><br>
+		<input type="checkbox" />AA<br>
+		<input type="checkbox" />BB<br>
+		<input type="checkbox" />CC<br>
+		<input type="checkbox" />DD<br>
+		<input type="checkbox" />EE<br>                                        
+		<script>
+			function sel(a){
+				var list = document.getElementsByTagName('input');
+				for(var i=0;i<list.length;i++){
+					switch(a){
+						case 1:list[i].checked=true;break;
+						case 2:list[i].checked=false;break;
+						case 3:list[i].checked=!list[i].checked;break;
+					}
+				}
+			}
+		</script>
+	
+	
+	
+	
+	
+	
+	
+//===== 显示进度条
+
+		<div style="width:100%;height:30;border:1px solid">
+			<div id='read' style="height:30;width:0;background:#ccc"></div>
+		</div>
+		<center><button type='button' onclick="read()">读取进度</button></center>
+		<script>
+			mread = 0;
+			mytime=null
+			function read(){
+				if(mytime==null){
+					running3();
+				}
+			}
+			function running3(){
+				mread++;
+				document.getElementById('read').style.width=mread+'%';
+				if(mread>100){
+					return;
+				}
+				mytime = setTimeout("running3()",50);
+			}
+		</script>
+	
+	
+	
+	
+	
+	
+	
+//===== 下拉菜单效果
+ 
+		<style>
+			.caiDan{
+				border:1px solid;
+				background:#aaa;
+				width:100px;
+				text-align:center;
+				cursor:pointer;
+			}
+			.zilei{
+				cursor:pointer;
+				width:100px;
+				background:#eee;
+				border:1px solid #cce;
+				text-align:center;
+				font-size:12px;
+			}
+		</style>
+		<div onclick="sel2('dy')" class = 'caiDan'>电影</div>
+			<div id='dy' style='display:block'>
+				<div class='zilei'>爱情电影</div>
+				<div class='zilei'>惊恐电影</div>
+				<div class='zilei'>科幻电影</div>
+			</div>
+		<div onclick="sel2('xs')" class = 'caiDan'>小说</div>
+			<div id='xs' >
+				<div class='zilei'>爱情小说</div>
+				<div class='zilei'>惊恐小说</div>
+				<div class='zilei'>科幻小说</div>
+			</div>
+		<div class = 'caiDan' onclick="sel2('yy')">音乐</div>
+			<div id='yy'>
+				<div class='zilei'>流行音乐</div>
+				<div class='zilei'>古典音乐</div>
+				<div class='zilei'>现代音乐</div>
+			</div>
+		<script>
+			var syy=sxs=sdy='block';
+			var stat=null;
+			function sel2(name){
+				switch(name){
+					case 'dy':
+						sdy=sdy=='block'?"none":'block';
+						stat=sdy;
+					break;
+					case 'xs':
+						sxs=sxs=='block'?"none":'block';
+						stat=sxs
+					break;
+					case 'yy':
+						syy=syy=='block'?'none':'block';
+						stat=syy;
+					break;
+				}
+				document.getElementById(name).style.display=stat;
+			}
+		</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>//===== 2,10,16进制示意表效果提示 </h2>
+
+<script>
+alert(CreateRadixTable());
+function CreateRadixTable (){
+   var s, s1, s2, s3, x;                    // 声明变量。
+   s = "Hex    Dec   Bin \n";               // 创建表头。
+   for (x = 0; x < 16; x++)                 // 根据所示值的
+   {                                        // 数字建立
+      switch(x)                             // 表尺寸。
+      {                                     // 设置栏目间空间。
+         case 0 : 
+            s1 = "      ";
+            s2 = "    ";
+            s3 = "   ";
+            break;
+         case 1 :
+            s1 = "      ";
+            s2 = "    ";
+            s3 = "   ";
+            break;
+         case 2 :
+            s3 = "  ";
+            break;
+         case 3 : 
+            s3 = "  ";
+            break;
+         case 4 : 
+            s3 = " ";
+            break;
+         case 5 :
+            s3 = " ";
+            break;
+         case 6 : 
+            s3 = " ";
+            break;
+         case 7 : 
+            s3 = " ";
+            break;
+         case 8 :
+            s3 = "" ;
+            break;
+         case 9 :
+            s3 = "";
+            break;
+         default: 
+            s1 = "     ";
+            s2 = "";
+            s3 = "    ";
+      }                                     // 转换为十六进制、十进制、二进制。
+      s += " " + x.toString(16) + s1 + x.toString(10)
+      s +=  s2 + s3 + x.toString(2)+ "\n";
+      
+   }
+   return(s);                               // 返回整个 radix 表。
+}
+</script>
+
+

@@ -1,0 +1,182 @@
+//=====header设置页面编码
+
+//===== php - header() 页面跳转
+
+//=====header() 从虚拟目录跨盘跳转 及引用文件
+
+//===== jquery 页面跳转
+
+//=====script的几种跳转方式
+
+//===== html - <meta> 页面跳转
+
+//=====php操作-睡眠3秒钟后再执行后面的内容
+
+//=====header禁用页面缓存
+
+//=====header 控制简单文件下载
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====header设置页面编码
+header("content-type:text/html;charset=utf-8");
+
+
+
+//=====php操作-睡眠3秒钟后再执行后面的内容
+<?php sleep(3); ?>
+
+
+
+
+
+
+
+//===== jquery 页面跳转
+
+	$(".test").click(function(){
+		location.href="http://www.baidu.com";
+或	
+		window.location.href="http://www.baidu.com";
+	});
+
+echo "<script>alert('用户名及密码不能为空！');window.history.back();</script>";
+
+
+
+
+
+
+//=====script的几种跳转方式 
+
+	-----location="bounds.html"; 重点记住使用的跳转方法！
+	-----location.reload(); script刷新方式，适用做实时时间显示。
+<html>
+<script>
+	setTimeout(function(){
+		//window.navigate('bounds.html');  
+		//window.location.href="bounds.html"
+		//location="bounds.html"; // 重点推荐使用此种跳转方法
+		//location.replace('bounds.html');//此方法是替换，不同于其它跳转，所以不会有后退
+		location.reload(); 	//刷新 
+
+	},1000);
+	document.write(new Date()+"<br>");
+	document.write(new Date()+"<br>");
+	document.write(new Date()+"<br>");
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+//===== php - header() 页面跳转 
+
+<?php
+	header("Refresh: 3; url=http://localhost/xxx.php");
+或
+	header("Location:a.php");	
+
+?>
+//注解：三秒后跳转到指定页面，也可跳加本页面达到刷新功能。
+//适用PHP判断条件是否成立时跳转
+
+
+
+
+
+
+
+
+
+//=====header() 从虚拟目录跨盘跳转 及引用文件
+
+header("Location:http://localhost/index.php?error=1");
+
+
+
+
+require "C://AppServ/www/mysql.php";	//跨盘符引用页面
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== html - <meta> 页面跳转
+	<head>
+		<meta http-equiv="refresh" content="3;url=http://www.baidu.com" />
+	</head>
+//注解：三秒后跳转到指定页面，也可跳加本页面达到刷新功能。
+//适用HTML静态指定跳转页面
+
+
+<meta http-equiv="refresh" content='3'>   意思是三秒钟刷新一次！
+<meta http-equiv="refresh" content='3;url=http://www.baidu.com'> 就是三秒后跳转到指定页面 
+
+<a href="../user/exit.php" target="_top">跳转</a>	frameset 顶层整体页面跳转
+<a href="../user/exit.php" target="_parent">跳转</a>	frameset 父级页面跳转
+
+
+
+
+
+//=====header禁用页面缓存
+
+<?php
+	header("Expires: -1");
+	header("Cache-Control: no_cache");
+	header("Pragma: no-cache");
+	echo "hello";
+?>
+
+
+
+
+
+
+
+//=====header 控制简单文件下载
+
+<?php
+	$file_name= "aa.wmv";   //关联一个要下载的文件
+	if(!file_exists($file_name)){	//如果此文件不存在，则显示下面信息，并结束！
+		echo "文件不存在！！";
+		return ;
+	}
+	$fp = fopen($file_name,'r');	//打开这个文件
+	$file_size=filesize($file_name);	//读取这个文件的大小
+	header("Content-Type: application/octet-stream"); //设置下载文件类型
+	header("Content-Ranges: bytes");		//设置字节类型（字节）
+	header("Content-Length: $file_size");		//设置下载文件的大小
+	header("Content-Disposition: attchment; filename=".$file_name); //设置文件名，可指定！
+	$buffer=1024;	//设置文件下载时每次读取量的大小。
+	while(!feof($fp)){	//如果文件没有读取结束
+		$file_data=fread($fp,$buffer);	//当前读取量是多少
+		echo "$file_data";	//把当前读取量返回给页面
+	}	
+	fclose($fp);	//下载完成，关闭文件。
+?>

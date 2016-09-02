@@ -1,0 +1,11 @@
+;(function($){
+$.fn.extend({
+	"nav":function(){
+		this.find($('.nav')).parent().hover(function(){
+			$(this).find('.nav').slideDown();
+		},function(){
+			$(this).find('.nav').stop(true).slideUp();
+		});
+	}
+});
+})(jQuery);

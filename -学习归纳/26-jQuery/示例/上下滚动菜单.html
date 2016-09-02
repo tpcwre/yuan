@@ -1,0 +1,62 @@
+<style>
+	div{
+		border:1px solid;
+		width:150px;
+		height:130px;
+		overflow:hidden;
+		
+	}
+	ul{
+		padding:0;
+		margin:0;
+		text-align:center;
+	}
+	li{
+		background:#ccc;
+		margin-top:1px;
+	}
+</style>
+<script type='text/javascript' src='jquery-1.8.3.min.js'></script>
+<script type='text/javascript'>
+	var m=0;
+	var height=0;
+	var myTime=null;
+	var color=null;
+	$(function(){
+		height=$('ul').height();
+		$("ul").clone().appendTo('div');
+		runs();
+		$("div li").mouseover(function(){
+			clearTimeout(myTime);
+			//$(this).css('background','#ccc')
+			$(this).css('background','red');
+		}).mouseout(function(){
+			runs();
+			$(this).css('background','#ccc')
+		});
+	
+	});
+	function runs(){
+		m +=10;
+		if(m>height){
+			m=0;
+		}
+		$("div").scrollTop(m);
+		myTime = setTimeout("runs()",50);
+	}
+	
+
+</script>
+<div>
+	<ul>
+		<li>11111111</li>
+		<li>22222222</li>
+		<li>33333333</li>
+		<li>44444444</li>
+		<li>555555555</li>
+		<li>6666666666</li>
+		<li>777777777</li>
+		<li>888888888</li>
+	</ul>
+</div>
+

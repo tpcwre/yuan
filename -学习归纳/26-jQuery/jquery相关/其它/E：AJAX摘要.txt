@@ -1,0 +1,173 @@
+
+
+
+
+//=====$.load()方法
+
+//loal-get方式
+$(function(){
+	$(":button").eq(0).click(function(){
+		$(".two").load("b.php?url=ycku1",function(response,status,xhr){
+			$(".two").html(response);
+		});
+	});
+});
+
+
+//loal-post方式
+$(function(){
+	$(":button").eq(0).click(function(){
+		$(".two").load("b.php",{
+			name:"lee"
+		},function(response,status,xhr){
+
+		});
+	});
+});
+
+
+
+
+
+
+
+
+
+//-----$.get()的使用方法
+$(function(){
+	$(":button").eq(0).click(function(){
+		$.get("b.php",{
+			name:"中国人民银行"
+		},function(response,status,xhr){
+			$(".two").html(response);
+		});
+	});
+});
+
+
+
+
+
+
+//-----$.post()的使用方法
+$(function(){
+	$(":button").eq(0).click(function(){
+		$.post("b.php",{			//请求的页面
+			url:"www.baidu.com"  		//传输的数据
+		},function(response,status,xhr){ 	//成功后返回的结果
+			$(".two").html(response);
+		});
+	});
+});
+
+
+
+
+
+
+
+
+//-----$.ajax()方法的使用
+$("form input[type=button]").click(function(){
+  $.ajax({
+    type:"post",
+    url:"c.php",
+    data:{
+	url:"ycku"
+    },
+    success:function(response,status,xhr){
+	$("#box").html(response+"=ajax方法实现");
+    }
+  });
+});
+
+
+
+
+
+
+
+//-----初始化重复的属性
+
+$("form input[type=button]").click(function(){
+  $.ajaxSetup({
+    type:"post",
+    url:"e.php",
+    data:{
+	user:$("form input[name=user]").val(),
+	email:$("form input[name=email]").val()
+    },
+  });
+
+  $.ajax({
+    success:function(response,status,xhr){
+	$("#box").html(response+2);
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+//-----$.param()解析对象的键值对，转为数据
+alert({
+  user:$("form input[name=user]").val(),
+  email:$("form input[name=email]").val()
+});
+
+
+
+
+
+//-----$.param()解析对象的键值对，转为数据
+alert($.param({
+  user:$("form input[name=user]").val(),
+  email:$("form input[name=email]").val()
+}));
+
+
+$("form input[type=button]").click(function(){
+  $.ajax({
+    type:"post",
+    url:"e.php",
+    data:$.param({
+	user:$("form input[name=user]").val(),
+	email:$("form input[name=email]").val()
+    }),
+    success:function(response,status,xhr){
+	$("#box").html(response+111);
+    }
+  });
+});
+
+
+
+
+
+//-----请求事件的属方式
+$(":button").click(function(){
+  $.ajax({
+	type:"post",
+	url:"f1.php",
+	data:$("form").serialize(),
+	success:function(){
+	  alert("请求成功后执行");
+	},
+	complete:function(){
+	  alert("请求完成后执行");
+	},
+	beforeSend:function(){
+	  alert("请求前执行");
+	},
+	error:function(){
+	  alert("错误时执行");
+	}
+	
+  });
+});

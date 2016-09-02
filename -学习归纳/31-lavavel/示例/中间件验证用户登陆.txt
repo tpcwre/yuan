@@ -1,0 +1,172 @@
+//===== 显示页面：
+
+
+
+
+	<form action='{{url('stu/reg')}}' method='post'>
+
+		<input type='hidden' name='_token' value="<?php echo csrf_token(); ?>" />
+
+		用户名：<input name='user' /><br>
+
+		密　码：<input type='password' name='pass' /><br>
+
+		<input type='submit' value='注册' />
+
+	</form>
+
+
+
+
+
+
+
+
+//===== 控制器页面
+
+
+
+	public function reg(Request $request){
+
+        	$data=$request->except('_token');
+      		//获取全部数据并将 _token过滤掉
+
+     
+        	var_dump($data);
+
+    
+       	// $date2 = \Request::except('_token');
+
+      		// var_dump($date2);
+
+
+    	}
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 中间件页面
+
+
+
+	//在根目录中用命令行 输入 php artisan make:middle regMiddleware 来创建中间件，它会自动在app/Middleware 下创建 regMiddleware中间件文件
+
+	use Closure;
+
+	class regMiddleware
+
+	{
+
+		public function handle($request, Closure $next)
+
+		{
+
+			$data= $request->except('_token');
+
+			$db = \DB::table("users")->where("name",$data['user'])->where("password",$data['pass'])->get();
+
+			if($db){
+
+				return $next($request);
+
+			}else{
+
+			  //  echo 1111;
+
+			   return  back();
+
+			}
+
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 中间件注册页面
+
+
+
+	protected $routeMiddleware = [
+
+		'auth' => \App\Http\Middleware\Authenticate::class,
+
+		'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+
+		'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+
+		'reg'=> \App\Http\Middleware\regMiddleware::class,		//将新建的中间件注册到这里
+
+	];
+	
+
+
+
+
+
+
+
+//===== 路由页面
+
+
+	<?php
+
+		Route::get('/', function () {
+
+			return view('welcome');
+
+		});
+
+		Route::get('stu',function(){
+
+			return view('stu/index');
+
+		});
+
+		//Route::resource('reg',"StuController@reg");
+
+		Route::group(['middleware'=>'reg'],function(){
+
+			Route::post('stu/reg',function(){
+
+				echo 133;
+
+			});
+
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+
+
+
+//-- mongoexport 导出数据 
+
+	./mongoexport --port=11111 --db=t1 --collection=t1 --out=/test/t1_t1
+			
+			--port		指定端口
+			--db		指定数据库
+			--collection	指定集合
+			--out 		指定输出的路径
+			
+				更多参数查看 	--help 		
+
+
+
+
+
+//-- mongoimport 导入数据
+
+	./mongoimport --port=11111 --db=t1 --collection=t1 /test/t1_t1
+
+			--port		指定端口
+			--db		指定数据库
+			--collection	指定集合
+
+			/test/t1_t1	指定要导入的数据路径
+
+				更多参数查看 	--help 	
+
+
+
+
+

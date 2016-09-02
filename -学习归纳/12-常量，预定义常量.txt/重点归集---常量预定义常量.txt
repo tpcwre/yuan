@@ -1,0 +1,201 @@
+
+
+
+
+
+
+//=====什么是常量：
+
+		常量可以理解成是一种特殊的变量，一旦被定义，就不能再改变或者取消定义。
+		常量和变量有如下不同；
+		1,常量前面没有美元符$.
+		2,常量一旦定义就不能被重新定义或者取消定义。
+		3,常量在定义的时候，就需要给它赋初值。
+		4，常量通过define 或者const定义。
+		5，常量名称一般全部大写，然后用下划线间隔。
+		6，在程序中我人不希望某个值变化，则考虑用常量。比如圆周率等。
+		7，常量可以不用理会变量的作用域而在任何地方定义和访问。
+		8，常量的值是标量(基本数据类型)string,integer,float,boolean.
+		<?php
+			//第一种方法：
+			define("TAX_RATE",0.08);
+			echo TAX_RATE;
+			结果： 0.08
+
+			//第二种方法；只适用于php5.3版本以后，以前的会报错
+			const TAX_RATE2=0.1;
+			echo "--".TAX_RATE2;
+			结果：0.1
+		?>
+
+
+
+//===== 常量的定义与使用：
+
+		<?php
+			define ('AAA','23489jelkwjer');
+			echo "类外define定义的全局常量：AAA-".AAA."<BR>";
+			echo "它只能在类外定义，属于全局常量！<hr>";
+		class One{
+			const BBB="222";
+			//const它只能在类中定义，属于成员常量！但它可以同时被类的内部和外部调用。
+			public $a;
+			public function __construct($aaa){
+				$this->a=$aaa;
+				echo $this->a;
+				echo "<hr>".self::BBB."类中定义的常量，在本类中的调用！<hr>";
+			}	
+		}
+		echo "类中const定义的常量".One::BBB."<br>";
+		echo "<hr>";
+		$a=new One(AAA);
+		?>
+
+
+
+
+
+
+//===== const与define的区别
+
+		【问】在php中定义常量时,const与define的区别? 
+		【答】使用const使得代码简单易读，const本身就是一个语言结构，而define是一个函数。另外const在编译时要比define快很多。
+		(1).const用于类成员变量的定义，一经定义，不可修改。define不可用于类成员变量的定义，可用于全局常量。
+		(2).const可在类中使用，define不能。
+		(3).const不能在条件语句中定义常量。
+		例如： 
+		if (...){ 
+		  const FOO = 'BAR';  // 无效的invalid 
+		}  
+		if (...) { 
+		  define('FOO', 'BAR'); // 有效的valid 
+		}
+		(4).const采用一个普通的常量名称，define可以采用表达式作为名称。 
+		 const  FOO = 'BAR';  
+		 for ($i = 0; $i < 32; ++$i) { 
+		  define('BIT_' . $i, 1 << $i); 
+		}
+		(5).const只能接受静态的标量，而define可以采用任何表达式。
+		例如： 
+		const BIT_5 = 1 << 5;  // 无效的invalid  
+		define('BIT_5', 1 << 5); // 有效的valid
+		(6).const定义的常量时大小写敏感的，而define可通过第三个参数（为true表示大小写不敏感）来指定大小写是否敏感。
+		例如：
+		define('FOO', 'BAR', true);  
+		echo FOO; // BAR 
+		echo foo; // BAR
+
+
+
+
+
+
+
+
+
+
+//===== define() 常量的声明
+
+	define('A','aaa');
+	echo A;
+
+	define('B','bbb',true);
+	echo b.'--define的每三个参数 为ture时，常量不区分大小写，false时区分大小写<br>';
+	
+
+
+
+//===== define() 判断常量是否存在
+
+	echo defined('B').'--defined判断常量是否存在';
+
+
+
+
+
+
+//====== 系统常量 
+
+		常量	描述	PHP
+	CASE_LOWER	用在 array_change_key_case() 中将数组键名转换成小写字母。	 
+	CASE_UPPER	用在 array_change_key_case() 中将数组键名转换成大写字母。	 
+	SORT_ASC	用在 array_multisort() 函数中，使其升序排列。	 
+	SORT_DESC	用在 array_multisort() 函数中，使其降序排列。	 
+	SORT_REGULAR	用于对对象进行通常比较。	 
+	SORT_NUMERIC	用于对对象进行数值比较。	 
+	SORT_STRING	用于对对象进行字符串比较。	 
+	SORT_LOCALE_STRING	基于当前区域来对对象进行字符串比较。
+
+
+
+
+
+
+
+
+
+
+//===== php_sapi_name()		PHP运行环境检测函数
+
+
+
+
+
+
+//===== 预定义常量
+
+	PHP_VERSION 		PHP 程序的版本，如4.0.2
+	PHP_OS      		执行PHP解释器的操作系统名称，如Windows
+	PHP_SAPI            	用来判断是使用命令行还是浏览器执行的，如果 PHP_SAPI=='cli' 表示是在命令行下执行
+	E_ERROR             	最近的错误处
+	E_WARNING           	最近的警告处
+	E_PARSE            	剖析语法有潜在问题处
+	E_NOTICE            	发生不寻常但不一定是错误处	
+	PHP_EOL             	系统换行符，Windows是（\r\n），Linux是（/n），MAC是（\r），自 PHP 4.3.10 和 PHP 5.0.2 起可用
+	DIRECTORY_SEPARATOR   	系统目录分隔符，Windows是反斜线（\），Linux是斜线（/）
+	PATH_SEPARATOR        	多路径间分隔符，Windows是反斜线（;），Linux是斜线（:）
+	PHP_INT_MAX          	INT最大值，32位平台时值为2147483647，自 PHP 4.4.0 和 PHP 5.0.5 起可用
+	PHP_INT_SIZE          	INT字长，32位平台时值为4（4字节），自 PHP 4.4.0 和 PHP 5.0.5 起可用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

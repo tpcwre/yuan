@@ -1,0 +1,624 @@
+
+//----- $(o).css() 设置元素的样式
+//----- $(o).attr() 获取或设置元素的属性
+//----- $(o).removeAttr() 删除元素的属性
+//----- $(o).val() 获取或设置表单项的值
+//----- $(o).mouseover(fun) 鼠标移入事件
+//----- $(o).addClass() 给元素添加指定类
+//----- $(o).mouseout(fun) 鼠标移出事件
+//----- $(o).removeClass() 给元素删除指定类
+//----- $(o).html() 获取元素标签中的内容(带标签名)
+//===== 元素的前添加后追加
+//----- $(o).prepend() 在指定元素中的首位添加子元素
+//----- $(o).append() 在指定元素中的未位添加子元素
+//===== 示例-表单验证焦点时提示，失去焦点再提示
+//----- $(o).focus(fun) 获取焦点事件;
+//----- $(o).next(o) 下一个兄弟节点
+//----- $(o).remove() 删除节点
+//----- $(o).insertAfter(o) 将一个元素作兄弟节点插入到指定元素后面
+//----- $(o).wrap() 将每个指定元素包裹一层父元素
+//----- $(o).wrapAll() 将指定的元素包裹在一个父元素中
+//----- $(o).unwrap() 删除指定元素的父元素
+//===== 示例 图片的替换
+//----- $(o).click(fun) 单击事件
+//----- $(o).replaceWith() 将匹配元素替换为指定元素
+//----- $(o).clone() 克隆元素
+//===== 示例-通过类名的增删来删除指定元素
+//===== 示例-两个下拉列表内容相互移动
+//----- $(o).fine() 在后代节点中查找指定节点
+//----- $(o).appendTo() 将指定的元素移动或添加到另一元素中的未尾
+//===== 表格内容的添加删除
+//----- $(o).parent() 获取父元素
+//----- document.myform.reset() 重置表单项
+//----- retrun false 阻止表单提交的默认行为
+//===== 放大镜的jquery实现方式
+//===== e.pageX,Y 获取鼠标在页面中的坐标
+//----- obj.offset().left,top 获取元素与浏览器边框的距离
+//----- obj.scrollTop,Left 获取或设置元素的滚动条位置
+//----- obj.width(),height() 获取元素的高和宽
+//===== 元素拖动效果jquery的实现方式
+//----- obj.mousedown() 鼠标按下事件
+//----- obj.mousemove() 鼠标移动事件
+//===== 元素的拖动效果javascript方式
+//----- obj.offsetWidth,Height 获取元素的宽和高
+//----- e.clientX,Y 获取鼠标的坐标
+//----- obj.event=null 清空事件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<style type="text/css">
+		#did{width:100px;height:100px;background-color:#ddd;}
+		#did:hover{height:300px;width:300px;background:red}
+	</style>
+        <script type="text/javascript" src="./jquery-1.8.3.min.js"></script>
+		<script type='text/javascript'>
+			$(function(){
+//----- $(o).css() 设置元素的样式
+				$('h2.cc').css('color','red');
+//----- $(o).attr() 获取或设置元素的属性
+				$('#aid').attr('aa','bb');
+				$("#aid").attr('cc','dd');
+//----- $(o).removeAttr() 删除元素的属性
+				$("#aid").removeAttr('aa');
+//----- $(o).val() 获取或设置表单项的值
+				$("input[name=name]").val('aaaaa');
+//----- $(o).mouseover(fun) 鼠标移入事件
+				$("#did").mouseover(function(){
+//----- $(o).addClass() 给元素添加指定类
+					$(this).addClass('hover');
+//----- $(o).mouseout(fun) 鼠标移出事件
+				}).mouseout(function(){
+//----- $(o).removeClass() 给元素删除指定类
+					$(this).removeClass('hover');
+//----- $(o).html() 获取元素标签中的内容(带标签名)
+				}).html('鼠标移入看看');
+			});
+		</script>
+		<a id="aid" href="http://www.baidu.com">百度</a>
+		<br/><br/>
+		<input type="text" name="name"/>	
+		<br/><br/>
+		<div id="did"></div>	
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="./jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+//===== 元素的前添加后追加
+	$(function(){
+		$("button").click(function(){
+			var con = $("input[name=name]").val();
+			var b = $(this).html();
+			switch(b){
+				case "前添加":
+//----- $(o).prepend() 在指定元素中的首位添加子元素
+					$("#uid").prepend("<li>"+con+"</li>");
+				break;
+				case "后追加":
+//----- $(o).append() 在指定元素中的未位添加子元素
+					$("#uid").append("<li>"+con+"</li>");
+				break;
+			}
+			$("input[name=name]").val('');
+		});
+	});
+</script>
+<h2>jQuery实例: 文档（节点）操作</h2>
+<ul id="uid">
+	<li>滚犊子</li>
+	<li>瘪犊子</li>
+	<li>扯犊子</li>
+	<li>王八犊子</li>
+</ul>
+名称：<input type="text" name="name" size="10"/> 
+<button>前添加</button>
+<button>后追加</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="./jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+//===== 示例-表单验证焦点时提示，失去焦点再提示
+	$(function(){
+//----- $(o).focus(fun) 获取焦点事件;
+		$(".ff input").focus(function(){
+			var info = $(this).attr('info');
+//----- $(o).next(o) 下一个兄弟节点
+//----- $(o).remove() 删除节点
+			$("input").next('span').remove();
+//----- $(o).insertAfter(o) 将一个元素作兄弟节点插入到指定元素后面
+			$("<span>请输入"+info+"信息</span>").css('color','#ccc').insertAfter(this);
+		}).blur(function(){
+			if($(this).val()<1){
+				$("<span>"+$(this).attr('info')+"信息不得为空</span>").css('color','red').insertAfter(this).next('span').remove();
+			}else{
+				$(this).next('span').remove();
+			}
+		});
+	});
+</script>
+<h2>jQuery实例: 文档（节点）操作</h2>
+<form class='ff' action="#" method="get">
+	姓名：<input type="text" name="uname" info="姓名" /><br/><br/>
+	密码：<input type="password" name="upass" info="密码"  /><br/><br/>
+	邮箱：<input type="text" name="email" info="邮箱"  /><br/><br/>
+	电话：<input type="text" name="phone" info="电话"  /><br/><br/>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="./jquery-1.8.3.min.js"></script>
+<script type='text/javascript'>
+	$(function(){
+		$(".inner").click(function(){
+//----- $(o).wrap() 将每个指定元素包裹一层父元素
+			$(this).wrap('<h2></h2>');
+		});
+		$(".all").click(function(){
+			$("div").wrap("<h1 class='abc'></h1>");
+		})
+//----- $(o).wrapAll() 将指定的元素包裹在一个父元素中
+		$('i, u, span').wrapAll('<div/>');
+//----- $(o).unwrap() 删除指定元素的父元素
+		$('div').unwrap();
+		
+	});
+</script>
+<h2>jQuery实例: 文档（节点）操作</h2>
+<div class="container">
+  <div class="inner">Hello</div>
+  <div class="inner">Goodbye</div>
+  <div class="all">all</div>
+</div>
+<i>iiii</i>
+<p>pppp</p>
+<u>uuuu</u>
+<div>div</div>
+<span>span</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例 图片的替换
+
+<style type="text/css">
+	img:hover{border:10px solid #ccc}
+	img.cc{border:10px solid #ccc}
+</style>
+<script type="text/javascript" src="./jquery-1.8.3.min.js"></script>
+<script>
+	$(function(){
+//----- $(o).click(fun) 单击事件
+		$("#did img").click(function(){
+			$("#did img").removeClass('cc');
+			$(this).addClass('cc');
+		});
+		$("button").click(function(){
+//----- $(o).replaceWith() 将匹配元素替换为指定元素
+			//$("#did img.cc").replaceWith($("#mid"));
+//----- $(o).clone() 克隆元素
+			$("#did img.cc").replaceWith($("#mid").clone());
+		});
+	});
+</script>
+<h2>jQuery实例: 文档（节点）操作</h2>
+<div id="did">
+<img src="./images/1.jpg" width="100"/>
+<img src="./images/2.jpg" width="100"/>
+<img src="./images/3.jpg" width="100"/>
+<img src="./images/4.jpg" width="100"/>
+<img src="./images/5.jpg" width="100"/>
+</div>
+<hr/>
+<img id="mid" src="./images/6.jpg" width="100"/>
+<button>替换</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-通过类名的增删来删除指定元素
+
+<style>
+ul{list-style:none;margin:0;padding:0}
+ul li{background:pink;margin-top:2px;height:30px}
+li:hover{background-color:#f60;}
+li.cc{background:#ccc}
+</style>
+<script type="text/javascript" src="./jquery-1.8.3.min.js"></script>
+<script type='text/javascript'>
+	$(function(){
+		$("ul li").click(function(){
+			$(this).addClass('cc');
+		});
+		$("button").click(function(){
+		
+			$("ul li.cc").remove();
+		});
+	});
+</script>
+<h2>jQuery实例: 文档（节点）操作</h2>
+<ul>
+	<li>1.</li>
+	<li>2.</li>
+	<li>3.</li>
+	<li>4.</li>
+	<li>5.</li>
+	<li>6.</li>
+	<li>7.</li>
+	<li>8.</li>
+</ul>
+<button>删除</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-两个下拉列表内容相互移动
+<style>
+	select,option,div,button{margin:0px;padding:0px;}
+	#lid,#rid,div{
+		width:80px;
+		height:260px;
+		float:left;
+	}
+	div{
+		text-align:center;
+		padding-top:60px;
+	}
+</style>
+<script type="text/javascript" src="./jquery-1.8.3.min.js"></script>
+<select id="lid" multiple>
+	<option value="1">古天乐</option>
+	<option value="2">周杰伦</option>
+	<option value="3">刘欢</option>
+	<option value="4">韩红</option>
+	<option value="5">林志玲</option>
+	<option value="6">成龙</option>
+	<option value="7">梁家辉</option>
+	<option value="8">刘德华</option>
+</select>
+<div>
+<button onclick="doMove('lid','rid')">&nbsp;&nbsp;>>&nbsp;&nbsp;</button><br/><br/><br/><br/><br/><br/>
+<button onclick="doMove('rid','lid')">&nbsp;&nbsp;<<&nbsp;&nbsp;</button>
+</div>
+<select id="rid" multiple>
+</select>
+<script type="text/javascript">
+	function doMove(id1,id2){
+//----- $(o).fine() 在后代节点中查找指定节点
+//----- $(o).appendTo() 将指定的元素移动或添加到另一元素中的未尾
+		$("#"+id1).find("option:selected").attr('selected',false).appendTo($('#'+id2));
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="./jquery-1.8.3.min.js"></script>
+<style>
+	select,option,div,button{margin:0px;padding:0px;}
+	#lid,#rid,div{
+		width:80px;
+		height:260px;
+		float:left;
+	}
+	div{
+		text-align:center;
+		padding-top:60px;
+	}
+</style>
+<table id="tid" width="500" border="1">
+	<thead>
+		<tr>
+			<th>学号</th>
+			<th>姓名</th>
+			<th>性别</th>
+			<th>年龄</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1001</td>
+			<td>张三</td>
+			<td>男</td>
+			<td>20</td>
+			<td><button onclick="dodel(this)">删除</button></td>
+		</tr>
+		<tr>
+			<td>1002</td>
+			<td>李四</td>
+			<td>女</td>
+			<td>21</td>
+			<td><button onclick="dodel(this)">删除</button></td>
+		</tr>
+		<tr>
+			<td>1003</td>
+			<td>王五</td>
+			<td>男</td>
+			<td>22</td>
+			<td><button onclick="dodel(this)">删除</button></td>
+		</tr>
+	</tbody>
+</table>
+<br/><br/><br/>
+<form action="#" name="myform" onsubmit="return doAdd()">
+	学号：<input type="text" name="sno"/><br/><br/>
+	姓名：<input type="text" name="name"/><br/><br/>
+	性别：<input type="text" name="sex"/><br/><br/>
+	年龄：<input type="text" name="age"/><br/><br/>
+	<input type="submit" value="添加"/>
+</form>
+<script type='text/javascript'>
+	function dodel(ob){
+//----- $(o).parent() 获取父元素
+		$(ob).parent().parent().remove();
+	}
+	function doAdd(){
+		var str = "<tr><td>"+$("input[name=sno]").val()+"</td>";
+		str += "<td>"+$("input[name=name]").val()+"</td>";
+		str += "<td>"+$("input[name=sex]").val()+"</td>";
+		str += "<td>"+$("input[name=age]").val()+"</td>";
+		str += "<td><button onclick='dodel(this)'>删除</button></td></tr>";
+		$(str).appendTo($('tbody'));
+//----- document.myform.reset() 重置表单项
+		document.myform.reset();
+//----- retrun false 阻止表单提交的默认行为
+		return false;
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type='text/javascript' src = "jquery-1.8.3.min.js"></script>
+<script type='text/javascript'>
+/*
+
+//===== 放大镜的jquery实现方式
+		$(function(){
+			$('img').mousemove(function(e){
+				var x =e.pageX-$(this).offset().left;	
+				var y =e.pageY-$(this).offset().top;
+				$("#d").css('display','block');
+				$("#d").scrollTop(y*6-150);
+				$("#d").scrollLeft(x*6-150);
+				$("#d").css('left',$(this).offset().left+$(this).width());
+				$("#d").css('top',$(this).offset().top);
+			}).mouseout(function(){
+				$('#d').css('display','none');
+			});
+		});
+*/
+//===== 放大镜的javascript的实现方式
+	$(function(){
+		var img = document.getElementsByTagName('img')[0];
+		var d = document.getElementById('d');
+		img.onmouseover=function(e){
+			d.style.display='block';
+//===== obj.offsetLeft,Top 获取元素与浏览器的边距
+//===== obj.offsetWidth,Height 获取元素的宽和高
+			d.style.left=this.offsetLeft+this.offsetWidth;
+			d.style.top=this.offsetTop;
+		}
+		img.onmouseout=function(e){
+			d.style.display='none';
+		
+		}
+		img.onmousemove=function(e){
+			var x =e.clientX-this.offsetLeft;
+			var y =e.clientY-this.offsetTop;
+//===== obj.scrollLeft,Top 获取或设置元素的滚动条距离
+				d.scrollLeft=x*6-150;
+				d.scrollTop=y*6-150;
+			}
+	});
+
+
+
+
+</script>
+<img src = '1.jpg' width=300/>
+<div id='d' style="width:300;height:300;position:absolute;overflow:hidden;display:none">
+	<img src = '1.jpg'/>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type='text/javascript' src='jquery-1.8.3.min.js'></script>
+<script type='text/javascript'>
+/*
+//===== 元素拖动效果jquery的实现方式
+	$(function(){
+		var cc=null;
+//===== obj.mousedown() 鼠标按下事件
+		$("#d").mousedown(function(){
+			cc= $(this).css('background');
+			$(this).css('background','red');
+//===== obj.mousemove() 鼠标移动事件
+			$(document).mousemove(function(e){
+				var x =$('#d').width()/2;
+				var y =$('#d').height()/2;
+				$('#d').css('left',e.pageX-x);
+				$("#d").css('top',e.pageY-y);
+			});
+		}).mouseup(function(){
+			$(this).css('background',cc);
+			$(document).off('mousemove');
+		});
+	});
+*/
+
+
+
+//===== 元素的拖动效果javascript方式
+
+	$(function(){
+		var cc = null;
+		var d = document.getElementById('d');
+		d.onmousedown=function(){
+			cc = this.style.background;
+			this.style.background='red';
+			document.onmousemove=function(e){
+//===== obj.offsetWidth,Height 获取元素的宽和高
+				var x = d.offsetWidth/2;
+				var y = d.offsetHeight/2;
+//===== e.clientX,Y 获取鼠标的坐标
+				d.style.left=e.clientX-x;
+				d.style.top=e.clientY-y;
+			}
+		}
+		d.onmouseup=function(){
+			this.style.background=cc;
+//===== obj.event=null 清空事件
+			document.onmousemove=null;
+		}
+	});
+</script>
+<div id='d' style="width:150px;height:150px;background:#ccc;position:absolute;"></div>
+
+
+
+

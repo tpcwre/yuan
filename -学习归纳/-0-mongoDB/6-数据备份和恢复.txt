@@ -1,0 +1,51 @@
+
+	注：数据的备份和恢复与导入导出的不同点是：导入导出要指定集合，而备份和恢复可以不用指定集合
+
+//-- mongodump 数据备份 
+
+	./mongodump --port=11111 --db=t1 --out=/test			备份指定的库
+	
+
+	./mongodump --port=11111 --db=t1 --collection=t2 --out=/test/t1_t2		备份指定库中的集合,并指定保存的路径与名字
+
+		--port		指定端口
+		--db		指定数据库
+		--out		指定要备份的路径 
+
+			更多参数参见 --help
+
+
+
+//-- mongorestore 数据恢复
+
+	./mongorestore --port=11111 --db=t1 /test/t1			恢复指定的库
+
+		--port		指定端口
+		--db		指定数据库
+		/test/t1	指定要恢复的数据源
+
+			更多参数参见 --help
+
+
+
+
+示例：
+
+	./mongodump --port=11111 -d t1 -o /test				//备份数据库t1到test目录下
+	./mongorestore --port=11111 -d t1 /test/t1			//使用test/t1恢复到t1数据库
+
+
+
+
+
+
+	./mongodump --port:11111 -d t1 -c tt1 -o /test			//备份t1库下的 tt1 集合 到 test目录下
+	./mongorestore --port=11111 -d t1  /test/t1			//使用/test/t1 恢复到数据库 t1	（恢复的时候不用指明哪个集合）
+
+
+
+
+
+
+
+

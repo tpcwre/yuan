@@ -1,0 +1,275 @@
+
+		=====特殊过滤选择器=====
+
+
+							//filter()多选择器共同实现
+$('li').filter('.two, :first, :last').css('background','#ccc');
+$('li').filter('.two, :first-child, :last-child').css('background','red'); 
+
+-----filter(function(){})				//filter()限制多条件
+	$('li').filter(function(){
+		return $(this).attr('class')=='two' && $(this).attr('title')=='aaa';
+	}).css('background','#ccc');
+
+
+
+							//判断同时拥有指定的类名和属性名的元素是否存在
+	alert($('.two').is(function(){	
+		return $(this).attr('title')=='aaa';	//attr()-获取title属性值的参数
+	}));
+	//判断.two类名所在的元素中同时存在title属性为aaa的 元素是否存在。 
+	//注意这个方法必须要用this作引用 
+
+
+
+
+-----$('div:hidden').size(); 				//获取隐藏的DIV 节点元素的个数 
+-----$('div:hidden').css('background','red').show(1000);		% 显示隐藏
+	//使隐藏的DIV节点元素 在一秒后 从上至下显示出来
+-----$('div:visible').size());  			//获取可见的div节点元素的个数 
+
+
+-----$('div:contains("ku.co")')				//选取含有某字段的文本元素  
+-----$('div:empty')					//选取不包含子元素和空文本的元素
+
+-----$('ul:has(.two)')					//选择子节点中含有class是two的ul节点
+-----$('ul').has('.two')
+
+
+
+
+-----$("h2:header")	 				//选择指定h1-h6标题元素 
+-----$("div h3:header")	 				//选择指定区域内h1-h6标题元素	
+	
+-----$('input').get(0).focus();				//让表单输入框自动获取焦点	 
+-----$(':focus')					//选择初始化焦点所在的元素 
+
+
+
+
+
+
+$(function(){
+	$(".one").next().css({
+		"width":"100px",
+		"height":"100px",
+		"background":"#ccc"
+	}).html("123");
+})
+
+
+
+				=====选择器=====
+
+
+
+-----.next() .next('p')					//下一个(为p)兄弟节点
+-----$('xx + xx')					
+
+-----.nextAll() .nextAll('x')				//后面所有的兄弟节点
+-----$('x ~ ') $('x ~ y') 
+
+-----.prev() .prev('p') 				//上一个（为p）兄弟节点
+-----.prevAll() .prevAll('p') 				//上面全部（为p）兄弟节点 
+
+-----.siblings() .siblings('p')  			//上下所有(为p)兄弟节点
+
+-----.children() 					//一级子选择器 
+-----$('#two > a')	
+	被选定的一级子选择器的后代选择器也会受到影响
+
+-----.find('x') 					//后代选择器
+-----$('ul li a')					//后代选择器
+
+-----$('ul li *')					//全局 或 区域性全局选择器
+
+-----$('#one, .two, strong, .three')			//群组选择器 
+
+-----$('p.one')						//限制p标签且类名为one的元素 
+
+-----$('x','#y')					//选择#y下为x的后代节点
+
+----- .nextUntil('x') 					//指定下面非X节点，遇到X节点结束  
+----- .prevUntil('x')					//指定上面非x节点，遇到x节点结束 
+
+-----$('x[title]') 					//通过属性title来设置样式
+-----$('a[title=num1]')  				//设置指定的属性的样式	
+-----$('a[title^=nu]')					//设置标签名的属性以哪些字母为开头的样式
+-----$('a[title$=f]')					//设置标签名的属性以哪些字母为结尾的样式
+-----$('a[title|=num]')  				//属性值完全匹配或完全匹配-以前部分内容
+-----$('a[title!=num1]') 				//设置不等于xxx字段属性的样式
+-----$('a[title~=num1]')   				//包含空格的属性列表
+-----$('a[title*=nu]')   				//属性值中包含指定字串的
+-----$('a[aaa][title=num]')  				//匹配属性的个数与名字
+
+
+
+
+
+
+
+
+
+
+				=====基本过滤器=====
+
+
+-----$('li:first')	 				//选择首个li元素	
+-----$('li').first()
+ 
+-----$('li:last')	 				//选择最后一个li元素 
+-----$('li').last()
+
+-----$('#one li:last')	 				//选择#one 中最后一个li元素
+
+-----$('ul:first li:last')	 			//第一个父元素中最后一个子元素
+
+-----$('li:not(.two)')	 				//选择除指定类名以外的 
+-----$('li').not('.two')
+
+-----$('li:even')		 			//选择0以上为偶数的元素（包括0） 
+-----$('li:odd')	 				//选择0以上为奇数的元素（不包括0） 
+
+-----$('li:eq(3)')	 				//以下标形式选择元素（下标是从0开始） 
+-----$('li:eq(-3)')	 				//以下标形式选择元素（负数就是倒数-1为最后一个）
+-----$('li').eq(3)
+
+-----$('li:gt(3)')	 				//选择大于指定下标的所有元素(可以指定负数) 
+-----$('li:lt(3)')	 				//选择小于指定下村的所有元素（可以指定负数） 
+
+
+
+
+
+
+
+
+
+
+
+
+
+					=====内容过滤器=====
+
+
+
+-----$('div:parent')					//选择有子元素的div节点 
+
+-----$('li').parent().size();				//获取li的父元素的标签的个数
+-----$('li').parent().get(0);				//获取li的父元素标签的第一个元素
+-----$('li').parent()					//设置li父元素标签的所有元素的样式
+
+-----$('li').parents()					//设置祖先元素的样式（直接到html元素）
+-----$('li').parentsUntil('body')			//样式设置到body标签为止， 
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+				=====子元素过滤器=====
+
+
+							
+-----$('li:first-child')				//获取每个父元素的第一个为li的子元素	 
+-----$('li:last-child')					//获取每个父元素的最后一个子元素 
+-----$('li:only-child')					//获取只有一个子元素的元素	 
+-----$('li:nth-child(odd)')				//获取每个父元素的奇数子元素 
+-----$('li:nth-child(even)')				//获取每个父元素的偶数子元素	 
+-----$('li:nth-child(1)')				//获取每个父元素下的指定下标的子元素	 
+-----$('li:nth-child(3n)')				//获取每个父元素下的子元素，获取方式为逢N获取 
+-----$('li:nth-child(3n+1)')				//获取每个父元素下的子元素，获取方式为逢N+1获取
+
+
+
+
+
+
+
+
+					=====其它方法=====
+
+
+
+-----alert($('.two').is('li'));				//判定.two类所在元素是否为‘li’ 
+-----alert($('.two').is($('li')));		
+-----alert($('.two').is($('li').get(2)));	//判定.two类所在元素是否是下标为2的‘li’DOM元素对象
+
+-----alert($('.two').is($('li').eq(1)));	//判定.two类所在元素是否是下标为2的‘li’jquery元素对象
+
+
+	
+-----alert($('li').eq(1).hasClass('two'));		//判断下标为1的 li 对象的类名是否为‘two’
+-----$('li').slice(2,7).css('color','red'); 		//选择下标从 2 到 7的 li对象（7不受影响）
+							 
+-----$('li').slice(2).css('background','red');		//选择下标从2往后的所有 li 元素
+							 
+-----$('li').slice(2,-3).css('background','red');	//选择下标从2到倒数第三个之间的li元素
+
+
+-----alert($('#one').find('li').end().get(0).nodeName); //获取指定ID名所在元素下的子节点li的上一层元素的第一个元素		% 指定 上一层
+-----alert($('#one').find('li').parent().get(0).nodeName) //同上的另一种方式 
+-----$('#one').next('ul').end().css("background",'#ccc');  //end() 获取当前元素前一次状态
+
+-----alert($('div:first').children().size());		//获取第一个div节点的子节点的个数
+-----alert($('div:first').contents().size());		//获取第一个div节点中元素个数
+
+
+
+
+
+
+		=====第15课 表单选择器=====
+
+-----获取表单value值的方法
+	//alert($('input').size());				//获取表单元素的个数
+	//alert($('input').eq(0).val());			//获取指定下标元素的值
+	//alert($('input').eq(1).val());
+	//alert($('input[type=text]').val());			//获取text()类型元素的值
+	//alert($('input[name=psw]').val());			//获取指定名字元素的值
+	//alert($('input[name=user][type=text]').val());	//获取指定名与指定类型的元素的值
+
+----- :input 					选取所有表单元素(包括select,textarea,botton)
+	//alert($(':input').size());
+----- :text 						//选取所有的单行本框
+----- :password 					//选取所有的密码框
+----- :checkbox 					//选取所有的复选择框
+----- :submit 						//选取所有的提交按钮
+----- :reset 						//选取所有的重置按钮
+----- :image 						//选取所有的图像按钮
+----- :button 						//选取所有的普通按钮
+----- :file 						//选取所有的文件按钮
+----- :hidden 						//选取所有的不可见字段
+	<br><option>也算做隐藏元素
+	//alert($('form :hidden').size());			//获取表单中隐藏元素的个数
+	//alert($('form :hidden').val());			//获取表单中隐藏元素的值
+	//alert($('form :hidden[name=one]').val());		//获取指定名的隐藏元素值
+
+----- :radio 						//选取所有的单选框
+	//alert($(':radio[name=sex]').eq(0).val());
+	//alert($(':radio[name=sex]').last().val());
+
+----- :enabled 						//选取所有可用的元素
+	//alert($('form :enabled').size());
+
+----- :disabled 					//选取所有不可用的元素
+	//alert($('form :disabled').size());
+----- :checked 						//选取所有被选中的元素（单选，复选）
+	//alert($('form :checked').size());
+----- :selected 					//选取所有被选择中的元素(下拉菜单)
+	alert($('form :selected').size());
+----- option:selected 					//选择下拉菜单option的值和文本内容
+
+
+
+
+
+

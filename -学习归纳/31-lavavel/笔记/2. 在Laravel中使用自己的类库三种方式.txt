@@ -1,0 +1,173 @@
+
+//===== laravel 中使用自定义类
+//===== 创建redis自定义类
+
+	App目录下的 自定义类文件 Myredis.php 页面
+		<?php
+		namespace App;
+		use Redis;
+		class Myredis{
+				public $redis;
+				public function __construct(){
+						$this->redis = new Redis();
+						$this->redis->connect('localhost');
+				}
+				public function get($name){
+						return $this->redis->get($name);
+				}
+		}
+	
+	控制器文件
+		use Illuminate\Http\Request;
+		use App\Http\Requests;
+		use App\Http\Controllers\Controller;
+		use App\Myredis;
+		class testController extends Controller
+		{
+			public function index()
+			{   
+				$r = new Myredis();
+				echo $r->get('b');
+			}  
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+虽然Composer使得我们可以重用很多现有的类库（例如packagist.org中的），但是我们仍然可能用到一些不兼容composer的包或者类库。另外在某一项目中，我们也可能会创建某一类库，而且可能并没有制作成为composer package 的打算。这个时候我们可以通过以下方式来使用自己的特有类库。
+增加可直接实例化的类
+
+有些需要直接在项目中使用的类，可以通过以下方式增加到Laravel中
+
+    创建类库文件app/libraries/class/myClass.php
+    写入文件内容
+
+<?php
+class Message {
+    public static function display() {
+
+    }
+}
+?>
+
+    在app/start/globals.php中增加类导入路径
+
+<?php 
+ClassLoader::addDirectories(array(
+
+    app_path().'/commands',
+    app_path().'/controllers',
+    app_path().'/models',
+    app_path().'/database/seeds',
+    app_path().'/libaries/class', // 在这里增加
+
+));
+?>
+
+    在composer.json中增加autoload目录
+
+"autoload": {
+    "classmap": [
+        "app/commands",
+        "app/controllers",
+        "app/models",
+        "app/database/migrations",
+        "app/database/seeds",
+        "app/tests/TestCase.php",
+        "app/libraries/class"   //在这里增加
+    ]
+},
+
+    执行composer dump-autoload来创建导入映射
+    使用自己导入的类直接调用Message::display()即可
+
+    这种方法同样也是增加队列类的方法，很多人不知道Laravel中队列处理类应该放在哪里，其实按照上面的方法，在app目录下创建一个queues目录，然后让其可以直接实例化即可
+
+增加可直接调用的函数
+
+有人喜欢用v()来代替var_dump()，想要在Laravel中这么做也非常容易
+
+    创建一个函数文件app/libraries/function/helper.php
+    写入文件内容
+
+<?php 
+function v($msg){
+    var_dump($msg);
+}
+?>
+
+    把文件增加到composer自动导入列表中
+
+"autoload": {
+   "classmap": [
+       ...
+   ],
+   "files": [
+       "app/libraries/function/helper.php"
+   ],
+},
+
+或者在项目中显示require这个文件。打开app/start/global.php，在末尾增加：
+
+require app_path().'/libraries/function/helper.php';
+
+个人感觉这两种方式都OK，如果想要控制这个文件加载的时间，甚至可以在filter.php文件中增加以下内容
+
+App::before( function( $request ) {
+    require( "{$GLOBALS['app']['path.base']}/app/libraries/function/helper.php" );
+});
+
+    在项目中直接使用函数v('hello world');
+
+增加稍微复杂的类库
+
+有的时候一个类库不仅仅是一个文件那么简单，因此下面的方式更加适合有多个文件多个结构的类库。
+
+    创建psr0或者psr4标准的目录结构。
+
+libraries
+    Myapp
+        Search (note directory is capitalized)
+            Search.php
+            SearchFacade.php
+            SearchServiceProvider.php
+        AnotherLib
+
+Myapp/Search/Search.php中Search类的命名空间为Myapp\Search。
+
+    修改composer中autoload
+
+"autoload": {
+    "classmap": [
+        "app/commands",
+        "app/controllers",
+        "app/models",
+        "app/libraries",
+        "app/database/migrations",
+        "app/database/seeds",
+        "app/tests/TestCase.php"
+    ]
+    ,
+    "psr-0": {
+         "Myapp": "app/libraries"
+    }
+},
+
+    在项目中使用new Myapp\Search\Search()来实例化某一类
+
+总结
+
+虽然Laravel没有强制哪种方式最好，但是有一定的标准可以使得项目结构清晰，多人合作开发时省去很多交流成本。

@@ -1,0 +1,313 @@
+
+
+//=====jquery插件的使用
+//=====插件的种类
+//=====表单输入插件使用案例
+//=====自定义插件的编写过程(全局，局部插件)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====jquery插件的使用
+	1，先引入jquery主文件
+	2，引入插件文件
+	3，引入js操作文件
+	4，JS操作文件中调用插件
+
+
+//=====插件的种类
+	大致可分为：UI类，表单及验证类，输入类，特效类，Ajax类，滑动类，图形图像类，导航类，综合工具类，动画类等等。
+
+
+
+
+
+
+//=====表单输入插件使用案例
+
+
+要点提取：
+class="required" 			// 必填字段
+minlength="2"				// 不得小于指定个数
+class="required email"			// 邮箱格式
+class="url"				// 网址格式
+
+html页面：
+
+<head>
+<script src="jquery-1.11.1.js"></script>		<!--引入jquery主文件-->
+<script src="jquery.validate.js"></script>		<!--引入验证插件-->
+<script src="messages_zh.js"></script>			<!--引入中文包-->
+<script src="jquery.autocompleter.js"></script>	 	<!--引入自动完成插件(以废除的老插件)-->
+<script src="migrate.js"></script>			<!--引入向下兼容插件以兼容上面以废除的老插件-->
+<script src="js.js"></script>				<!--引入JS操作文件-->
+
+<link type="text/css" rel="stylesheet" href="jquery.autocompleter.css"/>  <!--引入插件中的样式-->
+</head>
+
+<body>
+<form action="12.html" method="post">
+<p>用户名：<input type="text" name="user" class="required" minlength="2"/>(*)</p>
+					<!--required -> 必填  minlength -> 不得小于几位 -->
+<p>邮　箱：<input type="text" name="email" class="required email" />(*)</p>
+						<!--email -> 以邮箱格式-->
+<p>网　址：<input type="text" name="url" class="url"/></p>
+						<!-- url -> 以网址格式-->
+<p><input type="submit" value="注册"/></p>
+</form>
+</body>
+
+
+
+JS页面：
+
+$(function(){
+	$("form").validate();    			 //调用验证插件
+	var user=['about','family','but','black'];	 //声明一个数组
+	$("form input[name='user']").autocomplete(user); //调用自动完成插件及引用以有的数组
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====自定义插件的编写过程(全局，局部插件)
+
+	一：先写出主体
+
+	二：在js中编写插件
+	
+	三：将编写好的js代码移植到 jquery.xxx.js中
+
+	四：编写好全局插件后，在html页面中引用
+
+	五：js操作页面中调用全局插件
+
+	六：将全局插件写成局部插件
+
+	七：局部插件的调用
+
+	八：插件也可以设置传入参数
+
+
+例：
+
+
+
+
+	 一：编写html页面主体：
+
+<head>
+<script src="jquery-1.11.1.js"></script>	//引入jquery框架文件
+<script src="a.js"></script>			//引入自操作JS文件
+<style>
+	.list{
+		list-style:none;
+		color:#fff;
+		font:normal normal 13px/30px normal;
+		margin:0;
+		padding:0;
+		margin:50px auto;
+		width:500px;
+
+	}
+	.list li{
+		background:#333;
+		float:left;
+		width:100px;
+		height:30px;
+		text-align:center;
+		
+	}
+</style>
+</head>
+<body>
+<ul class="list">
+	<li>导航列表
+		<ul class="nav">
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+		</ul>
+	</li>
+</ul>
+</body>
+
+
+
+
+
+
+	 二：js页面中编写逻辑代码
+
+$(function(){
+	$(".nav").css({
+		padding:0,
+		margin:0,
+		display:"none"
+	});
+	$(".nav").parent().hover(function(){
+ 		$(this).find(".nav").slideDown('normal');
+       	},function(){
+		$(this).find(".nav").stop().slideUp('normal');
+	});
+});
+
+ 
+
+
+
+
+
+	 三：将上面JS代码移植到jquery.nav.js中成为全局插件
+
+jquery.nav.js页面
+
+;(function($){			//注意 开头结尾 都要加上分号";"
+$.extend({			//$.extend 是定义全局插件
+  "nav":function(){
+				//插件的声明以键值对形式   将写好的代码移植在这里
+	$(".nav").css({
+		padding:0,
+		margin:0,
+		display:"none"
+	});
+	$(".nav").parent().hover(function(){
+ 		$(this).find(".nav").slideDown('normal');
+       	},function(){
+		$(this).find(".nav").stop().slideUp('normal');
+	});
+  }
+})
+})(jQuery);
+
+
+
+
+	 四：编写好全局插件后，在html页面中引用
+
+代码转移后插件即制做成功，然后在html页面引用，并在js自操作页面中调用 即可使用自定义插件
+
+<script src="jquery-1.11.1.js"></script>
+<script src="jquery.nav.js"></script>		//html页面中引用插件
+<script src="a.js"></script>
+
+
+
+
+
+
+
+
+	 五：js操作页面中调用全局插件
+
+$(function(){
+	$.nav();		//调用全局插件 nav
+});
+
+
+
+
+
+
+
+
+	 六：将全局插件写成局部插件
+
+;(function($){
+$.fn.extend({			//局部插件-与全局插件差个"fn"
+  "nav":function(){
+	$(this).find(".nav").css({	//局部插件要用this来指引区域
+		padding:0,
+		margin:0,
+		display:"none"
+	});
+	$(this).find(".nav").parent().hover(function(){	//局部插件要用this来指引区域
+ 		$(this).find(".nav").slideDown('normal');
+       	},function(){
+		$(this).find(".nav").stop().slideUp('normal');
+	});
+  }
+})
+})(jQuery);
+
+
+
+
+
+
+
+
+	 七：局部插件的调用 
+
+$(function(){
+	$(".list").eq(1).nav();  //调用局部插件要指明哪个区域
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+	八：插件也可以设置传入参数
+
+;(function($){
+$.fn.extend({			//局部插件-与全局插件差个"fn"
+  "nav":function(color){	//插件可以传参
+	$(this).find(".nav").css({	//局部插件要用this来指引区域
+		padding:0,
+		margin:0,
+		display:"none",
+		"color":color		//传入的参数可以设置字体的颜色
+	});
+	$(this).find(".nav").parent().hover(function(){	//局部插件要用this来指引区域
+ 		$(this).find(".nav").slideDown('normal');
+       	},function(){
+		$(this).find(".nav").stop().slideUp('normal');
+	});
+  }
+})
+})(jQuery);
+
+
+	//调用插件时直接传入参数 
+$(function(){
+	$(".list").eq(1).nav('yellow');  //调用局部插件要指明哪个区域
+});
+

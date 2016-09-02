@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<control>
+	<user>
+		<name>user01</name>
+		<email>01@163.com</email>
+		<phone>13822884401</phone>
+		<province>jilin</province>
+	</user>
+	<user>
+		<name>user02</name>
+		<email>02@163.com</email>
+		<phone>13822884402</phone>
+		<province>jilin</province>
+	</user>
+</control>
+
+
+
+
+
+
+
+
+
+
+
+

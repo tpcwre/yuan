@@ -1,0 +1,543 @@
+
+//===== in 方式遍历对象中的内容
+//===== in方式遍历数组
+//===== 获取并遍历网页中的指定节点
+//===== 对象中with的使用
+//===== JS中生成的数据都可以当做对象并调用其属性 
+//===== JS中获取日期
+//===== JS中的数学函数 
+	Math.abc() 	求绝对值
+	Math.ceil() 	进一取整
+	Math.floor()	舍去取整
+	Math.round()	四舍五入
+	Math.random()	随机数
+
+//===== 字符串函数与操作
+
+	.anchor() 	添加锚点
+	.bold()		字体加粗
+	.charAt()	获取指定位置的字符
+	.indexOf()	获取字符位置或指定位置后首次出现的位置
+	.localeCompare() 	字符比较
+	.replace()	替换首个或所有匹配的字符
+	.match()	正则匹配
+	.slice()	截取字符串
+	.substring()	截取字符串
+	.substr()	截取字符串
+	.toUpperCase()	字串转大写
+	.lplit()	分割字串
+	.toFixed()	指定保留几位小数
+
+//===== JS 中定义数组
+//===== JS简单验证表单 
+//===== 分时段问好 
+//===== 设置日期"2013-06-01 07:06:09"的时间戳值 
+//===== 显示中文的星期几
+//===== 做一个随机点名系统
+
+
+
+
+
+
+
+
+
+//===== in 方式遍历对象中的内容
+
+	<script>
+		var ob = new Object();
+		ob.name='zhangsan';
+		ob.age=20;
+		ob.getInfo=function(){
+			return this.name+':'+this.age;
+		}
+		for(var i in ob){
+			document.write(ob[i]+'<br>');
+		}
+		document.write('<hr>');
+	</script>
+
+
+
+
+
+
+	
+//===== in方式遍历数组
+
+	<script>
+		var arr=[10,20,30,40,50];
+		for(var i=0;i<arr.length;i++){
+			document.write(arr[i]+' ');
+		}
+				document.write('<Hr>');	
+				for(var i in arr){
+					document.write(arr[i]+' ');
+				}
+				document.write('<hr>	');
+	</script>
+
+
+
+
+
+
+//===== 获取并遍历网页中的指定节点
+
+	<ul>
+		<li>aaaa</li>
+		<li>bbbb</li>
+		<li>cccc</li>
+	</ul>
+	<script>
+		var list = document.getElementsByTagName('li');
+		for(var i=0;i<list.length;i++){
+			document.write(list[i].innerHTML+' ');
+		}
+		document.write('<hr>');
+		for(var i in list){
+			document.write(list[i].innerHTML+' ');
+		}
+		document.write('<br> in方式遍历时去除多余的属性<br>');
+		for(var i in list){
+			if(!isNaN(i)){
+				document.write(list[i].innerHTML+' ');
+			}
+		}
+	</script>
+	document.write("aaa");
+	
+	
+
+
+
+
+
+
+
+//===== 对象中with的使用
+
+	<script>
+		document.write('aaaaaaa<br>');
+		document.write('aaaaaaa<br>');
+		document.write('aaaaaaa<br>');
+		document.write('aaaaaaa<br>');
+		document.write('aaaaaaa<br>');
+		with(document){
+			write('bbbb<br>');
+			write('bbbb<br>');
+			write('bbbb<br>');
+			write('bbbb<br>');
+			write('bbbb<br>');
+		}		
+	</script>
+
+
+
+
+
+
+
+
+//===== JS中生成的数据都可以当做对象并调用其属性 
+
+	<script>
+		var str1 = 'abcde';
+		document.write(str1.length);
+
+	</script>
+
+
+
+
+
+
+
+
+	
+//===== JS中获取日期
+
+	<script>
+		var date = new Date();
+		var y = date.getFullYear();//获取年份
+		var m = date.getMonth()+1;//获取月份
+		var d = date.getDate();//获取日
+		var h = date.getHours(); //获取小时
+		var i = date.getMinutes();//获取分钟
+		var s = date.getSeconds();//获取秒
+		
+		var str2 = y+'-'+m+'-'+d+' '+h+':'+i+':'+s;
+		document.write(str2);
+		
+		document.write('<br>//===== 获取时间戳<br>');
+		document.write(date.getTime());
+
+	</script>
+
+
+
+
+
+
+
+
+
+//===== JS中的数学函数 
+	Math.abc() 	求绝对值
+	Math.ceil() 	进一取整
+	Math.floor()	舍去取整
+	Math.round()	四舍五入
+	Math.random()	随机数
+
+	<script>
+		document.write("-10的绝对值是："+Math.abs(-10)+'<br>');
+		document.write("4.012的进一取整是："+Math.ceil(4.012)+'<br>');
+		document.write("4.9999的舍去取整是："+Math.floor(4.999)+'<br>');
+		document.write("4.49的四舍五入是："+Math.round(4.49)+'<Br>');
+		document.write("4.51的四舍五入是："+Math.round(4.51)+'<br>');
+		document.write("随机一个数值："+Math.random()+'<br>');
+		document.write("随机一个0到9的数值："+Math.floor(Math.random()*10)+'<br>');
+		document.write("随机一个0到9的数值："+Math.ceil(Math.random()*10)%10+'<br>');
+		document.write("随机一个50到100的数值："+Math.ceil(Math.random()*50+50)+'<br>');
+
+		
+	</script>
+
+
+
+
+
+
+
+
+
+
+//===== 字符串函数与操作
+
+	.anchor() 	添加锚点
+	.bold()		字体加粗
+	.charAt()	获取指定位置的字符
+	.indexOf()	获取字符位置或指定位置后首次出现的位置
+	.localeCompare() 	字符比较
+	.replace()	替换首个或所有匹配的字符
+	.match()	正则匹配
+	.slice()	截取字符串
+	.substring()	截取字符串
+	.substr()	截取字符串
+	.toUpperCase()	字串转大写
+	.lplit()	分割字串
+	.toFixed()	指定保留几位小数
+
+	<script>
+		var s1='holle';
+		var s2 ='world';
+		document.write(s1+s2+'<br>');	//字符串连接
+		
+		
+		var s3 = 'mayao';
+		document.write(s3.anchor('yy')+'给元素添加锚点<br>');
+		document.write(s3.bold()+'字符串加粗<br>');
+		document.write(s3.charAt(2)+'获取指定位置的字符<br>');
+	//	document.write(s3.indexOf('a')+"获取指定字符首次出现的位置<br.");
+		document.write(s3.indexOf('a',2)+'获取指定字符在指定位置后首次出现的位置<br>');
+		document.write(s3.localeCompare('yyyao')+'字符比较<br>');	
+				按字母顺序比较相同位置的字符，如 
+				var s1 = 'c';
+				document.write(s1.localeCompare('b'));	//结果 1
+				var s1 = 'a';
+				document.write(s1.localeCompare('b'));	//结果 -1
+				var s1 = 'b';
+				document.write(s1.localeCompare('b'));	//结果 0
+
+		document.write(s3.replace('a','A')+'替换首个匹配的字符<br>');
+		document.write(s3.replace(/a/,'A')+'替换首个匹配的字符<br>');
+		document.write(s3.replace(/a/g,'A')+'替换所有匹配的字符<br>');
+		document.write(s3.match(/^[a-z]{5}$/)+'正则匹配<br>');
+		document.write(sMyString.slice(1,3) + "<br>");	//截取字串中下标从1到3的字符(不包含3)  		//si
+		document.write(sMyString.slice(4) + "<br>");	//截取字串中下标从4开始以后的所有字符  		//ghua University
+		document.write(sMyString.slice(2,-3) + "<br>");	//截取字串中下标从2开始到倒数第3个为止的字符  	//inghua Univers
+		document.write(s3.substring(2,4)+'字串截取：从2开始，截取到4<br>');
+		document.write(s3.substr(2,2)+'字串截取，从2开始，截取2个<br>');
+		document.write(s3.toUpperCase()+'字串转大写<br>');
+		var s5='how are you doing today';
+		document.write(s5.split(' ')+'以空格分割字串<br>');
+		document.write(s5.split('')+'分割字串中每个字符<br>');
+		document.write(s5.split(' ',3)+'以空格分割字串保留前三个<bR>');
+		var num1=1.123458925;
+		document.write(num1+"保留3位小数:"+num1.toFixed(3)+'<br>');
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+//===== JS 中定义数组
+
+	<script>
+		var a1 = new Array();
+		document.write('<br>定义一个空数组，长度为：'+a1.length);
+		var a2 = new Array(4);
+		document.write('<br>定义一个初始化为4个元素但无值的数组，长度为：'+a2.length);
+		
+		var a3 = new Array(1,2,3);
+		document.write('<br>定义一个初始化3个元素且有值的数组，长度为：'+a3.length);
+		
+		var a5=[];
+		document.write('<br>[]方式定义一个空数组,长度'+a5.length);
+		
+		var a6=[22,33,66];
+		document.write('<br>[]方式定义一个初始化三个元素的数组，长度：'+a6.length+'<br>');
+		
+		a1['name']='zhangsan';	//这里相当于给对象a1的属性name赋值
+		document.write(a1.name+'<br>');
+		document.write(a6.length+'<br>');
+		document.write(a6.join(':')+'将数组元素放入一个字串中<br>');
+		
+	</script>
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+	
+	
+	
+//===== JS简单验证表单 
+	
+	
+		<script type="text/javascript">
+			function subs(){
+				var form = document.myform;
+				if(form.name.value.match(/^[\w]{6,16}$/)==null){
+					alert('姓名信息不合法');
+					return false;
+				}
+				if(form.age.value.match(/^[0-9]{2}$/)==null || form.age.value<18){
+					alert('年龄信息不合法!');
+					return false;
+				}
+				if(form.classid.value.match(/^lamp[\d]{3}$/)==null){
+					alert('班级信息不合法！');
+					return false;
+				}
+			}
+		</script>
+	    <center>
+            <h3>添加学生信息(javascript验证效果)</h3>
+            <form name="myform" onsubmit="return subs()">
+            <table width="420">
+                <tr>
+                    <td>姓名：</td>
+                    <td><input type="text" name="name"/>6~16有效字符</td>
+                </tr>
+                <tr>
+                    <td>性别：</td>
+                    <td><input type="radio" name="sex" value="1"/>男
+                        <input type="radio" name="sex" value="0"/>女
+                    </td>
+                </tr>
+                <tr>
+                    <td>年龄：</td>
+                    <td><input type="text" name="age"/>两位数字</td>
+                </tr>
+                <tr>
+                    <td>班级：</td>
+                    <td><input type="text" name="classid"/>格式：lamp***</td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="添加"/>
+                        <input type="reset" value="重置"/>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </center>	
+	
+	
+
+
+
+
+
+	
+	
+	
+	
+	
+//===== 分时段问好 
+
+	<script>
+		var date = new Date();
+		var s = date.getSeconds();
+		document.write(s+'<br>');
+		if(s>5 && s<=9){
+			document.write('早上好');
+		}else if(s>9 && s<=12){
+			document.write('上午好');
+		}else if(s>12  && s<=17){
+			document.write('下午好');
+		}else if(s>17 && s<24){
+			document.write('晚上好');
+		}else{
+			document.write('睡得好！');
+		}
+	</script>
+
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+	
+	
+	
+//===== 设置日期"2013-06-01 07:06:09"的时间戳值 
+
+	<script>
+		var time = Date.UTC(2013,6,1,7-8,6,9,111);	
+	
+		var date = new Date(time);
+	
+		var y = date.getFullYear();
+		var m = date.getMonth();
+		var d = date.getDate();
+		var h = date.getHours();
+		var i = date.getMinutes();
+		var s = date.getSeconds();
+		m=m<10?'0'+m:m;
+		d=d<10?'0'+d:d;
+		h=h<10?'0'+h:h;
+		i=i<10?'0'+i:i;
+		s=s<10?'0'+s:s;
+		document.write(y+'-'+m+'-'+d+' '+h+':'+i+':'+s);
+
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 显示中文的星期几
+	
+	<script>
+		var day = Math.ceil(Math.random()*7);
+		switch(day){
+			case 1:var str ='今天周一';break;
+			case 2:var str ='今天周二';break;
+			case 3:var str ='今天周三';break;
+			case 4:var str ='今天周四';break;
+			case 5:var str ='今天周五';break;
+			case 6:var str ='今天周六';break;
+			case 7:var str ='今天周日';break;
+		
+		}
+		document.write(str);
+
+	</script>
+
+	
+	
+
+
+
+
+
+
+
+
+
+	
+	
+//===== 做一个随机点名系统
+
+	<script>
+		var arr= ["王远","刘吉","张明伟","李忠","付成","张东",
+"谭勤旺","付子达","冀飞虎","李思汉","李文浩","邢婷婷","岳劲松","覃睿","陈凯","武亚民",
+"吴伟","刘紫薇","方向凯","裴效鑫","李翔","郑少帅","杨莉","娄建","温晓冉","叶峰伯","刘泽鹏",
+"史悦旺","赵静武","刘其灵","崔忠宜","陈亚军","陈宝金","张金浩","王鹏","何强","解洪鑫",
+"李如宁","孙崇","梁佳俊","陈关银","赵世强","王爽","李嘉实","刘韧","段云鹏","张扬团",
+"郭永卫","张欣美","牛金芝","韩超","朱迪","于恒鹏","张永桃","郭苗苗","梁燕","苏睿","魏亮",
+"刘硕","马小鹏","杨粟","徐智通","马尧","裴志强","曾国防","朱凯凯","李保臣","高明"];
+	
+		var len = arr.length;
+		var tmp=null;
+		var rands = null;
+		var mz =null;
+		var myTime=null
+		function dm(ob){
+			if(ob.innerHTML=='点名'){
+				ob.innerHTML='停止';
+				if(myTime==null){
+					running();
+				}
+			}else{
+				ob.innerHTML='点名';
+				clearTimeout(myTime);
+				myTime=null;
+			}
+		}
+		function running(){
+			do{
+				rands = Math.floor(Math.random()*len);
+				//alert(arr[rands]+'-'+arr[tmp]);
+			}while(arr[rands]==arr[tmp]);
+			//alert(tmp+'--'+rands+'<br>');
+			tmp=rands;
+			mz = arr[rands];
+			document.getElementById('dm').innerHTML=mz;
+			myTime = setTimeout("running()",50);
+		}
+	</script>
+	<button onclick="dm(this)">点名</button>
+	<div id='dm' style="color:yellow;font:italic bold 2cm/10cm normal;text-align:center;">a</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

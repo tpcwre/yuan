@@ -1,0 +1,103 @@
+
+
+
+
+
+
+
+//=====指定浏览器解析的标准
+
+		<!DOCTYPE html>
+
+
+
+
+
+//===head 头的相关设置
+
+	<head>
+		
+		<meta http-equiv="refresh" content='3'>   意思是三秒钟刷新一次！
+		<meta http-equiv="refresh" content='3;url=http://www.baidu.com'> 就是三秒后跳转到指定页面
+		<meta http-equiv="content-type" content="text/html charset=utf-8" />	//设定页面编码
+		<meta charset='utf-8'/>
+		<meta name="description" content="LAMP兄弟连致力于PHP培训"/>		//网站描述
+		<meta name="keywords" content="PHP培训|LAMP培训|就业培训"/>		//关键字描述
+		<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />	//指定页面的渲染标准
+		<meta http-equiv="X-UA-Compatible" content="IE=8" />	
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" /> 以最新的标准
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />  	//chrome 表示允许使用谷歌框架，没有也不影响 
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />	//手机浏览等比缩放
+			注释：获取当前浏览器的物理宽度，并将布局宽度设置成与物理宽度相同，比例是1：1
+
+		<meta name="apple-mobile-web-app-capable" content="yes">		//这meta的作用就是删除默认的苹果工具栏和菜单栏。  (手机端有效)
+								//content有两个值”yes”和”no”,当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。
+
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">	//控制状态栏显示样式 black表示黑色
+
+		<meta name="format-detection" content="telephone=no">			//格式检测 
+					"telephone=no"  	默认点击数字自动转化为拨号，no 禁止自动 括号
+					"email=no"		默认点击自动进入邮箱，no 禁止
+					"adress=no" 		默认点击地址自动跳转，no 禁止
+					也可以连写：meta name="format-detection" content="telephone=no,email=no,adress=no"
+			
+
+								
+		<link rel="shortcut icon" type="image/x-icon" href="http://res.wx.qq.com/mmbizwap/zh_CN/htmledition/images/icon/common/favicon22c41b.ico">
+																			//微信icon小图标
+		<link rel="short icon" type="image/x-icon" href="img/a.ico"/>		//选项卡上的小图标
+		<link type="text/css" rel="stylesheet" href="./css.css" />		//关联CSS
+		<link rel="dns-prefetch" href="//res.wx.qq.com">			// DNS 预解析
+		<script src='a.js'></script>						//关联js文件
+		<title>搜房网</title>							//选项卡上的标题
+	</head>
+
+
+
+
+	
+//===== header() 相关
+
+	header('content-type:text/html;charset=utf-8');		//php文件中设置编码
+
+	header('Content-Type: text/event-stream');	
+		服务器端事件流语法：把 "Content-Type" 报头设置为 "text/event-stream"。服务器就可以开始向客户端发送事件流了。
+
+		
+	header('Cache-Control: no-cache');		规定不对页面进行缓存	其它相关设置见
+		网页的缓存是由HTTP消息头中的“Cache-control”来控制的，常见的取值有private、no-cache、max-age、must-revalidate等，默认为private。其作用根据不同的重新浏览方式分为以下几种情况。
+		public			所有内容都将被缓存
+		private			内容只缓存到私有缓存中
+		no-cache		规定不对页面进行缓存
+		no-store		所有内容都不会被缓存到缓存或 Internet 临时文件中
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,375 @@
+
+		第39课 知问前端--按键UI 5
+$(function(){
+
+学习要点：
+	1，使用button按钮
+	2，修改button样式
+	3，button()方法的属性
+	4，button("action",param)
+	5，单选，复选按钮
+一，使用button按钮：
+	使用button按钮UI的时候，不一定必须是input按钮形式，普通的文本也可以设置成button按钮
+		如： $("#search_button").button();
+
+二，修改button样式：
+	在弹出的button对话框中，在火狐浏览器中打开firebug或者右击-》查看元素，这样，我们可以看看button 的样式，根据样式进行修改，我们为了和网站主题符合，对dialog的标题背景进行修改。无须修改UI里的CSS,直接用style.css替代掉即可。
+
+三，button()方法的属性
+	按钮方法有两种形式：1，button(options),options是以对象键值对的形式传参，每个键值对表示一个选项；2，button("action",param),action是操作对话框方法的字符串，param则是option的某个选项。
+
+
+
+
+//-----引入UI按钮样式的方式
+$(".search_button").button();
+$(".reg").dialog({
+	buttons:{
+		"确定":function(){}
+	}
+});
+
+
+
+//-----修改全局和局部按钮的样式(普通，悬停，点击及局部和全局)
+
+	//通过审查元素找到相关按钮的元素的类名,并在style.css中重写其背景图片,如下：
+
+	//--修改全局性按钮的样式
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+	background:url(../img/bj.png);
+}
+
+	//--修改局部性按钮的样式
+.ui-state-default{
+	background:url(../img/bj.png);
+}
+
+
+	//--修改局部按钮hover样式（将上面CSS的首default改成hover）
+.ui-state-hover, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+	background:url(../img/bj.png);
+}
+
+	//--修改全局按钮hover样式（将上面CSS的default全改成hover）
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-default{
+	background:url(../img/bj.png);
+}
+
+	//--修改局部按钮的点击后的样式（将首个default改为active）
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-default{
+	background:url(../img/bj2.png);
+}
+
+	//--修改全局按钮的点击后的样式（将全部default改为active）
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+	background:url(../img/bj2.png);
+}
+
+
+
+
+
+
+
+//-----设置按钮的（非）激活状态
+//disabled	false/布尔值	  默认为false,设置为true时，按钮是非激活的。
+$(".search_button").button({
+	disabled:true
+});
+$(".search_button").click(function(){
+	alert("激活状态");
+});
+//当按钮为非激活状态时，是无法点击的。
+	
+
+
+//-----设置按钮上显示的文字
+//label		无/字符串	对应按钮上的文字，如果没有，HTML内容将被作为按钮的文字。
+
+$(".search_button").button({
+	label:"aaaaa"
+});
+
+
+
+
+//-----给按钮上加图标
+//icons		无、字符串	  对应按钮上的图标，在按钮文字前面和后面都 可以放置一个图标，通过对象键值对的方式完成{ 
+			primary:"ui-icon-search,    //在文字前面加图标
+			secondary:"ui-icon-search"  //在文字后面加图标
+			}
+//查找图标代码进入jquery.com官网，选择
+APIDocumentation -> widgets -> button Widget -> icons -> an icon class name
+//注意! 按钮上加图标时不能使用HTML原生的input元素，要在HTML中使用<button>元素。如下
+
+$(".button_search, .search_button").button({
+//这里input按钮就无效，而button按钮就有效
+   icons:{
+	primary:"ui-icon-search",	//文字前加图标
+	secondary:"ui-icon-triangle-1-s" //文字后加图标
+   }
+});
+
+
+//-----隐藏按钮上的文字
+text		true/布尔值	  当时设置为false时，不会显示文字，但必须指定一个图标。
+$(".button_search").button({
+	text:false
+	//当按钮上有图标时才可以隐藏文字
+});
+
+
+
+//-----按钮的创建事件
+$(".button_search").button({
+	create:function(){
+		alert("按钮创建事件");
+	}
+});
+
+
+
+//-----按钮操作之禁用和启用按钮
+//button("disable")	jquery对象	禁用按钮
+//button("enable")	jquery对象	启用按钮
+//注意！此方法要使用在按钮UI以经初始化之后，
+
+$(".button_search, .search_button").button(); //按钮始初化
+$(".search_button, .button_search").button("disable");
+$(".search_button, .button_search").button("enable")
+
+
+
+//-----删除按钮
+//button("destroy")	jquery对象	删除按钮，直接阻断了button
+$(".button_search, .search_button").button(); //按钮始初化
+$(".button_search, .search_button").button("destroy");
+
+
+
+//-----更新按钮，刷新按钮
+//button("refresh")	jquery对象	更新按钮布局
+$(".button_search, .search_button").button(); //按钮始初化
+$(".button_search, .search_button").button("refresh");
+
+
+
+//-----得到button的jquery对象
+//button("widget")	jquery对象	获取按钮的jquery对象
+$(".button_search, .search_button").button(); //按钮始初化
+$(".button_search, .search_button").button("widget");
+
+
+//-----得到button的options值
+//button("option",param)   一般值		获取option属性的值
+
+$(".button_search, .search_button").button(); //按钮始初化
+$(".button_search, .search_button").button("option"，"label");
+
+//-----设置button的options值
+//button("option",param,value) jquery对象		设置options属性的值
+$(".button_search, .search_button").button(); //按钮始初化
+$(".button_search, .search_button").button("option","label","搜索");
+
+
+
+
+//-----获取对话框中按钮的个数
+$(".reg").dialog({
+	buttons:{
+		"提交":function(){}
+	}
+});
+//alert($(".reg").parent().find("button").length);
+
+//-----查看对话框中第一个按钮的相关信息
+$(".reg").dialog({
+	buttons:{
+		"提交":function(){}
+	}
+});
+//alert($(".reg").parent().find("button").eq(0).html());
+
+
+//-----删除对话框中的按钮(两种方法)
+$(".reg").dialog({
+	buttons:{
+		"提交":function(){}
+	}
+});
+ 	//方法一
+//$(".reg").parent().find("button").eq(1).button("disable");
+	//方法二
+//$(".reg").dialog("widget").find("button").button("disable");
+
+
+
+
+//-----设置对话框中的单选按钮(两种方法)
+$(".reg").dialog({
+	buttons:{
+		"提交":function(){}
+	}
+});
+	//方法一
+//$(".reg input[name=sex]").button();
+	//方法二
+$(".reg").buttonset();
+//如果不想多选之间有间隙，就在HTML页面中删除多选之间的空格和换行。
+
+*/
+
+
+//-----设置对话框中的多选按钮(两种方法)
+//可以把input元素连接在一起，去除空格和换行，或设置浮动，达到消除按钮的间隙
+$(".reg").dialog({
+	buttons:{
+		"提交":function(){}
+	}
+});
+	//方法一
+$(".reg input[type=checkbox]").button();
+	//方法二
+//$(".reg").buttonset();
+
+
+});
+
+
+
+
+====================================================
+
+CSS页面：
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+
+.ui-widget-header{
+	background:url(../img/bj2.png);
+}
+.ui-dialog-title{
+	color:blue;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+	background:url(../img/bj.png);
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+	background:url(../img/bj2.png);
+}
+
+
+
+===============================================
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<input type="button" value="input版查询" class="search_button" />
+			<button class="button_search">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<div class="reg" title="会员注册">
+<!--
+<input type="radio" name="sex" id="male"><label for="male">男</label></input>
+<input type="radio" name="sex" id="female"><label for="female">女</label></input>
+-->
+<input type="checkbox" name="red" id="red"><label for="red">红</label></input>
+<input type="checkbox" name="red" id="yellow"><label for="yellow">黄</label></input>
+<input type="checkbox" name="red" id="blue"><label for="blue">蓝</label></input>
+<input type="checkbox" name="red" id="green"><label for="green">棕</label></input>
+</div>
+<div class="login" title="会员登陆">
+	登陆区
+</div>
+</body>
+</html>
+
+
+
+

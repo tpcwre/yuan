@@ -1,0 +1,230 @@
+
+注：tp框架配置变量存放位置为：ThinkPHP/Conf/convertion.php 但这里不要改动，请在项目下的配置文件Conf/config.php中另行覆盖！
+
+
+
+
+
+
+
+	'URL_MODEL'=>'1',			//-- URL 四种模式/系统默认为1,
+		0：普通模式
+		1：pathinfo模式
+		2：重写模式
+		3：兼容模式
+		系统本身是兼容四种模式的，使用哪种模式都会成功，这里设置的目的在于，有系统会自动生成地址，而这个时候所生成的地址就会按照设置的模式来生成了！
+
+	     设置 URL 重写模式详述
+		1，先将apache配置文件httpd.conf中的 rewrite.so 前的 号去掉 ，开启重写apache的重写功能 
+		2，在项目中的index同级目录中创建 一个 .htaccess 文件 ，添加如下内容
+		   <IfModule mod_rewrite.c>
+  			Options +FollowSymlinks 	//linux系统中不加此句会出内部异常错误
+  			RewriteEngine On
+ 		 	RewriteCond %{REQUEST_FILENAME} !-d
+  			RewriteCond %{REQUEST_FILENAME} !-f
+  			RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+		   </IfModule>
+		3, 在thinkphp 的配置文件中设置URL模式为2 （重写模式）
+
+
+	
+	'URL_PATHINFO_DEPR'=>'-',		//-- 修改URL的分隔符 (其它的 URL 模式参看 tp手册-》架构-》URL模式)
+				//效果：http://localhost/index.php/home-user-login-var-value
+
+
+	'TMPL_FILE_DEPR'=>'/',			//-- 控制器与方法在地址上的连接符
+				默认为 Index/index    Index模块下的index方法
+				修改为 Index_index    意义同上，但是省略了一个文件夹的层级
+
+
+
+						//-- 数据库连接配置			
+
+	'DB_TYPE'=>'mysql',   		//设置数据库类型
+	'DB_HOST'=>'localhost',		//设置主机
+		 'DB_HOST'=>'localhost,l1,l2,l3',		//多服务器地址
+	'DB_NAME'=>'thinkphp',		//设置数据库名
+	'DB_USER'=>'root',    		//设置用户名
+	'DB_PWD'=>'',        		//设置密码
+	'DB_PORT'=>'3306',   		//设置端口号
+	'DB_PREFIX'=>'tp_',  		//设置表前缀
+	'DB_RW_SEPARATE'=>true,		//读写分离
+	'DB_MASTER_NUM'=>'2',		//设置主服务的个数
+
+	'DB_DSN'=>'mysql://root:@localhost:3306/thinkphp',	//使用DSN方式配置数据库信息
+
+
+
+						//-- PDO数据库连接配置
+
+	'DB_TYPE'=>'pdo',   		//设置数据库类型
+	'DB_USER'=>'root',    		//设置用户名
+	'DB_PWD'=>'123',		//设置密码
+	'DB_PREFIX'=>'tp_',		//设置数据库表前缀
+	
+	'DB_DSN'=>'mysql://host=localhost;dbname=thinkphp;charset=UTF8',
+
+
+	'DEFAULT_M_LAYER' =>  'Logic', 		// 更改默认的模型层(Model)名称为Logic
+			//配置修改后：
+				D('User') 		//实例化UserLogic
+				D('User','Model') 	//实例化UserModel
+				D('User','Service') 	//实例化UserService
+
+
+
+
+
+	'URL_HTML_SUFFIX'=>'shtml'			//-- 设置伪静态后缀名
+	'URL_HTML_SUFFIX' => 'html|shtml|xml' 		//-- 设置多个伪静态后缀
+	'URL_DENY_SUFFIX' => 'pdf|ico|png|gif|jpg',	//-- URL禁止访问的后缀设置,比URL_HTML_SUFFIX优先级高
+
+    	'SESSION_AUTO_START' => true, 		//-- 是否开启session
+
+    	'LOAD_EXT_CONFIG' => 'user,db', 	//-- 关联加载扩展配置文件(在config.php 同级创建的user.db文件)
+
+
+	'DATA_CACHE_TIME'=>60,			//-- 设置缓存有效期
+
+
+	'SHOW_PAGE_TRACE'=>FALSE,		//-- 是否显示页面trace信息
+
+
+	'URL_CASE_INSENSITIVE'=>false,		//-- 访问地址是否区分大小写  默认false(区分大小写)
+
+
+
+	
+
+	'TMPL_ENGINE_TYPE'=>'Smarty',		//-- 设置使用Smarty引擎 
+
+
+
+	"DATA_CACHE_TEYPE"=>'File',		//-- 修改缓存方式，默认是文件方式 
+				支持：File | Db | Apc | Memcache | Shmop | Sqlite | Xcache | Apachenote | Eaccelerator |
+
+
+
+
+
+
+模块相关：
+
+	'DEFAULT_MODULE'=>'Home',		//-- 设置默认访问的模块
+
+	'MODULE_DENY_LIST'=>array('Common','Runtime','home'),	//-- 禁止指定模块的访问
+
+	'MODULE_ALLOW_LIST'=>array('Home','Admin','User'),	//-- 设置允许访问的模块列表
+
+	'MULTI_MODULE'=>false,			//-- 设置多模块访问还是单模块访问
+
+
+	
+
+
+
+模板相关：
+
+	'TMPL_L_DELIM'=>'<{', 			//-- 修改模板中变量定界符	
+	'TMPL_R_DELIM'=>'}>', 
+
+
+	'TMPL_TEMPLATE_SUFFIX'=>'.tpl', 	//-- 更改模板文件后缀名	默认为html
+
+
+	'DEFAULT_V_LAYER' =>  'Mobile', 	// 设置默认的视图层为Mobile
+			当视图层多元化时：将mobile设置为默认的视图层
+				view 普通视图层目录
+				mobile 手机端访问视图层目录
+
+	'DEFAULT_THEME'=>'you',			//--设置主题模板
+				1，要在view下创建一个主题文件夹‘you’
+				2，将Index或其它模块整体复制到‘you’中
+				3，当正常访问时就会默认访问这个'you'中主题模块
+
+
+						//-- GET传参方式更改主题模板
+	'DEFAULT_THEME'=>'my',
+	'TMPL_DETECT_THEME'=>'true',		//自动侦测模板主题	
+	'THEME_LIST'=>'you,my',			//支持的模板主题列表
+			可用下列GET传参方式更改主题模板
+				http://localhost/b/index.php/home/Bbb/index/t/my 
+				http://localhost/b/index.php/home/Bbb/index/t/you 
+
+
+
+
+
+控制器相关：
+
+	'DEFAULT_C_LAYER' =>  'Controller'	//设置默认的控制层
+	'CONTROLLER_LEVEL' =>  2,			//设置多级控制层，2是两层，可设置多层	
+				├─Controller 访问控制器│
+				├─User User分级（组）│
+				│  ├─UserTypeController.class.php		//访问：http://serverName/Home/User/UserType
+				│  │  ├─UserAuthController.class.php
+				│ 
+				├─Admin Admin分级（组）
+				│  │  ├─UserController.class.php
+				│  │  ├─ConfigController.class.php 
+	
+	'ACTION_SUFFIX' =>  'Action', 		//设置控制器内的方法后缀（用来解决重名冲突）
+				
+	'URL_PARAMS_BIND' =>  true, 		// URL变量绑定到操作方法作为参数
+							支持地址书写方式 
+							http://serverName/index.php?s=/Home/Blog/read/id/5
+							http://serverName/index.php?s=/Home/Blog/archive/year/2013/month/11
+							http://serverName/index.php?c=Blog&a=read&id=5
+							http://serverName/index.php?c=Blog&a=archive&year=2013&month=11
+	'URL_PARAMS_BIND_TYPE'  =>  1, 		// 设置参数绑定按照变量顺序绑定
+				//该方式仅对PATHINFO地址有效 (不设置时，默认为变量名绑定方式)
+
+
+
+
+
+
+	'URL_ROUTER_ON'   => true,		// 开启路由功能
+
+
+	'DB_LIKE_FIELDS'=>'title|content' 	//-- 查询语句中条件自动变为模糊查询%%
+
+
+
+	'AUTOLOAD_NAMESPACE' => array(		//注册新的命名空间
+				'My'=>THINK_PATH.'My',		
+				'One'=> THINK_PATH.'One',
+				)
+				
+				配置了上面的AUTOLOAD_NAMESPACE后，如果我们实例化下面的类库
+					new My\Net\IpLocation();
+					new One\Util\Log();
+				会自动加载对应的类库文件
+					Think/My/Net/IpLocation.class.php
+					Think/One/Util/Log.class.php
+
+
+
+
+
+
+
+
+	'VAR_MODULE'            =>  'module',     		// 默认模块获取变量
+	'VAR_CONTROLLER'        =>  'controller',   		// 默认控制器获取变量
+	'VAR_ACTION'            =>  'action',    		// 默认操作获取变量
+
+								//如果默认的变量设置和你的应用变量有冲突的话，你需要重新设置系统配置，
+
+
+
+
+	'USER_TYPE'      => 2, 					//用户类型 
+	'USER_AUTH_ID'   => 10, 				//用户认证ID    
+	'USER_AUTH_TYPE' => 2,					//用户认证模式
+
+
+   	 'USER_CONFIG'        => array(       			//二级配置
+			 'USER_AUTH' => true,       
+			 'USER_TYPE' => 2,    
+			),

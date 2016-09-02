@@ -1,0 +1,151 @@
+
+	
+	
+
+
+//===== php.ini 配置文件中设置错误机制选项
+
+
+	打开 php.ini 配置文件。
+
+	1：error_reporting = E_ALL			// 设置开启哪个级别的错误提示 
+				E_ALL			// 显示所有错误级别的错误提示
+				E_ALL & ~E_NOTICE	// 显示除提示级别以外的所有错误提示
+				E_ALL & ~E_NOTICE & ~E_STRICT	
+		
+	2：display_errors = Off 		// 设置是否显示错误报告。
+			    Off / On		// 开启/关闭
+						
+	3：log_errors = On 			// 是否启用错误日志
+			Off / On		// 开启/关闭
+					
+	4：error_log = '';			//设置错误日志存储的的路径和文件名
+	   error_log = "C:\xampp\php\logs\php113"	//指定错误存储的位置及文件名
+	   error_log = syslog			 //设置开启系统日志 
+			//系统日志查看方式：右键-》我的电脑-》系统工具-》事件查看器-》应用程序：右侧的信息
+
+
+
+
+
+
+
+
+//===== error_reporting()  PHP脚本中配置错误设置
+
+<?php
+	error_reporting(E_ALL &~E_ERROR);		//显示除致命级别以外的全部错误提示
+	error_reporting(E_ALL &~E_WARNING);		//显示除警告级别以外的全部错误提示
+	error_reporting(E_ALL &~E_NOTICE);		//显示除提示级别以外的全部错误提示
+	error_reporting(E_ALL);				//显示所有级别的全部错误提示
+
+	gettype($a);	//会出现一般错误，只提示不影响
+	gettype();	//会出现警告错误，部分功能失效，不影响后续代码执行
+	gettype1();	//会出现致使错误，终止程序运行
+?>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== ini_set()  脚本中设置是否显示错误提示
+
+	
+	ini_set('display_errors','off');		//开启错误提示
+	ini_set('display_errors','on');			//关闭错误提示
+
+	gettype($a);
+	gettype();
+	gettype1();
+
+
+
+
+
+
+//===== ini_get() 脚本中获取一个配置选项的值</h2>";
+
+
+
+	var_dump(ini_get('display_errors'));	//获取错误提示是否开启   
+	var_dump(ini_get('ini_reporting'));	//获取错误级别的提示范围
+	var_dump(ini_get('log_errors'));	//获取是否开启错误提示日志
+	
+	
+	
+	
+	
+	
+//===== ini_get_all() 脚本中获取所有配置选项
+
+
+
+	var_dump(ini_get_all());
+
+
+
+
+
+
+
+
+
+	
+//===== 错误级别的设置范围
+
+	
+	如：E_ALL & ~E_NOTICE | ~E_STRICT
+
+	& 表示并且
+	| 表示或者
+	~ 表示除了。
+	
+	
+
+	
+	
+	
+	
+//===== PHP的错误级别
+
+
+        Notice：注意级别，没什么大碍，可以正常使用。
+        E_NOTICE
+
+        WARNING:警告级别，部分功能失效，脚本继续执行。
+        E_WARNING
+		
+        ERROR：致命级别，程序终止。
+        E_ERROR
+
+        E_ALL  所有级别的错误
+
+
+
+
+
+
+
+
+//===== 错误处理 函数
+
+		debug_backtrace — 产生一条回溯跟踪(backtrace)
+		debug_print_backtrace — 打印一条回溯。
+		error_get_last — 获取最后发生的错误
+		error_log — 发送错误信息到某个地方
+		error_reporting — 设置应该报告何种 PHP 错误
+		restore_error_handler — 还原之前的错误处理函数
+		restore_exception_handler — 恢复之前定义过的异常处理函数。
+		set_error_handler — 设置一个用户定义的错误处理函数
+		set_exception_handler — 设置一个用户定义的异常处理函数。
+		trigger_error — 产生一个用户级别的 error/warning/notice 信息
+		user_error — trigger_error 的别名
+
+
+
+

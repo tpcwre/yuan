@@ -1,0 +1,63 @@
+
+	1  在 app\Http\Requests 目录下创建 request文件 使用命令行 php artisan 命令来创建即可
+
+			<?php
+			namespace App\Http\Requests\home;
+			use App\Http\Requests\Request;				//自定义的request 要继承request
+			class UserregRequest extends Request
+			{
+				public function authorize()
+				{
+					return true;					//true 打开验证机制
+				}
+				public function rules()
+				{
+					return [						//设置数组形式的验证规则
+						"reg_name"=>'required',		//这里的验证要与表单中的字段名相同
+						"reg_pwd"=>'required',
+						"reg_rpwd"=>'required',
+						"reg_code"=>'required', 
+					];
+				}
+			}
+
+
+	2,	在表单中让验证规则生效
+
+		<?php
+
+			namespace App\Http\Controllers\Home;
+			use App\Http\Requests\home\UserregRequest;		//引入自定义的request的命名空间
+			class LoginController extends Controller
+			{
+				 public function store(UserregRequest $request)		//指定参数为自定义的 UserregRequest
+				{
+					....
+				}
+			}
+
+
+
+
+
+	3, 在模板中提示验证的错误信息
+	
+		      <ul>										//调用 错误信息
+                @foreach($errors->all() as $error)
+                  <li>{{$error}}</li>
+                @endforeach
+              </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

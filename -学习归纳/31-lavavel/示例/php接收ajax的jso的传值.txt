@@ -1,0 +1,18 @@
+ 
+	$.ajax({
+		.....
+	});
+
+		//ajax传送的数据：
+		blist:"[{"lotteryId":206,"codes":"03","num":1,"method":"bdw","multiple":1,"model":"yuan","code":1944}]"
+
+
+
+
+   public function index(Request $request)
+    {
+       $data = $request->except('_token');
+       $arr = json_decode($data['blist']);	//寂寞中接收json数据	
+        echo $arr[0]->codes;			//显示对象中某个对的值。
+      
+    }

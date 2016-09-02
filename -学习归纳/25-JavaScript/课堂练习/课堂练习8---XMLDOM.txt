@@ -1,0 +1,506 @@
+
+//===== 示例-XML文档
+//===== 示例-获取列表中的内容
+	//----- document.getElementsByTagName() 通过标签名获取节点对象或列表
+	//----- obj.getElementsByTagName() 获取某节点对象中的子节点列表 
+	//----- obj.length 获取子节点的长度(个数)
+	//----- obj.nodeTyype 获取节点类型
+	//----- obj.childNodes 获取子节点列表
+//===== 示例-加载XML文件并获取文件中内容
+	//----- 加载解析xml文件 (暂只支持火狐)
+	//----- obj.load() 加载 xml文件
+	//----- obj.getAttribute()	获取节点的非标准属性值
+//===== 示例-用节点标,非属性值替换来判断所点击的是哪项
+	//----- document.getElementById() 通过ID获取节点对象
+	//----- aob.href= 	设置节点的链接性情地址
+	//----- obj.innerHTM= 设置节点标签中的内容
+	//----- obj.setAttribute() 修改节点的非标准属性值
+	//----- ob.value 获取表单value值
+	//----- ob.value.length 获取表单值的长度
+//===== 示例-从首部或尾部删除列表项
+	//----- obj.removechild()	删除某个子节点
+//===== 示例-向列表中添加子项内容
+	//----- document.createElement() 创建一个节点
+	//----- obj.innerHTML=	向节点中添加内容
+//===== 向列表中添加子内容并同时添加事件
+//===== 示例-向列表中指定位置添加子项内容
+	//----- obj.inertBefore() 从首位子节点
+	//----- obj.appendChild() 从末位添加子节点
+//===== 示例-替换列表中子项内容
+	//----- obj.className 获取节点的类名
+	//----- obj.className= 设置节点的类名
+	//----- obj.replaceChild() 替换子节点
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 示例-XML文档	
+
+	<?xml version="1.0" encoding="UTF-8"?>
+	<stulist>
+		<stu id="1001">
+			<name>张三</name>
+			<age>22</age>
+			<sex>女</sex>
+			<classid>lamp113</classid>
+		</stu>
+		<stu id="1002">
+			<name>李四</name>
+			<age>22</age>
+			<sex>女</sex>
+			<classid>lamp113</classid>
+		</stu>
+	</stulist>
+
+
+	
+	
+	
+	
+
+
+//===== 示例-获取列表中的内容
+
+		<table width="200" border="1">
+		  <thead>
+			<tr><th>名字</th><th>性别</th><th>年龄</th></tr>
+		  </thead>
+		  <tbody>
+			<tr><td>张三</td><td>男</td><td>18</td></tr>
+			<tr><td>李四</td><td>女</td><td>20</td></tr>
+		  </tbody>
+		</table>
+		<script type="text/javascript">
+			//获取指定标签名的第一个对象
+	//----- document.getElementsByTagName() 通过标签名获取节点对象或列表
+			var tbody = document.getElementsByTagName("tbody")[0];
+			//获取tbody中的tr对象列表 
+	//----- obj.getElementsByTagName() 获取某节点对象中的子节点列表 
+			var list = tbody.getElementsByTagName("tr");
+			//上面对象列表中第一个对象的子节点列表
+	//----- obj.childNodes 获取子节点列表
+			var data = list[0].childNodes;
+	//----- obj.length 获取子节点的长度(个数)
+			document.write(data.length+"<br/>");
+			
+			//遍历上面列表中所有的元素td节点
+			for(var i=0;i<data.length;i++){
+	//----- obj.nodeTyype 获取节点类型
+				if(data[i].nodeType==1){
+					document.write(data[i].innerHTML+" ");
+				}
+			}
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+//===== 示例-加载XML文件并获取文件中内容
+
+	<script type="text/javascript">
+	//----- 加载解析xml文件 (暂只支持火狐)
+		var xmlDoc = null;
+		try{ //Internet Explorer
+			xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+		}catch(e){
+			try{ //Firefox, Mozilla, Opera, etc.
+				xmlDoc=document.implementation.createDocument("","",null);
+			}catch(e){
+				alert(e.message);
+			}
+		}
+		xmlDoc.async=false;
+	//----- obj.load() 加载 xml文件
+		xmlDoc.load("./stu.xml");
+		
+		//解析xml文件的内容
+		var list = xmlDoc.getElementsByTagName("stu");
+		//alert(list.length);
+		//遍历
+		for(var i=0;i<list.length;i++){
+	//----- obj.getAttribute()	获取节点的非标准属性值
+			document.write("id:"+list[i].getAttribute("id")+" ");
+			document.write("name:"+list[i].getElementsByTagName("name")[0].innerHTML+"<br/>");
+		}
+	</script>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+//===== 示例-用节点标,非属性值替换来判断所点击的是哪项
+
+	<a href="http://www.baidu.com" id="aid">百度</a><br/><br/>
+	姓名：<input type="text" name="name" info="姓名" onblur="doCheck(this)" /><br/><br/>
+	邮箱：<input type="text" name="name" info="邮箱" onblur="doCheck(this)" /><br/><br/>
+	年龄：<input type="text" name="name" info="年龄" onblur="doCheck(this)" /><br/><br/>
+	电话：<input type="text" name="name" info="电话" onblur="doCheck(this)" /><br/><br/>
+	<script type="text/javascript">
+		//获取超级链接a节点对象
+	//----- document.getElementById() 通过ID获取节点对象
+		var a = document.getElementById("aid");
+		
+	//----- aob.href= 	设置节点的链接性情地址
+		//改变a标签的标准属性值
+		a.href="http://www.lampbrother.net";
+	//----- obj.innerHTM= 设置节点标签中的内容
+		a.innerHTML="兄弟连";
+		
+	//----- obj.setAttribute() 修改节点的非标准属性值
+		//更改非标准属性
+		//a.aa="bb"; //传统方式不行
+		a.setAttribute("aa","bb");
+		
+		
+		//验证姓名函数
+		function doCheck(ob){
+			//判断是否无值
+	//----- ob.value 获取表单value值
+	//----- ob.value.length 获取表单值的长度
+			if(ob.value.length==0){
+				alert(ob.getAttribute('info')+'不可以为空！');
+			}
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-从首部或尾部删除列表项
+
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	<button onclick="dodel('a')">删除第一个节点</button>
+	<button onclick="dodel('z')">删除最后一个节点</button>
+	<script type="text/javascript">
+		function dodel(c){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取ul中的所有子节点
+			var list = uid.getElementsByTagName('li');
+			//判断并执行删除
+			switch(c){
+				case "a": //删除第一个
+	//----- obj.removechild()	删除某个子节点
+					uid.removeChild(list[0]);
+					break;
+				case "z": //删除末尾节点
+					uid.removeChild(list[list.length-1]);
+					break;
+			}
+			
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-向列表中添加子项内容
+
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	名称：<input type="text" size="10" id="tid" name="name"/> 
+	<button onclick="dodel('i')">创建</button>
+	<button onclick="dodel('a')">删除第一个节点</button>
+	<button onclick="dodel('z')">删除最后一个节点</button>
+	<script type="text/javascript">
+		function dodel(c){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取ul中的所有子节点
+			var list = uid.getElementsByTagName('li');
+			//判断并执行删除
+			switch(c){
+				case "a": //删除第一个
+					uid.removeChild(list[0]);
+					break;
+				case "z": //删除末尾节点
+					uid.removeChild(list[list.length-1]);
+					break;
+				case "i": //添加节点
+					//获取输入框中的值
+					var name = document.getElementById("tid").value;
+	//----- document.createElement() 创建一个节点
+					//创建一个节点
+					var li = document.createElement("li");
+					//将内容添加到节点内
+	//----- obj.innerHTML=	向节点中添加内容
+					li.innerHTML = name;
+					//将li添加ul中
+					uid.appendChild(li);
+			}
+			
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 向列表中添加子内容并同时添加事件
+
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	名称：<input type="text" size="10" id="tid" name="name"/> 
+	<button onclick="doAdd()">创建</button>
+	<script type="text/javascript">
+		function doAdd(){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取输入框中的值
+			var name = document.getElementById("tid").value;
+			//创建一个节点
+			var li = document.createElement("li");
+			//为新创建的li添加事件
+			li.onclick = function(){
+				alert(this.innerHTML);
+			}
+			//将内容添加到节点内
+			li.innerHTML = name;
+			//将li添加ul中
+			uid.appendChild(li);
+			document.getElementById("tid").value=""; //清空
+		}
+		//获取ul里面的所有li子节点
+		var list = document.getElementById("uid").getElementsByTagName("li");
+		//遍历li
+		for(var i=0;i<list.length;i++){
+			list[i].onclick=function(){
+				alert(this.innerHTML);
+			}
+		}
+	</script>
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+//===== 示例-向列表中指定位置添加子项内容
+
+
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	名称：<input type="text" size="10" id="tid" name="name"/> 
+	<button onclick="doadd('a')">添加第一个节点</button>
+	<button onclick="doadd('z')">添加最后一个节点</button>
+	<script type="text/javascript">
+		function doadd(c){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取输入框中的值
+			var name = document.getElementById("tid").value;
+			//创建一个节点
+			var li = document.createElement("li");
+			//将内容添加到节点内
+			li.innerHTML = name;
+			//判断并执行添加
+			switch(c){
+				case "a": //添加第一个
+	//----- obj.inertBefore() 从首位子节点
+					uid.insertBefore(li,uid.getElementsByTagName("li")[1]);
+					break;
+				case "z": //添加末尾节点
+	//----- obj.appendChild() 从末位添加子节点
+					uid.appendChild(li);
+					break;
+			}
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-替换列表中子项内容
+
+	<style>
+		li:hover{background-color:#ddd;}
+		li.cc{background-color:#f0c;}
+	</style>
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	名称：<input type="text" size="10" id="tid" name="name"/> 
+	<button onclick="doreplace()">替换掉节点</button>
+	<script type="text/javascript">
+		//获取ul里面的所有li子节点
+		var list = document.getElementById("uid").getElementsByTagName("li");
+		var ob =null;
+		//遍历li
+		for(var i=0;i<list.length;i++){
+			list[i].onclick=function(){
+	//----- obj.className 获取节点的类名
+	//----- obj.className= 设置节点的类名
+				this.className="cc";
+				ob = this;
+			}
+		}			
+		function doreplace(){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取输入框中的值
+			var name = document.getElementById("tid").value;
+			//创建一个节点
+			var li = document.createElement("li");
+			//将内容添加到节点内
+			li.innerHTML = name;
+			li.onclick=function(){
+				this.className="cc";
+				ob = this;
+			}		
+			//执行替换
+	//----- obj.replaceChild() 替换子节点
+			uid.replaceChild(li,ob);	 //将ob 替换为li
+		}
+	</script>

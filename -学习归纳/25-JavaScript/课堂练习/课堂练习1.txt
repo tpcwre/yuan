@@ -1,0 +1,264 @@
+
+//===== JavaScript 的三种连接方式
+//===== alert("aaa"); 	弹出一个提示框
+//===== document.write('aaa'); 	向页面输入指定内容	
+//===== onclick 点击事件
+//===== window.history.go 前进或后退 
+//===== location.href 页面跳转
+//===== typeof()  判断数据类型
+//===== 数据类型
+//===== setTimeout() 单次定时 
+//===== clearTimout() 	清除单次定时
+//===== setInterval()	无限重复定时
+//===== clearInterval() 清除无限重复定时
+//===== getElementById() 通过id获取指定对象并设置
+//===== getElementsByTagName 通过 标签名获取元素
+//===== getElementsByName 通过name获取元素对象
+//===== 通过name直接获取表单对象的值 
+//===== value 获取或修改表单项的值
+//===== innerHTML  获取或修改改对象标签中的内容
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== JavaScript 的三种连接方式
+
+	一：外链方式
+
+		<head>
+			<script type="text/javascript" src="my.js"></script>
+		</head>
+
+	二：内链方式
+
+		<script type="text/javascript">
+			document.write("hello world!");
+		</script>
+	
+	三：内嵌方式
+
+		<div onclick="alert('aaaa')"></div>
+
+
+
+		
+		
+		
+//===== alert("aaa"); 	弹出一个提示框
+
+					
+
+
+
+//===== document.write('aaa'); 	向页面输入指定内容	
+
+
+
+
+//===== onclick 点击事件
+
+	<button onclick="alert('干嘛？')">点击我</button>
+
+
+
+
+
+
+//===== window.history.go 前进或后退 
+
+	<button onclick="window.history.go(-1)">后退一步</button>
+	<button onclick="window.history.go(1)">前进一步</button>
+
+
+
+
+
+
+//===== location.href 页面跳转
+
+	<button onclick="window.location.href='1.html'">跳转</button>
+
+
+
+
+
+
+
+//===== typeof()  判断数据类型
+
+	var b = 100;
+	document.write(typeof(b)+"<br/>"); //number 数值类型
+
+
+
+
+
+
+
+//===== 数据类型
+
+	1, undefined  	不存在的变量
+	2, number 	数值类型
+	3, string 	字串类型
+	4, object 	对象类型
+	5, boolean 	布尔类型
+	6, function 	函数类型
+
+
+
+
+
+
+//===== parseFloat()	转换数据类型为浮点数
+
+	 parseFloat(document.myform.num1.value); //强转浮点数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== setTimeout() 单次定时 
+
+	方式一：
+	setTimeout("aa()",3000);	三秒后调用 
+	
+	方式二：
+	setTimeout(function(){		三秒后调用 
+		alert(11);
+	},3000);
+
+	
+	
+	
+
+//===== clearTimout() 	清除单次定时
+
+		<script type="text/javascript">
+			var m=0;
+			var mytime=null;
+			function doStop(){
+				if(mytime!=null){
+					clearTimeout(mytime); //清除定时
+					mytime=null;
+				}
+			}	
+			//定时累加输出数值
+			function running(){
+				m++;
+				document.getElementById("did").innerHTML=m;
+				mytime = setTimeout("running()",1000);
+			}
+		</script>
+
+
+
+
+
+
+
+//===== setInterval()	无限重复定时
+//===== clearInterval() 清除无限重复定时
+
+	setInterval(function(){
+		aerlt(111);
+	},3000);			每隔三秒执行一次
+
+
+	clearInterval();
+
+	
+	
+
+
+
+
+
+
+
+
+//===== getElementById() 通过id获取指定对象并设置
+
+	var hid = document.getElementById("hid");	以ID获取指定对象
+	hid.style.color="red";				修改对象的字体颜色
+	hid.style.fontSize="30px";			修改字体大小 
+	hid.innerHTML="Hello Wrold!"; 			改变标签中的值	
+
+	
+	
+	
+
+
+
+//===== getElementsByTagName 通过 标签名获取元素
+
+	alert(document.getElementsByTagName('div')[1].innerHTML);   以标签名获取元素内容
+
+
+	
+	
+
+	
+//===== getElementsByName 通过name获取元素对象
+
+
+	alert(document.getElementsByName('div')[0].innerHTML);
+
+
+	
+	
+
+	
+	
+//===== 通过name直接获取表单对象的值 
+
+	<form name='fm'>
+		<input name='n1' /><br>
+	</form>
+	<script>
+		n1 = document.fm.n1.value;	//注意：必须先获取表单然后再向下获取子项
+	</script>
+
+
+	
+	
+	
+
+
+//===== value 获取或修改表单项的值
+	
+	document.form.res.value = 'xxx';	//修改表单项的值
+	alert(form.res.value);				//获取表单项的值
+
+
+
+
+
+//===== innerHTML  获取或修改改对象标签中的内容 
+
+	alaert(hid.innerHTML);
+	hid.innerHTML="Hello Wrold!"; 	//改变标签中的值
+
+
+
+
+

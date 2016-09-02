@@ -1,0 +1,15 @@
+1：将 QuickText.ini 文件放在plugins\Config 下
+
+2：将 QuickText.UNI.dll 文件放在 plugins  下
+
+3：在pad++操作界面中选中插件-》 QuickText-》option -》PHP
+
+	在右侧可以添加快捷键和 相应的内容
+
+
+4：使用时必须在指定的应用文件中。如php 的快捷方式必须在php页面中使用才会有效。
+
+5：使用示例
+  <?php
+	html  (直接按TAB键，即可将其快捷内容打印出来)
+  ?>

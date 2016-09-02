@@ -1,0 +1,24 @@
+
+//===== nginx 配置文件
+
+	sudo vim nginx.conf		编辑nginx 配置文件
+
+	server{
+		listen	8080;		指定端口
+		server_name book.xxx.com	指定域名
+		root /home/www/laravel/publi;	指定服务器根目录
+		index index.php index.html	指定默认使用文件类型		
+
+
+		location / {			配置重写规则	laravel必有项
+    			try_files $uri $uri/ /index.php?$query_string;
+		}
+
+		location ~ \.php${		nginx解析 PHP的配置
+			fastcgi_pass 127.0.0.1:9000;
+			fastcgi_index index.php;
+			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+			include fastcgi_params;
+		}
+
+	}

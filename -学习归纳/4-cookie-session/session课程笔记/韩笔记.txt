@@ -1,0 +1,221 @@
+
+
+		-----获取 Session 数据
+
+	取出对象时需要实现申明一下类的定义，（就是用require或include引用一个类文件）
+<?php
+	session_start();
+
+	//把所有的session获取
+	echo "<pre>";
+	print_t($_SESSION);
+	echo "<pre>";
+
+	//通过key 来指定获取某个值
+	echo $_SESSION['name'];
+	$arr=$_SESSION['arr'];
+	
+
+	//取数组的数据
+	foreach($arr as $k=>$v){
+		echo $v."---";
+	}
+
+	//取出对象
+	$xiaogou=$_SESSION['dog'];
+	echo "<br>小狗的名字：".$xiaogou->getName();
+	
+
+
+	
+
+
+	-----更新 Session 数据
+
+	就是重新设置一下session
+<?php
+	//把原来的 name="shunping" 的值"shunping" 改为 "顺平"
+	$_SEESION['name']="顺平";
+	echo "更新成功";
+
+?>
+
+
+
+
+
+
+
+
+	-----删除 session 数据
+
+<?php
+	//删除单个SESSION
+	session_start();
+  	unset($_SESSION['name']);
+	echo "删除name成功";
+
+	//删除所有的session
+	//这样会把当前这个浏览器对应的session文件一并删除。
+	session_destroy();
+?>
+
+
+	
+
+	-----通过 session 保存购物车简单案例
+
+首页面：
+<body>
+	<h1>购买书籍</h1>
+	<a href="buy.php?bid=sn1&bname=西游记">西游记添加到购物车</a><br><br>
+	<a href="buy.php?bid=sn2&bname=红楼梦">红楼梦添加到购物车</a><br><br>
+	<a href="buy.php?bid=sn3&bname=三国演义">三国演义添加到购物车</a><br><br>
+	<a href="buy.php?bid=sn4&bname=水浒传">水浒传添加到购物车</a><br><br>
+	<a href="mybook.php">查看我的购物车</a>
+</body>
+
+保存处理页面：
+<?php	
+	$bid=$_GET['bid'];
+	$bname= $_GET['bname'];
+	session_start();
+	$_SESSION["$bid"]= $bname;
+	echo "<font color='red' font-size='20'>成功将  $bname 加入购物车！";
+	echo "<br><br><a href='mybook.php'>查看购物车</a>";
+	echo "<br><br><a href='aa.php'>返回购物大厅</a>";
+?>
+
+购物车页面：
+<?php
+	session_start();
+	$del=$_GET['del'];
+	$delone=$_GET['delone'];
+	if($delone){
+		unset($_SESSION[$delone]);
+	}
+	if($del){
+		session_destroy();
+	}
+	echo "您选购的书籍有：<br>";
+	
+	foreach($_SESSION as $key=>$val){
+		echo $val."---<a href='mybook.php?delone=$key'>从购物车中删除</a><br>";
+	}
+	echo "<br><a href='mybook.php?del=de'>清空购物车</a><br>";
+	echo "<br><a href='aa.php'>返回购物大厅</a>";
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+	-----获取session 的id号
+
+<?php
+	$sid = session_id;
+	echo "session的id号=".$sid;
+?>
+
+
+
+
+	-----Session和Cookie的主要区别及自动启动session：
+
+Cooki 是把用户的数据写给用户的浏览器。
+Session技术是把用户的数据写到用户独占的$_SESSION中，存在服务器的某个路径的文件中。
+
+在使用$_SESSION 前要保证session被初始化，具体方法如下：
+1，先调用session_start();
+2, 配置php.ini session.auto_start = 1 (不推荐，会影响效率)
+
+
+
+
+
+
+	
+
+	-----用户禁用cookie后解决session文件共享的三种方法：
+
+
+	当用户禁用cookie后，服务器每次session_start()都会创建一个全新的session文件，后果就是无法让多个页面的php去共享同一份session文件。 	
+	如何解决这个问题？要从cookie session和http协议入手解决。
+
+	如果客户端禁用cookie怎样实现session技术共享多个页面？
+
+
+	方法一：URL重写，给每个连接添加一个指定的PHPSESSID;
+
+在每个超链接上添加一个PHPSESSID= sessionId ,同时在每个页面加入if语句，判断是否以经有session文件，如果有就沿用，如果没有再创建新的session文件 .如：
+	if(isset($_GET['PHPSESSID'])){
+		//设置session_id
+		session_id($_GET['PHPSESSID']);
+	}
+	session_start();
+
+
+
+	方法二：使用常量SID ;
+
+在 href=,header(),action=   时可以直接拼接SID 常量即可. 如：
+echo "<a href='xxxx.php?bookid=sn001&bookname=西游记&".SID."'>西游记</a><br>";	
+
+
+	方法三：在php.ini中启用透明session功能。
+
+可以启用 session.use_trans_sid 指定是否启用透明 SID 支持，即可以这样设置。
+	session.use_trans_sid=1. 然后重启apache即可。
+此方法相当于在 href=,action=,header(), 之后默认加上了 SID 。但不支持js的跳转。需要手动添加SID
+
+
+
+
+
+
+		=====session的验证码技术
+
+	为什么时候我们需要验证码？
+1，防止登录时，恶意攻击。
+2，防止灌水。
+
+		
+
+		-----验证码实例代码
+	在第120课
+
+
+
+
+	
+		-----cookie 和session的区别
+
+1: 存放的位置不同
+	cookie保存在客户端，session保存在服务器端的  文件系统/数据库/memcache
+2, 安全性
+	比较而言 cookie 的安全性比session要弱 因为session保存在服务器
+3, 网络传输量
+	cookie 通过网络在客户端与服务器端传输，而session保存在服务器端，不需要传输。
+
+4，生命令周期
+	cookie的生命周期是累计的，从创建时就开始计时，到达指定时间后cookie生命周期结束，cookie就失效了。
+	session的生命周期是间隔的，从创建时，开始计时，如在设定时间内没有访问session，则session超过庙宇时间后就会失效。如果在设定时间内再次访问了session,那么它的生命周期将重新开始计算。
+
+
+
+
+		-----设置用户自定义session会话存储函数
+
+有两种方式：
+session.save_handler = files  //使用系统默认的
+session.save_handler = user  //使用自己设置的
+
+自设文件参考第121课内容
+

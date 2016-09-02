@@ -1,0 +1,563 @@
+
+
+
+
+
+
+
+
+
+
+//===== $.fx.interval 设置浏览器帧数
+
+//=====表单序列化得到的是键值对
+
+//-----$.support.opacity 设置不同浏览器的透明度
+//-----通过$.support.opacity 来检测浏览器是IE类还是W3C类
+
+//=====icon 标签上的小图标
+
+//=====setTimeout() 设置指定时间后执行(jquery操作)
+
+//=====隐藏loading对话框标头区
+
+//=====closeOnEscape 取消ESC键功能
+
+//=====a标签的js空连接
+
+//=====is(':checked') 判断复选框是否被选择 (jquery)
+//===== option:selected  获取下拉列表当前选择对象(jquery)
+
+//=====typeof()获取数据类型
+
+//=====查找当前运动的动画
+
+//===== jquery 页面跳转
+
+//=====jquery 获取元素的高度
+
+//===== 获取元素中的ID名，类名，title值额外数据，及元素下标
+
+//=====给元素添加或删除CSS类属性
+
+//=====判断元素是否被点击
+
+//=====javascript 用unescape方法将字符串编码解码。
+
+//=====jquery 表单传送前将内容进行urlencode编码
+
+//=====confirm() 判断关决定是否继续执行冒泡或默认行为
+
+//=====jquery 属性连缀的两种方式
+
+//===== 页面显示时间函数及调用
+
+//=====用javascript 给元素添加一个属性值
+
+//===== javascript 点击或其它触发跳转事件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====用javascript 给元素添加一个属性值
+
+		document.getElementsByName('sex')[1].checked='checked';
+
+
+		<input type="radio" name='sex' value='1' />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== javascript 点击或其它触发跳转事件
+
+
+		<head>
+		<script>
+			function jump(){
+				location='b.html';
+			}
+		</script>
+		</head>
+		<body>
+			<button onmouseout=jump()>添加新数据</button><br>
+			<button onmouseover=jump()>添加新数据</button><br>
+			<button onclick=jump()>添加新数据</button><br>
+			<button ondblclick=jump()>添加新数据</button><br>
+		</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 页面显示时间函数及调用
+
+	$(function(){
+
+		$("#title_t2").html(time());
+	});	
+
+
+	function time(){
+	setInterval(function dt(){
+		var dt = new Date();
+		var str="";
+		switch(dt.getDay()){
+			case 0:
+				str="日";
+				break;
+			case 1:
+				str="一";
+				break;
+			case 2:
+				str="二";
+				break;
+			case 3:
+				str="三";
+				break;
+			case 4:
+				str="四";
+				break;
+			case 5:
+				str="五";
+				break;
+			case 6:
+				str="六";
+				break;
+		}
+		var hours=dt.getHours();
+		var minutes=dt.getMinutes();
+		var seconds=dt.getSeconds();	
+		if(hours < 10){
+			hours="0"+hours;
+		}
+		if(minutes <10){
+			minutes="0"+minutes;
+		}
+		if(seconds <10){
+			seconds="0"+seconds;
+		}
+
+
+		var times = dt.getFullYear()+"年"+(dt.getMonth()+1)+"月"+dt.getDate()+"日&nbsp;星期"+str+"&nbsp"+hours+":"+minutes+":"+seconds;
+		document.getElementById("title_t2").innerHTML=times;
+	   },1000);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====javascript 用unescape方法将字符串编码解码。
+	
+<script>
+	var str="escape%20%u65B9%u6CD5%u8FD4%u56DE%u4E00%u4E2A%u5305%u542B%u4E86charstrign%u5185%u5BB9%u7684%u5B57%u7B26%u4E32%u503C%uFF08Unicode%u683C%u5F0F%uFF09%u3002%u6240%u6709%u7A7A%u683C%uFF0C%u6807%u70B9%uFF0C%u91CD%u97F3%u7B26%u53F7%u4EE5%u53CA%u5176%u4ED6%u975EASCLL%u5B57%u7B26%u90FD%u7528%25xx%u7F16%u7801%u4EE3%u66FF%uFF0C%u5176%u4E2Dxx%u7B49%u4E8E%u8868%u793A%u8BE5%u5B57%u7B26%u7684%u5341%u516D%u8FDB%u5236%u6570%u3002%u4F8B%u5982%uFF0C%u7A7A%u683C%u8FD4%u56DE%u7684%u662F%u3002";
+
+	alert(str);
+	document.write(unescape(str));
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+//=====jquery 表单传送前将内容进行urlencode编码
+
+<form action="./search.php" name="searchform" method="get">
+        <input type="text" name="keywords" id="keywords" style="width: 300px;"/> 
+         <input type="button" id="submit"  value="搜索"/>
+</form>
+$(function(){
+    $("#submit").click(function(){
+        $("#keywords").val(encodeURI($("#keywords").val()));
+        $("form").sumbit();
+    });
+});
+ 
+
+
+
+
+
+
+
+
+
+//=====confirm() 判断关决定是否继续执行冒泡或默认行为
+
+	$(".del").click(function(e){
+		if(confirm("确认删除?")){
+			
+		}else{
+			e.preventDefault();	//阻止默认行为
+			e.stopPropagation();	//阻止冒泡行为
+		}
+	});
+
+
+
+
+
+
+
+
+
+
+
+//=====jquery 属性连缀的两种方式
+
+	$(".r1").mousedown(function(){
+		$(this).css({
+				"background":"#888",
+				"borderColor":"green",
+				"color":"white"
+		});
+	});
+或
+	$(".title_t1").click(function(){
+		$(this).css("color","blue").css("fontSize","100px");
+	});
+
+
+
+
+
+
+
+
+
+
+
+//===== 元素的隐藏与显示
+
+alert( $("#dvTest").is(":visible")); //判断元素显示或隐藏状态 
+}); 
+$("#btnTestIs").click(function(e){ 
+// alert( $(e.target).is("input") ); //判断元素的标名称 
+
+$('div:hidden').size(); 		获取隐藏的DIV 节点元素的个数 	% 隐藏
+$('div:hidden').css('background','red').show(1000);		% 显示隐藏
+	//使隐藏的DIV节点元素 在一秒后 从上至下显示出来
+$('div:visible').size());  	获取可见的div节点元素的个数	% 获取可见
+
+
+
+
+
+
+//=====Math.random() 随机数
+
+<script>
+	alert(Math.random());
+</script>
+
+
+
+
+
+//=====判断元素是否被点击
+
+	$(".all").click(function(e){
+		if(e.target==$(".aa")[0]){	
+			$(".aa").css('background','#eee');
+			$(".aaa").css('background','#fff');
+		}
+		if(e.target==$(".aaa")[0]){
+			$(".aa").css('background','#fff');
+			$(".aaa").css('background','#eee');
+		}
+	});
+
+
+
+
+
+//=====给元素添加或删除CSS类属性
+
+$('div').addClass('bg size');		//同时添加多个CSS类属性
+$('div').removeClass('red size');	//同时删除多个CSS类属性
+
+
+
+
+
+
+//===== 获取元素中的ID名，类名，title值额外数据，及元素下标
+
+<div class='a' id='b' title='c' aaa='aaaaaa'>	</div>
+
+alert($('.a').attr('id'));	
+alert($('.a').attr('class'));
+alert($('.a').attr('title'));
+alert($('.a').attr('aaa'));	额外数据
+alert($('.a').index());		元素下标
+
+
+
+
+
+
+
+//=====jquery 获取元素的高度
+
+	$("#div").height();		//纯数值
+或
+	$("#div").css('height');	//带单位的字符串
+
+
+
+
+
+
+
+
+//===== jquery 页面跳转
+
+	$(".test").click(function(){
+		location.href="http://www.baidu.com";
+或	
+		window.location.href="http://www.baidu.com";
+	});
+
+
+
+	"window.location.href"、"location.href"是本页面跳转.
+	"parent.location.href" 是上一层页面跳转.
+	"top.location.href" 是最外层的页面跳转.
+举例说明：
+    	如果A,B,C,D都是html，D是C的iframe，C是B的iframe，B是A的iframe，如果D中js这样写
+    	"window.location.href"、"location.href"：D页面跳转
+    	"parent.location.href"：C页面跳转
+    	"top.location.href"：A页面跳转
+如果D页面中有form的话,
+    	<form>:  form提交后D页面跳转
+    	<form target="_blank">:  	form提交后弹出新页面
+    	<form target="_parent">:  	form提交后C页面跳转
+    	<form target="_top"> :  	form提交后A页面跳转
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====查找当前运动的动画
+
+	$('#abut6').click(function(){
+		$(':animated').css('background','yellow');
+	});
+
+
+
+
+
+
+
+
+//=====typeof()获取数据类型
+
+alert(typeof(divs));						
+
+//$.type() 判断数据的类型
+var arr=[1,2,3];
+var obj={};
+var str="1,2,3";
+alert($.type(arr));
+alert($.type(obj));
+alert($.type(str));
+
+
+
+//=====is(':checked') 判断复选框是否被选择 (jquery)
+
+html页面：
+<head>
+<script src='jquery.js'></script>
+<script src="a.js"></script>
+</head>
+<body>
+<input type="checkbox" name="sex" id="box"/>
+</body>
+
+js页面：
+$(function(){
+ $("#box").click(function(){
+	alert($('#box').is(':checked'));  //复选框选中时返回true,未选择返回false
+ });
+});
+
+
+
+//===== option:selected  获取下拉列表当前选择对象(jquery)
+
+	$(".reset").click(function(){
+		alert($('.listname option:selected').text());
+	});
+
+	$("#ddlregtype").find("option:selected").text();
+
+
+
+
+
+//=====a标签的js空连接
+
+<a href="javascript:void(0)">注册</a>
+
+
+
+
+
+
+
+
+
+
+
+
+//=====隐藏loading对话框标头区
+$("#loading").dialog('widget').find('.ui-widget-header').hide();
+
+//=====closeOnEscape 取消ESC键功能
+
+
+$("#loading").dialog({		//设置loading做成对话框
+		autoOpen:false,
+		modal:true,
+		width:220,
+		height:50,
+		closeOnEscape:false,	//取消ESC键功能 
+	}).parent().parent().find(".ui-widget-header").hide();		//隐藏loading对话框标头区
+
+
+
+
+
+
+
+
+
+//=====setTimeout() 设置指定时间后执行(jquery操作)
+
+	setTimeout(function(){				//时间间隔1秒钟后执行以下操作
+		$('#loading').dialog('close');		//关闭loading对话框
+		$("#reg").dialog('close');		//关闭reg对话框
+		$("#reg").resetForm();			//重置所有表单项
+	},1000);					//1000 是1秒
+	
+
+
+
+
+
+
+//=====icon 标签上的小图标
+
+<link rel="shortcut icon" type="image/x-icon" href="img/a.ico" />
+
+
+
+
+
+
+//===== $.fx.interval 设置浏览器帧数
+
+	//$.fx.interval='13';			//默认是13毫秒 数值越大会越卡
+
+
+
+
+
+
+
+//=====表单序列化得到的是键值对
+
+	$(':button').click(function(){
+		alert($('form').serialize());
+	});
+
+
+
+
+
+
+
+//-----$.support.opacity 设置不同浏览器的透明度
+//-----通过$.support.opacity 来检测浏览器是IE类还是W3C类
+
+if($.support.opacity==true){  //true为支持W3C
+	$("#box").css("opacity",0.5);
+}else{
+	$("#box").css("filter","alpha(opacity=10)");
+}

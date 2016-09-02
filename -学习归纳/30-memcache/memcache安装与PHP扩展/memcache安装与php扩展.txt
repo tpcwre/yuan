@@ -1,0 +1,61 @@
+
+//===== yum 安装 
+	//-- 安装 memcache
+
+	1 	yum -y install memcached		安装memcache
+
+	2	service memcached start			启动
+
+	3	telnet 127.0.0.1 11211			连接memcache并操作
+		set a 0 60 3				添加数据  键名，是否压缩，过期时间，值的位数
+		aaa					输入上面指定3位的值
+
+
+	//--- 安装 php扩展
+
+	1.	/../php/bin/phpize			//用phpize创建 configure 相关文件
+
+	2.	./configure --with-php-config=/usr/local/php/bin/php-config 		安装依赖文件
+
+	3, 	make && make install			编译与安装
+
+
+	4,	vim /usr/local/php/etc/php.ini		编辑php配置文件
+		extension=memcache.so			将扩展文件添加到配置文件中
+
+		
+	5.	service memcached restart		重启相关服务
+		service nginx restart
+		service php-fpm restart
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

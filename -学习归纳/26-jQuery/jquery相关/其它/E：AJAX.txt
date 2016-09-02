@@ -1,0 +1,991 @@
+
+
+
+
+ 
+ 	第26课  Ajax
+
+	ajax全称为：“Asynchronous JavaScript and XML” (异步JavaScript 和XML),它并不是JavaScript的一种单一技术，而是利用了一系列交互式网页应用相关的技术所形成的结合体，使用ajax，我们可以无刷新状态更新页面，并且实现异步提交，提升了用户体验。
+	
+学习要点：
+	1：ajax概述
+	2：load方法
+	3：get(),post()
+	4：$.getScript()和$.getJSON()
+	5：$.ajax()方法
+	6：表单序列化
+	
+-----ajax概述
+
+  ajax这个概念是由 Jesse James Garrett 在2005年发明的。它本身不是单一技术，是一串技术的集合，主要有：
+	1. JavaScript,通过用户或其它与浏览器相关事件捕获交互行为。
+	2. XMLHttp$equest对象，通过这个对象可以在不中断其它浏览器任务的情况下向服务器发送请求。
+	3. 服务器上的文件，以XML,HTML 或JSON格式保存文本数据 
+	4. 其它JavaScript. 解释来自服务器的数据（比如PHP从MySQL获取的数据）并将其呈现到网页上。
+
+  由于 ajax包含众多特性，优势与不足也非常明显，它们分别如下。
+  优点：
+	1.不需要插件支持（一般浏览器且默认开启javaScript即可）。
+	2.用户体验极佳（不刷新页面即可获取可更新的数据 ）。
+	3.提升WEB程序的性能（在传输数据方面做到按需放松，不必整体提交）。
+	4.减轻服务器和带宽的负担（将服务器的一些操作转移到客户端）。
+
+  缺点：
+	1.不同版本的浏览器对 XMLHttpRequest对象支持度不足（比如IE5以前）。
+	2.前进，后退的功能被破坏（因为Ajax永远在当前页，不会记录前后页面）。
+	3.搜索引擎的支持度不够（因为搜索引擎爬虫还不能理解JS引起变化的数据的内容）。
+	4.开始调试工具缺乏（相对于其他语言的工具集来说，JS或AJAX调试开发少可怜）
+
+
+//-----load()方法及其三个参数
+	load()方法有三个参数
+		url：必选，请求HTML文件的URL地址，参数类型为String.
+		data：可选，当用POST方法传输数据的。用此参数。以对象键值对的方式{url:"ycku"}
+		callback：可选，成功或失败的回调整函数，参数类型为函数function.此参数有三个属性
+
+//-----http回应状态码说明
+	HTTP状态码：	状态字符串				说明 
+	200				OK				服务器成功返回了页面
+	400				Bad Request		语法错误导致服务器不识别
+	401				Unauthorize		语法需要用户认证
+	404				Not found		指定的URL在服务器上找不到
+	500		Internal Server Error	服务器遇到意外错误，无法完成请求
+	503		ServiceUnavailable		由于服务器过载或维护导致无法完成请求。
+//-----第三个参数 xhr 是对象 它有四个属性
+	responseText	作为响应主体被返回的文本，等同于方法response
+	responseXML	如果响应主体内容类型是”text/xml“”application/xml“,则返回包含响应数据的XML DOM文档
+	status		响应的HTTP状态
+	statusText	HTTP状态的说明,赞同于方法status
+		*/
+
+c.js页面
+//-----load() 异步加载HTML文件内容
+$(function(){
+  $(":button").click(function(){
+/*
+//-----把另一个页面内容加载到本页指定元素内
+	$("#box").load("cc.html");
+
+//-----ajax加载指定页面并筛选内容
+	//筛选指定内容:这里实际上加载页面的全部内容，只是筛选了需要显示的内容。（以类名的方式筛选）
+	//只显示了指定的内容。
+	$("#box").load("cc.html .url");	
+
+//-----加载时用GET方式传送数据以便验证
+ 	原理：在调用cc.php页面时，向其发送一条GET数据键值对url="ycku1" ,当cc.php页面接收到该信息时会作出一个判断，如果GET接收的数据url==ycku1则回应一个数据内容，否则会回应另一个数据内容。  
+	$("#box").load("cc.php?url=ycku1");	
+
+//-----第二个参数data 是以POST提交数据的，它以对象键值对的形式来操作
+	$("#box").load("cc.php",{
+		url:"ycku"
+	});
+*/
+
+//-----第三个参数 回调函数的使用
+	$("#box").load("cc.php",{
+		url:"ycku"
+	},function(response,status,xhr){
+//-----函数参数response 表示从服务器端返回的内容
+		//alert(response);
+//-----编辑返回的内容
+		//$("#box").html(response+123);
+
+//-----函数参数status 表示返回的状态，success 代表成功，error代表失败
+		if(status=="success"){
+		//	alert("成功");
+		}else{
+		//	alert("失败，没有返回内容");
+		}
+
+//-----函数参数xhr 表示xml,http,requert的对象 它有四个属性
+//-----xhr属性responseText	作为响应主体被返回的文本内容 等同于上面的response方法。
+		//alert(xhr.responseText);
+//-----xhr属性responseXML  返回包含响应数据的XML DOM文档
+	//如果响应主体内容类型是”text/xml“”application/xml“
+	//,则返回包含响应数据的XML DOM文档
+		//alert(xhr.responseXML);	
+//-----xhr属性status  响应的HTTP状态
+		//alert(xhr.status);
+//-----xhr属性statusText  HTTP状态的说明
+		alert(xhr.statusText);	
+	});
+  });
+});
+
+
+c.html页面
+<span class="title">百度首页</span>
+<span class="url">www.baidu.com</span>
+
+
+cc.php页面
+<?php
+/*
+//-----用GET数据验证
+	if($_GET["url"]=="ycku"){
+		echo "动态php页面内容";
+	}else{
+		echo "木有！";
+  	}
+*/
+//-----用POST数据验证
+	if($_POST["url"]=="ycku"){
+		echo "POST方式验证成功";
+	}else{
+		echo "数据不对";
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------
+	
+
+
+
+
+		第27课 ajax 中
+学习重点：
+	3：get(),post()
+	4：$.getScript()和$.getJSON()
+
+
+$(function(){
+
+/*
+//-----$.get()和$.post()
+  	.load()方法是局部方法，因为他需要一个包含元素的jquery对象作为前缀，而$.get()和$.post()是全局方法，无须指定某个元素，对于用途而言，.load()适合做静态文件的异步获取，而对于需要传递参数到服务器页面的，$.get()和$.post()更加合适。
+	$.get()方法有四个参数，前面三个参数和.load()一样，多了一个第四个参数type,即服务器返回的内容格式：包括xml,html,script,json,jsonp和text,第一个参数为必选参数，后面三个为可选参数。
+	
+ 	$.get()和$.post()方法的使用基本上一致，他们之间的区别也比较隐晦，基本都是背后的不同，在用户使用上体现不出，具体区别如下：
+	1.GET请求是通过URL提交的，而POST请求则是HTTP消息实体提交的。
+	2.GET提交有大小限制(2KB),而POST方式不受限制 。
+	3.GET方式会被缓存下来，可能有安全性问题，POST没有这个问题
+	4.GET方式通过$_GET[]获取，POST方式通过$_POST[]获取
+
+//-----$.get()的使用方法一：$.get("url?a=b",fn) url带问号和函数两个参数的形式
+$(":button").click(function(){
+  $.get("c.php?url=ycku",function(response,status,xhr){
+	$("#box").html(response);
+  })
+});
+//-----$.post("url?a=b",fn) url带问号和函数两个参数的形式是不可用的
+$(":button").click(function(){
+  $.get("c.php?url=ycku",function(response,status,xhr){
+	$("#box").html(response);
+  })
+});
+
+//-----$.get()的使用方法二：$.get("url","a=b",fn) 三个参数的形式
+//通过DATA参数字串键值对的形式传参，其自动转换为问号紧跟传参
+//注意在c.php文件中对get和post的设置要正确
+$(":button").click(function(){
+  $.get("c.php","url=ycku",function(response,status,xhr){
+	$("#box").html(response);
+  });
+});
+//-----$.post()的使用方法一：$.post("url","a=b",fn) 三个参数的形式
+//通过DATA参数字串键值对的形式传参，其自动转换为问号紧跟传参
+//注意在c.php文件中对get和post的设置要正确
+$(":button").click(function(){
+  $.post("c.php","url=ycku",function(response,status,xhr){
+	$("#box").html(response+"post方式");
+  });
+});
+
+
+//-----$.get()的使用方法三：$.get("url",{a:"b"},fn) 三个参数的形式
+//通过DATA参数对象键值对的形式传参
+$(":button").click(function(){
+   $.get("c.php",{url:"ycku"},function(response,status,xhr){
+	$("#box").html(response+123);
+   });
+});
+
+//-----$.post()的使用方法二：$.get("url",{a:"b"},fn) 三个参数的形式
+//通过DATA参数对象键值对的形式传参
+$(":button").click(function(){
+  $.post("c.php",{
+	url:"ycku"
+  },function(response,status,xhr){
+	$("#box").html(response+"post对象键值对方式");
+});
+});
+
+
+//-----$.get()和$.post()的第四个参数type
+//返回的内容格式包括：xml,html,script,json,jsonp和text
+//type参数对于php文件返回的数据是纯文本，默认是html或text，所以当响应内容为html和text时可以不用在尾部加html参数。
+$(":button").click(function(){
+  $.post("c.php",{
+	url:"ycku"	
+  },function(response,status,xhr){
+	$("#box").html(response);
+},"html");
+//这里加不加html其结果的文本内容都一样
+});
+
+
+
+//-----get(),post()的参数type会自动识别响应返回的内容格式
+//不要强制设置与其不同的格式，如把html,text格式设置为xml或json
+$(":button").click(function(){
+  $.post("c.php",{
+	url:"ycku"	
+  },function(response,status,xhr){
+	$("#box").html(response);
+},"xml");
+});
+
+
+//-----获取xml中指定元素的内容
+//-----xml响应体会返回一个DOM对象
+//-----响应体为xml时，设置type为html会把xml中连标签所有内容当作纯文本
+$(":button").click(function(){
+  $.post("ccc.xml",function(response,status,xhr){
+  	//获取xml中指定元素的内容
+	alert($(response).find("rool").find("url").text());
+  //当响应体为xml，而设置type为html是，返回内容将会把xml连带标签的所有内容当作文本来一起返回
+  //},"html");
+  //当响应体为xml或其它格式时，type不用真写也会自动识别响应体，xml响应体会返回一个DOM对象
+  });
+
+
+//-----json响应体返回一个对象 
+//-----获取json响应体的内容
+$(":button").click(function(){
+  $.post("ccc.json",function(response,status,xhr){
+	//json响应体返回一个对象 
+	alert(response);
+	//获取json响应体的内容
+	alert(response[0].url);
+  })
+});
+
+*/
+//-----$.getScript()和$.getJSON()
+/*	jquery提供了一组用于特定异步加载的方法：$.getScript(),用于加载特定的JS文件；$.getJSON(),用于专门加载JSON文件.
+	有时我们希望能够特定的情况再加载JS文件，而不是一开始把所有JS或JSON文件都加载了，这时候使用$.getScript()方法或$.getJSON()Y方法。
+//-----$.getJSON()的使用方法	
+$(":button").click(function(){
+  $.getJSON("ccc.json",function(response,status,xhr){
+	alert(response);
+	alert(response[0].url);
+  });
+});
+
+*/
+//-----$.getScript()方法的使用
+
+$(":button").click(function(){
+  $.getScript("ccc.js");
+});
+
+});
+
+
+
+
+ccc.js页面
+alert("只有在被招呼的时候才会加载！");
+
+
+ccc.json页面
+[
+	{
+		"url":"www.baidu.comssss"
+		"a":"aaaa",		
+		"b":"bbbb",
+		"c":"cccc",
+		"d":"dddd",
+		"e":"eeee",
+		"f":"ffff"
+	},
+	{
+		"a":"aaaa",		
+		"b":"bbbb",
+		"c":"cccc",
+		"d":"dddd",
+		"e":"eeee",
+		"f":"ffff"
+	}
+]
+
+
+ccc.xml页面
+<?xml version="1.0"?>
+<rool>
+	<url>www.baidu.com</url>
+</rool>
+
+
+
+ccc.php
+<?php
+/*
+	if($_GET["url"]=="ycku"){
+		echo "php动态内容页面";
+	}else{
+		echo "get版木有！";
+	}
+*/
+	if($_POST['url']=="ycku"){
+		echo "php页面POST";
+	}else{
+		echo "post版木有";
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第28课 ajax (下)
+学习要点：
+	5：$.ajax()方法
+	6：表单序列化
+
+	
+//-----$.ajax()方法的使用
+$("form input[type=button]").click(function(){
+  $.ajax({
+    type:"post",
+    url:"c.php",
+    data:{
+	url:"ycku"
+    },
+    success:function(response,status,xhr){
+	$("#box").html(response+"=ajax方法实现");
+    }
+  });
+});
+
+//-----表单序列化 （文本）
+	ajax用的最多的地主莫过于表单操作，而传统的表单操作是通过submit提交将数据传输到服务器端，如果使用ajax异步处理的话，我们需要将每个表单元素逐个获取才方能提交，这样工作效率就大大降低。
+	使用表单序列化方法serialize(),会智能的获取指定表单内的所有元素，这样，在面对大量表单元素时，会把表单元素内容序列化为字符串，然后再使用ajax请求。 
+
+//-----ajax 针对表单提交的普通方式
+表单元素特别多的情况下，写起来非常麻烦，容易出错
+复制提交的JS内容时，data属性需要修改的非常多。
+
+
+$("form input[type=button]").click(function(){
+  $.ajax({
+    type:"post",
+    url:"e.php",
+    data:{
+	user:$("form input[name=user]").val(),
+	email:$("form input[name=email]").val(),
+    },
+    success:function(response,status,xhr){
+	  $("#box").html(response);
+        }
+  });
+});
+//-----表单序列化 $("").serialize()
+$("form input[type=button]").click(function(){
+  
+  $.ajax({
+    type:"post",
+    url:"e.php",
+    data:$("form").serialize(),
+    success:function(response,status,xhr){
+	$("#box").html(response);
+    }
+  });
+});
+
+//-----序列化serialize()会得到字符串形式的键值对，并且对URL进行编码
+alert($("form").serialize());
+
+
+
+//-----.serialize()方法可以直接获取单选复选和下拉列表等内容
+//-----使用序列化得到单选或多选中的元素内容
+//-----解码序列化后被编码的内容
+$("form input[name=sex]").click(function(){
+  //serialize()后的数据会被编码，需要解码
+  $("#box").html($(this).serialize());
+ 
+  //解码序列化的内容
+  $("#box").html(decodeURIComponent($(this).serialize()));  
+});
+
+
+//-----.serialize()序列化方法可以把数据生成键值对的json对象
+//-----转换JSON数据，并将其数据显示在页面上	
+//-----接收任何数据的方法
+
+$("form input[name=sex]").click(function(){
+  //接收任何数据的方法
+  //console.log($(this).serializeArray());
+
+  //转换JSON数据，并将其数据显示在页面上
+  var json = $(this).serializeArray();
+  $("#box").html(json[0].name+"="+json[0].value);
+});
+
+
+//-----初始化重复的属性
+
+$("form input[type=button]").click(function(){
+  $.ajaxSetup({
+    type:"post",
+    url:"e.php",
+    data:{
+	user:$("form input[name=user]").val(),
+	email:$("form input[name=email]").val()
+    },
+  });
+
+  $.ajax({
+    success:function(response,status,xhr){
+	$("#box").html(response+2);
+    }
+  });
+});
+
+//-----使用$.param()将对象形式的键值对转为URL地址的字符串键值对
+	注意：使用$.param()将对象形式的键值对转为URL地址的字符串键值对，可以更加稳定准确的传递表单内容，因为有时程序对于复杂的序列化解析能力有限，所以直接传递object对象要谨慎。
+
+
+
+//-----对像方式的键值对返回的是一个对象
+alert({
+  user:$("form input[name=user]").val(),
+  email:$("form input[name=email]").val()
+});
+
+//-----$.param()解析对象的键值对，转为数据
+alert($.param({
+  user:$("form input[name=user]").val(),
+  email:$("form input[name=email]").val()
+}));
+
+
+$("form input[type=button]").click(function(){
+  $.ajax({
+    type:"post",
+    url:"e.php",
+    data:$.param({
+	user:$("form input[name=user]").val(),
+	email:$("form input[name=email]").val()
+    }),
+    success:function(response,status,xhr){
+	$("#box").html(response+111);
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第29课 ajax 进阶
+
+$(function(){
+
+/*
+学习要点：
+	1，加载请求
+	2，错误处理
+	3，请求全局事件
+	4，JSON 和 JSONP
+
+
+//-----加载请求：（文本）
+	在ajax异步发送请求时，遇到网速较慢的情况，就会出现请求时间较长的问题。而超过一定时间的请求，用户就会变得不再耐烦而关闭页面。而如果在请求期间能给用户一些提示，比如：“正在努力加载中。。。”，那么相同的请求时间会让用户体验更加的好一些，
+	jquery提供了两个全局事件，ajaxStart()和ajaxStop().这两个全局事件，只要用户触发了ajax,请求开始时（未完成其它请求时）激活ajaxStart(),请求结束时(所有请求都结束了)激活ajaxStop().
+
+//-----显示和隐藏请求加载的提示信息ajaxStart() ajaxStop()
+//-----设置请求超时 timeout:500
+//-----取消全局事件 global:false
+
+
+$("form input[type=button]").click(function(){
+  $.ajax({
+	type:"post",
+	url:"http://www.facebwer23oosdsdfsdk.com/f.php",
+	data:$("form").serialize(),
+	success:function(response,status,xhr){
+		$("#box").html(response);
+	}
+	timeout:3000;
+	global:false;
+  });
+});
+
+$(document).ajaxStart(function(){
+	$(".loading").show();
+}).ajaxStop(function(){
+	$(".loading").hide();
+  });
+
+
+//-----请求加载的错误处理：（文本）
+	ajax 异步提交时，不可能所有情况都是成功完成的，也有因为代码异步文件错误，网络错误导致提交失败的，这时，我们应该把错误报告出来，提醒用户重新提交或提示开始者进行修补。
+	在之前高层封装中是没有回调错误处理的，比如$.get(),$.post()和.load()。所以，早期的方法通过全局ajaxError()事件方法以来返回错误信息。 而在jquery1.5之后，可以通过连缀处理使用局部error()方法即可，而对于$.ajax()方法，不但可以用这两种方法，还有自己的属性方法error:function(){}.
+
+//-----第一种错误处理方式 
+$("form input[type=button]").click(function(){
+  $.ajax({
+	type:"post",
+	url:"f1.php",
+	data:$("form").serialize(),
+	success:function(response,status,xhr){
+	  $("#box").html(response);
+	},
+	//timeout:1000
+	//global:false
+	error:function(xhr,errorText,errorType){
+		//alert("错误！");
+		//alert(errorText+"="+errorType);
+		//alert(xhr.status+":"+xhr.statusText);
+
+	}
+  });
+//-----第二种错误处理方法-连缀方式
+  $.post("f1.php").error(function(xhr,errorText,errorType){
+	alert("第二种错误处理方法-连缀");
+	alert(errorText+"="+errorType);
+	alert(xhr.status+":"+xhr.statusText);
+  });
+});
+$(document).ajaxStart(function(){
+	$(".loading").show();
+}).ajaxStop(function(){
+	$(".loading").hide();
+});
+
+
+//-----第三种错误处理方式.ajaxError()全局事件提示错误
+$(":button").click(function(){
+	$.post("f1.php");
+});
+$(document).ajaxError(function(event,xhr,settings,info){
+//-----获取事件的类型
+	//alert(event.type);
+//-----事件当前的目标对象
+	//alert(event.target);
+//-----查看事件对象都有哪些属性
+	for(var i in event){
+	//	document.write(i+"<br/>");
+	}
+
+//------settings 得到的是对象及查看其所有属性
+	alert(settings);
+	for(var s in settings){
+		//document.write(s+"<br/>");
+	}
+	
+//------获取当前发生错误的路径 
+	alert(settings.url);
+//------获取当前传输用的是什么类型（post,get）
+	alert(settings.type);
+//-----获取错误类型 （not found）
+	alert(info);
+});
+
+//-----	六个全局的请求事件（文本）
+	jquery对于ajax操作提供了很多全局事件方法，ajaxStart() , ajaxStop() , ajaxError()等事件方法。他们都属于请求时触发的全局事件，除了这些，还有一些其他全局事件；
+	.ajaxSuccess(),对应一个局部方法： .success() ,请求成功完成时执行
+	.ajaxComplete(),对应一个局部方法：.complete(),请求完成后注册一个回调函数。
+	.ajaxSend(),没有对应的局部方法，只有属性beforeSend,请求发送之前要绑定的函数。
+
+//-----请求事件的全局形式
+$(":button").click(function(){
+  //当请求发生错误时，下面的顺序就会不同
+  $.post("f1.php",$("form").serialize());
+});
+$(document).ajaxSend(function(){
+  alert("发送请求之前执行");
+}).ajaxComplete(function(){
+  alert("不管成功与否，请求完成后执行");
+}).ajaxSuccess(function(){
+  alert("请求成功后执行");
+}).ajaxError(function(){
+  alert("请求失败后执行");
+});
+
+
+//-----请求事件的连缀方式
+$(":button").click(function(){
+  $.post("f1.php",$("form").serialize()).success(function(){
+	alert("请求成功后执行");
+  }).complete(function(){
+	alert("不论成功与否，请求完成后执行");
+  }).error(function(){
+	alert("请求失败后执行");	
+  });
+});
+*/
+
+
+//-----请求事件的属方式
+$(":button").click(function(){
+  $.ajax({
+	type:"post",
+	url:"f1.php",
+	data:$("form").serialize(),
+	success:function(){
+	  alert("请求成功后执行");
+	},
+	complete:function(){
+	  alert("请求完成后执行");
+	},
+	beforeSend:function(){
+	  alert("请求前执行");
+	},
+	error:function(){
+	  alert("错误时执行");
+	}
+	
+  });
+});
+
+
+});
+
+
+
+cc.php页面
+<?php
+	echo $_POST["user"]."-".$_POST["email"];
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//第30课 ajax 进阶
+
+
+
+$(function(){
+/*
+
+学习要点：
+	4，JSON 和 JSONP
+	5，jqXHR对象
+
+
+//-----dataType设置会影响xml,json的response结果类型是纯文本还是对象
+$("form input[type=button]").click(function(){
+ $.ajax({
+	type:"post",
+	url:"a.json",
+	dataType:"html",//当文件类型是XML,JSAON时，如果把数据类型强制设置成为HTML，那么下面的response结果将会把XML,JSON文件中容包括节点标签的全部内容以纯文本的形式显示。否则response返回的则是xml,json的对象 。
+	success:function(response,status,xhr){
+		alert(response);
+	}
+ });
+});
+
+
+//-----如何获取php文件中包含转码后的json数据及dataType 设置数据类型
+
+$(":button").click(function(){
+  $.ajax({
+	type:"post",
+	url:"jsonp.php",//此PHP文件中以把数组数据编码成为josn数据	
+	dataType:"json",//将数据类型设置为json类型
+	success:function(response,status,xhr){
+		alert(response.c);
+	}
+	//总结：当文件类型是php时，response结果调取的却是php文件中被转码的json数据时。显示出来的就是纯文本形式，（因为url文件为php，则默认数据类型为html或text）,如果想把php文件中的json数据以json对象方式显示出来，那么就需要把数据类型设置为json类型-dataType:"json".
+
+  });
+});
+
+
+
+//-----JSON 和 JSONP (文本)
+	如果在同一个域下，$.sjax()方法只要设置dataType属性即可加载JSON文件。而在非同域下，可以使用JSONP,但也是有条件的。
+	如果想跨域操作的话，我们就必须使用JSONP,JSONP(JSON with Padding)是一个非官方协议，它允许在服务器端集成Script tsgs 返回至客户端,通过javascript callback的形式实现跨域的访问（这仅仅是JSONP简单的实现 形式）。
+
+
+
+
+//普通方法无法获取跨域的JSON数据
+$(":button").click(function(){
+  $.ajax({
+	type:"post",
+	url:"http://172.21.216.3/jsonp.php", //跨域获取
+	dataType:"json",
+	success:function(response,status,xhr){
+		alert(response);
+		alert(response.a);
+	}
+  });
+});
+
+
+//-----本地获取php文件中JSON数据的两种方式	
+
+	//ajax方式获取本地php文件内的JSON数据
+$(":button").click(function(){
+  $.ajax({
+	type:"post",
+	url:"jsonp.php",
+	dataType:"json",
+	success:function(response,status,xhr){
+		alert(response);
+		alert(response.a);
+	}
+  });
+});
+
+	//getJSON方式获取本地文件内的JSON数据
+$(":button").click(function(){
+	$.getJSON("jsonp2.php?callback=?",function(response){
+		alert(response.a);
+		console.log(response);
+	});
+});
+
+//-----跨域获取php文件中JSON数据的两种方式
+	//$.getJSON()方式
+$(":button").click(function(){
+        //注意！远程和本地调取时的路径是完全不同的，远程要从要目录调用，本地如果同级的话可直接调用。
+	$.getJSON("http://172.21.216.3/jquery/jsonp2.php?callback=?",function(response){
+		alert(response.a);
+		console.log(response);
+	});
+});
+	
+
+	//ajax()方式
+$(":button").click(function(){
+	$.ajax({
+		type:"get",
+		url:"jsonp2.php?callback=?",	
+		dataType:"json",
+		success:function(response){
+			alert(response.a);
+			console.log(response);
+		}
+	});
+});
+
+
+
+
+
+//-----跨域获取json数据的简便方式 jsonp
+
+
+$(":button").click(function(){
+	$.ajax({
+		type:"get",
+		url:"jsonp2.php?",
+		dataType:"jsonp",
+		success:function(response){
+			alert(response.a);
+			console.log(response);
+		}
+	});
+});
+	
+
+
+//-----jqXHR 和 done() 的用法及优点。
+	jqXHR 代表 $.ajax()返回的对象：
+	使用jqXHR的连缀方式比$.ajax()的属性方式有三大好处；
+	1，可连缀操作，可读性大大提高
+	2，可以多次执行同一个回调函数 
+	3，为多个操作指定回调函数。
+
+//ajax中普通方法的response 无法扩展编辑
+$(":button").click(function(){
+	$.ajax({
+		type:"post",
+		url:"a.php",
+		data:$("form").serialize(),
+		success:function(response,status,xhr){
+			alert(response+"aaa");
+		},
+		success:function(response,status,xhr){
+			alert(response+"bbb");
+		}
+	});
+});
+
+
+
+
+$(":button").click(function(){
+	$.jqXHR = $.ajax({
+			type:"post",
+			url:"a.php",
+			data:$("form").serialize()	
+		});
+//-----done等同于success 的功能
+	//$.jqXHR.success(function(response){
+	$.jqXHR.done(function(response){
+		alert(response+1);	
+//-----done可以连缀
+	}).done(function(response){
+		alert(response+2);
+	});	
+//-----done在编辑response时的扩展性好，不会覆盖以前的内容。
+	$.jqXHR.done(function(response){
+		alert(response+3);
+	});
+});
+
+
+
+
+//-----同时处理多个jqXHR对象数据（普，简两种方式）
+//普通方式 
+$(":button").click(function(){
+	$.jqXHR = $.ajax({url:"t1.php"});
+	$.jqXHR2 = $.ajax({url:"t2.php"});
+	
+	$.jqXHR.done(function(response){
+		alert(response);
+	});
+	$.jqXHR2.done(function(response){
+		alert(response);
+	});
+});
+
+
+*/
+//简便方式
+$(":button").click(function(){
+	var jqXHR = $.ajax({url:"t1.php"});
+	var jqXHR2 = $.ajax({url:"t2.php"});
+	
+	$.when(jqXHR,jqXHR2).done(function(t1,t2){
+		alert(t1[0]);
+		alert(t2[0]);
+	});
+
+});
+
+
+});
+
+
+
+json.php页面
+<?php
+	$a = array('a'=>1,"b"=>2,"c"=>3);
+	$_result=json_encode($a);
+	echo $_result;
+?>
+
+
+json2.php页面
+<?php
+	//这个文件是远程端：
+	$arr=array("a"=>1,"b"=>2,"c"=>3);
+	$_result=json_encode($arr);
+	$_callback=$_GET["callback"];
+	echo $_callback."($_result)";
+?>
+
+t1.php页面
+<?php
+	echo "test1.php";
+?>
+
+t2.php页面
+<?php
+	echo "test2.php";
+?>
+
+a.json页面
+[
+	{
+		"a":"aaa",
+		"b":"bbb",
+		"c":"ccc"
+	}
+]
+
+a.php页面
+<?php 
+	echo $_POST["user"]."====".$_POST['email'];
+?>
+
+
+
+
+
+

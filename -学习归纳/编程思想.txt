@@ -1,0 +1,256 @@
+//===== 用 in_array() 代替 if语句
+//===== 用 do,while 避免重复的随机文件名
+//===== mysql 面向对象方式的条件查询组合
+//===== 滑过条目变色，点击后再变色并保持，点击其它后全部还原，当前的变色并保持
+//===== 回调方法加 &  引用 方式 做显示前的最后数据修改
+//===== 子类中关闭父类的某些方法
+
+
+
+
+
+
+//===== 用 in_array() 代替 if语句
+
+	原理：将可能的结果放入一个数组中， 然后用in_array()判断要查询的值是否存在于数组中，
+
+
+
+
+
+
+
+
+
+//===== 用 do,while 避免重复的随机文件名
+
+		$ext = pathinfo($this->upfile['name'],PATHINFO_EXTENSION);
+		do{
+			//随机新的上传文件名
+			$this->fileName=data("YmdHis").rand(1000,9999).'.'.$ext;
+		}while(file_exists($this->savePath.$this->fileName));
+		//用do,while判断文件名是否存在，如果存在就换个随机名
+
+
+
+
+
+
+
+//===== mysql 面向对象方式的条件查询组合
+
+	//将查询条件拆分，保存到属性，最后判断有效属性来组合查询语句
+
+	
+	1，设置存放查询条件的属性
+
+		protected $where=array(); 	//where条件
+		protected $order; 		//排序条件
+		protected $limit; 		//limit子句条件
+
+
+
+	2，接收查询条件，并保存到属性
+
+		//封装where过滤条件
+		public function where($where){
+			$this->where[] = $where;
+			return $this;
+		}
+		
+		//封装order排序条件
+		public function order($order){
+			$this->order  = $order;
+			return $this;
+		}
+		
+		//封装limit分页条件
+		public function limit($m,$n=0){
+			if($n>0){
+				$this->limit="{$m},{$n}";
+			}else{
+				$this->limit=$m;
+			}
+			return $this;
+		}
+		
+
+		
+	3，判断属性中有效的查询条件，合并语句并查询
+	
+		//查询数据
+		public function select(){
+			//定义查询sql语句
+			$sql = "select * from {$this->tabname}";
+			
+			//判断拼装条件
+			if(count($this->where)>0){
+				$sql .= " where ".implode(" and ",$this->where);
+			}
+			if($this->order){
+				$sql .= " order by ".$this->order;
+			}
+			if(!empty($this->limit)){
+				$sql.= " limit ".$this->limit;
+			}
+			
+			//发送执行，并返回结果集
+			$result = mysql_query($sql,$this->link);
+			//解析结果
+			$list = array(); //定义一个用于返回数据的变量
+			
+			while($row = mysql_fetch_assoc($result)){
+				$list[]=$row; //将解析的结果方法list中
+			}
+			//释放结果集
+			mysql_free_result($result);
+			return $list;
+		}
+
+
+	4，调用查询
+	
+		$mysql=new Model('user');
+		$arr=$mysql->where('id<10')->where('age<28')->order('id desc')->select();
+		echo '<pre>';
+		print_r($arr);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 滑过条目变色，点击后再变色并保持，点击其它后全部还原，当前的变色并保持
+
+		<style>
+			li.cc{
+				background:#ccd;	//滑过样式
+			}
+			li.dj{
+				background:blue;	//点击样式
+			}
+		</style>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+		<script>
+			var lis = document.getElementsByTagName('ul')[0].getElementsByTagName('li'); 
+			for(var i=0;i<lis.length;i++){
+				//滑入样式
+				lis[i].onmouseover=function(){
+					if(this.className!='dj'){
+						this.className='cc';
+					}
+				}
+				//滑出样式
+				lis[i].onmouseout=function(){
+					if(this.className!='dj'){
+						this.className='';
+					}
+				}
+				//点击样式
+				lis[i].onclick=function(){
+					for(var j=0;j<lis.length;j++){
+						lis[j].className='';
+					}
+					this.className='dj';
+				}
+			}
+		</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 回调方法加 &  引用 方式 做显示前的最后数据修改
+
+		<?php
+		class CommonController extends Controller{
+			protected function _list($model, $map = array(), $sortBy = '', $asc = false) {
+				//回调函数，用于数据加工，如将用户id，替换成用户名称
+
+				if (method_exists($this, '_tigger_list')) {
+					$this->_tigger_list($list);
+				}
+				//检测在子类中是否存在 _tigger_list方法 ,本方法用于修改数据，
+				
+			}
+		}
+
+		//子类中声明  _tigger_list 方法并&引用父类中变量加以修改
+		class GradeController extends commonController{
+			public function _tigger_list(&$list){
+				$mod->M('Stu');
+				foreach($list as &$ob){
+					//获取对应的学生信息
+					$vo = $mod->field('name')->find($ob('sid'));
+					//将姓名添加到当前数据中
+					$ob['sname']=$vo['name'];
+				}
+			}	
+
+		}
+
+		?>
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+//===== 子类中关闭父类的某些方法
+	
+	//将父类的删除方法关闭掉，避免删除漏洞
+	class B extends A{
+		public function del(){
+			$this->error('拒绝删除');
+		}
+	}

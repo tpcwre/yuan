@@ -1,0 +1,377 @@
+Javascript知识点
+
+概念：基于对象和事件驱动的具有安全性能的 "客户端(即在浏览器运行的)" 的脚本文件
+
+Javascript的组成：
+	ECMAScript：基础语法知识
+	BOM：跟浏览器相关的弹框
+	DOM：html文档
+
+特点：
+	1.JavaScript是一种脚本编程语言，也是一种解释性语言。
+	2.JavaScript的语法基本结构形式与C++、Java十分类似。
+	3.JavaScript是一种基于对象的语言。
+	4.JavaScript具有跨平台性。JavaScript是依赖于浏览器本身，与操作环境无关，只要能运行浏览器的计算机，并支持JavaScript的浏览器就可正确执行。
+	5.安全性与简单性。
+
+作用：
+	1.表单验证
+	2.界面交互美观
+	3.网页内容动态化（使用ajax技术）
+
+优点：
+	1.用户体验好
+	2.不能够操作计算机本地文件（客户端脚本文件）
+	3.减少了客户端和服务器端的网络传输
+	4.支持分布式的运算和处理
+	5.javascript利用DOM，操作HTML对象，改变html样式和行为，从而达到让网页内容更友好
+
+缺点：
+	兼容性
+
+基本语法：
+	1.引入
+		1.内嵌
+			<button onclick="alert('ok')">点击我</button>
+			<a href="javascript:alert('ok')">点击我</a>
+		2.内连
+			<script type="text/javascript">
+			alert('ok');
+			</script>
+		3.外联
+			<script type="text/javascript" src="1.js"></script>
+	2.注释
+		// 单行注释
+		/*
+			多行注释
+		*/
+	3.输出
+		1.alert():弹出
+		2.document.write():输出在浏览器
+		3.console.log():在调试栏(谷歌在console中，火狐在控制台中)
+	4.语句
+		javascript的语句一般以 分号 或者 换行 结束
+
+	5.变量名
+		以字母数字下划线和$定义，不要以数字开头
+
+		注意：
+			1.变量名，函数名和操作符都区分大小写
+			2.不要使用一些关键字，保留字，true，false，null等作为变量名
+
+			关键字
+			break	do 	instanceof	typeof	case 	default		in
+			else	new	var	catch	finally	if 	try		return
+			void	continue	for 	switch	throw 	while
+			debugger	function	this	with	delete
+
+			保留字
+			abstract	enum	int 	short	boolean	export	interface
+			static	byte	extends	long	super	char 	transient	native
+			volatile	class	float	package	throws	implements	goto
+			private	final	debugger	const	protected	synchronized	double
+			import	public	let	yield
+
+	6.数据类型
+		基本数据类型：字符串、数值(整型和浮点型)、布尔、null、Undefined、函数
+		复杂数据类型：数组、对象
+
+		typeof：检测数据类型	type str;
+		对象：null，数组和对象
+
+		两种情况的值是undefined:未定义的变量 定义未被赋值的变量
+
+		字符串：
+			1.单引号和双引号没有区别
+			2.可以互相嵌套
+			3.不可以嵌套自身，如果非要嵌套自身，需要使用转义符'\'
+
+		NaN：
+			1.本来要返回数值的操作数未返回数值，返回NaN(比如数值意外的与字符串运算)
+			2.任何与NaN运算的结果也是NaN
+			3.NaN与任何值都不想等(包括自身)
+			4.isNaN():判断一个值是否是NaN
+		注意：不要使用浮点型的值进行精确计算
+
+	7.数据类型转化
+		其他数据->字符串(原型返回)
+		其他数据->布尔值
+			0, 0.0  ''(空字符串) ,NaN, null, undefined false转为布尔值为假，其他"都"为真
+		Number():转为整型
+			数值:原型输出,NaN输出NaN
+			布尔值:true=>1 false=>0
+			null=>0
+			undefined=>NaN
+			字符串:
+				纯数字字符串->数字
+				空字符串->0
+				其他字符串(包括数字与字母组合)->NaN
+		parseInt():转为整型
+			转化规则：从第一个字符开始，如果是数字，继续找下一位，直到非数字，并将获取的数字全部返回
+		parseFloat():转为浮点型
+			有效字符：一个小数点和数字
+			转化规则:从第一个字符开始，如果遇到无效的字符截至并返回
+	8.运算符
+		运算符与PHP的一样
+		+：可以作为连接符
+
+	9.流程控制
+		if () {
+
+		} else if() {
+
+		} else {
+
+		}
+
+		switch(){
+			case '':
+				// 代码
+				break;
+			default:
+				// 代码
+		}
+	10.循环语句
+		//for最常用(while和do...while使用较少)
+		for(var i=0;i <= 10;i++){
+
+		}
+		break:跳出循环，进行下面代码
+		continue:跳出当次循环，继续循环
+
+		var j = 0;
+		while(j <= 10){
+			j++;
+		}
+
+		var z = 0;
+		do{
+			z++;
+		}while(z <= 10)
+	11.函数定义
+		1.第一种方式
+		function 函数名(param1,param2,param3...){
+			//函数体
+			//return 返回值
+		}
+		2.第二种方式(不推荐)
+		var demo = new Function('x','y','return x+y;');
+
+		3.第三种方式
+		var demo = function(){}
+
+		注意：
+			1.不允许给参数赋初始值
+			2.
+				给函数赋值少于实际个数：则未被赋值的参数为undefined
+				给函数赋值多于实际个数：忽略多赋的值
+
+			3.变量的作用域
+				在函数外：使用var申明的变量为全局变量
+				在函数内：
+					使用var申明的变量为局部变量
+					直接定义变量则为全局变量
+				(*)在开发中建议尽可能使用局部变量，目的是为了减少空间的名称冲突。
+
+		函数内的参数对象：arguments
+			arguments.length:获取参数的长度
+
+		常用函数
+			encodeURI():把字符串编码为 URI。
+			*decodeURI():解码某个编码的 URI。
+			*eval():将 JavaScript 字符串，作为脚本代码来执行。
+	12.对象定义
+		1.直接定义：
+		var obj = new Object();
+		obj.name = '';
+		obj.say = function(){}
+
+		obj.name
+		obj.say()
+		2. 使用函数
+		function demo(){
+			this.name = "";
+			this.age="";
+
+			this.say=function(){}
+		}
+		var demo = new demo()
+		3.使用{}定义
+		var obj = {
+			name:'zhangsan',
+			age:23,
+			say:function(){}
+		}
+	13.
+		定义数组两种形式
+			1.var arr = [1,2,3];
+			2.var arr = new Array(1,2,3);
+
+		注意:
+			1.var arr = new Array(10):定义一个指定长度的数组(值都为undefined)
+			2.只有索引数组，没有关联数组，而且数组的下标必然是从0开始，如果没有被赋值，则为undefined
+
+		length:获取数组元素个数和字符串的长度，不能够获取对象的属性个数
+	14.for...in...遍历数组元素和对象属性
+	15.with(document){
+		write('ok');
+		write('ok');
+		write('ok');
+	}
+	16.内置对象`
+	数值对象：var num = new Number()
+	布尔对象：var bool = new Boolean()
+	字符串对象：var str = new String()
+		str.split(':'):将字符串以分号分割
+		str.trim():删除字符串两边空格
+		str.substr(start,length):从start位置开始，截取length个长度
+		str.substring(start,end):从start开始，到end位置结束(不包含end)
+		toLowerCase()	把字符串转换为小写
+		toUpperCase() 	把字符串转换为大写
+
+		str.match('字符串'|正则)		匹配字符串 或者 执行正则表达式匹配
+		str.replace('字符串|正则'，替换内容)	替换与正则表达式匹配的子串,返回替换后的字符串
+	数组对象：var arr = new Array()
+		arr.pop():删除并返回数组中最后一个元素
+		arr.push(arr|string):在数组的尾部添加(一个或多个)元素,并返回新数组的个数
+		arr.shift():删除并返回数组中的第一个元素
+		arr.unshift(arr|string):在数组的开头添加(一个或者多个)元素，并返回新数组的个数
+		*arr.join(':'):将数组元素以:链接成字符串
+		arr.sort():按字符串顺序排序
+	正则对象：var reg = new RegExp();
+		reg = /[a-z]/;	没有引号
+		reg.test(string)
+	时间对象：
+		var myDate = new Date();	//当前时间
+		var myDate = new Date('2013-1-13 13:13:13');
+		var myDate = new Date(时间戳);
+
+		年：myDate.getFullYear()
+		月：myDate.getMonth()+1
+		日：myDate.getDate()
+		时：myDate.getHours()
+		分：myDate.getMinutes()
+		秒：myDate.getSeconds()
+		毫秒：myDate.getMilliseconds()
+		时间戳:myDate.getTime()
+
+	事件
+		1.鼠标事件
+			onclick
+			obj.onclick = function(ent){
+				// 兼容谷歌和IE
+				var event = window.event || ent;
+			}
+			ondblclick
+
+			onmouseover
+			onmouseout
+
+			onmousedown
+			onmouseup
+
+			oncontextmenu
+				return false:阻止右键点击
+			onmousemove
+		2.键盘事件
+			event.keyCode:获取按下键盘对应的ascii值
+
+			onkeydown
+			onkeyup
+			onkeypress
+			1. 一个放开一个没有放开，onkeydown 先于 onkeypress 发生。
+			2.onkeypress 无法系统按钮。
+			3.onkeydown 捕获的 keyCode 不区分字母大小，而 onkeypress 区分。
+		3.框架对象事件
+			onerror：图片加载错误时触发
+			onload:通常用于body元素，在页面完全载入后(包括图片、css文件等等)执行脚本代码。
+			onscroll：滚动条发生滚动
+		4.表单事件
+			this.value:获取表单的值
+
+			// 文本域
+			onblur
+			onfocus
+			onselect:文本框中的文本被选中时发生。
+
+			// 单选框，多选框，下拉菜单
+			onchange
+
+			// 表单
+			表单对象.onreset
+			表单对象.onsubmit
+
+		阻止冒泡（js中return false不能阻止冒泡，jquery可以阻止）
+			event.stopPropagation() 	火狐谷歌
+			window.event.cancelBubble = true	IE
+
+		event.clientX:鼠标的横坐标
+		event.clientY:鼠标的纵坐标
+
+		box.clientWidth:div宽(实际宽度+padding值)
+        box.clientHeight:div高(实际高度+padding值)
+
+		obj.offsetLeft:获取obj对象距左边的距离(参照物：父级元素有定位，相对于父级，没有定位，则相对于body)
+		obj.offsetTop:获取obj对象距左边的距离(参照物：父级元素有定位，相对于父级，没有定位，则相对于body)
+
+        box.offsetWidth:div宽(实际宽度,padding,边框,滚动条)
+        box.offsetHeight:div高(实际高度,padding,边框,滚动条)
+
+		obj.scrollLeft：obj内容的横向滚动距离
+		obj.scrollTop：obj内容的纵向滚动距离
+
+浏览器对象模型 BOM（window是最大的对象）
+	3.window对象的包括
+		全局变量，函数
+		location对象
+			*location.href:获取当前网页的链接
+			*location.reload():刷新
+		history对象
+			history.back()：后退
+			history.forward()：前进
+			history.go(-1):后退
+			history.go(1):前进
+			history.go(0):刷新
+		frames对象 window.parent.name  window.parent.demo();
+		screen对象
+		navigator对象
+		document对象 D
+			// 表单
+			document.forms[0]
+			document.forms['name值']
+			document.name值
+
+			// 链接
+			document.links[0]
+			document.links['name值']
+
+			// 图片
+			document.images[0]
+			document.images['name值']
+
+			document.querySelectorAll('div')
+			document.querySelector('#box'):获取第一个
+
+JS扩展
+	1.获取html对象
+			document.getElementById()
+			document.getElementsByClassName()
+			document.getElementsByName()
+			document.getElementsByTagName()
+
+			obj.style:对象的具体样式对象
+			obj.style.background:背景样式
+			obj.style.backgroundColor:背景样式
+
+			obj.innerHTML:获取标签内部的html代码
+			obj.innerText:获取标签内的文本
+
+
+
+	2.定时器
+		setTimeout(vCode, iMilliSeconds [, sLanguage]) -- 单次定时执行指定函数
+		clearTimeout(iTimeoutID) -- 取消上面的单次定时
+
+		setInterval(vCode, iMilliSeconds [, sLanguage]) --无限次定时执行指定函数
+		clearInterval(iIntervalID)-- 取消上面的多次定时
+

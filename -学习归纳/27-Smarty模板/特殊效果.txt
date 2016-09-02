@@ -1,0 +1,44 @@
+
+
+
+
+//===== smarty 支持PHP函数的直接输出 
+
+	<p>现在的时间戳是：{time()} ；</p> 
+
+
+
+//===== 模板中支持计算	
+
+	<p>数值{$a} 的二倍结果是：{$a*2} </p>
+
+
+
+//===== 模板中调用二维数据变量
+
+	$info=array(
+		arrary('age'=>18,name=>'li'),
+		arrary('age'=>19,name=>'zhang'),
+	);
+	$this->assign('info',$info);			//控制器中注册变量
+
+
+
+	{$info.1.name}					//模板中调用下标为1的name值
+
+
+
+
+//===== 模板中遍历数组
+
+	$info=array(
+		arrary('age'=>18,name=>'li'),
+		arrary('age'=>19,name=>'zhang'),
+	);
+	$this->assign('info',$info);			//控制器中注册变量
+	
+
+
+	{foreach $info as $k=>$v}			//模板中遍历数组
+		{$v.name}
+	{/foreach}

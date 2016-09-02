@@ -1,0 +1,953 @@
+
+
+
+//=====select 查询语句集合
+
+//=====mysql取出查询结果的四种方法
+
+//=====数据库添加当前时间
+
+//=====mysql 所有命令函数
+
+//=====mysql数据库连接构造
+
+//=====dql查询	
+
+//=====释放资源
+
+//=====关闭连接
+
+//=====mysql数据表复制的几种方法
+
+//-----更改mysql 数据库的表名
+
+//-----查看数据表是否存在
+
+//-----按id的奇偶数查询数据表内容
+
+//=====从虚拟目录跨盘引用其它盘符目录文件
+
+
+//-----解决数据库与网页乱码问题
+
+//=====mysql_num_rows 获取结果集的行数，用于判断$res是否有数据
+
+
+
+//===== mysql_affected_rows() 	取得前一次 MySQL 操作所影响的记录行数
+//===== mysql_connect()  	打开一个到 MySQL 服务器的连接
+//===== mysql_select_db () 	选择数据库
+//===== mysql_set_charset()	设置数据库编码
+     或 mysql_query('SET NAMES UTF8')
+//===== mysql_query()   发送一条 MySQL 查询
+//===== create database dbname 创建一个数据库
+//===== create table user1() 创建一个数据表，以及相关内容
+//===== drop database dbname 	删除一个数据库或数据表
+//===== mysql_error ()	返回错误信息
+//===== mysql_fetch_array()  以关联和索引数组形式从结果集中取出数据
+//===== mysql_fetch_assoc()  以索引数组形式从结果集中取出数据
+//===== mysql_free_result( $result ) 释放资源
+//===== mysql_fetch_row($) 以索引数组形式取出结果集中数据
+//===== mysql_fetch_field()  取出表头字段信息(对象)
+//===== mysql_num_rows($)  取得结果集中行的数目(配合select)
+
+
+
+
+
+
+
+
+
+//=====mysql_num_rows 获取结果集的行数，用于判断$res是否有数据
+
+$res=mysql_qurey($sql);
+if($res && mysql_num_rows($res)>0){
+	echo '结果集中有数据';
+}else{
+	echo '结果集是空的';
+}
+
+
+
+
+//=====mysql取出查询结果的四种方法
+
+1, mysql_fetch_row	返回索引数组，取出结果的下标以0,1,2,数字的形式显示。
+2, mysql_fetch_assoc	返回关联数组，取出结果的下标以，数组本身KEY字串的形式显示。
+3, mysql_fetch_array	同时返回索引与关联数组，内存多占用一倍。
+4, mysql_fetch_object	以对象的形式返回数据，使用方法为： echo $row->xx 
+			因为这时对象把数据当做一个属性.
+
+
+
+
+//=====数据库添加当前时间
+	$sql = insert into(time) values(now());
+	
+	now() 所显示的时间为： 2015-04-11 15:31:45
+
+
+
+
+//=====修改数据表名字段
+
+	先将数据表导出，然后修改某字段，然后再导入！
+
+	如出现，无法导出数据表情况，可在最下方的‘另存为文件’中，选择zip压缩格式！
+	
+
+
+
+
+
+
+
+
+
+
+
+//=====从虚拟目录跨盘引用其它盘符目录文件
+
+	require "C://AppServ/www/mysql.php";	//跨盘符引用页面
+	$mysql = new Mysql();
+
+
+
+
+//===== mysql_affected_rows() 	取得前一次 MySQL 操作所影响的记录行数
+//===== mysql_connect()  	打开一个到 MySQL 服务器的连接
+//===== mysql_select_db () 	选择数据库
+//===== mysql_set_charset()	设置数据库编码
+
+<?php
+$link  =  mysql_connect ( 'localhost' ,  'mysql_user' ,  'mysql_password' );
+if (! $link ) {
+    die( 'Could not connect: '  .  mysql_error ());
+}
+mysql_select_db ( 'mydb' );
+mysql_set_charset('utf8');
+
+/* 本例返回被删除记录的准确数目 */
+mysql_query ( 'DELETE FROM mytable WHERE id < 10' );
+printf ( "Records deleted: %d\n" ,  mysql_affected_rows ());
+
+/* 对于非真值的 WHERE 子句，应返回 0 */
+mysql_query ( 'DELETE FROM mytable WHERE 0' );
+printf ( "Records deleted: %d\n" ,  mysql_affected_rows ());
+?> 
+
+
+结果输出：
+Records deleted: 10
+Records deleted: 0
+
+
+
+
+
+
+//===== mysql_close ( $link )   关闭 MySQL 连接
+
+
+<?php
+$link  =  mysql_connect ( 'localhost' ,  'mysql_user' ,  'mysql_password' );
+if (! $link ) {
+    die( 'Could not connect: '  .  mysql_error ());
+}
+echo  'Connected successfully' ;
+mysql_close ( $link );
+?> 
+
+以上例程会输出：
+Connected successfully
+
+
+
+
+
+
+
+
+//===== mysql_query()   发送一条 MySQL 查询
+//===== create database dbname 创建一个数据库
+//===== drop database dbname 	删除一个数据库或数据表
+//===== mysql_error ()	返回错误信息
+	
+<?php
+$link  =  mysql_connect ( 'localhost' ,  'mysql_user' ,  'mysql_password' );
+if (! $link ) {
+    die( 'Could not connect: '  .  mysql_error ());
+}
+
+$sql  =  'CREATE DATABASE dbname' ;
+或
+$sql  =  "drop database dbname";
+if ( mysql_query ( $sql ,  $link )) {
+    echo  "创建或删除成功" ;
+} else {
+    echo  '创建或删除失败'  .  mysql_error () .  "\n" ;
+}
+?> 
+以上例程的输出类似于：
+
+Database my_db created successfully
+
+
+
+
+
+
+
+
+//===== mysql_fetch_array()  以关联和索引数组形式从结果集中取出数据
+把结果当做一个数组，可用关联和索引的方式取出！
+
+<?php
+    mysql_connect ( "localhost" ,  "mysql_user" ,  "mysql_password" ) or die( "Could not connect: "  .  mysql_error ());
+    mysql_select_db ( "mydb" );
+
+    $result  =  mysql_query ( "SELECT id, name FROM mytable" );
+
+    while ( $row  =  mysql_fetch_array ( $result ,  MYSQL_NUM )) {   	//索引数组形式
+         printf  ( "ID: %s  Name: %s" ,  $row [ 0 ],  $row [ 1 ]);
+    }
+或
+    while ( $row  =  mysql_fetch_array ( $result ,  MYSQL_ASSOC )) {  	//关联数组形式
+         printf  ( "ID: %s  Name: %s" ,  $row [ "id" ],  $row [ "name" ]);
+    }
+或
+    while ( $row  =  mysql_fetch_array ( $result ,  MYSQL_BOTH )) {	//关联索引兼具
+         printf  ( "ID: %s  Name: %s" ,  $row [ 0 ],  $row [ "name" ]);
+    }
+
+     mysql_free_result ( $result );
+?> 
+
+
+
+
+
+
+
+
+//===== mysql_fetch_assoc()  以索引数组形式从结果集中取出数据
+//===== mysql_free_result( $result ) 释放资源
+
+
+<?php
+    mysql_connect ( "localhost" ,  "mysql_user" ,  "mysql_password" ) or die( "Could not connect: "  .  mysql_error ());
+    mysql_select_db ( "mydb" );
+
+    $result  =  mysql_query ( "SELECT * FROM mytable" );
+    if (! $result ) {
+   	 echo  "数据查询失败 "  .  mysql_error ();
+    	 exit;
+    }
+    if ( mysql_num_rows ( $result ) ==  0 ) {
+    	echo  "没有数据！" ;
+   	exit;
+    }
+    while ( $row  =  mysql_fetch_assoc ( $result )) {
+   	 echo  $row [ "userid" ];
+   	 echo  $row [ "fullname" ];
+   	 echo  $row [ "userstatus" ];
+    }
+
+    mysql_free_result ( $result );
+?> 
+
+
+
+
+
+
+
+//===== mysql_fetch_row($) 以索引数组形式取出结果集中数据
+
+<?php
+$result  =  mysql_query ( "SELECT id,email FROM people WHERE id = '42'" );
+if (! $result ) {
+    echo  'Could not run query: '  .  mysql_error ();
+    exit;
+}
+$row  =  mysql_fetch_row ( $result );
+
+echo  $row [ 0 ];  // 42
+echo  $row [ 1 ];  // the email value
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== mysql_fetch_field()  取出表头字段信息(对象)
+
+	while($into=mysql_fetch_field($res)){
+		echo $into->name;
+	}
+结果会显示：一个表的表头如： id  name  password age  等
+
+	//$field = $res->fetch_field() 面向对象的方式
+
+
+
+
+
+
+
+
+//===== mysql_num_rows($)  取得结果集中行的数目(配合select)
+
+<?php
+$link  =  mysql_connect ( "localhost" ,  "mysql_user" ,  "mysql_password" );
+mysql_select_db ( "database" ,  $link );
+
+$result  =  mysql_query ( "SELECT * FROM table1" ,  $link );
+$num_rows  =  mysql_num_rows ( $result );
+
+echo  " $num_rows  Rows\n" ;
+?>
+
+
+
+
+
+
+
+
+
+
+//=====mysql数据库连接构造
+	public $link;
+	function __construct($addr,$root,$pass,$user){
+		$this->link=mysql_connect($addr,$root,$pass)or die("数据库连接失败！");
+		mysql_select_db($user)or die("选择数据库失败！");
+		mysql_set_charset("utf8");
+	}
+
+
+	function dql($sql){
+		$res=mysql_query($sql);
+		return $res;
+	}
+
+
+//=====释放资源
+	function free($res){
+		mysql_free_result($res);
+	}
+	
+
+//=====关闭连接
+	function close(){
+		mysql_close($this->link);
+	}
+
+	
+	
+}
+
+
+
+
+-----解决数据库与网页乱码问题（Data too long）
+
+ show variables like "%char%";
+原因，cmd 的操作系统只认GBK的编码，而在文档中的ANSY码有时也是GBK码，所以有时在文档中粘到CMD中的数据可以使用，而直接在CMD中输入的字符却会出错。，，
+	解决方法一：要么在文档中以GBK编码先写好代码，然后粘到CMD中。
+	解决方法二： set character_set_client=gbk;  (可以调用上面的variable like命令查看一下)
+		     set character_set_results=gbk;
+	    或直接： set names gbk; 即可
+	容易出错的地方： 设置好 mysql_set_charset('utf8');  有时忘记设置这里就会出现乱码！
+	mysqli 中的编码设置  $mysqli->set_charset('utf8');  
+
+
+
+
+
+//php连mysql用 utf-8编码乱码解决方案大全 
+
+1.修改my.ini:
+[mysql]
+default-character-set=utf8
+[mysqld]
+default-character-set=utf8
+default-storage-engine=MyISAM
+在[mysqld]下加入:
+default-collation=utf8_bin
+init_connect='SET NAMES utf8'
+
+2.在需要做数据库操作的php程序前面加上
+mb_internal_encoding('utf-8');
+3.create table最后边加上ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+
+4.phpMyAdmin/config.inc.php
+
+$cfg['DefaultCharset'] = 'utf-8';
+$cfg['RecodingEngine'] = 'iconv';
+
+5.phpMyAdmin/libraries/string.lib.php
+将第41行的
+mb_internal_encoding($GLOBALS['charset']);
+改为：mb_internal_encoding('utf-8');
+
+6.phpAdmin导出数据时
+把"二进制区域使用十六进制显示"的勾去掉
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====create table user1() 创建一个数据表，以及相关内容
+	create table user1(
+	id int primary key auto_increment,
+	name varchar(32) not null,
+	password varchar(64) not null,
+	email varchar(128) not null,
+	age tinyint unsigned not null
+	)	
+	;
+
+
+
+
+-----按id的奇偶数查询数据表内容
+//按偶数查询
+select * from a where id%2=0;
+
+//按奇数查询
+select * from a where id%2=1;
+
+
+
+
+
+
+
+-----查看数据表是否存在
+$sql="show tables like 'xxxx'";
+
+
+-----myadmin登陆: 无法在发生错误时创建会话,请检查 PHP 或网站服务器日志,并正确配置 PHP 安装。
+解决方法：
+	1：设置一个session临时存放的文件夹tmp 
+	2：在php.ini中找到session.save_path = "/ext"
+		修改指向到自设的tmp   session.save_path = "c:/wamp/tmp"
+	3：在文件夹选项中取消使用简单文件共享
+	4：在tmp安全项中 设置user用户的顶级权限
+	5：如果在使用中遇到此问题并设置以上四步还无效时，就清空tmp文件夹。
+
+
+
+
+-----cmd下导入，导出mysql数据表
+				
+	1：导出库文件
+c:\>mysqldump?-h?localhost?-u?root?-p?mydb?>e:\mysql\mydb.sql
+	2.导出库中的数据表
+c:\>mysqldump?-h?localhost?-u?root?-p?mydb?mytable>e:\mysql\mytable.sql
+后输入密码，等待一会导出就成功了，可以到目标文件中检查是否成功。
+
+	3.导入文件
+c:\>mysql?-h?localhost?-u?root?-p?mydb2?<?e:\mysql\mydb2.sql
+
+
+
+
+-----导入文件大小限制问题的解决：
+
+	?默认情况下：MySQL?对导入文件大小有限制的，最大为2M，所以当文件很大时候，直接无法导入，下面就这个问题的解决列举如下：?
+	1.在php.ini中修改相关参数：?影响mysql导入文件大小的参数有三个：?memory_limit=128M,upload_max_filesize=2M,post_max_size=8M?修改upload_max_filesize=200?M?这里修改满足你需要的大小，可以同时修改其他两项memory_limit=250M?post_max_size=200M?这样就可以导入200M以下的.sql文件了。?
+上文中是把MySQL放置在系统路径中，其实不妨也行。例如我的MySQL安装目录为D:\MySQL?Server?5.0
+
+
+	//mysql_fetch_row()  用[0]数字的索引方式显示内容
+	//mysql_fetch_assoc() 用'string'字符串的关联方式显示
+	//mysql_num_rows()   其表示取得结果集中行的数目 
+
+//mysqli 面向过程的语句
+
+$mysqli = mysql_connect('localhost','root','abcd','words'); //连接数据库
+mysqli_set_charset($mysqli,"utf8");		//设置编码
+$sql=",,,,,";					//dml,dql语句
+$res = mysqli_query($mysqli,$sql);		//query语句
+$row = mysqli_fetch_row($res);			//fetch语句  以索引形式反回数组结果
+
+
+//mysqli 面向对象的语句
+$mysqli = new mysqli('localhost','root','abcd','words');  //连接数据库
+$mysqli->query("set names utf8");			//设置编码
+$sql=",,,,";						//dml,dql语句
+$res=$mysqli->query($sql);				//query语句
+$row=$res->fetch_row()					//fetch语句
+
+$res->free();						//释放资源
+mysqli_free_result($res);			//释放资源
+mysqli_result::free();
+
+$mysqli->close();					//关闭连接
+mysqli_close($mysqli);					//关闭连接
+
+$mysqli->affected_rows>0				//查看受到操作是否影响到行数
+mysqli_affected_rows				//查看最后一次，插入等操作受到影响的行数。
+
+mysqli::autocommit
+mysqli_autocommit				//自动提交
+
+mysqli::commit					//提交一个事务
+mysqli_commit					
+
+
+$mysqli->connect_error;				//数据库连接错误
+mysqli_connect_erron
+
+
+$mysqli->rollback;
+mysqli_rollback;				//回滚，回退当前数据库的事务
+
+$mysqli->set_charset;
+mysqli_set_charset;				//设置数据库编码
+
+mysqli_result::fetch_assoc()
+mysqli_fetch_assoc()				//以关联数组形式返回结果。
+
+$mysqli->error;
+mysqli_error;				//返回一个描述最后一次错误的字符串。
+
+
+$mysqli->multi_query;
+myslqi_multi_query;			//同时查询多条语句
+
+$mysqli->next_result;
+mysqli_next_result;			//让下一个结果集做准备，如果下一下存在，返回真！
+
+
+
+
+PHP连接数据库：
+<?php
+	$link = mysql_connect('localhost','root','abcd')or die('连接数据库失败');   //连接数据库，（）中指定路径，账户，密码。
+	mysql_select_db('threephp')or die("选择数据库失败"); 	 //选择数据库，（）中指定哪一个库的库名。
+	mysql_set_charset('utf-8');			    //设置使用编码是什么。
+					//到这里，数据库就连接成功了。
+	$sql = "select id,name,age,sex from user where id = 10"; //查一条时用 $row形式，
+	$res = mysql_query($sql);                           //这条语句就是把数据库内容$sql发送了。
+	//var_dump($res);	//查看发送是否成功，打开网页显示：resource(3) of type (mysql result)  表示成功。
+	//$row = mysql_fetch_assoc($res);
+	//var_dump($row);
+	while(list($id,$name,$age,$sex) = mysql_fetch_row($res)){  //查多条时用这种while 形式/
+		echo "{$id}--{$name}--{$age}--{$sex}--<br/>";
+	}
+
+?>
+	
+
+
+
+<?php
+	$link = mysql_connect('localhost','root','abcd');
+	mysql_select_db('shoujiguishu');
+	mysql_set_charset('utf8');
+	$jsps = $_POST['text'];
+	$num = substr($jsps,0,7);
+	$sql = "select * from shouji where num = ($num)";
+	$res = mysql_query($sql);
+	if($res&&mysql_num_rows($res)){
+		$card = mysql_fetch_assoc($res);
+		$istrue = 1;
+	}else{
+		$istrue = 2;
+		$eor = "请输入正确的手机号码！";
+	}
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+	<head>
+		<title>one</title>
+		<meta http-equiv="content-type" content="text/html;	charset=utf8" />
+		<link type="text/css" rel="stylesheet" href="./xm.css" />
+		<style>
+				*{
+					margin:0px;
+					padding:0px;
+				}
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<div class="top">
+				手机号码所在地查询
+			</div>
+			<div class="search">
+				<form action="" method="post">
+					<div class="textc">
+						<input type="text" class="text" name="text" value="请输入手机号..." pattern="[0-9]{11}"/>
+					</div>
+					<div class="searc">
+						<input type="submit" class="subc" name="sub" value="" />
+						<input type="reset"  class="rec" name="re" value="" />
+					</div>
+				</form>
+			</div>
+			<div class="result">
+				<?php if($istrue==1){ ?>
+				<p>您输入的手机号是：<?php echo $jsps ?></p>
+				<p>号码所在城市：<?php echo $card['city'] ?> </p>
+				<p>号码所在城市区号：<?php echo $card['quhao'] ?></P>
+				<p>手机号所属类型：<?php echo $card['type'] ?></p>
+				<?php }else{
+					echo "请输入一个正确的手机号码";
+					}
+				?>
+				
+			</div>
+		</div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+---mysql相关命令：
+进入数据库： mysql -uroot -p  
+ 
+显示库内容：show databases;
+
+进入数据库：  use threephp    	//threephp为数据库的名字
+
+显示库中的表: show tables;  	
+
+看表的内容结构： desc user;
+
+退出： exit; 或  quit;
+
+ // user 为表名，name 和value 要一一对应
+插入内容： insert into user(name,age,sex) value('zhangsan',20,'nan');   
+插入多条内容：insert into user(name,age,sex) value('zhangsan',20,'nan')，(name,age,sex) value('zhangsan',20,'nan')，，，，依次类推，就是name等字段名，输入一次，后面的值多闪重复写，间隔用逗号隔开。
+
+
+
+
+	update语句更新数据表中已存在的数据
+update 表名 set 字段名=表达式[,....][where 条件]
+[order by 字段][limit 行数]
+
+//更新示例；
+update user set name = 'wangjun';  //这里不加参数where会改变表中所有该名字的内容。
+update user set name = 'zhangsan' where id = 1;  //这样就会只改变第一个字段内容了。
+
+update fanginfo set aname='ddd' where id%5=1;	更改id能被5整除的数据内容
+
+
+ Delete 删除数据：
+delete from 表名 [where 条件] [order by字段] [limit 行数]
+delete from user where id = 3;                      //user 是表名，where必须有的参数，
+
+
+
+
+
+
+//=====select 查询语句集合
+
+							//--查询非指定条件语句
+select * from user where (name!='aa') and(name!='bb');
+查询除了 name=aa和bb以外的所有数据
+
+
+							//mysql同时满足多条件查询
+select * from fanginfo where (price between 1000 and 2000) and(mj<60);
+
+$aa='and(mj<80)';
+$sql="select * from fanginfo where (id<90) $aa ";
+
+$sql="select * from fanginfo where (id<90) and(mj>80)";
+
+
+select * from fanginfo where id%5=1;		//选择id能被5整除的数据
+
+
+select name from user;    //只查name;
+
+select name,age from user; //同时查name 和age 两项。
+
+select * from user;        //查询user 表中所有的内容
+
+select id,name,age,sex from user where id = 33;    //查询id为33的具体内容;
+
+select id,name,age,sex from user where id < 10;    //查询id小于10的所有内容；
+
+select id,name,age,sex from user where id between 15 and 25;   // 查询id从15到25之间的内容.
+
+select id,name,age,sex from user where id in (4,6,32,53,57,60);  //同时显示多条不同的内容。
+
+select id,name,age,sex from user where name like '%a%'; //模糊查找，带某个字符段的。
+select id,name,age,sex from user where name like '%g'; //模糊查找，以某个字段开头的，
+select id,name,age,sex from user where name like 'w%'; //模糊查找，以某个字段结尾的。
+
+select id,name,age,sex from user order by id;  //正序排列显示，可以用name,age,等其它。后面省略了asc 因为是默认的.
+select id,name,age,sex from user order by id desc;  //倒序排列显示，，，，其它同上。
+
+select * from user limit 3;  //limit 限制最多输出三行，
+select * from user limit 7,3;  //限制 从第七行开始，最多输出三行。
+
+
+select id,name,age,sex from user order by id desc limit 0,10;	//限制字段，以ID倒排序，从0开始输出10条 
+
+
+select count(*) from user; //查询user表里有多少条内容。
+
+select sum(age) from user;  //计算总和：计算user表下的 age 年龄的总和是多少。
+select avg(age) from user;  //求平均数； 计算user表下的age 年龄的平均值是多少。
+select max(age) from user;  //求最大值； 显示user 表中age年龄最大的。
+select min(age) from user;  //求最小值； 显示user表中age年龄最小的。
+
+
+
+select version();        //查询版本；
+
+select 1+1;              //可以计算；
+
+
+select name as un from user;	//查询name字段 并用别名un显示
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====mysql数据表复制的几种方法
+
+
+//复制一条数据到另一个表
+insert into t2(en,ch) select en,ch from t1 where id = 10;
+
+//复制旧表全部数据到另一个表（假设表结构不一样）
+insert into t2(en,ch) select en,ch from t1;
+
+//复制旧表的全部数据到新表(假设两个表结构一样)
+insert into t2 select * from t1;
+
+
+1、复制表结构及数据到新表
+CREATE TABLE 新表SELECT * FROM 旧表
+这种方法会将oldtable中所有的内容都拷贝过来，当然我们可以用delete from newtable;来删除。
+不过这种方法的一个最不好的地方就是新表中没有了旧表的primary key、Extra（auto_increment）等属性。需要自己用&quot;alter&quot;添加，而且容易搞错。
+ 
+ 
+2、只复制表结构到新表
+方法一：
+CREATE TABLE 新表SELECT * FROM 旧表WHERE 1=2
+方法二:(低版本的mysql不支持，mysql4.0.25 不支持，mysql5已经支持了)
+或CREATE TABLE 新表LIKE 旧表
+ 
+ 
+3、复制旧表的数据到新表(假设两个表结构一样)
+INSERT INTO 新表SELECT * FROM 旧表
+ 
+ 
+4、复制旧表的数据到新表(假设两个表结构不一样)
+INSERT INTO 新表(字段1,字段2,.......) SELECT 字段1,字段2,...... FROM 旧表
+ 
+ 
+5、可以将表1结构复制到表2
+SELECT * INTO 表2 FROM 表1 WHERE 1=2
+ 
+ 
+6、可以将表1内容全部复制到表2
+SELECT * INTO 表2 FROM 表1
+ 
+ 
+7、 show create table 旧表;
+这样会将旧表的创建命令列出。我们只需要将该命令拷贝出来，更改table的名字，就可以建立一个完全一样的表
+ 
+ 
+8、mysqldump
+用mysqldump将表dump出来，改名字后再导回去或者直接在命令行中运行
+
+
+
+9,复制表1内容到表2，但不复制重复记录。
+insert into table1 select distinct * from table2(不复制重复纪录）
+
+
+
+10，复制表1内容到表2，只复制前五条。
+ insert into table1 select top 5 * from table2 (前五条纪录)
+
+
+
+11，复制库1中的表内容到库2中的表中。
+insert into db1.table1 select * from db2.table2 (完全复制)
+
+insert into db1.table1 select distinct * from db2.table2(不复制重复纪录）
+
+insert into tdb1.able1 select top 5 * from   db2.table2 (前五条纪录)
+
+
+
+12，复制库1 的内容到库2
+nsert into table1 select * from table2 (完全复制) 
+
+insert into table1 select distinct * from table2(不复制重复纪录） 
+
+insert into table1 select top 5 * from table2 (前五条纪录) 
+
+
+
+-----更改mysql 数据库的表名
+	alter table test_2 rename test_3; 
+	上面的意思是把表名test_2 修改为 test_3 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====mysql 所有命令函数
+
+
+
+mysql_result()	取得结果数据。	3
+mysql_select_db()	选择 MySQL 数据库。	3
+mysql_query()	发送一条 MySQL 查询。	3
+mysql_num_fields()	取得结果集中字段的数目。	3
+mysql_free_result()	释放结果内存。	3
+mysql_num_rows()	取得结果集中行的数目。	3
+mysql_fetch_row()	从结果集中取得一行作为数字数组。	3
+mysql_field_flags()	从结果中取得和指定字段关联的标志。	3
+mysql_fetch_array()	从结果集中取得一行作为关联数组，或数字数组，或二者兼有。	3
+mysql_fetch_assoc()	从结果集中取得一行作为关联数组。	4
+mysql_fetch_field()	从结果集中取得列信息并作为对象返回。	3
+mysql_fetch_lengths()	取得结果集中每个字段的内容的长度。	3
+mysql_close()	关闭非持久的 MySQL 连接。	3
+mysql_connect()	打开非持久的 MySQL 连接。	3
+mysql_affected_rows()	取得前一次 MySQL 操作所影响的记录行数。	3
+
+
+
+
+
+mysql.allow_persistent	"1"	是否允许 MySQL 的持久连接。	PHP_INI_SYSTEM
+mysql.max_persistent	"-1"	每个进程中最大的持久连接数目。	PHP_INI_SYSTEM
+mysql.max_links	"-1"	每个进程中最大的连接数，包括持久连接。	PHP_INI_SYSTEM
+mysql.trace_mode	"0"	跟踪模式。从 PHP 4.3.0 起可用。	PHP_INI_ALL
+mysql.default_port	NULL	指定默认连接数据库的 TCP 端口号。	PHP_INI_ALL
+mysql.default_socket	NULL	默认的 socket 名称。PHP 4.0.1起可用。	PHP_INI_ALL
+mysql.default_host	NULL	默认的服务器地址。不适用于SQL安全模式。	PHP_INI_ALL
+mysql.default_user	NULL	默认使用的用户名。不适用于SQL安全模式。	PHP_INI_ALL
+mysql.default_password	NULL	默认使用的密码。不适用于SQL安全模式。	PHP_INI_ALL
+mysql.connect_timeout	"60"	连接超时秒数。	PHP_INI_ALL
+资源类型
+在 MySQL 模块中使用了两种资源类型。第一种是数据库的连接句柄，第二种是 SQL 查询返回的结果集。
+PHP MySQL 函数
+PHP：指示支持该函数的最早的 PHP 版本。
+函数	描述	PHP
+mysql_change_user()	不赞成。改变活动连接中登录的用户	3
+mysql_client_encoding()	返回当前连接的字符集的名称	4
+mysql_create_db()	不赞成。新建 MySQL 数据库。使用 mysql_query() 代替。	3
+mysql_data_seek()	移动记录指针。	3
+mysql_db_name()	从对 mysql_list_dbs() 的调用返回数据库名称。	3
+mysql_db_query()	
+不赞成。发送一条 MySQL 查询。
+使用 mysql_select_db() 和 mysql_query() 代替。
+3
+mysql_drop_db()	
+不赞成。丢弃（删除）一个 MySQL 数据库。
+使用 mysql_query() 代替。
+3
+mysql_errno()	返回上一个 MySQL 操作中的错误信息的数字编码。	3
+mysql_error()	返回上一个 MySQL 操作产生的文本错误信息。	3
+mysql_escape_string()	
+不赞成。转义一个字符串用于 mysql_query。
+使用 mysql_real_escape_string() 代替。
+4
+
+mysql_fetch_object()	从结果集中取得一行作为对象。	3
+mysql_field_len()	返回指定字段的长度。	3
+mysql_field_name()	取得结果中指定字段的字段名。	3
+mysql_field_seek()	将结果集中的指针设定为指定的字段偏移量。	3
+mysql_field_table()	取得指定字段所在的表名。	3
+mysql_field_type()	取得结果集中指定字段的类型。	3
+mysql_get_client_info()	取得 MySQL 客户端信息。	4
+mysql_get_host_info()	取得 MySQL 主机信息。	4
+mysql_get_proto_info()	取得 MySQL 协议信息。	4
+mysql_get_server_info()	取得 MySQL 服务器信息。	4
+mysql_info()	取得最近一条查询的信息。	4
+mysql_insert_id()	取得上一步 INSERT 操作产生的 ID。	3
+mysql_list_dbs()	列出 MySQL 服务器中所有的数据库。	3
+mysql_list_fields()	
+不赞成。列出 MySQL 结果中的字段。
+使用 mysql_query() 代替。
+3
+mysql_list_processes()	列出 MySQL 进程。	4
+mysql_list_tables()	
+不赞成。列出 MySQL 数据库中的表。
+使用Use mysql_query() 代替。
+3
+mysql_pconnect()	打开一个到 MySQL 服务器的持久连接。	3
+mysql_ping()	Ping 一个服务器连接，如果没有连接则重新连接。	4
+mysql_real_escape_string()	转义 SQL 语句中使用的字符串中的特殊字符。	4
+mysql_stat()	取得当前系统状态。	4
+mysql_tablename()	不赞成。取得表名。使用 mysql_query() 代替。	3
+mysql_thread_id()	返回当前线程的 ID。	4
+mysql_unbuffered_query()	向 MySQL 发送一条 SQL 查询（不获取 / 缓存结果）。	4
+PHP MySQL 常量
+在 PHP 4.3.0 以后的版本中，允许在 mysql_connect() 函数和 mysql_pconnect() 函数中指定更多的客户端标记：
+PHP：指示支持该常量的最早的 PHP 版本。
+常量	描述	PHP
+MYSQL_CLIENT_COMPRESS	使用压缩的通讯协议。	4.3
+MYSQL_CLIENT_IGNORE_SPACE	允许在函数名后留空格位。	4.3
+MYSQL_CLIENT_INTERACTIVE	在关闭连接前所允许的交互超时非活动时间。	4.3
+MYSQL_CLIENT_SSL	使用 SSL 加密（仅在 MySQL 客户端库版本为 4+ 时可用）。	4.3
+mysql_fetch_array() 函数使用一个常量来表示所返回数组的类型：
+常量	描述	PHP
+MYSQL_ASSOC	返回的数据列使用字段名作为数组的索引名。	 
+MYSQL_BOTH	返回的数据列使用字段名及数字索引作为数组的索引名。	 
+MYSQL_NUM	
+返回的数据列使用数字索引作为数组的索引名。
+索引从 0 开始，表示返回结果的第一个字段。

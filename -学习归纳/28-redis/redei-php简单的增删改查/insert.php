@@ -1,0 +1,1 @@
+<?php	require "redis.php";	$name=$_POST['name'];	$age=$_POST['age'];	$sex=$_POST['sex'];	$edit=$_POST['edit'];	if(empty($edit)){		$edit='stu'.$redis->incr('id');	}	//echo $name.$age.$sex;	//die();	$redis->hmset($edit,array('name'=>$name,'age'=>$age,'sex'=>$sex));//	if($stat==1){	header('location:index.php');

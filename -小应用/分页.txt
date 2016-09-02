@@ -1,0 +1,37 @@
+<?php
+	if($resc && mysql_num_rows($resc)){
+		$rowc=mysql_fetch_assoc($resc)['count'];		//总条数据
+	}
+	$mp=5;												//每页条数
+	$pnum=ceil($rowc/$mp);								//总页数
+	$pnow =empty($_GET['pnow'])?1:$_GET['pnow'];		//当前页
+	$limit=($pnow-1)*$mp;								//数据库查询基数
+
+
+	$strid="&id={$id}";
+	echo "<a class='pages_next' href='List.php?pnow=1{$strid}'> 首页 </a>";
+	if($pnum<5){	//当最大页小于10 
+		$min=1;			//遍历最小数就为1
+		$max=$pnum;		//遍历最大数就为总页数
+	}else{			//当最大页大于10
+		if($pnow<$pnum-5){		//如果当前页小于最大页减10
+			$min=$pnum-5;
+		}else{					//如果当前页大于最大页减10
+			$min=$pnow;
+		}
+	}
+	$prev=($pnow-1)<=0?1:$pnow-1;	//限制下页不要超过最大页
+	echo "<a class='pages_next' href='List.php?pnow={$prev}{$strid}'> 上一页</a>";
+
+	for($i=$min;$i<=$max;$i++){
+		if($i==$pnow){
+			echo "<a href='List.php?pnow={$i}{$strid}'><b>{$i}</b></a> ";
+		}else{
+			echo "<a href='List.php?pnow={$i}{$strid}'>{$i}</a> ";
+		}
+	}
+	$pnext=($pnow+1)<$pnum?$pnow+1:$pnum;	//限制下页不要超过最大页
+	echo "<a class='pages_next' href='List.php?pnow={$pnext}{$strid}'> 下一页</a>";
+	echo "<a class='pages_next' href='List.php?pnow={$pnum}{$strid}'> 尾页 </a>";
+	echo "<a>...{$pnum}</a>";
+?>

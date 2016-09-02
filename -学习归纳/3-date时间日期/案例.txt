@@ -1,0 +1,79 @@
+<form>
+	<select name='year'>
+		<option value='2015'>2015</option>
+		<option value='2014'>2114</option>
+		<option value='2013'>2013</option>
+	</select>
+	<select name='month'>
+		<option value='1'>1</option>
+		<option value='2'>2</option>
+		<option value='3'>3</option>
+		<option value='4'>4</option>
+		<option value='5'>5</option>
+		<option value='6'>6</option>
+		<option value='7'>7</option>
+		<option value='8'>8</option>
+		<option value='9'>9</option>
+		<option value='10'>10</option>
+		<option value='11'>11</option>
+		<option value='12'>12</option>
+	</select>
+	<input type='submit' value='提交'/>
+</form>
+<?php
+				//11 接收表单数据，并判断是否使用默认的年月数据
+	if(isset($_GET['year']) && isset($_GET['month'])){
+		$year=$_GET['year'];
+		$month=$_GET['month'];
+	}else{
+		$year=date('Y');
+		$month=date('m');
+	}
+
+		//$year=date('Y');		//1	获取当前的年和月的值
+		//$month=date('m');
+
+
+
+	$week=date('w',mktime(0,0,0,$month,1,$year));	//2	用年月的时间戳换算出当月1号是周几，用来做首部空格
+	$days=date('t',mktime(0,0,0,$month,1,$year));	//3	用年月的时间戳换算出当月的最大天数
+
+	
+	$num=0;				//8	设置计数器，存储遍历的天数
+	echo "<table border=1 width=500>";
+		echo "<tr>";
+			echo "<td>日</td>";		//4	设置一周七天
+			echo "<td>一</td>";
+			echo "<td>二</td>";
+			echo "<td>三</td>";
+			echo "<td>四</td>";
+			echo "<td>五</td>";
+			echo "<td>六</td>";
+		echo "</tr>";
+		echo "<tr>";
+			for($i=1;$i<=$week;$i++){	//5	遍历日历前空几天，打出空格
+				echo "<td>&nbsp;&nbsp;</td>";
+				$num++;		//9 每遍历一天加1
+			}
+			for($i=1;$i<=$days;$i++){	//6	遍历最大天数，显示月中的天
+				if($num%7==0){			//10 遍历到7 天一换行
+					echo "</tr><tr>";
+				}
+				echo "<td>{$i}</td>";
+				$num++;		//9 每遍历一天加1
+			}
+			$last=42-$week-$days;		//7	算出尾总空格，遍历出来
+			for($i=1;$i<=$last;$i++){
+				if($num%7==0){			//10 遍历到7 天一换行
+					echo "</tr><tr>";
+				}
+				echo "<td>&nbsp;&nbsp;</td>";
+				$num++;		//9 每遍历一天加1
+			}
+			
+			
+		echo "</tr>";
+		
+	echo "</table>";
+
+?>

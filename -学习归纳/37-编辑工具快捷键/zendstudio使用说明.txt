@@ -1,0 +1,103 @@
+//===== zendstudio 注册
+
+Help -> Register
+添入下面注册名与注册码即可.
+zend studio 8 注册码(适用于7.0以上所有版本)
+Username: zendstudio.net
+Serial Number: 3727234F6095F72034F6095F
+
+
+
+
+
+
+//=====设置zendstudio操作目录
+
+默认为：c:/Documents and Settings/Administrator/Zend/workspaces...
+可以在 File -> Switch Workspace -> Other 修改指定到服务器www 目录。
+
+
+
+
+
+
+
+
+//=====新建一个项目
+
+File -> New -> PHP Project   
+
+
+
+//=====新建一个php页面 
+
+pro1项目名称右键 -> New -> PHP File
+
+
+
+
+//=====改变编辑器中代码字体大小
+
+Window -> General -> Appearance -> Basic -> Text Font 
+双击后改变字体大小。
+ 建议：  Arial   粗体   小四
+
+
+
+
+
+
+//===== 开启或关闭项目 
+
+右键项目名称 -> Close Project   关闭项目
+右键项目名称 -> Open Project  	开启项目
+
+
+
+
+
+//=====模板设置   (解决 新建页面缺少 '?>' )
+
+Window -> Preferences -> PHP -> Editor -> Templates -> New simple PHP file 
+修改 pattern 内容为
+<?php
+${cursor}
+?>
+
+
+
+
+
+
+//=====调整'自动提示代码命令'的速度
+
+Window -> Preferences -> PHP -> Editor -> Content Assist -> Auto Activation
+将代码自动提示的速度设置成 50 即可。
+
+
+
+
+
+
+
+
+//=====修改项目编码格式
+右键 项目名称 -> properties -> Resource  右侧 Text file encoding  
+
+选择 Other 可以修改为utf8 或其它编码
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

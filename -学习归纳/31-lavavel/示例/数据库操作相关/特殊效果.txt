@@ -1,0 +1,5 @@
+
+//===== 以数组形式插入数据库时记得要释放掉那个数组
+
+            \DB::table("order_fcpl3_2015_info")->insert($orderInfo);
+            unset($orderInfo);			//释放数组

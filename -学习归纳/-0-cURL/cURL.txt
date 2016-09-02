@@ -1,0 +1,337 @@
+﻿
+
+//初始化CURL
+	$curlobj = curl_init();			
+		$curl = curl_init('http://www.baidu.com');	
+	
+//设置CURL操作的URL
+	curl_setopt($curlobj,CURLOPT_URL,'https://ajax.aspnetcdn.com/ajsx/jquery.validate/1.12.0/jquery.validate.js');
+	
+//禁止直接显示获取的内容
+	curl_setopt($curlobj,CURLOPT_RETURNTRANSFER, true);		
+	
+//终止服务端进行验证
+	curl_setopt($curlobj,CURLOPT_SSL_VERIFYPEER, 0);	
+
+//设置不获取header数据
+	curl_setopt($curlobj,CURLOPT_HEADER,0);		
+	
+//设置能够让CURL支持页面链接跳转(如有的网站登陆后会自动跳转，如这里不设置就会导致curl失败)
+	curl_setopt($curlobj,CURLOPT_FOLLOWLOCATION, 1);		
+	
+								//CURL的cookie设置
+//设置CURL支持cookie和session
+	curl_setopt($curlobj,CURLOPT_COOKIESESSION, TRUE);		
+//设置CURL保存cookid的文件
+	curl_setopt($curlobj,CURLOPT_COOKIEFILE,'cookiefile');	
+
+//设置CURL读取cookid的文件
+	curl_setopt($curlobj,CURLOPT_COOKIEJAR,'cookiefile');	
+	
+//设置cookie里保存的内容是什么， 这里保存的是session_name 内容为session_id
+	curl_setopt($curlobj,CURLOPT_COOKIE,session_name().'='.session_id());	
+	
+								//CURL的POST方式
+//设置为post方式		(post 方式 必须设置一)
+	curl_setopt($curlobj,CURLOPT_POST, 1);	
+	
+//关闭post传输方式
+	curl_setopt($curlobj,CURLOPT_POST, 0);		
+	
+//设置post传送的数据字段	(post 方式 必须设置二)
+	curl_setopt($curlobj,CURLOPT_POSTFIELDS,$data);	
+	
+// header中设置POST参数	(post 方式 必须设置三)
+	curl_setopt($curlobj,CURLOPT_HTTPHEADER, array('application/x-www-form-urlencoded;charset=utf-8','Content-length:'.strlen($data)));
+	
+//将CURL传输方式设置成普通的GET文件流形式
+	curl_setopt($curlobj,CURLOPT_HTTPHEADER, array("Content-type:text/xml"));	
+	
+//设置过期时间,如果300秒还没下载完成，则关闭CURL
+	curl_setopt($curlobj,CURLOPT_TIMEOUT, 300);			
+	
+//设置FTP的用户名：密码
+	curl_setopt($curlobj,CURLOPT_USERPWD, 'peter.zhou:123456');		
+	
+//将下载的内容保存到 刚才创建的文件中
+	curl_setopt($curlobj,CURLOPT_FILE, $outfile);	
+	
+//开启CURL文件上传功能
+	curl_setopt($curlobj,CURLOPT_UPLOAD, 1);	
+
+//指定要上传的文件	
+	curl_setopt($curlobj,CURLOPT_INFILE, $fp);		
+
+//设置上传文件的大小（就会计算上传需要的时间，不然上传不显示等待时间）	
+	curl_setopt($curlobj,CURLOPT_INFILESIZE, filesize($localfile));		
+	
+//禁止服务端进行验证
+	curl_setopt($curlobj,CURLOPT_SSL_VERIFYPEER, 0);	
+	
+//判断curl的执行是否有错误
+	if(!curl_errno($curlobj))	
+	
+//执行curl并将获取的结果保存
+	$output=curl_exec($curlobj);
+	
+//以数组方式获取返回的信息包括 
+	$info=curl_getinfo($curlobj);	
+
+//关闭CURL	
+	curl_close($curlobj);				
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== cURL的PHP网络文档
+	
+		http://php.net/manual/zh/book.curl.php
+
+
+//===== curl 下载与安装 
+		
+	http://curl.haxx.se/download/	下载地址
+	http://jingyan.baidu.com/article/a681b0dec4c67a3b1943467c.html	安装示例
+
+
+//===== cmd 下执行php文件
+
+	php -f xx.php
+
+
+//===== window中的cmd 下，将抓取的内容直接存入一个新建的文件中
+
+	php -f curl.php > new.html					//运行curl文件抓取网页内容并将结果保存到 new.html文件中。(new文件可以不存在，会直接创建)
+	
+	
+	
+	
+//===== 查看windows , linux 是否支持curl 
+
+		//windows 
+			在cmd 中执行命令：	php -i 		
+			然后在列表中，用右键的查找，看看是否能查找到 cURL的相关说明 即可。
+			
+		//linux
+			执行命令： php -i | grep cURL	如出现以下内容，表明支持cURL
+				cURL support => enabled
+				cURL Information => 7.19.7
+	
+	
+	
+	
+//===== cURL 抓取页面内容的简要操作流程
+
+	$curl = curl_init('http://www.baidu.com');		//初始化
+	
+	curl_exec($curl);		//执行
+	
+	curl_close($curl);		//关闭curl
+	
+	
+	
+	
+	
+	
+//===== 以get方式获取百度页面数据，并将字符百度替换
+//===== 抓取内容并替换指定内容
+
+	$curlobj = curl_init();
+	
+	curl_setopt($curlobj,CURLOPT_URL,'http://www.baidu.com');	//设置访问网页的URL
+	
+	curl_setopt($curlobj,CURLOPT_RETURNTRANSFER,true);	//执行后不直接打印出
+	
+	$output = curl_exec($curlobj);						//执行抓取并把结果保存在变量中
+	
+	curl_close($curlobj);							//关闭curl
+	
+	echo str_replace('百度','吊丝',$output);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 以post 方式获取网络数据
+//===== CURL获取服务 - 查询北京天气
+	$data = 'theCityName=北京';		//设置传送数据，多个的话可以用&连接如：a=aa&b=bb
+	$curlobj = curl_init();			//初始化CURL
+	curl_setopt($curlobj,CRULOPT_URL,'http://www.webxml.com.cn/WebServices/WeatherWebService.asmx/getWeatherbyCityName');	//设置要获取数据的URL
+	curl_setopt($curlobj,CURLOPT_HEADER,0);		//设置不需要header数据
+	curl_setopt($curlobj,CURLOPT_RETURNTRANSFER,1);	//设置不直接打印  参数1或true 不直接打印
+	curl_setopt($curlobj,CURLOPT_POST,1);			//设置为post方式		(post 方式 必须设置一)
+	curl_setopt($curlobj,CURLOPT_POSTFIELDS,$data);	//设置post传送的数据字段	(post 方式 必须设置二)
+											// 设置post方式的相关参数	(post 方式 必须设置三)
+	curl_setopt($curlobj,CURLOPT_HTTPHEADER, array('application/x-www-form-urlencoded;charset=utf-8','Content-length:'.strlen($data)));
+	$rtn = curl_exec($curlobj);		//执行CURL并保存结果到变量中
+	if(!curl_errno($curlobj)){		//判断curl的执行是否有错误
+		// $info=curl_getinfo($curlobj);
+		// print_r($info);
+		echo $rtn;
+	}else{
+		echo "curl error".curl_error($curlobj);		//如果有错误将其打印出来
+	}
+	curl_close($curlobj);
+	
+	
+	
+	
+	
+	
+
+//===== 登陆幕课网并下载个人空间页面	(成功登陆并抓取案例)
+
+	<?php
+	$data = 'username=tpcwre@163.com&password=sdf&remember=1';	//设置个人用户信息
+	$curlobj = curl_init();		//初始化CURL
+	curl_setopt($curlobj,CURLOPT_URL,'http://www.imooc.com/user/login');	//设置访问的URL
+	curl_setopt($curlobj,CURLOPT_RETURNTRANSFER, true);		//不将获取的结果直接打印出来
+	
+	//CURL的cookie相关设置，需要在所有会话开始前设置好  (因为需要登陆操作，所以必须设置cookie)
+	date_default_timezone_set('PRC');					//使用cookie时，必须先设置时区
+	curl_setopt($curlobj,CURLOPT_COOKIESESSION, TRUE);		//设置CURL支持cookie和session
+	curl_setopt($curlobj,CURLOPT_COOKIEFILE,'cookiefile');	//设置CURL保存cookid的文件
+	curl_setopt($curlobj,CURLOPT_COOKIEJAR,'cookiefile');	//设置CURL读取cookid的文件
+	curl_setopt($curlobj,CURLOPT_COOKIE,session_name().'='.session_id());	//设置cookie里保存的内容是什么， 这里保存的是session_name 内容为session_id
+	
+	curl_setopt($curlobj,CURLOPT_HEADER, 0);
+	curl_setopt($curlobj,CURLOPT_FOLLOWLOCATION, 1);		//设置能够让CURL支持页面链接跳转(如有的网站登陆后会自动跳转，如这里不设置就会导致curl失败)
+	
+	curl_setopt($curlobj,CURLOPT_POST, 1);					//使用post方式
+	curl_setopt($curlobj,CURLOPT_POSTFIELDS, $data);		//传送数据
+	curl_setopt($curlobj,CURLOPT_HTTPHEADER, array('application/x-www-form-urlencoded;charset=utf-8','Content-length:'.strlen($data)));  //设置post相关设置
+	curl_exec($curlobj);		//执行CURL
+			
+	curl_setopt($curlobj,CURLOPT_URL,'http://www.imooc.com/space/index');			//在curl登陆后，再次打开个人中心的页面
+	curl_setopt($curlobj,CURLOPT_POST, 0);			//关闭POST的传输方式 ，因为刚才一直使用POST方式操作，但现在要获取网页数据就不能使用POST了，所以要关闭POST
+	curl_setopt($curlobj,CURLOPT_HTTPHEADER, array("Content-type:text/xml"));	//将post的相关设置也改成普通的文件流形式
+	
+	$output=curl_exec($curlobj);		//将获取的结果 保存
+	curl_close($curlobj);				//关闭CURL
+	echo $output;						//输出结果
+	
+
+
+
+
+
+
+	
+//===== 从FTP服务器下载文件到本地
+	
+	<?php
+	$curlobj = curl_init();		//初始CURL
+	curl_setopt($curlobj,CURLOPT_URL, 'ftp://192.168.1.100/downloaddemo.txt');		//设置下载地址
+	curl_setopt($curlobj,CURLOPT_HEADER, 0);			//禁止显示header
+	curl_setopt($curlobj,CURLOPT_RETURNTRANSFER, 1);	//禁止直接显示获取的内容
+	curl_setopt($curlobj,CURLOPT_TIMEOUT, 300);			//设置过期时间,如果300秒还没下载完成，则关闭CURL
+	curl_setopt($curlobj,CURLOPT_USERPWD, 'peter.zhou:123456');		//设置FTP的用户名：密码
+	
+	$outfile = fopen('dest.txt','wb');		//先创建一个本地文件来用于保存下载的文件
+	curl_setopt($curlobj,CURLOPT_FILE, $outfile);	//将下载的内容保存到 刚才创建的文件中
+
+	$rtn = curl_exec($curlobj);		//执行curl并将结果保存到变量
+	fclose($outfile);				//关闭curl
+	if(!curl_erron($curlobj)){			//判断curl过程中是否出现错误
+		$info = curl_getinfo($curlobj);
+		print_r($info);
+		echo 'return:'.$rtn;
+	}else{
+		echo 'curl error'.curl_error($curlobj);
+	}
+	
+	
+	
+	
+	
+	
+	
+//===== 将本地文件上传到FTP服务器上
+
+	<?php
+	$curlobj = curl_init();		//初始化CURL
+	$localfile = 'ftp01.php';	//指定要上传的文件名
+	$fp = fopen($localfile, 'r');	//获取要上传的文件的内容
+
+	curl_setopt($curlobj,CURLOPT_URL, 'ftp://192.168.1.1/ftp01_uploaded.php');	//设置上传到服务上的目标文件
+	curl_setopt($curlobj,CURLOPT_HEADER, 0);		//设置禁止显示 header
+	curl_setopt($curlobj,CURLOPT_RETURNTRANSFER, 1);	//禁止直接显示
+	curl_setopt($curlobj,CURLOPT_TIMEOUT, 300);			//设置超时为300秒
+	curl_setopt($curlobj,CURLOPT_USERPWD, 'peter:123');	//设置上传的用户名和密码
+	
+	curl_setopt($curlobj,CURLOPT_UPLOAD, 1);			//开启CURL文件上传功能 
+	curl_setopt($curlobj,CURLOPT_INFILE, $fp);			//指定要上传的文件
+	curl_setopt($curlobj,CURLOPT_INFILESIZE, filesize($localfile));		//设置上传文件的大小（就会计算上传需要的时间，不然上传不显示等待时间）
+
+	$rtn = curl_exec($curlobj);
+	fclose($fp);
+	if(!curl_erron($curlobj)){
+		
+	}
+
+
+
+
+
+	
+	
+	
+//===== curl 获取https 资源
+	
+	$curlobj = curl_init();
+	curl_setopt($curlobj,CURLOPT_URL,'https://ajax.aspnetcdn.com/ajsx/jquery.validate/1.12.0/jquery.validate.js');
+	curl_setopt($curlobj,CURLOPT_RETURNTRANSFER, true);		//禁止直接显示获取的内容
+	
+	date_default_timezone_set('RPC');		//设置时区 (https 是访问是需要证书的，而证书是有时效性的，所以这里要设置好时间)
+	curl_setopt($curlobj,CURLOPT_SSL_VERIFYPEER, 0);	//终止服务端进行验证
+	
+	$output=curl_exec($curlobj);		//执行curl
+	curl_close($curlobj);				//关闭CURL
+	echo $output;						//输出获取的内容
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

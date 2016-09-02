@@ -1,0 +1,40 @@
+	二、MySQL常见SQL技巧和常见问题
+===============================================
+2.1 正则表达式的使用
+---------------------------------------
+mysql>select name,email from t where email REGEXP "@163[.,]com$"
+
+
+2.2 巧用RAND()提取随机行
+---------------------------------------
+mysql>select * from stu order by rand() limit 3;  --随机提取3条数据
+
+
+2.3 利用GROUP BY的WITH ROLLUP子句统计
+---------------------------------------
+mysql> select cname,pname,count(pname) from demo group by cname,pname with rollup;
+	--使用with rollup关键字后，统计出更多的信息
+	--注意： with rollup不可以和ordery by同时使用
+
+2.4 用BIT GROUP FUNCTIONS做统计
+---------------------------------------
+	mysql>select id，bit_or(kind) from order_rab group by id
+	mysql>select id，bit_and(kind) from order_rab group by id
+	对order_rab表中id分组时对kind做位与和或计算。 
+	bin() 二进制函数
+
+2.5 使用外键需要注意的问题
+---------------------------------------
+	mysql>create table temp( id int, name char(20), foreign key(id) references outTable(id) on delete cascade on update cascade)；
+
+
+2.6 mysql中help的使用
+---------------------------------------
+	>? create
+	>? cre%
+	>? contents 查看所有帮助内容。
+	
+	
+	三、SQL语句的优化：
+==============================================================
+	 

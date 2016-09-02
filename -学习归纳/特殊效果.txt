@@ -1,0 +1,3607 @@
+http://lh.syssuper.com:8000/
+
+//===== 待扩展的知识
+
+	数据库大数据操作	SPARK   Hadoop
+
+	
+
+
+//===== 兄弟连云课堂视频地址及密码
+//===== 相关地址
+//===== 账号备忘
+//===== 奇思妙想
+//===== 常见的攻击方式
+
+	//-- SYN攻击原理
+
+
+
+
+//=====设置元素的隐藏与显示  display:none|block;
+
+//=====上下级文件夹路径 ../	./
+
+//=====获取变量的数据类型  gettype()
+
+//=====获取浏览器版本及型号
+
+//=====判断是否为指定类型数据 is_xxx()
+
+//=====base用来设置页面中默认的属性					（连接形）
+  =====改变页面超连接以新页面的跳转形式
+
+//=====MD5加密
+
+//===== sha1() 给数据加密
+
+//=====label 将几个区域合并在一个点击范围内
+
+//=====将16进制的数值随机打出来
+
+//=====从虚拟目录跨盘引用其它盘符目录文件
+
+//=====php 睡眠3秒钟后再执行后面的内容
+
+//=====DIV中让字符自动换行
+
+//=====php 动态变量名 ${a.$i}
+
+//=====遍历对象的方法和属性
+
+//===== overflow 隐藏超出区域的内容 
+//===== overflow 破除div 18px 高度的限制
+
+//=====在指定元素上使光标变成小手
+
+//=====设置网页标签上的ICON小图标
+
+//=====label标签的 for="id" 的关联属性
+ 
+
+
+
+
+//===== ReflectionMethod 方法反射 
+
+//===== @() 错误抑制 
+
+//=====!! 将数据转换成布尔值来显示
+
+//=====iconv 转换带中文路径的编码
+
+//===== .htaccess  设置目录的访问权限
+
+//===== call_user_func_array() 用于执行函数的函数
+
+//===== ? : 三元运算符，提供简单的判断 
+
+//===== 判断语句的另一种方式
+
+//===== PHP_EOL PHP中通用的换行
+
+//===== 五星彩票遍历每注号码
+
+//===== <<< 定义一个超大字串
+
+//===== 获取某网页的内容
+
+//====== php.ini 配置文件中 register_globals   on/off 开启和关闭时的区别 
+
+//===== 不用if判断如何设置 当x=0时，让y=a  当x=1时,让y=b
+
+//===== 抓取远程页面内容
+
+//===== 让页面内容适应移动端，内容不绽放
+
+//===== 修改Agent 将浏览器设置成手机浏览器 （微信）
+
+//===== 判断服务器请求方式是否为htttps 或 http
+
+//===== php.ini中关于服务保护的关闭
+
+//===== 开启url重写功能 
+
+
+
+
+
+
+
+
+//===== JavaScript 与jquery  相关	
+
+	//-- 获取 iframe标签中页面的高度; var h = document.getElementById('if1').contentWindow.document.body.scrollHeight;
+	//===== jquery 获取宽度和高度
+	//===== JS 判断访问终端类型及其信息
+	//===== js 获取表单值
+	//--js 方式设置背景图片
+		gg_img.style.backgroundImage='url(http://youle1.b0.upaiyun.com/xrqs_new_1.jpg)';
+	//-- js获取或设置页面title 	document.title='aaa';
+	//-- jquery 网络引用：http://libs.baidu.com/jquery/2.0.0/jquery.js	
+	//-- html();  jquery方式向元素内添加内容
+	//===== attr 和 getAttribute 获取和设置元素的属性
+	//-- innerHTML='' JS方式向元素内添加内容
+	//-- document.getElementByIdx_x("form1").reset();	js方式重置表单
+	//=====获取复选框被选中的元素个数(jquery)
+	//=====closeOnEscape 取消ESC键功能(jquery)
+	//=====jquery遍历对象中的属性 var i in event
+	//=====jquery 通过$.support.opacity 来检测浏览器是IE类还是W3C类
+		//$.support.opacity 设置不同浏览器的透明度
+	//=====setTimeout() 设置指定时间后执行(jquery操作)
+	//===== js中confirm 确认是否执行事件
+	//===== a标签的js空连接
+	//===== JS,Jquery获取各种屏幕的宽度和高度
+	//===== JavaScript 播放背景音乐效果
+	//===== 页面加载文字后再加载图片或其它
+	//=====	点击按钮复制文本
+	//===== js 点击变换验证图片
+	//===== js中confirm 确认是否执行事件
+	//===== <script src='...'> JS外部引用的另一种方式 用来做PV统计
+	//===== js 点击变换验证图片
+	//===== 文本框输入限制指定字数，并动态提示(jquery)
+	//===== location.href='',windwo.open(),window.history.back 等 JS页面跳转
+	//===== setInterval() 无限定时,setTimeout() 单次定时  clearInterval(),clearTimeout()	 清除定时器
+	//===== document.getElementsByTagName() 获取节点列表
+	//===== ob.onerror 当加载文档或图像时发生某个错误事件
+	//===== is(':checked') 判断复选框是否被选择 (jquery)
+	//===== H5 实现等待读圈效果
+	//===== JavaScript 函数 
+    		//===== 字符串函数
+			//-- substr(x,n)	截取从x 到 n 的子串
+			//-- substing(x,n)   x,n两者中的较小值作为子字符串的起始点,较大值做为终点
+			//-- str.test()	JS的正则匹配
+
+			//===== $.trim()去除字串两侧的空格 (jquery) 
+
+	//===== js 的一些特殊事件
+    		window.open() - 打开新窗口 	//===== window.open() JS 在新窗口打开页面
+    		window.close() - 关闭当前窗口
+    		window.moveTo() - 移动当前窗口
+    		window.resizeTo() - 调整当前窗口的尺寸
+		window.resize=fun	元素变化事件
+		window.location.href	获取或设置跳转地址
+		window.onload=function	页面初始化事件
+		document.referrer 	刷新页面
+		location.reload()	刷新页面（加setTimeout 就是定时刷新）
+
+			//===== e.select(); 	//选择对象
+			//===== document.execCommand("Copy"); //执行浏览器复制命令
+	//=====jquery 获取显示或隐藏元素的个数与值 :visible	:hidden
+	//===== 60秒后重发短信效果示例
+	//===== 让元素定时在两秒后隐藏
+	//===== js 实现的动态日期与时间
+	//===== 树叶满天向下漂落效果 （jquery2.0 微信流览器中有效）
+	
+	//===== 每个程序员都会的35个jQuery小技巧！	
+	
+		1. 禁止右键点击
+		2.隐藏搜索文本框文字
+		3.在新窗口中打开链接
+		4.检测浏览器
+		5.预加载图片
+		6.页面样式切换
+		7.列高度相同
+		8.动态控制页面字体大小
+		9.返回页面顶部功能
+		10.获得鼠标指针ＸＹ值
+		11.返回顶部按钮
+		12.预加载图片
+		13.检查图片是否加载完成
+		14.自动修改破损图像
+		15.鼠标悬停(hover)切换 class 属性
+		16.禁用 input 字段
+		17.阻止链接加载
+		18.切换 fade/slide
+		19.简单的手风琴效果
+		20.让两个 DIV 高度相同
+		21. 验证元素是否为空
+		22.替换元素
+		23.jQuery延时加载功能
+		24.移除单词功能
+		25. 验证元素是否存在于jquery对象集合中
+		26.使整个DIV可点击
+		27.ID与Class之间转换
+		28.克隆对象
+		29.使元素居屏幕中间位置
+		30.写自己的选择器
+		31.统计元素个数
+		32.使用自己的 Bullets
+		34.禁用Jquery（动画）效果
+		33.引用Google主机上的Jquery类库
+		35.与其他Javascript类库冲突解决方案
+	
+	
+//===== h5 相关
+	//===== H5 返回时跳转到指定页面
+	//===== h5实现次数统计 
+	//-- Number(localStorage.pagecount) h5将数据强转为数值类
+	//-- localStorage.key = 1; 	设置一永久存储
+	//-- localStorage.key='';	删除指定的永久存储
+	//-- sessionStorage.key = 1; 设置一个临时存储(随页面关闭而失效)
+	//-- sessionStorage.key ='';	删除指定临时存储
+
+
+
+//===== php 相关
+
+	特殊类
+	
+	//===== 获取 文件中返回的数组（如config配置文件返回的数组）
+	//===== windows 中的cmd下执行php文件
+	//===== php 禁止页面缓存
+	//===== ini_set() 临时设置php.ini的值（不用去更改php.ini）
+	//===== ini_get() 获取php.ini中设置的值
+	//===== .htaccess 的 PHP域名重写规则,将所有访问重定向到指定页面
+	//===== php 页面直接返回数组的应用方法
+	//===== ReflectionMethod 方法反射
+	//===== 命名空间示例
+	//===== exec() php中执行 cmd 命令的函数
+	//===== php.exe 在cmd命令行下执行php文件的应用
+	//===== windows下制做自动定时备份mysql数据
+	//===== 邮件服务器的搭建
+
+
+	函数类
+	//===== mt_rand()	随机返回整数
+	//===== ob_start()  缓存静态页面
+	//-- ob_clean(); 清除缓冲区内容
+	
+	//===== flush() 刷新PHP程序的缓冲
+	//-- simplexml_load_string() 函数把 XML 字符串载入对象中。
+	//-- error_reporting(0); 关闭notice 级别的错误提示
+	//-- session_set_cookie_params()把session变量存在cookie中就可以正常使用session了 ，这样就不用在每个页面都要调用session_start() 
+	
+	//===== header 头相关设置
+	//===== PHP获取域名的几个函数使用
+	//===== $GLOBALS['HTTP_RAW_POST_DATA']	与$_POST基本相同
+	//===== simplexml_loal_string()	将接收的xml数据转换成对象
+	//===== sprintf() 将变量按位置匹配放入字串中
+	//===== http_build_query($arr) 将数组以url-encoded形式转换成url参数
+	//===== urlencode(),urldecode() 将url编码与解码
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 获取 文件中返回的数组（如config配置文件返回的数组）
+
+	config.php
+	<?php  
+		return array(  
+   		 'name' => 'andy',  
+   		 'sex' => 'male'  
+		);  
+	?> 
+
+    	<?php  
+    		$config = include("config.php");  
+    		print_r($set);exit;  
+    	?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== ReflectionMethod 方法反射 
+
+	<?php
+
+	class persion{
+		function say(){
+			echo "my name is lily";
+		}
+		function run($addr,$speed){
+			echo "我在".$addr.'跑步，速度是'.$speed;
+		}
+	}
+
+	$obj = new persion;
+	$med = new ReflectionMethod($obj,'say');
+	echo $med->invoke($obj);			//invoke 反射没有参数的方法
+	echo '<hr>';
+
+	$obj2 = new persion;
+	$med2 = new ReflectionMethod($obj2,'run');
+	echo $med2->invokeArgs($obj2,array('liuhe','100'));	//invokeArgs 反射有参数的方法
+
+
+
+
+
+
+//===== jquery 获取宽度和高度
+
+	$(window).height();   
+	获取浏览器显示区域（可视区域）的宽度 ：
+	$(window).width();   
+	获取页面的文档高度   
+	$(document).height();   
+	获取页面的文档宽度 ：
+	$(document).width(); 
+	浏览器当前窗口文档body的高度：  
+	$(document.body).height();
+	浏览器当前窗口文档body的宽度： 
+	$(document.body).width();
+	获取滚动条到顶部的垂直高度 (即网页被卷上去的高度)  
+	$(document).scrollTop();   
+	获取滚动条到左边的垂直宽度 ：
+	$(document).scrollLeft(); 
+	获取或设置元素的宽度：
+	$(obj).width();
+	获取或设置元素的高度：
+	$(obj).height();
+	某个元素的上边界到body最顶部的距离：obj.offset().top;（在元素的包含元素不含滚动条的情况下）
+	某个元素的左边界到body最左边的距离：obj.offset().left;（在元素的包含元素不含滚动条的情况下）
+	返回当前元素的上边界到它的包含元素的上边界的偏移量：obj.offset().top（在元素的包含元素含滚动条的情况下）
+	返回当前元素的左边界到它的包含元素的左边界的偏移量：obj.offset().left（在元素的包含元素含滚动条的情况下）
+
+
+
+
+
+
+
+
+
+
+
+
+//===== js 获取表单值
+
+	<form action="***" method="post" name="fm" onsubmit="return subs();">
+	    <input type="text" name="time" />
+	</form>
+
+	 var time = document.fm.time.value;
+
+
+
+
+
+
+
+
+
+
+//===== JS 判断访问终端类型及其信息
+
+	<coding-1 lang="other">
+		<script type="text/javascript">
+			var browser={
+			versions:function(){
+			var u = navigator.userAgent, app = navigator.appVersion;
+			return {
+			trident: u.indexOf('Trident') > -1, //IE内核
+			presto: u.indexOf('Presto') > -1, //opera内核
+			webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+			gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+			mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/), //是否为移动终端
+			ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+			android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+			iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+			iPad: u.indexOf('iPad') > -1, //是否iPad
+			webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+			};
+			}()
+			}
+
+			document.writeln(" 是否为移动终端: "+browser.versions.mobile);
+			document.writeln(" ios终端: "+browser.versions.ios);
+			document.writeln(" android终端: "+browser.versions.android);
+			document.writeln(" 是否为iPhone: "+browser.versions.iPhone);
+			document.writeln(" 是否iPad: "+browser.versions.iPad);
+			document.writeln(navigator.userAgent);
+		</script>
+	</coding>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== php 页面直接返回数组的应用方法
+
+	a.php页面：
+		<?php
+
+		return 	[
+
+				'http://youle1.b0.upaiyun.com/img/ye1.png',
+
+				'http://youle1.b0.upaiyun.com/img/ye2.png',
+
+				'http://youle1.b0.upaiyun.com/img/ye3.png',
+
+			];
+
+
+	b.php页面：
+		<?php
+			$arr = require 'a.php';
+			var_dump($arr);
+
+
+
+
+
+
+
+
+
+
+//===== .htaccess 的 PHP域名重写规则,将所有访问重定向到指定页面
+
+	在根目录创建一个文件 .htaccess 并添加以下内容
+		RewriteEngine on		//开启重写功能 
+		RewriteRule .* flm.php		//设置所有访问都被定向到flm.php页面
+
+	其它规则见  自觉归纳-》htdocs重写规则
+
+
+
+
+
+
+
+
+
+
+//===== windows 中的cmd下执行php文件
+
+	1，在开始中打开运行，并执行 cmd 命令行
+	2，cd D:/xampp/htdocs		//进入apache根目录
+	3， 执行 php -f index.php 	//运行php 文件 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== php 函数
+	
+	
+	//===== mt_rand()	随机返回整数
+
+		echo mt_rand(0,15);		//随机显示 0-15 中的整数值
+
+
+
+	//===== ob_start()  缓存静态页面
+
+		手册位置： 
+			PHP -》函数参考 -》输出控制 -》Output Control 函数
+		<?php
+			$arr=array();
+			for($i=0;$i<100;$i++){
+				$arr[]=array('key'.$i=>'val'.$i);
+			}
+			echo '<pre>';
+			$path='./h1.html';
+			if(!file_exists($path)){	//判断指定的静态页面是否存在
+				ob_start();				//纯在页面内容
+			}
+		?>
+		<h1>ob_start() 开启缓存</h1>
+		<h1>ob_get_contents() 获取缓存的内容</h1>
+		<?php
+			$str = ob_get_contents();		//将缓存的内容放到一个变量中
+			$path='h1.html';				//设置一个静态页面路径 
+			file_put_contents($path,$str);	//将缓存内容保存到静态页面中
+		?>
+
+
+
+	//-- ob_clean(); 清除缓冲区内容
+
+		尤其在使用ThinkPHP3.2.3的验证码时，总会出现不显示图像的错误 ，就要使用该函数来清除缓冲区内容，如下
+           	public function verify(){
+                	ob_clean();
+                	$verify = new \Think\Verify();    //使用默认样式
+                	$verify->entry();       //生成验证码
+            	}
+
+
+	//-- json 数据的转换
+
+		$a = '你好';
+		//json_encode() 编码成json数据
+		$b = json_encode($a);		//没有参数：中文会进行编码处理
+		$b = json_encode($a,JSON_UNESCAPED_UNICODE);	//带参数：会直接显示中文
+		
+		// joson_decode()	将json数据解码
+		$c = json_decode($b);
+		var_dump($b);
+		echo '<br>';
+		var_dump($c);
+
+
+
+	//字串形式的json数据
+	$a='[{"lotteryId":206,"codes":"07","num":1,"method":"bdw","multiple":1,"model":"yuan","code":1944}]';
+	
+	//打印json字串
+	echo $a;	
+	
+	//json字串转成对象
+	$b = json_decode($a);	
+	echo "<br><pre>";
+	var_dump($b);			
+	echo '<br>'.$b[0]->codes;	//调取对象中的某个数据
+	
+
+	//json字串转成数组(加参数 true)
+	$c = json_decode($a,true);	
+	echo '<br>';
+	var_dump($c);
+	echo '<br>'.$c[0]['codes'];	//调取数组中的某个数据
+
+
+
+
+
+
+
+
+
+
+
+
+//==== 闭包函数 调用外部变量的示例
+
+		$m3 = new M3Email;
+		$m3->to = $mail;
+		$m3->cc = 'xx@xx.com';
+		$m3->subject='书店';
+		$m3->content='...';
+						//这里闭包函数function 使用 use($m3)来调用了外部变量的$m3 
+		Mail::send('view',['m3'=>$m3],function($m) use ($m3) {	
+			$m->from('','');
+			$m->to($user->email,$user->name)->subject('');
+		});
+
+
+
+
+
+
+
+//===== php 禁止页面缓存 
+ 	set cache = false
+        header("Cache-Control: no-cache, must-revalidate");
+
+
+	php.ini 中禁止缓存
+	linux 系统 中 进入php.ini  找到以 opcxxx=0   的开启  （不一定会有这一项）
+
+
+
+	<?php
+	header("Expires: -1");
+	header("Cache-Control: no_cache");
+	header("Pragma: no-cache");
+	echo "hello";
+
+	
+	
+	
+	
+	
+	
+	
+//===== ini_set() 临时设置php.ini的值（不用去更改php.ini）
+//===== ini_get() 获取php.ini中设置的值
+
+		
+	//ini_set() 与 ini_get() 的简述
+		php中的ini_set函数是php自带的用来修改设置php.ini配置文件的函数,用这个函数很方便,不用去手动修改php.ini文件,有时候我们也没有权限去修改php.ini文件,这时就用这个函数。
+
+		语法：ini_set("选项","值");该函数用时最好放到php的脚本最头部
+
+		比如：ini_set("max_execution_time", "180");//设置php的脚本超时时间为180秒
+
+		具体php选项可参考phpinfo文件的 Configuration PHP Core 部分
+
+		ini_get正好和ini_set相反,用来取php.ini文件里的环境变量的值.
+
+		语法：string ini_get (string varname );返回选项的值，如果选项的值为布尔型则返回为0或1
+
+		比如：echo ini_get('max_execution_time');//输出 30
+
+		如果想获取整个php.ini里的变量值,我们可以用ini_get的加强函数 ini_get_all()它以数组的形式返回整个php的环境变量。
+
+	//ini_set()
+		ini_set用来设置php.ini的值，在函数执行的时候生效，脚本结束后，设置失效。无需打开php.ini文件，就能修改配置，对于虚拟空间来说，很方便。
+
+		函数格式：string ini_set(string $varname, string $newvalue)
+
+		不是所有的参数都可以配置，可以查看手册中的列表。
+
+		常见的设置：
+
+		@ ini_set('memory_limit', '64M');
+
+		'menory_limit'：设定一个脚本所能够申请到的最大内存字节数，这有利于写的不好的脚本消耗服务器上的可用内存。@符号代表不输出错误。
+
+		@ini_set('display_errors', 1);
+
+		‘display_errors'：设置错误信息的类别。
+
+		@ini_set('session.auto_start', 0);
+
+		‘session.auto_start'：是否自动开session处理，设置为1时，程序中不用session_start()来手动开启session也可使用session，
+
+		如果参数为0，又没手动开启session，则会报错。
+
+		@ini_set('session.cache_expire', 180);
+
+		‘session.cache_expire'：指定会话页面在客户端cache中的有限期（分钟）缺省下为180分钟。如果设置了session.cache_limiter=nocache时，此处设置无 效。
+
+		@ini_set('session.use_cookies', 1);
+
+		‘session.use_cookies'：是否使用cookie在客户端保存会话ID；
+
+		@ini_set('session.use_trans_sid', 0);
+
+		‘session.use_trans_sid'：是否使用明码在URL中显示SID（会话ID），
+
+		默认是禁止的，因为它会给你用户带来安全危险：
+		1.用户可能将包含有效的sid的URL通过email/irc/QQ/MSN等途径告诉其他人。
+		2.包含有效sid的URL可能会保存在公用电脑上。
+		3.用户可能保存带有固定不变的SID的URL在他们的收藏夹或者浏览历史记录里。 基于URL的会话管理总是比基于Cookie的会话管理有更多的风险，所以应当禁用。
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+//===== H5 返回时跳转到指定页面
+	//-- localStorage.key = 1; 	设置一永久存储
+	//-- localStorage.key='';	删除指定的永久存储
+	//-- sessionStorage.key = 1; 设置一个临时存储(随页面关闭而失效)
+	//-- sessionStorage.key ='';	删除指定临时存储
+		
+			手册位置：w3c->h5->web存储
+	
+	页面A
+		<script>
+				setTimeout(function(){
+						location.href='b.php';
+				});
+		</script>
+	页面B
+		<script>
+			sessionStorage.b=1;
+			location.href='c.php';
+		</script>
+	页面C
+		<script>
+				if(sessionStorage.b){
+						if(sessionStorage.jump1){
+								location.href='d.php';
+						}else if(sessionStorage.jump2){
+								location.href='e.php';
+						}else{
+								location.href='index.php';
+						}
+				}else{
+						location.href='a.php';
+				}
+		</script>
+	页面index
+		<script>
+				if(!sessionStorage.b){
+						location.href='a.php';exit;     
+				}
+				sessionStorage.jump1 = 'd';
+		</script>
+	页面D
+		<script>
+				sessionStorage.jump1='';
+				sessionStorage.jump2='d';
+		</script>
+	页面E
+		<script>
+				sessionStorage.jump1='d';
+				sessionStorage.jump2='';
+		</script>
+          
+		
+		
+
+
+
+		
+	
+//===== h5实现次数统计 
+	//-- Number(localStorage.pagecount) h5将数据强转为数值类
+
+
+		对永久数据操作
+		<script type="text/javascript">
+			if (localStorage.pagecount){
+			  localStorage.pagecount=Number(localStorage.pagecount) +1;
+			}else{
+			  localStorage.pagecount=1;
+			}
+			document.write("Visits "+ localStorage.pagecount + " time(s).");
+		</script>
+		
+		对临时数据操作(受浏览器关闭影响)
+		<script type="text/javascript">
+			if (sessionStorage.pagecount){
+			  sessionStorage.pagecount=Number(sessionStorage.pagecount) +1;
+			}else{
+			  sessionStorage.pagecount=1;
+			}
+			document.write("Visits "+sessionStorage.pagecount+" time(s) this session.");
+		</script>
+				
+
+
+
+
+
+
+//===== H5 服务器的事件推送
+
+	注意apache 与nginx 在缓存 方面的机制不同 需要不同的设置
+	Nginx对于flush()的处理，还需要在后端脚本添加额外的Header头才 	X-Accel-Buffering: no，或者在Nginx的配置上面，针对指定请求关闭buffer，Nginx才会立马放行。
+
+	服务器端代码：
+		<?php
+			header('Content-Type: text/event-stream');		//设置事件流
+			header('Cache-Control: no-cache');				//禁止缓存
+			$time = date('r');								//设置并显示要推送的数据
+			echo "data: The server time is: {$time}\n\n";	 	注意：这里的data 和下面的event.data 是返回原内容，
+			flush();										//刷新缓冲，让目前为止的内容显示出来
+		?>
+
+	
+	客户端代码：
+		<div id='result'></div>
+		<script>
+				var source=new EventSource("event.php");		//创建事件推送对象并指定事件服务器页面
+				source.onmessage=function(event){				//设置推送事件发生时的行为
+						 document.getElementById("result").innerHTML+=event.data + "<br />";	//当推送事件发生就累写入指定元素
+				};
+		</script>
+		
+		或
+		
+		var es = new EventSource('sse.php');
+		es.addEventListener('message', function(e){
+			console.log(e.data);
+		});
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== JS,Jquery获取各种屏幕的宽度和高度
+
+	Javascript:
+
+		网页可见区域宽： document.body.clientWidth
+		网页可见区域高： document.body.clientHeight
+		网页可见区域宽： document.body.offsetWidth (包括边线的宽)
+		网页可见区域高： document.body.offsetHeight (包括边线的高)
+		网页正文全文宽： document.body.scrollWidth
+		网页正文全文高： document.body.scrollHeight
+		网页被卷去的高： document.body.scrollTop
+		网页被卷去的左： document.body.scrollLeft
+		网页正文部分上： window.screenTop
+		网页正文部分左： window.screenLeft
+		屏幕分辨率的高： window.screen.height
+		屏幕分辨率的宽： window.screen.width
+		屏幕可用工作区高度： window.screen.availHeight
+		屏幕可用工作区宽度： window.screen.availWidth
+
+		 
+
+	JQuery:
+
+	$(document).ready(function(){
+		alert($(window).height()); //浏览器当前窗口可视区域高度
+		alert($(document).height()); //浏览器当前窗口文档的高度
+		alert($(document.body).height());//浏览器当前窗口文档body的高度
+		alert($(document.body).outerHeight(true));//浏览器当前窗口文档body的总高度 包括border padding margin
+
+		alert($(window).width()); //浏览器当前窗口可视区域宽度
+		alert($(document).width());//浏览器当前窗口文档对象宽度
+		alert($(document.body).width());//浏览器当前窗口文档body的宽度
+		alert($(document.body).outerWidth(true));//浏览器当前窗口文档body的总宽度 包括border padding margin
+
+	})
+
+
+
+
+
+
+
+
+//=====is(':checked') 判断复选框是否被选择 (jquery)
+	$('.sel option:selected').val();
+	alert($("select").eq(0).val());  	获取第1个下拉列表的当前值
+	alert($("select[name=numb1]").val()); 
+
+
+
+
+
+
+
+
+
+//===== js 实现的动态日期与时间
+
+		<script>
+				function gettime(){
+						var d = new Date();
+						var y = d.getFullYear();
+						var m = d.getMonth()+1;
+						var da = d.getDate();
+						var h = d.getHours();
+						var i = d.getMinutes();
+						var s = d.getSeconds();
+
+						if(h>3 && h<=6){
+								xs='早上';
+						}else if(h>6 && h<=12){
+								xs='上午';
+						}else if(h>12 && h <=18){
+								xs='下午';
+						}else if(h >18 || h <=3){
+								xs='晚上';
+						}
+						var time = (h=h<10?'0'+h:h)+(i=i<10?'0'+i:i)+(s=s<10?'0'+s:s);
+						
+						var w = d.getDay();
+						switch(w){
+								case 1:
+										xs2='星期一';
+										break;
+								case 2:
+										xs2='星期二';
+										break;
+								case 3:
+										xs2='星期三';
+										break;
+								case 4:
+										xs2='星期四';
+										break;
+								case 5:
+										xs2='星期五';
+										break;
+								case 6:
+										xs2='星期六';
+										break;
+								case 0:
+										xs2='星期日';
+										break;
+						}
+						var str = y+'/'+m+'/'+da+' '+xs+' '+h+':'+i+':'+s+' '+xs2;
+						var times = document.getElementById('times');
+						times.innerHTML=str;
+				}
+				setInterval("gettime()",1000);
+		</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+//===== 文本框输入限制指定字数，并动态提示(jquery)
+	
+		$(function(){
+			$('#textLen').text($("#area").val().length);
+			$('#area').keyup(function(){
+				len =$(this).val().length;
+				$('#textLen').text(len);
+				if($("#area").val().length>50){
+					$("#t1").css('display','none');
+					$('#t2').css('display','block');
+				}else{
+					$("#t1").css('display','block');
+					$('#t2').css('display','none');
+				}
+			});
+			$('#submitBtn').click(function(){
+				if($('#area').val().length<50){
+					$("#form2").submit();
+				}
+			});
+		});
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+//===== $.trim()去除字串两侧的空格 (jquery) 
+        $(':input[name=user]').blur(function(){
+                $(':input[name=testaa]').val($.trim($(this).val()));
+
+        });
+
+
+
+
+
+		
+		
+//===== JavaScript 播放背景音乐效果
+
+		<script>
+			var music_url = 'http://smp3.569.com/countdown/yxj16.mp3';
+			var music_player = new Audio();
+			music_player.src  = music_url;
+			music_player.loop = 'loop';
+			music_player.play();
+		</script>
+
+
+
+
+
+
+
+//===== location.href='',windwo.open(),window.history.back 等 JS页面跳转
+//===== window.open() JS 在新窗口打开页面
+	<script>
+		location.href=".../index.php"; 		//页面跳转
+		或
+		window.location.replace(url);
+		或
+		window.open('.../index.php');		//新窗口打开页面
+		或
+		window.navigate("http://shanghepinpai.com"); 
+		或
+		self.location='http://shanghepinpai.com';
+		或
+		top.location='http://shanghepinpai.com'; 
+		或
+		window.history.back(-1); 
+	</script>
+
+
+
+
+//===== <script src='...'> JS外部引用的另一种方式 用来做PV统计
+	
+	<script src='http://139.129.97.44/pvcount.php?name=fenliu'></script>
+
+	<?php  $id = $_GET['id']; ..... ?>
+
+
+
+
+//===== setInterval() 无限定时,setTimeout() 单次定时  clearInterval(),clearTimeout()	 清除定时器
+
+	<script type="text/javascript" charset="utf-8">
+		window.setInterval(function()    
+			{    
+				location.href="b.html";	   
+			},5000);    
+
+		window.setTimeout(function()    
+			{    
+				location.href="b.html";	   
+			},5000);		
+
+	//-- clearInterval(),clearTimeout()	 清除定时器
+		var interval = setInterval(function(){
+			if(...){
+				window.clearInterval(interval);
+			}
+		},1000);
+	</script>
+
+	
+	
+	
+//===== 60秒后重发短信效果示例
+//-- html();  jquery方式向元素内添加内容
+
+	var enable = true;
+	$('.send').click(function(event){
+		if(enable == false){
+			return ;
+		}
+		enable=false;
+		var num = 60;
+		var interval = window.setInterval(function(){
+			$('.send').html(--num + 's 重新发送');
+			if(num == 0){
+				enable=true;
+				window.clearInterval(interval);
+				$('.send').html('重新发送');
+			}
+		},1000);
+	});
+
+
+//-- innerHTML='' JS方式向元素内添加内容
+	document.getElementById("xxx").innerHTML='XXXXXXXXX';
+
+
+	
+	
+//===== 让元素定时在两秒后隐藏
+
+	$('div').show();
+	setTimeout(function(){
+		$('div').hide();
+	},2000)
+
+
+
+
+	
+
+
+
+
+
+
+//===== document.getElementsByTagName() 获取节点列表
+//===== ob.onerror 当加载文档或图像时发生某个错误事件
+
+	<img src = '44.jpg' />
+	<div>aaa</div>
+	<script>
+		var i = document.getElementsByTagName('img')[0];
+		i.onerror=function(){
+			alert(11);
+		}
+	</script>
+
+
+
+
+
+
+
+
+//===== e.select(); 	//选择对象	
+//===== document.execCommand("Copy"); //执行浏览器复制命令
+
+		<script type="text/javascript">
+			function jsCopy(){
+				var e=document.getElementById("content");//对象是content
+				e.select(); //选择对象
+				document.execCommand("Copy"); //执行浏览器复制命令
+
+			  // alert("已复制好，可贴粘。");
+			}
+		</script>
+		<textarea cols="60" name="content" rows="2" id="content">www.qzpcw.com</textarea>
+		<input type=button value="复制" onclick="jsCopy()">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 页面加载文字后再加载图片或其它
+		//注：这段代码要放在代码的最后面
+		<script type="text/javascript">
+			var imgs=document.getElementsByTagName('img');			//获取页面中所有图片对象
+			for(var i=0;i<imgs.length;i++){
+				var isrc=imgs[i].getAttribute('xsrc');				//获取图片对象的非标准属性值 （把图片地址保存在属性值中）
+				imgs[i].src=isrc;									//将获取的图片地址赋值给 标准属性 src (这样来最后加载图片)
+			}
+			var ifr=document.getElementById('ifr');					//获取iframe 对像
+			var ifrsrc = ifr.getAttribute('xsrc');					//获取iframe 对象的非标准属性值 
+			ifr.src=ifrsrc;											//将非标准属性值赋值给标准属性src
+		</script>
+
+
+
+//=====	点击按钮复制文本
+		<script type="text/javascript">
+			function jsCopy(){
+				var e=document.getElementById("content");//对象是content
+				e.select(); //选择对象
+				document.execCommand("Copy"); //执行浏览器复制命令
+
+			  // alert("已复制好，可贴粘。");
+			}
+		</script>
+		<textarea cols="60" name="content" rows="2" id="content">www.qzpcw.com</textarea>
+		<input type=button value="复制" onclick="jsCopy()">
+
+
+
+//===== js 点击变换验证图片
+		<img src="code.php" onclick="this.src='code.php?id='+Math.random()"  />
+
+
+
+
+
+
+
+
+
+
+//===== js中confirm 确认是否执行事件
+		function dodel(id){
+			if(confirm(确认要删除吗？)){
+			 window.location="action.php?action=del&id="+id;
+		   }
+		}
+		注解 ： 
+			选择 
+				是：跳转到action.php页面并传送键值对 action=del	& id=+"id";	
+				否：返回false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== H5 实现等待读圈效果
+
+    <script type="text/javascript">
+    /*
+    html5 loading 控件
+    作者：玉开 博客：http://www.cnblogs.com/yukaizhao/
+    发布或使用此控件，请保留作者声明
+    */
+    function loading(canvas,options){
+      this.canvas = canvas;
+      if(options){
+        this.radius = options.radius||12;
+        this.circleLineWidth = options.circleLineWidth||4;
+        this.circleColor = options.circleColor||'lightgray';
+        this.dotColor = options.dotColor||'gray';
+      }else{     
+        this.radius = 12;
+        this.circelLineWidth = 4;
+        this.circleColor = 'lightgray';
+        this.dotColor = 'gray';
+      }
+    }
+    loading.prototype = {
+      show:function (){
+        var canvas = this.canvas;
+        if(!canvas.getContext)return;
+        if(canvas.__loading)return;
+        canvas.__loading = this;
+        var ctx = canvas.getContext('2d');
+        var radius = this.radius;     
+        var rotators = [{angle:0,radius:1.5},{angle:3/radius,radius:2},{angle:7/radius,radius:2.5},{angle:12/radius,radius:3}];     
+        var me = this;
+        canvas.loadingInterval = setInterval(function(){
+          ctx.clearRect(0,0,canvas.width,canvas.height);        
+          var lineWidth = me.circleLineWidth;
+          var center = {x:canvas.width/2 - radius,y:canvas.height/2-radius};         
+          ctx.beginPath();
+          ctx.lineWidth = lineWidth;
+          ctx.strokeStyle = me.circleColor;
+          ctx.arc(center.x,center.y,radius,0,Math.PI*2);
+          ctx.closePath();
+          ctx.stroke();
+          for(var i=0;i<rotators.length;i++){       
+            var rotatorAngle = rotators[i].currentAngle||rotators[i].angle;           
+            //在圆圈上面画小圆
+            var rotatorCenter = {x:center.x-(radius)*Math.cos(rotatorAngle) ,y:center.y-(radius)*Math.sin(rotatorAngle)};           
+            var rotatorRadius = rotators[i].radius;
+            ctx.beginPath();
+            ctx.fillStyle = me.dotColor;
+            ctx.arc(rotatorCenter.x,rotatorCenter.y,rotatorRadius,0,Math.PI*2);
+            ctx.closePath();
+            ctx.fill();
+            rotators[i].currentAngle = rotatorAngle+4/radius;
+          }
+        },50);
+      },
+      hide:function(){
+        var canvas = this.canvas;
+        canvas.__loading = false;
+        if(canvas.loadingInterval){
+          window.clearInterval(canvas.loadingInterval);
+        }
+        var ctx = canvas.getContext('3d');
+        if(ctx)ctx.clearRect(0,0,canvas.width,canvas.height);
+      }
+    };
+    </script>
+    <canvas id="canvas" width="300" height="100" style="border:1px solid #69c"></canvas>
+    <p>
+    <input type="button" onclick="loadingObj.hide()" value="HideLoading"/>
+    <input type="button" onclick="loadingObj.show()" value="showLoading"/>
+    </p>
+    <script>
+    var loadingObj = new loading(document.getElementById('canvas'),{radius:8,circleLineWidth:3});
+    loadingObj.show();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== JavaScript 函数 
+
+    //===== 字符串函数
+
+	//-- substr(x,n)	截取从x 到 n 的子串
+		var str = 'abcdefg'.substr(2,3);
+		alert(str);		//结果  cde
+
+	
+
+	//-- substing(x,n)   x,n两者中的较小值作为子字符串的起始点,较大值做为终点
+		var str2 = "abcdefg".substring(0,3);
+		//alert(str2);		//结果：abc
+
+		var str3 = "abcdefg".substring(3,0);
+		alert(str3);		//结果：abc
+
+
+		
+		
+	//-- str.test()	JS的正则匹配
+		<script>
+			var a = '11111111111';
+			var b = /^1[0-9]{10}$/;		//匹配以1开头，以10位的数字结尾 （匹配手机号）
+			if(b.test(a)){
+				alert(1);
+			}else{
+				alert(2);
+			}
+		</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+//===== 每个程序员都会的35个jQuery小技巧！	
+	
+		1. 禁止右键点击
+
+		$(document).ready(function(){
+			$(document).bind("contextmenu",function(e){
+				return false;
+			});
+		});
+
+		2.隐藏搜索文本框文字
+
+		Hide when clicked in the search field, the value.(example can be found below in the comment fields)
+
+		$(document).ready(function() {
+		$("input.text1").val("Enter your search text here");
+		   textFill($('input.text1'));
+		});
+
+			function textFill(input){ //input focus text function
+			 var originalvalue = input.val();
+			 input.focus( function(){
+				  if( $.trim(input.val()) == originalvalue ){ input.val(''); }
+			 });
+			 input.blur( function(){
+				  if( $.trim(input.val()) == '' ){ input.val(originalvalue); }
+			 });
+		}
+
+		3.在新窗口中打开链接
+
+		XHTML 1.0 Strict doesn’t allow this attribute in the code, so use this to keep the code valid.
+
+		$(document).ready(function() {
+		   //Example 1: Every link will open in a new window
+		   $('a[href^="http://"]').attr("target", "_blank");
+
+		   //Example 2: Links with the rel="external" attribute will only open in a new window
+		   $('a[@rel$='external']').click(function(){
+			  this.target = "_blank";
+		   });
+		});
+		// how to use
+		<a href="http://www.opensourcehunter.com" rel=external>open link</a>
+
+		4.检测浏览器
+
+		注: 在版本jQuery 1.4中，$.support 替换掉了$.browser 变量
+
+		$(document).ready(function() {
+		// Target Firefox 2 and above
+		if ($.browser.mozilla && $.browser.version >= "1.8" ){
+			// do something
+		}
+
+		// Target Safari
+		if( $.browser.safari ){
+			// do something
+		}
+
+		// Target Chrome
+		if( $.browser.chrome){
+			// do something
+		}
+
+		// Target Camino
+		if( $.browser.camino){
+			// do something
+		}
+
+		// Target Opera
+		if( $.browser.opera){
+			// do something
+		}
+
+		// Target IE6 and below
+		if ($.browser.msie && $.browser.version <= 6 ){
+			// do something
+		}
+
+		// Target anything above IE6
+		if ($.browser.msie && $.browser.version > 6){
+			// do something
+		}
+		});
+
+		5.预加载图片
+
+		This piece of code will prevent the loading of all images, which can be useful if you have a site with lots of images.
+
+		$(document).ready(function() {
+		jQuery.preloadImages = function()
+		{
+		  for(var i = 0; i<ARGUMENTS.LENGTH; jQuery(?<img { i++)>").attr("src", arguments[i]);
+		  }
+		}
+		// how to use
+		$.preloadImages("image1.jpg");
+		});
+
+		6.页面样式切换
+
+		$(document).ready(function() {
+			$("a.Styleswitcher").click(function() {
+				//swicth the LINK REL attribute with the value in A REL attribute
+				$('link[rel=stylesheet]').attr('href' , $(this).attr('rel'));
+			});
+		// how to use
+		// place this in your header
+		<LINK rel=stylesheet type=text/css href="default.css">
+		// the links
+		<A class=Styleswitcher href="#" rel=default.css>Default Theme</A>
+		<A class=Styleswitcher href="#" rel=red.css>Red Theme</A>
+		<A class=Styleswitcher href="#" rel=blue.css>Blue Theme</A>
+		});
+
+		7.列高度相同
+
+		如果使用了两个CSS列，使用此种方式可以是两列的高度相同。
+
+		$(document).ready(function() {
+		function equalHeight(group) {
+			tallest = 0;
+			group.each(function() {
+				thisHeight = $(this).height();
+				if(thisHeight > tallest) {
+					tallest = thisHeight;
+				}
+			});
+			group.height(tallest);
+		}
+		// how to use
+		$(document).ready(function() {
+			equalHeight($(".left"));
+			equalHeight($(".right"));
+		});
+		});
+
+		8.动态控制页面字体大小
+
+		用户可以改变页面字体大小
+
+		$(document).ready(function() {
+		  // Reset the font size(back to default)
+		  var originalFontSize = $('html').css('font-size');
+			$(".resetFont").click(function(){
+			$('html').css('font-size', originalFontSize);
+		  });
+		  // Increase the font size(bigger font0
+		  $(".increaseFont").click(function(){
+			var currentFontSize = $('html').css('font-size');
+			var currentFontSizeNum = parseFloat(currentFontSize, 10);
+			var newFontSize = currentFontSizeNum*1.2;
+			$('html').css('font-size', newFontSize);
+			return false;
+		  });
+		  // Decrease the font size(smaller font)
+		  $(".decreaseFont").click(function(){
+			var currentFontSize = $('html').css('font-size');
+			var currentFontSizeNum = parseFloat(currentFontSize, 10);
+			var newFontSize = currentFontSizeNum*0.8;
+			$('html').css('font-size', newFontSize);
+			return false;
+		  });
+		});
+
+		9.返回页面顶部功能
+
+		For a smooth(animated) ride back to the top(or any location).
+
+		$(document).ready(function() {
+		$('a[href*=#]').click(function() {
+		 if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+		 && location.hostname == this.hostname) {
+		   var $target = $(this.hash);
+		   $target = $target.length && $target
+		   || $('[name=' + this.hash.slice(1) +']');
+		   if ($target.length) {
+		  var targetOffset = $target.offset().top;
+		  $('html,body')
+		  .animate({scrollTop: targetOffset}, 900);
+			return false;
+		   }
+		  }
+		  });
+		// how to use
+		// place this where you want to scroll to
+		<A name=top></A>
+		// the link
+		<A href="#top">go to top</A>
+		});
+
+		10.获得鼠标指针ＸＹ值
+
+		Want to know where your mouse cursor is?
+
+		$(document).ready(function() {
+		   $().mousemove(function(e){
+			 //display the x and y axis values inside the div with the id XY
+			$('#XY').html("X Axis : " + e.pageX + " | Y Axis " + e.pageY);
+		  });
+		// how to use
+		<DIV id=XY></DIV>
+
+		});
+
+		11.返回顶部按钮
+
+		你可以利用 animate 和 scrollTop 来实现返回顶部的动画，而不需要使用其他插件。
+
+		// Back to top
+		$('a.top').click(function () {
+		  $(document.body).animate({scrollTop: 0}, 800);
+		  return false;
+		});
+		<!-- Create an anchor tag -->
+		<a class="top" href="#">Back to top</a>
+
+		改变 scrollTop 的值可以调整返回距离顶部的距离，而 animate 的第二个参数是执行返回动作需要的时间(单位：毫秒)。
+
+		12.预加载图片
+
+		如果你的页面中使用了很多不可见的图片（如：hover 显示），你可能需要预加载它们：
+
+		$.preloadImages = function () {
+		  for (var i = 0; i < arguments.length; i++) {
+			$('<img>').attr('src', arguments[i]);
+		  }
+		};
+
+		$.preloadImages('img/hover1.png', 'img/hover2.png');
+
+		13.检查图片是否加载完成
+
+		有时候你需要确保图片完成加载完成以便执行后面的操作：
+
+		$('img').load(function () {
+		  console.log('image load successful');
+		});
+
+		你可以把 img 替换为其他的 ID 或者 class 来检查指定图片是否加载完成。
+
+		14.自动修改破损图像
+
+		如果你碰巧在你的网站上发现了破碎的图像链接，你可以用一个不易被替换的图像来代替它们。添加这个简单的代码可以节省很多麻烦：
+
+		$('img').on('error', function () {
+		  $(this).prop('src', 'img/broken.png');
+		});
+
+		即使你的网站没有破碎的图像链接，添加这段代码也没有任何害处。
+
+		15.鼠标悬停(hover)切换 class 属性
+
+		假如当用户鼠标悬停在一个可点击的元素上时，你希望改变其效果，下面这段代码可以在其悬停在元素上时添加 class 属性，当用户鼠标离开时，则自动取消该 class 属性：
+
+		$('.btn').hover(function () {
+		  $(this).addClass('hover');
+		  }, function () {
+			$(this).removeClass('hover');
+		  });
+
+		你只需要添加必要的CSS代码即可。如果你想要更简洁的代码，可以使用 toggleClass 方法：
+
+		$('.btn').hover(function () { 
+		  $(this).toggleClass('hover'); 
+		});
+
+		注：直接使用CSS实现该效果可能是更好的解决方案，但你仍然有必要知道该方法。
+
+		16.禁用 input 字段
+
+		有时你可能需要禁用表单的 submit 按钮或者某个 input 字段，直到用户执行了某些操作（例如，检查“已阅读条款”复选框）。可以添加 disabled 属性，直到你想启用它时：
+
+		$('input[type="submit"]').prop('disabled', true);
+
+		你要做的就是执行 removeAttr 方法，并把要移除的属性作为参数传入：
+
+		$('input[type="submit"]').removeAttr('disabled');
+
+		17.阻止链接加载
+
+		有时你不希望链接到某个页面或者重新加载它，你可能希望它来做一些其他事情或者触发一些其他脚本，你可以这么做：
+
+		$('a.no-link').click(function (e) {
+		  e.preventDefault();
+		});
+
+		18.切换 fade/slide
+
+		fade 和 slide 是我们在 jQuery 中经常使用的动画效果，它们可以使元素显示效果更好。但是如果你希望元素显示时使用第一种效果，而消失时使用第二种效果，则可以这么做：
+
+		// Fade
+		$('.btn').click(function () {
+		  $('.element').fadeToggle('slow');
+		});
+		// Toggle
+		$('.btn').click(function () {
+		  $('.element').slideToggle('slow');
+		});
+
+		19.简单的手风琴效果
+
+		这是一个实现手风琴效果快速简单的方法：
+
+		// Close all panels
+		$('#accordion').find('.content').hide();
+		// Accordion
+		$('#accordion').find('.accordion-header').click(function () {
+		  var next = $(this).next();
+		  next.slideToggle('fast');
+		  $('.content').not(next).slideUp('fast');
+		  return false;
+		});
+
+		20.让两个 DIV 高度相同
+
+		有时你需要让两个 div 高度相同，而不管它们里面的内容多少。可以使用下面的代码片段：
+
+		var $columns = $('.column');
+		var height = 0;
+		$columns.each(function () {
+		  if ($(this).height() > height) {
+			height = $(this).height();
+		  }
+		});
+		$columns.height(height);
+
+		这段代码会循环一组元素，并设置它们的高度为元素中的最大高。
+		
+		21. 验证元素是否为空
+
+		This will allow you to check if an element is empty.
+
+		$(document).ready(function() {
+		  if ($('#id').html()) {
+		   // do something
+		   }
+		});
+
+		22.替换元素
+
+		Want to replace a div, or something else?
+
+		$(document).ready(function() {
+		   $('#id').replaceWith('
+		<DIV>I have been replaced</DIV>
+
+		');
+		});
+
+		23.jQuery延时加载功能
+
+		Want to delay something?
+
+		$(document).ready(function() {
+		   window.setTimeout(function() {
+			 // do something
+		   }, 1000);
+		});
+
+		24.移除单词功能
+
+		Want to remove a certain word(s)?
+
+		$(document).ready(function() {
+		   var el = $('#id');
+		   el.html(el.html().replace(/word/ig, ""));
+		});
+
+		25. 验证元素是否存在于jquery对象集合中
+
+		Simply test with the .length property if the element exists.
+
+		$(document).ready(function() {
+		   if ($('#id').length) {
+		  // do something
+		  }
+		});
+
+		26.使整个DIV可点击
+
+		Want to make the complete div clickable?
+
+		$(document).ready(function() {
+			$("div").click(function(){
+			  //get the url from href attribute and launch the url
+			  window.location=$(this).find("a").attr("href"); return false;
+			});
+		// how to use
+		<DIV><A href="index.html">home</A></DIV>
+
+		});
+
+		27.ID与Class之间转换
+
+		当改变Window大小时，在ID与Class之间切换
+
+		$(document).ready(function() {
+		   function checkWindowSize() {
+			if ( $(window).width() > 1200 ) {
+				$('body').addClass('large');
+			}
+			else {
+				$('body').removeClass('large');
+			}
+		   }
+		$(window).resize(checkWindowSize);
+		});
+
+		28.克隆对象
+
+		Clone a div or an other element.
+
+		$(document).ready(function() {
+		   var cloned = $('#id').clone();
+		// how to use
+		<DIV id=id></DIV>
+
+		});
+
+		29.使元素居屏幕中间位置
+
+		Center an element in the center of your screen.
+
+		$(document).ready(function() {
+		  jQuery.fn.center = function () {
+			  this.css("position","absolute");
+			  this.css("top", ( $(window).height() - this.height() ) / 2+$(window).scrollTop() + "px");
+			  this.css("left", ( $(window).width() - this.width() ) / 2+$(window).scrollLeft() + "px");
+			  return this;
+		  }
+		  $("#id").center();
+		});
+
+		30.写自己的选择器
+
+		Write your own selectors.
+
+		$(document).ready(function() {
+		   $.extend($.expr[':'], {
+			   moreThen1000px: function(a) {
+				   return $(a).width() > 1000;
+			  }
+		   });
+		  $('.box:moreThen1000px').click(function() {
+			  // creating a simple js alert box
+			  alert('The element that you have clicked is over 1000 pixels wide');
+		  });
+		});
+
+		31.统计元素个数
+
+		Count an element.
+
+		$(document).ready(function() {
+		   $("p").size();
+		});
+
+		32.使用自己的 Bullets
+		Want to use your own bullets instead of using the standard or images bullets?
+
+		$(document).ready(function() {
+		   $("ul").addClass("Replaced");
+		   $("ul > li").prepend("? ");
+		 // how to use
+		 ul.Replaced { list-style : none; }
+		});
+
+		33.引用Google主机上的Jquery类库
+
+		Let Google host the jQuery script for you. This can be done in 2 ways.
+
+		//Example 1
+		<SCRIPT src="http://www.google.com/jsapi"></SCRIPT>
+		<SCRIPT type=text/javascript>
+		google.load("jquery", "1.2.6");
+		google.setOnLoadCallback(function() {
+			// do something
+		});
+		</SCRIPT><SCRIPT type=text/javascript src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></SCRIPT>
+
+		 // Example 2:(the best and fastest way)
+		<SCRIPT type=text/javascript src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></SCRIPT>
+
+		34.禁用Jquery（动画）效果
+
+		Disable all jQuery effects
+
+		$(document).ready(function() {
+			jQuery.fx.off = true;
+		});
+
+		35.与其他Javascript类库冲突解决方案
+
+		To avoid conflict other libraries on your website, you can use this jQuery Method, and assign a different variable name instead of the dollar sign.
+
+		$(document).ready(function() {
+		   var $jq = jQuery.noConflict();
+		   $jq('#id').show();
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 树叶满天向下漂落效果 （jquery2.0 微信流览器中有效）
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+    <div id="leafContainer">
+	
+    <style>
+        #leafContainer {
+            z-index: -1;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+            #leafContainer > div {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                -webkit-animation-iteration-count: infinite, infinite;
+                -webkit-animation-direction: normal, normal;
+                -webkit-animation-timing-function: linear, ease-in;
+            }
+                #leafContainer > div > img {
+                    position: absolute;
+                    width: 50px;
+                    height: auto;
+                    -webkit-animation-iteration-count: infinite;
+                    -webkit-animation-direction: alternate;
+                    -webkit-animation-timing-function: ease-in-out;
+                    -webkit-transform-origin: 50% -100%;
+                }
+        @-webkit-keyframes fade {
+            0% {
+                opacity: 1;
+            }
+
+            95% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+        @-webkit-keyframes drop {
+            0% {
+                -webkit-transform: translate(0px, -50px);
+            }
+            100% {
+                -webkit-transform: translate(0px, 650px);
+            }
+        }
+        @-webkit-keyframes clockwiseSpin {
+            0% {
+                -webkit-transform: rotate(-50deg);
+            }
+            100% {
+                -webkit-transform: rotate(50deg);
+            }
+        }
+        @-webkit-keyframes counterclockwiseSpinAndFlip {
+            0% {
+                -webkit-transform: scale(-1, 1) rotate(50deg);
+            }
+            100% {
+                -webkit-transform: scale(-1, 1) rotate(-50deg);
+            }
+        }
+    </style>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+    <script>
+	const NUMBER_OF_LEAVES = 20;
+        function init()
+        {
+            var container = document.getElementById('leafContainer');
+            for (var i = 0; i < NUMBER_OF_LEAVES; i++) 
+            {
+                container.appendChild(createALeaf());
+            }
+        }
+        function randomInteger(low, high)
+        {
+            return low + Math.floor(Math.random() * (high - low));
+        }
+        function randomFloat(low, high)
+        {
+            return low + Math.random() * (high - low);
+        }
+        function pixelValue(value)
+        {
+            return value + 'px';
+        }
+        function durationValue(value)
+        {
+            return value + 's';
+        }
+        function createALeaf()
+        {
+            var leafDiv = document.createElement('div');
+            var image = document.createElement('img');
+            image.src =  'ye6.png';			//下落图片
+            leafDiv.style.top = "-100px";
+            leafDiv.style.left = pixelValue(randomInteger(0, 500));
+            var spinAnimationName = (Math.random() < 0.5) ? 'clockwiseSpin' : 'counterclockwiseSpinAndFlip';
+            leafDiv.style.webkitAnimationName = 'fade, drop';
+            image.style.webkitAnimationName = spinAnimationName;
+            var fadeAndDropDuration = durationValue(randomFloat(5, 11));
+            var spinDuration = durationValue(randomFloat(4, 8));
+            leafDiv.style.webkitAnimationDuration = fadeAndDropDuration + ', ' + fadeAndDropDuration;
+            var leafDelay = durationValue(randomFloat(0, 5));
+            leafDiv.style.webkitAnimationDelay = leafDelay + ', ' + leafDelay;
+            image.style.webkitAnimationDuration = spinDuration;
+            leafDiv.appendChild(image);
+            return leafDiv;
+        }
+        //window.addEventListener('load', init, false);
+        $(function () { init();})
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== http_build_query($arr) 将数组以url-encoded形式转换成url参数
+	$arr = array(
+		'名字'=>'aaa',
+		'age'=>'18',
+		'sex'=>'nv'
+	);
+	print_r($arr);	//结果：Array ( [name] => aaa [age] => 18 [sex] => nv )
+	
+	$b = http_build_query($arr);	
+	echo $b;		//结果：%E5%90%8D%E5%AD%97=aaa&age=18&sex=nv
+
+
+
+
+
+
+//===== urlencode(),urldecode() 将url编码与解码
+
+        $redirect =  urlencode('http://www.wmwzx.com/test/wx/auth/index.php');
+        echo $redirect.'<br>';
+        echo    $b = urldecode($redirect);
+	
+	结果：
+		http%3A%2F%2Fwww.wmwzx.com%2Ftest%2Fwx%2Fauth%2Findex.php
+		http://www.wmwzx.com/test/wx/auth/index.php
+
+
+
+
+
+
+
+
+
+//===== sprintf() 将变量按位置匹配放入字串中
+
+		%% 印出百分比符号，不转换。
+		%c 整数转成对应的 ASCII 字元。
+		%d 整数转成十进位。
+		%f 倍精确度数字转成浮点数。
+		%o 整数转成八进位。
+		%s 整数转成字符串。
+		%x 整数转成小写十六进位。
+		%X 整数转成大写十六进位
+
+
+                $toUser = $postObj->FromUserName;
+                $fromUser = $postObj->ToUserName;
+                $time = time();
+                $msgType = 'text';
+                $content = '欢迎关注我们的微信公众账号' . $postObj->FromUserName . '-' . $postObj->ToUserName;
+                $template = "<xml>
+                            <ToUserName><![CDATA[%s]]></ToUserName>			//将第1个变量放入第一个%s 
+                            <FromUserName><![CDATA[%s]]></FromUserName>			//将第2个变量放入第二个%s
+                            <CreateTime>%s</CreateTime>					......
+                            <MsgType><![CDATA[%s]]></MsgType>
+                            <Content><![CDATA[%s]]></Content>
+                            </xml>";
+                $info = sprintf($template, $toUser, $fromUser, $time, $msgType, $content);  //这里指定第一个变量，第二个变量....
+
+
+
+
+
+
+
+
+
+
+
+//===== $GLOBALS['HTTP_RAW_POST_DATA']	与$_POST基本相同
+
+//===== simplexml_loal_string()	将接收的xml数据转换成对象
+
+		$postArr = $GLOBALS['HTTP_RAW_POST_DATA'];
+        	$postObj = simplexml_load_string($postArr);
+        	//判断该数据包是否是订阅的事件推送
+        	if (strtolower($postObj->MsgType) == 'event')
+
+	基本上$GLOBALS['HTTP_RAW_POST_DATA'] 和 $_POST是一样的。但是如果post过来的数据不是PHP能够识别的，你可以用 $GLOBALS['HTTP_RAW_POST_DATA']来接收，比如 text/xml 或者 soap 等等。
+	$_POST：通过 HTTP POST 方法传递的变量组成的数组。是自动全局变量。
+$GLOBALS['HTTP_RAW_POST_DATA'] ：总是产生 $HTTP_RAW_POST_DATA 变量包含有原始的 POST 数据。此变量仅在碰到未识别 MIME 类型的数据时产生。$HTTP_RAW_POST_DATA 对于 enctype="multipart/form-data" 表单数据不可用。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== PHP获取域名的几个函数使用
+
+		<?php
+		//获取当前的域名:
+		echo $_SERVER['SERVER_NAME'];//获取来源网址,即点击来到本页的上页网址
+		echo "<br>";
+		echo $_SERVER["HTTP_REFERER"]; //获取上一页面域名的后缀
+		echo "<br>";
+		echo $_SERVER['REQUEST_URI'];//获取当前域名的后缀
+		echo "<br>";
+		echo $_SERVER['HTTP_HOST'];//获取当前域名
+		echo "<br>";
+		dirname(__FILE__);//获取当前文件的物理路径
+		dirname(__FILE__)."/../";//获取当前文件的上一级物理路径
+		exit;
+		?> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 开启url重写功能 
+
+
+	编辑 httpd.conf 配置文件
+
+	开启 LoadModule rewrite_module modules/mod_rewrite.so  重写功能 
+
+	在根目录创建文件 .htaccess
+
+	写入内容
+		RewriteEngine on 
+		RewriteRule .* flm.php			将所有uri 重定向到 flm.php文件    项目只有这一个文件入口
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== QuickSSHd  手机ssh管理软件
+
+		名字也可以是其它开头结尾为  SSHD的软件,可以像ssh连接操作linux一样来操作手机
+
+
+
+
+
+
+
+//===== php.ini中关于服务保护的关闭
+
+	编辑php.ini文件，查找safe_mode，如果看到safe_mode = On
+	则改成
+	safe_mode = Off
+	保存，重启apache就ok了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 判断服务器请求方式是否为htttps 或 http
+
+	echo $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 修改Agent 将浏览器设置成手机浏览器 （微信）
+
+
+	1,工具-》添加组件   查找 User-Agent Switcher  下载并安装 
+
+	2,安装好后，选择 工具-》 wechat -> Edit User Agents -> new -> new User Agent 
+
+		description: 随便添加一个描述
+	
+		User Agent: 将下面代码添加进来
+
+Mozilla/5.0 (Linux; Android 4.4.4; MI 4LTE Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36 MicroMessenger/6.3.7.51_rbb7fa12.660 NetType/WIFI Language/en
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 让页面内容适应移动端，内容不绽放
+
+	<meta name='Viewport' content="width=device-width,initital-scale=1">
+		意为：宽度为适应物理屏幕大小，等比绽放为1 ，也就是不缩放
+
+
+
+
+
+
+
+//===== 抓取远程页面内容
+	
+	$a = file_get_contents('http://www.baidu.com');			//获取远程页面内容
+
+	echo htmlentities(substr($a,3,100));				//截取内容
+	
+
+	或用 cURL
+		手册位置 php Manual->其它服务-》cURL
+
+
+
+
+
+
+
+
+
+
+//===== $_SERVER['PHP_SELF']	跳转到当前页面
+
+
+	$_SERVER  其它功能见手册  php Manual->语言参考-》预定义变量-》$_SERVER
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 不用if判断如何设置 当x=0时，让y=a  当x=1时,让y=b
+
+	$arr=['a','b'];
+	y=$arr[x];
+
+
+
+
+
+
+
+
+//====== php.ini 配置文件中 register_globals   on/off 开启和关闭时的区别 
+
+	当该配置开启时, <input name='user_name' /> 以post方式提交时 另一个页面是可以用$user_name来接收的，如果$user_name变量存在时就会被 表单提交过来的值而覆盖。  关闭了就不会被覆盖了！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== <<< 定义一个超大字串
+
+ 	$str = <<<SHOW			//此处不可有空格
+   	my name is Jiang Qihui!
+  	 SHOW;
+
+
+	$str= <<<eof
+		......
+	eof;
+
+	$str= <<<show
+		......
+	show;
+
+
+
+
+
+//===== 获取某网页的内容
+
+	方法1(对于PHP5及更高版本):
+   	$readcontents = fopen("http://www.phpres.com/index.html", "rb");
+   	$contents = stream_get_contents($readcontents);
+   	fclose($readcontents);
+   	echo $contents;
+   	方法2:
+   	echo file_get_contents("http://www.phpres.com/index.html"); 
+
+
+
+
+
+
+
+
+//===== 五星彩票遍历每注号码
+
+
+
+
+
+<?php
+	$arr=array(
+		array(1,2),
+		array(3),
+		array(5,6,3),
+		array(5,6),
+		array(5),
+	);
+	
+for($i=0;$i<count($arr[0]);$i++){
+	$num= $arr[0][$i];
+	$a = $num;
+	for($j=0;$j<count($arr[1]);$j++){
+		$num.=$arr[1][$j];
+		$b = $num;
+		for($k=0;$k<count($arr[2]);$k++){
+			$num.=$arr[2][$k];
+			$c=$num;
+			//echo $num."<br>";
+			for($x=0;$x<count($arr[3]);$x++){
+				$num.=$arr[3][$x];
+				$d=$num;
+				for($y=0;$y<count($arr[4]);$y++){
+					$num.=$arr[4][$y];
+					echo $num.'<br>';
+					$num=$d;
+				}$num=$c;
+			}
+			$num=$b;
+		}
+		$num=$a;
+	}
+}
+
+
+结果：
+13555
+13565
+13655
+13665
+13355
+13365
+23555
+23565
+23655
+23665
+23355
+23365
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 兄弟连云课堂视频地址及密码
+
+	//-- 涛哥课堂视频
+		lamp113期高级
+		链接：http://pan.baidu.com/s/1mg3suwS 密码：0gu7
+		lamp119基础
+		链接:http://pan.baidu.com/s/1gdATE63 密码:iwac
+
+	//-- 基础课
+		lamp119基础
+		链接:http://pan.baidu.com/s/1gdATE63 密码:iwac
+		静哥初级课111期视频及课堂笔记
+		http://yunpan.cn/cLu4q8ZMnNIQq  访问密码 f24d
+		两个老师的，哪个听着感觉好听哪个
+
+	//-- 高级课
+		lamp113期高级1
+		链接：http://pan.baidu.com/s/1mg3suwS 密码：0gu7
+		lamp113期高级2
+		链接：http://pan.baidu.com/s/1ntvRtod 密码：rwz2
+
+
+	//-- 特级课
+		涛哥特级课
+		http://yunpan.cn/cdqb9zt9k8H9B  访问密码 845f
+
+
+	//-- linux 系统
+		陈龙老师Linux 116期课堂视频
+		http://yunpan.cn/cFUBaqXgvFDkK  访问密码 30bf
+
+
+
+
+
+
+
+
+
+
+
+//===== PHP_EOL PHP中通用的换行
+
+	header('content-type:text/plain');
+
+	echo "aaaaaaaa", PHP_EOL ,'cccccccccc';
+
+
+
+
+
+
+
+
+//===== 判断语句的另一种方式
+
+	$index=array('a'=>0,'b'=>1);
+
+	$status=array('男','女');
+	echo $status[$index['a']];
+
+
+
+
+
+
+
+
+//===== ? : 三元运算符，提供简单的判断 
+
+	$a=true;
+	echo $a?'真':'假';
+
+        格式： 运算元1 ? 运算元2 : 运算元3;
+
+        运算元1为条件 ，运算元2为表达式，运算元3表达式。
+
+        如果说运算元1为真那么将运算元2的东西返回，如果运算元1为假那么将运算元3的东西返回。
+
+        注意：
+            1、表达式只能放置一条语句。
+            2、表达式的值可以返回，所以可以进行赋值操作
+
+        `` 反引号，执行运算符 得到的结果将是系统真实运行这个命令时返回的东西。
+        （不建议你用）  
+
+
+
+
+
+
+//===== call_user_func_array() 用于执行函数的函数
+	//==计算未定参数个数的总和
+
+	function add(){
+		$res=0;
+		$data=func_get_args();	//获取所有的参数
+		foreach($data as $v){
+			$res += $v;			//将所有参数值累加
+		}
+		return $res;			//将累加的和返回
+	}
+
+	$data = array(10,20,30,40,50,60,70);
+	echo call_user_func_array('add',$data); //计算未知个数的参数和
+
+
+
+
+
+
+
+
+
+//===== .htaccess  设置目录的访问权限
+
+
+	1. 在要禁用的目录中创建 .htaccess 文件
+	2，添加内容 deny from all 		//禁止所有用户访问
+
+
+
+
+
+
+
+
+//===== js 点击变换验证图片
+
+<img src="code.php" onclick="this.src='code.php?id='+Math.random()"  />
+
+
+
+
+
+
+
+
+
+
+//===== js中confirm 确认是否执行事件
+
+
+function dodel(id){
+    if(confirm(确认要删除吗？)){
+     window.location="action.php?action=del&id="+id;
+   }
+}
+注解 ： 
+	选择 
+		是：跳转到action.php页面并传送键值对 action=del	& id=+"id";	
+		否：返回false;
+
+
+
+
+
+
+
+
+
+
+
+//=====iconv 转换带中文路径的编码
+
+	iconv("utf-8","gbk",$file);
+
+	$img=iconv("utf-8","gbk","c:/一二三/aa.jpg");
+	if(copy($img,"d:/img1.jpg")){
+		echo "ok";
+	}else{
+		echo "failed";
+	}
+
+
+
+
+
+
+
+
+
+
+
+//=====!! 将数据转换成布尔值来显示
+
+<?php
+	$a=array('a5'=>'aaa5','a6'=>'aaa6','a7'=>'aaa7');
+	
+	//echo each($a).'<Br>';		//结果显示：Array
+	//echo !each($a);		//结果显示：空
+	echo !!each($a);		//结果显示：1
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== @() 错误抑制 
+
+临时屏蔽错误，不影响程序的执行。但是错误依然存在。
+
+$a=100/0;		//页面会提示错误，因为0不能当做除数
+
+解决
+$a=@(100/0);		//@() 抑制错误的出现。当有错误就会直接显示为空
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====获取浏览器版本及型号
+
+$_SERVER["HTTP_USER_AGENT"] 
+
+
+
+
+
+
+//===== attr 和 getAttribute 获取和设置元素的属性
+
+
+<div class='a' id='b' title='c' aaa='aaaaaa'>	</div>
+
+alert($('.a').attr('id'));	
+alert($('.a').attr('class'));
+alert($('.a').attr('title'));
+alert($('.a').attr('aaa'));	
+$('#zhanimg').attr('src','http://www.wmwzx.com/public/zhan/zhan2.png');		
+var ifr=document.getElementById('ifr');					
+var ifrsrc = ifr.getAttribute('xsrc');
+    ifr.src='xxxx';
+
+//=====closeOnEscape 取消ESC键功能(jquery)
+
+
+$("#loading").dialog({		//设置loading做成对话框
+		closeOnEscape:false,	//取消ESC键功能 
+	}).parent().parent().find(".ui-widget-header").hide();		//隐藏loading对话框标头区
+
+
+
+
+
+
+
+
+
+
+//===== a标签的js空连接
+
+<a href="javascript:void(0)">注册</a>
+
+
+
+
+
+
+//=====setTimeout() 设置指定时间后执行(jquery操作)
+
+	setTimeout(function(){				//时间间隔1秒钟后执行以下操作
+		$('#loading').dialog('close');		//关闭loading对话框
+		$("#reg").dialog('close');		//关闭reg对话框
+		$("#reg").resetForm();			//重置所有表单项
+	},1000);					//1000 是1秒
+	
+
+
+
+
+
+
+
+
+//=====jquery 通过$.support.opacity 来检测浏览器是IE类还是W3C类
+	//$.support.opacity 设置不同浏览器的透明度
+
+if($.support.opacity==true){  //true为支持W3C
+	$("#box").css("opacity",0.5);
+}else{
+	$("#box").css("filter","alpha(opacity=10)");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====jquery遍历对象中的属性 var i in event
+
+	for(var i in event){
+	//	document.write(i+"<br/>");
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====获取复选框被选中的元素个数(jquery)
+
+html页面：
+<head>
+<script src='jquery.js'></script>
+<script src="a.js"></script>
+</head>
+<body>
+<input type="checkbox" name="sex" id="box"/>
+</body>
+
+
+
+js页面：
+$(function(){
+    $('body').click(function(){
+	alert($(":checked").length);	//获取复选框被选中的元素个数
+    });
+});
+
+
+
+
+
+//=====is(':checked') 判断复选框是否被选择 (jquery)
+
+html页面：
+<head>
+<script src='jquery.js'></script>
+<script src="a.js"></script>
+</head>
+<body>
+<input type="checkbox" name="sex" id="box"/>
+</body>
+
+js页面：
+$(function(){
+ $("#box").click(function(){
+	alert($('#box').is(':checked'));  //复选框选中时返回true,未选择返回false
+ });
+});
+
+
+
+
+
+//===== sha1() 给数据加密
+
+	$a="abc";
+	echo $a."<br>";
+	$b=sha1($a);
+	echo $b."<br>";
+
+	$c="abc";
+	echo $c."<br>";
+	$d=sha1($c);
+	echo $d."<br>";
+
+	if($b==$d){
+		echo "一样";
+	}else{
+		echo "不一样";
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====label标签的 for="id" 的关联属性
+
+for 属性规定 label 与哪个表单元素绑定。 效果；点击文字就会自动选择相关联的表单元素。 
+
+<body>
+<label for='text'>aaaaaaaaaa</label>		//点到aaa时，焦点会自动选择text表单元素
+<input type="text" name='text' id='text'>
+</div>
+</body>
+
+
+
+
+
+//=====设置网页标签上的ICON小图标
+
+<link rel="shortcut icon" type="image/x-icon" href="img/a.ico"/>
+
+
+
+
+
+//=====在指定元素上使光标变成小手
+
+<style>
+	.one{
+		width:100px;
+		height:100px;
+		background:#ccc;
+		cursor:pointer;
+	}
+</style>
+<div class="one"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== overflow 隐藏超出区域的内容 
+//===== overflow 破除div 18px 高度的限制
+<style>
+	.one{
+		width:18px;
+		height:10px;
+		overflow:hidden;
+		background:#ccc;
+	}
+</style>
+<div class="one"></div>
+
+
+
+
+
+
+
+
+
+//=====遍历对象的方法和属性
+
+class one{
+	public $a='aaaaaa';
+	public $b="bbbbb";
+	public $c='ccccc';
+	public function aa(){
+
+	}
+	public function cc(){
+
+	}
+	public function dd(){
+
+	}
+}
+
+//遍历对象的属性
+//方式一：
+$one=new one();
+foreach($one as $k=>$v){
+	//echo $k."=>".$v."<br>";
+}
+//方式二：
+$aa=get_class_methods(one);
+print_r($aa);
+
+
+//遍历对象的方法
+$bb=get_class_vars(one);
+print_r($bb);
+
+
+
+
+
+
+
+
+
+
+
+
+//=====php 动态变量名 ${a.$i}
+
+	for($i=0;$i<10;$i++){
+		${a.$i}="aaaaaaa".$i;
+		echo ${a.$i};
+	}
+		
+
+
+
+
+
+
+
+//=====DIV中让字符自动换行
+
+<style>
+	.one{
+		width:200px;
+		height:200px;
+		border:1px solid;
+		word-wrap:break-word;		//自动换行
+	}
+</style>
+<body>
+<div class='one'>
+<?PHP$str="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	echo $str;
+?>
+</div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+//=====php 睡眠3秒钟后再执行后面的内容
+<?php sleep(3); ?>
+
+
+
+
+//=====从虚拟目录跨盘引用其它盘符目录文件
+
+	require "C://AppServ/www/mysql.php";	//跨盘符引用页面
+	$mysql = new Mysql();
+
+
+
+//=====将16进制的数值随机打出来
+<?php
+	$a='';
+	for($i=0;$i<4;$i++){			//控制长度为4个
+		$a.= dechex(rand(1,15));	//将字符组合
+	}
+	echo $a;
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====label 将几个区域合并在一个点击范围内
+<label>是否保存用户名<input type="checkbox" name="keep"/></label>
+
+
+
+
+
+
+
+
+
+//=====MD5加密
+
+	$str=md5("abcdefg");
+	echo $str;
+
+	$str1="abcdefg";
+	if(md5($str1)==$str)
+		echo "一样";
+	else
+		echo "不一样";
+
+
+
+		
+		
+		
+
+
+//=====获取变量的数据类型  gettype()
+//=====判断是否为指定类型数据 is_xxx()
+
+gettype()
+
+用来取得变量的类型。返回的类型字符串可能为下列字符串其中之一：integer、double、string、array、object、unknown typeis_numeric ( mixed var ): //检验测定变量是不是为数码或数码字符串 is_bool(): //检验测定变量是不是是布尔型 
+is_float(): //检验测定变量是不是是浮点型 和is_double，
+is_real()都同样的用法 
+is_int(): //检验测定变量是不是是整儿
+is_integer()同样的用法 
+is_string(): //检验测定变量是不是是字符串 
+is_object(): //检验测定变量是不是是一个对象 
+is_array(): //检验测定变量是不是是数组 
+is_null(): //检验测定变量是不是为 灭茬 值是不是是灭茬巨细写敏感
+
+
+
+//typeof()获取数据类型(jquery)
+
+alert(typeof(divs));	
+
+
+
+
+
+
+
+//=====上下级文件夹路径 ../	./
+
+上一级文件夹 ../ 
+当前文件夹   ./
+下一级文件夹 ./x/
+
+
+
+
+
+
+//=====jquery 获取显示或隐藏元素的个数与值 :visible	:hidden
+
+
+	//获取表单元素的值用 val()
+	alert($(".sl2:visible").find("option:selected").length);
+	alert($(".sl2:visible").find("option:selected").val());
+
+	alert($(".sl2:hidden").size());
+	alert($(".sl2:hidden").eq(0).find("option:selected").val());
+
+
+	//获取普通元素的值用 html() 或text()
+	alert("隐藏元素共有："+$("div:hidden").size()+"个,内容分别是："
+				+$("div:hidden").eq(0).html()+"和"
+				+$("div:hidden").eq(1).text());
+	alert("显示的元素共有："+$("div:visible").length+"个,内容是："
+				+$("div:visible").text());
+
+
+	
+
+//=====设置元素的隐藏与显示  display:none|block;
+
+<style>
+	.one{
+		width:200px;
+		height:200px;
+		border:1px solid;
+		display:none;
+		display:block;
+	}
+</style>
+<?php
+	echo "<a href='http://www.baidu.com'><div class='one'></div></a>";
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====base用来设置页面中默认的属性
+  =====改变页面超连接以新页面的跳转形式
+
+<head>
+<base target="_blank">
+</head>
+<body>
+<a href="http://www.baidu.com">百度连接</a>
+<a href="http://www.baidu.com">百度连接</a>
+</body>
+
+
+
+
+
+
+
+//===== header头 及 head 头相关设置
+
+
+	<meta http-equiv="content-type" content="text/html charset=utf-8" />	//设定页面编码
+	<meta charset='utf-8'/>
+	<meta name="description" content="LAMP兄弟连致力于PHP培训"/>		//网站描述
+	<meta name="keywords" content="PHP培训|LAMP培训|就业培训"/>		//关键字描述
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />	//指定页面的渲染标准
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />	
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" /> 以最新的标准
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />  	//chrome 表示允许使用谷歌框架，没有也不影响 
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />	//手机浏览等比缩放
+
+	<meta name="apple-mobile-web-app-capable" content="yes">		//这meta的作用就是删除默认的苹果工具栏和菜单栏。  (手机端有效)
+							//content有两个值”yes”和”no”,当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">	//控制状态栏显示样式 black表示黑色
+
+	<meta name="format-detection" content="telephone=no">			//格式检测 
+				"telephone=no"  	默认点击数字自动转化为拨号，no 禁止自动 括号
+				"email=no"		默认点击自动进入邮箱，no 禁止
+				"adress=no" 		默认点击地址自动跳转，no 禁止
+				也可以连写：meta name="format-detection" content="telephone=no,email=no,adress=no"
+		
+
+	<link rel="short icon" type="image/x-icon" href="img/a.ico"/>		//选项卡上的小图标
+	<link type="text/css" rel="stylesheet" href="./css.css" />		//关联CSS
+	<link rel="dns-prefetch" href="//res.wx.qq.com">			// DNS 预解析
+	<script src='a.js'></script>						//关联js文件
+	<title>搜房网</title>							//选项卡上的标题
+
+
+
+	header('content-type:text/html;charset=utf-8');		//php文件中设置编码
+
+	header('Content-Type: text/event-stream');	
+		服务器端事件流语法：把 "Content-Type" 报头设置为 "text/event-stream"。服务器就可以开始向客户端发送事件流了。
+
+		
+	header('Cache-Control: no-cache');		规定不对页面进行缓存	其它相关设置见
+		网页的缓存是由HTTP消息头中的“Cache-control”来控制的，常见的取值有private、no-cache、max-age、must-revalidate等，默认为private。其作用根据不同的重新浏览方式分为以下几种情况。
+		public			所有内容都将被缓存
+		private			内容只缓存到私有缓存中
+		no-cache		规定不对页面进行缓存
+		no-store		所有内容都不会被缓存到缓存或 Internet 临时文件中
+
+
+
+
+
+
+
+
+
+//===== flush() 刷新PHP程序的缓冲
+
+	刷新PHP程序的缓冲，而不论PHP执行在何种情况下（CGI ，web服务器等等）。该函数将当前为止程序的所有输出发送到用户的浏览器。 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 常见的攻击方式
+
+	//-- SYN攻击原理
+
+		SYN攻击属于DOS攻击的一种，它利用TCP协议缺陷，通过发送大量的半连接请求，耗费CPU和内存资源。SYN攻击除了能影响主机外，还可以危害路由器、防火墙等网络系统，事实上SYN攻击并不管目标是什么系统，只要这些系统打开TCP服务就可以实施。从上图可看到，服务器接收到连接请求（syn=j），将此信息加入未连接队列，并发送请求包给客户（syn=k,ack=j+1），此时进入SYN_RECV状态。当服务器未收到客户端的确认包时，重发请求包，一直到超时，才将此条目从未连接队列删除。配合IP欺骗，SYN攻击能达到很好的效果，通常，客户端在短时间内伪造大量不存在的IP地址，向服务器不断地发送syn包，服务器回复确认包，并等待客户的确认，由于源地址是不存在的，服务器需要不断的重发直至超时，这些伪造的SYN包将长时间占用未连接队列，正常的SYN请求被丢弃，目标系统运行缓慢，严重者引起网络堵塞甚至系统瘫痪。 三、SYN攻击工具
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 相关地址
+
+	//-- nginx
+		http://nginx.org/en/download.html 		nginx  下载地址
+		http://nginx.org/
+
+		wget http://nginx.org/download/nginx-1.0.13.tar.gz
+
+	//-- php
+		http://php.net   	
+		http://www.php.net/downloads.php		php下载地址
+		wget http://cn2.php.net/get/php-5.4.0.tar.bz2/from/this/mirror  
+		wget http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.bz2/download    	依赖包
+		wget http://sourceforge.net/projects/mhash/files/mhash/0.9.9.9/mhash-0.9.9.9.tar.bz2/download		依赖包	
+		wget http://sourceforge.net/projects/mcrypt/files/MCrypt/2.6.8/mcrypt-2.6.8.tar.gz/download
+		yum –y install libxml2-devel curl-devel libpng-devel openldap-devel
+		
+
+	//-- mysql 
+
+		wget http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.95.tar.gz/from/http://mysql.cdpa.nsysu.edu.tw/
+
+	//-- mongoDB
+		http://www.mongodb.org/
+		https://github.com/mongodb
+
+
+	//-- redis 下载地址
+		http://redis.io/download
+		wget http://redis.googlecode.com/files/redis-2.0.4.tar.gz	
+		
+
+	//-- memcache 下载地址
+		http://memcached.org/	
+
+
+	//-- SVN 官网
+		subversion.apache.org/packages.html
+
+
+	//-- cURL 文档（网络爬虫）
+		http://php.net/manual/zh/book.curl.php
+
+	
+	//-- apache
+		http://mirror.bit.edu.cn/apache/httpd/				apache 源码包下载
+
+
+	//-- 其它地址		
+		
+		http://www.webxml.com.cn/zh_cn/index.aspx			提供天气，车票等相关服务的网站，可CRUL抓取	
+		http://webservice.webxml.com.cn/WebServices/WeatherWS.asmx		
+
+		http://v.youku.com/v_show/id_XNTM5MzI3OTk2.html			yum 方式 30分钟搭建LNMP环境
+
+		http://www.2gei.com/bgremover/					在线去除图片纯色背景色
+
+		http://zhanzhang.cnzz.com/					CNZZ 数据统计
+
+		http://www.iedns.com/news.asp?newsclass=help			网站域名
+
+		http://www.cnblogs.com/chengmo/archive/2013/05/29/php.html	通过head头篡改IP
+
+		http://www.imooc.com/learn/278					高性能产品的必由之路—性能测试工具（幕课视频）
+
+		http://www.vidown.cn/						维堂 视频下载工具
+
+		http://www.xiguaji.com/Login#/MBiz/Rank				微信违规高点击量集锦
+
+		http://www.xunzi.cc/forum-2-1.html				建林寻子网
+
+		http://www.china-seek.net/					寻亲网
+
+		http://www.zgxrqsw.com/xrqs.asp					寻人启示网
+		http://www.zgdzxrw.com/						寻人网大全
+
+		http://tool.php100.com/						PHP工具大全
+
+		http://www.diediao.com/						碟调网-电影在线观看
+		http://www.mp4ba.com/						电影下载
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 命名空间示例
+
+
+	<?php
+
+	namespace a;
+	function one(){
+		echo 'one<br>';
+	}
+	\b\one();	//结果two
+
+	namespace b;
+	function one(){
+		echo 'two<br>';
+	}
+	one();		//结果two
+	\a\one();	//结果one
+
+	one();		//非限定名称：指向当前空间下的one方法
+
+	b\one();	//限定名称：指向当前空间下的b空间下的one()方法
+
+	\b\one();	//完全限定名称：指向b空间下的one方法
+	\a\one();
+
+
+
+	//use 空间的引用 
+
+		//use : 如果当前空间找不到指定元素就会去 usr 的空间去寻找元素
+		
+		namespace shanghai;
+
+		class Person{
+			static $name='上海人';
+		}
+
+
+		namespace beijing;
+		function get(){
+			echo '北京人';
+		}
+
+		use shanghai\Person;
+		echo Person::$name;		//结果：上海人
+		//或
+		use shanghai;
+		echo shanghai\Person::$name;
+
+		
+		//示例二
+		namespace beijing\chaoyang;
+		class Person{
+			static $name = 'chaoyang';
+		}
+		
+		namespace tianjing\tanggu;
+		function aa(){
+			echo 'aa';
+		}
+		
+		use beijing\chaoyang\Person;
+		echo Person::$name;				//显示 chaoyang
+		
+		use beijing\chaoyang;
+		echo chaoyang\Person::$name;	//显示 chaoyang
+		
+			
+	//空间引用别名，防止本空间和引用空间出现同名元素
+
+		namespace beijing\chaoyang;
+		class Person{
+			static $name = 'chaoyang<br>';
+		}
+		
+		namespace hebei\handan;
+		class Person{
+			static $name = 'handan';
+		}
+		
+		use beijing\chaoyang\Person as pon;		//使用别名pon 代替Person
+		echo pon::$name;
+
+		
+		
+		
+		
+		
+		
+	//引用公共空间 使用 \
+		
+		b.php 页面
+			<?php
+				function getName(){
+					echo 'bbbbbb';
+				}
+		
+		a.php 页面
+			<?php
+				namespace a;
+				function getName(){
+					echo 'aaaaa';
+				}
+				include "b.php";
+				
+				\getName();			//调用b页面中的公共空间的方法 
+				
+				
+				*/
+
+
+	//命名空间中的常量
+
+			1，const() 来定义的常量会受命名空间影响
+
+				const HOST='127.0.0.1';
+				
+			2，define() 定义的常量不受命名空间影响，全局通用
+				
+				
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== exec() php中执行 cmd 命令的函数
+//===== php.exe 在cmd命令行下执行php文件的应用
+//===== windows下制做自动定时备份mysql数据
+
+	   1，制做mysql备份命令的 dump.php 文件
+		<?php
+		$fname = date('YmdHis');
+		$com = "E:/xampp/mysql/bin/mysqldump -uroot -p123 test t4 > c:\\$fname";
+		echo exec($com);	// exec() 函数是PHP用来执行CMD 命令的一个函数 
+
+	   2，制做一个执行 php 的批处理文件 dump.bat 内容如下：
+		E:\xampp\php\php.exe E:\xampp\htdocs\dump.php		//意为：使用php.exe 来执行 dump.php文件
+
+	   3，开启计划任务，并将 dump.bat 添加到任务中运行即可。
+	
+	
+
+
+
+
+
+
+//===== 邮件服务器的搭建
+
+	查看 百度云-》编程相关-》PHP相关-》audio of php-》传智播客PHP培训第二版PHP视频教程 韩顺平 大型门户网站核心技术-Mysql优化-》15，16集

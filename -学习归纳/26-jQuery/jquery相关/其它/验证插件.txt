@@ -1,0 +1,1294 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第47课 知问前端--验证插件 上 13
+学习要点：
+	1，使用validate.js插件
+	2，默认验证规则
+	3，validate()方法和选项
+
+
+
+//-----课程笔记（文本）
+	
+一：使用valudate.js插件
+	官网下载：http://bassistance.de/jquery-plugins/jquery-plugin-validation
+	最重要的文件是validate.js,还有两个可选的辅助文件：additional-methods.js(控件 class方式)和message_zh.js(提示汉化)文件(实际使用，请使用min压缩版)。
+	
+//第一步：引入validate.js
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
+	
+//第二步：在JS文件中执行
+	$("#reg").validate();
+
+
+//验证规则的两种方式 
+	validate.js的默认验证规则的写法有两种形式： 1，控件属性方式。 2，JS键值对传参方式。
+
+
+
+//常用的验证规则
+required:true		必须输入字段
+email:true		必须输入正确格式的电子邮件
+url:true		必须输入正确格式的网址。
+data:true		必须输入正确格式的日期（IE6验证出错）
+dateSO:true		必须输入正确格式的日期（ISO）(只验证格式，不验证有效)
+number:true		必须输入合法的数字（负数，小数）。
+digits:true		必须输入正整数 。
+creditcard:true		必须输入合法的信用卡号，
+equalTo:"#id"		输入值必须和#id的值 相同，用来“验证两次相同密码”
+minlength:5		输入长度最小是5个字符 （汉字算一个字符）
+maxlength:10		输入长度最大是10 个字符（汉字算一个字符）
+rangelength:[5,10]	输入长度介于5到10 个字符之间（汉字算一个字符）
+range:[5,10]		输入的数值必须介于5和10之间。
+min:5			输入值不能小于5.
+max:10			输入值不能大于10.
+remot:"check.php"	使用ajax方法调用check.php验证输入值。
+
+
+//使用控件方式验证“必填和不得小于两位”
+<input type="text" class="required" minlength="2" name="user" id="user"/>
+
+	注意：默认规则里设置布尔值的，直接写到class里即可实现。如果是数字或数组区间，直接使用属性=值的方式即可。而对于错误提示信息，可以引入中文汉化文件，或直接换即可。
+
+
+
+
+//使用JS对象键值对传参方式设置
+$("#reg").validate({
+	rules:{
+		user:{
+			required:true,	//只有一个规则的话，直接user:"required"
+			minlength:2,
+		}
+		messages:{
+			required:"账号不能为空",
+			minlength:"账号不得小于2位",
+		}
+	}
+});
+
+	注意：由于第一种形式不能设置指定的错误提示信息。我们推荐使用第二种形式，第二种形式也避免HTML的污染。
+
+
+//所有规则演示
+	$("#reg").validate({
+		rules:{
+			email:{
+				email:true,
+			},
+			url:{
+				url:true,
+			}
+			date:{
+				date:true,
+			},
+			dateIOS:{
+				dateIOS:true,
+			},
+			number:{
+				number:true,
+			},
+			digits:{
+				digits:true,
+			},
+			creditcard:{
+				creditcard:true,
+			},
+			min:{
+				min:5,
+			},
+			range:{
+				range:[5,10],
+			},
+			rangelength:{
+				rangelength:[5,10],
+			},
+			notpass:{
+				equalTo:"#pass",	//这里的To是大写的T 
+			}
+		}
+	});
+
+
+============================================
+
+
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
+	<script type="text/javascript" src="js/b.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/b.css"/>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+	</style>
+</head>
+
+<body>
+<form id="reg" action="123.html">
+	<p>用户名：<input type="text" name="user" /></p>
+	<p>email：<input type="text" name="email" /></p>
+	<p>网址：<input type="text" name="url" /></p>
+	<p>日期：<input type="text" name="date" /></p>
+	<p>日期ISO：<input type="text" name="dateISO" /></p>
+	<p>数字：<input type="text" name="number" /></p>
+	<p>信用卡：<input type="text" name="creditcard" /></p>
+	<p>正整数：<input type="text" name="digits" id="integer"/></p>
+	<p>验证正整数：<input type="text" name="equalTo" /></p>
+	<p>最小长度：<input type="text" name="minlength"/></p>
+	<p>最大长度：<input type="text" name="maxlength"/></p>
+	<p>长度范围：<input type="text" name="rangelength"/></p>
+	<p>值范围：<input type="text" name="range"/></p>
+	<p>最小值：<input type="text" name="min"/></p>
+	<p>最大值：<input type="text" name="max"/></p>
+	<p><input type="submit" value="提交" /></p>
+</form>
+</body>
+</html>
+
+
+
+=======================================================
+
+js页面
+
+
+$(function(){
+/*
+//-----启用validate表单验证插件
+	$("#reg").validate();
+
+
+//-----使用控件方式验证“必填”和“不得小于两位”
+ 在html文本中直接加入代码 
+<input type="text" class="required" minlength="2" name="user" id="user"/> 
+
+
+//-----汉化validate验证插件的错误提示信息
+
+在jquery.validation插件包中找到dist\localization中的汉化文件：messages_zh.js 然后，将其中的错误提示内容替换正在使用的jquery.validate.js 中的messages: {下的错误提示信息 即可。
+
+
+
+//-----使用插件键值对的方式验证 一项属性”必填“。
+$("#reg").validate({
+	rules:{
+		user:"required",
+	}
+});
+
+
+
+//-----使用插件键值对方式同时验证多项属性 "必填"和"不得小于两位"
+//-----修改验证的错误提示信息
+$("#reg").validate({
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+		}
+	},
+	//修改验证的错误提示信息
+	messages:{
+		user:{
+			required:"a账号不能为空",
+			minlength:"b至少要输入2个字符",
+		}
+	}
+
+});
+*/
+
+//-----常见的验证规则
+$("#reg").validate({
+	rules:{
+//-----验证字段不能为空
+		user:{
+			required:true,	
+		},
+//-----验证输入正确邮箱格式
+		email:{
+			email:true,	
+		},
+//-----验证输入正确网址
+		url:{
+			url:true,	
+		},
+//-----验证输入正确日期
+		date:{
+			date:true,	
+		},
+//-----验证输入正确日期格式
+		dateISO:{
+			dateISO:true,	
+		},
+//-----验证输入正确数字
+		number:{
+			number:true,	
+		},
+//-----验证正确的信用卡号
+		creditcard:{
+			creditcard:true,  
+		},
+//-----验证必须为正整数
+		digits:{
+			digits:true,	
+		},
+//-----验证两次(密码)输入是否一致
+		equalTo:{
+			equalTo:"#integer", 
+		},
+//-----验证最小长度
+		minlength:{
+			minlength:3,	
+		},
+//-----验证最大长度
+		maxlength:{
+			maxlength:5,	
+		},
+//-----验证长度的范围
+		rangelength:{
+			rangelength: [3,5],	
+		},
+//-----验证值的范围
+		range:{
+			range:[5,10],	
+		},
+//-----验证最小值
+		min:{
+			min:5,		
+		},
+//-----验证最大值
+		max:{
+			max:5,		
+		}
+		
+	},
+     //修改错误提示信息
+	messages:{
+		user:{
+			required:"required-不能为空",
+		},
+
+	},
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第48课 知问前端--验证插件 中 14
+
+
+//-----验证长度时提示信息自动匹配设置的长度 {0}{1}
+//-----调试模式，会阻止自动提交 debug
+//-----全局默认行为设置并为全局设置debug模式。
+//-----代替默认提交的方式 submitHandler
+//-----忽略某个字段验证 ignore
+//-----群组提示group
+//-----群组提示第二种方法(推荐使用这种方法)
+//-----设置错误提示的class名
+//-----设置错误提示的标签名
+//-----统一包裹错误提示
+//-----设置成功后加载的class
+//-----输入验证正确后在文本框内加入图标
+//-----设置验证错误时边框变色，正确时恢复
+//-----获取验证到的错误个数。并随个数改变而改变提示信息。
+//-----获取错误提示句柄，不用提交及时获取值。
+//-----课程笔记 
+
+==============================
+
+js页面：
+
+$(function(){
+/*
+//-----验证长度时提示信息自动匹配设置的长度 {0}{1}
+$("#reg").validate({
+	rules:{
+		user:{
+			required:true,
+			//匹配一个值
+			//minlength:4,
+			//匹配两个值
+			rangelength:[3,5],
+		}
+	},
+	//修改验证的错误提示信息
+	messages:{
+		user:{
+			required:"a账号不能为空",
+			//匹配一个值
+			//minlength:jQuery.format("b至少要输入{0}个字符"), 教学如此，但测试无效
+			//minlength:$.format("b至少要输入{0}个字符"),  教学如此，但测试无效
+			//minlength:"b至少要输入{0}个字符",  此方法有效。
+			//匹配两个值
+			rangelength:"b至少要输入{0}-{1}个字符！", 
+		}
+	}
+});
+
+//-----调试模式，会阻止自动提交 debug
+$("#reg").validate({
+	//调试模式，会阻止自动提交
+	debug:true,
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+		}
+	},
+	messages:{
+		user:{
+			required:"不能为空",
+			minlength:"到少要输入{0}个字符",
+		}
+	}
+});
+
+
+
+//-----全局默认行为设置并为全局设置debug模式。
+$.validator.setDefaults({
+	debug:true
+});
+$("#reg").validate({
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+		},
+	},
+	messages:{
+		user:{
+			required:"不能是空的",
+			minlength:"至少需要{0}个字符",
+		}
+	}
+});
+
+//-----代替默认提交的方式 submitHandler
+$("#reg").validate({
+	//当验证成功后执行，而且阻止了默认提交
+	//一秀用于ajax的异步提交使用。
+	submitHandler:function(form){
+		//alert(form);
+		alert("验证成功，准备提交");
+	},
+	rules:{
+		user:{
+			required:true,
+			minlength:3,
+		}
+	},
+	messages:{
+		user:{
+			required:"不能为空！",
+			minlength:"至少要{0}个字符"
+		}
+	}
+});
+
+
+
+
+//-----忽略某个字段验证 ignore
+
+$("#reg").validate({
+	ignore:"#pass",
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+		},
+		pass:{
+			required:true,
+			minlength:6,
+		}
+
+	},
+	messages:{
+		user:{
+			required:"不能是空的！",
+			minlength:"到少要输入{0}个字符",
+		},
+		pass:{
+			required:"不可以空",
+			minlength:"到少要{0}个字符"
+		}
+
+	},
+});
+
+
+
+
+
+//-----群组提示group
+
+$("#reg").validate({
+	groups:{
+		myerror:"user pass",
+	},
+	focusInvalid:false,
+	errorPlacement:function(error,element){
+		//alert(element[0]);   //input 元素
+		//alert(error);  	//错误元素对象 
+		$.each(error,function(index,value){
+			//alert(index+" "+$(value).html()); //遍历了两个错误
+			$(".myerror").html($(".myerror").html()+$(value).html());
+		});
+	},
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+		},
+		pass:{
+			required:true,
+			minlength:6,
+		}
+
+	},
+	messages:{
+		user:{
+			required:"不能是空的！",
+			minlength:"到少要输入{0}个字符",
+		},
+		pass:{
+			required:"不可以空",
+			minlength:"到少要{0}个字符"
+		}
+
+	},
+});
+
+
+
+
+//-----群组提示第二种方法(推荐使用这种方法)
+
+$("#reg").validate({
+	groups:{
+		error_user:"user",
+		error_pass:"pass",
+	},  		//其实这时的 groups{}的内容可以去掉，直接用下面的Placement原生直接获取错误
+	errorPlacement:function(error,element){
+		error.appendTo(".myerror");  //自动将获取的错误添加到类名为.myerror的元素中。
+	},
+
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+		},
+		pass:{
+			required:true,
+			minlength:6,
+		}
+
+	},
+	messages:{
+		user:{
+			required:"不能是空的！",
+			minlength:"到少要输入{0}个字符",
+		},
+		pass:{
+			required:"不可以空",
+			minlength:"到少要{0}个字符"
+		}
+
+	},
+});
+
+
+$("#reg").validate({
+	
+	errorPlacement:function(error,element){
+		error.appendTo(".myerror");  //自动将获取的错误添加到类名为.myerror的元素中。
+	},
+
+//-----设置错误提示的class名
+	errorClass:"abc",
+
+//-----设置错误提示的标签名
+	errorElement:"p",
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+		},
+		pass:{
+			required:true,
+			minlength:6,
+		}
+
+	},
+	messages:{
+		user:{
+			required:"不能是空的！",
+			minlength:"到少要输入{0}个字符",
+		},
+		pass:{
+			required:"不可以空",
+			minlength:"到少要{0}个字符"
+		}
+
+	},
+});
+
+
+
+*/
+
+
+$("#reg").validate({
+
+//-----统一包裹错误提示
+	//errorLabelContainer:"ol.myerror",
+	//wrapper:"li",
+
+//-----设置成功后加载的class
+	success:"abc", 	//验证成功后添加了一个类
+/*  在CSS中设置这个类的样式。
+.abc{
+	border:5px solid green;
+}
+
+
+//-----输入验证正确后在文本框内加入图标
+在CSS中直接设置valid样式即可 （valid是内置的元素）
+.valid{
+	background:url(../img/a.ico) no-repeat right;
+}
+
+
+//-----设置验证错误时边框变色，正确时恢复
+	highlight:function(element,errorClass){
+		$(element).css("border","1px solid red");
+	},
+	unhighlight:function(element,errorClass){
+		$(element).css("border","1px solid black");
+	},
+
+
+
+	invalidHandler:function(event,validator){
+//-----获取验证到的错误个数。并随个数改变而改变提示信息。
+		var error= validator.numberOfInvalids();
+		if(error){
+			$("p.myerror").html("您有"+error+"个错误");
+		}
+	},
+	submitHandler:function(form){
+		//if(error==0) $("p.myerror").hide();
+		//因为到这时是以经没有错误了，所可以以直接
+		$(".myerror").hied();
+	},
+
+*/
+
+//-----获取错误提示句柄，不用提交及时获取值。
+	//即在输入的同时提示信息会随验证的对错而自动显示或消失。
+	showErrors:function(errorMap,errorList){
+		//$.each(errorMap,function(index,value){
+			//alert(index+" "+value);
+		//});
+		//alert(errorMap.user);
+		//alert(errorList[0].element);
+		//alert(errorList[0].message);
+	
+		var error = this.numberOfInvalids();
+		if(error){
+			$(".myerror").html("您有"+error+"条错误信息");
+		}else{
+			$(".myerror").hide();
+		}
+		this.defaultShowErrors();
+	},
+
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+		},
+		pass:{
+			required:true,
+			minlength:6,
+		}
+
+	},
+	messages:{
+		user:{
+			required:"不能是空的！",
+			minlength:"到少要输入{0}个字符",
+		},
+		pass:{
+			required:"不可以空",
+			minlength:"到少要{0}个字符"
+		}
+
+	},
+});
+
+});
+
+
+
+=======================================
+
+
+//-----课程笔记
+
+
+
+三：validate()的方法和选项
+	除了默认的验证规则外，validate.js还提供了大量的其他属性和方法供开发者使用。比如，调试属性，错误提示位置一系列比较有用的选项。
+
+//jquery.format 格式化错误提示
+$("#reg").validate({
+	rules:{
+		user:{
+			required:true,
+			minlength:5,
+			rangelength:[5,10],
+		}
+	},
+	messages:{
+		user:{
+			required:"账号不能为空",
+			minlength:jQuery.format("账号悄得小于{0}位"),
+			rangelength:jQuery.format("账号限制在{0}-{1}位"),
+		}
+	}
+});
+
+
+
+//开启调试模式禁止提交
+	$("#reg").validate({
+		debug:true,
+	});
+
+
+//设置调试模式为默认，可以禁止多个表单提交
+	$.validator.setDefaults({
+		debug:true,
+	});
+
+
+//使用其他方式代替默认提交
+	submitHandler:function(form){
+		//可以执行ajax提交，并且无须debugtrue阻止提交了
+	}
+
+
+//忽略某个字段验证
+	ignore:"#pass",
+
+
+//群组错误提示
+	groups:{
+		myerror:"user pass",
+	}
+
+
+//显示群组的错误提示
+	focusInvalid:false,
+	errorPlacement:function(error,element){
+		$.each(error,function(index,value){
+			$(".myerror").html($(".myerror").html()+$(value).html());
+		});
+	}
+
+//群组错误提示，分开
+	groups:{
+		error_user:"user",
+		error_pass:"pass",
+	},  		//其实这时的 groups{}的内容可以去掉，直接用下面的Placement原生直接获取错误
+
+//将群组的错误指定存放位置
+	errorPlacement:function(error,element){
+		error.appendTo(".myerror");  //自动将获取合并错误添加到类名为.myerror的元素中。
+	},
+
+
+
+//设置错误提示的class名
+	errorClass:"error_list",
+
+
+
+//设置错误提示的标签
+	errorElement:"p",
+
+
+//统一包裹错误提示
+	errorLabelContainer:"o1.error",
+	wrapper:"li",
+
+
+
+//设置成功后加载的class
+	success:"success",
+
+
+//使用方法加载class并添加文本
+	success:function(label){
+		label.addClass("success").text("ok");
+	}
+
+
+//高亮显示有错误的元素，变色式
+	highlight:function(element,errorClass){
+		$(element).fadeOut(function(){
+			$(element).fadeIn();
+		});
+	}
+
+	highlight:function(element,errorClass){
+		$(element).css("border","1px solid red");
+	}
+
+
+//成功的元素移出错误高亮
+	unhighlight:function(element,errorClass){
+		$(element),css("border","solid #ccc");
+	}
+
+
+
+//表单提交时获取信息
+	invalidHandler:function(event,validator){
+		var errors=validator.numberOfInvalis();
+		if(errors){
+			$(".myerror").html("您有"+errors+"个表单错误");
+		}
+	}
+
+
+
+
+
+//获取错误提示句柄，不用提交及时获取值。
+	showErrors:function(errorMap,errorList){
+		var errors=this.numberOfInvalis();
+		if(errors){
+			$(".myerror").html("您有"+errors+"个错误");
+		}else{
+			$(".myerror").hide();
+		}
+		this.defaultShowErrors();
+	}			//执行默认错误
+	
+
+
+
+==========================================
+
+CSS面页
+.valid{
+	background:url(../img/1.jpg) no-repeat right;
+}
+.abc{
+	border:5px solid green;
+}
+
+
+==========================================
+html页面
+
+.valid{
+	background:url(../img/1.jpg) no-repeat right;
+}
+.abc{
+	border:5px solid green;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第49课 知问前端--验证插件 下 15
+
+
+//-----验证用户名是否被占用
+/*
+$(function(){
+
+	submitHandler:function(form){
+		alert("验证成功");
+	}
+
+	$("#reg").validate({
+		submitHandler:function(form){
+			alert("成功后提交");
+		},
+		rules:{
+			user:{
+				required:true,
+				minlength:2,
+//验证用户是否被占用
+				//remote:"user.php",
+			},
+			pass:{
+				required:true,
+				minlength:6,
+			}
+		},
+		messages:{
+			user:{
+				required:"账号不能为空",
+				minlength: ("至少需要{0}个字符"),
+//验证用户是否被占用
+				//remote:"用户名被占用",
+			},
+			pass:{
+				required:"密码不能为空",
+				minlength:"至少需要{0}个字符",
+			},
+		}
+	});
+});
+
+
+
+//-----同时传递多个值到远程端（同时验证用户名和密码）
+$(function(){
+	$("#reg").validate({
+		submitHandler:function(form){
+			alert("成功后提交");
+		},
+		rules:{
+			user:{
+				required:true,
+				minlength:2,
+			},
+			pass:{
+				required:true,
+				minlength:6,
+//同时传递多个值到远程端
+				remote:{
+					url:"user.php",
+					type:"post",  //不加这条，默认为GET方式。
+					dataType:"json", //默认传递数据类型
+					data:{
+						user:function(){
+							return $("#user").val();
+						},
+					},
+				}, 
+
+			},
+		},
+		messages:{
+			user:{
+				required:"账号不能为空",
+				minlength: ("至少需要{0}个字符"),
+			},
+			pass:{
+				required:"密码不能为空",
+				minlength:"至少需要{0}个字符",
+				remote:"账号或密码不正确!",
+			},
+		}
+	});
+});
+
+
+//-----validate验证相关操作
+	//取消提交验证
+	//设置鼠标离开不触发验证,点击提交时才验证
+	//设置键盘按下弹起不触发验证
+	//设置点击 checkbox和radio点击不触发验证
+	//不让错误提示元素获得焦点
+	//隐藏验证错误提示
+	//屏蔽验证时提示title信息
+
+$(function(){
+	$("#reg").validate({
+	//--取消提交验证
+	//onsubmit:false,		//默认是true
+	//注意：设置为false会导致直接传统提交，不会实现验证功能，一般是用于keyup/click/blur验证提交
+
+
+	//--设置鼠标离开不触发验证,点击提交时才验证
+	//onfocusout:false,	//默认为true
+
+
+	//--设置键盘按下弹起不触发验证
+	//onkeyup:false,		//默认为true
+	//注意：只要设置了，在测试的浏览器不管是false还是true都不触发
+
+	//--设置点击 checkbox和radio点击不触发验证
+	//onclick:false,		//默认为true
+
+	//--不让错误提示元素获得焦点
+
+	//--隐藏验证错误提示
+	//--屏蔽验证时提示title信息
+	//当点击提交时，如果获取到错误，默认会把焦点放置在第一条错误元素上，当设置了focusInvalid，那么提交后焦点就不会放在错误元素上。
+	//focusInvalid:false,	//默认为true
+
+
+	//--隐藏验证错误提示
+	//提示错误时，隐藏错误提示，不能和focusInvalid一起用，冲突。
+	//focusCleanup:true,	//默认为false
+
+
+	//--屏蔽验证时提示title信息
+	//--如果表单元素设置了title值，且messages为默认，就会读取title值的错误信息，我们可以通过ignoreTitle:true,设置为true,屏蔽这一个功能 。
+	//ignoreTitle:true,	//默认为false
+
+		submitHandler:function(form){
+			alert("成功后提交");
+		},
+		rules:{
+			user:{
+				required:true,
+				minlength:2,
+			},
+			pass:{
+				required:true,
+				minlength:6,
+				remote:{
+					url:"user.php",
+					type:"post",  
+					dataType:"json", 
+					data:{
+						user:function(){
+							return $("#user").val();
+						},
+					},
+				}, 
+
+			},
+		},
+		messages:{
+			user:{
+				required:"账号不能为空",
+				minlength: ("至少需要{0}个字符"),
+			},
+			pass:{
+				required:"密码不能为空",
+				minlength:"至少需要{0}个字符",
+				remote:"账号或密码不正确!",
+			},
+		}
+	});
+//-----判断表单所验证的元素是否全部有效
+	//alert($("#reg").valid());	//全部有效返回true
+
+});
+*/
+
+//-----单独验证表单项。
+$(function(){
+	$("#reg").validate();
+	$("#user").rules("add",{
+		required:true,
+		minlength:2,
+		messages:{
+			required:"不可以空",
+			minlength:"2个以上",
+		}
+	});
+
+
+//-----删除所有验证规则
+	//$("#user").rules("remove");
+
+//-----删除指定验证规则
+	//$("#user").rules("remove","required min max");
+
+
+//-----自定义验证规则
+	$("#code").rules("add",{
+		required:true,
+		code:true,
+		messages:{
+			required:"邮编不能为空",
+		}
+	});
+
+	//--定义规则
+	$.validator.addMethod("code",function(value,element){
+		//首尾限制在0到9的6位数字。
+		var tel=/^[0-9]{6}$/; 
+		return this.optional(element) || (tel.test(value));
+	},"请输入正确的邮编");
+
+});
+
+
+
+
+
+
+=========================================
+//-----课程笔记
+
+
+
+
+四:validate.js其他功能
+	使用remote:url,可以对表单进行ajax验证，默认会提交当前验证的值到远程地址。如果需要提交其他的值，可以使用data选项。
+	//使用ajax验证
+	rules:{
+		user:{
+			required:true,
+			minlength:2,
+			remote:"user.php",
+		},
+	},
+	
+	//user.php内容
+	<?php
+		if($_GET["user"]=="bnbbs"){
+			echo "false";
+		}else{
+			echo "true";
+		}
+	?>
+	注意：远程地址只能输出"true"或"false",不能输出其他值。
+
+
+
+
+	//同时传递多个值到远程端
+	pass:{
+		required:true,
+		minlength:6,
+		remote:{
+			url:"user.php",
+			type:"POST",
+			dataType:"json",
+			data:{
+				user:function(){
+					return $("#user").val();
+				},
+			},
+		},
+	},
+
+
+	
+
+	//user.php内容
+	<?php
+		if($_POST["user"]!="bnbbs" || $_POST["pass"]!="123456"){
+			echo "false";
+		}else{
+			ehco "true",	
+		}
+	?>
+
+
+
+
+
+
+
+	validate.js 提供了一些事件触发的默认值，这些值呢？，大部分建议是不用更改的。
+	//--取消提交验证
+	onsubmit:false,		//默认是true
+	注意：设置为false会导致直接传统提交，不会实现验证功能，一般是用于keyup/click/blur验证提交
+
+
+	//--设置鼠标离开不触发验证
+	onfocusout:false,	//默认为true
+
+
+	//--设置键盘按下弹起不触发验证
+	onkeyup:false,		//默认为true
+	注意：只要设置了，在测试的浏览器不管是false还是true都不触发
+
+	//--设置点击 checkbox和radio点击不触发验证
+	onclick:false,		//默认为true
+
+	//--设置错误提示后，无法获得焦点
+	focusInvalid:false,	//默认为true
+
+
+	//--提示错误时，隐藏错误提示，不能和focusInvalid一起用，冲突。
+	focusCleanup:true,	//默认为false
+
+
+	//--如果表单元素设置了title值，且messages为默认，就会读取title值的错误信息，我们可以通过ignoreTitle:true,设置为true,屏蔽这一个功能 。
+	ignoreTitle:true,	//默认为false
+
+	
+	//--判断表单所验证的元素是否全部有效
+	alert($("#reg").valid());	//全部有效返回true
+
+	validate.js提供了可以单独验证每个表单元素的rules方法，不但提供了add增加验证，还提供了remove删除验证的功能 。
+	//--给user增加一个表单验证
+	$("#user").rules("add",{
+		required:true,
+		minlength:2,
+		messages:{
+			required:"账号不能为空"，
+			minlength:jQuery.format("账号不得小于{0}位！"),
+		}
+	});
+
+	
+	//--删除user的所有验证规则
+	$("#user").rules("remove");
+
+
+	//--删除user的指定验证规则
+	$("#user").rules("remove","minlength min max");
+
+	//--添加自定义验证
+	$.validator.addMethod("code",function(value,element){
+		var te1=/^[0-9]{6}$/;
+		return this.optional(element) || (te1.test(value));
+	},"请正确填写您的邮政编码");
+
+	//--调用自定义验证
+	rules:{
+		code:{
+			required:true,
+			code:true,
+		}
+	}
+
+
+
+
+
+======================================================
+
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
+	<script type="text/javascript" src="js/b.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/b.css"/>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+	</style>
+</head>
+
+<body>
+<form id="reg" action="123.html">
+	<p class="myerror"></p>
+	<ol class="myerror"></ol>
+	<p>用户名：<input type="text" name="user" id="user" title="title信息"/></p>
+	<p>密码：<input type="password" name="pass" id="pass" /></p>
+	<p>邮编：<input type="text" name="code" id="code" /></p>
+	<p><input type="submit" value="提交" /></p>
+</form>
+</body>
+</html>
+
+

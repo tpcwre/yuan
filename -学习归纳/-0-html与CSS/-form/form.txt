@@ -1,0 +1,585 @@
+
+
+//===== <form>标签
+
+//===== type的属性值
+
+//===== 表单属性集合
+
+//===== fieldset 给指定表单项加一层边框
+
+//===== <label>表单项关联标签
+
+//===== 设置文本框四角的弧度
+
+//===== text 文本框
+
+//===== password 密码框
+
+//===== radio	单选框
+
+//===== checkbox 复选框
+
+//===== file 文件上传
+
+//===== enctype	编码类型。
+
+//===== reset	重置按钮
+
+//=====	submit	提交按钮
+
+//===== image	图片形式的提交按钮
+
+//===== hidden 	隐藏域
+
+//===== button 	按钮
+
+//===== select 	下拉列表
+
+//===== textarea 文本域
+
+//=====区分多个表单提交的数据的方法
+
+//===== 文件上传示例
+
+//===== 表单的jquery操作
+
+
+
+//===== <form>标签
+
+	<from action='a.php' method='post' enctype="multipart/form-date">
+
+		action	要提交到哪个页面
+		method	提交时使用的方法 post,get
+		enctype="multipart/form-date"	使用表单上传文件的声明
+
+
+
+/===== type的属性值
+
+     <input type='text' name='' value='' />
+		type：指定表单项的类型
+			text		文本框
+			password	密码框
+			radio		单选框
+			checkbox	复选框
+			file		文件上传
+			reset		重置按钮
+			submit		提交按钮
+			image		图片提交
+			hidden 		隐藏域
+			button 		按钮
+			select:option 		下拉列表
+			textarea 	文本域
+			
+		name：指定表单项的名称，
+		
+		value：指定表单项要传输的值
+				
+				
+
+
+
+
+
+//===== 表单属性集合
+
+
+		id				id名(可选)						-公共
+        disabled		禁用表单项						-公共
+        size			表单长度,以字符个数计算			-公共
+		autofocus		表单项自动获取焦点				-公共
+		readonly		表单项只读						-公共
+		border-radius:20px 	设置表单边框弧度（CSS中）	-公共
+		tabindex		输入域，使用“tab”键的遍历顺序	-公共
+		accesskev		表单的快捷键访问方式			-公共
+
+
+
+        maxlength		文本框最大输入的长度			-文本框
+		placeholder 	文本框内部提示信息 				-文本框
+	    pattern			文本框输入限制					-文本框
+			
+		checked 		单选或复选默认选项				-单选多选
+		
+		src				提交按钮的图片的位置（URI）		-按钮
+		alt				代替提交图片形式的按键内容		-按钮
+		type			button按钮的类型 button,reset,submit	-按钮
+
+
+		option			select下拉列表项				-select
+        selected		下拉列表示默认选中项。			-select
+		multiple		下拉列表同时显示多个选项		-select
+
+
+        cols			文本区域内可见的宽度			-textarea
+        rows			文本区域内可见的高度			-textarea
+		resize:none		设置文本域是否可以改变大小(css)	-textarea
+		overflow-y:hidden 	隐藏文本框的纵向滚动条 		-textarea
+		overflow-x:hidden	隐藏文本框的纵横滚动条		-textarea
+
+
+
+
+
+
+
+
+
+
+//===== fieldset 给指定表单项加一层边框
+
+<fieldset>
+	身高：<input type='text' />
+	体重：<input type='text'/>
+</fieldset>
+
+
+
+
+
+
+//===== <label>表单项关联标签
+
+		<input type='radio' name='sex' value='nan' id='nan'/><label for='nan'>男</label>
+		<input type='radio' name='sex' value='nv' id='nv'/><label for='nv'>女</label>
+		<input type='radio' name='sex' value='bzd' id='bzd'/>不知道
+
+            for属性：和input表单中的id属性进行绑定。
+            步骤：
+                1、给input标签一个唯一的ID属性值
+                2、将要进行捆绑的内容用<label>标签进行标记
+                3、给label标签中的for属性的值和ID属性的值相同
+
+
+
+
+
+
+
+
+
+//===== 设置文本框四角的弧度
+
+	<input type='text' style="border-radius:20px" />
+		   
+		border-radius:20px 	设置文本框的四角弧度
+
+
+		
+		
+		
+
+
+
+//===== text 文本框
+
+	<input type='text' name='user' id='user' value='abc' size=15  maxlength=3 placeholder='文本框' disabled autofocus/>
+
+		name	表单名
+		id		id名
+		value	默认值
+		size	表单项的宽度(宽度以字符的个数计算)
+		maxlength	最大输入的长度
+		placeholder 占位符，文本框中的示例提示信息 
+		disabled	禁用表单项
+		aotufocus	让表单项获取焦点
+	        		
+
+	//-- pattern 文本框输入限制
+		
+		<input type='text' pattern="[0-9,a-z]{1,9}" />   
+		可以使用0到9,a到z 的字符，可以1到9位数间。
+
+
+		
+		
+		
+		
+		
+//===== password 密码框
+
+	<input type="password" name='pwd' />
+
+		name		表单项名
+
+
+		
+		
+		
+//===== radio	单选框
+	
+	<input type='radio' name='sex' value=0 />男
+	<input type='radio' name='sex' value=1 checked="checked"/>女
+
+		checked 	默认选项
+		value		值
+		name		表单项名
+                注意： 你的name属性的值需要是一样的才可以进行单个选择
+
+
+
+				
+				
+
+//===== checkbox 复选框
+
+	<input type="checkbox" name='box[]' value='sports' />运动
+	<input type="checkbox" name='box[]' value='book' checked='checked'/>看书
+	<input type="checkbox" name='box[]' value='buy' />购物
+
+		name='box[]'	复选框的名需要是一个数组形式
+		value			值
+		checked			默认选项	
+
+
+
+
+
+//===== file 文件上传
+//===== enctype	编码类型。
+	
+	文件上传时需要指定form表单的编码形式
+	<form action="" enctype="multipart/form-data" method="post">
+		<input type="file" name="myfile"/>
+		<input type="submit" value="上传"/>
+	</form>
+
+		name		表单项名
+		enctype="multipart/form-date"	表单传输文件的编码设置
+
+
+	
+	
+	
+	
+//===== reset	重置按钮
+
+	<input type="reset" value="重置" />
+	
+		value		这里指按钮上的文字
+
+
+
+		
+		
+
+//=====	submit	提交按钮
+
+	<input type="submit" value='提交' />
+	
+		value		这里指按钮上的文字
+
+
+		
+		
+
+//===== image	图片形式的提交按钮
+
+	<input type="image" src='1.jpg'/>
+	
+		src	当使用图片来表示按钮时，代表图片的位置（URI）
+		alt	用来替换提交按钮图片（当在input的src属性定义的图片无法显示时）提示信息
+		
+
+
+
+
+
+
+//===== hidden 	隐藏域
+
+	<form action='b.php' method='post'>
+		<input type="hidden" name='hid' value='hidd' />
+		<input type="submit" value='提交' />
+	</form>
+
+
+	//-区分多个表单提交的数据的方法
+
+		<input type="hidden" name="type" value="query"/>
+
+		判断时：
+
+		$type=$_POST['type'];
+		if($type=="query"){}
+
+	
+
+
+
+
+
+//===== button 	按钮
+
+	<form action="b.php" method='post'>
+		<input type='text' value='aa' name='user'/>
+		<button type='button'>按钮</button>
+		<button type='reset'>重置</button>
+		<button type='submit'>提交</button>
+	</form>
+
+		type 设置按钮的性质  
+			button	按钮
+			reset	重置		
+			submit	提交
+
+
+
+
+
+
+
+//===== select 	下拉列表
+
+	<select name='sel' disabled="disabled">
+		<option value='b'>bbb</option>
+		<option disabled="disabled">aaa</option>
+		<option value='a' selected='selected'>ccc</option>
+	</select>
+		
+		option		列表项
+		name		表单项名
+		value		传递给服务器的值
+      		disabled	禁用表单项或表单中的列表值
+        	selected	表示默认选中谁。
+		multiple	可以有多个选择  下拉列表
+		tabindex	使用“tab”键的遍历顺序。
+
+	//-同时显示多项的下拉列表
+
+		<select multiple>
+			<option>1</option>
+			<option>1</option>
+			<option>1</option>
+		</select>
+
+
+
+
+
+
+
+
+
+
+
+//===== textarea 文本域
+	
+	<form action="b.php" method='post' name='area'>
+		<textarea cols=50 rows=20  style='resize:none'>a</textarea>
+	</form>
+
+      		name		传输的标识
+        	cols		文本区域内可见的宽度
+        	rows		文本区域内可见的高度
+		resize:none		设置文本域是否可以改变大小
+		disabled 		无法获得焦点，无法选择，灰色显示，表单无效。
+		readonly		输入域可以选择，但是无法修改	
+		tabindex		输入域，使用“tab”键的遍历顺序
+		accesskev		表单的快捷键访问方式
+		overflow-y:hidden 	隐藏文本框的纵向滚动条
+		overflow-x:hidden	隐藏文本框的纵横滚动条
+		注：textarea会按代码内容显示，空格，换行都会显示
+
+
+
+
+
+//=====区分多个表单提交的数据的方法
+
+		一：用GET传输数据区分提交 
+			<form action="a.php?type=query" method="get"> 
+
+
+		二：用隐藏域来区分提交
+			<form>
+				<input type="hidden" name="type" value="query"/>
+				<input type="submit" value="添加"/>
+			</form>
+
+			判断时：
+				$type=$_GET['type'];
+				if($type=="query"){}
+
+		三：直接在submit项中添加一个name来区分
+			<input type="submit" name="type" value="query"/>
+			判断时
+			$type=$_GET["type"]; 
+			if($type=="query"){}
+
+
+
+
+
+
+//===== 文件上传示例
+
+
+		echo "<form action='' method='post' enctype='multipart/form-data'>";
+			echo "<input type='file' name='file' />";
+			echo "<input type='file' name='file[]' />";	//多文件上传
+			echo "<input type='submit' value='上传' />";
+		echo "</form>";
+
+		$name=$_FILES['file']['name'];
+		$tmp=$_FILES['file']['tmp_name'];
+		$type=$_FILES['file']['type'];
+		$size=$_FILES['file']['size'];
+		$error=$_FILES['file']['error'];
+		if($size > 10){
+			echo "文件过大<br>";
+		}
+
+		$types=array('image/jpeg','image/png','image/gif');
+		if(in_array($type,$types)){
+			echo "文件类型不正确<br>";
+		}
+		$exts=array('jpg','jpeg','gif','png','JPG','JPEG','PNG','GIF');
+		$ext=pathinfo($name,PATHINFO_EXTENSION);
+		if(in_array($ext,$exts)){
+			echo "文件格式不正确<br>";
+		}
+		if(is_uploaded_file($tmp)){
+			echo "文件上传非法<br>";
+			if(move_uploaded_file($tmp,$name)){
+				echo "文件上传成功！";
+			}else{
+				echo "文件上传失败";
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+		
+
+
+
+
+//===== 表单的jquery操作
+
+	//-- jquery获取表单单行文本框元素
+		$(":text").size();
+
+		
+		
+
+	//-- 获取表单项的值
+		$("#t2").val('aaa');				//给指定文本域添加内容
+	
+		$("input").val();					//当页面中只有一个表单项时
+		
+		$("input").eq(1).val(); 			//页面中有多个表单项时
+
+		$("input[type=password]").val();	//通过表单类型选择元素及获取其内容
+
+		$("input[name=user]").val();		//通过表单name选择元素及获取其内容
+		
+		$(":radio").eq(0).val();
+		
+		$(":radio").last().val();
+		
+		$(":radio").first().val();
+		
+		$(":radio[name=sex]").last().val();		//如果有多组单选项就用名字来区分
+		
+		$(this).find("option:selected").val(),	//获取select中当前选中的option值
+
+
+
+	//--size() 获取表单项的总个数
+	
+		$("input").size();			//获取输入表单项的总个数
+
+		$(":text").size();			//获取文本表单项的总个数
+
+		$(":password").size();		//获取密码表单项的总个数
+
+		$("input:checked").size();	//获取被自动选择的表单项的总个数
+		
+		$(":submit").size();		//获取提交按键总个数
+		
+		$(":reset").size();			//重置按键总个数
+
+		$(":image").size();			//图片按钮元素
+
+		$(":file").size();			//获取表单文件按钮元素
+
+		$(":button").size();		//获取表单普通按钮元素
+
+		$(":hidden").size();		//获取表单域中的隐藏元素
+		$("input:hidden").size();
+		
+		$("form :enabled").size();	//可用表单项总个数
+		
+		$("form :disabled").size(); //不可用表单项总个数
+		
+		$("input:selected").size();
+		
+		
+		
+		
+		
+	//-- checked 获取被自动选择的表单项
+	
+		$(":checked");
+		
+		$("input:checked").get(0).value		// 获取第一个自动选择的表单项的值 ，get() javascript方式
+		
+		$("input:checked").eq(0).val()		// 获取第一个自动选择的表单项的值 ，eq() jquery方式 
+		
+		$("input:checked").size();			//获取被自动选择的表单项的总个数
+		
+		$("input:checked[name=a]").val()	//获取被自动选择且名为a的表单项的值
+
+
+		
+
+	//-- 获取表单可用元素
+		$(":enabled");
+		$("form :enabled");
+		$("form :enabled").size();
+
+
+		
+		
+	//-- 获取表单不可用元素
+		$(":disabled");
+		$("form :disabled");
+		$("form :disabled").size();
+
+
+		
+
+
+	//-- 获取表单下拉菜单被选中元素
+		$(":selected");
+		$("input:selected").get(0).value);
+		$("input:selected").eq(0).val());
+		$("input:selected").size();
+
+		$(".s3").find("option:selected").val())		//获取select下拉菜单当前option值
+		
+
+
+
+
+
+
+
+
+
+
+
+

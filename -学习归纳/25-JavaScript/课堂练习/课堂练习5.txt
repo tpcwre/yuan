@@ -1,0 +1,177 @@
+
+//===== onload() 网页加载完后触发此函数
+//===== unload 离开或关闭页面时加载
+//===== focus 获取焦点事件
+//===== blur 失去焦点事件
+//===== blur 与submit 事件做表单验证
+//===== 多下拉列表关联控制
+//===== add(new Option(k,v) 添加下拉列表项
+//===== obj.length=? 控制下拉列表项
+
+
+
+
+
+
+
+
+
+//===== onload() 网页加载完后触发此函数
+
+		window.onload=function(){
+			var id1 = document.getElementById('id1');
+			id1.style.width='100px';
+			id1.style.height='100px';
+			id1.style.backgroundColor='red';
+		}
+
+
+
+
+
+
+
+
+//===== unload 离开或关闭页面时加载
+
+		<body onunload="alert('bye,bye')">
+
+
+
+
+
+
+
+
+
+
+
+//===== focus 获取焦点事件
+//===== blur 失去焦点事件
+
+		<script>
+		window.onload=function(){
+			var list = document.getElementsByTagName('input');	
+			for(var i=0;i<list.length;i++){
+				list[i].onfocus=function(){
+					this.style.border="1px solid blue";
+				}
+				list[i].onblur=function(){
+					this.style.border="1px solid #ccc";
+				}
+			}
+		}
+		</script>
+		姓名：<input /><br>
+		年龄：<input /><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== blur 与submit 事件做表单验证
+
+
+		<script>
+		  function checkName(){
+			var name = document.myForm.uname;
+			if(name.value.match(/^[\w]{6,16}$/)==null){
+				alert('用户名不合法！');
+				return false;
+			}
+			return true;
+		  }   
+			function checkAge(){
+				var age = document.myForm.age;
+				if(age.value.match(/^[\d]{2}$/)==null || age.value<18){
+					alert('年龄输入不合法');
+					return false;
+				}
+				return true;
+			}
+			function checkMail(){
+				var mail = document.myForm.email;
+				if(mail.value.match(/^[\w]*\@[a-zA-Z0-9]{2,3}\.([a-zA-Z]{2,3}$|[a-zA-Z]{2,3}\.[a-zA-Z]{2}$)/)==null){
+					alert('邮箱不合法');
+					return false;
+				}
+				return true;
+			}
+			function doSubmit(){
+				return checkName() && checkAge() && checkMail();
+			}
+		</script>
+
+		<form name='myForm' onsubmit="return doSubmit()">
+		姓名：<input type='text' name='uname' onblur='checkName()'/><br> 
+		年龄：<input type='text' name='age' onblur='checkAge()'/><br> 
+		邮箱：<input type='text' name='email' onblur='checkMail()'/><br> 
+			<input type='submit' value='提交'/>
+		</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 多下拉列表关联控制
+//===== add(new Option(k,v) 添加下拉列表项
+//===== obj.length=? 控制下拉列表项
+
+		<script>
+			var city = new Array();
+			city[1]=["昌平区","东城区","朝阳区","海淀区"];
+			city[2]=["虹口区","浦东区","宝山区","松江区"];
+			city[3]=["河东区","河西区","河北区","和平区"];
+			city[4]=["南沙区","天河区","白云区","花都区"];
+			function fun(ob){
+				var v = ob.value;
+				var sel2 = document.myForm.sel2;
+				sel2.length=1;
+				for(var i=0;i<city[v].length;i++){
+					sel2.add(new Option(city[v][i],i));
+				}
+			}
+		</script>
+		<form name='myForm' action='4.html' method='post' >
+			<select name='sel1' onchange="fun(this)">
+				<option value="">-请选择-</option>
+				<option value="1">北京</option>
+				<option value="2">上海</option>
+				<option value="3">天津</option>
+				<option value="4">广州</option>
+			</select>
+			<select name='sel2'>
+				<option value="">-请选择</option>
+			</select>
+		</form>

@@ -1,0 +1,91 @@
+	.ui-widget-header{		/*更改对话框标题区背景样式*/
+		background:url(../img/bj2.png);
+	}
+	.ui-dialog-title{		/*更改对话框标题区字体样式*/
+		color:blue;	
+	}
+
+					/*修改全局按钮UI的样式
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+		background:blue;
+	}*/
+
+					/*修改UI局部按钮UI的样式
+	.ui-widget-header{
+		background:blue;
+	}*/
+
+
+
+					/*修改全局按钮hover样式（将上面CSS的default全改成hover）*/
+	.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-default{
+		background:url(../img/bj.png);
+	}
+
+
+					/*修改局部按钮hover样式（将上面CSS的首default改成hover）
+	.ui-state-hover, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+		background:url(../img/bj.png);
+	}*/
+
+
+					/*修改全局按钮的点击后的样式（将全部default改为active）*/
+	.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+		background:url(../img/bj2.png);
+	}
+
+
+					/*修改局部按钮的点击后的样式（将首个default改为active）*/
+	.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-default{
+		background:url(../img/bj2.png);
+	}
+
+
+					/*设置日历年月字体样式*/
+	.ui-datepicker-title{
+		color:blue;
+	}
+
+
+					/*设置提示UI文字内容的样式*/
+	.ui-tooltip{
+		color:red
+		
+	}
+
+
+
+					/*自动补全背景样式
+	.ui-menu-item{
+		background:red;
+	}*/
+
+					/*自动补全鼠标悬停时的文字样式
+	.ui-menu-item a{
+		color:yellow;
+	}*/
+
+
+					/*设置日历标题域样式
+	.ui-widget-header{
+		background:blue;
+	}*/
+
+
+					/*设置当天日期的样式*/
+	.ui-datepicker-today .ui-state-highlight{
+		border:1px solid red;
+		color:yellow;
+	}
+
+					/*设置选定后日期的样式*/
+	.ui-datepicker-current-day .ui-state-active{
+		border:1px solid black;
+		color:black;
+	}
+
+					/*验证成功后在本域中弹出图标*/
+	.valid{
+		background:url(../img/a.ico) no-repeat right;
+	}
+

@@ -1,0 +1,181 @@
+
+
+ubuntu安装和配置SVN
+
+第一步：安装apache2  libapache2-svn subversion
+
+
+复制代码
+代码如下:
+
+sudo apt-get install apache2
+sudo apt-get install subversion
+sudo apt-get install libapache2-svn
+
+安装完后按照提示
+
+
+复制代码
+代码如下:
+
+Run '/etc/init.d/apache2 restart' to activate new configuration!
+
+重启apache2
+
+第二步：创建SVN库和项目
+
+
+复制代码
+代码如下:
+
+sudo mkdir /home/svn //创建SVN库
+sudo svnadmin create /home/svn/project //创建项目
+
+第三步：创建组并添加成员
+
+sudo addgroup subversion     //创建一个叫subversion的组为拥有仓库所在的目录
+系统提示：正在添加组"subversion" (GID 1001)...
+完成。
+sudo  usermod -G subversion -a www-data   //将自己和“www-data”(Apache 用户)加入组成员中   
+查看：more /etc/group | grep subversion
+系统提示：subversion:x:1001:www-data
+
+第四步：修改项目权限
+
+sudo chown -R root:subversion /home/svn/project
+sudo chmod -R g+rws /home/svn/project   //赋予组成员对所有新加入文件仓库的文件拥有相应的权限
+查看txn-current-lock文件的权限和用户以及组信息
+ ls -l /home/svn/myproject/db/txn-current-lock
+系统提示：-rw-rwSr-- 1 root subversion 0 2011-01-25 17:47  /home/svn/project/db/txn-current-lock
+
+第五步：通过命令访问库
+
+sudo svn co file://lodalhost/home/svn/project   //第一种方法，知道主机名时用
+sudo svn co file:///home/svn/project    //第二种方法，当不确定主机命时用，这用的是file:///，三个斜杠
+系统提示：取出版本 0。
+己可以取出版本，说明SVN服务器己正常运行，下面试从webdav访问
+
+第六步：配置apache2
+
+修改 /etc/apache2/mods-available/dav_svn.conf
+sudo vim /etc/apache2/mods-available/dav_svn.conf
+加入以下代码：
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+<Location /svn/project>
+DAV svn
+SVNPath /home/svn/myproject
+AuthType Basic
+AuthName "project subversion repository"
+AuthUserFile /etc/subversion/passwd
+<LimitExcept GET PROPFIND OPTIONS REPORT>
+Require valid-user
+</LimitExcept>
+</Location>
+
+如果需要用户每次登录时都进行用户密码验证，就将<LimitExcept GET PROPFIND OPTIONS REPORT>与</LimitExcept>两行注释掉   
+加入代码后重启apache2
+
+第七步：建立/etc/subversion/passwd文件，这个文件里包含了用户授权的详细信息
+
+添加用户
+sudo htpasswd -c /etc/subversion/passwd [user_name]                //第一次添加用户使用参数“-c”以后再添加就不用了
+访问文件仓库
+ svn co http://hostname/svn/project project --username [username]
+OK！这次通过web页面访问到版本库了，下面试一下导入版本库
+导入版本库
+把/var/www/下的内容导入版本号中：
+sudo svn  import -m "第一次导入"  /var/www http://192.168.0.5/svn/project
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+系统提示：
+认证领域: <http://192.168.0.5:80> myproject subversion repository
+“root”的密码:
+认证领域: <http://192.168.0.5:80> myproject subversion repository
+用户名: test
+“test”的密码:
+增加           /var/www/index.html
+-----------------------------------------------------------------------
+注意!  你的密码，对于认证域:
+   <http://192.168.0.5:80> myproject subversion repository
+只能明文保存在磁盘上!  如果可能的话，请考虑配置你的系统，让 Subversion
+可以保存加密后的密码。请参阅文档以获得详细信息。
+你可以通过在“/home/icedot/.subversion/servers”中设置选项“store-plaintext-passwords”为“yes”或“no”，
+来避免再次出现此警告。
+-----------------------------------------------------------------------
+保存未加密的密码(yes/no)?
+请输入 'yes' 或 'no': yes
+提交后的版本为 1。
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+最后在windows下通过TortoiseSVN及web页面访问，成功。
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+试验过程中曾经出现过的错误
+检出版本库报错：
+sudo svn co http://192.168.0.5/home/svn/project
+svn: 方法 OPTIONS 失败于 “http://192.168.0.5/home/svn/myproject”: 200 OK (http://192.168.0.5)
+这个报错在网上查了很久，没什么可借鉴的资料，模糊的觉的可能是说用户名和权限不对，以待后面确认
+sudo svn co file://localhost/home/svn/project
+svn: 无法为URL打开ra_local会话
+svn: 无法打开版本库“file://localhost/home/svn/projcet”
+
+1. 安装SVN
+
+
+复制代码
+代码如下:
+
+　　apt-get install subversion
+
+2. 建立svn仓库
+
+　　1). 建立svn目录：mkdir /home/.svn(使用隐藏目录）
+　　2). cd /home/.svn   
+　　3). mkdir astar
+　　4). 创建仓库astar：svnadmin create /home/.svn/astar，执行完毕后astar目录有svnadmin创建的目录和文件
+　　5). mkdir test
+　　6). 创建仓库test：svnadmin create /home/.svn/test，执行完毕后test目录有svnadmin创建的目录和文件
+
+3. 配置和管理svn
+
+　　1). 每个仓库的配置文件在$repos/conf/下，vi svnserve.conf，配置项在[general]下：
+　　　　anon-access：匿名用户的权限，可以为read，write和none，默认值read。不允许匿名用户访问：anon-access = none
+　　　　auth-access：认证用户的权限，可以为read，write和none，默认值write。
+　　　　password-db：密码数据库的路径，去掉前边的#
+　　　　authz-db：认证规则库的路径，去掉前边的#。
+　　　　注意：这些配置项的行都要顶格，否则会报错。修改配置后需要重启svn才能生效。
+　　2). 配置passwd文件
+　　　　这是每个用户的密码文件，比较简单，就是“用户名=密码”，采用的是明码。如allen=111111
+　　3). 配置authz文件
+　　　　1. [groups] section：为了便于管理，可以将一些用户放到一个组里边，比如：owner=allen,ellen
+　　　　2. groups下边的sections表示对一个目录的认证规则，比如对根目录的认证规则的section为[/]。设置单用户的认证规则时一个用户一行，如：
+　　　　　　[/]   
+　　　　　　allen=rw　　#allen对根目录的权限为rw
+　　　　　　ellen=r　　  #ellen对根目录的权限为r
+　　　　　　如果使用group，需要在group名字前加@,如
+　　　　　　@owner=rw　　#group owner中的用户均为rw，等价于上边的两句话
+　　　　启动时如果从/home/.svn/astar启动，/就是astar目录，用如上方式以astar目录为根设置权限。
+　　　　如果从/home/.svn/启动，每个仓库根还是自己的起始目录。可以采用如上方式设置astar的权限，也可以采用如下方式：
+　　　　　　[astar:/]
+　　　　　　@owner=rw
+　　　　设置test的权限如下：
+　　　　　　[test:/]
+　　　　　　@harry_and_sally = rw
+　　　　简言之，每个仓库的根目录(/)就是自己的起始目录；[repos:/]这种方式只适用于多仓库的情况；[/]适合于单仓库和单仓库的方式。
+　　　　3. 不能跨越仓库设置权限。
+
+4. 启动和停止svn   
+
+　　1). 启动：
+　　　　1. 从astar目录启动，svnserve -d -r /home/.svn/astar，根目录(/)是astar，authz中规则的配置使用section[/]。访问方式为：
+　　　　　　svn://192.168.0.87/
+　　　　2. 从.svn目录启动，svnserve -d -r /home/.svn，根目录(/)是.svn，authz中对astar的配置使用section[astar:/] ,对test的配置使用section[test:/]。访问方式为：
+　　　　　　svn://192.18.0.87/astar
+　　　　　　svn://192.18.0.87/test
+　　　　如果需要svn自启动，把命令加入/etc/rc.local中
+　　2). 检查svn服务器是否已经启动（svn默认使用3690端口）：netstat -an | grep 3690
+　　3). 停止：killall svnserve
+
+5. svn client
+
+　　推荐使用TortoiseSVN， http://tortoisesvn.tigris.org/
+　　Eclipse插件，http://subclipse.tigris.org/
+
+作者 t80t90s

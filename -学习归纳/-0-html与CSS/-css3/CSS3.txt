@@ -1,0 +1,643 @@
+﻿
+
+//=====(元素) transform:rotate 	设置元素顺时针旋转的角度
+//=====(其它) -ms-,-moz-,-webkit-,-o-,	几种浏览器的区分与兼容
+//=====(元素) transform:translate	位移元素的位置
+//=====(元素)	transform:scale	缩放元素的大小尺寸
+//=====(元素)	transform:skew	设置元素的斜拉角度
+//=====(元素) transform-origin 	设置transform属性时的基准点
+//=====(元素)	transform:matrix	transform方法的集合
+//=====(元素) transform:rotateX/Y		元素2D翻转
+//=====(元素) 其它元素2D,3D转化
+//=====(元素) transition	设置元素属性的过度
+//=====(元素) keyframes   =》 animation 	动画
+//=====(元素) column-count	多列
+//=====(边框) border-radius	设置元素的四角的圆弧度
+//=====(边框)	box-sizing 是否计算边框的宽度
+//=====(元素) box-shadow 		设置元素的阴影
+//=====(元素)	resize 	设置用户可调整元素大小
+//=====(边框) border-image	用图片设置边框
+//=====(边框) 	outline ,outline-offset  设置元素的轮廓
+//=====(背景) background-size		设置背景图片的大小
+//=====(背景) background-url		同时设置多个背景图片
+//=====(文本) text-shadow		设置字体阴影
+//=====(文本)	word-wrap		设置元素内文字自动换行 
+//=====(文本) overflow		设置超出元素的字母是否隐藏
+//=====(文本) text-overflow	设置超出元素文字的隐藏方式
+//=====(其它) div.test.hover	指定类名的元素悬停样式
+//=====(文本) word-break	规定非中日韩文本的换行规则
+//=====(文本)	指定文本使用某种字体 ttf
+
+
+
+
+
+
+
+//=====(元素) transform:rotate 	设置元素顺时针旋转的角度
+//=====(其它) -ms-,-moz-,-webkit-,-o-,	几种浏览器的区分与兼容
+
+	div#div2
+	{
+	transform:rotate(30deg);
+	-ms-transform:rotate(30deg); /* IE 9 */
+	-moz-transform:rotate(30deg); /* Firefox */
+	-webkit-transform:rotate(30deg); /* Safari and Chrome */
+	-o-transform:rotate(30deg); /* Opera */
+	}
+	
+	
+	
+
+
+
+//=====(元素) transform:translate	位移元素的位置
+	<style>
+		.test{
+			width:150px;
+			height:150px;
+			background:red;
+			overflow:hidden;
+			font-size:50px;
+			transform:translate(150px,500px);
+			-ms-transform:translate(50px,100px); 	/* IE 9 */
+			-moz-transform:translate(350px,500px); 	/* Firefox */
+			-webkit-transform:translate(50px,100px); /* Safari and Chrome */
+			-o-transform:translate(50px,100px); 	/* Opera */
+		}
+	</style>
+	<div id='d1' class='test'>hello ! arr this is the very good boy !!! </div>
+	
+	
+
+
+
+	
+	
+//=====(元素)	transform:scale	缩放元素的大小尺寸
+	<style>
+		.test{
+			width:150px;
+			height:150px;
+			background:red;
+			overflow:hidden;
+			font-size:50px;
+			transform:scale(2,4);		/*值 scale(2,4) 把宽度转换为原始尺寸的 2 倍，把高度转换为原始高度的 4 倍。*/
+			-ms-transform: scale(2,4);	/* IE 9 */
+			-webkit-transform: scale(2,4);	/* Safari 和 Chrome */
+			-o-transform: scale(2,4);	/* Opera */
+			-moz-transform: scale(2,4);	/* Firefox */
+		}
+	</style>
+	<div id='d1' class='test'>hello ! arr this is the very good boy !!! </div>
+	
+	
+	
+
+
+	
+	
+//=====(元素)	transform:skew	设置元素的斜拉角度	
+	<style>
+		.test{
+			width:150px;
+			height:150px;
+			background:red;
+			overflow:hidden;
+			font-size:50px;
+			transform: skew(30deg,20deg);
+			-ms-transform: skew(30deg,20deg);	/* IE 9 */
+			-webkit-transform: skew(30deg,20deg);	/* Safari and Chrome */
+			-o-transform: skew(30deg,20deg);	/* Opera */
+			-moz-transform: skew(30deg,20deg);	/* Firefox */
+		}
+	</style>
+	<div id='d1' class='test'>hello ! arr this is the very good boy !!! </div>	
+
+
+
+
+
+
+
+
+
+//=====(元素) transform-origin 	设置transform属性时的基准点
+
+	<style>
+		.test{
+			width:150px;
+			height:150px;
+			background:red;
+			overflow:hidden;
+			font-size:50px;
+			transform-origin: left bottom;		/*设置以左下角为基准*/
+			transform:rotate(30deg);
+		}
+	</style>
+
+
+
+
+
+
+		
+		
+	
+//=====(元素)	transform:matrix	transform方法的集合
+
+	<style>
+		.test{
+			width:150px;
+			height:150px;
+			background:red;
+			overflow:hidden;
+			font-size:50px;
+			
+			transform:matrix(1,10,10,3,300,200);
+			-ms-transform:matrix(0.866,0.5,-0.5,0.866,0,0);		/* IE 9 */
+			-moz-transform:matrix(1,10,10,3,300,200);	/* Firefox */
+			-webkit-transform:matrix(0.866,0.5,-0.5,0.866,0,0);	/* Safari and Chrome */
+			-o-transform:matrix(0.866,0.5,-0.5,0.866,0,0);		/* Opera */
+				/*
+					参数一，四	设置 	元素的拉伸，x ,y 
+					参数二，三 	设置	元素的斜拉  坚拉，横拉
+					参数五，六	设置	元素的位移	x,y
+				*/
+		}
+	</style>
+	<div id='d1' class='test'>hello ! arr this is the very good boy !!! </div>
+		
+	
+	
+	
+
+
+
+
+	
+	
+//=====(元素) transform:rotateX/Y		元素2D翻转
+
+	<style>
+		.test{
+			width:150px;
+			height:150px;
+			background:red;
+			overflow:hidden;
+			font-size:50px;
+		}
+		#d1{
+			transform:rotateX(180deg);		//X 纵向翻转
+			transform:rotateY(180deg);		//Y 横向翻转
+		}
+	</style>
+	<div class='test'>hello ! arr this is the very good boy !!! </div>
+	<div id='d1' class='test'>hello ! arr this is the very good boy !!! </div>	
+	
+
+
+
+
+
+
+
+	
+	
+	
+//=====(元素) 其它元素2D,3D转化
+	matrix3d(n,n,n,n,n,n,
+	n,n,n,n,n,n,n,n,n,n) 	定义 3D 转换，使用 16 个值的 4x4 矩阵。
+	translate3d(x,y,z) 	定义 3D 转化。
+	translateX(x) 	定义 3D 转化，仅使用用于 X 轴的值。
+	translateY(y) 	定义 3D 转化，仅使用用于 Y 轴的值。
+	translateZ(z) 	定义 3D 转化，仅使用用于 Z 轴的值。
+	scale3d(x,y,z) 	定义 3D 缩放转换。
+	scaleX(x) 	定义 3D 缩放转换，通过给定一个 X 轴的值。
+	scaleY(y) 	定义 3D 缩放转换，通过给定一个 Y 轴的值。
+	scaleZ(z) 	定义 3D 缩放转换，通过给定一个 Z 轴的值。
+	rotate3d(x,y,z,angle) 	定义 3D 旋转。
+	rotateX(angle) 	定义沿 X 轴的 3D 旋转。
+	rotateY(angle) 	定义沿 Y 轴的 3D 旋转。
+	rotateZ(angle) 	定义沿 Z 轴的 3D 旋转。
+	perspective(n) 	定义 3D 转换元素的透视视图。
+	
+	
+
+
+
+
+
+
+	
+//=====(元素) transition	设置元素属性的过度
+
+	<!DOCTYPE html>
+	<mate charset='utf-8' />
+	<style>
+		#d{
+			width:100px;
+			height:100px;
+			background:#fcc;
+			line-height:200px;
+			text-align:center;
+			color:#fff;
+			font-weight:bold;
+			font-size:30px;
+			transition: width 1s,height 1s,transform 1s;
+		}
+		#d:hover{
+
+			width:1000px;
+			transform:rotate(360deg);
+			height:1000px;
+		}
+	</style>
+	<body>
+	<div id='d'>CSS过渡</div>
+	</body>
+		
+		
+	
+
+
+
+	
+	
+//=====(元素) keyframes   =》 animation 	动画
+
+	<!DOCTYPE html>
+	<mate charset='utf-8' />
+	<style>
+		#d{
+			width:100px;
+			height:100px;
+			background:#fcc;
+			line-height:200px;
+			text-align:center;
+			color:#fff;
+			font-weight:bold;
+			font-size:30px;
+			transition: width 1s,height 1s,transform 1s;
+		}
+		@keyframes myfirst{			/*声明动画 from ,to 形式*/
+			from{background:red;}
+			to {background:yellow;}
+		}
+		@keyframes two{				/*声明动画*/
+			from{width:500px;height:500px;border:3px solid;}
+			to{width:300px;height:300px;border:15px;transform:rotate(360deg);}
+			
+		}
+		#d:hover{
+			animation:myfirst 5s;		/*调用动画并指定时间*/
+			animation:two 3s;
+		}
+		
+		@keyframes one{					/*百分比形式*/
+			0%{background:red;}
+			25${backgruond:blue;}
+			50%{background:yellow}
+			100%{background:green}
+		}
+		#d:hover{
+			animation:one 5s;
+		}
+	</style>
+	<body>
+	<div id='d'>动画</div>
+	</body>
+		
+		
+	
+	
+	
+
+
+
+
+
+
+	
+//=====(元素) column-count	多列
+
+	<!DOCTYPE html>
+	<mate charset='utf-8' />
+	<style>
+		#d{
+			width:300px;
+			height:500px;
+			background:#fcc;
+			text-align:center;
+			color:#fff;
+			word-wrap:break-word;
+			-moz-column-count:4;	/*设置列的数量*/
+			-moz-column-gap:50px;	/*设置列间距*/
+		}
+	</style>
+	<body>
+	<div id='d'>
+	圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯
+
+	圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯
+
+	圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯圆顶圣诞快乐时团圆柑田；地枯
+	</div>
+	</body>
+
+	
+	
+	
+	
+
+
+	
+	
+//=====(边框) border-radius	设置元素的四角的圆弧度
+
+	#d1{
+		border-radius:145px;			//设置四个角为同样的弧度
+		border-radius:75px 25px;		//设置对角
+		border-radius:75px 25px 45px 65px;	//分别设置四个角
+	}
+	
+
+
+
+
+
+
+
+	
+//=====(边框)	box-sizing 是否计算边框的宽度
+	#d3{
+		width:200px;
+		height:200px;
+		box-sizing:border-box;		/*不会计算边框的宽度*/
+	}
+	
+	
+
+
+
+
+	
+//=====(元素) box-shadow 		设置元素的阴影
+
+	#d1{
+		box-shadow:20px 50px 50px red;			//左右偏移，上下偏移，虚化，颜色
+		-moz-box-shadow: 10px 10px 5px #888888; /* 老的 Firefox */
+	}
+	
+
+
+
+
+
+
+
+	
+
+//=====(元素)	resize 	设置用户可调整元素大小
+	
+	<!DOCTYPE html>
+	<meta charset='utf-8' />
+	<style> 
+	div
+	{
+		border:2px solid;
+		padding:10px 40px; 
+		width:300px;
+		resize:both;		/*设置用户可调整元素大小*/
+		overflow:auto;
+		word-wrap:break-word;
+	}
+	</style>
+	<body>
+	<div class='test'>
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa圣诞快乐进aaaaaaaa
+	</div>
+	</body>
+	
+	
+
+
+
+
+
+
+
+//=====(边框) border-image	用图片设置边框
+
+	#d1{
+		width:200px;
+		height:100px;
+		border:135px solid;				//设置图片边框时必须有这条属性
+		border-image:url(1.jpg) 50 50 50 80 repeat; 
+										// 参数二：上右下左 
+										//参数三：默认拉伸，round (平铺，会变形) repeat(重复，不变形会缺失)
+	}
+	
+	
+
+
+
+
+
+
+
+
+
+	
+//=====(边框) 	outline ,outline-offset  设置元素的轮廓
+	
+	<!DOCTYPE html>
+	<meta charset='utf-8' />
+	<style> 
+	div
+	{
+		margin:50px;
+		border:2px solid;
+		padding:10px 40px; 
+		width:300px;
+		height:300px;
+		outline:13px solid;		
+		outline-offset:10px;
+	}
+	</style>
+	<body>
+	<div class='test'>
+	aaaaaaaaaaaa
+	</div>
+	</body>
+	
+	轮廓所使用的样式
+	none 	默认。定义无轮廓。
+	dotted 	定义点状的轮廓。
+	dashed 	定义虚线轮廓。
+	solid 	定义实线轮廓。
+	double 	定义双线轮廓。双线的宽度等同于 outline-width 的值。
+	groove 	定义 3D 凹槽轮廓。此效果取决于 outline-color 值。
+	ridge 	定义 3D 凸槽轮廓。此效果取决于 outline-color 值。
+	inset 	定义 3D 凹边轮廓。此效果取决于 outline-color 值。
+	outset 	定义 3D 凸边轮廓。此效果取决于 outline-color 值。
+	inherit 	规定应该从父元素继承轮廓样式的设置。
+	
+	
+	
+
+
+
+
+
+
+
+	
+	
+//=====(背景) background-size		设置背景图片的大小
+
+	#d1{
+		background-size:300px 200px;		//宽，高
+		background-size:100% 100%;
+		background-repeat:no-repeat;		//不重复
+	}
+	
+	
+
+
+
+
+
+
+
+
+	
+//=====(背景) background-url		同时设置多个背景图片	
+
+	#d1{
+		background:url(12.jpg),url(jb.png);
+		background-repeat:no-repeat;
+	}
+	
+	
+
+
+
+
+
+
+
+//=====(文本) text-shadow		设置字体阴影	
+
+	#d1{
+		font:normal bold 80px normal;
+		text-shadow:10px 20px 30px red;		//左右位置，上下位置，虚化程度，颜色
+	}
+
+	
+
+
+
+
+
+
+
+
+	
+//=====(文本)	word-wrap		设置元素内文字自动换行 	
+
+	#d1{
+		word-wrap:break-word;
+	}
+	
+	
+
+
+
+
+
+
+
+//=====(文本) overflow		设置超出元素的字母是否隐藏
+//=====(文本) text-overflow	设置超出元素文字的隐藏方式
+//=====(其它) div.test.hover	指定类名的元素悬停样式
+	<!DOCTYPE html>					
+	<style>
+	.test{
+		width:100px;
+		height:50px;
+		border:1px solid;
+		overflow:hidden;			//必须条件(隐藏超出元素的字母 auto)
+		text-overflow:ellipsis;		//隐藏的文字用省略号代替
+		text-overflow:clip;			//直接隐藏文字
+	}
+	div.test:hover					//hover生效必须要有<!DOCTYPE html>	
+	{
+	color:blue;
+	overflow:visible;
+
+	}
+	</style>
+	<div class='test'>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+	
+	
+
+
+
+
+
+
+
+
+
+//=====(文本) word-break	规定非中日韩文本的换行规则
+	.test{
+		word-break:normal;		/*使用浏览器默认的换行规则*/
+		word-break:break-all;	/*随元素大小换行*/
+		word-break:keep-all;	/*只能在半角空格或连字符处换行*/
+	}
+	
+	
+	
+
+
+
+
+
+
+
+	
+
+//=====(文本)	指定文本使用某种字体 ttf
+
+	<style>
+		.test{
+			color:blue;
+			font-size:50px;
+		}
+		@font-face						/*声明引字体*/
+		{
+			font-family:myfirstFont;	/*声明字体应用名-myfirstFont*/
+			src:url('simfang.ttf')		/*引用字体*/
+		}
+		@font-face
+		{
+			font-family:mytwofont;		/*声明字体应用名-mytwoFont*/
+			src:url('simhei.ttf');		/*引用字体*/
+		}
+		#d2{
+			font-family:myfirstFont;	/*元素中文本使用指定的字体*/
+		}
+		#d3{
+			font-family:mytwoFont;		/*元素中文本使用指定的字体*/
+		}
+		
+	</style>
+	<div id='d1' class='test'>hello ! arr this is the very good boy !!! </div>
+	<hr>
+	<div id='d2' class='test'>hello ! arr this is the very good boy !!! </div>
+	<hr>
+	<div id='d3' class='test'>hello ! arr this is the very good boy !!! </div>
+	
+	
+	

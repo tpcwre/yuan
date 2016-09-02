@@ -1,0 +1,70 @@
+
+
+
+
+//-- 缓存的三种方式 
+
+	1，文件方式
+
+	2，内存方式
+
+	3，数据库方式
+
+
+
+//-- 指定缓存方式 
+
+	在config.php 配置文件中设置：如，
+		"DATA_CACHE_TEYPE"=>'File',		//默认是文件方式 
+				支持：File | Db | Apc | Memcache | Shmop | Sqlite | Xcache | Apachenote | Eaccelerator |
+
+
+
+//-- 缓存使用方法 S()
+
+	S(name,value);		设置缓存
+	S(name,value,300);	设置缓存并设置300秒有效时间
+	S(name,value,array('type'=>'file','expire'=>60));  设置缓存并指定缓存方式及有效时间
+	S(name,array());	缓存数组
+
+	S(name);		获取缓存
+	S(name,null);		删除缓存
+
+
+
+
+
+
+
+//-- 缓存应用示例
+
+	//外部用户访问的方法
+	function y1(){
+		$this->y2();	
+	}
+
+
+	function y2(){
+		$info = S('goods');
+		if($info){
+			return $info;		//如果缓存有数据就直接返回
+		}else{
+			//...数据库操作
+			$dt = 'xxx';		//从数据库取得的数据结果
+			S('goods',$dt,10);	//将取得的数据缓存并设置时效
+			return $dt;		//将数据返回
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+

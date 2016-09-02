@@ -1,0 +1,83 @@
+﻿<?php
+
+//=====使用PDO的异常处理来实现事务操作（批量添加）
+
+
+$list = array(
+			array("name"=>'uu017','sex'=>'1','age'=>20,'classid'=>'lamp113'),
+			array("name"=>'uu018','sex'=>'0','age'=>21,'classid'=>'lamp114'),
+			array("name"=>'uu019','sex'=>'1','age'=>24,'classid'=>'lamp113'),
+		);
+require("config.php");		//导入配置文
+try{
+	$pdo = new PDO(DSN,USER,PASS);					//实例化PDO对象
+	$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); 	//设置pdo的错误处理模式为异常模式
+}catch(PDOException $e){
+	die("实例化PDO失败！原因：".$e->getMessage());
+}
+try{
+	$pdo->beginTransaction();					//开启事务
+	$sql = "insert into stu values(null,:name,:sex,:age,:classid)";	//定义添加sql语句
+	$stmt = $pdo->prepare($sql);					//预处理
+	$m=0;								//设置存储成功行数
+	foreach($list as $data){					//遍历要添加的信息并执行
+		$stmt->execute($data);					//执行
+		$m+=$stmt->rowCount();					//获取成功的行数
+	}
+	$pdo->commit();							//提交事务
+}catch(PDOException $pe){
+	$pdo->rollback();						//如果出错就回滚事务
+	$m=0;								//如果出错就将成功数置0
+	
+}
+echo "成功添加{$m}条。";						//显示成功条数
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====不使用PDO的异常处理来实现事务操作（批量添加）
+
+
+
+$list = array(
+	array("name"=>'uu023','sex'=>'1','age'=>20,'classid'=>'lamp113'),
+	array("name"=>'uu024','sex'=>'0','age'=>21,'classid'=>'lamp114'),
+	array("name"=>'uu022','sex'=>'1','age'=>24,'classid'=>'lamp113'),
+);
+require("config.php");
+try{
+	$pdo = new PDO(DSN,USER,PASS);
+	//$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); 
+}catch(PDOException $e){
+	die("实例化PDO失败！原因：".$e->getMessage());
+}
+$pdo->beginTransaction();		//开启事务
+$sql = "insert into stu values(null,:name,:sex,:age,:classid)";
+$stmt = $pdo->prepare($sql);		//预处理语句
+$m=0;					//设置存储成功数
+$b=true;				//设置判断是否全部成功的开关
+foreach($list as $data){
+	$stmt->execute($data);		//执行语句 
+	if($stmt->errorCode()>0){	//获取错误号
+		$b=false;		//如果出错就关闭开关
+		break;
+	}
+	$m+=$stmt->rowCount();		//累加成功号
+}
+if($b){					//判断是否成功
+	$pdo->commit();			//成功就提交事务
+}else{
+	$pdo->rollback();		//失败就回滚事务
+	$m=0;				//成功号置0
+}
+	
+echo "成功添加{$m}条。";

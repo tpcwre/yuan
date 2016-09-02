@@ -1,0 +1,269 @@
+
+$(function(){
+//-选项卡的初始化
+  $("#tabs").tabs({
+
+//-选项卡折叠形式的（显示，隐藏）效果
+	collapsible:true,  
+
+//-禁用指定某个或多个选项卡（使其变灰无法使用）
+//disabled:[0];	disabled:[0,1];	disabled:true; 设置为true 就是全部禁用
+	disabled:[0,1],		
+
+//-设置选项卡变换的触发事件(鼠标悬停)
+//也可设置为其它事件触发
+	event:"mouseover",	
+
+//-设置页面初始化时默认显示哪个选项卡。
+	active:1,		
+
+//-设置页面初始化时选项卡默认是为显示或是折叠
+//此功能要配合collapsible:true 使用
+	active:false,		
+
+
+//-设置选项卡内容显示显框的高度
+	// content:根据内容伸展高度，
+	heightStyle:"content",	
+
+	// auto: 设置选项卡最高的那个高度为全部选项卡的高度，	
+	heightStyle:"auto",	
+
+	// fill: 为选项卡的高度添加额外的高度（以最高的高度为基准）	
+	height:Style:"fill",		
+
+
+//-设置选项卡切换时的形式(淡入淡出或其它形式)
+	show:true,			//true 为淡入淡出
+	hide:true,			//false 为即时显示，消失
+
+//-选项卡切换的各种形式		
+blind	从顶部显示或消失
+bounce	断断续续地显示或消失，垂直运动
+clip	上下向中心垂直显示或消失 
+slide	从左边显示或消失
+drop	从左边显示或消失，有透明度变化
+fole	从左上角显示或消失
+highlight	伴随透明度和背景色的变化显示或消失 
+puff	从中心开始缩放，显示时“收缩”，消失时“生长”
+scale	从中心开始扩大，显示时“生长”，消失时“收缩”
+pulsate	以闪烁形式显示或消失
+
+				
+
+//-选项卡创建事件
+  creata:function(event,ui){
+	alert("创建tab时触发");
+	//获取当前选项卡的html代码段
+	//tab得到当前的活动选项卡
+	alert($(ui.tab.get()).html());	
+
+	//获取当前选项卡的显示内容
+	//panel得到内容选项的对象
+	alert($(ui.panel.get()).html()); 
+  }
+
+//-选项卡切换事件（切换完成之后触发）
+  activate:function(event,ui){
+	alert("切换到另一个选项卡之后触发");
+	//得到旧的选项卡对象
+	alert($(ui.oldTab.get()).html()); 
+	//得到新的选项卡对象		
+	alert($(ui.newTab.get()).html());
+	//得到旧的选项卡内容	
+	alert($(ui.oldPanel.get()).html());
+	//得到新的选项卡内容	
+	alert($(ui.newPanel.get()).html());	
+  }
+
+
+
+//-选项卡切换事件（切换完成之前触发）
+  activate:function(event,ui){
+	alert("切换到另一个选项卡之前触发");
+	//得到旧的选项卡对象
+	alert($(ui.oldTab.get()).html()); 
+	//得到新的选项卡对象		
+	alert($(ui.newTab.get()).html());
+	//得到旧的选项卡内容	
+	alert($(ui.oldPanel.get()).html());
+	//得到新的选项卡内容	
+	alert($(ui.newPanel.get()).html());	
+  }
+
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第56课 知问前端-选项卡UI 下
+课程笔记(图片)
+//-ajax远程加载文档后触发事件
+//-ajax远程加载文档之前触发事件
+//-加载之前获取选项卡中的内容
+//-设置ajax加载指定页面的url 
+//-禁用或启用指定（全部）选项卡（外部命令）
+//-获取选项卡jquery对象(外部方法)
+//-更新选项卡(外部方法)
+//-删除选项卡(外部方法)
+//-得到tabs的option值(外部方法)
+//-设置tabs的option值(外部方法)
+//-点击按钮触发局部更新
+//-on形式的ajax加载后触发事件
+//-on形式的ajax加载后触发事件
+//-on形式的选项卡切换触发事件
+//-on形式的选项卡切换前触发事件
+
+
+$(function(){
+//-ajax远程加载文档后触发事件
+	//注：此功是点击选项卡加载其它页面的内容，加载方式是以a href="***.html"的方式.
+	//其它页面内容如：tab1.html
+		内容为：“tab1content” 不需要加其它标签什么的     
+	
+			
+	load:function(event,ui){
+		alert("ajax远程加载文档后触发");
+		alert(ui.tab.get().html());	//得到当前选项卡对象及其代码
+		alert(ui.panel,get().html());	//得到当前选项卡内的内容
+	}
+
+
+//-ajax远程加载文档之前触发事件
+	//注：此功是点击选项卡加载其它页面的内容，加载方式是以a href="***.html"的方式.
+	//其它页面内容如：tab1.html
+		内容为：“tab1content” 不需要加其它标签什么的  
+	beforeLoad:function(event,ui){
+		alert("ajax远程加载文档之前触发");
+		alert(ui.tab.get().html());	//得到当前选项卡对象及其代码
+		alert(ui.panel,get().html());	//得到当前选项卡内的内容 注意，这里什么也得不到，因为是在加载之前触发的，所以得不到其内容。所以在这里此功能不可用。
+
+//-加载之前获取选项卡中的内容
+		ui.jqXHR.success(function(responseText){
+			alert(responseText);
+		});
+
+//-设置ajax加载指定页面的url 
+		ui.ajaxSettings.url = "tabe.html";
+	}
+  });
+
+例：
+	html页面内容：
+<div id="tabs">
+	<ul>
+		<li><a href="tab1.html">tab1</a></li>
+		<li><a href="tab2.html">tab1</a></li>
+		<li><a href="tab3.html">tab1</a></li>
+	</ul>
+</div>
+
+	tab1.html页面内容：
+	tab1-content
+
+	tab2.html页面内容：
+	tab1-content
+
+	tab3.html页面内容：
+	tab1-content
+
+
+
+
+
+//-禁用或启用指定（全部）选项卡（外部命令）
+	//禁用全部选项卡（变灰）
+	$("#tabs").tabs("disable");
+
+	//指定禁用第一个选项卡
+	$("#tabs").tabs("disable",0);
+
+	//启用指定选项卡
+	$("#tabs").tabs("enable",0);
+
+	//启用全部选项卡就到上面把禁用全部选项卡删除即可。
+
+
+//-获取选项卡jquery对象(外部方法)
+	$("#tabs").tabs("widget");
+
+
+
+//-更新选项卡(外部方法)
+	$("#tabs").tabs("refresh");
+
+
+//-删除选项卡(外部方法)
+	$("#tabs").tabs("destroy");
+
+
+//-得到tabs的option值(外部方法)
+	alert($("#tabs").tabs("option","active"));
+
+
+//-设置tabs的option值(外部方法)
+	$("#tabs").tabs("option","active",1);
+
+
+
+//-点击按钮触发局部更新
+	$("#button").click(function(){
+		$("#tabs").tabs("load",0);
+	});
+
+例：
+	html页面内容
+	<input type="button" id="button" value="更新内容" />
+
+	tab1.html页面内容
+	tab1-content
+	
+	tab1.html修改后的页面内容
+	tab1-contentaaaaa
+如上：
+	1，tab1页面显示在html页面中的内容为 tab1-content。
+	2，当tab1页面的内容改变为tab1-contentaaaaa时，不用刷新页面，而只点击input按钮即可做到局部刷新。
+
+
+
+//-on形式的ajax加载后触发事件
+	$("#tabs").on("tabsload",function(event,ui){
+		alert("ajax远程加载文档之后触发");
+	});
+
+
+//-on形式的ajax加载后触发事件
+	$("#tabs").on("tabsbeforeload",function(event,ui){
+		alert("ajax远程加载文档之前触发");
+	});
+
+
+//-on形式的选项卡切换触发事件
+	$("#tabs").on("tabsactivate",function(event,ui){
+		alert("选项卡切换触发");
+	});
+
+
+//-on形式的选项卡切换前触发事件
+	$("#tabs").on("tabsbeforeactivate",function(event,ui){
+		alert("选项卡切换前触发");
+	});
+
+});

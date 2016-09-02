@@ -1,0 +1,383 @@
+
+//===== js与jquery的正则
+//===== DOM 操作节点时要表格的tbody节点
+//===== 超链接里的事件
+//===== with 省略多条命令中相同语句。 
+//===== 让元素按斜线运行
+//===== js 对一个范围内取随机整数 
+//===== php中将多个结果存放到json中，ajax接收并解析成数组来分别显示
+//===== 时间倒计时
+//===== js 判断多选或单选是否至少有一个被选择
+
+//===== 限制文本域内容输入字符长度，据条件提示与提交
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 限制文本域内容输入字符长度，据条件提示与提交
+
+
+ 21 <div class="page_bd">
+ 22     <div id="step2" class="category_item">
+ 23                 <h3 id='t1' class="category_title">举报描述</h3>
+ 24                 <h3 id='t2' class="category_title" style="color:red;text-align:center;display:none">举报描述不能超过50个字符</h3>
+ 25                 <form name='form2' id='form2' action="c_jubao.php" method='post'>
+ 26                         <input type='hidden' value='<?php echo $val; ?>' name='yuanyin'/>
+ 27                         <div id="textareaDiv" class="textarea_panel">
+ 28                                 <textarea id="area" name='miaosu'>aa</textarea>
+ 29                                 <i id="reasonTextTips" class="ic ic_warning ic_small"></i>
+ 30                                 <span id="textareaLenSpan" class="frm_hint"><span id="textLen">0</span>/50</span>
+ 31                         </div>
+ 32                 </form>
+ 33         <div class="opr_area">
+ 34                 <a id="submitBtn" href="javascript:" class="btn btn_primary btn_disabled js_btn_submit">提交</a>
+ 35         </div>
+ 36     </div>
+ 37 </div>
+ 38 <script src='../../html/conf/config/jquery.js' ></script>
+ 39 <script>
+ 40 $(function(){
+ 41         $('#textLen').text($("#area").val().length);
+ 42         $('#area').keyup(function(){
+ 43                 len =$(this).val().length;
+ 44                 $('#textLen').text(len);
+ 45                 if($("#area").val().length>50){
+ 46                         $("#t1").css('display','none');
+ 47                         $('#t2').css('display','block');
+ 48                 }else{
+ 49                         $("#t1").css('display','block');
+ 50                         $('#t2').css('display','none');
+ 51 
+ 52                 }
+ 53         });
+ 54         $('#submitBtn').click(function(){
+ 55                 if($('#area').val().length<50){
+ 56                         $("#form2").submit();
+ 57                 }
+ 58         });
+ 59 });
+
+
+
+
+
+
+
+
+
+
+
+
+//===== js 判断多选或单选是否至少有一个被选择
+
+
+
+ 82                 <script>
+ 83                         var next = document.getElementById('nextBtn');
+ 84                         var f1 = document.getElementById('form1');
+ 85                         var inps = document.getElementsByTagName('input');
+ 86                         var j1 = document.getElementById('jbyy1');
+ 87                         var j2 = document.getElementById('jbyy2');
+ 88                         var stat=false;
+ 89                         next.onclick=function(){
+ 90 
+ 91                                 for(var i=0;i<inps.length;i++){
+ 92                                         if(inps[i].type=='radio' && inps[i].checked){		//多选就把radio换成checkbox
+ 93                                                 stat=true;
+ 94                                         }
+ 95                                 }
+ 96                                 if(!stat){
+ 97                                         j1.style.display='none';
+ 98                                         j2.style.display='block';
+ 99                                         exit;
+100                                 }
+101                                 f1.submit();
+102 
+103                         }
+104                 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== js与jquery的正则
+
+<script type='text/javascript'>
+	function doCheck(ob){
+		var v = ob.value;
+		var reg=/^\w{6,}$/;
+		if(!reg.test(v)){
+			alert('用户名不合法');
+		}
+	}
+</script>
+
+
+$(function(){
+	$("input[name='user']").blur(function(){
+		var nr = $(this).val();
+		var reg = /^[\w]{6,}$/;
+		if(!reg.test(nr)){
+			alert('用户名请使用数字字母下划线，不得小于六位');
+		}
+	});
+});
+	
+
+
+
+
+
+
+
+//===== DOM 操作节点时要表格的tbody节点
+
+	DOM操作时在获取表格的节点时，要注意tbody会默认存在 ，操作时会容易忘记而出错
+
+
+
+
+
+
+
+//===== 超链接里的事件
+
+
+	<a href="javascript:alert('aa');">点击</a>
+
+
+
+
+
+
+//===== with 省略多条命令中相同语句。 
+
+
+
+
+<script>
+	with(document){
+		write(11111111+'<br>');
+		write(2222222+'<br>');
+		write(33333333+'<br>');
+		write(44444444+'<br>');
+		write(55555555+'<br>');
+	}
+</script>
+
+<script>
+	var dt=new Date();
+	with(dt){			//这里加入对象，那么以下代码中有相同对象的就可以省略
+		var str="今天是：";
+		str+=getYear()+"年";
+		str+=(getMonth()+1)+"月";
+		str+=getDate()+"日 ";
+		str+=getHours()+":";
+		str+=getMinutes()+":";
+		str+=getSeconds()+" ";
+	}
+	document.write(str);
+</script>
+
+
+
+
+
+
+
+
+
+//===== 让元素按斜线运行
+
+	var d = document.getElementById('d');	
+	var degree=6;
+	var xx=0;
+	var yy=0;
+	function runs(){
+		var x =6 * Math.cos(degree);
+		var y =6 * Math.sin(degree);
+	//	degree -=0.1;
+		d.style.left=d.offsetLeft+x;
+		d.style.top =d.offsetTop+y;
+	}
+	setInterval("runs()",50);
+
+
+
+
+
+//===== js 对一个范围内取随机整数 
+
+
+	alert(Math.floor(Math.random()*10000%51+50));		//大整数对51 向下取余 就是得出50 再加上50 就是一百	结果得出50到100的随机数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== php中将多个结果存放到json中，ajax接收并解析成数组来分别显示
+
+
+	//--php页面组装json数据
+	
+		public function getTime()
+		{
+			$tname = \Session::get('tablename');
+			$date = \DB::select("select * from info_jx11x5_2015");
+		   // dd($date);
+			$nowt = time();                             //当前时间戳
+			$qt = $nowt+600;                            //结束时间戳
+			foreach($date as $k=>$v){
+				if($date[$k]->open_time>$nowt && $date[$k]->open_time<$qt){
+					$endt = $date[$k]->open_time;       //开奖时间戳   
+				   
+					$data[] =  $date[$k]->issue;		//将结果1存放到数组中
+				}
+			}
+			$res = $endt-$nowt;                 //时间差
+
+			$s = $res%60;                       //秒
+			$i = floor($res/60);                //分
+			$h = floor($res/360);               //时
+			$data[] ="00:".($i<10?'0'.$i:$i).":".($s<10?'0'.$s:$s);		//将结果2存放到数组中
+		   
+			echo json_encode($data);			//用json格式显示数据
+		}
+		
+	
+	
+	//--ajax页面接收解析数据
+		
+		function getTime(){
+			$.ajax({
+				url:'{{url('gettime')}}',
+				type:'get',
+				data: {'_token': CSRF_TOKEN},
+				success:function(response){
+					var info = JSON.parse(response);		//将接收到的json格式数据 解析成数组
+					alert(info);							//显示全部数据
+						//结果：1445783400,2015102581			
+					alert(info[0]);							//显示数组中第一个数据
+						//结果：1445783400
+					alert(info[1]);							//显示数组中第二个数据
+						//结果：2015102581
+				}
+			});
+		}
+
+
+
+
+
+
+
+
+
+
+
+//===== 时间倒计时
+
+
+		示例1
+
+		$(function(){ 
+			show_time();
+		}); 
+
+		function show_time(){ 
+			var time_start = new Date().getTime(); //设定当前时间
+
+			var time_end =  new Date("2015/10/25 23:28:00").getTime(); //设定目标时间
+
+
+			// 计算时间差 
+			var time_distance = time_end - time_start; 
+			//alert(time_distance);
+			// 时间差转成天
+			var int_day = Math.floor(time_distance/86400000) 
+			time_distance -= int_day * 86400000;    //相当于送去累计过去的天
+			// 时
+			var int_hour = Math.floor(time_distance/3600000) 
+			time_distance -= int_hour * 3600000; 
+			// 分
+			var int_minute = Math.floor(time_distance/60000) 
+			time_distance -= int_minute * 60000; 
+			// 秒 
+			var int_second = Math.floor(time_distance/1000) 
+			// 时分秒为单数时、前面加零 
+			if(int_day < 10){ 
+				int_day = "0" + int_day; 
+			} 
+			if(int_hour < 10){ 
+				int_hour = "0" + int_hour; 
+			} 
+			if(int_minute < 10){ 
+				int_minute = "0" + int_minute; 
+			} 
+			if(int_second < 10){
+				int_second = "0" + int_second; 
+			} 
+			if(int_minute<1 && int_scond<1){
+
+			}
+			// 显示时间 
+			var str=int_hour+":"+int_minute+":"+int_second;
+			$("div.last-time span").html(str);
+			// 设置定时器
+			setTimeout("show_time()",1000); 
+		}
+
+
+
+
+		示例2 
+
+		var mytime=null;
+			function getTime(){
+				var endt = {{\Session::get('endt')}}*1000;
+				var nowt = Date.parse(new Date());	//当前时间
+				if(endt <= nowt){
+					location.href='{{url('jx11x5')}}';
+					alert('第{{\Session::get('sue')}}期已停止，请注意投注期号！');
+				}
+				var res = endt-nowt;
+				//alert(res);
+				var s = res%60000/1000;		//秒
+				var i= Math.floor(res/60000);	//分
+				str="00:"+(i=i<10?'0'+i:i)+":"+(s=s<10?'0'+s:s);
+				$('div.last-time span').html(str);
+				//mytime=setTimeout("getTime()",1000);
+			}
+		$(function(){
+			getTime();
+		});

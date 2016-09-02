@@ -1,0 +1,289 @@
+
+
+
+
+//===== 选择器的分类
+//===== CSS常规选择器
+//===== 目标伪类选择器
+//===== 结构伪类选择器
+//===== 属性选择器
+//===== 选择器的权重值及优先级
+//===== 其它选择器
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 选择器的分类
+
+			常规选择器
+
+                标签选择器 div 等
+                #id
+                .class
+				div, p, strong, .one{...}	群组选择器
+					当多个选择器有相同的属性是就可以使用群组选择器，群组选择器的组合没有限制。
+					
+				div.one{...}			限制选择器
+					限定选择拥有类名为one的div元素
+
+
+
+            层次选择器
+                E F   		后代选择器		选择E元素下的所有为F的元素
+                E > F 		子选择器		选择E元素下所有为F的一级子元素
+
+                E + F 		相邻兄弟选择器	选择E元素下一个且为F的兄弟元素
+                E ~ F 		通用选择器		选择E元素以后所有为F的兄弟元素
+
+            伪类选择器
+                E:link		访问前
+                E:visited	访问后
+                E:hover		悬停时
+                E:active	点击时
+
+                E:target 目标伪类选择器	锚点时
+
+            
+            结构性伪类选择器
+                E:first-child		首个位置且为E的子元素
+                E:last-child		未尾位置且为E的子元素
+                E:nth-child(n)		指定位置且为E的子元素
+                E:nth-last-child(n)	倒数指定位置且为E的子元素
+
+
+                E:first-of-type		位置不限，首次出现为E的子元素
+                E:last-of-type		位置不限，最后一次出现为E的子元素
+                E:nth-of-type(n)	位置不限，指定第几次出现为E的子元素
+                E:nth-last-of-type(n)	位置不限，指定倒数第几次出现的为E的子元素
+
+                n:odd 奇数  even 偶数
+				E:nth-of-type(odd)	odd-奇数；even-偶数  
+
+            属性选择器
+                E[attr]				选择有attr属性的元素
+                E[attr='val']		选择attr属性值为val的元素
+                E[attr*='val']		选择attr属性值中包含val的元素
+                E[attr^='val']		选择attr属性值以val开始的元素
+                E[attr$='val']		选择attr属性值以val结尾的元素
+
+				[title]{}			为带有指定属性的所有元素设置样式
+				[title=xxx]{}		为指定的属性和值的元素设置样式
+				[title^=xxx]{}		为开头为指定属性值的元素设置样式
+				[title$=xxx]{}		为结尾为指定属性值的元素设置样式
+				[title|=xxx]{}		属性列表中以指定值开头的，列表必须以‘-’分隔 如<title='a-b-c'>
+				[title*=xxx]{}		为属性值中包含指定字符的元素设置样式	如title='abcdef'>
+				[title~=xxx]{}		为属性列表中包含指定字符的元素设置样式	如<title='abc def'>
+
+
+				
+				
+				
+
+
+
+
+
+
+
+
+
+
+
+
+//===== CSS常规选择器
+    
+
+		#d1{...}			//===== id选择器 页面唯一
+
+		.d1{...}			//===== 类选择器
+
+		div, #d1, .d1, div em{...}	//===== 组合选择器
+
+		div p{...}			//===== 选择所有指定名的后代元素  (子孙都会选择)
+
+		div > p(...)			//===== 选择指定名的一级子元素 (不会选择二级或以下)
+
+		div + p(...)			//===== 选择指定名且相邻的下一个兄弟元素 (位置与名都要匹配)
+
+		div ~ p(...)			//===== 选择后面所有为指定名的兄弟元素
+
+
+
+
+
+
+
+
+//===== 目标伪类选择器
+
+        a:target{}			选择匹配的E的所有的，且匹配元素被相关URL指向（锚点指向的时候生效）
+
+        a:link{}			链接没有被访问过是什么样子
+
+        a:visited{}			元素被访问过是什么样子
+
+        a:hover{}			用户鼠标停留在元素上是什么样子
+
+        a:active{}			点击鼠标的那一刹那是什么样子 
+
+       			 	伪：不直接存在于HTML中，只有当用户和网站交互时才体现出来。
+
+   			注意：
+       			 	1、链接伪类，需要遵守一个规则，“爱/恨原则”  LoVe/HAte
+
+       			 	l link->v visted->h hover -> a active
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 结构伪类选择器
+
+
+        E:first-child{...}		选择匹配指定名的第一个子元素 (只要是有父元素的都会在选择范围之内)
+        E:last-child{...}		选择匹配指定名的最后一个子元素(只要是有父元素的都会在选择范围之内)
+        E:nth-child(n){...}		选择匹配指定名且匹配指定位置的子元素
+        E:nth-last-child(n){...}	倒数选择匹配指定名且匹配指定位置的子元素
+
+        E:first-of-type{...}		选择匹配指定名且为首次出现的子元素,位置不限。
+        E:last-of-type{...}		选择匹配指定名且是最后一次出现的子元素,位置不限。
+        E:nth-of-type(n){...}		选择匹配指定名且指定第几次出现的子元素，位置不限。
+        E:nth-last-of-type(n){...}	倒数选择匹配指定名且指定第几次出现的子元素，位置不限。
+
+
+
+
+
+
+
+//===== 属性选择器
+        E[attr]{...}		选择匹配具有attr属性名的的E元素
+        E[attr='val']{...}	选择有attr属性的E元素，并且属性的值为val的。
+        E[attr*='val']{...}	选择有attr属性的E元素，并且属性的值包含val的。
+        E[attr^='val']{...}	选择有attr属性的E元素，并且值以val开头的。
+        E[attr$='val']{...}	选择有attr属性的E元素，并且值以val结尾的。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 选择器的权重值及优先级
+
+
+    1、一个标签选择器  1分
+    2、一个类选择器10分
+    3、一个ID选择器 100分
+    4、一个内联方式的值 1000分
+    5、伪类选择器10分
+    6、通配符选择器 0 分   *通配符
+    7、属性选择器10分
+    8、层次选择器需要拆分开并且进行相加来进行计算
+
+    注意：
+        1、数值越大，权重越高
+        2、权重值要相同，最后一个样式胜出。
+        3、如果要忽略权重值时，需要在任何要保护的属性的后面加入!important就可以避免被更大的权重值覆盖
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 其它选择器
+
+.class .intro 选择 class="intro" 的所有元素。 1 
+#id #firstname 选择 id="firstname" 的所有元素。 1 
+* * 选择所有元素。 2 
+element p 选择所有 <p> 元素。 1 
+element,element div,p 选择所有 <div> 元素和所有 <p> 元素。 1 
+element element div p 选择 <div> 元素内部的所有 <p> 元素。 1 
+element>element div>p 选择父元素为 <div> 元素的所有 <p> 元素。 2 
+element+element div+p 选择紧接在 <div> 元素之后的所有 <p> 元素。 2 
+[attribute] [target] 选择带有 target 属性所有元素。 2 
+[attribute=value] [target=_blank] 选择 target="_blank" 的所有元素。 2 
+[attribute~=value] [title~=flower] 选择 title 属性包含单词 "flower" 的所有元素。 2 
+[attribute|=value] [lang|=en] 选择 lang 属性值以 "en" 开头的所有元素。 2 
+:link a:link 选择所有未被访问的链接。 1 
+:visited a:visited 选择所有已被访问的链接。 1 
+:active a:active 选择活动链接。 1 
+:hover a:hover 选择鼠标指针位于其上的链接。 1 
+:focus input:focus 选择获得焦点的 input 元素。 2 
+:first-letter p:first-letter 选择每个 <p> 元素的首字母。 1 
+:first-line p:first-line 选择每个 <p> 元素的首行。 1 
+:first-child p:first-child 选择属于父元素的第一个子元素的每个 <p> 元素。 2 
+:before p:before 在每个 <p> 元素的内容之前插入内容。 2 
+:after p:after 在每个 <p> 元素的内容之后插入内容。 2 
+:lang(language) p:lang(it) 选择带有以 "it" 开头的 lang 属性值的每个 <p> 元素。 2 
+element1~element2 p~ul 选择前面有 <p> 元素的每个 <ul> 元素。 3 
+[attribute^=value] a[src^="https"] 选择其 src 属性值以 "https" 开头的每个 <a> 元素。 3 
+[attribute$=value] a[src$=".pdf"] 选择其 src 属性以 ".pdf" 结尾的所有 <a> 元素。 3 
+[attribute*=value] a[src*="abc"] 选择其 src 属性中包含 "abc" 子串的每个 <a> 元素。 3 
+:first-of-type p:first-of-type 选择属于其父元素的首个 <p> 元素的每个 <p> 元素。 3 
+:last-of-type p:last-of-type 选择属于其父元素的最后 <p> 元素的每个 <p> 元素。 3 
+:only-of-type p:only-of-type 选择属于其父元素唯一的 <p> 元素的每个 <p> 元素。 3 
+:only-child p:only-child 选择属于其父元素的唯一子元素的每个 <p> 元素。 3 
+:nth-child(n) p:nth-child(2) 选择属于其父元素的第二个子元素的每个 <p> 元素。 3 
+:nth-last-child(n) p:nth-last-child(2) 同上，从最后一个子元素开始计数。 3 
+:nth-of-type(n) p:nth-of-type(2) 选择属于其父元素第二个 <p> 元素的每个 <p> 元素。 3 
+:nth-last-of-type(n) p:nth-last-of-type(2) 同上，但是从最后一个子元素开始计数。 3 
+:last-child p:last-child 选择属于其父元素最后一个子元素每个 <p> 元素。 3 
+:root :root 选择文档的根元素。 3 
+:empty p:empty 选择没有子元素的每个 <p> 元素（包括文本节点）。 3 
+:target #news:target 选择当前活动的 #news 元素。 3 
+:enabled input:enabled 选择每个启用的 <input> 元素。 3 
+:disabled input:disabled 选择每个禁用的 <input> 元素 3 
+:checked input:checked 选择每个被选中的 <input> 元素。 3 
+:not(selector) :not(p) 选择非 <p> 元素的每个元素。 3 
+::selection ::selection 选择被用户选取的元素部分。 3 

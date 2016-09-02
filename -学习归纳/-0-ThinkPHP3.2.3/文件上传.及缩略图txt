@@ -1,0 +1,192 @@
+
+
+
+
+
+
+
+
+	if($_FILES['g_img']['size']>0){
+		$config = array(
+			'rootPath'=>'./Public/',		//设置文件保存的根目录
+			'savePath'=>'upload/',			//设置保存路径 
+				//注：文件保存全路径为 rootPath+savePath的结合，且文件保存会在以上路径下创建出以日期为目录名的目录下。
+		);
+
+		$upload = new \Think\Upload($config);		//创建上传对象
+		$z = $upload->uploadOne($_FIELS['g_img']);	//调用上传方法，并传入上传数据，uploadOne()上传后会返回上传附件的信息
+		if(!$z){
+			dump($upload->getError());		//获取失败信息
+		}else{
+			$imgpath = $z['savePath'].$z['saveName'];	//获取$z返回的上传数据，并拼装文件地址。
+			$_POST['goods_img ']=$imgpath;		//将文件地址存入POST
+		}
+	}
+	$goods = D('Goods');				//创建数据库对象
+	$goods->create();				//获取并过滤POST字段数据
+	$zz = $goods->add();				//添加到数据库
+
+
+
+
+
+//-- 类文件位置
+
+	ThinkPHP/Library/Think/Upload.class.php
+
+
+
+
+
+
+//-- 上传相关参数
+
+        'mimes'         =>  array(), //允许上传的文件MiMe类型
+        'maxSize'       =>  0, //上传的文件大小限制 (0-不做限制)
+        'exts'          =>  array(), //允许上传的文件后缀
+        'autoSub'       =>  true, //自动子目录保存文件
+        'subName'       =>  array('date', 'Y-m-d'), //子目录创建方式，[0]-函数名，[1]-参数，多个参数使用数组
+        'rootPath'      =>  './Uploads/', //保存根路径
+        'savePath'      =>  '', //保存路径
+        'saveName'      =>  array('uniqid', ''), //上传文件命名规则，[0]-函数名，[1]-参数，多个参数使用数组
+        'saveExt'       =>  '', //文件保存后缀，空则使用原后缀
+        'replace'       =>  false, //存在同名是否覆盖
+        'hash'          =>  true, //是否生成hash编码
+        'callback'      =>  false, //检测文件是否存在回调，如果存在返回文件信息数组
+        'driver'        =>  '', // 文件上传驱动
+        'driverConfig'  =>  array(), // 上传驱动配置
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 缩略图类文件位置
+
+	ThinkPHP/Library/Think/Image.class.php
+
+	使用原理 ： 使用open() 打开一个图像资源，后使用 thumb()制做缩略图，再使用save() 设保存
+
+
+
+	使用示例
+
+	$image = new \Think\Image();		//创建制图对象
+	$image->open($imgsrc);			//打开指定图片资源
+	$image->thumb(150,150);			//设置图片大小
+	$image->save($samllimgsrc);		//将设置好的图片保存到指定路径及指定名
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 图片上传及缩略图示例
+
+  控制器
+
+    public function index(){
+         
+        $src = S('src');            //获取大图缓存地址
+        $src2 = S('src2');          //获取缩略图缓存地址
+        $this->assign('src2',$src2);    //注册到模板
+        $this->assign('src',$src);
+    	$this->display();
+    }
+
+    public function control(){
+
+        if($_FILES['my_img']['size']>0){    //判断文件是否上传
+            $config =array(
+                    'rootPath'=>'./Public/',    //设置文件保存根目录
+                    'savePath'=>'upload/',      //设置文件保存路径 
+                );
+            $upload = new \Think\Upload($config);   //创建上传对像
+            $z = $upload->uploadOne($_FILES['my_img']);  //将指定文件上传
+
+            $src = $z['savepath'].$z['savename'];   //获取并拼装保存后的文件路径 
+            S('src',$src);      //将上传后的文件相对路径缓存
+
+            $image = new \Think\Image();            //创建制图对象
+            $src2 = './Public/'.$src;               //设置源图片路径 
+            $p2 = './Public/smallupload/'.$z['savename']; //设置缩略图保存路径
+            $image->open($src2);        //打开图片资源
+            $image->thumb(150,150);     //设置绽放比
+            $image->save($p2);          //保存缩略图
+            S('src2','smallupload/'.$z['savename']);    //缓存图片相对地址
+            $this->redirect('index');       //跳回首页
+        }
+
+    }
+
+
+
+
+    模板
+
+	<form action = '__URL__/control' method='post' enctype='multipart/form-data'>
+		<input type='file' name='my_img' />
+		<input type='submit' value='提交' />
+	</form>
+	<img src='__PUBLIC__/{$src2}' />		拼装调用图片
+	<img src='__PUBLIC__/{$src}' />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

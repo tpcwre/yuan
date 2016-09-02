@@ -1,0 +1,69 @@
+
+
+
+
+
+//-- 获取系统（含自定义）常量集合
+	function right(){
+		dump(get_defined_constants());		//获取常量集合
+		dump(get_defined_constants(true));	//获取常量集合（会将常量按类分组）
+	}
+	
+
+
+
+
+
+//-- 常用的系统常量
+
+             __ROOT__       	// 当前网站地址		/obj
+            __APP__        	// 当前应用地址		/obj/index.php
+            __MODULE__		// 当前应用模块		/obj/index.php/Admin
+            __CONTROLLER__	// 当前控制器		/obj/index.php/Admin/Index
+            __ACTION__     	// 当前方法		/obj/index.php/Admin/Index/right
+            __URL__ 		// 等同于__CONTROLLER__	/obj/index.php/Admin/Index
+            __SELF__  		// 当前页面地址 	/obj/index.php/Admin/Index/right
+            __PUBLIC__  	// 项目公共目录		/obj/Public
+
+	    __EXT__		// 获取当前页面全用的后缀 如：html,shtml等
+
+
+	以上常量 存放在 ThinkPHP/Library/Behavior/ContentReplaceBehavior.class.php 文件下，只有这里注册的常量才能在模板中使用 如： __URL__
+
+
+
+
+
+
+
+//-- 自定义常量的声明及调用
+
+	
+	define('SITE_URL','http://web.1116.com/');	//入口文件中定义常量
+	define('CSS_URL',SITE_URL.'shop/public/css/');		
+	
+	{$Think.const.CSS_URL}				//模板中调用路径的常量	
+
+
+
+
+
+
+
+//-- 模板中使用常量引入相关文件
+
+	<limk href='/shop/public/css/style.css' rel='stylesheet' type='text/css'>	//css引用 该方式不利于后期维护
+	<limk href='__PUBLIC__/css/style.css' rel='stylesheet' type='text/css'>		使用常量引入路径
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,141 @@
+
+
+//===== frameset 框架注意事项 
+//===== framest 属性
+//===== framest 属性
+//===== frame 属性
+//===== frameset 垂直框架
+//===== frameset 水平框架
+//===== frameset 混合框架
+//===== 导航框架
+//===== 使用框架导航跳转至指定页面的指定锚点
+
+
+
+
+
+
+
+//===== frameset 框架注意事项 
+	frameset该页面中不能有其它任何元素，如body体数字，字符等！
+
+	
+	
+//===== framest 属性
+
+	cols="25%,50%,25%"	设置列数，并指定每列宽度的占比
+	
+	rows="25%,50%,25%"	设置行数，指定每行高度的占比
+	
+	
+	
+//===== frame 属性
+
+	noresize 			禁止拖动框架边框
+	scrolling='no'		隐藏滚动条
+	frameborder=0 		设置边框
+	src='..'			指定嵌入页面地址
+	
+	 			
+	target='showfram'	指定跳转到哪一个frame页面
+			其它属性：
+			1,_blank:新窗口   
+			2, _self：窗口	
+			3,_parent: 父窗口	
+			4, _top:整个浏览器窗口	
+			5, =“框架名称”  如上面的frame2例子
+			
+			
+			
+	
+	
+//===== frameset 垂直框架
+	<frameset cols="25%,50%,25%">
+	  <frame src="a.html"  noresize>   		//noresize 固定大小
+	  <frame src="a.html" scrolling='no'>   //scrolling 隐藏滚动条
+	  <frame src="a.html" frameborder=0>	//frameborder 设置边框
+	</frameset>
+
+
+
+//===== frameset 水平框架
+	<frameset rows="25%,50%,25%">
+	  <frame src="a.html">
+	  <frame src="a.html">
+	  <frame src="a.html">
+	</frameset>
+
+
+
+//===== frameset 混合框架
+
+	<frameset rows="50%,50%">
+		<frame src="../example/html/frame_a.html">
+		<frameset cols="25%,75%">
+			<frame src="../example/html/frame_b.html">
+			<frame src="../example/html/frame_c.html">
+		</frameset>
+	</frameset>
+
+
+	
+	
+
+//===== 导航框架
+	a.html内容
+	<frameset cols='150,*'>
+	  <frame src="b.html">			
+	  <frame src="c.html" name='showfram'>
+	</frameset>
+
+	b.html内容
+	<a href='aa.html' target='showfram'>aa.html页面</a><br>
+	<a href="bb.html" target='showfram'>bb.html页面</a>
+
+	c.html内容为空
+
+	aa.html内容：aa.html页面
+
+	bb.html内容：bb.html页面
+
+
+
+
+
+
+//===== 使用框架导航跳转至指定页面的指定锚点
+
+	index.html内容
+	<frameset cols='20%,*'>
+		<frame src='left.html'>
+		<frame src='right.html' name='showfram'>
+	</frameset>
+
+	left.html内容
+	<a href='aa.html' target='showfram'>aa.html页面</a>	
+	<a href='bb.html#aa5' target='showfram'>bb.html页面</a>   
+	//注：#aa5 就是 bb.html页面中的锚点(name为aa5的 a 标签) 
+
+	aa.html内容 	空
+
+	bb.html内容
+	<body>
+		<a name='aa1'>aaaaaaa1</a><br><br><br><br><br>
+		<a name='aa7'>aaaaaaa5</a><br><br><br><br><br>
+		<a name='aa9'>aaaaaaa9</a><br><br><br><br><br>
+	</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,347 @@
+﻿<head>
+<script src="../js/jquery-1.11.1.js"></script>
+<script src="../js/jqueryui.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src='../js/jquery.ui.datepicker-zh-CN.js'></script>
+<script src='../js/jquery.validate.js'></script>
+<script src='../js/messages_zh.js'></script>
+<script src="../js/migrate.js"></script>
+<script src="jquery.nav.js"></script>
+<script src="a.js"></script>
+<link type="text/css" rel="stylesheet" href="../css/ui-lightness/jqueryui.css"/>
+<style>
+	#accordion{
+		margin:30px 200px 0 200px;
+	}
+	#tabs{
+		margin:0 200px 0 200px;
+	}
+	#jqueryevent{
+		border:1px solid blue;
+		height:50px;
+	}
+	.but0, .but01{
+		position:relative;
+		border:1px solid blue;
+	}
+	.list{
+		padding:0;
+		margin:0;
+		color:#fff;
+		list-style:none;
+		width:300px;
+		margin:0 auto;
+	}
+	.list li{
+		background:#333;
+		width:100px;
+
+		float:left;
+		font:italic normal 20px/30px normal;
+		text-align:center;	
+	}
+	.nav{
+		font-size:15px;
+		margin:0;
+		padding:0;
+		display:none;
+	}
+	.big{
+		color:yellow;
+	}
+	.abc{
+		color:red;
+	}
+	.valid{
+		background:url(../img/dui.jpg) no-repeat right;
+	},
+</style>
+</head>
+<body>
+
+
+
+
+
+
+											//=====validate验证插件
+								
+<div>
+<form id="reg1" action="123.html">
+<ol class='errorol'></ol>
+用户名：<input type="text" name="user" id="user3"/><br>
+密　码：<input type="text" name='pass' /><br>
+<input type="submit" value="提交"/>
+</form>
+</div>
+<br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+											//=====日历UI
+<div>
+日　期：<input type="text" name='pass' id="date1"/><br>
+日　期：<input type="text" name='pass' id="date2"/><br>
+</div>
+<br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+												//=====自动补全
+<div>
+用户名：<input type="text" name="user" id="user1"/><br>
+密　码：<input type="text" name='pass' /><br>
+<button>提交</button>
+</div>
+<br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+												//=====tooltip提示信息UI
+<div id="tooltip">
+用户名：<input type="text" name="user" title="输入用户名"/><br>
+密　码：<input type="text" name='pass' title="输入密码"/><br>
+<button>提交</button>
+</div>
+<br><br><br>
+
+
+
+
+
+
+
+												//=====按钮UI
+												
+<div>
+<button id="butui">按钮UI</button>
+</div>
+<br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+												//=====对话框
+												
+<div>
+<button id='login_but'>登陆</button>
+<div id="login_dia"></div>
+<div >
+
+</div>
+</div>
+<br><br><br>
+
+
+
+
+
+
+
+
+
+
+												//=====插件的制做与调用
+<div>
+<div class='list'>
+	<li>导航列表
+		<ul class="nav">
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+		</ul>
+	</li>
+	<li>导航列表
+		<ul class="nav">
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+		</ul>
+	</li>	<li>导航列表
+		<ul class="nav">
+			<li>数据列表</li>
+			<li>数据列表</li>
+			<li>数据列表</li>
+		</ul>
+	</li>
+</div>
+<div style="clear:both""></div>
+</div><br><br><br>
+
+
+
+												//=====选择器，过滤器，DOM
+<br><br><br>
+												
+												
+												
+												
+												
+												
+												//=====jquery事件
+<div id="jqueryevent">
+	<div style='width:30px;height:30px;border:1px solid red;'></div>
+	<input type=''>
+</div>
+<br><br><br>
+
+												//=====ajax异步提交
+<div>
+<form id="login">
+<input type="text" name='user'/>
+<input type="text" name="pass"/>
+<input type="button" value="提交" id="sub1"/>
+</form>
+<div class="form"></div>
+</div>
+<br><br><br>
+
+
+
+
+												//=====jquery工具函数
+<div>
+<div id="tool1"></div>
+<div id="tool2" style="width:100px;height:100px;background:blue"></div>
+</div>
+<br><br><br>
+
+
+
+
+
+
+
+												//=====动画效果
+<div>
+<p>
+<button id="but1">消失</button>
+<button id="but2">显示</button>
+<button id="but6">上隐</button>
+<button id="but7">下显</button>
+<button id="but8">淡入</button>
+<button id="but9">淡出</button>
+<button id="but10">透明度</button>
+<button id="but11">正常切换</button>
+<button id="but12">淡入切换</button>
+<button id="but13">上下切换</button>
+<button id="but14">无限切换</button>
+<button id="but3">同步动画</button>
+<button id="but4">列队动画</button>
+<button id="but5">切换显隐</button>
+</p>
+<p>
+<button id="abut1">多重同步动画</button>
+<button id="abut2">列队动画</button>
+<button id="abut3">移动动画</button>
+<button id="abut4">stop</button>
+<button id="abut5">延迟</button>
+<button id="abut6">找当前动画</button>
+<button id="abut7">动画均度及</button>
+</p>
+<div style="width:50px;height:20px;background:#999" class="but0">but0</div>
+<div style="width:50px;height:20px;background:#999" class="but01">but01</div>
+<div style="width:100px;height:100px;background:red" class="but1">but1</div>
+<div style="width:100px;height:100px;background:blue" class="but2"></div>
+<div style="width:100px;height:100px;background:green" class="but3"></div>
+
+</div><br><br><br>
+
+
+
+
+												//=====选项卡UI折叠菜单UI
+<div>
+<div id="accordion">
+	<h1>折叠菜单1</h1>
+	<div>内容1</div>
+	<h1>折叠菜单2</h1>
+	<div>内容1</div>
+	<h1>折叠菜单3</h1>
+	<div>内容1</div>
+</div>
+</div><br><br><br>
+
+
+
+
+												//=====选项卡UI
+<div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tab1">tab1</a></li>
+		<li><a href="#tab2">tab1</a></li>
+		<li><a href="#tab3">tab1</a></li>
+	</ul>
+	<div id="tab1">tab111111111</div>
+	<div id="tab2">tab222222222</div>
+	<div id="tab3">tab333333333</div>
+</div>
+</div><br><br><br>
+
+
+												//=====jquery-cookie插件
+<div id="cookie"></div>
+
+
+
+</body>

@@ -1,0 +1,1002 @@
+
+
+
+
+
+
+
+
+
+//-- mongoDB 官网
+
+	www.mongodb.org 	英文
+	www.mongoing.com	中文
+	github.com/mongodb	github
+
+
+
+
+
+
+
+
+
+//-- 文件说明
+
+	mongod			是数据库的主运行程序 
+	mongo 			用来连接数据库的客户端
+	mongoimport		数据的导入
+	mongoexport		数据的导出
+	mongodump		类似上面的导入导出，但这里是二进制数据，不能被直接读取 (用于数据备份和恢复)
+	mongorestore
+	mongooplog		记录操作记录的日志
+	mongostat		查看服务器的各种状态 
+
+
+
+
+
+
+
+
+
+
+
+//-- BSON数据类型
+	TypeName		   TypeNumber
+
+	Double				1
+	String				2
+	Object				3
+	Array				4
+	Binary data			5
+	Object id			7
+	Boolean				8
+	Date				9
+	Null				10
+	Rgular expression		11	正则
+	JavaScript code			13
+	Symbol				14
+	JavaScript code with scope	15
+	32-bit integer			16
+	Timestamp			17
+	64-bit integer			18
+	Min key				255
+	Max key				127
+
+
+	db.t1.find({age:{$type:10}})				查找age值类型为null的数据,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- mongoDB 相关命令
+
+	服务启动连接相关操作
+		numactl --interleave=all bin/mongod -f conf/mongod.conf		设置mongod服务自启动
+
+		./bin/mongod -f conf/mongod.conf	//启动mongodb服务
+
+		db.shutdownServer()			//内部关闭mongod服务
+		kill -15(或不带参数)			//外部关闭mongod服务
+
+		mkdir mongodata				// --dbpath='...'	手动设置数据库路径 
+		mongod --dbpath='mongodata/'	
+
+		./bin/mongo 127.0.0.1:12345/test	连接mongod服务的test库
+
+	库操作
+		show dbs				//查看数据库有哪些
+		use mydb				//创建或选择数据库
+		db.dropDatabase()			//删除当前数据库
+			db.runCommand({"dropDatabase": 1})    	
+
+		db.stats()				//查看当前数据库状态 
+		{
+			"db" : "t1",
+			"collections" : 2,
+			"objects" : 2,
+			"avgObjSize" : 96,
+			"dataSize" : 192,
+			"storageSize" : 65536,
+			"numExtents" : 0,
+			"indexes" : 2,
+			"indexSize" : 32768,
+			"ok" : 1
+		}
+
+
+	表操作
+		show collections			//查看当前库中有哪些集合（表）
+		show tables				//查看表数库中有哪些集合（表）
+		db.createCollection("c1")		//显式创建数据表（默认在添加数据时会自动创建表）
+		db.users.drop()				//删除表users
+		db.runCommand({"drop","users"})    	
+
+
+
+		//-- 固定集合（表）
+			固定集合可在两个方面做限制：json数据的个数，集合的容量大小
+		
+		//-- capped 创建一个固定集合，指定存储容量10M,json个数为5个
+		db.createCollection("t2",{capped:true,size:10000000,max:5})
+			该集合最多存放5条数据，如列队一样，当存满时，后入数据会顶替掉先前的数据
+
+		//-- convertToCapped 将普通集合转成固定集合
+		db.runCommand({convertToCapped:"t1",size:10000000,max:6})	   最大10M,最多6条数据
+
+
+
+
+
+
+
+	gridFS大文件上传下载操作
+		使用帮助 
+		./mongofiles --help 	
+	
+		上传指定文件
+		./mongofiles --host=127.0.0.1 --port=11111 put xxx.gz	
+
+		下载文件
+		./mongofiles --host=127.0.0.1 --port=11111 get xxx.gz
+
+		查看当前以上传的文件列表 
+		./mongofiles --host=127.0.0.1 --port=11111 list      	指定主机和端口
+		./mongofiles --port=11111 --db=admin list		指定admin库 和 端口
+
+		删除指定文件
+		./mongofiles --host=127.0.0.1 --port=11111 delete mongoperf.tar.gz
+		./mongofiles --port=11111 --db=admin delete mongoperf.tar.gz		删除指定库中的文件
+
+
+
+
+
+
+
+
+	增 insert(),save()
+		//-- insert() 数据添加
+		db.im_coll.insert({x:1});		自动创建并向集合（表）im_coll 插入一条数据（数据是以json格式）
+		db.im_coll.insert({x:3,_id:1});		插入数据并指定id为1
+		for(i=3;i<100;i++)db.im_coll.insert({x:i})	循环插入数据
+
+
+
+		//-- save() 数据保存
+		save()和insert()也存在着些许区别：若新增的数据主键已经存在，insert()会不做操作并提示错误，而save() 则更改原来的内容为新内容。
+		db.user.save({name:'jike',age:'20'})	//存储数据
+		db.user.save({name:'jike2',age:'21'})	
+		db.user.save({_id:0bjectId("234285sd0fsf08"),name:'ime'});	//根据指定id号来修改替换数据 
+
+		//-- insert()与save() 的区别 
+		存在数据：{ _id : 1, " name " : " n1 "} ，_id是主键
+			insert({ _id : 1, " name " : " n2 " })    会提示错误
+			save({ _id : 1, " name " : " n2 " })     会把 n1 改为  n2 ，有update的作用。
+
+
+		//-- save 的特殊用法
+			{ "_id" : ObjectId("57b6c32427072488c053aff2"), "user" : "user1" }
+		var x = db.t2.findOne()
+		x
+			{ "_id" : ObjectId("57b6c32427072488c053aff2"), "user" : "user1" }
+		x.age=18
+		x.sex='nv'
+		x.score=180
+		db.t2.save(x)
+			{ "_id" : ObjectId("57b6c32427072488c053aff2"), "user" : "user1", "age" : 18, "sex" : "nv", "score" : 180 }
+
+
+
+
+
+	删 remove()
+
+		
+		db.users.remove({})    			删除users集合下所有数据
+		db.users.remove({"name": "lecaf"})      删除users集合下name=lecaf的数据
+
+
+	改 update()
+		
+		db.t1.update({x:1},{x:999})	 		将 x:1 的那条数据 修改（更新）成 x:999  (整条数据会被修改)
+		db.t1.update({z:100},{$set:{y:999}});		查找z:100的数据，只修改y字段为999  其它不变
+		db.t1.update({y:100},{y:999},true);		修改数据，当数据不存在时就自动创建该数据	
+		db.t1.update({_id:0bjectId("234285sd0fsf08")},{'name':'ime','age':29}); 指定id号修改数据
+		//-- $set 
+		db.t1.update({c:1},{$set{c:2}},false,true);	将所有c:1的数据修改为c:2 (不加参数，默认只会修改首条,最后的true,表示修改所有匹配的数据)
+		//-- unset 删除指定字段
+		db.t1.update({},{$unset:{score:1}},0,1)		删除所有数据中的score字段  score:1 中的1表示为真
+		db.t1.update({},{$unset:{age:1,sex:1,num:1,score:1}},0,1)
+	
+		//--$inc  自增，自减
+		db.t1.update({},{$inc:{score:10}},0,1)		将表中所有数据中的score字段累加10 ，如不存在则创建并累加10
+		db.t1.update({x:1},{$inc:{score:10}})		给指定数据指定字段累加10
+		db.t1.update({x:1},{$inc:{score:-10}})		给指定数据指定字段累减10
+
+		db.t1.update({},{$set:{sex:"nan"},$inc:{num:11}},0,1)	修改所有数据中的sex字段值为jnan,并将num字段值自增11,字段不存在则创建 
+
+
+
+
+		//-- $push 给数组值的尾部添加一个元素
+		{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 1, 2, 3, 4 ] }
+		db.t7.update({user:"user1"},{$push:{arr:5}})
+		{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 1, 2, 3, 4, 5 ] }
+
+		//-- $pushAll	给数组值的尾部添加多个元素
+		db.t7.update({user:'user1'},{$pushAll:{arr:[5,6,7]}})
+		{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 1, 2, 3, 4, 5, 6, 7 ] }
+
+		//-- $addToSet 给数组值的尾部添加一个不重复的元素（如元素存在则不添加）
+		db.t7.update({user:'user1'},{$addToSet:{arr:8}})
+
+		//-- $addToSet 配合 $each 向数组值的尾部添加多个元素
+		//-- $each 遍历多个元素
+		db.t7.update({user:'user1'},{$addToSet:{arr:{$each:[7,8,9,10,11,12]}}})
+
+		//-- $pop 弹出数组值的最后一个元素或首个元素
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 1, 2, 3, 4 ] }
+		db.t7.update({user:'user1'},{$pop:{arr:1}})		删除最后一个元素
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 1, 2, 3] }
+		db.t7.update({user:'user1'},{$pop:{arr:-1}})		删除首个元素
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 2, 3, 4 ] }
+
+		//-- $pull 删除数组中指定元素
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 2, 3, 4 ] }
+		db.t7.update({user:'user1'},{$pull:{arr:2}})	
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 3, 4 ] }
+
+		//-- $pullAll 删除数组中多个指定元素
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] }
+		db.t7.update({user:'user1'},{$pullAll:{arr:[4,6,7,9,11]}})
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 3, 5, 8, 10, 12 ] }
+
+		//-- $rename 修改指定字段名
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "arr" : [ 3, 5, 8, 10, 12 ] }
+		db.t7.update({user:'user1'},{$rename:{arr:"post"}})
+			{ "_id" : ObjectId("57b6b22643125c6d7bd020e6"), "user" : "user1", "post" : [ 3, 5, 8, 10, 12 ] }
+
+
+		//-- $ 代表查询的结果 
+			{ "_id" : ObjectId("57b6be8f27072488c053aff1"), "user" : "user1", "arr" : [ { "tit" : "linux" }, { "tit" : "php" } ] }
+		db.t1.update({"arr.tit":"linux"},{$set:{"arr.$.add":"add the elem"}})    //匹配arr.tit并修改其下的add元素 ，不存在则添加
+			{ "_id" : ObjectId("57b6be8f27072488c053aff1"), "user" : "user1", "arr" : [ { "tit" : "linux", "add" : "add the elem" }, { "tit" : "php" } ] }
+		
+
+
+	查 find()
+
+		db.t1.find()				查询所有数据
+		db.t1.findOne()				查询首条数据
+		db.t1.find({x:1})			查找包含x:1的所有数据
+		db.t1.findOne({x:1)			查找包含x:1的首条数据
+		db.t1.find({x:1}).limit(2)		查找包含x:1的前两条数据
+		db.t1.find().count()			查询表中数据总条数
+		db.t1.find().sort({x:1})		按x字段正排序
+		db.t1.find().sort({x:-1})		按x字段倒排序
+		db.t3.find().sort({a:1,b:-1});
+		db.system.profile.find().sort({$natural:-1})	sort({$natural:-1}) 查询最新的一条记录
+		db.t1.find().limit(5)			限制只查询5条
+		db.t1.find().skip(8)			查询除前8条以后的所有数据（跳过前8条）
+		db.t1.find().skip(3).limit(2).sort({x:1})	查询第3条以后的数据，只显示两条，并以x字段正排序
+
+		//-- field.field 字段值中的字段查询
+		db.t1.insert({name:'user',post:[{a:1},{b:2},{c:3}]})
+		db.t1.find({"post.b":22})		查询指定字段的josn值中的字段
+		db.t1.find({"x.a":1,"x.b":{$gt:1}})	查找x字段的json值中的字段a=1的，并且x字段的json值中的b字段值大于1的
+
+		//-- hint()	强制使用指定索引
+		db.im2.find({m:{$exists:false}}).hint('m_1')	//强制使用指定的 m_1 索引来查找数据
+
+
+		//-- $gt,$lt,$lte,$gte,$ne,$mod,$in,$nin,$exists
+		db.collection.find({ "key.subkey" :value })    内嵌对象中的值匹配，注意："key.subkey"必须加引号
+		db.t1.find({x:1})			查询x=1的数据
+		db.t1.find({x:{$gt:8}})			大于8 
+		db.t1.find({x:{$lt:2}})			小于2 
+		db.t1.find({x:{$lte:2}})		小于等于2 
+		db.t1.find({x:{$gte:8}})		大于等于8 
+		db.t1.find({x:{$gt:1,$lt:3}})		大于1且小于3
+		db.t1.find({x:{$ne:3}})			不等于3
+		db.t1.find({x:{$mod:[5,1]}})		对5取模等于1
+		db.t1.find({x:{$in:[2,4,6,8]}})		在指定值内的 (in)
+		db.t1.find({x:{$nin:[2,4,6,8]}})	不在指定值内的（not in）
+
+		db.t1.find({x:{$exists:true}})		查询包含x字段的数据
+		db.t1.find({x:{$exists:false}})		查询不包含x字段的数据
+		
+		//-- 正则
+		db.t1.find({c:/^a.*c$/i})		
+			正则，类似like；“i”忽略大小写，“m”支持多行，“x”忽略空白字符，“s”让“.”表示所有字符，包括换行符，如：/a.*b/不匹配"apple\nbanana",但是/a.*b/s可以
+		db.t1.find({c:{$not:/^a.*c$/i}})	正则反匹配查询
+
+		//-- $or,$nor
+		db.t1.find({$or:[{x:1},{x:4}]})		或查询：有x:1或者x:4的数据 （值为数组时，也会查询包含1或4 的数据）
+		db.t1.find({a:1,$or:[{b:2},{c:3}]}) 	查询包含a:1,并且包含 b:2或c:3 的数据
+		db.t1.find({$nor:[{x:1},{x:2}]})	查询不包含x:1或x:2的数据
+
+		//-- $size	
+		db.t1.find({x:{$size:5}})		查询X字段的值(必须是数组)，该数组值的长度等于5的
+		{ "_id" : ObjectId("57b6644f189f6a0779c36375"), "x" : [ 1, 2, 3, 4, 5 ] }
+
+
+		//-- $slice 查找json值中的几段
+		> db.t1.find({user:"user3"})
+		{ "_id" : ObjectId("57b6939d189f6a0779c3638e"), "user" : "user3", "post" : [ { "tit" : 1 }, { "tit" : 2 }, { "tit" : 3 } ] }
+		> db.t1.find({user:"user3"},{post:{$slice:1}})
+		{ "_id" : ObjectId("57b6939d189f6a0779c3638e"), "user" : "user3", "post" : [ { "tit" : 1 } ] }
+		> db.t1.find({user:"user3"},{post:{$slice:2}})
+		{ "_id" : ObjectId("57b6939d189f6a0779c3638e"), "user" : "user3", "post" : [ { "tit" : 1 }, { "tit" : 2 } ] }
+		> db.t1.find({user:"user3"},{post:{$slice:3}})	
+		{ "_id" : ObjectId("57b6939d189f6a0779c3638e"), "user" : "user3", "post" : [ { "tit" : 1 }, { "tit" : 2 }, { "tit" : 3 } ] }
+	
+		> db.t1.find({user:'user2'},{post:{$slice:[4,6]}})
+		{ "_id" : ObjectId("57b69f0a43125c6d7bd020e5"), "user" : "user2", "post" : [ { "a" : 5 }, { "a" : 6 } ] }
+
+
+
+		//-- distinct(去重)				
+		db.t1.distinct("x")			查询包含x字段的数据中都有哪些不同的值 
+
+		//-- 分页实现
+		db.t1.find().skip(4).limit(4)		skip结合limit实现分页
+
+
+		//-- $elemMatch 查找字段值中元素的匹配字段
+		db.t1.insert({user:"user3",post:[{tit:1},{tit:2},{tit:3}]})
+		db.t1.find({post:{$elemMatch:{tit:1,tit:2}}})		查找字段post的json值中同时包含tit:1,tit:2的数据
+		
+		db.t1.find({age:{$exists:1,$in:[null]}})
+
+
+		//-- $type 查找指定类型的数据
+		{ "_id" : ObjectId("57b69a1b189f6a0779c36391"), "age" : null }
+		{ "_id" : ObjectId("57b69a1e189f6a0779c36392"), "age" : "" }
+
+		db.t1.find({age:{$exists:1,$in:[null]}})		查找出age:null 的数据
+		db.t1.find({age:{$type:10}})				查找age值类型为null的数据,更多数据类型参见（//-- BSON数据类型）
+
+			
+
+
+
+		//-- explain() 操作语句检测 
+		db.t1.find({y:1}).explain()
+
+
+
+
+
+
+
+
+//-- mongo 特殊语句
+	mongo 数据库中支持js编程方式的语言
+				
+	//-- next(),hasnext() 判断和调用下条数据	
+		> var x=db.t1.find()		//将数据结果存放到变量x中
+		> x.hasNext()			//判断x 中是否有值，如果有值会返回true，没有返回false
+		true
+		> x.next()			//每调用一次就会返回下一条数据
+		  x.getNext()
+		{
+			"_id" : ObjectId("57b706759642c8fd994be3fc"),
+			"user" : "user1",
+			"age" : 1
+		}	
+
+
+
+	
+	//-- 用for循环插入多条数据
+
+		> for(i=1;i<11;i++){
+		... db.t1.insert({user:"user"+i,age:i})
+		... }
+		WriteResult({ "nInserted" : 1 })
+		> db.t1.find()
+		{ "_id" : ObjectId("57b706759642c8fd994be3fc"), "user" : "user1", "age" : 1 }
+		{ "_id" : ObjectId("57b706759642c8fd994be3fd"), "user" : "user2", "age" : 2 }
+		{ "_id" : ObjectId("57b706759642c8fd994be3fe"), "user" : "user3", "age" : 3 }
+		{ "_id" : ObjectId("57b706759642c8fd994be3ff"), "user" : "user4", "age" : 4 }
+		{ "_id" : ObjectId("57b706759642c8fd994be400"), "user" : "user5", "age" : 5 }
+		{ "_id" : ObjectId("57b706759642c8fd994be401"), "user" : "user6", "age" : 6 }
+		{ "_id" : ObjectId("57b706759642c8fd994be402"), "user" : "user7", "age" : 7 }
+		{ "_id" : ObjectId("57b706759642c8fd994be403"), "user" : "user8", "age" : 8 }
+		{ "_id" : ObjectId("57b706759642c8fd994be404"), "user" : "user9", "age" : 9 }
+		{ "_id" : ObjectId("57b706759642c8fd994be405"), "user" : "user10", "age" : 10 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 索引相关
+
+	//获取索引列表
+	db.im_coll.getIndexes()			查看im_coll表中的索引情况 
+
+	//普通索引(单键索引)
+	db.im_coll.ensureIndex({x:1})		为x创建索引  1为正序排列，-1为倒序排列 
+		注：该方式需在数据少时创建，否则会吃掉很大资源
+		
+	//普通索引（多键索引）
+	db.im_coll.insert({x:[1,2,3]})	此时的索引为多键索引
+		注：当x的值为非数组时，那么该索引就是单键索引，为数组时为多键索引.如
+
+	//background:true 后台创建索引
+	db.t1.ensureIndex({user:1},{background:true})
+
+
+	//复合索引
+	db.im_coll.ensureIndex({x:1,y:1})	为x和y创建复合索引,1为正序排列，-1为倒序排列
+
+
+	//过期索引
+	db.im_coll.ensureIndex({time:1},{expireAfterSeconds:30})	设置过期索引
+					设置time字段为正序索引，并且指定其时效为30秒,
+				
+	db.im_coll.insert({time:new Date()});	向过期索引中添加数据，
+		注：1.过期索引字段的值必须以时间类型的值,这里不可以使用时间戳，只能是Date() 值,否则数据不能被删除
+		    2.如果过期索引的值是一个数组（多个时间值），那么将按最小的时间进行删除
+		    3.过期索引不能是复合索引 
+		    4.删除过期索引时不是固定的，它本身有一个机制来运行！
+
+
+
+	//全文索引的设置
+	db.im_coll.ensureIndex({content:'text'})			//为字段content创建全文索引
+	
+	db.im_coll.ensureIndex({content1:'text',content2:'text'})	//为字段content1，content2创建全文索引（复合式）
+
+	db.im_coll.ensureIndex({"$**":"text"})				//给所有字段都设置为全文索引
+
+
+	db.im_coll.insert({content:"aa bb cc"});
+	db.im_coll.insert({content:"aa bb cc dd ee"});
+	db.im_coll.insert({content:"aa bb ff gg hh"});
+	
+	//全文索引的使用
+	db.im_coll.find({$text:{$search:"aa"}})			//查找全文索引的字段中包含aa的数据
+	db.im_coll.find({$text:{$search:"aa ee"}});		//查找全文索引的字段中包含aa 或 ee 的数据
+	db.im_coll.find({$text:{$search:"aa cc -dd"}})		//查找全文索引的字段中包含aa 或 cc 同时不包含 dd 的数据
+	db.im_coll.find({$text:{$search:"\"aa\" \"dd\""}})	//查找全文索引的字段中包含aa 与 dd (同时有aa 与 dd)的数据
+
+
+	//全文索引的相似度查询
+	db.im_coll.find({$text:{$search:"aa bb"}},{score:{$meta:"textScore"}})		//查出所有包含 aa bb 的数据并且列出其相似度
+
+	db.im_coll.find({$text:{$search:"aa bb"}},{score:{$meta:"textScore"}}).sort({score:{$meta:"textScore"}});
+										//查出所有包含 aa bb 的数据并且以相似度的高低来排序
+
+
+	//全文索引的限制
+		1.每次查询，只能指定一个$text查询
+		2.$text查询不能出现在$nor (排除)查询中
+		3.$text查询会使 hint不再起作用（强制指定使用某索引）
+		4.全文索引暂时还不支持中文
+
+
+
+	//给索引设置别名
+	db.im_coll.ensureIndex({x:1,y:1,z:1},{name:"normal_index"})		//给复合索引x,y,z 设置别名 normal_index
+
+
+	//删除索引（使用别名删除）
+	db.t1.dropIndex()				//删除所有索引（除了_id）
+	db.t1.dropIndex({user:1})			//删除索引时，可以使用系统的索引名也可使用设置的别名 
+	
+
+	//唯一索引 unique
+	db.im_coll.ensureIndex({m:1,n:1},{unique:true})		//将复合索引m,n 设置为唯一索引
+	
+	db.t1.insert({m:1,n:1})			因为是m,n唯一索引，所以在插入数据时不能再次插入完全重复的数据
+
+
+
+
+
+	//sparse 希疏索引
+	db.im2.ensureIndex({m:1},{sparse:true})		//设置 m 为正序的希疏索引
+
+
+	// $exists 查找存在或不存在字段的数据
+	db.im2.find({m:{$exists:true}})			//只查找字段 m 有值的数据 参数true可换false
+
+
+	// hint() 强制指定哪个索引
+	db.im2.find({m:{$exists:false}}).hint('m_1')	//强制使用 m_1 索引来查找数据
+
+
+	
+   	// 地理位置索引 
+	一：2d 索引
+	db.location.ensureIndex({w:'2d'})		//创建一个2d索引 w 字段
+		2d数据范围：经（-180，180） 纬（-90，90）
+	db.location.insert({w:[180,90]})		//插入经纬度数据
+	db.location.insert({w:[-180,-90]})
+
+	//$near 附近点查询
+	db.location.find({w:{$near:[1,1]}})		//$near查找附近的点(会返回100条相近的数据)
+
+	//$near,$maxDistance	附近点且指定范围查询
+	db.location.find({w:{$near:[1,1],$maxDistance:10}})	//查找指定点附近，且在最大范围10以内的数据
+
+
+	//$geowithin 形状范围内搜索 
+
+	//  $box 查询矩形内的点
+	db.location.find({w:{$geoWithin:{$box:[[0,0],[3,3]]}}})		//查找0，0，3，3矩形范围内的点
+
+
+	// $center 查询圆形内的点
+	db.location.find({w:{$geoWithin:{$center:[[0,0],3]}}})		//查询0，0坐标，半径 为5范围内的点
+
+	// $polygon 查询多边形范围内的点
+	db.location.find({w:{$geoWithin:{$polygon:[[0,0],[2,5],[6,1]]}}})
+	db.location.find({w:{$geoWithin:{$polygon:[[0,0],[2,5],[6,8],[8,1]]}}})
+
+
+	// geoNear 升级版的near查询
+	db.runCommand({geoNear:"location",near:[1,2],maxDistance:10,num:1})
+
+	二： 2dsphere	球面位置索引
+
+	db.collection.ensureIndex({w:"2dsphere"})		//创建一个多维地理2d索引
+
+
+
+
+
+
+
+
+//-- 如何评判当前索引的构建情况 
+	1，mongostat 工具的使用
+	2，profile 慢查询日志
+	3，日志的介绍 
+	3，explain的分析
+
+
+	
+	./mongostat -h 127.0.0.1:12345			//运行mongostat 状态工具
+
+	//mongostat 状态说明 
+	mongostat
+		insert		当前的插入数量 
+		query
+		update
+		delete
+		getmore		获取find的后续数量
+		command		执行命令的数量
+		dirty
+		userd
+		flushed		将数据从内存刷新到磁盘上的信息
+		vsize		显示占用的空间大小
+		res		显示占用的空间大小
+		idx miss	查询没有命中索引的比率
+		qr|qw		读写命令的队列，值高代表性能的下降(重要指标)
+		ar|aw		当前活跃的客户端读写的数量 
+		netIn		输入流量 
+		netOut		输出流量 
+		conn		当前的连接数量 
+		time
+
+
+	//mongostat 实时监控数据库的增删改查及连接数等状态
+
+		for(i=1;i<100000;i++)db.t1.insert({y:i})		//向表t1中循环插入十万条数据
+
+
+		./mongostat -h 127.0.0.1:12345			//在另一操作台中开启mongostat 工具查看当前状态
+			insert query update delete getmore command % dirty % used flushes  vsize   res qr|qw ar|aw netIn netOut conn                      time
+			  2126    *0     *0     *0       0     1|0     0.6    0.6       0 367.0M 41.0M   0|0   0|0  245k   105k    2 2016-08-14T11:09:25+08:00
+			  2016    *0     *0     *0       0     1|0     0.7    0.7       0 367.0M 42.0M   0|0   0|0  232k   101k    2 2016-08-14T11:09:26+08:00
+			  2114    *0     *0     *0       0     1|0     0.7    0.7       0 368.0M 42.0M   0|0   0|0  243k   105k    2 2016-08-14T11:09:27+08:00
+						
+			主要监控数据有： insert(插入)，query(查询)，，，， conn(当前连接数)
+			这里会看到insert 状态显示当前以每秒2000多条的插入速度在运行着
+			
+
+
+
+
+
+
+//-- profile 工具(慢查询 *重要*)
+	db.getProfilingStatus()		//查看慢查询的设置
+		{ "was" : 0, "slowms" : 100 }		这里的0 就是下面获取的操作级别,共有0,1,2三个级别
+
+	db.getProfilingLevel()		//查看当前的操作级别 
+					0：不开启日志，
+					1：记录慢语句命令（默认>100ms的语句）
+					2：记录所有命令
+
+
+	db.setProfilingLevel(1)		//设置操作级别为1(只记录慢语句)
+					这时 在当前库中会生成一个 system.profile 表用来记录所有操作
+
+	db.setProfilingLevel(1,1000);	//设置慢查询的时间(毫秒)
+	db.setProfilingLevel(1,100);
+			注：也可在启动时用 --slowms=1000 来指定慢查询时间如：
+			./mongod --profile=1 --slowms=1000		profile=0/1/2
+
+
+	db.system.profile.find().sort({$natural:-1}).limit(1)		//按自然排序查看操作内容
+		op	操作类型
+		ns	操作空间  imooc.system.profile	: imooc库的system.profile 表
+		query 	find() 中的操作语句，如果指定语句则为空
+		order by 	是sort() 的条件语句
+		cursorid
+		ntoreturn	limit() 指定的条数
+		ntoskip		路过的数目
+		nscanned	扫描的数目（包括索引实体）
+		nscannedObjects		扫描的实体数目
+		...
+
+
+
+
+
+	另一种使用方法
+	show profile
+		profile提供的信息内容解释
+ 		ts:该命令在何时执行。
+		millis：执行耗时，以毫秒为单位。
+		op：什么操作。
+		query：设置的查询条件。
+		nReturned：返回的条数。
+		docsExamined：文档扫描条数。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- mongoDB 命令大全
+		参见：http://docs.mongoing.com/manual-zh/reference/method.html 
+	Name 	Description
+	db.collection.aggregate() 	Provides access to the aggregation pipeline.
+	db.collection.bulkWrite() 	Provides bulk write operation functionality.
+	db.collection.count() 	Wraps count to return a count of the number of documents in a collection or matching a query.
+	db.collection.copyTo() 	Deprecated. Wraps eval to copy data between collections in a single MongoDB instance.
+	db.collection.createIndex() 	Builds an index on a collection.
+	db.collection.dataSize() 	Returns the size of the collection. Wraps the size field in the output of the collStats.
+	db.collection.deleteOne() 	Deletes a single document in a collection.
+	db.collection.deleteMany() 	Deletes multiple documents in a collection.
+	db.collection.distinct() 	Returns an array of documents that have distinct values for the specified field.
+	db.collection.drop() 	Removes the specified collection from the database.
+	db.collection.dropIndex() 	Removes a specified index on a collection.
+	db.collection.dropIndexes() 	Removes all indexes on a collection.
+	db.collection.ensureIndex() 	Deprecated. Use db.collection.createIndex().
+	db.collection.explain() 	Returns information on the query execution of various methods.
+	db.collection.find() 	Performs a query on a collection and returns a cursor object.
+	db.collection.findAndModify() 	Atomically modifies and returns a single document.
+	db.collection.findOne() 	Performs a query and returns a single document.
+	db.collection.findOneAndDelete() 	Finds a single document and deletes it.
+	db.collection.findOneAndReplace() 	Finds a single document and replaces it.
+	db.collection.findOneAndUpdate() 	Finds a single document and updates it.
+	db.collection.getIndexes() 	Returns an array of documents that describe the existing indexes on a collection.
+	db.collection.getShardDistribution() 	For collections in sharded clusters, db.collection.getShardDistribution() reports data of chunk distribution.
+	db.collection.getShardVersion() 	Internal diagnostic method for shard cluster.
+	db.collection.group() 	Provides simple data aggregation function. Groups documents in a collection by a key, and processes the results. Use aggregate() for more complex data aggregation.
+	db.collection.insert() 	Creates a new document in a collection.
+	db.collection.insertOne() 	Inserts a new document in a collection.
+	db.collection.insertMany() 	Inserts several new document in a collection.
+	db.collection.isCapped() 	Reports if a collection is a capped collection.
+	db.collection.mapReduce() 	Performs map-reduce style data aggregation.
+	db.collection.reIndex() 	Rebuilds all existing indexes on a collection.
+	db.collection.replaceOne() 	Replaces a single document in a collection.
+	db.collection.remove() 	Deletes documents from a collection.
+	db.collection.renameCollection() 	Changes the name of a collection.
+	db.collection.save() 	Provides a wrapper around an insert() and update() to insert new documents.
+	db.collection.stats() 	Reports on the state of a collection. Provides a wrapper around the collStats.
+	db.collection.storageSize() 	Reports the total size used by the collection in bytes. Provides a wrapper around the storageSize field of the collStats output.
+	db.collection.totalSize() 	Reports the total size of a collection, including the size of all documents and all indexes on a collection.
+	db.collection.totalIndexSize() 	Reports the total size used by the indexes on a collection. Provides a wrapper around the totalIndexSize field of the collStats output.
+	db.collection.update() 	Modifies a document in a collection.
+	db.collection.updateOne() 	Modifies a single document in a collection.
+	db.collection.updateMany() 	Modifies multiple documents in a collection.
+	db.collection.validate() 	Performs diagnostic operations on a collection.
+	Cursor
+	Name 	Description
+	cursor.batchSize() 	Controls the number of documents MongoDB will return to the client in a single network message.
+	cursor.close() 	Close a cursor and free associated server resources.
+	cursor.comment() 	Attaches a comment to the query to allow for traceability in the logs and the system.profile collection.
+	cursor.count() 	Modifies the cursor to return the number of documents in the result set rather than the documents themselves.
+	cursor.explain() 	Reports on the query execution plan for a cursor.
+	cursor.forEach() 	Applies a JavaScript function for every document in a cursor.
+	cursor.hasNext() 	Returns true if the cursor has documents and can be iterated.
+	cursor.hint() 	Forces MongoDB to use a specific index for a query.
+	cursor.itcount() 	Computes the total number of documents in the cursor client-side by fetching and iterating the result set.
+	cursor.limit() 	Constrains the size of a cursor’s result set.
+	cursor.map() 	Applies a function to each document in a cursor and collects the return values in an array.
+	cursor.maxScan() 	Specifies the maximum number of items to scan; documents for collection scans, keys for index scans.
+	cursor.maxTimeMS() 	Specifies a cumulative time limit in milliseconds for processing operations on a cursor.
+	cursor.max() 	Specifies an exclusive upper index bound for a cursor. For use with cursor.hint()
+	cursor.min() 	Specifies an inclusive lower index bound for a cursor. For use with cursor.hint()
+	cursor.next() 	Returns the next document in a cursor.
+	cursor.noCursorTimeout() 	Instructs the server to avoid closing a cursor automatically after a period of inactivity.
+	cursor.objsLeftInBatch() 	Returns the number of documents left in the current cursor batch.
+	cursor.pretty() 	Configures the cursor to display results in an easy-to-read format.
+	cursor.readConcern() 	Specifies a read concern for a find() operation.
+	cursor.readPref() 	Specifies a read preference to a cursor to control how the client directs queries to a replica set.
+	cursor.returnKey() 	Modifies the cursor to return index keys rather than the documents.
+	cursor.showRecordId() 	Adds an internal storage engine ID field to each document returned by the cursor.
+	cursor.size() 	Returns a count of the documents in the cursor after applying skip() and limit() methods.
+	cursor.skip() 	Returns a cursor that begins returning results only after passing or skipping a number of documents.
+	cursor.snapshot() 	Forces the cursor to use the index on the _id field. Ensures that the cursor returns each document, with regards to the value of the _id field, only once.
+	cursor.sort() 	Returns results ordered according to a sort specification.
+	cursor.tailable() 	Marks the cursor as tailable. Only valid for cursors over capped collections.
+	cursor.toArray() 	Returns an array that contains all documents returned by the cursor.
+	Database
+	Name 	Description
+	db.cloneCollection() 	Copies data directly between MongoDB instances. Wraps cloneCollection.
+	db.cloneDatabase() 	Copies a database from a remote host to the current host. Wraps clone.
+	db.commandHelp() 	Returns help information for a database command.
+	db.copyDatabase() 	Copies a database to another database on the current host. Wraps copydb.
+	db.createCollection() 	Creates a new collection. Commonly used to create a capped collection.
+	db.currentOp() 	Reports the current in-progress operations.
+	db.dropDatabase() 	Removes the current database.
+	db.eval() 	Deprecated. Passes a JavaScript function to the mongod instance for server-side JavaScript evaluation.
+	db.fsyncLock() 	Flushes writes to disk and locks the database to prevent write operations and assist backup operations. Wraps fsync.
+	db.fsyncUnlock() 	Allows writes to continue on a database locked with db.fsyncLock().
+	db.getCollection() 	Returns a collection object. Used to access collections with names that are not valid in the mongo shell.
+	db.getCollectionInfos() 	Returns collection information for all collections in the current database.
+	db.getCollectionNames() 	Lists all collections in the current database.
+	db.getLastError() 	Checks and returns the status of the last operation. Wraps getLastError.
+	db.getLastErrorObj() 	Returns the status document for the last operation. Wraps getLastError.
+	db.getLogComponents() 	Returns the log message verbosity levels.
+	db.getMongo() 	Returns the Mongo() connection object for the current connection.
+	db.getName() 	Returns the name of the current database.
+	db.getPrevError() 	Returns a status document containing all errors since the last error reset. Wraps getPrevError.
+	db.getProfilingLevel() 	Returns the current profiling level for database operations.
+	db.getProfilingStatus() 	Returns a document that reflects the current profiling level and the profiling threshold.
+	db.getReplicationInfo() 	Returns a document with replication statistics.
+	db.getSiblingDB() 	Provides access to the specified database.
+	db.help() 	Displays descriptions of common db object methods.
+	db.hostInfo() 	Returns a document with information about the system MongoDB runs on. Wraps hostInfo
+	db.isMaster() 	Returns a document that reports the state of the replica set.
+	db.killOp() 	Terminates a specified operation.
+	db.listCommands() 	Displays a list of common database commands.
+	db.loadServerScripts() 	Loads all scripts in the system.js collection for the current database into the shell session.
+	db.logout() 	Ends an authenticated session.
+	db.printCollectionStats() 	Prints statistics from every collection. Wraps db.collection.stats().
+	db.printReplicationInfo() 	Prints a report of the status of the replica set from the perspective of the primary.
+	db.printShardingStatus() 	Prints a report of the sharding configuration and the chunk ranges.
+	db.printSlaveReplicationInfo() 	Prints a report of the status of the replica set from the perspective of the secondaries.
+	db.repairDatabase() 	Runs a repair routine on the current database.
+	db.resetError() 	Resets the error message returned by db.getPrevError() and getPrevError.
+	db.runCommand() 	Runs a database command.
+	db.serverBuildInfo() 	Returns a document that displays the compilation parameters for the mongod instance. Wraps buildinfo.
+	db.serverCmdLineOpts() 	Returns a document with information about the runtime used to start the MongoDB instance. Wraps getCmdLineOpts.
+	db.serverStatus() 	Returns a document that provides an overview of the state of the database process.
+	db.setLogLevel() 	Sets a single log message verbosity level.
+	db.setProfilingLevel() 	Modifies the current level of database profiling.
+	db.shutdownServer() 	Shuts down the current mongod or mongos process cleanly and safely.
+	db.stats() 	Returns a document that reports on the state of the current database.
+	db.version() 	Returns the version of the mongod instance.
+	db.upgradeCheck() 	Performs a preliminary check for upgrade preparedness for a specific database or collection.
+	db.upgradeCheckAllDBs() 	Performs a preliminary check for upgrade preparedness for all databases and collections.
+	Query Plan Cache
+	Name 	Description
+	db.collection.getPlanCache() 	Returns an interface to access the query plan cache object and associated PlanCache methods for a collection.”
+	PlanCache.help() 	Displays the methods available for a collection’s query plan cache. Accessible through the plan cache object of a specific collection, i.e. db.collection.getPlanCache().help().
+	PlanCache.listQueryShapes() 	Displays the query shapes for which cached query plans exist. Accessible through the plan cache object of a specific collection, i.e. db.collection.getPlanCache().listQueryShapes().
+	PlanCache.getPlansByQuery() 	Displays the cached query plans for the specified query shape. Accessible through the plan cache object of a specific collection, i.e. db.collection.getPlanCache().getPlansByQuery().
+	PlanCache.clearPlansByQuery() 	Clears the cached query plans for the specified query shape. Accessible through the plan cache object of a specific collection, i.e. db.collection.getPlanCache().clearPlansByQuery()
+	PlanCache.clear() 	Clears all the cached query plans for a collection. Accessible through the plan cache object of a specific collection, i.e. db.collection.getPlanCache().clear().
+	Bulk Write Operation
+	Name 	Description
+	Bulk() 	Bulk operations builder.
+	db.collection.initializeOrderedBulkOp() 	Initializes a Bulk() operations builder for an ordered list of operations.
+	db.collection.initializeUnorderedBulkOp() 	Initializes a Bulk() operations builder for an unordered list of operations.
+	Bulk.insert() 	Adds an insert operation to a list of operations.
+	Bulk.find() 	Specifies the query condition for an update or a remove operation.
+	Bulk.find.removeOne() 	Adds a single document remove operation to a list of operations.
+	Bulk.find.remove() 	Adds a multiple document remove operation to a list of operations.
+	Bulk.find.replaceOne() 	Adds a single document replacement operation to a list of operations.
+	Bulk.find.updateOne() 	Adds a single document update operation to a list of operations.
+	Bulk.find.update() 	Adds a multi update operation to a list of operations.
+	Bulk.find.upsert() 	Specifies upsert: true for an update operation.
+	Bulk.execute() 	Executes a list of operations in bulk.
+	Bulk.getOperations() 	Returns an array of write operations executed in the Bulk() operations object.
+	Bulk.tojson() 	Returns a JSON document that contains the number of operations and batches in the Bulk() operations object.
+	Bulk.toString() 	Returns the Bulk.tojson() results as a string.
+	User Management
+	Name 	Description
+	db.auth() 	Authenticates a user to a database.
+	db.createUser() 	Creates a new user.
+	db.updateUser() 	Updates user data.
+	db.changeUserPassword() 	Changes an existing user’s password.
+	db.removeUser() 	Deprecated. Removes a user from a database.
+	db.dropAllUsers() 	Deletes all users associated with a database.
+	db.dropUser() 	Removes a single user.
+	db.grantRolesToUser() 	Grants a role and its privileges to a user.
+	db.revokeRolesFromUser() 	Removes a role from a user.
+	db.getUser() 	Returns information about the specified user.
+	db.getUsers() 	Returns information about all users associated with a database.
+	Role Management
+	Name 	Description
+	db.createRole() 	Creates a role and specifies its privileges.
+	db.updateRole() 	Updates a user-defined role.
+	db.dropRole() 	Deletes a user-defined role.
+	db.dropAllRoles() 	Deletes all user-defined roles associated with a database.
+	db.grantPrivilegesToRole() 	Assigns privileges to a user-defined role.
+	db.revokePrivilegesFromRole() 	Removes the specified privileges from a user-defined role.
+	db.grantRolesToRole() 	Specifies roles from which a user-defined role inherits privileges.
+	db.revokeRolesFromRole() 	Removes inherited roles from a role.
+	db.getRole() 	Returns information for the specified role.
+	db.getRoles() 	Returns information for all the user-defined roles in a database.
+	Replication
+	Name 	Description
+	rs.add() 	Adds a member to a replica set.
+	rs.addArb() 	Adds an arbiter to a replica set.
+	rs.conf() 	Returns the replica set configuration document.
+	rs.freeze() 	Prevents the current member from seeking election as primary for a period of time.
+	rs.help() 	Returns basic help text for replica set functions.
+	rs.initiate() 	Initializes a new replica set.
+	rs.printReplicationInfo() 	Prints a report of the status of the replica set from the perspective of the primary.
+	rs.printSlaveReplicationInfo() 	Prints a report of the status of the replica set from the perspective of the secondaries.
+	rs.reconfig() 	Re-configures a replica set by applying a new replica set configuration object.
+	rs.remove() 	Remove a member from a replica set.
+	rs.slaveOk() 	Sets the slaveOk property for the current connection. Deprecated. Use readPref() and Mongo.setReadPref() to set read preference.
+	rs.status() 	Returns a document with information about the state of the replica set.
+	rs.stepDown() 	Causes the current primary to become a secondary which forces an election.
+	rs.syncFrom() 	Sets the member that this replica set member will sync from, overriding the default sync target selection logic.
+	Sharding
+	Name 	Description
+	sh._adminCommand() 	Runs a database command against the admin database, like db.runCommand(), but can confirm that it is issued against a mongos.
+	sh.getBalancerLockDetails() 	Reports on the active balancer lock, if it exists.
+	sh._checkFullName() 	Tests a namespace to determine if its well formed.
+	sh._checkMongos() 	Tests to see if the mongo shell is connected to a mongos instance.
+	sh._lastMigration() 	Reports on the last chunk migration.
+	sh.addShard() 	Adds a shard to a sharded cluster.
+	sh.addShardTag() 	Associates a shard with a tag, to support tag aware sharding.
+	sh.addTagRange() 	Associates range of shard keys with a shard tag, to support tag aware sharding.
+	sh.removeTagRange() 	Removes an association between a range shard keys and a shard tag. Use to manage tag aware sharding.
+	sh.disableBalancing() 	Disable balancing on a single collection in a sharded database. Does not affect balancing of other collections in a sharded cluster.
+	sh.enableBalancing() 	Activates the sharded collection balancer process if previously disabled using sh.disableBalancing().
+	sh.enableSharding() 	Enables sharding on a specific database.
+	sh.getBalancerHost() 	Returns the name of a mongos that’s responsible for the balancer process.
+	sh.getBalancerState() 	Returns a boolean to report if the balancer is currently enabled.
+	sh.help() 	Returns help text for the sh methods.
+	sh.isBalancerRunning() 	Returns a boolean to report if the balancer process is currently migrating chunks.
+	sh.moveChunk() 	Migrates a chunk in a sharded cluster.
+	sh.removeShardTag() 	Removes the association between a shard and a shard tag.
+	sh.setBalancerState() 	Enables or disables the balancer which migrates chunks between shards.
+	sh.shardCollection() 	Enables sharding for a collection.
+	sh.splitAt() 	Divides an existing chunk into two chunks using a specific value of the shard key as the dividing point.
+	sh.splitFind() 	Divides an existing chunk that contains a document matching a query into two approximately equal chunks.
+	sh.startBalancer() 	Enables the balancer and waits for balancing to start.
+	sh.status() 	Reports on the status of a sharded cluster, as db.printShardingStatus().
+	sh.stopBalancer() 	Disables the balancer and waits for any in progress balancing rounds to complete.
+	sh.waitForBalancer() 	Internal. Waits for the balancer state to change.
+	sh.waitForBalancerOff() 	Internal. Waits until the balancer stops running.
+	sh.waitForDLock() 	Internal. Waits for a specified distributed sharded cluster lock.
+	sh.waitForPingChange() 	Internal. Waits for a change in ping state from one of the mongos in the sharded cluster.
+	Subprocess
+	Name 	Description
+	clearRawMongoProgramOutput() 	For internal use.
+	rawMongoProgramOutput() 	For internal use.
+	run() 	For internal use.
+	runMongoProgram() 	For internal use.
+	runProgram() 	For internal use.
+	startMongoProgram() 	For internal use.
+	stopMongoProgram() 	For internal use.
+	stopMongoProgramByPid() 	For internal use.
+	stopMongod() 	For internal use.
+	waitMongoProgramOnPort() 	For internal use.
+	waitProgram() 	For internal use.
+	Constructors
+	Name 	Description
+	Date() 	Creates a date object. By default creates a date object including the current date.
+	UUID() 	Converts a 32-byte hexadecimal string to the UUID BSON subtype.
+	ObjectId() 	Returns an ObjectId.
+	ObjectId.getTimestamp() 	Returns the timestamp portion of an ObjectId.
+	ObjectId.toString() 	Displays the string representation of an ObjectId.
+	ObjectId.valueOf() 	Displays the str attribute of an ObjectId as a hexadecimal string.
+	WriteResult() 	Wrapper around the result set from write methods.
+	WriteResult.hasWriteError() 	Returns a boolean specifying whether the results include WriteResult.writeError.
+	WriteResult.hasWriteConcernError() 	Returns a boolean specifying whether whether the results include WriteResult.writeConcernError.
+	BulkWriteResult() 	Wrapper around the result set from Bulk.execute().
+	Connection
+	Name 	Description
+	Mongo.getDB() 	Returns a database object.
+	Mongo.getReadPrefMode() 	Returns the current read preference mode for the MongoDB connection.
+	Mongo.getReadPrefTagSet() 	Returns the read preference tag set for the MongoDB connection.
+	Mongo.setReadPref() 	Sets the read preference for the MongoDB connection.
+	Mongo.setSlaveOk() 	Allows operations on the current connection to read from secondary members.
+	Mongo() 	Creates a new connection object.
+	connect() 	Connects to a MongoDB instance and to a specified database on that instance.
+	Native
+	Name 	Description
+	cat() 	Returns the contents of the specified file.
+	version() 	Returns the current version of the mongo shell instance.
+	cd() 	Changes the current working directory to the specified path.
+	sleep() 	Suspends the mongo shell for a given period of time.
+	copyDbpath() 	Copies a local dbPath. For internal use.
+	resetDbpath() 	Removes a local dbPath. For internal use.
+	fuzzFile() 	For internal use to support testing.
+	getHostName() 	Returns the hostname of the system running the mongo shell.
+	getMemInfo() 	Returns a document that reports the amount of memory used by the shell.
+	hostname() 	Returns the hostname of the system running the shell.
+	_isWindows() 	Returns true if the shell runs on a Windows system; false if a Unix or Linux system.
+	listFiles() 	Returns an array of documents that give the name and size of each object in the directory.
+	load() 	Loads and runs a JavaScript file in the shell.
+	ls() 	Returns a list of the files in the current directory.
+	md5sumFile() 	The md5 hash of the specified file.
+	mkdir() 	Creates a directory at the specified path.
+	pwd() 	Returns the current directory.
+	quit() 	Exits the current shell session.
+	_rand() 	Returns a random number between 0 and 1.
+	removeFile() 	Removes the specified file from the local file system.
+	setVerboseShell() 	Configures the mongo shell to report operation timing.
+	_srand() 	For internal use.
+

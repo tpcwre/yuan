@@ -1,0 +1,1010 @@
+
+	//第二课 smarty的使用
+//=====smarty-获取当前文件的绝对路径
+//=====smarty-用绝对路径引入smarty.class.php文件
+//=====smarty-将smarty对象实例化
+//=====smarty-设置模板文件目录
+//=====smarty-设置编译文件目录
+//=====smarty-设置配置文件目录
+//=====smarty-设置缓存文件目录
+//=====smarty-设置缓存，默认false不开启，true为开启缓存
+
+
+
+
+
+	//第三课  分配变量
+//=====smarty-普通变量
+//=====smarty-=索引数组
+//=====smarty-关联数组
+//=====smarty-二维索引数组
+//=====smarty-关联和索引同在的多维数组
+//=====smarty-对象变量
+//=====smarty-两个数值型数据可以在模板中运算
+//=====smarty-获取显示配置文件变量
+//=====smarty-配置文件中的数值变量也可计算
+//=====smarty-PHP中声明一个常量，不用注册可以tpl模板中直接调用 
+//=====smarty-server获取主机IP
+//=====smarty-server获取主机名
+
+
+
+
+
+
+
+	//第四课  自定义函数 上
+//=====smarty-tpl中声明模板变量并赋值<br>
+//=====smarty-模板计数器<br>
+//=====smarty-交替循环<br>
+//=====smarty-调试工具，查看模板的各项信息<br>
+//=====smarty-取出变量的值， 等同于{$xx}<br>
+//=====smarty-将变量值取出再赋给另一个变量名<br>
+//=====smarty-引入其它页面（使用自己的网址，显示它人的页面）<br>
+//=====smarty-在页面上创建一张图片<br>
+//=====smarty-将数据表格化<br>
+//=====smarty-模板中运算函数（两种方式）<br>
+//=====smarty-模板中的邮箱功能<br>
+//=====smarty-文字格式化（代码中）<br>
+
+
+
+
+
+
+	//第五课  自定义函数  中
+//=====smarty-批量显示复选框<br>
+//=====smarty-批量显示单选框<br>
+//=====smarty-批量显示下拉菜单<br>
+//=====smarty-模板中选择日期的下拉列表<br>
+//=====smarty-模板中选择时间的下拉列表<br>
+//=====smarty-模板加载JS文件弹出提示信息<br>
+//=====smarty-模板加载JS文件提示图片的信息
+
+
+
+
+
+
+
+	//第六课<br>  自定义函数下
+//=====smarty-将PHP函数注册到模板中<br>
+//=====smarty-要模板中注册一个区块函数（双标签元素）<br>
+//=====smarty-插件形式的自定义函数-函数插件<br>
+//=====smarty-插件形式的自定义函数-块插件<br>
+
+
+
+
+
+
+
+
+
+	//第七课  变量调节器
+//=====smarty-模板处理字串的普通方式<br>
+//=====smarty-变量调节器方式截取字符串<br>
+//=====smarty-去掉省略号 "..."。<br>
+//=====smarty-将字母转换成大写<br>
+//=====smarty-将字串首字母大写。<br>
+//=====smarty-统计字符个数，是否包括空格 <br>
+//=====smarty-连接字符串<br>
+//=====smarty-计算字符变量中共有多少段落<br>
+//=====smarty-统计英文句子，以英文的 . 来计算<br>
+//=====smarty-统计英文单词<br>
+//=====smarty-显示时间<br>
+//=====smarty-当变量值为空时，就显示指定字串内容<br>
+//=====smarty-将字符串中特殊字符进行编码<br>
+//=====smarty-字串缩进-代码和页面两种方式<br>
+//=====smarty-字母转换成小写<BR>
+//=====smarty-将代码中的回车转换成br <br> 
+//=====smarty-正则-将某字串替换成另一字串<br>
+//=====smarty-正则-将指定字符串加斜体<br>
+//=====smarty-替换字母<br>
+//=====smarty-在两个字母中间插入一个指定字母或符号<br>
+//=====smarty-数字格式化-将小数去尾取整<br>
+//=====smarty-数字格式化-取小数点后几位<br>
+//=====smarty-去除空格或将空格转换成特殊字符 <br>
+//=====smarty-去掉HTML标签<br>
+//=====smarty-组合变量调节器<br>
+//=====smarty-用插件自定义变量调节器<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//第八课 内置函数 上<br>
+
+//=====smarty-模板中嵌入PHP代码<br>
+//=====smarty-模板中调用另一个tpl模板文件<br>
+//====={literal} 使模板变量不解析
+//=====smarty-模板中调用其它PHP文件<br>	
+//=====smarty-模板中调用配置文件<br>
+//=====smarty-模板中嵌入CSS样式时解决 花括号的冲突问题 <br>
+//=====smarty-if else 条件判断语句<Br>
+//=====smarty-压缩模板中代码的空格与换行<br>
+//=====smarty-左右分隔符（花括号）<br>
+//=====smarty-模板双标签保留变量<br>
+//=====smarty-内置函数insert,不会被缓存<br>
+
+
+
+
+
+
+
+
+
+
+	//第九课   内置函数 下<br>
+
+//=====smarty-模板中foreach遍历索引数组<br>
+//=====smarty-foreach当模板遍历的数组不存在时<br>
+//=====smarty-模板循环名及循环总次数<br>
+//=====smarty-foreach模板遍历关联数组及为遍历数据排序<br>
+//=====smarty-foreach模板遍历二维索引数组的两种方式<br>
+//=====smarty-foreach模板遍历二维索引关联数组的两种方式<br>
+//=====smarty-section遍历模板数组(只能用于索引数组)<Br>
+//=====smarty-section遍历模板二维索引数组的两种方式<br>
+//=====smarty-section遍历索引关联数组的两种方式<br>
+//=====smarty-section遍历三维数组<br>
+//=====smarty-设置遍历的开始位置<br>
+//=====smarty-设置遍历的步长<br>
+//=====smarty-限制遍历循环的最大次数<br>
+
+
+
+
+
+
+
+
+
+
+	//第十课 smarty模板缓存
+
+//=====smarty-缓存开启时的特点（文本）
+//=====smarty-开启缓存及缓存的三种方式<br>
+//=====smarty-缓存的生命周期<br>
+//=====smarty-设置局部缓存<br>
+//=====smarty-一个页面多个缓存<br>
+//=====smarty-在display()中加上第二个或更多的参数实现多面页缓存<BR>
+//=====smarty-用环境变量$_SERVER来设置多页面多缓存<BR>
+//=====smarty-判断缓存是否存在及是否执行PHP语句<br>
+//=====smarty-设置局部不缓存<br>
+//=====smarty-将局部不缓存设置成插件
+//=====smarty-清理缓存
+//=====smarty-清理全局缓存
+//=====smarty-定时清理缓存
+//=====smarty-清理指定的单一缓存
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======================================================================================
+
+
+
+
+
+
+	//第二课 smarty的使用
+	
+//=====smarty-获取当前文件的绝对路径
+	define("ROOT",dirname(__FILE__));
+
+//=====smarty-用绝对路径引入smarty.class.php文件
+	require ROOT."/smarty/smarty.class.php";
+
+//=====smarty-将smarty对象实例化
+	$_smarty = new Smarty();
+
+//=====smarty-设置模板文件目录
+	$_smarty->template_dir=ROOT."/templates/";
+
+//=====smarty-设置编译文件目录
+	$_smarty->compile_dir=ROOT."/templates_c/";
+
+//=====smarty-设置配置文件目录
+	$_smarty->config_dir=ROOT."/configs/";
+
+//=====smarty-设置缓存文件目录
+	$_smarty->cache_dir=ROOT."/cache/";
+
+//=====smarty-设置缓存，默认false不开启，true为开启缓存
+	$_smarty->caching=false
+
+//=====smarty-设置缓存时间效
+	$_smarty->cache_lifetime=5;
+
+//=====smarty-模板定界符
+ 	$_smarty->left_delimiter='{';
+	$_smarty->right_delimiter='}';
+
+
+
+
+
+
+
+
+
+
+
+	//第三课  分配变量
+
+//=====smarty-普通变量
+	$_smarty->assign("a","aaaaaa");
+	{$a}
+
+//=====smarty-=索引数组
+	$arr=array(1,2,3,4,5);
+	$_smarty->assign("arr",$arr);
+	{$arr[0]}{$arr[1]}
+
+//=====smarty-关联数组
+	$arr=array("a"=>1,"b"=>2,"c"=>3);
+	$_smarty->assign($arr);
+	{$arr.a}|{$arr.b}{$arr.c}
+
+//=====smarty-二维索引数组
+	$arr=array(
+		array(1,2,3),
+		array(4,5,6)
+	);
+	$_smarty->assign("arr",$arr);
+	{$arr[0][1]}|{$arr[1][1]}
+
+//=====smarty-关联和索引同在的多维数组
+	$arr=array(
+		"a"=>array(1,2),
+		"b"=>array(3,4)
+	);
+	$_smarty->assign("arr",$arr);
+	{$arr.a[0]}|{$arr.b[1]}
+
+//=====smarty-对象变量
+	class arr{
+		public $name="computer";
+		function run(){
+			return "正在运行中...";
+		}
+	}
+	$_smarty->assing("arr",new arr);
+	{$arr->name} | {$arr->run()}
+
+	
+//=====smarty-两个数值型数据可以在模板中运算
+	$_smarty->assign("x",10);
+	$_smarty->assign("y",20);
+	{$x*$y}
+
+//=====smarty-获取显示配置文件变量
+conf.conf配置文件
+weburl=www.sina.com
+a=50
+	{config_load file="conf.conf"}
+	{$smarty.config.weburl} | {#weburl#}
+
+//=====smarty-配置文件中的数值变量也可计算
+	{$smarty.config.x+$smarty.config.y}
+
+//=====smarty-PHP中声明一个常量，不用注册可以tpl模板中直接调用 
+	define("PI",3.1415926);
+	{$smarty.const.PI}
+
+//=====smarty-server获取主机IP
+	{$smarty.server.REMOTE_ADDR}
+
+//=====smarty-server获取主机名
+	{$smarty.server.HTTP_HOST}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//第四课  自定义函数 上
+
+//=====smarty-tpl中声明模板变量并赋值<br>
+	{assign var=a value=aaa}
+	{$a}
+
+//=====smarty-模板计数器<br>
+{counter start=10 skip=5 direction=down}|
+{counter print=false}|
+{counter}|
+{counter start=2}|
+{counter assign=b}|
+{$b}
+
+
+
+//=====smarty-交替循环<br>
+<p style="background:{cycle values="red,blue"}">p</p>
+
+//=====smarty-调试工具，查看模板的各项信息<br>
+{debug}
+
+//=====smarty-取出变量的值， 等同于{$xx}<br>
+{eval var=$a}
+ 
+//=====smarty-将变量值取出再赋给另一个变量名<br>
+{eval var=$a assign=b}
+{$b}
+
+//=====smarty-引入其它页面（使用自己的网址，显示它人的页面）<br>
+{fetch file="http://www.baiduc.com"}
+
+//=====smarty-在页面上创建一张图片<br>
+{html_imgage file="http://www.baidu.com/images/logo.jpg"}
+
+//=====smarty-将数据表格化<br>
+	$table=array(1,2,3,4,5,6,7,8,9,0);
+	{html_table loop=$table cols=5}	
+
+//=====smarty-模板中运算函数（两种方式）<br>
+	$_smarty->assign("x",100);
+	$_smarty->assign("y",200);
+	{math equation=$x+$y}
+或
+	{math equation=x*y x=$x y=$y}
+
+//=====smarty-模板中的邮箱功能<br>
+{mailto address="aaa@163.com"}
+{mailto address="aaa#163.com" text="我的邮箱"}
+
+//=====smarty-文字格式化（代码中）<br>
+{textformat indent=30}
+	在代码中缩进
+{/textformat}
+
+
+
+
+
+
+
+
+	//第五课  自定义函数  中
+
+//=====smarty-批量显示复选框<br>
+	$checkbox=array("a"=>"aaa","b"=>"bbb","c"=>"ccc");
+	$_smarty->assign("check",$checkbox);
+	$_smarty->assign("id","b");
+	{html_checkboxes options=$checkbox selected=$id labels=false}
+
+
+//=====smarty-批量显示单选框<br>
+	$radio=array("a"=>"aaa","b"=>"bbb","c"=>"ccc");
+	$_smarty->assgin("radio",$radio);
+	$_smarty->assign("id","c");
+	{html_radios options=$radio checked=$id labels=false}
+
+//=====smarty-批量显示下拉菜单<br>	
+	$opt=array("a"=>"aaa","b"=>"bbb","c"=>"ccc");
+	$_smarty->assgin("opt",$radio);
+	$_smarty->assign("id","c");
+	<select>
+	{html_options options=opt selected=$id}
+	</select>
+
+//=====smarty-模板中选择日期的下拉列表<br>
+	{html_select_date month_format=%m start_year=1990 end_year=2050 field_order=YMD}
+
+//=====smarty-模板中选择时间的下拉列表<br>
+	{html_select_time}
+
+//=====smarty-模板加载JS文件弹出提示信息<br>
+{popup_init src="js/js.js"}
+<p {popup text="这是一个提示信息" trigger="onclick" sticky=true caption=标题 closetext=关闭}>ppppppp</p>
+或
+{popup_init src="js.js"}
+<p {popup text="
+	<ul>
+		<li>iiiiiii</li>
+		<li>iiiiiii</li>
+	</ul>
+" trigger="onclick" sticky=true caption=标题 closetext=关闭}>p</p>
+
+//=====smarty-模板加载JS文件提示图片的信息
+{popup_init src="js.js"}
+<p {popup text="
+	<img src="img/a.jpg" />
+" trigger="onclick" sticky=true caption="标题" context="关闭"}>ppp</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//第六课<br>  自定义函数下
+
+//=====smarty-将PHP函数注册到模板中<br>
+function info($arr){
+	$show=$arr["show"];
+	$age=$arr["age"];
+	$height=$arr["height"];
+	if($show){
+		if($age && $height){
+			return "您的年龄是:{$age},身高是：{$height}";
+		}else if($age){
+			return "您的年龄是：{$age}";
+		}else if($height){
+			return "您的身高是：{$height}";
+		}else{
+			return "您还没有输入参数";
+		}
+	}else{
+		return "您无权查看";
+	}
+}
+$_smarty->register_function("info","info");
+{info age=18 height=19 show=1}
+
+
+//=====smarty-要模板中注册一个区块函数（双标签元素）<br>
+function textlee($arr,$content){
+	$color=$arr["color"];
+	$size=$arr["size"];
+	if($color && $size){
+		return "<p style="color:{$color};font-size:{$size}">{$content}</p>";
+	}else if($color){
+		return "<p style="color:{$color}">{$content}</p>";
+	}else if($size){
+		return "<p style="size:{$size}">ppppp</p>";
+	}else{
+		return $content;
+	}
+}
+$_smarty->register_block("textlee","textlee");
+{textlee color=red size="1cm"}
+	这是一个区块函数..
+{/textlee}
+
+//=====smarty-插件形式的自定义函数-函数插件<br>
+1，在smarty/plugins 下创建文件 function.info.php
+2, 建立函数 function smarty_function_info(){}
+3, 将上面函数注册中的内空写入2 中建立的函数中
+4，调用 
+
+//=====smarty-插件形式的自定义函数-块插件<br>
+1，在smarty/plugins中创建文件 block.textlee.php
+2, 创建名为 function smarty_block_textlee(){} 函数
+3, 将上面本节的注册区块的代码写入该 函数
+4，调用 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//第七课  变量调节器
+//=====smarty-模板处理字串的普通方式<br>
+	$str1="这是smarty教程，我们正在学习javascritp课程";
+	$str2=substr($str1,0,30);
+	$str3=strtoupper($str2);
+	$_smarty->assign("str1",$str1);
+	$_smarty->assign("str2",$str2);
+	$_smarty->assign("str3",$str3);
+
+//=====smarty-变量调节器方式截取字符串<br>
+	{$str1|truncate:30}
+
+//=====smarty-去掉省略号 "..."。<br>
+	{$str1|truncate:30:""}
+
+//=====smarty-将字母转换成大写<br>	
+	{$str1|upper}
+
+
+//=====smarty-将字串首字母大写。<br>
+	{$str1|capitalize}	
+
+
+//=====smarty-统计字符个数，是否包括空格 <br>
+	{$str1|count_characters}
+	{$str1|count_characters:true}
+
+//=====smarty-连接字符串<br>
+	{$str1|cat:"lee"}
+
+//=====smarty-计算字符变量中共有多少段落<br>
+	$str="ksladfjls
+adfjsalkfjaslkfjsa
+lfjsalfjsl;fjasd";
+	$_smarty->assign("str",$str);
+	{$str|count_paragraphs}
+
+
+//=====smarty-统计英文句子，以英文的 . 来计算<br>
+	$_smarty->assign("str","lksadj.flsf.saldkfhs.hkdas.");
+	{$str|count_sentences}
+
+//=====smarty-统计英文单词<br>
+	$_smarty->assign("str","this is smarty lesson,we study the lesson javascript now");
+	{$str|count_words}	
+
+//=====smarty-显示时间<br>
+	{$smarty.now} 时间戳
+	{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}
+
+
+//=====smarty-当变量值为空时，就显示指定字串内容<br>
+	{$str|default:"数据不存在！"}
+
+//=====smarty-将字符串中特殊字符进行编码<br>
+	$str="alksj <& dflsjaflsa";
+	$_smarty->assign("str",$str);
+	{$str|escape}	默认为html编码
+	{$str|escape:url}	指定url编码
+
+
+//=====smarty-字串缩进-代码和页面两种方式<br>
+	{$str|indent:80} 代码中缩进
+	{$str|indent:80:"&nbsp"} 页面中缩进
+
+
+//=====smarty-字母转换成小写<BR>
+	{$str|lower}
+
+
+//=====smarty-将代码中的回车转换成br <br> 
+	//也就是说，代码中的回国原来是不会让显示内容换行的，但转换后的回国就相当于br，就可以换行了。<br>
+	{$str|nl2br}
+
+//=====smarty-正则-将某字串替换成另一字串<br>
+	{$str|regex_replace:"/javascript/":"vbscript"}
+或
+	{$str|regex_replace:"/(j.*t)/":"aaaaaaa"}
+
+//=====smarty-正则-将指定字符串加斜体<br>
+{$str|regex_replace:"/javascript/":"<u>javascript</u>"}
+或
+{$str|reget_replace:"(j.*t)":"<u>\\1</u>"}
+
+//=====smarty-替换字母<br>
+	{$str|replace:"smarty":"aaaaaaaa"}
+
+//=====smarty-在两个字母中间插入一个指定字母或符号<br>
+	{$str|spacify:"#"}
+
+//=====smarty-数字格式化-将小数去尾取整<br>
+	$str=39.889;
+	$_smarty->assign("str",$str);
+	{$str|string_format:"%d"}
+
+//=====smarty-数字格式化-取小数点后几位<br>
+	{$str|string_format:"%.2f"}
+	{$str|string_format:"%.3f"}
+
+//=====smarty-去除空格或将空格转换成特殊字符 <br>
+	{$str|strip}
+	{$str|strip:"&nbsp"}  将代码中的空格转换成特殊字符的空格
+	{$str|strip:"<br>"}	将代码中的空格转换成换行
+
+//=====smarty-去掉HTML标签<br>
+	$str="<u>uuuuuuuu</u>";
+	$_smarty->assign("str",$str);
+	{$str|strip_tags}
+
+//=====smarty-组合变量调节器<br>
+	{$str|truncate:40:""|upper|regex_replace:"/javascript/":"vbsc"}
+
+//=====smarty-用插件自定义变量调节器<br>
+1, 在smarty/plugins 下创建文件 modifier.lee.php
+2, 创建函数
+<?php
+function smarty_modifier_lee($arr,$length,$encode){
+	if(mb_strlen($arr)>$length){
+		return mb_substr($arr,0,$length,$encode);
+	}else{
+		return $arr;
+	}
+}
+?>
+3, 调用 {$str|lee:20:"utf-8"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//第八课 内置函数 上<br>
+
+//=====smarty-模板中嵌入PHP代码<br>
+	//虽然模板中可以嵌入PHP代码，但会破坏业务层脱离的本质，基本不要这样做！<br>
+{php}
+	ehco 10+20;
+{/php}
+
+//=====smarty-模板中调用另一个tpl模板文件<br>
+//一定要注意变量分配问题，以当前加载的PHP文件变量值为准。<br>
+注意：当被调用的tpl文件中用assign初始化的变量，在调用时的优先级高于在php中初始化的变量。否则以当前PHP变量为准。
+a.tpl页面
+<body>
+	{assign var=name value=aaaa}
+	{$name}
+<body>
+
+	{include file="a.tpl"} //引入模板后会自动调用{$name}
+
+
+
+
+//=====smarty-模板中调用其它PHP文件<br>	
+	//不建议使用，会破坏业务层次<br>
+	{include_php file="a.php"}
+
+//=====smarty-模板中调用配置文件<br>
+	{config_load file="conf.conf"}
+	{$smarty.config.webname}
+	{#weburl#}
+
+//=====smarty-模板中嵌入CSS样式时解决 花括号的冲突问题 <br>
+//====={literal} 使模板变量不解析
+//防止定界符花括号冲突，建议CSS或者JS代码，用分离的，不要在这里混合。<br>
+{literal}
+	<style>
+		body{
+			background:#ccc;
+		}
+	</style>
+{/literal}
+
+//=====smarty-if else 条件判断语句<Br>
+{assign var=flag value=true}
+{if $flag}
+	真的
+{else}
+	假的
+{/if}
+
+//=====smarty-压缩模板中代码的空格与换行<br>
+{strip}
+	<p>
+		<U>
+			uuuuuuu
+		</u>
+	</p>
+{/strip}
+
+//=====smarty-左右分隔符（花括号）<br>
+左分隔符：{ldelim}
+右分隔符：{rdelim}
+
+//=====smarty-模板双标签保留变量<br>
+//相当于声明一个模板变量,但此变量是双标签，其中可存放任何数据<br>
+
+{capture name=table}
+	<table border=1>
+		<tr>
+			<td>111</td>
+		</tr>
+	</table>
+{/capture}
+{$smarty.capture.table}
+
+//=====smarty-内置函数insert,不会被缓存<br>
+function insert_lee($arr){
+	return "{$arr["a"]}的钱比{$arr["b"]}的钱多1000";
+}				//insert变量
+$_smarty->assign("c",2000);	//变通变量
+
+	调用 
+	{insert name=lee a="小明" b="小亮"}<br>
+	{$c}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//第九课   内置函数 下<br>
+
+//=====smarty-模板中foreach遍历索引数组<br>
+$arr=array(1,2,3,4,5);
+	
+{foreach from=$arr key=key item=item}
+	{$item}
+{/foreach}
+
+
+//=====smarty-foreach当模板遍历的数组不存在时<br>
+{foreach from=$arr key=key item=item}
+	{$key}{$item}
+  {foreachelse}
+	数据不存在 
+{/foreach}
+
+
+//=====smarty-模板循环名及循环总次数<br>
+{foreach from=$arr key=key item=item name=arr}
+	{$key}=={$item}
+  {foreachelse}
+	数据不存在
+{/foreach}
+共循环了{$smarty.foreach.arr.total}次
+
+
+//=====smarty-foreach模板遍历关联数组及为遍历数据排序<br>
+$arr=array("a"=>1,"b"=>2,"c"=>3);
+$_smarty->assign("arr",$arr);
+
+{foreach from=$arr key=key item=item name=arr}
+	{$smarty.foreach.arr.iteration}-{$key}=={$item}<br>
+{/foreach}
+
+
+//=====smarty-foreach模板遍历二维索引数组的两种方式<br>
+$_smarty->assign("arr",array(
+		array(1,2),
+		array(3,4)
+	));
+{foreach from=$arr key=key item=item name=arr}
+	{foreach from=$item key=key item=item}
+		{$item}
+	{/foreach}<br>
+{/foreach}
+{foreach from=$arr key=key item=item}
+	{$item[0]}=={$item[1]}<br>
+{/foreach}
+
+//=====smarty-foreach模板遍历二维索引关联数组的两种方式<br>
+$_smarty->assign("arr",array(
+	array("a"=>1,"b"=>2),
+	array("a"=>3,"b"=>4)
+));
+{foreach from=$arr key=key item=item}
+	{foreach from=$item key=key item=item}
+		{$item}
+	{/foreach}<br>
+{/foreach}
+或
+{foreach from=$arr key=key item=item}
+	{$item.a}-{$item.b}
+{/foreach}
+
+//=====smarty-section遍历模板数组(只能用于索引数组)<Br>
+	//注：section也存在else否则语句<br>
+{section name=a loop=$arr}
+	{$arr[a]}
+{/section}
+
+
+//=====smarty-section遍历模板二维索引数组的两种方式<br>
+$_smarty->assign("arr",array(
+	array(1,2),
+	array(3,4)
+));
+{section name=a loop=$arr}
+	{section name=b loop=$arr[a]}
+		{$arr[a][b]}
+	{/section}
+{section}
+或
+{section name=a loop=$arr}
+	{$arr[a][0]}-{$arr[a][1]}
+{/section}
+
+//=====smarty-section遍历索引关联数组的两种方式<br>
+$_smarty->assign("arr",array(
+	array("a"=>1,"b"=>2),
+	array("a"=>1,"b"=>2)
+));
+{section name=a loop=$arr}
+	{foreach from=$arr[a] key=key item=item}
+		{$item}
+	{/foreach}<br>
+{/section}
+或
+{section name=a loop=$arr}
+	{$arr[a].a}-{$arr[a].b}
+{/section}
+
+
+//=====smarty-section遍历三维数组<br>
+$_smarty->assign("arr",array(
+	array("a"=>1,"b"=>2,"c"=>array(1,2,3)),
+	array("a"=>1,"b"=>2,"c"=>array(1,2,3))
+));
+{section name=a loop=$arr}
+	{$arr[a].a}-{$arr[a].b}-
+	{section name=b loop=$arr[a].c}
+		{$arr[a].c[b]}
+	{/section}
+{section}
+
+
+//=====smarty-设置遍历的开始位置<br>
+$_smarty->assign("a",array(1,2,3,4,5,6,7,8,9,0));
+{section name=a loop=$arr start=3}
+	{$arr[a]}
+{/section}
+
+//=====smarty-设置遍历的步长<br>
+$_smarty->assign("arr",array(1,2,3,4,5,6,7,8,9,0));
+{section name=a loop=$arr step=2}
+	{$arr[a]}
+{/section}
+
+
+//=====smarty-限制遍历循环的最大次数<br>
+$_smarty->assign("arr",array(1,2,3,4,5,6,7,8,9,0));
+{section name=a loop=arr max=8}
+	{$arr[a]}
+{/section}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//第十课 smarty模板缓存
+
+//=====smarty-缓存开启时的特点（文本）
+1，当tpl模板文件改变时，缓存文件会更新。<br>
+2，当PHP文件改变时，缓存文件不会更新。<br>
+
+
+//=====smarty-开启缓存及缓存的三种方式<br>
+	//开启缓存有三种方式： 0 为 关闭，1 为开启全局缓存，2 为开启局部缓存。<br>
+	$_smarty->caching=0; 关闭
+	$_smarty->caching=1; 开启全局缓存
+	$_smarty->caching=2: 开启局部页面缓存
+
+//=====smarty-缓存的生命周期<br>
+	$_smarty->cache_lifetime=60;  
+	缓存生命周期默认为3600秒；
+
+//=====smarty-设置局部缓存<br>
+	在想要设置缓存的PHP页面
+	$_smarty->caching=2;
+
+//=====smarty-一个页面多个缓存<br>
+	$_smarty->assign("page",$_GET["page"]);
+	$_smarty->display("x.tpl",$_GET["page"]);
+
+//=====smarty-在display()中加上第二个或更多的参数实现多面页缓存<BR>
+	$_smarty->assign("size",$_GET["size"]);
+	$_smarty->display("x.tpl",$_GET["page"],$_GET["size"]);
+
+//=====smarty-用环境变量$_SERVER来设置多页面多缓存<BR>
+	$_smarty->display("x.tpl",$_SERVER[REQUEST_URI]);
+
+//=====smarty-判断缓存是否存在及是否执行PHP语句<br>
+	IF(!$_smarty->is_cached("x.tpl",$_SERVER[REQUEST[URI]])){
+		echo 10*20;
+	}
+	$_smarty->display("x.tpl",$_SERVER[REQUEST[URI]]);
+	
+
+//=====smarty-设置局部不缓存<br>
+function nocache($arr,$content){
+	return $content;
+}
+$_smarty->register_block("nocache","nocache",false);
+
+{nocace}
+	这里的内容将不被缓存
+{/nocache}
+
+//=====smarty-将局部不缓存设置成插件
+1, 在smarty/plugins 下创建文件 block.nocache.php
+2, 写代码
+<?php
+function smarty_block_nocache($arr,$content){
+	return $content;
+}
+?>
+3, 修改smarty_compiler.class.php中第712行内容，区块设置成false
+
+{nocache}
+	插件形式的不被缓存的区块。
+{/nocache}
+
+
+//=====smarty-清理缓存
+清理缓存分两种形式：一是定时清理，二是手动清理
+
+//=====smarty-清理全局缓存
+看clearcache.php页面
+	$_smarty->clear_all_cache();
+	$smarty->clear_all_cache(); 		//清除所有缓存
+	$smarty->clear_cache(‘index.tpl’); 	// 清除某一模版的缓存
+	$smarty->clear_cache(‘index.tpl’,cache_id); // 清除指定缓存号的缓存
+
+
+//=====smarty-定时清理缓存
+	$_smarty->cache_lifetime=5;
+
+//=====smarty-清理指定的单一缓存
+	$_smarty->clear_cache("x.tpl");

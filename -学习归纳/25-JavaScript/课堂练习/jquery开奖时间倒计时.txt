@@ -1,0 +1,14 @@
+	function nowtime(){
+		var endt = {{\Session::get('endt')*1000}};			//开奖时间
+		var nowt = Date.parse(new Date());	//当前时间
+		var res = endt-nowt;				//时差
+		if(res <= 0){
+			window.href="{{url('jx11x5')}}";
+		}
+		var s = (res%60000)/1000;			//秒
+		var i = (Math.floor(res/60000))		//分
+		var h = (Math.floor(res/(360000)));
+		var str =(h=h<10?'0'+h:h)+':'+(i=i<10?'0'+i:i)+':'+(s=s<10?'0'+s:s);
+		$(".last-time > span").html(str);
+		setTimeout("nowtime()",1000);
+	}

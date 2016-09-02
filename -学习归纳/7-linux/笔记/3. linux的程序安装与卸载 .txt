@@ -1,0 +1,565 @@
+
+
+//===== 特殊效果
+	
+
+	//-- QuickSSHd  手机ssh管理软件
+
+		名字也可以是其它开头结尾为  SSHD的软件,可以像ssh连接操作linux一样来操作手机
+
+
+
+	//-- gcc 包	//C语言的编译器     
+		源码包安装时系统上一定要安装GCC  GCC本身首次安装要使用rpm的二进制方式安装 ，不然 没有解释源码包的程序
+
+
+
+
+
+
+
+
+	//-- 永久关闭增强防护 SElinux
+
+		vim /etc/selinux/config
+
+			设置 SELINUX=DISABLED		//永久关闭增强防护功能,需要重启
+
+
+
+
+
+	//-- 脚本for 循环安装多个包
+	
+		for packages in patch make cmake gcc gcc-c++ gcc-g77 flex bison file libtocl libtool-libs autoconf kernel-devel libjpeg libjpeg-devel libpng libpng-devel zlib-devel unzip libcap;
+
+		do yum -y install $packages: done
+
+		解释： in 后面跟多少个包名就循环多少次,每次循环就把当前循环的包名赋于 package 这个变量,然后 yum 安装这个变量中存放的包  done 继续循环下次
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 各程序安装包说明
+
+	mcrypt-2.6.8.tar.gz		web服务的加密软件
+
+
+
+
+
+
+
+
+
+
+//===== linux 下的两种安装方式
+	1，源码方式：需要编译，安装时间长，代码开源，功能可自行定制,因为都是用C语言写的，所以需要先安装 gcc来支持源码安装
+	2，二进制方式(RPM)(可YUM安装)：时间短，代码不可见，安装时间短，需要包之间的依赖关系较为复杂
+		注： RPM包可以使用yum方式来安装，它解决了包之间的依赖关系的繁锁
+
+	
+
+
+
+
+ 
+
+//===== RPM包的命名规则
+
+	httpd-2.2.15-15.el6.centos.1.i686.rpm
+		httpd 		包名
+		2.2.15		版本号
+		15		软件发布的次数
+		el6.centos 	适合的linux平台
+		i585		适合的硬件平台 (32位或64位)
+		rpm		包的扩展名
+
+
+
+
+//===== RPM包安装时的依赖关系
+
+	树型依赖：	a->b->c   安装顺序  c->b->a
+	环形依赖：	a-b-c-a		安装顺序需要 同时安装
+
+	模块依赖:
+	如 libodbcinst.so.2	其实这个东西是隐藏在包中的一个文件，那我们怎么知道这个文件隐藏在哪个包中呢？ 去网站  www.rpmfind.net  查找文件所在的包
+
+
+
+
+
+//===== 所有安装后的rpm包都会存放在/var/lib/rpm/中的数据库
+	
+	所有安装过的rpm包信息都存储在 /var/lib/rpm/__db.xxx 的安装数据库中
+
+
+
+//===== RPM 安装，升级，卸载，查询
+	
+	//-- rpm安装
+		rpm -ivh 包命名
+
+			-i	安装(install)
+			-v	显示详细信息(verbose)
+			-h	显示进度(hash)
+			--nodeps 	不检测依赖性
+
+			
+	//-- rpm升级
+		rpm -uvh 包全名		（可替代安装命令）	
+			
+			-u	升级(upgrade)	
+
+
+	//-- rpm卸载
+		rpm -e 包名
+		
+			-e	卸载（erase）
+			--nodeps 	不检查依赖性
+
+			注：在任何位置卸载都可以，而且卸载也有依赖性 如: httpd=2.2....   is needed by (installed) httpd-manual-2.2.15...
+				也就是说 安装时的顺序是 a->b->c  那么卸载时就要按 c->b->a 来卸载
+			
+
+	//-- rpm 查询
+
+		//--查询指定包
+			rpm -q 包名				
+				-q 		查询(query)
+		
+		//--查询所有以安装的rpm包
+			rpm -qa		
+
+		//--查询所有以安装的httpd相关包 (grep 后面使用的是正则匹配 httpd)
+			rpm -qa | grep httpd	
+				-a		所有(all)
+
+		//--查询包信息
+			rpm -qi 包名		//查询以以安装的包信息
+			rpm -qip 包名		//查询未安装的包信息
+				-q 		查询(query)
+				-i	查询软件信息 (information)
+				-p 	查询未安装包信息(package)
+
+		//--查询程序的指定安装位置
+			rpm -ql httpd		查询以安装的包的安装信息
+
+			rpm -qlp 包全名		查询未安装包的安装信息
+
+				-l  		列表(list)
+				-q		查询(query)
+				-p		查询未安装的包信息(package)
+
+		//-- 查询系统文件属于哪个软件包
+			rpm -qf 系统文件名
+				-q		查询
+				-f		查询文件属于哪个包(file)
+
+
+		//-- 查询包的依赖性
+			rpm -qR 包名		查询以安装包的依赖关系 
+			rpm -qRp 包全名		查询未安装包的依赖关系
+				-q		查询
+				-p		查询未安装的包信息
+				-R		查询包的依赖性(requires)
+
+				注：该方式不如直接安装，来查看所需要的每个依赖关系
+
+
+		//-- rpm 帮助命令
+			rpm --help | grep prefix	查询rpm包的安装位置
+		
+
+
+
+	//-- RPM包校验
+		rpm -V 已安装包名
+
+			结果显示： S.5....T.   c   /etc/....
+
+			-V	校验指定RPM包中的文件(verify)
+				验证内容的8种信息
+					S：文件大小是否改变
+					M：文件类型或权限是否被改变
+					5：文件MD5校验是否改变（可看出内容是否改变）
+					D：设备主从代码是否改变
+					L：文件路径是否改变
+					U：文件属主（所有者）是否改变
+					G：文件的改组是否改变
+					T：文件的修改时间是否改变
+
+				文件类型：
+					c：配置文件(config file)
+					d：普通文件(documentation)
+					g：鬼文件(ghostfile),很少见，不应存在于rpm包中
+						出现则可能是有漏洞或是被攻击
+					L：授权文件(license file)
+					r：描述文件(read me)		
+					
+			
+
+	//-- RPM包中提取指定的文件
+		rpm2cpio 包命名 | cpio -idv .文件绝对路径
+		或
+		cpio 选项 < [文件|设备]
+			-rpm2cpio	将RPM包转换为cpio格式命令
+			-cpio		用于创建软件档案和从档案中提取文件
+			-i：copy-in模式，还原
+			-d：还原时自动新建目录 
+			-v：显示还原过程
+
+		该功能可用来还原被误删除的命令或文件,找到原始包并提取
+
+		使用流程：
+			rpm2cpio /路径/包名 | cpio -idv ./bin/xx	
+
+			将一个安装包转换成cpio格式，并提取 xx 文件到 当前目录中的 bin下 
+			而后可以将提取的文件再复制到指定的目录中即可
+
+
+
+
+//===== RPM包默认安装位置
+	
+
+		/etc/...		配置文件安装目录
+		/usr/bin/...		可执行命令安装目录
+		/usr/lib/...		程序使用的函数库文件目录
+		/usr/sbin/...		脚本，命令（超级用户可以用的程序）
+		/usr/share/...		一些相关文档
+		/usr/share/doc/...	基本软件使用手册保存位置
+		/usr/share/man/...	帮助文件目录
+		/var/log/...		日志
+		/var/run/..		运行程序
+
+
+		/var/www/html		RPM包的apache默认根目录
+
+
+
+//===== rpm 安装程序的两种启动方式
+
+	//-- 绝对路径启动
+		/etc/rc.d/init.d/httpd start   		默认的标准启动方式
+
+	//-- 服务启动方式 
+		service httpd start
+			注：这种方式也是在搜索上面绝对路径的启动文件后执行其来启动的
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== YUM 的配置文件
+
+	/etc/yum.repos.d/
+		CentOS-Base.repo		网络yum源	默认 
+		CentOs-Debuginfo.repo		调试
+		CentOs-Media.repo		光盘YUM源
+		CentOs-Vault.repo
+
+
+		CentOs-Base.repo 内容如下 
+			[base]		容器名
+				name			容器名，可以自己随意写
+				mirrorlist		镜像YUM源站点  默认使用这个
+				baseurl			YUM源主服务器
+					*	注：默认的服务器是国外的，可以找个国内的镜像站点替换，来提高速度
+				enabled=1		设置当前[xxx]容器是否生效   1生效或0不生效
+				gpgcheck=1		RPM数字证书验证	 1验证或0不验证		
+				gpgkey=...		证书位置
+
+
+
+
+
+//===== 光盘YUM源
+
+
+	mkdir /mnt/cdrom			//创建一个目录
+
+	mount /dev/cdrom /mnt/cdrom/ 		//挂载光盘
+
+	mv Cen.... Cen..bak			//将网络yun源改名使其失效
+
+	enabled=1				//设置光盘YUM生效
+
+	baseurl=file:///mnt/cdrom		//将YUM源地址设置成自己的光盘目录
+		file:///mnt/xxx				//可设置多个光盘YUN源
+
+
+
+
+
+
+
+
+
+
+
+//===== YUM 命令
+
+	yum list			查看yum源中有哪哪些软件包
+
+	yum search httpd		搜索和关键字相关的包
+
+	yum -y install 包名		YUM安装程序
+		如： yum -y install gcc
+
+
+
+	yum -y update 包名		升级
+
+	yum -y remove 包名		卸载
+		* 注: 使用最小化安装，尽量不卸载，因为会误删被系统依赖的包而导致系统崩溃
+
+	yum grouplist			列出所有可用的软件组列表 
+		
+		LANG=en_US		显示言从中文切换到英文	
+
+		LANG=zh_CN.utf8		从英文切换到中文 并指定编码
+
+	yum groupinstall 软件组名	安装指定软件组，组名可由grouplist 查询出来
+
+		yum groupinstall "chinese Support"	安装中文组包
+
+	yum groupremove	软件组名	卸载指定软件组
+
+
+
+
+
+
+
+//===== YUM 操作apache(httpd)
+
+
+		yum search httpd 		//查看apache相关的yum程序包
+
+		yum -y install httpd		//安装apache程序
+
+		service httpd start | stop | restart     	//apache 启动，停止，重启
+
+		vim /etc/httpd/conf/httpd/conf			//编辑apache配置文件
+			DocumentRoot "/var/www/html"		//默认的网站根目录，可以自行设置
+			
+		如果运行报错  httpd: Could not reliably determine the server's fully qualified domain name  就在配置文件中加入 ServerName localhost:80
+		
+		service httpd stop 		//停止 apache 服务
+
+		yum -y remove httpd		//卸载apache程序
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+//===== 源码包的安装位置
+
+	源码包安装位置需要手工指定，一般都存放在 /usr/local/软件名/  下，但也可指定为其它目录 
+
+	源码安装因为没有卸载方式，只能删除其安装目录与文件的方式来卸载 ，所以要指定安装目录\
+
+	
+
+
+
+
+
+//===== ./configure 	源码包的安装方式
+
+	1,	定义需要的功能选项
+	2，	检测系统环境是否符合安装要求
+		比如是否安装了gcc,没安就会报错
+	3，	把定义好的功能选项和检测系统环境的信息都写入Makefile文件，用于后续的编辑
+
+	./configure --help		查看安装选项  
+
+	INSTALL				安装说明文件 打开后会有以下内容
+		这里就说明的安装步骤
+			$ ./configure --prefix=PREFIX		安装并指定目录
+			$ make					翻译文件
+			$ make install				安装文件
+			$ PREFIX/bin/apachectl start		启动程序
+
+
+	一：安装并指定位置
+		./configure --prefix=/usr/local/apache2 		指定安装位置(源码包一定要指定安装位置)
+
+	二：编译
+		make 			//将源码翻译成二进制
+			make clean 		//如果编译出错可以清除缓存等，重新再来.而不用删除整个目录，因为它还没有真正安装 
+
+	三：真正安装程序
+		make install 	
+
+	四：启动程序 
+		/usr/local/apache2/bin/apachectl start		
+			注意如果RPM包的apache 在运行，80端口被占用会报错，所以要 service httpd stop 停掉rpm的apache 再启动源码的apache
+			启动如果出现报错
+				httpd: Could not reliably determine the server's fully qualified domain name
+				解决方法：在httpd.conf 配置文件中加入一句  ServerName  localhost:80
+
+	五：停止程序
+		/usr/local/apache2/bin/apachectl stop
+
+	六：源码包的卸载
+		源码包没有卸载命令，直接删除程序的目录即可
+
+
+
+
+
+
+//===== 源码包的两种启动方式 
+
+	//-- 在安装目录中找到启动文件启动
+		/usr/local/apache2/bin/apachectl start		用程序安装的绝对路径运行启动文件 来启动程序
+
+	//-- 将启动文件拷贝到 /etc/rc.d/init.d/ 目录下就可使用下面的两种启动方式了
+
+		/etc/rc.d/init.d/httpd start   		默认的标准启动方式
+		service httpd start			服务式启动
+
+
+
+
+
+
+
+
+//===== 源码包的根目录位置
+	
+	/usr/local/apache2/htdocs
+
+
+
+
+
+
+//====== 源码方式安装apache(httpd)
+
+
+	rz			//将apache 源码包上传到  /usr/local/src
+
+	tar vzxf httpd-2.2.31.tar.gz			//解压源码包
+
+	cd httpd-2.2.31					//进入解压后的目录
+
+	vim INSTALL					//查看程序的安装说明
+		
+	./configure --prefix=/usr/local/apache2		//将程序安装到 /usr/local/apache2 目录下
+
+	make						//编译程序
+
+	make install 					//编译后二进制安装 
+
+	/usr/local/apache2/bin/apachectl start		//apache源码包方式的启动，停止，重启	
+					 stop
+					 restart	
+
+		如果运行报错  httpd: Could not reliably determine the server's fully qualified domain name  就在配置文件中加入 ServerName localhost:80	
+
+
+	vim /usr/local/apache2/conf/httpd.conf 		//编辑源码包的配置文件
+
+		DocumentRoot "/usr/local/apache2/htdocs"		//默认网站根目录  可修改
+			注：修改网站根目录时要保证下面两个字段中的路径是一致的				
+				DocumentRoot "/usr/local/apache2/htdocs"
+				<Directory "/usr/local/apache2/htdocs">
+	
+
+
+
+
+
+
+//===== 将源码启动做成service 启动方式 
+
+	cp /usr/local/apache2/bin/apachectl /etc/rc.d/init.d/		//将源码启动文件复制到服务启动目录
+	
+	service apachectl stop | start | restart			//apache 做成service 服务启动方式
+
+
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

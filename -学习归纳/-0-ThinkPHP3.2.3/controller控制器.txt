@@ -1,0 +1,326 @@
+
+//-- 框架命令
+
+	$this->assigon('a','aaaa');		//-- 注册模板变量
+	$this->assign('sex','man')->assign('sex2','nv');
+
+	$this->display()			//-- 调用当前控制器对应的模板
+	$this->display('index2');		//-- 调用当前控制器下的其它模板
+	$this->display('User:index2');		//-- 调用其它控制器对应下的模板
+	$this->display('my:User:index2');	//-- 关联到指定主题下的模板文件，(需要在conf开启主题支持)
+
+
+	$this->redirect('模块/控制器/方法');	//-- 重定向（跳转）
+	$this->redirect('index',array('id'=>234),5,'这是一次跳转');
+	$this->redirect('Stu/index',array('id'=>234),5,'这是一次跳转');
+		参数：（地址，参数，停留时间，提示信息);
+
+
+	$this->success('删除成功');		//-- 成功后跳回
+	$this->success('删除成功','index');  	//-- 成功后跳到指定方法页面
+	$this->success('添加成功','index',5);	//-- 成功后跳转到指定方法，延时5秒
+	$this->success('新增成功', U('Stu/index'),3);
+	$this->error('删除失败');		//-- 失败后跳转
+
+	$this->ajaxReturn($data);		//--返回ajax数据(默认json格式)	详见“//-- ajax异步提交”
+	$this->ajaxReturn($data,'xml');		//--执行xml格式返回
+
+		;
+
+
+						//-- 获取当前模块名，控制器名，方法名
+    	echo CONTROLLER_NAME;
+    	echo ACTION_NAME;
+    	echo MODULE_NAME;
+
+	echo DATA_PATH				//-- 获取 Runtime/Data 路径 
+
+
+
+
+
+
+
+
+
+
+//-- 模块分组
+
+	默认Home 为前台，可也手动创建Admin 目录，内容与Home一样，作为后台模块
+
+	http://localhost/one/index.php/Home/Index/index			前台
+	http://localhost/one/index.php/Admin/Index/index		后台
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 空方法
+
+	空操作有两种解决方案：
+		一：在对应的控制器里制做一个方法 _empty(),这个控制器的空操作都会自动执行该方法。（推荐）
+		二：给空操作的名称制作一个同名的模板，系统会自动调用
+
+
+	例一：创建_empty方法后，当访问一个不存在的方法时，不会报错！会执行_empty()方法
+	function _empty($m,$args){
+		echo "访问的方法".$m."不存在 ！";
+	}
+
+	例二：当访问一个空方法时让其显示一张404图片
+		function _empty(){
+			echo "<img src='".CSS_URL."img/404.jpg' width=100px alt=''/>";
+		}
+
+
+
+
+
+
+
+
+//--  空控制器
+
+	当访问一个不存在的控制器时如创建如下文件，就会执行以下内容
+	在Controller目录下创建一个EmptyController.class.php文件，内容如下
+
+	<?php
+	namespace Home\Controller;
+	use Think\Controller;
+	class EmptyController extends Controller{
+		function _empty(){
+			echo '控制器不存在 ！';
+			或
+			echo "<img src='".CSS_URL."img/404.jpg' width=300px alt='404图片'>";	
+		}
+	}
+
+
+
+
+//-- _before_,_after_ 前置和后置操作方法    
+		public function _before_index(){
+				echo 'before<br/>';
+		}   
+		public function index(){
+				echo 'index<br/>';    
+		}    
+		//后置操作方法    
+		public function _after_index(){
+				echo 'after<br/>';   
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 跨控制器操作，跨模块操作
+
+	class IndexController extends Controller{
+		public function index(){
+			echo 'Home模块-Index控制器-index方法<br>';
+	//使用A() (A() 生成控制器实例)
+			$a = A('Index2');	//实例化本模块下的index2控制器
+			$a->index();		//调用 index2控制器下的index()方法
+			$a->index2();		//调用 index2控制器下的index2()方法
+
+			$b = A('Admin/Index');	//实例化Admin模块下的Index控制器
+			$b->index();		//调用Admin模块下的Index控制器下的index() 方法
+			$b->index2();		//调用Admin模块下的Index控制器下的index() 方法
+
+			$c = A('Admin/Index2');	//实例化Admin模块下的Index2控制器
+			$c->index();		//调用Admin模块下的Index2控制器下的index() 方法
+			$c->index2();		//调用Admin模块下的Index2控制器下的index2() 方法
+
+	//使用R() （R()直接调用方法）
+			$aa = R('Index2/index');	//调用了本模块下的index2控制器下的index方法
+	
+			$aa = R('Admin/Index/index');	//调用了Admin模块下的index控制器下的index方法
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+//-- GET传值的接收
+
+
+	方式一： 
+		
+
+	<a href='__ACTION__/id/2/name/lili'>修改</a>
+
+	//参数绑定：直接在方法参数中接收GET值
+	public function xxx($id,$name){}	//这里会将传值的名转换为变量名来接收,这里顺序不受影响
+				注：该方式如果接收不到参数就会禁止访问,可以给参数设置默认值为解决
+			
+	I('get.xx');		I() 方式获取get传值
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+//-- ajax异步提交
+
+		模板
+		<script>
+			$(function(){
+				$.ajax({
+					url:'__MODULE__/Index/sums',	//传值到Index控制器的sums方法
+					type:'post',
+					data: {
+						abc:'1',
+						bcd:2,
+					},
+					success:function(response){
+						alert(response);	//显示出返回的数据
+					}
+				});
+			});
+		</script>
+		
+		控制器
+		class IndexController extends Controller {
+			public function index(){
+			   $this->display();
+			}
+			public function sums(){
+				$a = I('abc');				//接收POST,GET传值
+				$b = I('bcd');
+				//die(json_encode($a+$b));		//返回数据
+				$this->ajaxReturn($a+$b);		//返回数据
+				echo ($a+$b*$a*$b);			//显示数据
+			}
+		}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- session 机制
+
+	session('a');		//获取 session 
+
+	session('a','aaa');	//设置 session 
+	
+	session('a','aaa',有效时间);	//设置带时效的 session 
+
+	session('a',null);	//删除指定 session 
+
+	session(null);		//清空 session
+
+	session();		//获取全部 session
+
+	I('session.a');		//获取指定 session
+
+	I('session.');		//获取全部session
+
+
+//-- cookie 机制
+
+	cookie('a');		//获取 cookie
+
+	cookie('a','aaa');	//设置 cookie 
+
+	cookie('a','aaa',有效时间);	//设置带时效的 cookie
+
+	cookie('a',null);	//删除指定 cookie 
+
+	cookie(null);		//清空 cookie
+
+	cookie();		//获取全部 cookie
+
+	I('cookie.a');		//获取指定 cookie
+
+	I('cookie.');		//获取全部 cookie
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 文件读写操作
+
+        	$path =CACHE_PATH.'aa.txt';	//获取文件路径 ：./Pyj/Runtime/Cache/aa.txt
+        	file_put_contents($path,'3333333333333333');
+        	echo file_get_contents($path);	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

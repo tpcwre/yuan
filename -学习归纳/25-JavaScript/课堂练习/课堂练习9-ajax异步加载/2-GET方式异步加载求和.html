@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>JavaScript实例</title>
+        
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2 class="cc">JavaScript实例:Ajax操作实现数据求和(GET)</h2>
+		<form action="" name="myform" onsubmit="return doAdd()">
+			数值1：<input type="text" name="num1"/><br/><br/>
+			数值2：<input type="text" name="num2"/><br/><br/>
+			结 果：<input type="text" name="res" readonly style="border:0px;"/><br/><br/>
+			<input type="submit" value="求和"/>
+		</form>
+        <script type="text/javascript">
+			//
+			function doAdd(){
+				//获取要提交的数值
+				var m1 = document.myform.num1.value;
+				var m2 = document.myform.num2.value;
+				
+				//1. 创建Ajax请求对象
+				var xmlhttp = null;
+				if(window.XMLHttpRequest){
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				}else{
+					// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				//2. 设置回调函数
+				xmlhttp.onreadystatechange=function(){
+					//判断是否完成
+					if(xmlhttp.readyState==4){
+						//判断响应状态
+						if(xmlhttp.status==200){
+							//获取响应信息
+							var str = xmlhttp.responseText;
+							//将信息输出到结果框
+							document.myform.res.value=str;
+						}
+					}
+				}
+				
+				//3. 初始化请求信息
+				xmlhttp.open("get","2.php?m1="+m1+"&m2="+m2,true);
+				
+				//4. 发送请求
+				xmlhttp.send();
+				
+				return false;
+			}
+		
+		
+        </script>
+    </body>
+</html>

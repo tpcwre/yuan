@@ -1,0 +1,219 @@
+
+
+
+
+
+
+		第57课 知问前端-折叠菜单UI
+学习要点：
+	1，使用accordion
+	2，修改accordion样式
+	3，accordion()方法的属性
+	4，accordion()方法的事件
+	5，accordion中使用on
+课程笔记(图片)
+
+//-accordion折叠菜单的初始化
+//-collapsible设置菜单是否可以折叠
+//-disabled禁用折叠菜单
+//-event触发折叠菜单切换的事件
+//-active:1设置页面初始化时第二个折叠菜单自动展开
+//-active:true设置页面初始化时所有的折叠菜单是否自动展开
+//-heightStyle 设置折叠菜单内容框的高度
+	//设置全部折叠菜单的高度与最高的那个高度相同
+	//设置折叠菜单内容框的高度根据内容高度而变
+	//设置为折叠菜单内容添加额外的高度。
+//-header 设置折叠菜单的标题标签
+//-icons设置折叠菜单上的小图标（如+ ,- 号）
+//-create折叠菜单创建时触发事件
+//-得到当前折叠菜单标题对象及代码段
+//-得到当前折叠菜单中内容及其对象
+//=activate折叠菜单切换完成后触发事件
+//-折叠菜单切换后得到新的标题对象及代码段
+//-折叠菜单切换后得到新的折叠菜单中内容及其对象
+//-折叠菜单切换后得到旧的标题对象及代码段
+//-折叠菜单切换后得到旧的折叠菜单中内容及其对象
+//=beforeActivate折叠菜单切换前触发事件
+//-折叠菜单切换前得到新的标题对象及代码段
+//-折叠菜单切换前得到新的折叠菜单中内容及其对象
+//-折叠菜单切换前得到旧的标题对象及代码段
+//-折叠菜单切换前得到旧的折叠菜单中内容及其对象
+//-disable禁用折叠菜单（外部方法）
+//-enable启用折叠菜单
+//-widget获取折叠菜单jquery对象
+//-refresh更新折叠菜单
+//-destroy删除折叠菜单
+//-得到accordion的option值
+//-设置accordion的option值
+//-on形式的折叠菜单切换完成后事件
+//-on形式的折叠菜单切换前触发事件
+
+
+
+
+html页面内容：
+<div id="accordion">
+	<h1>菜单1</h1>
+	<div>内容1</div>
+	<h1>菜单2</h1>
+	<div>内容2</div>
+	<h1>菜单3</h1>
+	<div>内容3</div>
+</div>
+
+$(function(){
+
+//-accordion折叠菜单的初始化
+  $("#accordion").accordion({
+	
+//-collapsible设置菜单是否可以折叠
+	//默认false,true为允许菜单折叠对应内容。
+	collapsible:true,
+
+//-disabled禁用折叠菜单
+	//默认为false,true是禁用折叠菜单
+	disabled:true,
+
+//-event触发折叠菜单切换的事件
+	event:mouseover,
+
+
+//-active:1设置页面初始化时第二个折叠菜单自动展开
+	active:1,
+
+
+//-active:true设置页面初始化时所有的折叠菜单是否自动展开
+	//要配合collapsibel(允许展开折叠菜单)来使用
+	active:true,
+
+
+//-heightStyle 设置折叠菜单内容框的高度
+	
+	//设置全部折叠菜单的高度与最高的那个高度相同
+	heightStyle:"auto",
+
+	//设置折叠菜单内容框的高度根据内容高度而变
+	heightStyle:"content",
+
+	//设置为折叠菜单内容添加额外的高度。
+	heightStyle:"fill",
+
+
+//-header 设置折叠菜单的标题标签
+	header:"h1",	//这里要与想要设置的html页面中的标签名一致。
+
+
+
+//-icons设置折叠菜单上的小图标（如+ ,- 号）
+	//一般折叠菜单图标默认为右三角和下三角
+	icons:{
+		"header":"ui-icon-plus",
+		"activeHeader":"ui-icon-minus",
+	},
+
+//-create折叠菜单创建时触发事件
+	create:function(event,ui){
+		alert("折叠菜单创建触发事件");
+//-得到当前折叠菜单标题对象及代码段
+		alert($(ui.header.get()).html());
+
+//-得到当前折叠菜单中内容及其对象
+		alert($(ui.panel.get()).html());
+	}
+
+//=activate折叠菜单切换完成后触发事件
+	activate:function(event,ui){
+		alert("折叠菜单切换时触发事件");
+
+//-折叠菜单切换后得到新的标题对象及代码段
+		alert($(ui.newHeader.get()).html());
+
+//-折叠菜单切换后得到新的折叠菜单中内容及其对象
+		alert($(ui.newPanel.get()).html());
+
+//-折叠菜单切换后得到旧的标题对象及代码段
+		alert($(ui.oldHeader.get()).html());
+
+//-折叠菜单切换后得到旧的折叠菜单中内容及其对象
+		alert($(ui.oldPanel.get()).html());
+	}
+
+
+
+
+//=beforeActivate折叠菜单切换前触发事件
+	beforeActivate:function(event,ui){
+		alert("折叠菜单切换时触发事件");
+
+//-折叠菜单切换前得到新的标题对象及代码段
+		alert($(ui.newHeader.get()).html());
+
+//-折叠菜单切换前得到新的折叠菜单中内容及其对象
+		alert($(ui.newPanel.get()).html());
+
+//-折叠菜单切换前得到旧的标题对象及代码段
+		alert($(ui.oldHeader.get()).html());
+
+//-折叠菜单切换前得到旧的折叠菜单中内容及其对象
+		alert($(ui.oldPanel.get()).html());
+	}
+  });
+
+
+
+//-disable禁用折叠菜单（外部方法）
+	$("#accordion").accordion("disable");
+
+//-enable启用折叠菜单
+	$("#accordion").accordion("enable");
+
+
+
+
+//-widget获取折叠菜单jquery对象
+	$("#accordion").accordion("widget");
+
+
+
+
+//-refresh更新折叠菜单
+	$("#accordion").accordion("refresh");
+
+
+//-destroy删除折叠菜单
+	$("#accordion").accordion("destroy");
+
+
+
+//-得到accordion的option值
+	alert($("#accordion").accordion("option"),"active");
+
+
+//-设置accordion的option值
+	$("#accordion").accordion("option","active",1);
+
+
+//-on形式的折叠菜单切换完成后事件
+$("#accordion").on("accordionactivate",function(event,ui){
+	alert($(ui.newHeader.get()).html());
+	alert($(ui.newPanel.get()).html());
+	alert($(ui.oldHeader.get()).html());
+	alert($(ui.oldPanel.get()).html());
+});
+
+
+
+
+
+
+//-on形式的折叠菜单切换前触发事件
+$("#accordion").on("accordionbeforeactivate",function(event,ui){
+	alert($(ui.newHeader.get()).html());
+	alert($(ui.newPanel.get()).html());
+	alert($(ui.oldHeader.get()).html());
+	alert($(ui.oldPanel.get()).html());
+});
+}):
+
+
+

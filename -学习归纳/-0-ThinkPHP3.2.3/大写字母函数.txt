@@ -1,0 +1,390 @@
+
+//-- 大写字母系统函数库位置
+	ThinkPHP/Common/functions.php
+
+
+
+
+
+
+
+//-- G() 统计程序运行时间
+
+	G('name');
+	for($i=0;$i<100000;$i++){
+		$count += $i;
+	}
+	G('end');		
+	echo G('name','end');
+
+
+	G('name2');
+	for($i=0;$i<10000;$i++){
+		$count += $i;
+	}
+	G('end');
+	echo G('name2','end');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- F() 数据以文件方式保存
+
+	F()方法主要用于项目的文件数据的写入、更改和删除，其工作机理和S方法是类似的，区别在于用途不同，数据保存的目录也不同，而且不能指定缓存方式，因为默认就是文件形式保存数据。
+	F()方法使用了var_export方法，所以只能支持简单数据类型，不支持对象的缓存
+
+	$a = 'aaaaaaaa';
+
+	F('a',$a);			//文件会保存到 Runtime/Data/a.php 文件中
+	F('user/a',$a);			//文件会保存到 Runtime/Data/user/a.php 文件中
+
+	echo F('a.txt');
+
+
+
+
+
+
+
+
+//-- I() 获取 cookie,seesion,get,post 等值的方法
+	I方法的所有获取变量都会进行htmlspecialchars过滤，那么：I('get.name');等同于 htmlspecialchars($_GET['name']);
+
+	//- 特殊使用方式
+
+	echo I('get.name','','htmlspecialchars'); 	// 采用htmlspecialchars方法对$_GET['name'] 进行过滤，如果不存在则返回空字符串
+	echo I('get.name','','strip_tags'); 		// 等同于 strip_tags($_GET['name'])
+	I('get.name','',NULL);				// 一旦过滤参数设置为NULL，即表示不再进行任何的过滤。
+	I('session.user_id',0); 			// 获取$_SESSION['user_id'] 如果不存在则默认为0
+	I('post.email','','email');			// 表示 会对$_POST['email'] 进行 格式验证，如果不符合要求的话，返回空字符串。
+
+	//- 常用方式
+
+	I('pwd') 		//尝试用所有方式获取键为 pwd 的值
+
+	I('get.');		//获取全部GET
+	I('get.id');		//获取指定GET
+
+	I('post.');		//获取全部POST
+	I('post.name');		//获取指定POST
+
+	I('cookie.');		//获取全部cookie
+	I('cookie.aaa');	//获取指定cookie
+
+	I('session.');		//获取全部session
+	I('session.aaa');	//获取指定session
+
+	I('server.');		//获取全部 $_SERVER
+    	I('server.TMP');	//获取指定 $_SERVER
+
+		其它见下文处 “//-- I() 方法详解”
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- U()  生成当前使用模式（0.1.2.3）的URL地址
+	由于缓存原因，请开启debug模式时才会，获取每次改变模式的地址
+
+	例一：
+	echo U();
+	echo U('Index/login');
+		0：普通模式时
+			/one/index.php?m=Home&c=Index&a=index
+			/one/index.php?m=Home&c=Index&a=login
+		1：pathinfo 械
+			/one/index.php/Home/Index/index.html
+			/one/index.php/Home/Index/login.html
+		2：重写模式
+			/one/Home/Index/index.html
+			/one/Home/Index/login.html
+		3：兼容模式
+			/one/index.php?s=/Home/Index/index.html
+			/one/index.php?s=/Home/Index/login.html
+
+
+	例二：
+	echo U();
+   	echo U('Index/login');
+   	echo U('xxx/bbb/ccc');
+		结果：
+		/one/index.php/home/index/index.html
+		/one/index.php/home/index/login.html
+		/one/index.php/xxx/bbb/ccc.html 
+
+
+
+
+
+
+
+
+
+
+
+//-- C() 获取或设置配置变量 （从convertion.php 到 config.php）
+
+	C('name');		//获取配置文件中键为name的值
+
+	C('name','li');		//设置配置文件name的值为li
+
+
+
+
+
+
+
+
+
+//-- L() 获取语言变量信息
+
+	echo L('_ERROR_ACTION_');		//输出系统的相应中文提示信息
+	
+	ThinkPHP/Lang/zh-cn.php	文件中存有相关的中文提示变量数组
+
+
+
+
+
+//-- E() 给页面输出错误信息
+	
+	E('出错啦！');				//跳转错误提示页面
+
+	E(L('_ERROR_ACTION_').'CCCCC');		//结果提示：非法操作CCCCC
+
+
+
+
+
+//-- A() 实例化一个控制器
+
+	class IndexController extends Controller{
+		public function index(){
+			echo 'Home模块-Index控制器-index方法<br>';
+
+			$a = A('Index2');	//实例化本模块下的index2控制器
+			$a->index();		//调用 index2控制器下的index()方法
+			$a->index2();		//调用 index2控制器下的index2()方法
+
+			$b = A('Admin/Index');	//实例化Admin模块下的Index控制器
+			$b->index();		//调用Admin模块下的Index控制器下的index() 方法
+			$b->index2();		//调用Admin模块下的Index控制器下的index() 方法
+
+			$c = A('Admin/Index2');	//实例化Admin模块下的Index2控制器
+			$c->index();		//调用Admin模块下的Index2控制器下的index() 方法
+			$c->index2();		//调用Admin模块下的Index2控制器下的index2() 方法
+
+			$blog = A('User','Event');		//实例化事件控制器
+			$blog = A('Admin/Blog','Event');	//实例化Admin模块下的blog 事件控制器
+		}
+	}
+
+
+
+//-- R() 直接实例控制器并调用指定方法
+
+	public function index(){
+		$aa = R('Index2/index');	//调用了本模块下的index2控制器下的index方法
+	
+		$aa = R('Admin/Index/index');	//调用了Admin模块下的index控制器下的index方法
+	}
+
+
+
+
+//-- D() 实例化数据库模型(3.2以后效果等同于M())
+
+	$user = D();			//实例空模型
+	$user = D('User');		//实例化user表模型
+	$use r= D('Admin/User');	//跨模块实例 Admin模块下的 user 模型
+
+	
+	D('User','Logic') 		//实例化UserLogic,和下面配置文件相关
+	D('User','Service') 		//实例化UserService
+
+
+	'DEFAULT_M_LAYER' =>  'Logic', 		// 更改默认的模型层(Model)名称为Logic
+		//配置修改后：
+		D('User') 		//实例化UserLogic
+		D('User','Model') 	//实例化UserModel
+		D('User','Service') 	//实例化UserService
+
+
+
+
+//-- M() 实例化数据库模型(3.2以后效果等同于D())
+
+	$user = M('User');
+
+
+
+
+
+
+
+
+//-- S() 缓存
+
+	S(name,value);		设置缓存
+	S(name);		获取缓存
+	S(name,null);		删除缓存
+	S(null);		清空缓存
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- I() 方法详解
+		正如你所见到的一样，I方法是ThinkPHP众多单字母函数中的新成员，其命名来自于英文Input（输入），主要用于更加方便和安全的获取系统输入变量，可以用于任何地方，用法格式如下：
+		I('变量类型.变量名',['默认值'],['过滤方法'])
+		变量类型是指请求方式或者输入类型，包括：
+		变量类型	含义
+		get	获取GET参数
+		post	获取POST参数
+		param	自动判断请求类型获取GET、POST或者PUT参数
+		request	获取REQUEST 参数
+		put	获取PUT 参数
+		session	获取 $_SESSION 参数
+		cookie	获取 $_COOKIE 参数
+		server	获取 $_SERVER 参数
+		globals	获取 $GLOBALS参数
+		注意：变量类型不区分大小写。
+		变量名则严格区分大小写。
+		默认值和过滤方法均属于可选参数。
+
+		用法
+		我们以GET变量类型为例，说明下I方法的使用：
+		echo I('get.id'); // 相当于 $_GET['id']
+		echo I('get.name'); // 相当于 $_GET['name']
+		复制代码
+		支持默认值：
+		echo I('get.id',0); // 如果不存在$_GET['id'] 则返回0
+		echo I('get.name',''); // 如果不存在$_GET['name'] 则返回空字符串
+		复制代码
+		采用方法过滤：
+		echo I('get.name','','htmlspecialchars'); // 采用htmlspecialchars方法对$_GET['name'] 进行过滤，如果不存在则返回空字符串
+		复制代码
+		支持直接获取整个变量类型，例如：
+		I('get.'); // 获取整个$_GET 数组
+		复制代码
+		用同样的方式，我们可以获取post或者其他输入类型的变量，例如：
+		I('post.name','','htmlspecialchars'); // 采用htmlspecialchars方法对$_POST['name'] 进行过滤，如果不存在则返回空字符串
+		I('session.user_id',0); // 获取$_SESSION['user_id'] 如果不存在则默认为0
+		I('cookie.'); // 获取整个 $_COOKIE 数组
+		I('server.REQUEST_METHOD'); // 获取 $_SERVER['REQUEST_METHOD'] 
+		复制代码
+		param变量类型是框架特有的支持自动判断当前请求类型的变量获取方式，例如：
+		echo I('param.id'); 
+		复制代码
+		如果当前请求类型是GET，那么等效于 $_GET['id']，如果当前请求类型是POST或者PUT，那么相当于获取 $_POST['id'] 或者 PUT参数id。
+		并且param类型变量还可以用数字索引的方式获取URL参数（必须是PATHINFO模式参数有效，无论是GET还是POST方式都有效），例如：
+		当前访问URL地址是
+		http://serverName/index.php/New/2013/06/01 
+		复制代码
+		那么我们可以通过
+		echo I('param.1'); // 输出2013
+		echo I('param.2'); // 输出06
+		echo I('param.3'); // 输出01
+		复制代码
+		事实上，param变量类型的写法可以简化为：
+		I('id'); // 等同于 I('param.id')
+		I('name'); // 等同于 I('param.name')
+		复制代码
+		变量过滤
+		使用I方法的时候 变量其实经过了两道过滤，首先是全局的过滤，全局过滤是通过配置VAR_FILTERS参数，这里一定要注意，3.1版本之后，VAR_FILTERS参数的过滤机制已经更改为采用array_walk_recursive方法递归过滤了，主要对过滤方法的要求是必须引用返回，所以这里设置htmlspecialchars是无效的，你可以自定义一个方法，例如：
+		function filter_default(&$value){
+			$value = htmlspecialchars($value);
+		}
+		复制代码
+		然后配置：
+		'VAR_FILTERS'=>'filter_default'
+		复制代码
+		如果需要进行多次过滤，可以用：
+		'VAR_FILTERS'=>'filter_default,filter_exp'
+		复制代码
+		filter_exp方法是框架内置的安全过滤方法，用于防止利用模型的EXP功能进行注入攻击。
+
+		因为VAR_FILTERS参数设置的是全局过滤机制，而且采用的是递归过滤，对效率有所影响，所以，我们更建议直接对获取变量过滤的方式，除了在I方法的第三个参数设置过滤方法外，还可以采用配置DEFAULT_FILTER参数的方式设置过滤，事实上，该参数的默认设置是：
+		'DEFAULT_FILTER'        => 'htmlspecialchars'
+		复制代码
+		也就说，I方法的所有获取变量都会进行htmlspecialchars过滤，那么：
+		I('get.name'); // 等同于 htmlspecialchars($_GET['name'])
+		复制代码
+		同样，该参数也可以支持多个过滤，例如：
+		'DEFAULT_FILTER'        => 'strip_tags,htmlspecialchars'
+		复制代码
+		I('get.name'); // 等同于 htmlspecialchars(strip_tags($_GET['name']))
+		复制代码
+		如果我们在使用I方法的时候 指定了过滤方法，那么就会忽略DEFAULT_FILTER的设置，例如：
+		echo I('get.name','','strip_tags'); // 等同于 strip_tags($_GET['name'])
+		复制代码
+		I方法的第三个参数如果传入函数名，则表示调用该函数对变量进行过滤并返回（在变量是数组的情况下自动使用array_map进行过滤处理），否则会调用PHP内置的filter_var方法进行过滤处理，例如：
+		I('post.email','',FILTER_VALIDATE_EMAIL);
+		复制代码
+		表示 会对$_POST['email'] 进行 格式验证，如果不符合要求的话，返回空字符串。
+		（关于更多的验证格式，可以参考 官方手册的filter_var用法。）
+		或者可以用下面的字符标识方式：
+		I('post.email','','email');
+		复制代码
+		可以支持的过滤名称必须是filter_list方法中的有效值（不同的服务器环境可能有所不同），可能支持的包括：
+		int
+		boolean
+		float
+		validate_regexp
+		validate_url
+		validate_email
+		validate_ip
+		string
+		stripped
+		encoded
+		special_chars
+		unsafe_raw
+		email
+		url
+		number_int
+		number_float
+		magic_quotes
+		callback
+		复制代码
+		在有些特殊的情况下，我们不希望进行任何过滤，即使DEFAULT_FILTER已经有所设置，可以使用：
+		I('get.name','',NULL);
+		复制代码
+		一旦过滤参数设置为NULL，即表示不再进行任何的过滤。

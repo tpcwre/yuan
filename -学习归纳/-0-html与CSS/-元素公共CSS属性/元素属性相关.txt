@@ -1,0 +1,877 @@
+
+
+//===== DIV+CSS的兼容性问题；
+//===== CSS之间可以相互引用：
+//===== 盒子模型
+//===== display:table-cell + vertical-align:middle 将元素表格化，可以设置元素的上下剧中
+//===== cursor:pointer 在指定元素上使光标变成小手
+//===== 将元素浮动，让文字包围
+//===== opacity 设置整个元素的透明度
+//===== 给元素添加轮廓（外框）
+//===== clip 对定位的元素进行裁切
+//===== important 提高元素的优先权重
+//===== CSS选择器的权重值占比
+
+//===== e:hover 元素的悬停样式
+//===== body 中直接设置背景色和文字色彩：
+//===== width, height 元素的高和宽
+//===== border 元素的边框 
+//===== border-radius 元素四角的弧度 
+//===== margin 元素的外边距
+//===== margin:0 auto; 块状元素居中
+//===== padding 元素的内边距
+//===== box-sizing 设置盒子是否包含内边距和边框的宽度
+//===== rgba()设置背景色透明度
+//===== CSS中常用的控制背景的属性
+//===== background-color背景色
+//===== background-image 设置背景图片
+//===== 设置背景图片随元素大小变化
+//===== backgroun-repeat 设置背景图片是重复的方式
+//===== background-attachment 背景图片是否随滚动条滚动
+//===== background-position 设置背景图片的位置	
+//===== 背景样式的简写
+//===== display 设置元素的显示类型
+//===== 元素的浮动
+//===== clear 清除浮动
+//===== position,absolute,fixeed等元素的定位
+//===== z-index元素叠加时层级显示的优先级顺序及设置
+//===== display:table-cell 将元素表格化，可以设置元素的上下剧中
+//===== vertical-align:middle	将元素上下剧中对齐
+//===== word-break:break-all  设置元素中的内容项格自动换行
+//===== text-align 块元素中内容的左右剧中
+//===== line-height 块元素中单行内容的上下位置
+
+
+
+
+
+
+
+
+
+
+
+//===== DIV+CSS的兼容性问题；
+
+	1，不同浏览器解释盒子模型的差异。
+	2，设置浏览器去遵循W3C标准。
+
+	在文档顶部加写两句代码可以解决90%的问题。
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+//===== CSS之间可以相互引用：
+
+	@import url('url.css')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====块元素和行内元素；block,inline,inline-block
+
+		行内元素(inline element),双叫内联元素；
+			内联元素只能容纳文本或者其他内联元素，常见内联元素<span> <a> <input>
+		块元素(block element)
+			块元素一般都从新行开，可以容纳文本，其它内联元素和其它块元素。即使内容不能占满一行，块元素也要把整行占满，	
+				常见块元素<div> <p>
+
+		1,行内元素它只占内容的宽度，不会占据整行，而且不会自动换行：
+		2,块元素它不管自己的内容有多少，会占据整行，而且会换行显示。
+		3,一些css属性对行内元素不生效，比如 margin,left,right,width,height,建议尽可能使用块元素定位。
+
+
+
+		使用：
+		Display inline 表示使用行内元素方式显示；
+		Displya block 表示使用块元素方式显示。
+		.s1{
+			display:block;  //区块元素来显示。
+		}
+		.s2{
+			display:inline; //行内元素来显示。
+		}
+		.s2{
+			display:inline-block; //行内区块元素。
+			注： 因为行内元素无法设置背景图片和高宽等。使其变成行内区块才可以！
+
+			display:none;		//隐藏元素
+		}
+
+
+
+
+		
+		
+		
+		
+		
+//===== 盒子模型	
+
+		<style>
+		.box1{
+			float:left;
+			width:450;
+			height:500;
+			border:1px blue solid;
+			margin-top:10;
+			margin-left:15;
+			margin-bottom:10;
+		}
+		.box2{
+			float:left;
+			width:218;
+			height:244;
+			border:1px blue solid;
+			margin-top:3;
+			margin-left:3;	
+		}
+
+		</style>
+		<html>
+			<head>
+				<title>one</title>
+				<meta http-equiv="content-type" content="text/html;	charset=gb2312" />
+				<link type="text/css" rel="stylesheet" href="./css.css" />
+			<head>
+			<body>
+				<?php
+					for($i=1;$i<5;$i++){
+						echo "<div class=box1>";
+							for($j=1;$j<5;$j++){
+								echo "<div class=box2>";
+									for($l=1;$l<5;$l++){
+									
+										echo "<div class=box3></div>";
+										}
+								echo "</div>";
+							}
+						echo "</div>";
+					}
+				?>
+			</body>
+		</html>
+		
+		
+		
+
+
+
+
+
+
+
+
+
+//===== important 提高元素的优先权重
+//===== CSS选择器的权重值占比
+
+	<style>
+		div{
+			width:300px;
+			height:300px;
+			background:red;
+		}
+		.a{
+			background:yellow !important;
+		}
+		#a{
+			background:blue;
+		}
+	</style>
+	<div id='a'  class='a'></div>
+
+	1、一个标签选择器  1分
+	2、一个类选择器10分
+	3、一个ID选择器 100分
+	4、一个内联方式的值 1000分
+	5、伪类选择器10分
+	6、通配符选择器 0 分   *通配符
+	7、属性选择器10分
+	8、层次选择器需要拆分开并且进行相加来进行计算
+
+	注意：
+	1、数值越大，权重越高
+	2、权重值要相同，最后一个样式胜出。
+	3、如果要忽略权重值时，需要在任何要保护的属性的后面加入!important就可以避免被更大的权重值覆盖
+
+
+
+
+
+
+
+
+//===== clip 对定位的元素进行裁切
+
+
+	<style>
+		div{
+			width:500px;
+			height:500px;
+			position:absolute;
+			top:100;
+			left:100;
+			background:red;
+			clip:rect(100px 300px 300px 100px)
+		}
+	</style>
+	<div></div>
+
+
+	设置元素的形状。唯一合法的形状值是：rect (top, right, bottom, left)
+
+	JavaScript 语法： 	object.style.clip="rect(0px,50px,50px,0px)"
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 给元素添加轮廓（外框）
+		
+	outline:blue dotted thick;		设置轮廓的颜色，样式，粗线
+
+  	outline-color:#00ff00;			轮廓的颜色
+
+	outline-width:5px;			轮廓的宽度
+
+			thin 	规定细轮廓。
+			medium 	默认。规定中等的轮廓。
+			thick 	规定粗的轮廓。
+			length 	允许您规定轮廓粗细的值。
+			inherit 	规定应该从父元素继承轮廓宽度的设置。
+
+	outline-style:dotted;			轮廓的样式
+
+			none 	默认。定义无轮廓。
+			dotted 	定义点状的轮廓。
+			dashed 	定义虚线轮廓。
+			solid 	定义实线轮廓。
+			double 	定义双线轮廓。双线的宽度等同于 outline-width 的值。
+			groove 	定义 3D 凹槽轮廓。此效果取决于 outline-color 值。
+			ridge 	定义 3D 凸槽轮廓。此效果取决于 outline-color 值。
+			inset 	定义 3D 凹边轮廓。此效果取决于 outline-color 值。
+			outset 	定义 3D 凸边轮廓。此效果取决于 outline-color 值。
+			inherit 	规定应该从父元素继承轮廓样式的设置。
+
+
+
+
+
+
+
+
+
+//===== display:table-cell + vertical-align:middle 将元素表格化，可以设置元素的上下剧中
+
+	<style>
+		.c{
+			height:200px;
+			width:50px;
+			border:1px solid;
+			word-break:break-all;
+			display:table-cell;
+			vertical-align:middle;
+		}
+	</style>
+	<div class='c'>
+		<span>aaaaaasdf</span>
+	</div>
+
+
+
+
+
+
+
+
+
+//===== cursor:pointer 在指定元素上使光标变成小手
+
+	<style>
+		.one{
+			width:100px;
+			height:100px;
+			background:#ccc;
+			cursor:pointer;
+		}
+	</style>
+	<div class="one"></div>
+
+
+
+
+
+
+//===== e:hover 元素的悬停样式
+	
+	#did:hover{height:300px;width:300px;background:red}
+
+
+
+
+//===== body 中直接设置背景色和文字色彩：
+
+	<body bgcolo=# text=# link=# alink=# vlimk=#>
+	bgcolor -- 背景色彩；
+	text -- 非可链接文字的色彩；
+	link -- 可链接文字的色采；
+	alink -- 正被点击的可链接文字色彩；
+	vlink -- 已经点击（访问）过的可链接文字色彩;
+
+
+
+
+
+
+
+//===== width, height 元素的高和宽
+	width:auto;			设置元素的宽-自动
+	width:50%;			设置元素的宽-百分比
+	width:500px;			设置元素的宽-指定像素
+	height:auto;			设置元素的高-自动
+	height:50%;			设置元素的高-百分比
+	height:800px;			设置元素的高-指定像素
+	
+	
+
+
+
+
+
+//===== border 元素的边框 
+	border:5px solid blue;			设置边框
+			none 定义无边框。 
+			hidden 与 "none" 相同。不过应用于表时除外，对于表，hidden 用于解决边框冲突。 
+			dotted 定义点状边框。在大多数浏览器中呈现为实线。 
+			dashed 定义虚线。在大多数浏览器中呈现为实线。 
+			solid 定义实线。 
+			double 定义双线。双线的宽度等于 border-width 的值。 
+			groove 定义 3D 凹槽边框。其效果取决于 border-color 的值。 
+			ridge 定义 3D 垄状边框。其效果取决于 border-color 的值。 
+			inset 定义 3D inset 边框。其效果取决于 border-color 的值。 
+			outset 定义 3D outset 边框。其效果取决于 border-color 的值。 
+			inherit 规定应该从父元素继承边框样式。 
+	border-top:10px solid yellow;	设置元素的上边框
+	border-right:10px solid #aaa;	设置元素的右边框
+	border-bottom:10px solid #555;	设置元素的下边框
+	border-left:10px solid blue;	设置元素的左边框
+	
+	
+	 border-width:20px;		设置边框的宽度
+	 border-top-width:5px;		设置上边框的宽度
+	 border-right-width:5px;	设置右边框的宽度
+	 border-bottom-width:5px;	设置下边框的宽度
+	 border-left-width:5px;		设置左边框的宽度
+	 
+	 
+	 
+	border-color:yellow;			设置边框的颜色
+	border-top-color:blue;		设置上边框的颜色
+	border-right-color:#222;	设置右边框的颜色
+	border-bottom-color:#888;	设置下边框的颜色
+	border-left-color:#ccc;		设置左边框的颜色
+	
+	border : 简写属性，用于把针对四个边框属性设置在一个声明中。
+	border-style : 用于设置元素所有边框的样式，或者单独地为各边设置边框样式。
+	border-width : 简写属性，用于为元素的所有边框设置宽度，或者单独地为各边边框设置宽度。
+	border-color : 简写属性，设置元素的所有边框中可见部分的颜色，或为4个边分别设置颜色。
+	border-bottom : 简写属性，用于把下边框的所有属性设置到一个声明中。
+	border-left : 简写属性，用于把左边框的所有属性设置到一个声明中。
+	border-right : 简写属性，用于把右边框的所有属性设置到一个声明中。
+	border-top : 简写属性，用于把上边框的所有属性设置到一个声明中。
+	border-bottom-color ; 设置元素的下边框的颜色。
+	border-bottom-style : 设置元素的下边框的样式。
+	border-bottom-width : 设置元素的下边框的宽度。
+	border-left-color : 设置元素的左边框的颜色。
+	border-left-style : 设置元素的左边框的样式。
+	border-left-width : 设置元素的左边框的宽度。
+	border-right-color :设置元素的右边框的颜色。
+	border-right-style :设置元素的右边框的样式。
+	border-right-width:设置元素的右边框的宽度。
+	border-top-color :设置元素的上边框的颜色。
+	border-top-style :设置元素的上边框的样式。
+	border-top-width :设置元素的上边框的宽度。
+		 
+	 
+	 
+//===== border-radius 元素四角的弧度 
+
+	border-radius:20px;				同时设置四个角的弧度
+	border-radius:10px 50px;			左对角，右对角
+	border-radius:10px 50px 200px; 			左上，右对角，右下
+	border-radius:10px 30px 80px 150px;		左上，右上，右下，左下
+
+
+
+//===== margin 元素的外边距
+
+	margin:50px;			四周
+	       auto			自动 
+	       em			1em=16px
+	       n%			百分比
+			
+	margin:20px 100px;		/*上下，左右*/
+	margin:5px 10px 100px 80px;	/*上，右，下，左*/
+	
+	margin-top:30px;			/*上外边距*/
+	margin-right:100px;			/*右外边距*/
+	margin-bottom:200px;			/*下外边距*/
+	margin-left:10px;			/*左外边距*/
+
+	
+
+
+
+
+//===== margin:0 auto; 块状元素居中
+	div{
+                width:800px;
+                height:50px;		/*需要将块元素设置好宽度*/
+                margin:0 auto;		/*块状元素居中*/
+      	}
+	<div> 块元素的居中</div>
+
+
+
+
+
+	
+	
+//===== padding 元素的内边距
+
+
+	padding:10px;				设置元素内边距
+			em			1em=16px
+			n%			按百分比设置内边距
+	padding-top:10px;			设置元素上内边距
+	padding-right:0px;			设置元素右内边距
+	padding-bottom:100px;			设置元素下内边距
+	padding-left:0px;			设置元素左内边距
+	padding:10px 20px 30px 50px;		内边距的简写方式
+	
+	
+	
+
+
+
+
+
+
+//===== box-sizing 设置盒子是否包含内边距和边框的宽度
+
+
+	.a div{
+		box-sizing:border-box;		/*合并内边距与边框*/
+		padding:50px;
+	}
+	.b div{
+		box-sizing:content-box;		/*不合并内边距与边框*/
+		padding:50px;
+	}
+
+
+            content-box，内边距和边框将不算到宽度和高度中。
+            border-box，内边距和边框将算到宽度和高度中。
+
+    注意：
+        1、有些浏览器不支持那你就加上供应商前缀。
+
+
+    供应商前缀：各个浏览器对于新属性的支持程度不同，有些还在测试阶段，所以要支持一些新属性，需要使用每个供应商提供的前缀的支持。
+
+    firefox: -moz-
+    safari: -webkit-
+    opeara: -o-
+    IE: -ms-       micro soft
+
+
+
+
+
+
+
+
+
+
+	
+//===== opacity 设置整个元素的透明度
+	
+	opacity:0.3;			透明度值为0-1
+	opacity:1;			1为不透明，0为完全透明
+	
+	
+	
+
+
+
+//===== rgba()设置背景色透明度
+ 
+
+        background:rgb(255,255,0);//
+        background:rgba(255,255,0,.5);//
+
+        IE8不支持rgba,但是支持rgb会忽略rgba，其他的浏览器先解析rgb，然后用rgba进行覆盖。这样可以做到不同浏览器的兼容
+
+
+
+
+
+
+
+//===== CSS中常用的控制背景的属性
+		background      	简写属性，作用是将背景属性设置在一个声明中；
+		background-color	设置元素的背景颜色。transparent(透明色)
+		background-image	把图像设置为背景。none(无)
+		background-repeat	设置背景图像是否及如何重复 repeat,repeat-x（横）,repeat-y(竖),no-repeat（不重复）
+		background-attachment	背景图像是否固定或者随着页面的其余部分滚动，scroll滚动，fixed固定
+		background-position	背景图像的起始位置，横向（left,center,right）纵向（top,center,bottom）,百分比和长度。TT
+
+		background-color	规定要使用的背景颜色。	1
+		background-position	规定背景图像的位置。	1
+		background-size		规定背景图片的尺寸。	3
+		background-repeat	规定如何重复背景图像。	1
+		background-origin	规定背景图片的定位区域。	3
+		background-clip		规定背景的绘制区域。	3
+		background-attachment	规定背景图像是否固定或者随着页面的其余部分滚动。	1
+		background-image	规定要使用的背景图像。	1
+		inherit	规定应该从父元素继承 background 属性的设置。
+
+
+	
+	
+	
+//===== background-color背景色
+
+	background-color:red;			设置元素背景色
+	background:blue;			关键字方式设置背景色
+	background:#aaa;			三位16进制数值方式设置背景色
+	background:#aaaeee;			六位16进制数值方式设置背景色
+	
+	background:rgba(255,255,0,.3);		带透明度的背景色
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+	
+	
+	
+	
+//===== background-image 设置背景图片
+	
+	background-image:url('./other/a7.jpg');
+	background:url('./other/a5.jpg');
+
+
+
+//===== 设置背景图片随元素大小变化
+
+	<body style='background:url("1.jpg");background-size:cover;background-repeat:no-repeat;'>
+
+
+	
+	
+	
+	
+//===== backgroun-repeat 设置背景图片是重复的方式
+	background-repeat:no-repeat;			背景图片不重复
+	background-repeat:repeat-x;			背景图片水平重复
+	background-repeat:repeat-y;			背景图片垂直重复
+	
+
+
+
+
+
+//===== background-attachment 背景图片是否随滚动条滚动
+	background:url("./other/a5.jpg") no-repeat;
+	background-attachment:fixed;	不随滚动条滚动
+	background-attachment:scroll;	随滚动条滚动
+	
+       	fixed的时候，一般运用在html或body标签上，使用在其他标签上不能达到固定的效果。
+	
+	
+	
+	
+//===== background-position 设置背景图片的位置	
+	background-position:50px -50px;		参数一：左右， 参数二：上下
+	background-position:left top;
+	background-position:left center;
+	background-position:left bottom;
+	background-position:center top;
+	background-position:center center;
+	background-position:center bottom;
+	background-position:right top;
+	background-position:right center;
+	background-position:right bottom;
+	注意：如果只设定了一个值，另外一个值将自动的会变为50%；
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 背景样式的简写
+	
+	background: color image repeat attachment position;	
+	
+	background:'url(../img/dui.jpg)no-repeat 40px top',
+	
+	background:red url('./other/a7.jpg') no-repeat fixed center top;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== display 设置元素的显示类型
+
+		display:none;		隐藏元素
+		display:block;		将元素转为块级元素
+		display:inline;		将元素转为行内元素
+
+
+
+
+
+
+
+
+
+//===== 元素的浮动
+
+		float:left;		左浮动
+		float:right;		右浮动
+		float:none;		无浮动相当于清除当前元素的浮动
+
+        float:值
+        left，元素向左浮动，元素下的内容将移动到元素的右边。
+        right，元素向右浮动，元素下的内容将移动到元素的左边。
+        none，无浮动。
+
+    注意：
+        1、只能左右浮动。
+        2、如果一个元素被设置为float 那么将会自动成为块级元素
+        3、如果父元素包含了浮动的元素并且没有设置父元素的高度，那么父元素的高度将会被压塌。
+
+
+
+
+
+
+//===== clear 清除浮动
+
+ 		clear:left;		清除左浮动
+		clear:right;		清除右浮动
+		clear:both;		清除两侧浮动
+
+        clear：值
+        none，允许浮动出现在两侧，默认值
+        right，右侧不允许出现浮动元素
+        left，左侧不允许出现浮动元素
+        both，左右两侧都不允许出现浮动元素。
+
+
+
+
+
+
+
+
+
+
+//===== 将元素浮动，让文字包围
+
+	<style>
+		width:200px;
+		height:200px;
+		border:1px solid;
+		float:left;
+	</style>
+	<div class='img'></div>
+	<img  class='img' src='aa.jpg' alt='图片出错啦' title='图片'/>
+	<p>时时时时,,,,,,</p>
+
+
+
+
+
+
+
+
+
+
+//===== position,absolute,fixeed等元素的定位
+	
+	Div{
+		position:absolute;	/*设置了一个绝对的定位*/
+		top:1px;
+		left:0px;
+ 		bottom:5px;
+        right10px;
+    }
+	Div{
+		position:relative;	/*设置了一个以原位为基准的相对定位*/
+		top:1px;
+		left:0px;
+ 		bottom:5px;
+        right10px;
+    }
+	Div{
+        position:static;	/*将元素设置成静态或将浮动的元素改回原位*/
+    }
+
+			static:静态定位-是默认的正常定位，left,top对它不生效。
+			absolute: 绝对定位-是在同样也脱标的父元素中改变自身位置的定位，如果没有父元素或父元素属于标准流时	，则对页面
+				1：当父元素为正常时，absolute定位基点为浏览器的左上角
+				2：当父元素为absolute或relative时，定位基点为本身的原点。
+
+			的左上角定位。它移动后的空间会被其它区块占用。 类似于被浮动了！
+			fixed:固定定位-就是只针对页面(不是body)的左上角来定位。这没有父区块。或唯一父区块就是页面。
+				它移动后的位置也会被占用，也类似于浮动。即使不移动加上此属性，位置也会被占用。出现重叠。
+			relative: 相对定位-是针对自己原位做的定位改变，它脱离标准流后的空间，不能被占用，依然要保留。相对定位会随着父区块的改变而改变，最终父区块为body.相对于它在HTML流中的当前位置来进行定位，网页元素不会占据相对定位元素原来的位置，相对定位的元素发生移动后，将留下一个"大窟窿"
+            fixed：	生成绝对定位的元素，永远相对于浏览器窗口进行定位
+
+      注意：
+            1、如果一个标签的位置是绝对定位的，且它又不在其他任何设定了，absolute、relative、fixed定位的标签里面，他就是相对于浏览器窗口进行定位。
+            2、如果一个标签的位置是绝对的，且处在另一个设定absolute、relative、fixed定位的标签，他就是相对于另一个元素进行定位。
+
+	设定元素的位置
+        top:规定元素的上边缘，定义了元素上外边距与其他包含的边界之间的距离
+            px
+            %
+        left
+        bottom
+        right
+
+        注意：当position为static时不能使用。
+
+
+
+
+
+
+
+
+
+//===== z-index元素叠加时层级显示的优先级顺序及设置
+
+		div:nth-of-type(2){
+			background:yellow;
+			position:absolute;
+			top:220px;
+			left:220px;
+			z-index:3;
+		}
+		div:nth-of-type(3){
+			background:green;
+			position:absolute;
+			top:240px;
+			left:240px;
+			z-index:0;
+		}
+
+			z-index:1;
+			z-index:2;
+			z-index:3;
+			z-index:4;
+			z-index:5;
+			z-index:6;
+
+			注意：
+				1、z-index仅能在定位的元素上有效,
+				2、值越大，元素就会出现在越接近堆叠顶部的地方。
+				3、默认的值为0
+
+
+
+
+
+
+
+
+
+
+
+//===== display:table-cell 将元素表格化，可以设置元素的上下剧中
+//===== vertical-align:middle	将元素上下剧中对齐
+//===== word-break:break-all  设置元素中的内容项格自动换行
+
+	<div style="display:table;word-break:break-all">
+		<div style='display:table-cell;vertical-align:middle'>aaaaaasdf</div>
+	</div>
+	
+
+
+
+
+
+
+
+
+
+//===== text-align 块元素中内容的左右剧中
+//===== line-height 块元素中单行内容的上下位置
+	<style>
+		.b{
+			height:100px;
+			border:1px solid;
+			line-height:100px;		/*块元素中单行内容上下剧中*/
+			text-align:center;		/*块元素中内容左右剧中*/
+		}
+	</style>
+	<div class='b'>当块元素中内容只有一行时，用line-height将内容上下剧中</div>
+
+
+
+
+
+
+
+
+
+
+
+

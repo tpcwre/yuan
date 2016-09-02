@@ -1,0 +1,399 @@
+﻿
+//=====要点提取
+
+<?php
+ $xmldom=new DOMDocument();							//创建DOM对象			
+ $xmldom->load("demo.xml");							//加载xml文件
+		
+ echo $xmldom->getElementsByTagName("name")->item(0)->nodeValue;	  	//获取元素的文本内容
+
+ echo $xmldom->getElementsByTagName("stu")->item(0)->getAttribute("attr"); 	//获取元素属性
+
+ echo $xmldom->getElementsByTagName("stu")->item(0)->nodeName;			//获取节点名
+
+ echo $xmldom->getElementsByTagName("stu")->item(0)->nodeType;			//获取节点类型
+
+ echo $xmldom->getElementsByTagName("name")->item(0)->parentNode->nodeName;	//获取父节点名
+
+ $list=$xmldom->getElementsByTagName("stu")->item(0)->childNodes;		//获取子节点列表
+
+ for($i=0;$i<$list->length;$i++){						//获取元素列表中元素的个数    获取元素个数
+	echo $list->item($i)->nodeName."<br>";					//获取每个元素的元素名
+ }
+
+ $aaa = $xmldom->createAttribute("aaa");					//创建新的属性节点：					
+ $xmldom->getElementsByTagName("name")->item(0)->appendChild($aaa);   		//挂载节点点
+ $xmldom->save("demo.xml"); 
+
+ //$xmldom->getElementsByTagName("sex")->item(0)->setAttribute("b","bbb");	//创建属性
+
+ //$e1=$xmldom->createElement("cc","ccc");					//创建节点
+
+ //$sex=$xmldom->getElementsByTagName("sex")->item(0);				//获取指定节点
+
+ //$sex->parentNode->removeChild($sex);						//删除指定子节点
+
+ $xmldom->getElementsByTagName("name")->item(0)->removeAttribute("aaa");	//删除指定属性
+
+ $xmldom->getElementsByTagName("name")->item(0)->nodeValue="NEWCONTENT";	//添加与修改元素的文本内容
+
+ $xmldom->getElementsByTagName("name")->item(0)->setAttribute("a","bbb");	//添加与修改元素的属性
+
+ $xmldom->save("demo.xml");							//保存XML文件
+
+	
+?>
+
+		========DOM==========
+
+
+
+
+
+
+$xmldom=new DOMDocument();		//创建DOM对象			
+$xmldom->load("demo.xml");		//加载xml文件
+
+
+
+			=====获取与查询相关===
+
+
+$xmldom->getElementsByTagName("sex")->item(0);	//获取指定节点
+
+item(0)->nodeValue;	  		//获取元素的文本内容
+
+item(0)->textContent;  			//获取元素的文本内容
+
+item(0)->getAttribute("attr"); 		//获取元素属性
+
+item(0)->nodeName;			//获取节点名
+
+item(0)->nodeType;			//获取节点类型
+
+item(0)->parentNode->nodeName;		//获取父节点名
+
+item(0)->childNodes;			//获取子节点列表
+
+$list->length;				//获取元素列表中元素的个数
+
+item(0)->firstChild->nodeName;		//获取首个子节点			
+
+item(0)->lastChild->nodeName;		//获取最后一个子节点		
+
+item(0)->previousSibling->nodeName;	//获取上一个兄弟节点			
+
+item(0)->nextSibling->nodeName;		//获取下一个兄弟节点	
+
+item(0)->getNodePath();			//获取DOM元素的层级路径	
+
+
+		
+
+			=====创建-添加-修改-插入====
+
+$xmldom->createAttribute("aaa");	//创建新的属性节点：
+	
+item(0)->setAttribute("b","bbb");	//创建属性
+
+$xmldom->createElement("cc","ccc");	//创建节点
+				
+item(0)->appendChild($aaa);   		//挂载节点
+
+
+item(0)->nodeValue="NEWCONTENT";	//添加与修改元素的文本内容
+
+item(0)->setAttribute("a","bbb");	//添加与修改元素的属性
+
+item(1)->insertBefore($e1);		//向指定节点内部最后插入节点
+
+
+
+
+
+			=====删除=====
+
+
+parentNode->removeChild($sex);		//删除指定子节点
+
+item(0)->removeAttribute("aaa");	//删除指定属性
+
+
+
+
+
+			=====保存=====
+
+$xmldom->save("demo.xml"); 		//保存XML文件
+$xmldom->as("demo.xml");
+
+
+
+
+			=====判断=====
+		
+item(0)->hasAttributes();		//判断元素是否含有属性					
+item(0)->hasChildNodes();		//判断元素是否包含子元素（文本也算元素）
+
+
+
+			
+			=====其它实例=====
+					//=====nodeType 获取节点类型说明
+					//=====循环遍历DOM元素内容
+					//=====创建多级DOM元素，并挂载，保存
+
+
+
+
+
+
+
+<?php
+ $xmldom=new DOMDocument();							//创建DOM对象			
+ $xmldom->load("demo.xml");							//加载xml文件
+		
+ echo $xmldom->getElementsByTagName("name")->item(0)->nodeValue;	  	//获取元素的文本内容
+ echo $xmldom->getElementsByTagName("name")->item(0)->textContent;  		//获取元素的文本内容
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("stu")->item(0)->getAttribute("attr"); 	//获取元素属性
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("stu")->item(0)->nodeName;			//获取节点名
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("stu")->item(0)->nodeType;			//获取节点类型
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("name")->item(0)->parentNode->nodeName;	//获取父节点名
+	echo "<br>";
+ $list=$xmldom->getElementsByTagName("stu")->item(0)->childNodes;		//获取子节点列表
+ for($i=0;$i<$list->length;$i++){						//获取元素列表中元素的个数
+	echo $list->item($i)->nodeName."<br>";
+ }
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("stu")->item(0)->firstChild->nodeName;	//获取首个子节点			
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("stu")->item(0)->lastChild->nodeName;	//获取最后一个子节点		
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("sex")->item(0)->previousSibling->nodeName;	//获取上一个兄弟节点			
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("sex")->item(0)->nextSibling->nodeName;	//获取下一个兄弟节点			
+	echo "<br>";
+ echo $xmldom->getElementsByTagName("book")->item(0)->getNodePath();		//获取DOM元素的层级路径			
+
+ //$aaa = $xmldom->createAttribute("aaa");					//创建新的属性节点：					
+ //$xmldom->getElementsByTagName("name")->item(0)->appendChild($aaa);   	//挂载节点点
+ //$xmldom->save("demo.xml"); 
+
+	echo "<br>";
+ //$xmldom->getElementsByTagName("sex")->item(0)->setAttribute("b","bbb");	//创建属性
+ //$xmldom->save("demo.xml");
+	echo "<br>";
+ //$e1=$xmldom->createElement("cc","ccc");					//创建节点
+ //$xmldom->getElementsByTagName("sex")->item(1)->parentNode->insertBefore($e1);	//向指定节点内部最后插入节点
+ //$xmldom->save("demo.xml");
+	echo "<br>";
+ //$sex=$xmldom->getElementsByTagName("sex")->item(0);				//获取指定节点
+ //$sex->parentNode->removeChild($sex);						//删除指定子节点
+ //$xmldom->save("demo.xml");
+	echo "<br>";
+ $xmldom->getElementsByTagName("name")->item(0)->removeAttribute("aaa");	//删除指定属性
+ $xmldom->save("demo.xml");
+	echo "<br>";
+ $xmldom->getElementsByTagName("name")->item(0)->nodeValue="NEWCONTENT";	//添加与修改元素的文本内容
+ $xmldom->save("demo.xml");
+	echo "<br>";
+ $xmldom->getElementsByTagName("name")->item(0)->setAttribute("a","bbb");	//添加与修改元素的属性
+ $xmldom->save("demo.xml");
+	echo "<br>";
+ $attr=$xmldom->getElementsByTagName("a")->item(0)->hasAttributes();		//判断元素是否含有属性
+ if($attr){
+	echo "这个元素含有属性";
+ }else{
+	echo "这个元素没有属性";
+ }
+	echo "<br>";
+										//判断元素是否包含子元素（文本也算元素）
+ $node=$xmldom->getElementsByTagName("a")->item(0)->hasChildNodes();	
+ if($node){
+	echo "有子节点";
+ }else{
+	echo "没有子节点";
+ }
+	echo "<br>";
+	
+?>
+
+
+
+
+
+
+
+
+//=====nodeType 获取节点类型说明
+
+返回值       描述 		包含子节点
+
+1	Element	代表元素	Element, Text, Comment, ProcessingInstruction, CDATASection, EntityReference
+2	Attr	代表属性	Text, EntityReference
+3	Text	代表元素或属性中的文本内容。	None
+4	CDATASection	代表文档中的 CDATA 部分（不会由解析器解析的文本）。	None
+5	EntityReference	代表实体引用。	Element, ProcessingInstruction, Comment, Text, CDATASection, EntityReference
+6	Entity	代表实体。	Element, ProcessingInstruction, Comment, Text, CDATASection, EntityReference
+7	ProcessingInstruction	代表处理指令。	None
+8	Comment	代表注释。	None
+9	Document	代表整个文档（DOM 树的根节点）。	Element, ProcessingInstruction, Comment, DocumentType
+10	DocumentType	向为文档定义的实体提供接口	None
+11	DocumentFragment	代表轻量级的 Document 对象，能够容纳文档的某个部分	Element, ProcessingInstruction, Comment, Text, CDATASection, EntityReference
+12	Notation	代表 DTD 中声明的符号。	None
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====循环遍历DOM元素内容
+
+- -xml页面：
+<?xml version="1.0" encoding="utf-8"?>
+<class>
+	<stu>
+		<name>小明</name>
+		<age>18</age>
+	</stu>
+	<stu>
+		<name>小丽</name>
+		<age>19</age>
+	</stu>
+</class>
+
+
+- -PHP页面：
+<?php
+	$xmldom=new DOMDocument();
+	$xmldom->load("xml.xml");
+	function get($obj,$name){
+		return $obj->getElementsByTagName($name)->item(0)->nodeValue;
+	}
+	$stus=$xmldom->getElementsByTagName("stu");
+	for($i=0;$i<$stus->length;$i++){
+		$stu=$stus->item($i);
+		echo get($stu,"name")."- -".get($stu,"age")."<br>";
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+//=====创建多级DOM元素，并挂载，保存
+
+- -XML页面：
+<?xml version="1.0" encoding="utf-8"?>
+<class>
+	<stu>
+		<name>小明</name>
+		<age>18</age>
+	</stu>
+</class>
+
+
+- -PHP页面：
+<?php
+	$xmldom=new DOMDocument();	//实例DOM对象
+	$xmldom->load("xml.xml");	//加载指定XML文件
+
+	$root=$xmldom->getElementsByTagName("class")->item(0);  //获取根节点
+
+	$stu=$xmldom->createElement("stu");	//创建一级子节点
+	$root->appendChild($stu);		//将一级子节点挂载到根节点上
+
+	$name=$xmldom->createElement("name");	//创建二级子节点
+	$name->nodeValue="小超";		//为二级子节点添加内容
+	$stu->appendChild($name);		//将二级子节点挂载到一级子节点上。
+
+	$age=$xmldom->createElement("age");	//同上
+	$age->nodeValue=18;
+	$stu->appendChild($age);
+	
+	$xmldom->save("xml.xml");		//将操作后的文件保存回原文件
+						//如用新名，则是创建了一个新文件。
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+用于处理XML文档的DOM元素属性
+ 
+childNodes  返回当前元素的所有子元素的数组
+    
+firstChild    返回当前元素的第一个下级子元素
+ 
+lastChild    返回当前元素的最后一个下级子元素
+ 
+nextSibling    返回紧跟当前元素后面的元素
+ 
+nodeValue    指定表示元素值的读/写属性
+ 
+parentNode    返回元素的父节点
+ 
+previousSibling    返回紧跟当前元素之前的元素
+ 
+ 
+用于遍历XML文档的DOM元素方法
+ 
+getElementById(id)    获取在指定唯一id属性值文档中的元素
+ 
+getElementsByTagName(name)    返回当前元素中有指定标记名的子元素数组
+  
+hasChildNodes() 返回一个Boolean，指示元素是否有子元素
+ 
+getAttribute(name)    返回元素的属性值，属性由name制定
+ 
+ 
+动态创建内容是所用的DOM属性和方法
+ 
+document.createElement(tagName)    文档对象上的createElement方法可以创建由tagName制定的元素。如果以串div作为方法参数，就会生成一个div元素    
+ 
+document.createTextNode(text)    文档对象的createTextNode方法会创建一个包含静态文本的节点
+ 
+<element>.appendChild(childNode)    appendChild方法将指定的节点增加到当前元素的子节点列表。例如可以增加一个option元素，作为select元素的子节点
+ 
+<element>.getAttribute(name)    获取元素中的name属性的值
+ 
+ <element>.setAttribute(name, value)    设置元素的name属性值
+ 
+<element>.insertBefore(newNode,targetNode)    将节点newNode作为当前元素的子节点传达到targetNode元素前面
+ 
+<element>.removeAttribute(name)    从元素中删除属性name
+ 
+<element>.removeChild(childNode) 移除子元素
+ 
+<element>.replaceChild(newNode,oldNOde) 替换子元素
+ 
+<element>.hasChildNodes() 是否有子元素

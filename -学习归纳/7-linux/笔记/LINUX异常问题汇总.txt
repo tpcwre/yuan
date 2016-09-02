@@ -1,0 +1,5 @@
+
+
+//-- 关闭来自php 的缓存
+
+	设置php.ini中的  opcache.enable=0

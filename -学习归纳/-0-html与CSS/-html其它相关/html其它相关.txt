@@ -1,0 +1,84 @@
+
+
+
+
+//===== 实体字符
+		 空格 		&nbsp; 		&#160; 
+	< 	小于号 		&lt; 		&#60; 
+	> 	大于号 		&gt; 		&#62; 
+	& 	和号 		&amp; 		&#38; 
+	" 	引号 		&quot; 		&#34; 
+	' 	撇号  		&apos; 		(IE不支持) &#39; 
+	￠ 	分 		&cent; 		&#162; 
+	￡ 	镑 		&pound; 	&#163; 
+	￥ 	日圆 		&yen; 		&#165; 
+	� 	欧元 		&euro; 		&#8364; 
+	§ 	小节 		&sect; 		&#167; 
+	? 	版权 		&copy; 		&#169; 
+	? 	注册商标 	&reg; 		&#174; 
+	?	商标 		&trade; 	&#8482; 
+	× 	乘号 		&times; 	&#215; 
+	÷ 	除号 		&divide; 	&#247; 
+
+
+
+
+	更多实体字符参见：	http://www.w3school.com.cn/html/html_entities.asp
+
+
+
+
+
+
+
+
+//=====作用于文件内容的实体字符
+
+	\r		空格
+	\n		空格
+	\r\n		换行
+	\t		TAB大空格
+
+
+
+
+
+
+
+
+//===== body 相关
+
+
+	//-- body 中直接设置背景色和文字色彩：
+
+		<body bgcolo=# text=# link=# alink=# vlimk=#>
+			bgcolor -- 背景色彩；
+			text -- 非可链接文字的色彩；
+			link -- 可链接文字的色采；
+			alink -- 正被点击的可链接文字色彩；
+			vlink -- 已经点击（访问）过的可链接文字色彩;	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====<hr>水平线 size noshade color 等设置
+	<hr noshade="noshade" size="50"/>
+	<hr color="red" size="30" width="200"/>
+
+hr{
+	background-color:green;  
+	border:5px solid black;
+	height:10px;
+}
+

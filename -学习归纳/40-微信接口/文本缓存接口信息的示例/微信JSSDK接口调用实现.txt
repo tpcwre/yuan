@@ -1,0 +1,66 @@
+一： 登陆公众号-》基本配置 获取appid 和 secret
+
+
+
+二： 点击 公众号设置-》功能设置-》JS接口安全域名
+	设置好自己的服务器域名	
+
+
+三：上传代码 
+	1，修改 access_token.php  jsapi_ticket.php 两个文件的系统的权限为所有权限
+
+	2, 编辑sample文件 
+		在调用jssdk的方法中添加 appid,和 secret 
+
+
+
+四：sample页面中调用及应用接口
+
+
+<?php
+//调用接口
+require_once "jssdk.php";
+header('content-type:text/html;charset=utf-8');
+//$jssdk = new JSSDK("wxf992052a0717cd09","e748cb124cb69f04d244461700913821");          //jiafafangzhi.cn
+$jssdk = new JSSDK("wx8d853a94c513ec0f","279a03d8fb0e6efeb0e1532781f74682"); 
+$signPackage = $jssdk->GetSignPackage();
+?>
+
+
+<body style="width:100%;height:100%;background:#000;color:#fff">
+	页面主体内容
+</body>
+
+
+//调用功能
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+ <script>
+  wx.config({
+    debug: true,
+    appId: '<?php echo $signPackage["appId"];?>',
+    timestamp: <?php echo $signPackage["timestamp"];?>,
+    nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+    signature: '<?php echo $signPackage["signature"];?>',
+    jsApiList: [
+      // 所有要调用的 API 都要加到这个列表中
+        'onMenuShareAppMessage',
+        'wx.onMenuShareAppMessage',             //调用转发给朋友功能
+
+    ]
+  });
+  wx.ready(function () {
+        //设置转发给朋友功能
+        wx.onMenuShareAppMessage({
+                title: '高明', // 分享标题
+                desc: 'aaaaaaaaaa', // 分享描述
+                link: 'http://www.sina.com.cn', // 分享链接
+                success: function () { 
+        alert(3);
+                },
+                cancel: function () { 
+        alert(4);
+                }
+        });
+  });
+</script> 
+            

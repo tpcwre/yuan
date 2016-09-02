@@ -1,0 +1,95 @@
+
+一：创建seed类，并匹配好要添加的字段名
+php artisan make:seed MySeeds
+
+
+database/seeds/MySeeds.php 页面
+
+<?php
+use Illuminate\Database\Seeder;
+use App\mydbseed;		//引入自定义的model类
+class MySeeds extends Seeder
+{
+    public function run()
+    {
+    	mydbseed::create([	//设置添加的字段名
+        "a"=>11,
+        'b'=>22,
+        'c'=>33,
+    		]);
+
+	foreach(range(1,10) as $v){		//同时添加10条数据
+	    mydbseed::create([	
+       		 "a"=>11,
+       		 'b'=>22,
+        	'c'=>33,
+    		]);
+	}
+    }
+}
+
+
+
+
+二：注册调用新建的seed类
+
+database/sedds/DatabaseSeeder.php页面
+
+<?php
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+class DatabaseSeeder extends Seeder
+{
+    public function run()
+    {
+        Model::unguard();
+        $this->call(MySeeds::class);		//注册上面新建的MySeeds 类
+        Model::reguard();
+    }
+}
+
+
+
+
+
+
+
+三：创建自定义mode类		
+
+php artisan make:model mydbseed
+
+app/mydbseed.php	页面
+
+<?php
+namespace App;
+use Illuminate\Database\Eloquent\Model;		//继承model类
+class mydbseed extends Model
+{
+   protected $table='two';			//设置使用的表名
+   public $timestamps = false;			// 默认ORM会向数据库中自动添加两个字段的内容，这里将取消自动添加
+    //$primaryKey='id';				//设置主键的字段
+    //protected $guarded = ['price'];		//字段黑名单，该字段不可修改
+						//其它设置查阅手册 Eloquent ORM 起步
+}
+
+
+
+
+
+
+四，执行数据填充命令
+
+
+	php artisan db:seed	
+		该命令会自动执行DatabaseSeeder中配置好的数据库操作语句
+
+
+
+
+
+
+
+
+
+
+

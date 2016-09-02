@@ -1,0 +1,39 @@
+//=====jquery插件下载地址   jquery.com
+//=====jquery UI插件下载地址： jqueryui.com
+
+//=====jquery设置CSS样式
+//=====val()获取及设置表单中的内容
+//=====获取和设置DOM元素中的文本内容
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====jquery设置CSS样式
+//=====val()获取及设置表单中的内容
+//=====获取和设置DOM元素中的文本内容
+
+$(function(){
+	$(":button").css({		//jquery设置CSS样式
+		width:'50px',
+		height:'30px',
+	});
+	$(":button").click(function(){	//val()获取及设置表单中的内容
+		alert($(":text[name='user']").val());	
+		$(this).val($(':text').val());	
+		$(".one").html($(":text").val());	//设置DOM元素中的文本内容	
+	});
+
+	alert($(".one").text());	//获取DOM元素的文本内容
+});

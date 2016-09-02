@@ -1,0 +1,388 @@
+
+
+//=====三元运算
+
+//===== if() 控制语句
+
+//===== switch() 控制语句
+
+//=====while() 循环控制
+
+//=====do while()  先执行后循环
+
+//=====for() 循环控制
+
+//=====break 结束循环体, exit 退出程序, continue 略过符合条件的结果
+
+//====== 在switch下continue会出错，要使用continue2
+
+
+
+
+
+
+
+
+
+
+//=====三元运算
+
+?：判断结果是否为真。
+: : 区分前后两个结果
+当判断为真时，返回第一个结果，为假时，返回第二个结果
+
+<?php
+	$a=160;
+	$sum=$a>100?'成功':'失败';	当$a>100为真时，返回'成功',为假时返回'失败'
+	echo $sum;
+?>
+
+
+
+
+
+
+
+
+
+
+
+//===== if() 控制语句
+
+	//--单向分支
+	$a=10;
+	if($a>16){
+		echo '成年了';
+	}
+
+
+	//--双向分支
+	$a=false;
+	if($a==true){
+		echo '对的';
+	}else if($a==false){
+		echo "错的";
+	}
+
+
+	//--多向分支
+	if($a<16){
+		echo "未成年";
+	}else if($a>16 && $a<30){
+		echo '成年了';
+	}else if($a>30){
+		echo '养家了';
+	}else{
+		echo '父母养着';
+	}
+
+	//--if()语句简写形式
+	$a=20;
+	if($a>16);
+	echo '成年了aaa';
+
+
+	//--if 嵌套结构
+		$age=24;
+		$money=true;
+		
+		if($age>20 && $age <30 && $money){
+			echo "感觉不错，咱们交往一下试试看<br>";
+			$stat='在一起交往很开心';
+			if($stat){
+				echo "咱们结婚呗。，，，";
+			}else{
+				echo "你这个人真好，我配不上你,,,";
+			}
+			
+		}else{
+			echo "咱们不合适，，，";
+		}
+		
+
+
+
+
+
+
+
+
+
+
+
+
+//===== switch() 控制语句
+	
+		//--switch 选择星期几
+		$week=8;
+		switch($week){
+			case 1:
+				echo "今天星期一，上班";
+			break;
+			case 2:
+				echo "今天星其二，上班";
+			break;
+			case 3:
+				echo "今天星其三，上班";
+			break;
+			case 4:
+				echo "今天星其四，上班";
+			break;
+			case 5:
+				echo "今天星其五，上班";
+			break;
+			default:
+				echo "今天星其八，这是哪个星球的日子";
+		}
+		
+		
+		//--switch 更换图片</h1>";
+
+			$a=5;
+			switch($a){
+				case 1:
+					echo "<img src='img/p1.jpg' />";
+				break;
+				case 2:
+					echo "<img src='img/p2.jpg' />";
+				break;
+				default:
+					echo "没有其它的图片了。。。";
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+//=====while() 循环控制
+
+
+	$a=10;
+	while($a>0){		//括号里的表达式返回的需要是一个布尔值
+		echo $a;
+		$a--;
+		echo "<br>";
+	}
+
+
+
+
+	//--while循环输出 三角形</h1>";
+	
+	$a=1;
+	while($a<=5){
+		$b=1;
+		while($b<=$a){
+			echo "*";
+			$b++;
+		}
+		echo "<br>";
+		$a++;
+	}
+	
+
+
+	//--while循环输出 99乘法表</h1>";
+	
+	$a=1;
+	while($a<=9){
+		$b=1;
+		while($b<=$a){
+			echo $b.'*'.$a.'='.$a*$b." ";
+			$b++;
+		}
+		echo "<br>";
+		$a++;
+	}
+
+
+
+
+	//-- while嵌套循环</h1>";
+
+		$a=1;
+		while($a<5){
+			$b=1;
+			while($b<5){
+				echo $b;
+				$b++;
+			}
+			echo $a.'<br>';
+			$a++;
+		}
+
+		
+
+
+	//--while循环做表格并隔行换色</h1>";
+	
+		echo "<table border=1 width=500>";
+			$rows=1;
+			while($rows<=5){
+				if($rows%2==1){
+					echo "<tr bgcolor='#ccc'>";
+				}else{
+					echo "<tr>";
+				}
+					$cols=1;
+					while($cols<=5){
+						echo "<td>a</td>";
+						$cols++;
+					}
+				echo "</tr>";
+				$rows++;
+			}
+		echo "</table>";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====do while()  先执行后循环
+
+	无论条件是否成立，先执行一次语句，然后再判断，判断为真时继续执行，为假时，结束。
+
+	/--do while 的用法一：</h1>";
+	$a=1;
+	do{
+		echo "do while的用法,不管条件是否成立，先运行一次<br>";
+		$a++;
+	}while($a<=1);
+	
+
+	
+	/--do while 的用法 二</h1>";
+	$a=1;
+	do{
+		echo '不管条件是否成立，先执行一次do 语句，如果条件成立，则继续执行<br>';
+		$a++;
+	}while($a<=5);
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====for() 循环控制
+
+<?php
+	for($a=1;$a<11;$a++){
+		echo $a.'<br>';
+	}
+	echo '循环结束';
+?>
+
+
+	/--for循环-同时可有多个条件
+	
+	for($i=1,$j=1;$i<10;$i+=1,$j+=5){
+		echo $i.'--'.$j.'<br>';
+	}
+
+
+	/--for循环-输出三角型 </h1>";
+	
+	for($i=1;$i<10;$i++){
+		for($j=1;$j<=$i;$j++){
+			echo "*";
+		}
+		echo '<br>';
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+//=====break 结束循环体, exit 退出程序, continue 略过符合条件的结果 
+
+<?php
+//--break 结束整个循环体
+	for($a=1;$a<5;$a++){
+		for($b=1;$b<5;$b++){
+			if($b==2){
+				break;
+			}
+			echo $a.$b.'<br>';
+		}
+	}
+	echo '程序还在进行中....';
+
+//--exit 结束整个页面程序
+	for($a=1;$a<5;$a++){
+		for($b=1;$b<5;$b++){
+			if($b==2){
+				//exit;
+				exit('程序结束运行！');
+			}
+			echo $a.$b.'<br>';
+		}
+	}
+	echo '程序还在进行中....';
+
+//--continue 跳过符合条件的结果，继续往后循环
+	for($a=1;$a<5;$a++){
+		for($b=1;$b<5;$b++){
+			if($b==2){
+				continue;
+			}
+			echo $a.$b.'<br>';
+		}
+	}
+	echo '程序还在进行中....';
+?>
+
+
+
+
+
+//====== 在switch下continue会出错，要使用continue2
+
+	foreach($tmps as $k=>$v){
+		switch($error){
+			case 1:
+			case 2:
+				continue 2;
+			break;
+			case 3:
+			case 6:
+			case 7:
+				continue 2;
+			break;
+			case 4:
+				continue 2;
+			break;
+		}
+	}
+

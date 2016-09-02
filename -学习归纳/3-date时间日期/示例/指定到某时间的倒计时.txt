@@ -1,0 +1,14 @@
+
+
+//===== 指定到某时间的倒计时
+
+	var endt = {{\Session::get('endt')}}*1000;		//获取指定到期时间戳
+	var nowt = Date.parse(new Date());				//当前时间戳
+	if(endt <= nowt){
+		location.href='{{url('fcpl3')}}';
+		alert('第{{\Session::get('sue')}}期已停止，请注意投注期号！');
+	}
+	var res = (endt-nowt)/1000;				//获取指定时间戳与当前时间戳的时差
+	var s = Math.floor(res%60);				//获取倒计时剩余的秒数
+	var i = Math.floor(res%3600/60);		//获取倒计时剩余的分数
+	var h = Math.floor(res%(60*60*24)/3600);//获取倒计时剩余的小时数

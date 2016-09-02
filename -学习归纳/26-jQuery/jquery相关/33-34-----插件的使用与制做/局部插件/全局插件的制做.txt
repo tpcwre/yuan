@@ -1,0 +1,16 @@
+
+					//=====局部插件的制做
+					//1，引入jquery文件
+					//2，创建jquery.xxx.js 和 x.js文件
+					//3，在jquery.xxx.js文件中编写功能代码
+					 	全局插件的代码头为$.extend()
+						而局部插件的代码头为$.fx.extend()
+					//4，引入写好的jquery.xxx.js文件
+					//5，在x.js文件中调用插件 $('dom').$.xxx();
+
+
+
+
+
+
+					

@@ -1,0 +1,591 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第40课 知问前端-创建注册表单 6
+
+
+//-----文本框点击后弹出日历
+//-----将title提示信息用框的形式显示
+
+学习要点：
+	1，HTML部分
+	2，CSS部分
+	3，jQuery部分
+
+======================================
+js页面
+$(function(){
+$(".search_button").button({
+	icons:{
+		primary:"ui-icon-search",
+	}
+});
+$("#reg").dialog({
+	title:"会员注册",
+	autoOpen:true,
+	modal:true,
+	resizable:false,
+	width:320,
+	height:340,
+	buttons:{
+		"提交":function(){},
+		"取消":function(){
+			$(this).dialog("close");
+		}
+	}
+});
+
+$("#reg").buttonset();
+
+//-----文本框点击后弹出日历
+$("#date").datepicker();
+
+//-----将title提示信息用框的形式显示
+$("#reg input[title]").tooltip();
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第41课 知问前端-工具提示UI 7
+学习要点：
+	1，调用tooltip()方法
+	2，修改tooltip()样式
+	3，tooltip()方法的属性
+	4，tooltip()方法的事件
+	5，tooltip()中使用on()
+
+
+//-----课件内容（文本）
+一，调用tooltip()方法
+<input type="text" name="user" class="text" id="user" title="输入账号"/>
+$("#user").tooltip();
+
+
+
+二，修改tooltip()样式
+	在弹出的tooltip提示框后，在火狐浏览器中打开firebug或者审查元素，这样我们可以看看tooltip的样式，根据样式进行修改。无须修改UI里的CSS,直接用自建的CSS替代即可。
+	.ui-tooltip{
+		color:red
+	}
+	其它属性修改方案类似。
+
+
+
+三，tooltip()方法的属性
+	对话框方法有两种形式：1，tooltip(options) , options是以对象键值对的形式传参，每个键值对表示一个选项；	2，tooltip("action",param),action是操作对话框方法的字符串，param则是options的某个选项。
+
+1, 	tooltip外观选项
+属性		默认值/类型		说明
+disabled	false/布尔值		设置为true,将禁止显示工具提示
+content		无/字符串		设置title内容
+items		无/字符串		设置选择器以限定范围（过滤功能）
+tooltipClass	无/字符串		引入class形式的CSS样式
+
+$("[title]").tooltip({
+	disabled:false,
+	content:"改变title内容",
+	items:"input", //限制只有input类型的元素才会显示title信息。
+	tooltipClass:"reg_tooltip"  //给元素赋与一个名为reg_tooltip的样式
+});
+
+
+
+2,	tooltip页面位置选项
+属性		默认值/类型		说明
+position	无/对象		使用对象的键值对赋值，有两个属性；my和at 表示坐标，my 是以目标点左下角为基准的，at以my 为基准。分别有left,right,center,top,bottom值。另外还可以额外为距离添加数值
+
+$("#user").tooltip({
+	position:{
+		my:"left center",
+		at:"right+5 center"   //+5 是为距离额外添加的数值，
+	}
+});
+
+
+
+3，	tooltip 视觉选项
+属性		默认值/类型		说明
+show		false/布尔值		显示对话框时，默认采用淡入淡出效果，
+hide		false/布尔值		关闭对话框时，默认采用淡入淡出效果。
+
+$("#user").tooltip({
+	show:false,
+	hide:false
+});
+	注意：设置true后，默认为淡入淡出，如果想使用另的特效，可以使用以下字串参数。
+
+特效名称		说明 
+blind		工具提示从顶部显示或消失 
+bounce		工具提示断断续续地显示或消失，垂直运动。
+clip		工具提示从中心同时向上下垂直显示或消失 
+slide		工具提示从左边显示或消失 
+drop		工具提示从左边显示或消失，有透明度变化 
+fold		工具提示从左上角开始显示或消失
+highlight	工具提示显示或消失，伴随透明度和背景色的变化。
+puff		工具提示从中心缩放，显示时收缩，消失时扩散
+scale		工具提示从中心缩放，显示时扩散，消失时收缩。
+pulsate		工具提示以闪烁形式显示或消失。
+
+$("#user").tooltip({
+	show:"blind",
+	hide:"blind"
+});
+
+
+
+
+4,	tooltip 行为选项
+属性		默认值/类型		说明
+track		fals/布尔值		设置为true,能跟随鼠标移动。
+$("#user").tooltip({
+	track:true
+});
+
+
+
+
+四，tooltip()方法的事件
+	除了属性设置外，tooltip()方法也提供了大量的事件，这些事件可以给各种不同状态时提供回调函数，这些回调函数中的this值等于对话框内容的div对象，不是整个对话框的div.
+
+
+1，	tooltip事件选项
+事件名		说明
+create		当工具提示被创建时会调用create方法，该方法有两个参数（event,ui）,此事件中的UI参数为空。
+
+open		当工具提示被显示时，会调用open方法，该方法有两个参数（event,ui）,此事件中的ui有一个参数tooltip,返回是工具提示的jQuery对象。
+
+close		当工具提示关闭时，会调用close方法。关闭的工具提示可以用tooltip("open")重新打开。该方法有两个参数（event,ui）.此事件中的ui有一个参数tooltip,返回是工具提示的jquery对象。
+
+//当工具提示创建时
+$("#user").tooltip({
+	create:function(){
+		alert("创建触发");
+	}
+});
+
+
+//当工具提示关闭时
+$("#user").tooltip({
+	close:function(){
+		alert("关闭触发");
+	}
+});
+
+//当工具提示打开时
+$("#user").tooltip({
+	open:function(){
+		alert("打开触发");
+	}
+});
+
+
+2，tooltip("action",param)方法
+方法		 	返回值		说明 
+tooltip("open")		jQuery对象	打开工具提示
+tooltip("close")	jQuery对象	关闭工具提示
+tooltip("disable")	jQuery对象	禁用工具提示
+tooltip("enable")	jQuery对象	启用工具提示
+tooltip("destroy")	jQuery对象	删除工具提示，直接阻断了tooltip
+tooltip("widget")	jQuery对象	获取工具提示jquery对象
+tooltip("option",param) 一般值		获取option属性值（内容）
+tooltip("option",param,value)  jquery对象	设置option属性值（内容）
+
+$("#user").tooltip("open");
+$("#user").tooltip("close");
+$("#user").tooltip("disable");
+$("#user").tooltip("enable");
+$("#user").tooltip("destroy");
+$("#user").tooltip("widget");
+//获取某个options的param选项值（内容）
+var title=$("#user").tooltip("option","content")
+alert(title);
+//设置某个options的param选项值（内容）
+$("#reg").dialog("option","content","提示内容");
+
+
+
+
+五，tooltip()中使用on()
+	在tooltip的事件中，提供了使用on()方法处理的事件方法
+1，	on()方法触发的对话框事件
+特效名称		说明
+dialogopen		显示时触发
+tooltipclose		关闭时触发
+
+$("#reg").on("dialogopen",function(){
+	alert("打开时触发");
+});
+
+$("#");
+
+
+=====================================
+
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<button class="search_button">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<div id="reg">
+<p>
+	<label for="user">用户名：</label>
+	<input type="text" name="user" class="text" id="user" title="请输入用户名" />
+	<span class="star"> * </span>
+	
+</p>
+
+<p>
+	<label for="pass">密　码：</label>
+	<input type="password" name="pass" class="text" id="pass" title="请输入密码" />
+	<span class="star">*</span>
+</p>
+
+<p>
+	<label for="email">邮　箱：</label>
+	<input type="text" name="email" class="text" id="email" title="请输入邮箱" />
+</p>
+<p>
+	<label>性　别：</label>
+	<input type="radio" name="sex" value="male" id="male" checked="checked">
+	<label for="male">男</label></input>	
+   	
+	<input type="radio" name="sex" value="female" id="female">
+	<label for="female">女</label></input>
+</p>
+<p>
+	<label for="date">生　日：</label>
+	<input type="text" name="date" class="text" id="date" readonly="readonly" title="请输入日期"/>
+</p>
+
+</div>
+
+</body>
+</html>
+===========================================
+css页面
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+
+.ui-widget-header{
+	background:url(../img/bj2.png);
+}
+.ui-dialog-title{
+	color:blue;
+}
+
+
+
+#reg{
+	padding:15px 0 0 15px;
+}
+
+#reg p{
+	margin:10px 0;
+	padding:0;
+}
+
+#reg p label{
+	font:normal bold 14px normal;
+	color:#666;
+}
+
+#reg .star{
+	font-sie:20px;
+	color:red;
+}
+
+
+#reg .text{
+	border-radius:5px;
+	border:1px solid #ccc;
+	background:#fff;
+	width:200px;
+	height:25px;
+	line-height:25px;
+	text-indent:5px;
+	font-size:13px;
+	color:#666;
+}
+
+/*设置对话框中title提示信息的tooltip样式*/
+.ui-tooltip{
+	color:red;
+}
+
+/*为tooltip引入class形式的CSS样式*/
+.a{
+	color:blue;
+}
+
+=========================================
+
+
+js页面
+
+$(function(){
+$(".search_button").button({
+	icons:{
+		primary:"ui-icon-search",
+	}
+});
+$("#reg").dialog({
+	title:"会员注册",
+	autoOpen:true,
+	modal:true,
+	resizable:false,
+	width:320,
+	height:340,
+	buttons:{
+		"提交":function(){},
+		"取消":function(){
+			$(this).dialog("close");
+		}
+	}
+});
+
+$("#date").datepicker();
+$("#reg").buttonset();
+/*
+//-----调用tooltip()方法给title提示信息添加效果
+$("#user").tooltip({
+	//position:"top left"
+	//position:"right top"
+});
+
+
+//-----修改对话框中title提示信息的tooltip样式
+//找到元素的类名，在CSS中重写
+.ui-tooltip{
+	color:red;
+}
+
+//-----禁用tooltip样式
+$("#user").tooltip({
+	disabled:true
+});
+
+
+
+//-----tooltip中修改title提示信息内容
+$("#user").tooltip({
+	content:"这是被修改的内容"
+});
+
+
+//-----tooltip中限制过滤要提示的title信息的范围
+$("[title]").tooltip({
+	items:"#pass"  
+//带有title的很多元素中只有id为pass的title提示信息是tooltip风格。
+});
+
+
+//-----为tooltip引入class形式的CSS样式
+//先在CSS中设置好CSS样式 .a 然后在这里引用 。
+$("#user").tooltip({
+	tooltipClass:"a"
+});
+
+//-----tooltip()中设置title提示信息的位置
+//可设置的值有：left,right,center,top,bottom 这些值针对的是title信息的四边， 基准点文本框的左下点（不变），
+$("#user").tooltip({
+  position:{
+    my:"left bottom", // title信息框左侧和底部与基准点重叠，
+    at:"right+15 bottom"  //还可以通过加减数值来偏移位置
+  }
+});
+
+
+//-----title信息的显示与消失的效果默认为淡入淡出
+blind		工具提示从顶部显示或消失 
+bounce		工具提示断断续续地显示或消失，垂直运动。
+clip		工具提示从中心同时向上下垂直显示或消失 
+slide		工具提示从左边显示或消失 
+drop		工具提示从左边显示或消失，有透明度变化 
+fold		工具提示从左上角开始显示或消失
+highlight	工具提示显示或消失，伴随透明度和背景色的变化。
+puff		工具提示从中心缩放，显示时收缩，消失时扩散
+scale		工具提示从中心缩放，显示时扩散，消失时收缩。
+pulsate		工具提示以闪烁形式显示或消失。
+
+$("[title]").tooltip({
+//true为淡入淡出，false为极速显示
+	//show:true,
+	//hide:true
+	show:"drop",
+	hide:"drop"
+});
+
+//-----title信息与鼠标一起移动
+$("#user").tooltip({
+	track:true
+});
+
+//-----tooltip的创建，打开，关闭事件
+$("#user").tooltip({
+	create:function(){
+	//	alert("创建触发");
+	},
+	open:function(e,ui){
+	//	alert("打开触发");
+	//	alert(ui.tooltip.length);
+	},
+	close:function(e,ui){
+		alert("关闭触发");
+		alert(ui.tooltip.length);
+	}
+});
+
+
+//-----tooltip("option",param)非初始化的各操作行为
+$("[title]").tooltip();
+$("#pass").tooltip("open");
+//--关闭tooltip效果
+$("#user").tooltip("close");
+//--禁用tooltip效果
+$("#user").tooltip("disable");
+//--启用tooltip效果
+$("#user").tooltip("enable");
+//--删除tooltip效果
+$("#user").tooltip("destroy");
+//--获取tooltip对象
+$("#user").tooltip("widget");
+//--获取某个options的param选项值（内容）
+var title=$("#user").tooltip("option","content")
+alert(title);
+//--设置某个options的param选项值（内容）
+$("#reg").dialog("option","content","提示内容");
+
+*/
+
+
+//-----tooltip 结合on的打开 ，关闭事件
+$("#user").tooltip();
+$("#user").on("tooltipopen",function(){
+	alert("打开触发");
+});
+$("#user").on("tooltipclose",function(){
+	alert("关闭触发");
+});
+
+
+});

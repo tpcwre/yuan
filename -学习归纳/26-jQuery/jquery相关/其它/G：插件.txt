@@ -1,0 +1,292 @@
+
+
+		第33课 插件
+-----插件的使用和案例
+
+jquery 插件官网 jquery.com 可下载相关插件
+
+学习要点：
+1，插件概述
+2，验证插件
+3，自动完成插件
+4，自定义插件
+
+										//-----插件概述：
+
+
+    插件是以jquery的核心代码为基础，编写出复合一定规范的应用程序，也就是说，插件也是jquery代码，通过js文件引入的方式 植入即可。
+    插件的种类很多，主要大致可以分为：UI类，表单及验证类，输入类，特效类，ajax类，滑动类，图形图像类，导航类，综合 工具类，动画类等待。
+    引入插件是需要一定步骤，基本如下；
+1，必须先引入jquery.js文件，而且在所有插件之前引入。
+2，引入插件。
+3，引入插件的周边，比如皮肤，中文包等。
+
+
+
+										//-----验证插件：
+
+	validate.js是jquery比较优秀的表单验证插件之一，这个插件有两个js文件，一个是主文件，一个是中文包文件。使用的时候，可以使用min版本，在这里，为了教学，我们未压缩版本。
+
+
+
+
+										//-----插件使用流程：
+第一步：在html页面中引入jquery.js文件
+第二步：在html页面中引入validate.js文件
+	<script src="jquery-1.11.1.js"></script>
+	<script src="jquery.validate.js"></script>
+	<script src="messages_zh.js"></script>
+	<script src="a.js"></script>
+第三步：加载validate
+    $("form").validate();  如此即可
+第四步：启用插件相关功能 如下：
+  必选项	在表单设置 	class="required"
+  不小于两位 	在表单设置	minlength="2"	
+  以邮箱格式	在表单中设置	class="email"
+  以网址格式	在表单中设置 	class="url"
+例：
+<p>用户名：<input type="text" name="user" class="required" minlength="3" /></p>
+<p>邮 箱：<input type="text" name="email" class="required email" /></p>
+<p>网 址；<input type="text" name="url" class="url" /></p>
+	
+第五步：可引用各语言包设置界面语言
+    在html页面中引入messages_zh.js中文语言包，并可以进行二次更改封装。
+
+第六步：如引入老版本的功能插件，当前jquery不支持的时候，需要引用老版本migrate.js即可以使用老插件的功能。
+	
+
+a.js页面；
+$(function(){
+	$("form").validate();
+});
+
+
+
+a.html页面
+<html>
+<head>
+	<script src="jquery-1.11.1.js"></script>
+	<script src="jquery.validate.js"></script>
+	<script src="messages_zh.js"></script>
+	<script src="a.js"></script>
+</head>
+<body>
+<form action="12.html">
+	<p>用户名：<input type="text" name="user" class="required" minlength="3" /></p>
+	<p>邮 箱：<input type="text" name="email" class="required email" /></p>
+	<p>网 址；<input type="text" name="url" class="url" /></p>
+	<p><input type="submit" value="提交"/></p>
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+		第34课 插件
+
+
+
+										//-----自定义插件：
+
+	前面我们使用了别人提供好的插件，使用起来非常方便。如果市面上找不到自己满意的插件，并且想自己封装一个插件提供给别人使用，那么就需要自己编写一个jquery插件了。
+
+
+									//-----插件的种类：-----全局插件与局部插件
+
+	按照功能分类，插件的形式可以分为三类
+	1，封装对象方法的插件：（基于某个DOM元素的jquery对象，局部性）
+	2，封装全局函数的插件。（全局性的封装）
+	3，选择器插件。（类似与find()）
+
+基本要点：
+	经过日积月累的插件开发，开发者逐步约定了一些基本要点，以解决各种因为插件导致的冲突，错误等问题，包括如下。
+	1，插件名推荐使用jquery.[插件名].js  , 以免和其他js文件或者库相冲突。
+	2，局部对象附加jquery.fn对象上，全局函数附加在jquery上。
+	3，插件内部，this指向是当前的局部对象.
+	4，可以通过this.each来遍历所有元素。
+	5，所有的方法或插件，必须用分号结尾，避免出现问题。
+	6，插件应该返回的是jquery 对象，以保证可链式连缀。
+	7，避免插件内部使用$,如果要使用，请传递jQuery进去。
+
+
+
+html页面：
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='jquery-1.11.1.js'></script>
+	<script type="text/javascript" src="jquery.nav.js"></script>
+	<script src='a.js'></script>
+	<style>
+		.list{
+			list-style:none;
+			padding:0;
+			font-size:13px;
+			margin:50px auto;
+			color:#fff;
+			width:550px;
+		}	
+		.list li{
+			float:left;
+			width:100px;
+			line-height:30px;
+			text-align:center;
+			background:#333;
+			cursor:pointer;
+		}
+
+		
+	</style>
+</head>
+<body>
+<ul class="list">
+	<li>导航列表
+		<ul class="nav">导航列表1</ul>
+		<ul class="nav">导航列表1</ul>
+		<ul class="nav">导航列表1</ul>
+		<ul class="nav">导航列表1</ul>
+		<ul class="nav">导航列表1</ul>
+	</li>
+	<li>导航列表
+		<ul class="nav">导航列表2</ul>
+		<ul class="nav">导航列表2</ul>
+		<ul class="nav">导航列表2</ul>
+		<ul class="nav">导航列表2</ul>
+		<ul class="nav">导航列表2</ul>
+	</li>
+
+</ul>
+<p>1</p><p>1</p>
+<ul class="list">
+	<li>导航列表
+		<ul class="nav">导航列表1</ul>
+		<ul class="nav">导航列表1</ul>
+		<ul class="nav">导航列表1</ul>
+		<ul class="nav">导航列表1</ul>
+		<ul class="nav">导航列表1</ul>
+	</li>
+	<li>导航列表
+		<ul class="nav">导航列表2</ul>
+		<ul class="nav">导航列表2</ul>
+		<ul class="nav">导航列表2</ul>
+		<ul class="nav">导航列表2</ul>
+		<ul class="nav">导航列表2</ul>
+	</li>
+</ul>
+</body>
+</html>
+
+==========================
+
+
+js页面
+
+$(function(){
+	//全局插件
+	$.nav();
+	//局部插件
+	$(".list").eq(0).nav("blue");
+	//插件返回的是一个对象
+	alert($(".list").eq(0).nav("blue"));
+});
+
+============================
+-----全局插件与局部插件
+
+jquery.nav.js页面
+
+(function($){
+/*
+//全局性插件： $.extend()
+  $.extend({
+    "nav":function(){
+	$(".nav").css('display','none');
+
+	$(".nav").parent().hover(function(){
+		$(this).find(".nav").slideDown("normal");
+	},function(){
+		$(this).find(".nav").stop(true).slideUp("normal");
+	});
+    }
+  });
+
+
+//局部性插件：$.fn.extend()
+  $.fn.extend({
+    "nav":function(){
+	$(this).find(".nav").css('display','none');
+
+	$(this).find(".nav").parent().hover(function(){
+		$(this).find(".nav").slideDown("normal");
+	},function(){
+		$(this).find(".nav").stop(true).slideUp("normal");
+	});
+    }
+  });
+
+*/
+
+//给插件传颜色参数color
+  $.fn.extend({
+    "nav":function(color){
+	$(this).find(".nav").css({
+			'display':'none',
+			"color":color
+		});
+
+	$(this).find(".nav").parent().hover(function(){
+		$(this).find(".nav").slideDown("normal");
+	},function(){
+		$(this).find(".nav").stop(true).slideUp("normal");
+	});
+	return this;
+    }
+  });
+
+})(jQuery);
+
+
+
+-----this在插件里的区别
+
+  $.fn.extend({
+    "nav":function(color){
+	//这是的this是插件的方法
+	//在插件里的this,经过了一些封装处理，this就是表示jquery对象。
+	//而不需要再次使用$()包装
+	this.find(".nav").css({
+			'display':'none',
+			"color":color
+		});
+
+	this.find(".nav").parent().hover(function(){
+		//这里的$(this)是普通的匿名函数，代表的是DOM对象。
+		$(this).find(".nav").slideDown("normal");
+	},function(){
+		$(this).find(".nav").stop(true).slideUp("normal");
+	});
+	return this;
+    }
+  });

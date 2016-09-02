@@ -1,0 +1,683 @@
+﻿
+
+//===== show status 命令了解各种SQL的执行频率
+	
+	show status；
+	
+	
+
+
+//-- where 与 having 的区别
+
+	select id,name,age from user where height>180;		where 查询字段只要是表中字段即可
+
+	select id,name,age from user having id > 30;		having 查询字段必需是 select 所查询的字段
+	
+	
+	
+//===== explain	查看sql语句执行效率
+
+		
+		$sql = "select * from user where id > ((select max(id) from user)-5)";			//双select 语句
+
+		$sql = select category_id,count(*) from table group by category_id;  //按种类查商品总数
+		$sql = select category_id,sum(price) from table gruop by category_id; //按各类查商品总价
+
+		$sql = select category_id,avg(price) from goods group by category_id  //按种类查询平均价
+		$sql = select category_id,avg(price) as ap from goods group by category_id having ap>1000; //按各类查询平均价大于1000的
+	
+		explain select * from table  where id=1000;
+	
+	
+	
+		select * from stus where id<10 union select * from stus where id<15;
+						// 同时处理两条查询的结果加起来，处理重复项。删除相同的
+						// union 是排重
+
+		select * from stus where id<10 union all select * from stus where id<15;
+						// 同时处理两条查询的结果加起来，并且不处理重复项。
+
+
+		select concat(id,"-",name,"-",sex,"-",age) from user;		//concat 拼接字段
+
+		select 1+2;							// select 可计算数值 
+
+		select * from test order by rand();				//随机顺序查询表中所有数据
+
+ 		select * from user where id in(4,5,6,7,8) order by rand();  	//指定范围内查询随机的数据
+
+		select * from test order by rand() limit 2;			//随机查询2条数据
+
+		select age-2 from user;						//获取所有age 字段减去2 的值
+
+
+		select t1.name,count(t2.tie) from t1,t2 where t1.id=t2.uid group by age;
+			//以age相同的为一组，查询t1表name 相关联的t2表中的tie 数量
+
+		select t1.name,count(t2.age) from t1,t2 where t1.id=t2.uid group by age having age>18;	//having 的二次筛选查询
+			
+
+ 		select name,count(name) c,id from user group by name having id>10 order by id desc;	//多逻辑查询
+
+		select t2.name from lamp.t2;				//对象方式查询库表中字段的值	
+
+
+		select * from a2;								// 查询表中所有数据
+
+		select name from a2 where id = 3;				// 查询指定id的名字
+
+		select * from a2 where id=3 and name='lily' or id=5 and name='xiaogang';	//混合式查询
+		select * from user where id=3 or (id=1 and name='马尧');			
+		select * from user where (id=3 or id=1) and name='马尧';
+
+		select * from s2 where id in(2,4,6,8,10);			// in() 查询指定范围内数据
+
+		select * from s2 where id between 2 and 5;			// between 查询指定范围内数据
+
+		select * from s2 where id not between 2 and 12;		// not 查询指定值以外的数据 经常和in或between综合使用
+		select * from s2 where id not in(2,4,6,8,10,12);	// not 查询指定值以外的数据 经常和in或between综合使用
+
+
+
+		select * from s2 where name like 'aaa';				// like % 模糊查询
+		select * from s2 where name like '%a';
+		select * from s2 where name like 'a%';
+		select * from s2 where name like '%a%';
+		select * from s2 where name like '_a_';
+									_，用途和%一样，但是表示任意字符出现一次。
+
+
+		select * from s2 order by age desc limit 1;			// order 排序 desc(倒序)
+									// limit 限制只显示一条
+
+		select * from s2 order by age desc limit 1,3;		// limit 限制从第1条开始，共查询几条
+
+
+		select count(*) from s2;						// count(*) 查询数据总条数
+		select count(name) from s2;				
+
+		select max(id) from s2;							// max() 求最大值
+		select min(id) from s2;							// min() 求最小值
+		select avg(id) from s2;							// avg() 求平均值
+		select sum(age) from s2;						// sum() 求总和
+
+
+		select avg(id) from s2 group by name;			// group by 分组计算平均值
+		select avg(age) from s2 group by name;
+
+
+		select avg(age) from s2 where name !='aaa' group by name;	
+											
+														//  ! group by取指定值以外的 分组平均值
+
+		select avg(age) from s2 where name !='bbb' group by name having avg(age) > 18;  // having  语句中的后置过滤
+			注意：where条件是对数据先进行过滤，而group by中的having是对分组后的数据再次进行过滤（where是前置过滤，having是后置过滤）
+			select 字段名 ===》from 表名===》 where===》 group by having ===》 order by ===》limit	从句的顺序
+
+
+
+
+
+		select * from score, student where score.id=student.id;  	// 数据表关联查询						*
+
+		select * from score, student where score.id=student.id and ....;  
+		
+		select u.id,u.name,u.sex,u.age,l.name from user1 as u,level as l where u.level=l.id;		
+					
+																		// as 给字段起别名					*
+
+
+		mysql> select * from user where userName regexp '[a-z]{2}';		// regexp 正则查询					*
+
+
+
+
+
+	//--- 关联查询与 having 查询中的二次筛选
+
+
+			mysql> select * from t1;
+			+----+------+------+
+			| id | name | id3  |
+			+----+------+------+
+			|  1 | a    |   11 |
+			|  2 | b    |   22 |
+			|  3 | c    |   33 |
+			|  4 | d    |   44 |
+			|  5 | e    |   55 |
+			+----+------+------+
+			5 rows in set (0.00 sec)
+
+
+
+			mysql> select * from t2;
+			+------+------+--------+--------+------+
+			| id   | name | gonzhi | zhiwei | uid  |
+			+------+------+--------+--------+------+
+			|    2 | aA   |    100 | a      |    3 |
+			|    1 | aA   |    100 | b      |    2 |
+			|    2 | cA   |    300 | a      |    3 |
+			|    5 | dA   |   1100 | b      |    1 |
+			|    6 | bA   |    100 | l      |    1 |
+			|    1 | aA   |    100 | b      |    2 |
+			|    3 | bA   |    200 | b      |    3 |
+			|    6 | bA   |    100 | l      |    1 |
+			|    1 | aA   |    100 | b      |    2 |
+			+------+------+--------+--------+------+
+			9 rows in set (0.00 sec)
+
+			
+							//以t2表的 gonzhi 相同的为一组，查询与t1表的name相关联的 gonzhi总个数
+			
+			select t1.name,t2.gonzhi,count(t2.gonzhi) from t1,t2 where t1.id=t2.uid group by zhiwei;
+			
+			+------+--------+------------------+
+			| name | gonzhi | count(t2.gonzhi) |
+			+------+--------+------------------+
+			| c    |    100 |                2 |
+			| a    |   1100 |                5 |
+			| a    |    100 |                2 |
+			+------+--------+------------------+
+
+						//以t2表的 gonzhi 相同的为一组，查询与t1表的name相关联的 gonzhi总个数 并用having 进行二次筛选出gonzhi > 100的数据
+			select t1.name,t2.gonzhi,count(t2.gonzhi) from t1,t2 where t1.id=t2.uid group by zhiwei having gonzhi>100;
+			+------+--------+------------------+
+			| name | gonzhi | count(t2.gonzhi) |
+			+------+--------+------------------+
+			| a    |   1100 |                5 |
+			+------+--------+------------------+
+
+
+
+
+
+	//--- 按倒数的字串长度排序来获取name值
+	
+			select name from tt1 order by length(name) desc limit 10;
+			
+			+----------+
+			| name     |
+			+----------+
+			| aaaaaaaa |
+			| aaaaaaa  |
+			| aaaaaa   |
+			| aaaaa    |
+			| aaaa     |
+			| aaa      |
+			| aa       |
+			| a        |
+			+----------+
+
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//====== 关联查询的三种方式 
+
+
+		mysql> select * from score;  
+		+----+-------+  
+		| id | score |  
+		+----+-------+  
+		|  1 |    60 |  
+		|  2 |    75 |  
+		|  4 |    90 |  
+		+----+-------+  
+		3 rows in set (0.00 sec)  
+		  
+		mysql> select * from student;  		
+		+----+--------+  
+		| id | name   |  
+		+----+--------+  
+		|  1 | 张三   |  
+		|  2 | 李四   |  
+		|  3 | 王五   |  
+		+----+--------+  
+		3 rows in set (0.00 sec)  
+							//关联查询方式一(标准)
+		mysql> select * from score, student where score.id=student.id;  	
+		+----+-------+----+--------+  
+		| id | score | id | name   |  
+		+----+-------+----+--------+  
+		|  1 |    60 |  1 | 张三   |  
+		|  2 |    75 |  2 | 李四   |  
+		+----+-------+----+--------+  
+		2 rows in set (0.09 sec)  
+							//关联查询方式二
+		mysql> select * from score join student on score.id=student.id;  
+		+----+-------+----+--------+  
+		| id | score | id | name   |  
+		+----+-------+----+--------+  
+		|  1 |    60 |  1 | 张三   |  
+		|  2 |    75 |  2 | 李四   |  
+		+----+-------+----+--------+  
+		2 rows in set (0.00 sec)  
+							//关联查询方式三
+		mysql> select * from score join student using(id);  
+		+----+-------+--------+  
+		| id | score | name   |  
+		+----+-------+--------+  
+		|  1 |    60 | 张三   |  
+		|  2 |    75 | 李四   |  
+		+----+-------+--------+  
+		2 rows in set (0.00 sec)  
+
+
+
+
+		
+			
+			
+			
+			
+
+//===== 左右连接查询
+
+
+		create table test1(
+			   id int,             
+			   name varchar(10)
+		)
+
+		create table test2(
+			   id int,             
+			   name varchar(10)
+		)
+
+		INSERT INTO `test1` VALUES (1,'2');
+		INSERT INTO `test1` VALUES (1,'2');
+		INSERT INTO `test1` VALUES (2,'1');
+		INSERT INTO `test1` VALUES (2,'2');
+		INSERT INTO `test1` VALUES (3,'1');
+
+		INSERT INTO `test2` VALUES (1,'2');
+		INSERT INTO `test2` VALUES (2,'1');
+		INSERT INTO `test2` VALUES (2,'2');
+		--------------------------------------------------
+
+		左连接：select * from  test1 a left join test2 b on a.id=b.id 
+
+
+		右连接：select * from test1 a right join test2 b on a.id= b.id;
+
+		内连接：
+			select * from  test1 a  join test2 b on a.id=b.id 
+			select * from  test1 a inner join test2 b on a.id=b.id 
+			select * from  test1 a , test2 b where a.id=b.id  
+
+
+			
+			
+			
+			
+
+//=====子查询语句
+
+			需求：我要找出保健人员都是谁？
+			mysql> select * from level where name="保健";
+			mysql> select * from user1 where level=3;
+			mysql> select * from user1 where level=(select id from level where name="保健");
+						//这种子查询就是用查询出来的结果作为条件来使用.
+
+
+			mysql> select *,(select gz from level where user1.level=level.id) as gz from user1;
+						//当作输出的字段来使用了
+
+
+			注意：
+				1、子查询总是从内向外进行处理。
+				2、因为是查询语句里面还有查询语句上面的语句实际上执行了两条SQL查询语句
+				3、实际上对于能够嵌套多少层子语句没有一个完全的限制，但是尽量少用。
+				4、子查询如果作为条件来使用的时候，通常和in操作符搭配使用。也可以使用=
+				或!=
+		
+				
+				
+			
+			
+			
+
+			
+			
+			
+			
+//===== mysql 的预处理
+			
+		mysql> prepare stmt1 from 'select * from t1 where id=?';			//设置处理
+	
+		mysql> set @id=1;													//设置变量
+		mysql> set @id2=3;
+			
+		mysql> execute stmt1 using @id;							//使用 @id变量值来执预处理语句
+			结果：
+			+----+------+------+
+			|  1 | a    |   11 |
+			+----+------+------+
+
+		mysql> execute stmt1 using @id2;						//使用变量 @id2 来执预处理语句
+			结果：
+			+----+------+------+
+			| id | name | id3  |
+			+----+------+------+
+			|  3 | c    |   33 |
+			+----+------+------+
+			
+			
+		drop prepare stmt1;										//删除 指定的预处理
+			
+		
+
+			
+			
+			
+//===== 给查询字段添加别名
+
+								//字段别名
+		mysql> select concat(id,"-",name,"-",sex,"-",age) as cons from user;
+		mysql> select concat(id,"-",name,"-",sex,"-",age) cons from user;
+								//表别名
+		mysql> select concat(id,"-",name,"-",sex,"-",age) as cons from user as u where u .id=1;
+
+		注意：
+			1、别名可以给字段起别名也可以给表起别名
+			2、表起别名主要用在联合（关联）查询
+				
+
+
+				
+
+	
+	
+	
+	
+//===== 	
+
+		a.最好在相同字段进行比较操作,在建立好的索引字段上尽量减少函数操作
+		例子1:
+		SELECT * FROM order WHERE YEAR(orderDate)<2008;(慢)
+		SELECT * FROM order WHERE orderDate<"2008-01-01";(快)
+		例子2:
+		SELECT * FROM order WHERE addtime/7<24;(慢)
+		SELECT * FROM order WHERE addtime<24*7;(快)
+		例子3:
+		SELECT * FROM order WHERE title like "%good%";
+		SELECT * FROM order WHERE title>="good" and name<"good";
+	
+	
+	
+	
+	
+	
+//===== 左查询
+	表user(id, name)
+	表article(id,uid,title, content, time)
+	获取每个用户的昵称及其发表的文章总数
+	
+	select u.name,count(a.id) from user u left join article a on u.id=a.uid group by u.id
+	
+	
+	
+	
+	
+//===== 关联查询
+	A(id,sex,par,c1,c2),B(id,age,c1,c2)两张表,
+	A.id与B.id关联,
+	将B中age>50的记录的c1.c2更新到A表中统一记录中的c1.c2字段中.
+	
+	update A a,B b set a.c1=b.c1,a.c2=b.c2 where a.id=b.id and b.age>50;
+	
+	
+	
+	
+	
+	
+//=====
+	表message
+		id 文章id
+		title 文章标题
+		content 文章内容
+		category_id 文章分类id
+		hits 点击量
+	表comment
+		comment_id 回复id
+		id 文章id，关联message表中的id
+		comment_content 回复内容
+		按照回复数量排序，
+		
+		文章id 文章标题 点击量 回复数量，回复最高的排在最前面，没有回复则回复数量显示为0   (这里就要用left左查询才可以)
+		
+		select m.id,m.title,m.hits,count(c.comment_id) num from message m left join comment c on m.id=c.id group by m.id order by count(c.coment_id) desc;
+		
+		
+		
+		
+		
+//===== 
+
+	Category (类别表)
+		Id   类别ID
+		Pid  上一级类别ID
+		Name 类别名称
+	Products (产品表)
+		Id  产品ID
+		Name  产品名称
+		Categoryid 产品类别ID
+		Input_date 录入日期
+	Product_hit (产品点击表)
+		Product_id 点击的产品
+		Hit_time 点击的时间
+		Hit_ip 点击的IP	
+	
+	
+	C 写出所有类别为5的商品类别ID,产品名,点击时间和IP
+		Select p.name,c.name,p.input_date from category c,products p where p.categoryid=c.id
+	A.写SQL语句，显示所有的产品的：产品名称、类别名称、录入日期
+	
+	B.写SQL语句，要求统计点击数前十位的：产品名称和产品点击数量。
+	Select p.id,p.name, count(h.product_id) from products p ,product_hit h where p.id=h.product_id  group by  p.id  order by count(h.product_id) desc limit 10
+
+	Select p.id,p.name, count(h.product_id) num from products p ,product_hit h where p.id=h.product_id  group by  p.id  order by num desc limit 10
+		
+	
+	
+	
+	
+//=====
+	写出统计 1989-1-1后出生的女生数量的SQL语句
+	Select count(*) from stu where birth >’1989-1-1’ and gender=0;
+	
+	
+	
+	
+	
+//===== 
+
+	1)写一条sql语句关系两个表，实现：显示城市的基本信息显示字段：城市id，城市名，省份名
+		Select c.id,c.name,p.name from city c,province p where c.province_id=p.id
+	
+	2)要统计每个省份有多少个城市显示字段：省份id，省份名，包含多少个城市
+		Select p.id,p.name,count(c.id) from city c,province p where c.province_id=p.id group by p.id 
+	
+	
+	
+	
+	
+	
+//=====
+
+	表S（s#, sname, sex), 
+	表C (c#, cname), 
+	表SC(s#, c#) . 
+	其中S#为学生号，sname为学生姓名，sex为性别，c#为课程号，cname为课程名。
+	写出查询选修"计算机"课的全体女学生姓名的SQL语句。
+		Select  S.s#，S.sname,S.sex from S,SC WhereS.s#=SC.s# and S.sex=”女” and SC.c# in(select c# from C where cname=”计算机”)
+		或
+		select  S.sname from S,C,SC where S.s#=SC.s# and C.c#=SC.c# and c.cname=’计算机’ and S.sex=‘女’;
+	
+	写出查询没有选修"数学"课的学生姓名的SQL语句
+		select * from S where S.s# not in(Select  S.s# from S,SC WhereS.s#=SC.s# and SC.c# in(Select c# from C where cname=” 数学”))
+	
+	
+	
+
+	
+	
+//=====
+
+	从表login中选出name字段包含admin的前10条结果所有信息的sql语句
+     
+		select * from login where name like “%admin%” limit 10;
+	
+	
+	
+	
+	
+	
+//=====	if判断语句
+
+   查出每个班的及格人数和不及格人数，格式为：class、及格人数、不及格人数；
+
+		select class,count(if(score>=60,score,null)),count(if(score<60,score,null)) from student group by class
+	或
+		select class,sum(score>=60),sum(score<60) from student group by class
+	
+	
+	
+	
+	如果库名不存在就创建
+
+		
+		create database if not exists mydb; 		//判断如果库不存在则创建
+	
+	
+//===== 
+	A、增加一个字段性别sex，写出修改语句
+	
+		alter table user add sex tinyint not null default 1；
+	
+	B、查询出年龄介于20岁到30岁之间的用户
+	
+		select * from user where age between 20 and 30；
+
+	C、如果是一个Web频繁访问的查询，上题的查询如何优化？(为age字段添加索引)
+  
+		alter table user add index index_age（age）;
+	
+	d、获取score表里uid为2的用户score最高的5条记录
+
+		select * from score where uid=2 order by score desc limit 5
+	
+	
+
+//=====
+	
+	使用联合查询获取name为“张三”的用户的总分数
+	
+		select sum(s.score) from user u,score s where u.id = s.uid and s.name=”张三”；
+	
+	
+	
+	
+	
+	
+//=====
+
+	一个article 表含有title、classid、dateline 以及其他字段，请写sql 语句，查询出最新的8篇文章。
+	
+		select * from article order by dateline desc limit 8
+	
+	
+	
+	
+	
+//===== 
+	一个article 表字段为id/title/type_id/author/content/dateline/active，另外一个article_type表字段为id/title。要求显示article 表的最新5 条文章作者和文章分类名。
+  
+		select a.author,t.title  from article a,article_type t where a.type_id=t.id order by dateline desc limit 5
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//=====
+	从表a 中删除id 大于5 同时sex 为1 的记录。
+	
+		delete from a where id>5 and sex=1
+
+	设b 表和c 表结构完全一样。把b 表的数据全部插入c 表中。写出sql 语句并列出注意事项及这种用法的用途。
+	
+	   insert into c select * from b；
+
+	   
+	写出发帖数最多的十个人名字的SQL，利用下表：
+	
+		Members(id,usename,posts,pass,email) select * from members order by posts desc limit 10;
+	
+	
+	
+	
+	
+	
+	
+	
+//=====
+
+	写一条sql实现：显示公司基本信息和职位信息，并按照公司Id正序和职位创建日期倒序   
+		
+		。。。。 order by Company.id asc,Job.createDate desc
+	
+	
+	
+	
+	
+	
+	
+	
+//=====
+
+	写出选择出销售额最高的十个产品的SQL语句，利用下表：Products（product_id,product_name,price,sell_num）;	其中product_id为产品id（主键），price为价格，sell_num为销售量。
+	
+		select * from products order by price*sell_num desc limit 10;
+	
+	
+	
+	
+	
+	
+	
+//=====
+
+	请写出一个SQL语句挑出用户（id=100）最近购买的10条订单。
+		
+		select * from payment where user_id=100 order by pay_time desc limit 10
+	
+	请写一个SQL语句挑出用户（id=100）最近】购买的第10到第20条订单(共10个)
+
+		select * from payment where user_id=100 order by pay_time desc limit 10,10
+
+		select user_id,sum(products) as c from payment group by products order by c desc limit 10;
+	请写出一个SQL语句挑出购买产品数最多的10个用户(user_id)和对应购买的产品总数。
+	
+		select user_id,sum(quantity) from payment group by user_id order by sum(quantity) desc limit 10;
+	
+	

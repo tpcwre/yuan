@@ -1,0 +1,219 @@
+
+Laravel 队列系列 —— 基于 Redis 实现任务队列的基本配置和使用
+发布于 2015年11月16日	
+1、概述
+
+在Web开发中，我们经常会遇到需要批量处理任务的场景，比如群发邮件、秒杀资格获取等，我们将这些耗时或者高并发的操作放到队列中异步执行可以有效缓解系统压力、提高系统响应速度和负载能力。
+
+实现队列有多种方式，Laravel也支持多种队列实现驱动，比如数据库、Redis、Beanstalkd、IronMQ及Amazon SQS等，此外还支持同步方式实现队列（默认），甚至将队列驱动设置为null表示不使用队列。Laravel为这些队列驱动提供了统一的接口，从而方便我们任意切换驱动而不需要改变业务逻辑编码，提供代码复用性。
+
+下面我们将以Redis驱动为例演示在Laravel如何实现队列创建、推送和执行。
+2、配置文件
+
+我们仍然从配置文件开始，首先我们需要在配置文件中配置默认队列驱动为Redis，队列配置文件是config/queue.php：
+
+return [
+
+    'default' => env('QUEUE_DRIVER', 'sync'),
+
+    'connections' => [
+        'sync' => [
+            'driver' => 'sync',
+        ],
+        'database' => [
+            'driver' => 'database',
+            'table' => 'jobs',
+            'queue' => 'default',
+            'expire' => 60,
+        ],
+        'beanstalkd' => [
+            'driver' => 'beanstalkd',
+            'host' => 'localhost',
+            'queue' => 'default',
+            'ttr' => 60,
+        ],
+        'sqs' => [
+            'driver' => 'sqs',
+            'key' => 'your-public-key',
+            'secret' => 'your-secret-key',
+            'queue' => 'your-queue-url',
+            'region' => 'us-east-1',
+        ],
+        'iron' => [
+            'driver' => 'iron',
+            'host' => 'mq-aws-us-east-1.iron.io',
+            'token' => 'your-token',
+            'project' => 'your-project-id',
+            'queue' => 'your-queue-name',
+            'encrypt' => true,
+        ],
+        'redis' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => 'default',
+            'expire' => 60,
+        ],
+    ],
+
+    'failed' => [
+        'database' => 'mysql', 'table' => 'failed_jobs',
+    ],
+];
+
+该配置文件第一个配置项default用于指定默认的队列驱动，这里我们将其值改为redis（实际上是修改.env中的QUEUE_DRIVER）。
+
+connections配置项包含了Laravel支持的所有队列驱动，我们使用Redis驱动，所以需要配置redis项：connection对应config/database.php中redis的default配置；queue为默认队列名称；expire为队列任务过期时间（秒）。这里我们可以保持其默认配置不变。
+
+failed配置项用于配置失败队列任务存放的数据库及数据表。这里我们需要按照自己的数据库配置对其做相应修改。
+3、编写队列任务
+
+本例中，我们将演示一个给用户发送新功能提醒邮件的例子。
+
+首先我们通过如下Artisan命令创建任务类：
+
+php artisan make:job SendReminderEmail --queued
+
+--queued选项表示生成的任务类实现了ShouldQueue接口，会被推送到队列而不是同步执行。
+
+运行成功后会在app/Jobs目录下生成一个SendReminderEmail.php，我们修改其内容如下：
+
+<?php
+namespace App\Jobs;
+
+use App\Jobs\Job;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use App\User;
+use Illuminate\Contracts\Mail\Mailer;
+class SendReminderEmail extends Job implements SelfHandling, ShouldQueue
+{
+
+    use InteractsWithQueue, SerializesModels;
+    protected $user;
+    
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle(Mailer $mailer)
+    {
+        $user = $this->user;
+        $mailer->send('emails.reminder',['user'=>$user],function($message) use ($user){
+            $message->to($user->email)->subject('新功能发布');
+        });
+    }
+}
+
+这里我们使用依赖注入引入了User和Mailer实例。User用于获取用户信息，Mailer用于发送邮件。这里的Mailer和前一节邮件发送中使用的Mail门面有异曲同工之效，它们最终调用的都是同一个类上的方法，这个类就是Illuminate\Mail\Mailer。
+
+下面我们创建邮件局部视图resources/views/emails/reminder.blade.php：
+
+亲爱的{{$user->name}}，您好，Laravel学院新发布了XXX功能，立即去体验下吧：
+<a href="http://laravelacademy.org">前往学院</a>
+
+编写好任务类之后我们来看如何将任务推送到队列中：
+4、推送队列任务
+手动分发任务
+
+我们可以使用控制器中的DispatchesJobs trait（该trait在控制器基类Controller.php中引入）提供的dispatch方法手动分发任务：
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Mail;
+use Storage;
+use App\User;
+use App\Jobs\SendReminderEmail;
+
+class MailController extends Controller
+{
+    //其他方法
+
+    //发送提醒邮件
+    public function sendReminderEmail(Request $request,$id){
+        $user = App\User::findOrFail($id);
+        $this->dispatch(new SendReminderEmail($user));
+    }
+}
+
+然后在routes.php中定义路由：
+
+Route::get('mail/sendReminderEmail/{id}','MailController@sendReminderEmail');
+
+运行队列监听器
+
+在浏览器中访问http://laravel.app:8000/mail/sendReminderEmail/1，此时任务被推送到Redis队列中，我们还需要在命令行中运行Artisan命令执行队列中的任务。Laravel为此提供了三种Artisan命令：
+
+    queue:work 默认只执行一次队列请求, 当请求执行完成后就终止；
+    queue:listen 监听队列请求，只要运行着，就能一直接受请求，除非手动终止；
+    queue:work --daemon 同 listen 一样， 只要运行着，就能一直接受请求，不一样的地方是在这个运行模式下，当新的请求到来的时候，不重新加载整个框架，而是直接 fire 动作。能看出来， queue:work --daemon 是最高级的，一般推荐使用这个来处理队列监听。
+
+    注：使用 queue:work --daemon ，当更新代码的时候，需要停止，然后重新启动，这样才能把修改的代码应用上。
+
+所以我们接下来在命令行中运行如下命令：
+
+php artisan queue:work --daemon
+
+然后去查看邮箱会收到提醒邮件：
+
+Laravel中使用队列实现邮件发送
+
+    注：要保证任务执行成功，需要确保users表中id为1的记录email是一个有效邮箱。
+
+当然你可以在控制器之外的其它地方使用dispatch分发任务，当然在此之前需要在该类中使用use DispatchesJobs。
+推送任务到指定队列
+
+上述操作将队列推送到默认队列，即配置文件中的default，当然你还可以将任务推送到指定队列：
+
+public function sendReminderEmail(Request $request,$id){
+    $user = App\User::findOrFail($id);
+    $job = (new SendReminderEmail($user))->onQueue('emails');
+    $this->dispatch($job);
+}
+
+延迟任务执行
+
+除此之外，Laravel还支持延迟任务执行时间，这里我们指定延迟1分钟执行任务：
+
+public function sendReminderEmail(Request $request,$id){
+    $user = User::findOrFail($id);
+    $job = (new SendReminderEmail($user))->delay(60);
+    $this->dispatch($job);
+}
+
+从请求中分发任务
+
+此外，我们还可以将HTTP请求实例映射到任务中，然后从请求实例中获取参数填充任务类的构造函数，如果请求中不包含该参数，甚至还可以传递额外参数，这可以通过DispatchesJobs trait提供的dispatchFrom方法来实现：
+
+public function sendReminderEmail(Request $request,$id){
+    $this->dispatchFrom('App\Jobs\SendReminderEmail',$request,['id'=>$id]);
+}
+
+当然我们需要对SendReminderEmail任务类的构造函数做如下修改：
+
+public function __construct($id)
+{
+    $this->user = User::find($id);
+}
+
+构造函数中的$id就是从额外参数中获取到的。
+
+关于队列任务失败处理请参考Laravel队列文档。

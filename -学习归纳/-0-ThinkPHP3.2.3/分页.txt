@@ -1,0 +1,58 @@
+
+//===== page 分页
+
+	//--- limit 方式
+		$Article = M('Article');
+		$Article->limit('0,10')->select(); // 查询第一页数据
+		$Article->limit('10,10')->select(); // 查询第二页数据
+	//--- page 方式	
+		$Article = M('Article');
+		$Article->page('1,10')->select(); // 查询第一页数据,每页10行
+		$Article->page('2,10')->select(); // 查询第二页数据,每页10行
+		或
+		$Article->page(1,10)->select();	// 3.1以后，page也支持2个参数的写法，
+		而易见的是，使用page方法你不需要计算每个分页数据的起始位置，page方法内部会自动计算。
+	//--- limi+page配合的分页
+		$Article->limit(25)->page(3)->select();
+
+	//-- 获取第二页数据，
+		$data = M('User')->field('id,name')->order('id asc')->page(2)->select();
+
+	//-- 获取第二页，以每页5条数据为准
+		$data = M('User')->field('id,name')->order('id asc')->page(2,5)->select();
+
+	//-- page 结合 limit (获取第二页的前五条)
+		$data = M('User')->field('id,name')->order('id asc')->page(2)->limit(5)->select();
+		
+		
+	示例	
+	public function index(){
+	//判断封装搜索条件
+        $where=array();
+        if(!empty($_GET['title'])){
+            $where['title']=array('like',"%{$_GET['title']}%");
+        }
+		//实例化Stu信息操作对象
+		$mod = M("pic");
+        //分页处理
+        $page = new \Think\Page($mod->where($where)->count(),4);
+		//获取信息，放置模板
+		$this->assign("list",$mod->where($where)->limit($page->firstRow,$page->listRows)->select());
+        $page->lastSuffix=false;
+        $page->setConfig('header', '共<b>%TOTAL_ROW%</b>条记录&nbsp;第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页');
+        $page->setConfig('prev','上一页');
+        $page->setConfig('next','下一页');
+        $page->setConfig('last','末页');
+        $page->setConfig('first','首页');
+        $page->setConfig('theme','%HEADER% %FIRST% %UP_PAGE%  %DOWN_PAGE% %END% ');
+        //封装页码信息
+        $this->assign("pageinfo",$page->show());
+        
+		//实例化pic信息操作对象
+		//$mod =M("pic");
+		//获取信息，放置模板
+		//$this->assign("alist",$mod->select());
+		
+		$this->display("index");	//加载模板
+    }
+	

@@ -1,0 +1,232 @@
+//===== html标签集合
+
+//===== 示例
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== html标签集合
+
+<!DOCTYPE html>					//---DOCTYPE 指定浏览器解析标准
+
+<html> </html>		//--html文档标记
+
+<head> </head>		//--html头标记
+
+<title> </title>	//---title设置标题
+
+<meta />		//---meta元素标签
+
+<body> </body>		//--html主体标记
+
+<p> </p>		//--段落标记
+
+<h1> </h6>		//--标题标记 
+
+<center></center>	//--居中标记
+	align='center'
+
+<b> </b>		//--字体加粗标记
+
+<strong> </strong>	//--字体着重加粗标记
+
+<big> </big>		//--字体加大标记
+
+<small> </small>	//--字体缩小标记
+
+<i> </i>		//--字体斜体标记
+
+<em> </em>		//--字体着重斜体标记
+
+<cite> </cite>		//--定义作品标签名（斜体）
+
+<sub> </sub>		//--字体位置下移标记
+
+<sup> </sup>		//--字体位置上移标记
+
+<pre> </pre>		//--预格式文本标记(按代码格式显示)
+
+<div> </div>		//--无样式的块元素
+
+<span> </span>		//--无样式的行内元素
+
+<marquee></marquee>	//--文字从右往左移动标签
+
+<aaa> </aaa>		//--自定义输出标记
+
+<a href=''> </a>	//--地址链接标记
+
+<blockquote> 		//--块引用长形式标记 (会换行并有段间距)
+</blockquote> 
+
+<q cite='www'> </q>	//--块引用的短形式标记 (不会换行也没有间距)
+   cite属性：定义引用的地址
+
+			//---abbr 缩写标签
+<abbr title="全称'>缩写</abbr>		
+   title属性：定义全写的提示信息
+
+			//---del 加删除线标签
+<del cite='www'>删除</del>
+  cite属性：定义删除的原因或出处
+
+<ins> </ins>		//--字体加下划线标记
+
+			//---dialog 对话形式显示标签
+<dialog>	
+  <dt>男：</dt><dd>结婚吧</dd>		//--dt 标题
+  <dt>女：</dt><dd>好吧</dd>		//--dd 内容
+</dialog>
+
+<table> </table>	//-- 表格标记
+
+<ol> </ol>		//-- 有序列表标记
+
+<ul> </ul>		//-- 无序列表标记
+
+<frameset>		//--页面框架标记 (不能有body体)
+</frameset>
+
+
+
+
+
+
+<img src='' />		//--图像连接标记
+
+<hr/>			//--水平线标记
+	<hr noshade="noshade" size="50"/>
+	<hr color="red" size="30" width="200"/>
+
+<br/>			//--换行标记
+
+<!--注释-->		//--注释标记
+
+
+
+<iframe>		//-- iframe 内联框架
+</iframe>
+
+<body>
+<iframe src='1.jpg' width=500 height=300></iframe>
+或
+<iframe src='http://www.baidu.com' width=500 height=300></iframe>
+</body>	
+
+
+
+
+
+
+
+
+
+
+//===== 示例
+
+
+
+
+
+<!DOCTYPE html>					//---DOCTYPE 指定浏览器解析标准
+
+<html>						//---html声明标签
+
+  <head>					//---head头标签
+
+	<title>标题</title>			//---title 设置标题
+
+	<meta charset='utf-8'/>			//---charset 设置编码
+
+	<meta name='keywords' content=''/>	//---keywords 网站关键字
+
+	<meta name='description' content=''/>	//---description 网站描述
+
+  </head>
+
+  <body>					//---主体标签
+
+	<!--这是一个注释标签-->			//---注释标签
+
+	<br>					//---换行标签
+
+	<p>这是一个段落标签</p>			//---p 段落标记
+
+	<h6>这是标题标签</h6>			//---hn 标题标签 有1-6级
+	<h5>这是标题标签</h5>
+	<h4>这是标题标签</h4>
+	<h3>这是标题标签</h3>
+	<h2>这是标题标签</h2>
+	<h1>这是标题标签</h1>
+
+
+	<b>b标签是单纯的加粗标签</b>		//---b 加粗标签
+
+	<strong>strong是着重标签</strong>	//---strong 着重标签
+
+	<i>i是单纯的斜体标签</i>		//---i 斜体标签
+
+	<em>em是着重加斜体标签</em><br>		//---em 着重斜体标签
+	
+	<cite>会以斜体显示</cite>		//---cite 定义作品标签			
+	
+	<sup>字符上移</sup>			//---sup 字符上移标签
+
+	<sub>字符下移</sub>			//---sub 字符下移标签
+	
+	<q cite='www.baidu.com'>短引用</q>	//---q 短引用
+		cite属性：定义引用的地址
+	
+	<abbr title="全称'>缩写</abbr>		//---abbr 缩写标签
+		title属性：定义全写的提示信息
+
+	<del cite='www'>删除</del>		//---del 加删除线标签
+		cite属性：定义删除的原因或出处
+	
+
+						//--文字从右往左移动标签
+	<marquee width=50 loop=3 bgcolor=red loop=3>滚动文字</marquee> 
+		width 滚动域的宽， 
+		height:滚动域的高，
+		bgcolor:滚动域的背景色  
+		loop:滚动圈数
+
+
+	
+	<dialog>				//---dialog 对话形式显示标签	
+	  <dt>男：</dt><dd>结婚吧</dd>			//--dt 标题
+	  <dt>女：</dt><dd>好吧</dd>			//--dd 内容
+	</dialog>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+

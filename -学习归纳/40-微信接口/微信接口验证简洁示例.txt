@@ -1,0 +1,33 @@
+
+一：公众平台-》基本配置-》  进行URL及TOKEN的配置并启用
+
+
+	如 
+		URL：http://www.jj-etna.com/index.php
+		Token：youle
+		EncodingAESKey：FyvOk6eHU9chYTQ1V13zHWNabQKDVmGBeI2AQ3Bfcxj
+
+		兼容方式
+
+
+
+
+二：编写验证代码
+http://www.jj-etna.com/index.php页面
+
+<?php
+        $time = $_GET['timestamp'];		//接收微服的时间戳
+        $nonce = $_GET['nonce'];		//接收微服的nonce
+        $token = 'youle';			//设置与微服一个的token 
+        $sign = $_GET['signature'];		//接收微服的验证字串
+        $arr = array($time,$nonce,$token);	//将接收的时间戳，nonce,和自己的token存放 到数组
+        sort($arr);				//将数组自然排序 
+        $tmpstr = implode('',$arr);		//将排序后的数组合成字串
+        $tmpstr = sha1($tmpstr);		//将字串 sha1加密
+
+        if($tmpstr == $sign){			//验证接收的字串是否与自己组合的字串相同 
+                echo $_GET['echostr'];		//验证成功
+                exit;
+        }
+
+

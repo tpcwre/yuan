@@ -1,0 +1,198 @@
+
+//===== cookid操作
+	//----- cookie的增删改查
+
+
+//===== session操作
+	//----- 给session设置指定的id
+	//----- 初始化session
+	//----- 获取session的id
+	//----- 获得服务器现在的session的名字
+	//----- session 的增删改查
+	//----- 删除session的ID
+	//----- 获取数组，对象的 Session 数据
+	//----- 用户禁用cookie后解决session文件共享的三种方法：
+
+
+
+
+
+
+
+
+
+
+
+//===== cookid操作
+
+	//----- cookie的增删改查
+
+
+		setCookie("a","aaa",time()+3600);	//增
+
+		echo $_COOKIE["a"]."<br>";		//查
+
+		setCookie("a","bbb",time()+3600);	//改
+
+		setCookie("a","",time()-10);		//删
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== session操作
+
+	//----- 给session设置指定的id
+
+		session_id($sid);			
+
+
+
+
+	//----- 初始化session
+
+		session_start();			
+
+
+
+
+
+
+	//----- 获取session的id
+
+		$sid = session_id();			
+		echo $sid;				//查看seesion的id
+
+
+
+
+
+	//----- 获得服务器现在的session的名字
+
+		session_name();   
+
+
+
+
+
+	//----- session 的增删改查
+
+		//  增
+
+			$_SESSION["a"]="aaa";			//创建及更新SESSION内容
+
+
+
+		//  删
+
+			unset($_SESSION["a"]);			//删除指定SESSION
+
+			session_destroy();			//删除所有session(包括文件)
+
+
+
+		//  改
+
+			$_SESSION["a"]="bbb";			
+
+
+		//  查
+
+			echo $_SESSION["a"];			//查看指定SESSION内容	
+
+			echo "<pre>";				//查看所有session内容
+			foreach($_SESSION as $k=>$v){
+				echo $k."=>".$v."<br>";
+			}
+			echo "</pre>";
+
+
+
+
+
+	//----- 删除session的ID
+	
+		setCookie('PHPSESSID','',time()-1,'/');		
+		//名字保存在 cookie中，上面有cookie保存的地址
+		//  '/'表示服务器的根目录，而不是系统盘根目录
+
+
+
+
+
+
+	//----- 获取数组，对象的 Session 数据
+
+		取出对象时需要实现申明一下类的定义，（就是用require或include引用一个类文件）
+	<?php
+		session_start();
+
+		//把所有的session获取
+		echo "<pre>";
+		print_t($_SESSION);
+		echo "<pre>";
+
+		//通过key 来指定获取某个值
+		echo $_SESSION['name'];
+		$arr=$_SESSION['arr'];
+		
+
+		//取数组的数据
+		foreach($arr as $k=>$v){
+			echo $v."---";
+		}
+
+		//取出对象
+		$xiaogou=$_SESSION['dog'];
+		echo "<br>小狗的名字：".$xiaogou->getName();
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//----- 用户禁用cookie后解决session文件共享的三种方法：
+
+
+		当用户禁用cookie后，服务器每次session_start()都会创建一个全新的session文件，后果就是无法让多个页面的php去共享同一份session文件。 	
+		如何解决这个问题？要从cookie session和http协议入手解决。
+
+		如果客户端禁用cookie怎样实现session技术共享多个页面？
+
+
+		方法一：URL重写，给每个连接添加一个指定的PHPSESSID;
+
+		在每个超链接上添加一个PHPSESSID= sessionId ,同时在每个页面加入if语句，判断是否以经有session文件，如果有就沿用，如果没有再创建新的session文件 .如：
+			if(isset($_GET['PHPSESSID'])){
+				//设置session_id
+				session_id($_GET['PHPSESSID']);
+			}
+			session_start();
+
+
+
+		方法二：使用常量SID ;
+
+		在 href=,header(),action=   时可以直接拼接SID 常量即可. 如：
+		echo "<a href='xxxx.php?bookid=sn001&bookname=西游记&".SID."'>西游记</a><br>";	
+
+
+		方法三：在php.ini中启用透明session功能。
+
+		可以启用 session.use_trans_sid 指定是否启用透明 SID 支持，即可以这样设置。
+			session.use_trans_sid=1. 然后重启apache即可。
+		此方法相当于在 href=,action=,header(), 之后默认加上了 SID 。但不支持js的跳转。需要手动添加SID

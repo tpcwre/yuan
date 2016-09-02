@@ -1,0 +1,19 @@
+﻿<?php
+	$xmldom = new DOMDocument();
+	$xmldom->load("xml.xml");
+	
+	$name = $xmldom->getElementsByTagName("name")->item(0)->nodeValue;		//查
+	echo $name;
+
+	$name2 = $xmldom->getElementsByTagName("name")->item(0)->nodeValue="wang";	//改
+
+	//$age = $xmldom->getElementsByTagName("age")->item(0);				
+	//$age->parentNode->removeChild($age);						//删
+
+	$stu=$xmldom->getElementsByTagName("stu")->item(0);				//增
+	$sex=$xmldom->createElement("sex");	//创建一个元素
+	$sex->nodeValue="nv";			//给元素添加内容
+	$stu->appendChild($sex);		//将元素挂载到父元素上
+	
+	$xmldom->save("xml.xml");							//将操作保存
+?>

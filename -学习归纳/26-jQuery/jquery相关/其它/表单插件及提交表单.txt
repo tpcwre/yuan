@@ -1,0 +1,872 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//第51课 知问前端--ajax表单插件 17
+ 
+
+		
+学习要点：
+	1，核心方法
+	2，option参数
+	3，工具方法
+//-----课程笔记
+//-----ajaxForm()提交方法
+//-----ajaxSubmit()提交方法
+//-----设置提交到指定页面
+//-----将ajax提交页面返回的内容显示在指定的元素中
+//-----指定ajax传输的方式是get还是post
+//-----指定传输数据类型(xml,json,script,默认null)
+//-----成功提交后清除表单内容。
+
+//-----成功提交后重置表单内容。
+//-----提交时添加额外的自定义数据
+//-----提交之前的行为，一般用于验证。
+	//--options 获取指定属性的值。如url,type等。
+	//--jqForm 获取form表单的代码内容
+	//--formData 获取表单中某个字段的相关属属性如，name,value等
+
+//-----提交失败后执行及其三个参数
+//-----工具-表单序列化 formSerialize()
+//-----工具-获取表单序列化中指定的某一个字段
+//-----工具-得到指定字段的value值。
+//-----工具-重置表单
+//-----工具-清空某一个字段
+
+$(function(){
+	//注意ajax提交时需要使用localhost方式打开主页。
+
+/*
+//-----ajaxForm()提交方法
+	$("#reg").ajaxForm(function(){
+			//function就是success:function(response){} 
+		alert("提交成功");
+	});
+*/
+//-----ajaxSubmit()提交方法
+	//当js里采用了submit()这个方法时，采用ajaxSubmit()提交
+	//ajaxForm自动阻止了默认提交。
+	
+	$("#reg").submit(function(){
+/*
+	//方法一：success方式 
+		$(this).ajaxSubmit(function(){ //需要在submit()方法里面使用。
+			alert("ok");
+		});
+*/
+	
+
+
+	//方法二：键值对方式
+		$(this).ajaxSubmit({
+//-----设置提交到指定页面
+	//注：默认提交页面add.php, 这里指定提交到页面test.php
+			url:"test.php", 
+		
+//-----将ajax提交页面返回的内容显示在指定的元素中
+			target:"#box",
+
+//-----指定ajax传输的方式是get还是post
+			type:"GET",
+
+//-----指定传输数据类型(xml,json,script,默认null)
+			dataType:null,
+
+//-----成功提交后清除表单内容。
+	//注：清除与重置的区别：清除会清空默认的初始value值。
+			//clearForm:true,
+
+//-----成功提交后重置表单内容。
+	//注：清除与重置的区别：重置会恢复到初始的value值。
+			//resetForm:true,
+
+//-----提交时添加额外的自定义数据
+			data:{
+				aaa:"bbb"
+			},
+
+//-----提交之前的行为，一般用于验证。
+	//--options 获取指定属性的值。如url,type等。
+	//--jqForm 获取form表单的代码内容
+	//--formData 获取表单中某个字段的相关属属性如，name,value等
+	//提交之前执行，一般用于数据验证，
+	//如果数据验证不合法，就返回false,不让提交,返回true才可以提交。
+			beforeSubmit:function(formData,jqForm,options){
+	//--options 获取指定属性的值。如url,type等。
+				//alert(options.url);  
+
+	//--jqForm 获取form表单的代码内容
+				//alert(jqForm); //得到form的jquery对象
+				//alert(jqForm.html()); //得到对象的代码内容
+
+	//--formData 获取表单中某个字段的相关属属性如，name,value等
+				//alert(formData[0].name);
+				//alert(formData[0].value);
+			},
+//-----提交成功后执行及其两个参数 
+	//responseText,提交成功后返回的内容，
+	//statusText,返回提交成功的状态。
+			success:function(responseText,statusText){
+				alert(responseText+statusText);
+			},
+	
+//-----提交失败后执行及其三个参数
+	//errorText,错误内容
+	//errorType,错误类型
+			error:function(event,errorText,errorType){
+				alert(errorText + errorType);
+			},
+		});
+	
+		return false;	//submit()不会阻止默认提交行为，这里人为阻止。
+	});
+	
+
+//-----工具-表单序列化 formSerialize()
+	//结果：user=,,,&pass=,,,,
+	//alert($("#reg").formSerialize());
+
+//-----工具-获取表单序列化中指定的某一个字段
+	//alert($("#reg #user").fieldSerialize());
+
+//-----工具-得到指定字段的value值。
+	//alert($("#reg #user").fieldValue());
+
+//-----工具-重置表单
+	//alert($("#reg").resetForm());
+
+//-----工具-清空某一个字段
+	alert($("#reg #user").clearFields());
+	
+})
+
+
+==================================================
+
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
+	<script type="text/javascript" src="js/jquery.form.js"></script>
+	<script type="text/javascript" src="js/b.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/b.css"/>
+
+</head>
+
+<body>
+<div id="box"></div>
+<form id="reg" action="add.php" method="post">
+	<p>账 号：<input type="text" name="user" value="abc" id="user"/></p>
+	<p>密 码：<input type="password" name="pass" id="pass"/></p>
+	<p><input type="submit" value="提交" /></p>
+</form>
+</body>
+</html>
+
+
+
+=====================================================
+
+add.php页面
+
+<?php
+	//sleep(3);  //睡眠3秒钟后执行以下内容。
+	echo "add.php";
+?>
+
+==================================================
+
+test.php页面
+
+<?php
+	echo "额外的数据".$_GET["aaa"];
+	echo "test.php";
+?>
+
+====================================================
+
+
+//-----课程笔记 
+
+		
+学习要点：
+	1，核心方法
+	2，option参数
+	3，工具方法
+	
+	传统的表单提交，需要多次跳转页面，极大的消耗资源也缺乏良好的用户体验，而这款form.js表单的ajax提交插件将解决这个问题
+	
+一：核心方法
+	官网下载：http://malsup.com/jquery/form/
+	form.js插件有两个核心方法：ajaxForm()和ajaxSubmit(),它们集合了从控制表单元素到决定如何管理提交进行的功能。
+
+	//ajaxForm提交方式
+	$("#reg").ajaxForm(function(){
+		alert("提交成功！");
+	});
+
+	注意：使用ajaxForm()方法，会直接实现ajax提交，自动阻止了默认行为，而它提交的默认页面是form控件的action属性值，提交的方式是method属性的值。
+
+
+	//ajaxSubmit()提交方式 
+	$("#reg").submit(function(){
+		$(this).ajaxSubmit(){
+			alert("提交成功");
+		};
+		return false;
+	});
+	
+	注意：ajaxForm()方法，是针对form直接提交的，所以阻止了默认行为，而ajaxSubmit()方法，由于是针对submit()方法的，所以需要手动阻止默认行为，而使用了validate.js验证插件，那么ajaxSubmit()比较适合我们。
+
+
+
+
+二，option参数
+	option参数是一个以键值对传递的对象，可以通过这个对象，设置各种ajax提交的功能。
+
+$("#reg").submit(function(){
+	$(this).ajaxSubmit({
+		url:"test.php",		//设置提交的url，可覆盖action属性
+		target:"#box", 		 //服务器返回的内容存放在#box里
+		type:"POST", 		//传输方式，GET或POST
+		dataType:null,		//xml,json,script,默认null.
+		clearForm:true,		//成功提交后，清空表单
+		resetForm:true,		//成功提交后，重置表单
+		data:{			//增加额外的数据提交
+			aaa:"bbb",
+			ccc:"ddd",
+		}，
+		beforeSubmit:function(formData,jqForm,options){
+			alert(formData[0].name);  //得到传递表单元素的name
+			alert(formData[0].value); //得到传递表单元素的value
+			alert(jqForm);		//得到form的jquery对象
+			alert(jqForm.html());	//得到form对象的代码内容。
+			alert(options);		//得到目前options设置的属性
+			alert("正在提交中....");
+			return true;
+		},
+		success:function(responseText,statusText){
+			alert(responseText+statusTest);	//成功后回调
+		}，
+		error:function(event,errorText,errorType){
+			alert(errorText + errorType);	//错误时调用
+		}
+	});
+	return false;
+});
+
+
+
+
+三：工具方法
+	form.js除了提供两个核心方法之外，还提供了一些常用的工具方法，这些方法主要是在提交前或提交后对数据或表单进行处理的。
+
+	//表单序列化
+	alert($("#reg")).formSerialize();
+
+	//序列化某一个字段
+	alert($("#reg #user").fieldSerialize());
+
+	//得到某个字段的value值
+	alert($("#reg #user").fieldValue());
+
+	//重置表单
+	$("#reg").resetForm();	
+
+	//清空某个字段
+	$("#reg #user").clearFields();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第52课 知问前端-ajax提交表单 18
+
+
+学习要点：
+	1，创建数据库
+	2，Loading制作
+	3，ajax提交
+
+//-----课程笔记
+//-----数据交互中效果的实现
+//-----取消ESC键的关闭功能
+//-----隐藏数据交互提示框的标头区域
+//-----获取验证到错误的个数
+//-----随错误个数变换对话框的高度
+//-----输入框获得焦点时高亮（变化样式）
+//-----removeClass删除一个类
+//-----验证正确后星号变换成图标或其它文字
+//-----为元素添加一个类样式。
+//-----将获取到的验证错误存放到指定的元素中
+
+
+$(function(){
+	$(".search_button").button();
+	
+//-----数据交互中效果的实现
+	$("#loading").dialog({
+		autoOpen:false,
+		modal:true,
+//-----取消ESC键的关闭功能
+		closeOnEscape:false,
+
+		resizable:false,
+		draggable:false,
+		width:200,
+		height:50,
+//-----隐藏数据交互提示框的标头区域
+	}).parent().parent().find(".ui-widget-header").hide();	
+
+	$("#reg_a").click(function(){
+		$("#reg").dialog("open");
+	});
+
+	$("#reg").dialog({
+		autoOpen:false,
+		modal:true,
+		resizable:false,
+		width:320,
+		height:360,
+		buttons:{
+			"提交":function(){
+				$(this).submit();
+			}
+		}
+	}).buttonset().validate({
+	  submitHandler:function(form){
+	     $(form).ajaxSubmit({
+		url:"add.php",
+		type:"POST",
+		beforeSubmit:function(formData,jqForm,options){
+			//点击提交按钮触发“数据交互框”
+			$("#loading").dialog("open");
+			//当点击提交按钮后，使其变灰，无法再使用
+			$("#reg").dialog("widget").find("button").eq(1).button("disable");
+		},
+	  	success:function(responseText,statusText){
+		    if(responseText){
+
+			//当数据发送成功后，提交按钮恢复使用状态。
+			$("#reg").dialog("widget").find("button").eq(1).button("enable"); 
+
+			//数据发送成功后，数据交互提示变换图标与显示内容
+		  	$("#loading").css("background","url(img/dui.jpg) no-repeat 20px center").html("数据添加成功...");
+		
+			//为了不马上关闭，并显现效果，延迟一秒后执行以下内容
+			setTimeout(function(){
+			  //关闭loading数据交互提示框
+				$("#loading").dialog("close");
+			  //关闭注册对话框
+				$("#reg").dialog("close");
+			  //重置对话框
+				$("#reg").resetForm();
+			  //去除对号图标的类，并替换改为*号内容
+				$("#reg span.star").html("*").removeClass("succ");
+
+			  //当再次添数据时，要把添加成功状态改回到添加中。
+		  		$("#loading").css("background","url(img/quan.jpg) no-repeat 20px center").html("数据交互中...");
+			},1000);
+		    }
+
+	 	}
+	     });
+	  },
+	
+		showErrors:function(errorMap,errorList){
+//-----获取验证到错误的个数
+			var errors = this.numberOfInvalids();
+
+
+//-----随错误个数变换对话框的高度
+			if(errors >0){
+				$("#reg").dialog("option","height",errors*20+340);
+			}else{
+				$("#reg").dialog("option","height",340);
+			}
+	
+			this.defaultShowErrors();
+		},
+
+//-----输入框获得焦点时高亮（变化样式）
+		highlight:function(element,errorClass){
+			//element得到的是当前操作的input元素
+	//--获取焦点时变亮
+			$(element).css("border","1px solid #630");
+			//框后提示-错误时提示*，对时提示对号
+//-----removeClass删除一个类
+			$(element).parent().find("span").html("*").removeClass("succ");
+		},
+	//--失去焦点时恢复
+		unhighlight:function(element,errorClass){
+			$(element).css("border","1px solid #ccc");
+//-----验证正确后星号变换成图标或其它文字
+//-----为元素添加一个类样式。
+//-----将获取到的验证错误存放到指定的元素中
+			//$(element).parent().find("span").html("ok");
+//-----为元素添加一个类样式。
+			//框后提示-错误时提示*，对时提示对号
+			$(element).parent().find("span").html("&nbsp").addClass("succ");
+		},
+//-----将获取到的验证错误存放到指定的元素中
+		errorLabelContainer:"ol.reg_error",
+		wrapper:"li",
+		rules:{
+			user:{
+				required:true,
+				minlength:2,
+			},
+			pass:{
+				required:true,
+				minlength:6,
+			},
+			email:{
+				required:true,
+				email:true,
+			},
+			date:{
+				date:true,
+			},
+		},
+		messages:{
+			user:{
+				required:"账号不能为空",
+				minlength:"至少要{0}个字符",
+			},
+			pass:{
+				required:"密码不能为空",
+				minlength:"密码至少要{0}个字符",
+			},
+			email:{
+				required:"邮箱不能为空",
+				email:"请输入正确的邮箱格式",
+			},
+		},
+	});
+	$("#date").datepicker();
+});
+
+
+
+============================================
+
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
+	<script type="text/javascript" src="js/jquery.form.js"></script>
+	<script type="text/javascript" src="js/b.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/b.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<button class="search_button">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<form action="123.html" id="reg" title="会员注册">
+
+<ol class="reg_error"></ol>
+
+<p>
+	<label for="user">用户名：</label>
+	<input type="text" name="user" class="text" id="user" />
+	<span class="star"> * </span>
+	
+</p>
+
+<p>
+	<label for="pass">密　码：</label>
+	<input type="password" name="pass" class="text" id="pass"  />
+	<span class="star">*</span>
+</p>
+
+<p>
+	<label for="email">邮　箱：</label>
+	<input type="text" name="email" class="text" id="email"  />
+</p>
+<p>
+	<label>性　别：</label>
+	<input type="radio" name="sex" value="male" id="male" checked="checked">
+	<label for="male">男</label></input>	
+   	
+	<input type="radio" name="sex" value="female" id="female">
+	<label for="female">女</label></input>
+</p>
+<p>
+	<label for="date">生　日：</label>
+	<input type="text" name="birthday" class="text" id="date" readonly="readonly" />
+</p>
+
+</form>
+<input type="text" id="abc"/>
+<div id="loading">数据交互中...</div>
+</body>
+</html>
+
+
+===================================
+
+css页面
+
+
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+
+
+#reg{
+	padding:15px 0 0 15px;
+}
+
+#reg p{
+	margin:10px 0;
+	padding:0;
+}
+
+#reg p label{
+	font:normal bold 14px normal;
+	color:#666;
+}
+
+/*星号的样式*/
+#reg .star{
+	font-sie:20px;
+	color:maroon;
+}
+
+/*错误提示的样式*/
+#reg ol{
+	margin:0;
+	padding:0 0 0 20px;
+	color:maroon;
+}
+
+
+/*限制错误提示的高度*/
+#reg ol li{
+	height:20px;
+}
+
+/*验证成功后添加的class*/
+#reg .succ{
+	display:inline-block;
+	width:20px;
+	background:url(../img/right.jpg)no-repeat;
+}
+
+#reg .text{
+	border-radius:5px;
+	border:1px solid #ccc;
+	background:#fff;
+	width:180px;
+	height:25px;
+	line-height:25px;
+	text-indent:5px;
+	font-size:13px;
+	color:#666;
+}
+
+
+/*设置对话框标题域与对话框中日历的标题域的背景*/
+.ui-widget-header{
+	background:url(../img/bj.png);
+}
+
+
+/*日历UI的今天单元格样式*/
+/*这里的.ui-datepicker-today是父元素的类名，.ui-stat-highlight是当前元素的类名*/
+.ui-datepicker-today .ui-state-highlight{
+	border:1px solid blue;
+	color:red;
+}
+
+
+/*日历UI的日期选定单元格样式*/
+/*选定是指选完后再次点击出现时显示的样式*/
+.ui-datepicker-current-day .ui-state-active{
+	border:1px solid black;
+	color:black;
+}
+
+
+
+/*beforeShowDay日历筛选限制的第二个参数赋予的类*/
+.a{
+	font:italic bold 30px normal;
+}
+
+/*loading数据交互提示框样式*/
+#loading{
+	background:url(../img/quan.jpg) no-repeat 20px center;
+	line-height:25px;
+	font-size:14px;
+	font-weight:bold;
+	text-indent:40px;
+}
+
+
+
+
+=========================================
+
+add.php页面
+
+
+<?php
+	sleep(3);
+	require 'config.php';
+	$user=$_POST['user'];
+	$pass=$_POST['pass'];
+	$email==$_POST['email'];
+	$query="INSERT INTO user(user,pass,email,sex,birthday,date) VALUES('{$_POST['user']}','{$_POST['pass']}','{$_POST['email']}','{$_POST['sex']}','{$_POST['birthday']}',NOW())";
+	mysql_query($query) or die('新增失败！'.mysql_error());
+	echo mysql_affected_rows();
+	mysql_close();
+?>
+
+
+==========================================
+
+config.php页面
+
+<?php
+	header("content-Type:text/html; charset=utf-8");
+	define("DB_HOST","localhost");
+	define("DB_USER","root");
+	define("DB_PWD","abcd1234");
+	define("DB_NAME","test");
+	$conn=@mysql_connect(DB_HOST,DB_USER,DB_PWD)or die("数据库连接失败".mysql_error());
+	@mysql_select_db(DB_NAME) or die("数据库错误：".mysql_error());
+	@mysql_query("SET NAMES UTF8")or die("字符集错误：".mysql_error());
+?>
+
+
+=========================================
+
+
+//-----课程笔记
+
+学习要点：
+	1，创建数据库
+	2，Loading制作
+	3，ajax提交
+	本节课，运用两大表单插件，完成数据表新增工作。
+
+一：创建数据库
+	创建一个数据库，名称为：zhiwen 	表结构为：id,user,pass,email,sex,birthday,date,
+	
+	所需PHP文件：config.php	;   add.php  ;	  is_user.php
+
+//-config.php
+<?php
+	header('Content-Type:text/html; charset=utf-8');
+	define("DB_HOST","localhost");
+	define("DB_USER","root");
+	define("DB_PWD","123456");
+	define("DB_name","zhiwen");
+	$conn=@mysql_connect(DB_HOST,DB_USER,DB_PWD)or die(mysql_error());
+		@mysql_select_db(DB_NAME)or die(mysql_error());
+		@mysql_query("set names utf8") or die(mysql_error);	
+?>
+
+
+
+//-add.php
+<?php
+	require "config.php";
+	$query="insert into user(user,pass,email,sex,birthday,date) values('{$_POST['user']}','{$_POST['pass']}','{$_POST['email']}','{$_POST['sex']}','{$_POST['BIRTHDAY']}',now())";
+
+	mysql_query($query) or die("新增失败".mysql_error());
+	echo mysql_affected_rows()	//显示影响的行数，添加成功返回1
+	mysql_close();
+?>
+
+
+//-is_user.php
+<?php
+	require "config.php";
+	$query=mysql_query("select user from user where user='{$_POST['user']}'")or die("SQL错误");
+	if(mysql_fetch_array($query,MYSQL_ASSOC)){
+		echo "false";
+	}else{
+		echo "true";
+	}
+	mysql_close();	
+?>
+
+
+
+二： loading制作
+	在提交表单的时候，用于网络速度问题，可能会出现不同时间延迟，所以，为了更好的用户体验，在提交等待过程中，设置loading是非常有必要的。
+
+//-采用对话框方式提交
+$("#loading").dialog({
+	modal:true,
+	autoOpen:false,
+	closeOnEscape:false,	//让ESC失效
+	resizable:false,
+	draggable:false,
+	width:180,
+	height:50,
+}).parent().parent().find(".ui-widget-header").hide();	//去掉header头
+
+
+
+//-css部分
+在CSS页面中加入：
+#loading{
+	background:url(../img/loading.gif)no-repeat 20px center;
+	line-height:25px;
+	font-size:14px;
+	font-weight:bold;
+	text-index:40px;
+	color:#666;
+}
+
+
+
+三，ajax提交 ：
+	最后，我们需要采用form.js插件对数据进行提交，而且在其他部分需要做一些修改。
+submitHandler:function(form){
+	$(form).ajaxSubmit({
+		url:"add.php",
+		type:"POST",
+		beforeSubmit:function(formData,jqForm,option){
+			$("#loading").dialog("open");
+			$("#reg").dialog("widget").find("button").eq(1).button("disable");
+		},
+		success:function(responseText,statusText){
+			$("#reg").dialog("widget").find("button").eq(1).button("enable");
+			if(responseText){
+				$("#loading").css("background","url(img/success.gif)no-repeat 20px center").html("数据提交成功....");
+				setTimeout(function(){
+					$("#loading").dialog("close");
+					$("#loading").css("background","url(img/loading.gif)no-repeat 20px center").html("数据交互中");
+					$("#reg").dialog("close");
+					$("#reg").resetForm();
+					$("#reg span.star").html("*").removeClass("success");
+				});
+			}
+		}
+	});
+}
+
+
+

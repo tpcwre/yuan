@@ -1,0 +1,336 @@
+//-----新绑定方法 on()
+	
+	$(':button').on('click',function(){
+		alert('新绑定方法on');
+	});
+
+//-----on()方法中阻止默认行为
+	$('form').on('submit',function(e){
+		e.preventDefault();
+	});
+
+//-----on()方法中阻止冒泡行为
+	$('form').on('click',function(e){
+		e.stopPropagation();
+		alert('sub');
+	});
+
+
+//-----on()方法中同时阻止默认和冒泡行为的两种方式
+	//方式一，当函数中有其它内容时用此方法
+	$('form').on('submit',function(){
+	//	return false;
+	});
+	//方式二，当函数中无其它内容内返回false时用此方法
+	$('form').on('submit',false);
+
+
+//-----off()移除绑定事件
+	$(':button').on('click',function(){
+		alert('aaaa');
+	});
+
+
+	//$(':button').off('click');
+
+
+
+//-----off()新版本移除命名空间
+	$(':button').on('click.a',function(){
+		alert('aaaaaa');
+	});
+	$(':button').on('click.b',function(){
+		alert('bbbbb');
+	});
+
+	$(':button').off('click.b');
+
+
+
+//-----on()的事件委托方法
+	$('#box').on('click',':button',function(){
+		$(this).clone().appendTo('#box');
+	});
+
+//-----off() 移除事件委托
+	$('#box').off('click',':button15:08 2014-10-23');
+
+//-----one()仅一次触发事件
+	$(':button').one('click',function(){
+		alert('one()仅触发一次事件');
+	});
+
+//-----one()仅一次触发委托事件
+	$('#box').one('click',':button',function(){
+		$(this).clone().appendTo('#box');
+	});
+
+
+
+//=====模拟人为操作行为（点击行为）
+	$('input').trigger('click');
+
+//-----模拟人为操作行为的简便方法
+	$('input').bind('click',function(){
+		alert('模拟人为操作事件');
+	}).trigger('click');
+
+
+
+
+//=====获取事件发生时是否按下了alt,shift,ctrl或meta键。
+-----altKey/shiftKey/ctrlKey/metaKey  获取事件发生时是否按下了alt,shift,ctrl或meta键。
+	$('div').bind('click',function(e){
+		alert(e.ctrlKey);	
+	});
+	$('div').bind('click',function(e){
+		alert(e.altKey);	//alt好像不好用，，
+	});	
+	$('div').bind('click',function(e){
+		alert(e.shiftKey);
+	});
+
+
+
+//=====which  获取鼠标的左中右键（1，2，3），或获取键盘按键
+	$(document).bind('mousedown',function(e){
+		alert(e.which);	  //获取哪个鼠标键触发的事件
+	});	
+	$(document).bind('keydown',function(e){
+		alert(e.which);	  //获取哪个键盘键触发的事件
+	});
+
+
+//=====timeStamp  获取事件触发的时间戳
+	$(document).bind('click',function(e){
+		alert(e.timeStamp);
+	});
+
+
+
+//=====获取三种坐标
+	$(document).bind('click',function(e){
+		alert(e.pageX+','+e.screenX+','+e.clientX);	//三种X坐标
+		alert(e.pageY+','+e.screenY+','+e.clientY);	//三种Y坐标	
+	});
+
+
+
+
+
+
+
+
+			=====事件汇总=====
+
+
+
+//=====鼠标穿过和穿出事件   mouseenter , mouseleave
+
+	$('div').mouseenter(function(){
+	//	$(this).css('background','red');
+		$('strong').html(function(index,value){
+	//		return value+1;
+		});
+	}).mouseleave(function(){
+	//	$(this).css('background','green');
+	});	//enter()和leave() 的子节点不会再次触发父节点事件，它们统一
+
+
+
+//=====鼠标移入和移出事件  mouseover , mouseout
+
+	$('div').mouseover(function(){
+	//	$(this).css('background','red');
+	//	$('strong').html(function(index,value){
+	//		return value+1;
+	//	});
+	}).mouseout(function(){
+	//	$(this).css('background','green');
+	});	//over()和out的子节点会再次触发父节点事件，它们不统一。
+
+
+
+//=====鼠标移动事件	mousemove
+
+	$("div").mousemove(function(){				
+		alert("鼠标移动事件");
+	});
+
+
+
+
+
+//=====鼠标抬起事件 	mouseup
+
+	$(document).mouseup(function(e){			
+		alert('鼠标抬起事件'+e.which);
+	})
+
+
+
+//=====鼠标左键按下事件 	mousedown
+
+	$("div").mousedown(function(e){				
+		alert("鼠标左键按下事件"+e.which);
+	});
+
+
+
+//=====键盘按下事件  keydown （带功能键）,  keypress（普通）
+
+	$(window).keydown(function(e){				
+		alert("带功能键键盘按下事件"+e.keyCode);
+	});
+
+	$(window).keypress(function(e){	
+		alert("无功能键键盘按下事件"+e.keyCode);
+	});
+
+
+
+
+//=====blur 失去焦点事件	blur , focusout
+
+	$(":text").blur(function(){
+		alert("失去焦点");
+	});
+
+
+	$(":text").focusout(function(){
+		alert("失去焦点事件");
+	});
+
+
+
+
+
+
+
+//=====光标激活事件 focusin (可子节点激活)  focus(文本框元素)
+
+	$("p").focusin(function() {
+ 	//	 $(this).find("span").css('display','node').fadeOut(1000);
+	});	//focusin 可以从不是文本框的父元素层使用
+								
+	$('div').focusin(function(){
+	//	alert('光标激活');
+	});
+
+
+  	$(":text").focus(function(){
+		$(this).next().hide(2000);
+	});	//focus 则必须要使用在文本框类的元素层上
+
+
+
+
+
+//=====获取焦点事件  focus
+
+	$(":text").focus(function(){
+		alert("获得焦点事件");			
+ 	});
+		
+
+
+
+
+//=====离开本页面事件   unload
+
+	$(window).unload(function(){				
+		alert("离开本页面事件");
+	});
+
+
+
+
+
+
+//=====表单提交事件  submit
+
+	$("form").submit(function(){
+		alert("表单提交事件");				
+	});
+
+
+
+
+
+
+//=====文本内容被选择事件 select 
+	$(":text").select(function(){
+		alert("内容被选择事件");			
+	});
+
+
+
+
+
+
+//=====滚动条变化事件 scroll
+
+	$(document).scroll(function(){
+		alert("滚动条事件");				
+	});
+
+
+
+
+//=====浏览器窗口大小变化事件resize
+
+	$(window).resize(function(){
+		alert("浏览器大小变化事件");			
+	});
+
+
+
+
+//=====左键双击事件  dblclick
+
+	$("div").dblclick(function(){
+		alert("双击事件");
+	});
+
+
+
+
+
+//=====文本内容改变事件   change
+
+	$(":text").change(function(){
+		alert("内容以改变");
+ 	});
+
+
+
+
+
+
+//=====光标悬停事件   hover() 
+
+	//注：hover()是结合了mouseenter(),和mouseleave()两个方法。
+	//注：hover()是结合了mouseenter(),和mouseleave()两个方法。
+	$('div').hover(function(){
+	//	$(this).css('background','red');
+	},function(){
+	//	$(this).css('background','green');
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>{$title}</title>
+    </head>
+    <body>
+        <h2>{$title}</h2>
+		<h3><a href="index.php">返回首页</a></h3>
+		{$str="Hello PHP!"}
+		<h3>原字串：{$str}</h3>
+		<h3>小写后：{$str|lower} ： {strtolower($str)}</h3>
+		<h3>大写后：{$str|upper} ： {strtoupper($str)}</h3>
+		{$a="hello "}
+		{$b="world!"}
+		<h3>{$a|cat:$b} 字串连接 {$a}{$b}</h3>
+		
+		<h3>你好！{$name|default:"mayao"}</h3>
+		{$str = "<b style='color:red;'>ccccc</b>"}
+		<h3>{$str|escape}</h3>
+		
+		<hr/>
+		
+		{$str="aaaaaa\nbbbbbbbb\nccccccccc\nddddddddd"}
+		{$str|nl2br}
+		<hr/>
+		
+		{* 将日期2015-09-21替换成：09/21/2015 *}
+		{$str="2015-09-21"}
+		{preg_replace("/(\d\d\d\d)\-(\d\d)\-(\d\d)/","\\2/\\3/\\1",$str)}
+		{$str|regex_replace:"/(\d\d\d\d)-(\d\d)-(\d\d)/":'$2/$3/$1'}
+		<hr/>
+		
+		
+		{* 将下面字串中的b标签替换成i标签*}
+		{$str="<b>aaa</b><b>bb>b</b><b>ccc</b>"}
+		{$str|regex_replace:"/<b>(.*?)<\/b>/":"<i>\\1</i>"}
+		<hr/>
+		自定义汉字截取函数或调节器<br/>
+		{$str1 = "塔科马港口港务局委员康妮培根女士告诉法晚记者"}
+		{$str2 = "当时习近福州市"}
+		{$str3 = "市人大常委会主任的身份率团访问塔科马"}
+		
+		{mysubstr($str1,8)}<br/>
+		{mysubstr($str2,8)}<br/>
+		{mysubstr($str3,8)}<br/>
+		{$str2|ttr:6}<br/>
+		{$str3|ttr:10}<br/>
+		
+    </body>
+</html>

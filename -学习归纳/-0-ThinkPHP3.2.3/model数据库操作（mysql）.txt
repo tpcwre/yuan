@@ -1,0 +1,1150 @@
+
+
+
+
+
+
+
+
+//-- 数据库配置
+
+	app/Common/conf/config.php 	在项目级配置文件中配置数据库
+	<?php
+	return array(
+		'DB_TYPE'               =>  'mysql',     // 数据库类型
+		'DB_HOST'               =>  'localhost', // 主机地址
+		'DB_NAME'               =>  'vedio',     // 数据库名
+		'DB_USER'               =>  'root',      // 用户名
+		'DB_PWD'                =>  '',          // 密码
+		'DB_PORT'               =>  '3306',     // 端口
+		'DB_CHARSET'		=>  'utf8',	//设置字符集
+		'DB_PREFIX'             =>  '',    	// 数据库表前缀
+		'DB_FIELDTYPE'		=>  false,	//是否字段检查
+		'DB_FIELDS_CACHE'	=>  true,	//是否字段缓存,debug模式下不生效
+		
+		'DB_DSN'=>'mysql://root:pwd@localhost:3306/think',		//DSN连写方式 
+					mysql 		数据库类型
+					root		用户名
+					pwd			密码
+					localhost	主机地址
+					3306		端口
+					think		数据库名
+	);
+
+	
+
+
+
+
+//-- 实例化model的三种方式
+
+	1：	$user = new \Model\UserModel();		//实例自定义模型  表名为User
+		$user = new \Model\UserModel('User');
+		$user = new \Think\Model();		//实例自定义模型  表名为User
+		$user = new \Think\Model('User');
+
+
+	2：	$obj = D();				//-- 实例化一个空模型
+		$obj = D('User');			//-- 实例化 User表(不需要自定义模型,3.2后等同于M())
+		$use = D('Admin/User');			//--跨模块实例 Admin模块下的 user 模型
+
+
+				'DEFAULT_M_LAYER' =>  'Logic', 		// 更改默认的模型层(Model)名称为Logic
+		//配置修改后：
+		D('User') 		//实例化UserLogic
+		D('User','Model') 	//实例化UserModel
+		D('User','Service') 	//实例化UserService
+
+
+	3：	$obj = M();
+		$obj = M('User');			//-- 实例化 User表(不需要自定义模型,3.2后等同于D())
+		$obj = new Model('User');
+
+
+
+
+
+
+
+//-- 实例Model对象时直接配置连接信息
+
+			$m= M('User','tp_','mysql://root:abcd12345@localhost/thinkphp');
+				实例Model模型对象时可以放入三个参数，
+				usre，		表名 
+				tp_ ，		表前缀 
+				mysql:		数据库类型
+				root:		用户名
+				abcd12345	密码
+				localhost	地址
+				thinkphp	库名
+						
+
+
+
+
+//-- 跨数据库操作
+
+	public function fun1(){
+		$mod=M();
+		$list = $mod->db(1,"mysql://root:@localhost:3306/lamp113")->query("select * from demo");
+		或
+		$list = $mod ->query("select * from lamp119.lamp");
+		dump($list);
+	}
+
+
+
+
+
+//-- 创建自定义model模型
+	在app目录下（Home同级）创建model模型，这样如果有多个模块如Home,Admin的话就可以共享访问
+
+	1，创建目录 app/Model
+	2，创建模型：如果数据表名为 User,那么就创建类文件UserModel.class.php 如下
+		app/Model/UserModel.class.php
+		<?php
+		namespace Model;
+		use Think\Model;
+		class UserModel extends Model{
+			protected $trueTableName='index2';		//可以在这里发设置操作其它表（可选）
+			protected $tablePrefix='wx_';			//更改表前缀（可先）
+				...更多可设置属性见：ThinkPHP/Library/Think/Model.class.php 文件
+		}
+
+	3，控制器中调用数据模型
+		class IndexController extends Controller {
+    			public function index(){
+   				$m = new \Model\UserModel;
+   				$arr = $m->select();
+   			 }
+		}
+
+
+
+
+
+
+
+
+
+//-- Model模型参数动态设置
+
+	<?php
+	namespace Home\Model;
+	use Think\Model;
+	class UserModel extends Model{
+		protected $tablePrefix = 'tp_';		//修改表前缀
+		protected $tableName = 'user';		//修改不带前缀的表名
+		protected $trueTableName = 'user';	//修改表全名
+		protected $dbName = 'mysql';		//修改数据库名
+			
+		protected $fields=array('id','name','_pk'=>'id');	//手动定义数据表字段,并指定主键为id (会关闭缓存机制)
+									//同时手动定义数据表字段及数据类型
+		protected $fields=array('id','name','_pk'=>'id','type'=>array('id'=>'int','name'=>'varchar')); 
+		
+		......更多属性参看 ThinkPHP/Library/Think/Model.class.php
+		
+	}
+	?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 数据库模型操作示例
+
+	field() , where() , limit() 父类Model以定义好
+	alias() , concat(), table() , group() , order() , having() , count() , sum() , max() , min() , avg() 统一在魔术方法__cal()中
+	以上方法除了select(),count(),sum(),max(),min,avg()外，都可以连续操作且顺序不分先后。
+
+	$obj = D('User');
+	$obj->select();
+
+	$obj = D();	
+	$obj->field(字段1，字段2);
+	$obj->table('数据表');
+	$obj->where("id>50 and name like 'a%'");
+	$obj->group(字段);
+	$obj->having(参数条件,类似where);
+	$obj->order('price desc/asc');
+	$obj->limit([偏移量],条数);
+
+
+
+
+
+
+//-- 执行原生SQL语句
+
+   	1：查询类语句使用 query() 返回一个二维数组
+	
+		$goods = D('Goods');
+		$sql = "select id,avg(price) from goods group by category having avg(price)>1000";
+		$stat = $goods->query($sql);
+
+
+   	2：添加，修改，删除类使用 execute() 返回受影响的记录条数 
+		
+		$goods = D('Goods');
+		$sql = "update goods set name='htc' where id=100";
+		$goods->execute($sql);
+
+
+
+
+
+
+
+
+//-- 查询语句的比较符
+
+	$data['id']=array('GT',18);		//--GT 大于
+	$data['id']=array('LT',15);		//--LT 小于
+	$data['id']=array('EQ',16);		//--EQ 等于
+	$data['id']=array('NEQ',16);		//--NEQ 不等于
+	$data['id']=array('EGT',16);		//--EGT 大于等于
+	$data['id']=array('ELT',16);		//--ELT 小于等于
+
+
+
+//-- 特殊SQL语句
+
+	echo M()->getLastSql();			//-- 获取最后执行的sql语句
+
+	$info = $goods->getByName($name);	//-- 按字段查询
+		例：
+		$info = $goods->getByName('admin');	意思为：查询字段名为name中是否有 admin,有就以一维数组返回该条的数据
+
+	echo M('User')->addAll($data);		//-- 这里虽然操作多条，但返回的是首条的ID ，它把所有操作当做一条
+
+
+
+//-- select(),find(),getByxxx()  查询相关
+
+	$goods = D();
+	$goods->table('User')->select();
+	$goods->select(30);
+	$goods->select("1,3,5");
+
+
+	$goods->find(30);
+		$map['name'] = 'ss';
+		$user->where($map)->find();// 读取当前数据对象
+	
+
+	$goods = D('User');
+	$info = $goods->where("goods_price > 1000")->select();
+	$info = $goods->where("goods_price > 1000 and name like 'x%'")->select();
+
+	$info = $goods->field('id,name')->select();
+	$info = $goods->field('id,name',true)->select();			//排除字段
+	$info = $goods->field(array('user_id','content'),true)->select();
+
+	$info = $goods->field('id,nickname as name')->select();			//给查询的某个字段设置别名
+
+	$info = $goods->field(array('id','title','content'))->select();		//数组方式的字段查询
+
+
+	$info = $goods->field('id,SUM(score)')->select();			//查询中再加入复合函数 的查询
+
+	$info = $goods->limit(5)->select();
+	$info = $goods->limit(5,5)->select();
+
+	$info = $goods->group('name')->select();				//按指定字段分组查询
+	$info = $goods->field('category')->group('category')->select();
+	$data = M('User')->field('score,count(*) as total')->group('score')->select();
+	$data = M('User')->field('score,count(*) as total')->having('score >= 20')->group('score')->select();
+
+	$info = $goods->order("price desc")->select();
+
+	$info = $goods->having('price > 1000')->select()
+
+
+	
+
+
+
+									// concat+别名等更复杂的查询
+
+	$info = $goods->field(array('id','concat(name,'-',id)'=>'truename','LEFT(title,7)'=>'sub_title'))->select();
+		执行的SQL相当于：
+		SELECT id,concat(name,'-',id) as truename,LEFT(title,7) as sub_title FROM table
+
+									// 数组方式查询
+	$User = M("User"); // 实例化User对象
+	$map['name'] = 'thinkphp';
+	$map['status'] = 1;// 把查询条件传入查询方法
+	$User->where($map)->select();
+
+									// 表达式方式
+	$map['a'] = array('gt',1);
+	$where['b'] = 1;
+	$Model->where($map)->where($where)->where('status=1')->select();
+
+
+
+									// 多条件数组形式查询
+		$map=array();
+		$map['classid']='lamp113';
+		$map['name']=array('like','%a%');
+		$map['age']=array('between','20,30');
+		$map['id']=array('in',array(1,3,8));
+		$list = $mod->where($map)->select();
+
+
+
+
+	
+	
+	
+//-- like 模糊查询 (包含指定字符)
+	//$data['sex']=array('like','%nan%');			//中间匹配
+	//$data['sex']=array('like','女%');				//开头匹配
+	//$data['sex']=array('like','%ee');				//结尾匹配
+	$arr=$m->where($data)->select();
+										
+										//--notlike 模糊查询 (不包含指定字符)
+	//默认为and关系，可用第三个参数 改变成 and关系
+	$data['sex']=array('notlike','%nan%');			//注: notlike 中间无空格
+	$arr=$m->where($data)->select();			
+
+	 									//--like 模糊查询 同时多条件查询
+	$data['sex']=array('like',array('%n%','%w%'));			
+	//默认or (或关系)   包含‘n’或‘w’ 
+	$data['sex']=array('like',array('%n%','%w%'),'and');	
+	//强制and (和关系)  同时包含‘n’和‘w’
+	$data['sex']=array(array('like',array('%a%','%n%'),'and'),array('notlike','%b%'));
+	//查询包含a 和 n 的同时又不包含 b 的数据 
+	$arr=$m->where($data)->select();
+	
+	
+	
+//-- between 查询在几到几区间内的
+	$data['id']=array('between',array(17,20));
+	$arr=$m->where($data)->select();
+	
+	
+	
+//-- 区间选择(二维数组形式)
+	$data['id']=array(array('GT',14),array('LT',18));  
+	//默认是and 和关系  同时满足两个条件的数据
+	$data['id']=array(array('GT',26),array('LT',14),'or'); 
+	//强制or或关系	满足任意一个条件的数据
+	$arr=$m->where($data)->select();
+	
+	
+	
+//- not between 查询不在几到几区间内的
+	$data['id']=array('not between',array(17,20));	//注：not between中间有空格
+	$arr=$m->where($data)->select();
+
+	
+	
+//-- in 同时查询多个指定id号
+	$data['id']=array('in',array(16,17,18));		//是指定id号的
+
+
+
+	
+//-- not in 查询指定多个id号以外的
+	$data['id']=array('not in',array(16,17,18));	//不是指定id号的
+	$arr=$m->where($data)->select();
+
+	
+	
+//-- 连贯查询并指定连贯的关系
+	//连贯查询默认为 and 关系 ，可强制转为 or 关系 
+	$arr2=$m->where("name='小军b' and sex='nanb'")->find();
+	或
+	$data2['name']='小军b';			
+	$data2['sex']='nanb';
+	$arr2=$m->where($data2)->find();	// 两个条件要同时满足 （and '和'关系）
+	或
+	$data2['name']='小军b';
+	$data2['sex']='nanb';
+	$data2['_logic']='or';				
+	$arr2=$m->where($data2)->find();	// 两个条件满足一个 (or '或' 关系)
+
+
+	连续操作还有其它形式 ，如：
+	1.where		
+			$arr2=$m->where('id>1')->find();
+	2,order		
+			$arr2=$m->order('id desc')->find();
+			$arr2=$m->order(array('id'=>'desc','sex'=>'asc'))->find();
+	3,limit		
+			$arr=$m->limit('3,3')->select();
+			$arr=$m->limit(3,3)->select();
+		order结合limit:	
+			arr=$m->limit(1,2)->order(array('id'=>'desc','sex'=>'asc'))->select();
+			
+	4,field		
+			$arr=$m->field('name,id')->select();	//设置查询字段
+			$arr=$m->field('name as un')->select();	//查询name字段 并用别名un显示
+			$arr=$m->field('id',true)->select();	//查询id以外的所有字段
+		
+	5,table		//设置表名
+	6,group		//分组
+	7,having	//having是后置过滤
+	
+	连续操作手册位置-》thinkphp手册-》模型-》连续操作
+	
+	
+	
+//-- 更多条件同时查询
+	//更多条件同时查询默认为 and 关系，可强制转为 or 关系
+	$data['sex']=array(array('like','%va'),array('like','%w%'),array('EQ','nanEEE'));	
+	$data['sex']=array(array('like','%va'),array('like','%w%'),'nanEEE');	
+	
+	//默认为and关系	
+	$data['sex']=array(array('like','%va'),array('like','%w%'),array('EQ','nanEEE'),'or');						
+
+			//强制为or关系
+	$arr=$m->where($data)->select();
+	
+	
+
+
+
+
+
+
+
+
+//-- table() 查询指定数据表查询
+
+
+	// 指定操作的数据表
+	$Model->table('think_user')->where('status>1')->select();
+	
+	// 指定操作某个库的某个表
+	$Model->table('db_name.think_user')->where('status>1')->select();
+	
+	// 多表操作(表达式方式)
+	$Model->field('user.name,role.title')->table('think_user user,think_role role')->limit(10)->select();
+	
+	// 多表操作(数组方式)				
+	$Model->field('user.name,role.title')->table(array('think_user'=>'user','think_role'=>'role'))->limit(10)->select();
+
+	$data = M()->table(array('mk_user'=>'user','mk_userinfo'=>'info'))->where('user.id=info.user_id')->select();
+
+
+
+//-- getField() 获取指定的字段内容 不指定id则默认为首条
+	$arr=$m->getField('name');			//结果 ： xiaoming (首条)
+	$info = $m->where("id=3")->getField('username');	//结果： lily (id为3)
+
+
+
+
+
+
+
+//-- getDbFeilds() 获取表中字段
+
+	$info = $m->getDbFields();	//结果：id,name,pwd
+
+
+
+
+
+
+
+//-- alias 给操作的表设置别名
+//-- join 关联查询
+	jion通常有下面几种类型，不同类型的jion操作会影响返回的数据结果。
+
+	INNER JOIN: 如果表中有至少一个匹配，则返回行，等同于 JOIN 
+	LEFT JOIN: 即使右表中没有匹配，也从左表返回所有的行 
+	RIGHT JOIN: 即使左表中没有匹配，也从右表返回所有的行 
+	FULL JOIN: 只要其中一个表中存在匹配，就返回行 
+
+	$Model = M('User');
+	$Model->alias('a')->join('__DEPT__ b ON b.user_id= a.id')->select();
+	最终生成的SQL语句类似于： 
+	SELECT * FROM think_user a INNER JOIN think_dept b ON b.user_id= a.id
+
+
+
+
+
+
+//--- union() 多表查询
+		union('string/array',true/false)	默认是false,会筛选掉相同的， true 不筛选会全部显示重复相同的
+		
+		//string方式
+		$data= M('User')->field('user_name')->union('select user_name frome mk_user2')->select();
+	
+		$data= M('User')->field('user_name,id')->union('select user_name,id frome mk_user2')->select();
+
+
+		//array方式 
+		$data = M('User')->field('user_name')->union(array('field'=>'name','table'=>'user2'))->select();
+
+		$data = M('User')->field('user_name')->union(array('field'=>'name','table'=>'user2'),true)->select();	//true 查全部
+
+
+
+
+
+
+//--- distinct 过滤重复查询
+
+		$data = M('User')->distinct(true)->field('score')->order('score asc')->select();
+
+
+
+
+
+
+
+//--  _logic 强制语句的连接关系
+
+	$data2['_logic']='or';	  //或者是 and	
+	$arr=$m->where($data)->select();
+
+
+
+
+
+
+
+
+
+
+//-- add() 添加相关
+
+     一：数组方式数据添加
+	$goods = D('Goods');
+	$arr = array('name'=>'aaa','price'=>'1000');
+	$stat = $goods->add($arr);		//添加成功后会返回其主键值
+	或
+	$stat = $goods->data($arr)->add();		//添加时的使用
+	if($stat > 0){
+		echo 'success';
+	}else{
+		echo 'error';
+	}
+
+     二：AR方式数据添加	(ActiveRecord 活跃记录方式)
+	$goods = D('Goods');
+	$goods->name='aaa';
+	$goods->price=1000;
+	$stat = $goods->add();
+
+
+     三：对象方式
+		$Model = M('User');
+		$obj = new stdClass;
+		$obj->name = '流年';
+		$obj->email = 'thinkphp@qq.com';
+		$stat = $Model->data($obj)->add();
+
+
+     四：字符串方式
+		$Model = M('User');
+		$data = 'name=流年&email=thinkphp@qq.com';
+		$stat = $Model->data($data)->add();
+
+
+     接收表单数据并添加数据库实例
+	例一：数组添加方式 
+	$goods = D('Goods');
+	if(!empty($_POST)){
+		$arr = $_POST;
+		$stat = $goods->add($arr);
+		if($stat){
+			$this->success('成功','Goods/show list');
+		}else{
+			$this->error('失败','Goods/show list');
+		}
+	}
+	例二：AR添加方式 
+	$goods = D('Goods');
+	if(!empty($_POST)){
+		$arr = $_POST;
+		$goods->name = $_POST['name'];
+		$goods->age = $_POST['age'];
+		$stat = $goods->add();
+		if($stat){
+			$this->success('成功','Goods/show list');
+		}else{
+			$this->error('失败','Goods/show list');
+		}
+	}
+
+	例三：create() 收集过滤表单方式 (create会使用I()函数自动接收POST数据,且自动过滤非法字段)
+	$goods = D('Goods');
+	if(!empty($_POST)){
+		$goods->create();
+		$stat = $goods->add();
+		if($stat){
+			$this->success('成功','Goods/show list');
+		}else{
+			$this->error('失败','Goods/show list');
+		}
+	}
+
+
+
+
+
+
+
+
+//-- save() 修改相关
+
+	save() 如果失败会返回 false ,正常会返回受影响的记录条数  
+	
+    数组方式修改数据
+	$goods = D('Goods');
+	$arr = array('good_id'=>10,'good_name'=>'aaa');		//按接指定主键修改
+	$good->data($arr)->save();	//更新时的使用
+	或
+	$good->save($arr);
+
+
+	$goods = D('Goods');
+	$arr = array('good_name'=>'aaa');
+	$good->where('good_id>50')->save($arr);		//按where范围修改	
+
+
+    AR方式修改数据
+	$goods = D('Goods');
+	$goods->id = 53;		//按接指定主键修改
+	$goods->name='aaa';
+	$good->save();
+
+	$goods = D('Goods');
+	$goods->name='aaa';
+	$good->where('id>100')->save();	//按where范围修改
+
+
+
+
+
+
+
+//-- delete() 删除相关
+
+	$goods = D('Goods');
+	$goods->delete(30);		//删除主键为30 的信息
+	
+	$goods->delete('1,3,5');	//删除主键为1，3，5的多条信息
+
+	$goods->where('id>60')->delete();	//按where范围删除信息
+
+	$goods->where('id=4')->delete();	
+	
+	$goods->where('id<10')->delete();
+	
+
+
+
+
+
+
+
+//-- 聚合函数  count(),min(),max(),avg(),sum()
+
+	聚合函数可以结合 where条件使用，但limit()对此无效
+
+				//count() 获取总数
+	$goods->count();
+	$goods->where('price > 1000')->count();
+	$c=$mm->where("sex='nan'")->count();	//统计带条件的总数
+	$data['sex']=array('like','%n');		//统计数组形式条件的总数
+	$c=$mm->where($data)->count();	
+				
+				//max()获取最大id
+	$goods->max('price');
+	$c=$mm->max('id');	
+
+	$c=$mm->min('id')	//min()获取最小值
+
+	
+	$c=$mm->avg('id');	//avg()获取平均值
+
+	
+	$c=$mm->sum('id');	//sum() 获取数值总和
+
+
+
+			
+
+
+
+//-- create() + field() 验证并过滤操作字段
+	$Model->field('title,email,content')->create();		//过滤
+	$Model->add();						//添加
+	即表示表单中的合法字段只有title,email和content字段，无论用户通过什么手段更改或者添加了浏览器的提交字段，都会直接屏蔽。因为，其他是所有字段我们都不希望由用户提交来决定，你可以通过自动完成功能定义额外的字段写入。
+
+
+
+
+
+
+
+
+
+//--  %x 预处理操作
+	$Model->where("id=%d and username='%s' and xx='%f'",array($id,$username,$xx))->select();
+	或
+	$Model->where("id=%d and username='%s' and xx='%f'",$id,$username,$xx)->select();
+
+
+
+
+
+
+
+
+
+
+	
+//-- where 与 having 的区别
+
+	select id,name,age from user where height>180;		where 查询字段只要是表中字段即可
+
+	select id,name,age from user having id > 30;		having 查询字段必需是 select 所查询的字段
+	
+	
+	
+
+
+
+
+
+
+
+
+
+	
+	
+	
+
+
+
+
+//-- 表单验证
+
+    1，在项目的Home/Model中创建一个自定义模型，并继承Model
+    2，重写父类的$_validate属性，设置验证规则
+	例：
+	UserModel.class.php
+	<?php
+	namespace Model;
+	use Think\Model;
+	class UserModel extends Model{
+		protected $patchValidate = true;			//--设置批量验证
+
+		protected $_validate = array(				//--设置验证规则
+			array('username','require','用户名必须填写'),		//必填字段
+			array('pwd','require','密码不得为空'),
+			array('pwd2','pwd','两次密码不一致',0,'confirm'),	//两项字段必须一致
+			array('email','email','邮箱格式不正确'),		//邮箱格式
+			array('qq','/^[1-9]\d{4,9}$/','qq格式不正确'),		//正则方式验证
+			array('qq','2,3,4,5','qq格式不正确',0,'in'),		//验证是否在指定范围内的值
+
+			array('box','aa','多选至少先两项',0,'callback'),	//callback方式验证 ,会调用下面的aa()方法
+
+			array('qq','2,3,4,5','qq格式不正确',0,'in',3,3),	
+						
+			//验证参数解释：
+				参数一：验证字段
+				参数二：验证规则
+				参数三：提示信息
+				参数四：验证条件（可选）
+					0：POST字段存在就验证
+					1：必须验证
+					2：值不为空时验证
+				参数五：验证附加规则（可选）
+					regex	正则验证（默认）
+					function 	函数验证
+					callback	方法验证，
+					equal		验证是否等于某个值，该值由前面的验证规则定义 
+					notequal	验证是否不等于某个值，
+					in		验证是否在某个范围内
+					notin		验证是否不在某个范围内
+					length		验证长度
+					between		验证满园
+					notbetween	验证不在某个范围
+					expire		验证是否在有效期
+					ip_allow	验证IP是否允许 
+					ip_deny		验证IP是否禁止
+					unique		验证是否唯一
+	
+
+				参数六：定义验证环境，1代表新数据增时验证，2代表数据修改时验证，3代表全部验证（默认）	
+	
+		);
+		public function aa($name){
+			if(count($name)>2){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+	
+
+     控制器中验证
+		$User = D('User');
+		$z = $User->create();		//获取接收POST字段并验证
+		if(!$z){
+			dump($User->getError());exit;
+		}
+
+
+
+
+
+
+
+
+
+	
+
+//-- page 分页
+
+	//--- limit 方式
+		$Article = M('Article');
+		$Article->limit('0,10')->select(); // 查询第一页数据
+		$Article->limit('10,10')->select(); // 查询第二页数据
+	//--- page 方式	
+		$Article = M('Article');
+		$Article->page('1,10')->select(); // 查询第一页数据
+		$Article->page('2,10')->select(); // 查询第二页数据
+		或
+		$Article->page(1,10)->select();	// 3.1以后，page也支持2个参数的写法，
+		而易见的是，使用page方法你不需要计算每个分页数据的起始位置，page方法内部会自动计算。
+	//--- limi+page配合的分页
+		$Article->limit(25)->page(3)->select();
+
+	//-- 获取第二页数据，
+		$data = M('User')->field('id,name')->order('id asc')->page(2)->select();
+
+	//-- 获取第二页，以每页5条数据为准
+		$data = M('User')->field('id,name')->order('id asc')->page(2,5)->select();
+
+	//-- page 结合 limit (获取第二页的前五条)
+		$data = M('User')->field('id,name')->order('id asc')->page(2)->limit(5)->select();
+		
+		
+	示例	
+	public function index(){
+	//判断封装搜索条件
+        $where=array();
+        if(!empty($_GET['title'])){
+            $where['title']=array('like',"%{$_GET['title']}%");
+        }
+		//实例化Stu信息操作对象
+		$mod = M("pic");
+        //分页处理
+        $page = new \Think\Page($mod->where($where)->count(),4);
+		//获取信息，放置模板
+		$this->assign("list",$mod->where($where)->limit($page->firstRow,$page->listRows)->select());
+        $page->lastSuffix=false;
+        $page->setConfig('header', '共<b>%TOTAL_ROW%</b>条记录&nbsp;第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页');
+        $page->setConfig('prev','上一页');
+        $page->setConfig('next','下一页');
+        $page->setConfig('last','末页');
+        $page->setConfig('first','首页');
+        $page->setConfig('theme','%HEADER% %FIRST% %UP_PAGE%  %DOWN_PAGE% %END% ');
+        //封装页码信息
+        $this->assign("pageinfo",$page->show());
+        
+		//实例化pic信息操作对象
+		//$mod =M("pic");
+		//获取信息，放置模板
+		//$this->assign("alist",$mod->select());
+		
+		$this->display("index");	//加载模板
+    }
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- thinkphp 3.2查询缓存$Model->cache(true)讲解
+
+        对于及时性要求不高的数据查询，我们可以使用查询缓存功能来提高性能，而且无需自己使用缓存方法进行缓存和获取。
+
+        查询缓存功能支持所有的数据库，并且支持所有的缓存方式和有效期。
+
+        在使用查询缓存的时候，只需要调用Model类的cache方法，例如：
+
+            $Model->cache(true)->where('status=1')->select();
+
+        如果使用了cache(true) ，则在查询的同时会根据当前的查询条件等信息生成一个带有唯一标识的查询缓存，如果指定了key的话，则直接生成名称为key的查询缓存 ，例如：
+
+            $Model->cache('cache_name')->select();
+
+            指定key的方式会让查询缓存更加高效。
+
+        默认情况下缓存方式采用DATA_CACHE_TYPE参数设置的缓存方式（系统默认值为File表示采用文件方式缓存），缓存有效期是DATA_CACHE_TIME参数设置的时间，也可以单独制定查询缓存的缓存方式和有效期：
+
+            $Model->cache(true,60,'xcache')->select();
+
+        表示当前查询缓存的缓存方式为xcache，并且缓存有效期为60秒。
+
+        同样的查询，如果没有使用cache方法，则不会获取或者生成任何缓存，即便是之前调用过Cache方法。
+
+        如果指定了查询缓存的key的话，则可以在外部通过S方法直接获取查询缓存的内容，例如：
+
+            $value = S('cache_name');
+
+        除了select方法之外，查询缓存还支持find和getField方法，以及他们的衍生方法（包括统计查询和动态查询方法）。
+
+            // 对查询数据缓存60秒
+            $Model->where($map)->cache('key',60)->find();
+
+        具体应用的时候可以根据需要选择缓存方式和缓存有效期。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 数据库模型操作
+
+select where group having order limit
+
+	增 $m->add()
+$Model = M('User');
+$data['name'] = '流年';
+$data['email'] = 'thinkphp@qq.com';
+
+$Model->data($data)->add();			增
+或
+$Model->add($data);
+
+$Model->data($data)->save();			改
+$Model->data($data)->where('id=8')->save();
+或
+$Model->save($data);
+
+
+$Model->select();				查
+$Model->field('id,title,content')->select();	
+$Model->field('id,nickname as name')->select();		as 设置别名 
+
+$arr = $m->where('id>2')->count();			查询总条数
+
+$Model->field('feild',true)->select();			查询时排除指定字段	
+
+$Model->field('title,email,content')->save($data);	过滤字段
+
+$Model->where('status=1')->order('id desc')->limit(5)->select();	连贯操作		
+
+$Model->where('status=1')->order(array('order','id'=>'desc'))->limit(5)->select(); 	数组方式调用
+$m->where('type=1 and stat=1')->select();
+
+$Article->limit('10,25')->select();	分页查询
+$Article = M('Article');
+$Article->page('1,10')->select(); // 查询第一页数据
+$Article->page('2,10')->select(); // 查询第二页数据
+
+$Article->limit(25)->page(3)->select();
+当page方法只有一个值传入的时候，表示第几页，而limit方法则用于设置每页显示的数量，也就是说上面
+的写法等同于：
+$Article->page('3,25')->select(); 
+
+
+$this->field('user_id,username,max(score)')->group('user_id')->select();
+				查询结果按照用户id进行分组统计
+
+$this->field('user_id,test_time,username,max(score)')->group('user_id,test_time')->select();
+				支持对多个字段进行分组
+
+
+$this->field('username,max(score)')->group('user_id')->having('count(test_time)>3')->select(); 
+				配合group方法完成从分组的结果中筛选
+
+
+
+
+
+INNER JOIN: 等同于 JOIN（默认的JOIN类型）,如果表中有至少一个匹配，则返回行
+LEFT JOIN: 即使右表中没有匹配，也从左表返回所有的行
+RIGHT JOIN: 即使左表中没有匹配，也从右表返回所有的行
+FULL JOIN: 只要其中一个表中存在匹配，就返回行
+
+
+$Model->join('RIGHT JOIN __WORK__ ON __ARTIST__.id = __WORK__.artist_id')->select();
+		join方法的第二个参数支持的类型包括：INNER LEFT RIGHT FULL。
+
+
+join(array(' __WORK__ ON __ARTIST__.id = __WORK__.artist_id','__CARD__ ON __ARTIST__.card_id = __C
+ARD__.id'))
+join(array(' LEFT JOIN __WORK__ ON __ARTIST__.id = __WORK__.artist_id','RIGHT JOIN __CARD__ ON __
+ARTIST__.card_id = __CARD__.id'))
+		join方法的参数用数组
+
+
+
+
+		UNION操作用于合并两个或多个 SELECT 语句的结果集。每个union方法相当于一个独立的SELECT语句
+			
+$Model->field('name')					普通方式
+      ->table('think_user_0')
+      ->union('SELECT name FROM think_user_1')
+      ->union('SELECT name FROM think_user_2')
+      ->select();
+
+
+$Model->field('name')					数组方式
+      ->table('think_user_0')
+      ->union(array('field'=>'name','table'=>'think_user_1'))
+      ->union(array('field'=>'name','table'=>'think_user_2'))
+      ->select();
+
+$Model->field('name')
+      ->table('think_user_0')
+      ->union(array('SELECT name FROM think_user_1','SELECT name FROM think_user_2'),true)
+      ->select();
+
+
+
+$Model->distinct(true)->field('name')->select();	DISTINCT 方法用于返回唯一不同的值
+
+
+$Model->where('id=5')->cache(true)->find();
+cache可以用于select、find和getField方法，以及其衍生方法，使用cache方法后，在缓存有效期之内不会再次进行数据库查询操作，而是直接获取缓存中的数据，关于数据缓存的类型和设置可以参考缓存部分。
+
+
+
+$Model = M('User');
+$Model->cache(true,60,'xcache')->find();		表示对查询结果使用xcache缓存，缓存有效期60秒。
+
+
+$Model = M('User');
+$result = $Model->cache('key',60)->find();		指定名将数据缓存 
+$data = S('key');					S() 获取缓存数据
+
+
+	删 $m->delete()
+	
+	改 $m->save()
+	
+	查 $m->select()
+	
+
+
+
+
+
+
+
+
+
+
+
+
+//-- Model对象操作原理
+
+    class Model{
+	private $tabName=null;
+	private $sql=null;
+	private $where=null;
+	function __construct($tabName){
+		$this->tabName=$tabName;
+		mysql_connect('localhost','root','abcd12345')or dei('数据库连接失败');
+		mysql_select_db('thinkphp')or die('数据库选择失败');
+	}
+	
+	function where($_where){
+		$this->where=$_where;
+		return $this;		//返回该对象以便连贯操作
+		
+	}
+	
+	function select(){
+		$arr=array();
+		$this->sql="select * from tp_".strtolower($this->tabName)." where $this->where";
+		//$this->sql="select * from tp_user where id=13";
+		$result=mysql_query($this->sql);
+		if($result && mysql_num_rows($result)>0){
+			while($row=mysql_fetch_assoc($result)){
+				$arr[]=$row;
+			}
+		}
+		return $arr;
+	}
+    }	
+
+
+
+
+
+
+
+
+//-- sql语句
+
+	$sql = select category_id,count(*) from table group by category_id;  //按种类查商品总数
+	$sql = select category_id,sum(price) from table gruop by category_id; //按各类查商品总价
+
+	$sql = select category_id,avg(price) from goods group by category_id  //按种类查询平均价
+	$sql = select category_id,avg(price) as ap from goods group by category_id having ap>1000; //按各类查询平均价大于1000的

@@ -1,0 +1,241 @@
+		//=====要点提取
+
+<?xml version="1.0" encoding="utf-8"?>  	<!--文档声明-->
+<班级>						<!--元素-->
+						<!--属性 No="a001"-->
+	<stu No="a001" stuNo="a0&apos;0&quot;1"> <!--实体字符-->				
+		<name>孙悟空</name>
+		<sex>男</sex>
+		<age>500</age>
+						<!--CDATA 解决XML中特殊字符及保存图片的问题-->
+		<info><![CDATA[@!@#$$%%^&*&*(())__#$<>]]></info>	
+	</stu>
+</班级>
+
+
+
+
+
+
+
+
+			=====XML====
+
+
+
+//=====XML可以做为程序间通讯的标准
+//=====XML可以作为配置文件（PHP中用的很多）
+//=====XML可以做小型数据库
+//=====XML文件的组成部分
+//=====语法规范的XML文档
+//=====XML中要注意空格或换行会被解析
+//=====XML的五种实体字符
+//=====XML中的注释语法
+//=====CDATA 解决XML中特殊字符及保存图片的问题
+//=====XML引入CSS样式
+//=====XML的五种实体字符
+
+
+
+//=====XML的五种实体字符
+
+	&lt;		<
+	&qt;		>
+	&amp;		&
+	&apos;		"
+	&quot;		"
+
+
+
+
+//=====XML可以做为程序间通讯的标准
+
+<messages>
+ 	<message id="a001">			//信息头
+ 		<sender>韩顺平</sender>		//发送人
+  		<getter>张飞</getter>		//接收人
+		<content>你吃了吗</content>	//发送内容
+		<time>2011-11-11</time>		//发送时间
+		<image>aa.gif</image>		//图片
+ 	</message>
+</messages>
+
+
+
+
+
+
+	
+
+
+//=====XML可以作为配置文件（PHP中用的很多）
+
+如mysql数据库的连接信息
+  $con=mysql_connect("localhost","root","1234");
+  PHP可以操作XML来做配置文件
+
+配置文件：
+<dbinfo>
+<host>localhost</host>
+<user>root</user>
+<password>1234</password>
+</dbinfo>
+
+
+
+
+
+
+
+//=====XML可以做小型数据库
+	如果我们有这样的需求，有些数据，放在数据库代价高，这样可以考虑直接放入XML文件。
+
+
+
+
+
+
+
+
+
+//=====XML文件的组成部分
+文档声明、元素、属性、注释、CDATA区及特殊字符、处理命令（processing instruction）
+
+<?xml version="1.0" encoding="utf-8"?>  	//文档声明
+<班级>						//元素
+	<stu No="a001">				//属性 No="a001"
+		<name>孙悟空</name>
+		<sex>男</sex>
+		<age>500</age>
+		<介绍/>
+	</stu>
+	<stu No="a001" stuNo="a0&apos;0&quot;1">
+		<name>白骨精</name>
+		<sex>女</sex>
+		<age>100</age>
+		<介绍/>
+	</stu>
+</班级>
+
+
+注： stnadalone : 为文档定义是否独立使用，默认为NO ,一般不使用它！
+
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+
+
+
+
+
+
+
+//=====语法规范的XML文档
+
+1，XML声明语句 ： <?xml version="1.0" encoding="utf-8"?>
+2，必须有且仅有一个根元素
+3，标记大小写敏感
+4，属性值用引号
+5，标记成对
+6，空标记关闭
+7，元素正确嵌套
+	
+
+
+
+
+
+
+
+
+//=====XML中要注意空格或换行会被解析
+
+<name>宋江</name>
+
+与
+
+<name>
+宋江
+</name>
+
+上面的两种XML形式可能会出现解析结果不一样的时候。也许空格和换行会被解析，尽量使用第一种。
+
+
+
+
+
+
+
+
+
+
+//=====XML的五种实体字符
+
+	&lt;		<
+	&qt;		>
+	&amp;		&
+	&apos;		"
+	&quot;		"
+
+	当元素内容中夹杂着单双引号时，可以引用实体字符来解决出错的问题。
+
+<stu No="a001" stuNo="a0&apos;0&quot;1">    //结果 "a0"0"1" 
+	<name>白骨精</name>
+</stu>
+
+
+
+
+
+
+//=====XML中的注释语法
+
+	<!- -注释内容- ->
+
+
+
+
+
+
+
+//=====CDATA 解决XML中特殊字符及保存图片的问题
+
+
+基本语法 ：
+<![CDATA[#@]]>
+
+<class>
+	<stu>
+		<name>lee</name>
+		<info><![CDATA[@!@#$$%%^&*&*(())__#$<>]]></info> //这里可以保存特殊字符和二进制码
+	</stu>
+</class>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====XML引入CSS样式
+
+XML页面：
+<?xml version="1.0" encoding="utf-8"?>
+<!- -引入CSS- ->
+<?xml-stylesheet type="text/css" href="xml.css"?>
+<class>
+	<name>孙悟空</name>
+</class>
+
+CSS页面：
+name{
+	font-weight:bold;
+	color:red;
+	font-size:1cm;
+}
+

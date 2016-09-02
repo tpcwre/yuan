@@ -1,0 +1,551 @@
+
+//===== 循环相关语句-break-continue-goto以及-常量
+
+			基本的概念，表示结束当前的for,while,do while,swithc,流程，可以给一个数字
+		表示退出到第几层。
+
+		$i=0;
+		//  这里暗藏杀机。当++在前面是是先自增，也就是说$i先增为1,它为真，循环继续，如果是$i++,它就是后自增，这是它本身为0为假，就会直接跳出循环！所以这里要注意自增的前后位置！
+		while(++$i){   
+			switch($i){
+			case 5:
+				echo "aaaaa<br>";
+			break;   //这里break 跳出当前的switch,返回到wihile循环上。
+			case 10:
+				echo "bbbbbb<br>";
+			break 2; //这里的break连跳switch,while两层，直接跳出循环。
+			default:
+			break;
+			}
+
+		}
+		echo '$i='.$i;
+
+		结果 ： aaaaaaaa	
+			bbbbbbbb
+			$i=10;
+
+		从上面的案例，我们得到几个结论：
+		1: break语句，默认跳出1 层。
+		2：break语句，后面带的数字，不能超过实际可以跳出的循环层数，否则报错！
+
+
+			---循环相关语句-continue
+		基本概念：continue 用于结束本次循环剩余代码。从新开始新的一次循环（如果条件为真，就继续执行），countinue后面也可以带数字，表示从第几次循环重新开始。
+
+		for($i=0;$i<2;$i++){
+			for($j=1;$j<4;$j++){
+				if($j==2){
+					continue;
+				}
+			}
+			echo '$i='.$i.'$j='.$j."<br>";
+		}
+		结果是： 0 1  , 0 3 ,1 1 , 1 3 
+
+
+		for($i=0;$i<2;$i++){
+			for($j=1;$j<4;$j++){
+				continue 2;
+			}
+			echo '$i='.$i.'$j='.$j;
+		}
+		结果是： 0   1 ,   1  1
+
+
+			---goto语句：
+		基本概念：通过goto语句匀们可以将程序跳转到指定的地方去执行。
+		PHP中的GOTO有一定限制，只能在同一个文件和作用域中跳转，也就是说你无法跳出一个函数或类方法，也无法跳入到另一个函数。常见用法是用来跳出循环或者switch,可以代替多层的break;
+			语法； goto 标签；
+				标签：
+				语句；
+		goto a;
+		echo 'aa';
+		a:
+		echo 'bb';
+		结果显示  bb;
+
+		for($i=0,$j=50;$i<100;$i++){
+			while($j--){
+				if($j==17)goto end;
+			}
+		}
+		echo "i=$i";
+		end:
+		echo 'j=17';
+		结果 : j=17;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== if else 流程控制	（适合选择范围）
+
+		$a=true;
+		if($a==false){
+			echo 'a为假';
+		}else{
+			echo 'a为真';
+		}
+
+
+		$age=20;
+		if($age>=20 && $age<30){
+			echo "20多岁的女人那酸攀";
+		}else if($age>=30 && $age<40){
+			echo "30多岁的女人那";
+		}else if($age>=40 && $age<50){
+			echo "40多岁的女人那滋味";
+		}else if($age>=50 && $age<60){
+			echo "50多岁的女人那，，，";
+		}else{
+			echo "岁数太小或太大！";
+		}
+		
+	
+
+	
+		$cj=78;
+		if($cj>=90 && $cj<100){
+			echo "成绩优秀";
+		}else if($cj<90 && $cj>=80){
+			echo "成绩良好";
+		}else if($cj<80 && $cj>=70){
+			echo "成绩一般";
+		}else if($cj<70 && $cj>=60){
+			echo "成绩及格";
+		}else{
+			echo "不及格";
+		}
+		
+		
+		
+		$a=5;
+		if($a==1){
+			echo '今天星期一，上班';
+		}else if($a==2){
+			echo '今天星期二，上班';
+		}else if($a==3){
+			echo '今天星期三，上班';
+		}else if($a==4){
+			echo '今天星期四，上班';
+		}else if($a==5){
+			echo '今天星期五，上班';
+		}else if($a==6){
+			echo '今天星期六，加班';
+		}else if($a==7){
+			echo '今天星期日，加班';
+		}
+		
+		
+
+
+
+
+
+
+
+
+
+		
+//===== if 嵌套结构
+		$age=24;
+		$money=true;
+		
+		if($age>20 && $age <30 && $money){
+			echo "感觉不错，咱们交往一下试试看<br>";
+			$stat='在一起交往很开心';
+			if($stat){
+				echo "咱们结婚呗。，，，";
+			}else{
+				echo "你这个人真好，我配不上你,,,";
+			}
+			
+		}else{
+			echo "咱们不合适，，，";
+		}
+		
+	
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+//===== switch 循环		（适合选择某值）
+
+        注意：
+            1、while里面是条件表达式，你可以往里面写true。如果写的是true表示一直为真一直循环。
+            2、while循环通常用来做条件循环。
+            3、循环里面可以写任意我们学过的代码，循环是可以相互嵌套的，但是实际嵌套的过程中不要超过3层；
+ 	总结：switch 首先按照case顺序进行配置，如果一个都没有匹配到，则执行default语句的内容，直到遇到braak.则退出switch.
+	IF 和 switch语句的应用区别： IF 是对某个范围的判断，而switch是对某一个点的判断。所以我们可以这样去选择它们。当我们的分支就是几个点的时候（比如说先反上下左右的方向时）就应该使用switch。如果你的分支是几个区域（范围）的判断，则考虑使用IF。
+	
+		$week=8;
+		switch($week){
+			case 1:
+				echo "今天星期一，上班";
+			break;
+			case 2:
+				echo "今天星其二，上班";
+			break;
+			case 3:
+				echo "今天星其二，上班";
+			break;
+			case 4:
+				echo "今天星其二，上班";
+			break;
+			case 5:
+				echo "今天星其二，上班";
+			break;
+			case 6:
+				echo "今天星其二，上班";
+			break;
+			case 7:
+				echo "今天星其二，上班";
+			break;
+			default:
+				echo "今天星其八，这是哪个星球的日子";
+		}
+		
+		
+			//-- switch 更换图片
+			$a=5;
+			switch($a){
+				case 1:
+					echo "<img src='img/p1.jpg' />";
+				break;
+				case 2:
+					echo "<img src='img/p2.jpg' />";
+				break;
+				case 3:
+					echo "<img src='img/p3.jpg' />";
+				break;
+				case 4;
+					echo "<img src='img/p4.jpg' />";
+				break;
+				case 5:
+					echo "<img src='img/p5.jpg' />";
+				break;
+				case 6:
+					echo "<img src='img/p6.jpg' />";
+				break;
+				case 7:
+					echo "<img src='img/p7.jpg' />";
+				break;
+				default;
+					echo "没有其它的图片了。。。";
+			}
+	
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+//===== while循环
+	
+		$loop=1;
+		while($loop<5){
+			echo "我是小尧尧，这是第{$loop}次，，<br>";
+			$loop++;
+		}
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+//===== while嵌套循环 (巢式循环)
+
+		$a=1;
+		while($a<5){
+			$b=1;
+			while($b<5){
+				echo $b;
+				$b++;
+			}
+			echo $a.'<br>';
+			$a++;
+		}
+	
+	
+	
+
+
+
+
+
+	
+//===== while循环做表格并隔行换色
+	
+		echo "<table border=1 width=500>";
+			$rows=1;
+			while($rows<=5){
+				if($rows%2==1){
+					echo "<tr bgcolor='#ccc'>";
+				}else{
+					echo "<tr>";
+				}
+					$cols=1;
+					while($cols<=5){
+						echo "<td>a</td>";
+						$cols++;
+					}
+				echo "</tr>";
+				$rows++;
+			}
+		
+		
+		echo "</table>";
+	
+	
+
+
+
+
+//=====while循环输出 三角形
+	
+	$a=1;
+	while($a<=5){
+		$b=1;
+		while($b<=$a){
+			echo "*";
+			$b++;
+		}
+		echo "<br>";
+		$a++;
+	}
+
+
+
+
+
+
+
+/=====while循环输出 99乘法表
+	
+	$a=1;
+	while($a<=9){
+		$b=1;
+		while($b<=$a){
+			echo $b.'*'.$a.'='.$a*$b." ";
+			$b++;
+		}
+		echo "<br>";
+		$a++;
+	}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/=====do while 先执行再判断
+
+	$a=1;
+	do{
+		echo "do while的用法,不管条件是否成立，先运行一次<br>";
+		$a++;
+	}while($a<0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====for循环
+
+	for($i=1;$i<=5;$i++){
+		echo 'for循环<br>';
+	}
+	
+	
+	
+	
+	
+	
+	
+//=====for循环-同时可有多个条件
+	
+	for($i=1,$j=1;$i<10;$i+=1,$j+=5){
+		echo $i.'--'.$j.'<br>';
+	}
+	
+	
+	
+
+	
+	
+	
+	
+	
+/=====for循环-输出三角型
+	
+	for($i=1;$i<10;$i++){
+		for($j=1;$j<=$i;$j++){
+			echo "*";
+		}
+		echo '<br>';
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====break 结束整个循环体
+
+	for($i=1;$i<10;$i++){
+		if($i==5){
+			break;
+		}
+		echo " 本次共10次循环，但第四次结束循环！<br>";
+	}
+	
+	
+	
+	
+	
+//=====continue 略过本次循环，继续下次循环
+//=====continue 2 退出 switch 循环
+	
+	for($i=1;$i<10;$i++){
+		if($i==3 || $i==6 || $i==9){
+			continue;
+		}
+		echo "本次循环， $i continue 略过当次循环，继续下次循环<br>";
+	}
+	
+
+
+
+	注意：	在switch中 要使用  continue 2
+
+	  foreach($tmp_names as $key=>$value){
+            switch($error){
+                case 1:
+                case 2:
+                   $message[$key+1] = '太大了';
+                   continue 2;
+                break;
+                case 3:
+                case 6:
+                case 7:
+                    $message[$key+1] = '内部错误';
+                    continue 2;
+                break;
+                case 4:
+                    $message[$key+1 ] = '没有文件被上传';
+                    continue 2;
+                break;
+            }
+
+          
+
+
+	
+	
+	
+//=====exit 结束本页php程序
+	
+	for($i=1;$i<30;$i++){
+		echo 'exit 结束本页程序， $i';
+		if($i==5){
+			//exit();
+		}
+	}
+	echo 'exit 结束当前页程序';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

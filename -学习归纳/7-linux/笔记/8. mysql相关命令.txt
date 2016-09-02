@@ -1,0 +1,36 @@
+
+
+//===== mysql 的安装与移除 （ubantu）
+	
+	//-- mysql 的安装 
+		sudo apt-get install mysql-server
+			然后等待输入root用户的密码
+
+
+	//-- mysql 的移除
+		sudo apt-get autoremove --purge mysql-server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

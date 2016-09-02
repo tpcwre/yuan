@@ -1,0 +1,94 @@
+<?php
+/**
+ * 短信通道接口
+ *
+ * @author : wangyu
+ * @date : 2015-02-10
+ */
+class Utils_SmsGuodu{
+
+    private $_url ='接口地址' ;
+
+    private $_username;
+
+    private $_password;
+
+    private $_config;
+
+    private $_alarmPhoneConfig;
+
+    public function __construct(){
+        $this->_config = Yaf_Application::app()->getConfig()->get("smsguodu");
+        if(empty($this->_config)){
+            throw new Exception("smsguodu config can not be empty!");
+        }
+        $this->_username = $this->_config['servers']['username'];
+        $this->_password = $this->_config['servers']['password'];
+        $this->_alarmPhoneConfig = array('18515070524', '15001062523');
+    }
+
+    /**
+     * 发送短信
+     */
+    public function sendSms($phoneNum, $content, $contentType = 8, $sendTime = '', $validTime = '', $appendID = ''){
+        if(empty($phoneNum) || empty($content)){
+            return false;
+        }
+        $info = array();
+        $info['OperID'] = $this->_username;
+        $info['OperPass'] = $this->_password;
+        $info['DesMobile'] = $phoneNum;
+        $info['Content'] = mb_convert_encoding($content, 'GBK', 'utf8');
+        $info['ContentType'] = $contentType;
+        // 非必选参数
+        $info['SendTime'] = $sendTime;
+        $info['ValidTime'] = $validTime;
+        $info['AppendID'] = $appendID;
+        $params = http_build_query($info);
+
+        $req = new HttpRequest();
+        $req->timeout = 30;
+        $req->url = $this->_url;
+        $req->body = $params;
+        $res = $req->post();
+        if($res->statusCode === '200'){
+            $xmlRes = new SimpleXMLElement($res->body);
+            if(trim($xmlRes->code) !== '03'){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 发送警告短信
+     */
+    public function sendAlarmSms($content){
+        if(empty($content)){
+            return false;
+        }
+        $phoneNums = implode(',', $this->_alarmPhoneConfig);
+        $info = array();
+        $info['OperID'] = $this->_username;
+        $info['OperPass'] = $this->_password;
+        $info['DesMobile'] = $phoneNums;
+        $info['Content'] =  mb_convert_encoding($content, 'GBK', 'utf8');
+        $params = http_build_query($info);
+
+        $req = new HttpRequest();
+        $req->timeout = 30;
+        $req->url = $this->_url;
+        $req->body = $params;
+        $res = $req->post();
+        if($res->statusCode === '200'){
+            $xmlRes = new SimpleXMLElement($res->body);
+            if(trim($xmlRes->code) !== '03'){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+}

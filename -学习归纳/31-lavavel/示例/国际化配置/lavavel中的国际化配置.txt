@@ -1,0 +1,35 @@
+
+	1，laravel\config\app.php 中
+
+   		 'locale' => 'en',		//设置语言类型的首选 项
+
+   
+		 'fallback_locale' => 'ch',	//设置语言类型的备选 项
+
+
+	2,当这里配置了 en 或 ch 或其它时 ，那么就要在 laravel\resources\lang\ 下创建相应的目录 如
+				
+		\laravel\resources\lang\en
+				|-abc.php		//并创建文件，名字可随意起
+
+					<?php		//创建键值对形式的配置信息
+						return[
+							'title'=>'aaaaaa',
+							'content'=>'bbbbbbb',
+						];
+
+	3, 调用配置
+		<html>
+	
+			<head>
+        
+				<title>{{trans('haha.aa')}}</title>
+	//结果title就会显示 aaaaaa
+			</head>
+		
+</html>
+
+
+
+
+

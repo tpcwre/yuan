@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>JavaScript实例</title>
+        
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2 class="cc">JavaScript实例:Ajax操作</h2>
+		<div id="did" style="width:200px;height:100px;background-color:#ddd;"></div>
+		<button onclick="doLoad()">加载</button>
+        <script type="text/javascript">
+			//定义Ajax加载
+			function doLoad(){
+				//1. 创建Ajax请求对象
+				var xmlhttp = null;
+				if(window.XMLHttpRequest){
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				}else{
+					// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				//2. 设置回调函数
+				xmlhttp.onreadystatechange=function(){
+					//判断是否完成
+					if(xmlhttp.readyState==4){
+						//获取响应内容
+						var str = xmlhttp.responseText;
+						//添加到div中
+						document.getElementById("did").innerHTML=str;
+					}
+				}
+				//3. 初始化请求信息
+				xmlhttp.open("get","1.php",true);
+				//其中get为请求方式，还可以为post， 1.php表示请求地址， 第三个参数表示是否异步，true表示异步
+				//4. 发送请求
+				xmlhttp.send();
+			}
+        </script>
+    </body>
+</html>

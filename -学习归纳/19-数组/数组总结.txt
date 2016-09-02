@@ -1,0 +1,310 @@
+
+	
+	
+	
+	
+	
+	
+	
+//===== 数组的特性
+
+        1）、声明数组时，索引数组下标可以不连续。指定什么就是什么。
+        2）、负数可以作为下表，但是没有太大意义。
+        3）、声明关联数组时如果下标不加引号来包含下表，会当作常量来使用。如果连这个常量都没有才会转换为字符串
+        4）、如果下标是null，那么下标将为空字符串，如果下标为小数将会舍掉小数位。
+        5）、索引下标和关联下标可以放在同一个数组中，但是我们不经常用。
+        6）、数组的关联下标和索引下表不会相互影响。关联下标不会影响索引下标的排列规则。
+        7）、array()没有指定下标，默认是索引数组，从0开始
+        8）、array()可以指定下标，使用=>操作符来进行声明，索引和关联都这样做
+
+	1）、声明数组时，索引数组下标可以不连续。指定什么就是什么
+        2）、负数可以作为下标，但是没有太大意义
+	$arr[0]='a';
+	$arr[2]='b';
+	$arr[4]='c';
+	$arr[-4]='d';
+	echo '<pre>';
+		var_dump($arr);
+	echo '<pre>';
+
+	
+	3）、声明关联数组时如果下标不加引号来包含下表，会当作常量来使用。如果连这个常量都没有才会转换为字符串<br>";
+	define('hehe','abc');
+    $var[hehe] = 'b';
+    echo '<pre>';
+        var_dump($var);
+    echo '</pre>';
+	
+	
+	4）、如果下标是null，那么下标将为空字符串，如果下标为小数将会舍掉小数位。<br>";
+	
+	$var[null] = 'a';
+    //var_dump($var);
+    echo $var[''].'<br>';
+	
+	$var[3.14234]='kdf';
+	echo $var[3].'<br>';
+                  
+
+				  
+	5）、索引下标和关联下标可以放在同一个数组中，但是我们不经常用。<br>6）、数组的关联下标和索引下表不会相互影响。关联下标不会影响索引下标的排列规则";
+	$arr1=array('a','b','c','d'=>'ddd','e','f');
+	echo '<pre>';
+	var_dump($arr1);
+    echo '<pre>';
+                  
+				  
+				  
+	
+
+
+	
+	
+//===== 数组的声明 
+
+    	使用[]来直接声明，[]是array()的简化方式。
+
+    注意：
+        1、这种写法得是php 5.4版本以后可以这样使用。
+        2、新版本中可以使用一种方式来获取。
+
+        $var = array('a'=>'1',1=>'b');
+        $var = ['a'=>1,1=>'b'];
+	
+	$arr11=array('A','B','C');
+	var_dump($arr11);
+	
+	$arr12=['a','c','d'];
+	var_dump($arr11);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 删除数组中的元素 
+	
+	1,unset();直接在内存中释放，下标释放。
+    	2,null值：删除指定元素下标的值，设置为null ，下标保留
+	3,单独使用[]时，不指定下标的时候，索引下标的值将为出现过得最大的下标+1。
+				  
+	$avList = array('波多野结衣','饭岛爱','苍井空','麻生早苗','光月夜也','麻生舞','小室友里','小泽圆');
+
+
+   	 echo '<pre>';
+       	 var_dump($avList);
+   	 echo '</pre>';
+    	//unset($avList[1]);//删除变量
+   	 $avList[1] = null;
+	
+	
+    	unset($avList[7]);//去掉了下标为7的小泽圆
+   	 $avList[] = '吉泽明步';
+	
+    	echo '<pre>';
+     	   var_dump($avList);
+    	echo '</pre>';
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 多维数组的声明和使用
+
+	
+     $dongMan = array(
+        'maoxianlei'=>array(
+           array('mingCheng'=>'熊出没','jishu'=>104),
+           array('mingCheng'=>'火影忍者','jishu'=>601),
+           array('mingCheng'=>'死神','jishu'=>366)
+        ),
+        'gaoxiaolei'=>array(
+           array('mingCheng'=>'蜡笔小新','jishu'=>1665),
+           array('mingCheng'=>'哆啦A梦','jishu'=>1760),
+           array('mingCheng'=>'樱桃小丸子','jishu'=>367)
+        )
+    );
+
+    echo "<pre>";
+        var_dump($dongMan);
+    echo "</pre>";
+    echo $dongMan['maoxianlei'][2]['mingCheng'];
+    echo $dongMan['gaoxiaolei'][1]['mingCheng'];
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+
+
+
+
+//===== 数组的遍历
+
+
+	$array = array(1,2,3,4,5,6,7);
+	for($i=0;$i<count($array);$i++){
+		echo $array[$i].'<br>';
+	}
+	
+	echo '<hr>';
+	foreach($array as $k=>$v){
+		echo $k.'--'.$v.'<br>';
+	}
+	
+	
+	
+	
+	
+	
+	
+//===== 将数组表格化
+	
+	$dongMan = array(
+	   array('mingCheng'=>'熊出没','jishu'=>104),
+	   array('mingCheng'=>'火影忍者','jishu'=>601),
+	   array('mingCheng'=>'死神','jishu'=>366),
+	   array('mingCheng'=>'蜡笔小新','jishu'=>1665),
+	   array('mingCheng'=>'哆啦A梦','jishu'=>1760),
+	   array('mingCheng'=>'樱桃小丸子','jishu'=>367)
+    );
+	
+	echo "<table border=1 width=300>";
+		for($i=0;$i<count($dongMan);$i++){
+			echo "<tr>";
+				foreach($dongMan[$i] as $v){
+					echo "<td>$v</td>";
+				}
+			echo "</tr>";
+		}
+	echo "</table>";
+	
+	
+	echo "<hr>";
+	
+	
+	$dongMan1 = array(
+        'maoxianlei'=>array(
+           array('mingCheng'=>'熊出没','jishu'=>104),
+           array('mingCheng'=>'火影忍者','jishu'=>601),
+           array('mingCheng'=>'死神','jishu'=>366)
+        ),
+        'gaoxiaolei'=>array(
+           array('mingCheng'=>'蜡笔小新','jishu'=>1665),
+           array('mingCheng'=>'哆啦A梦','jishu'=>1760),
+           array('mingCheng'=>'樱桃小丸子','jishu'=>367)
+        )
+    );
+	foreach($dongMan1 as $k=>$v){
+		echo "<table border=1 width=200>";
+		echo "<caption><h3>$k</h3></caption>";
+		for($i=0;$i<count($v);$i++){
+			echo "<tr>";
+			echo "<td>{$v[$i]['mingCheng']}</td>";
+			echo "<td>{$v[$i]['jishu']}</td>";
+			echo "</tr>";
+		}
+		echo "</table>";
+	}
+	
+	
+	
+
+
+
+
+
+	
+	
+	
+//===== while+指针遍历数组
+
+	$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc');
+	while(true){
+		echo key($arr).'===>'.current($arr).'<br>';
+		if(!next($arr)){
+			break;
+		}
+	}
+	
+	
+	
+	
+
+	
+	
+	
+//===== do while+指针遍历数组
+	
+	$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+	do{
+		echo key($arr).'--'.current($arr).'<br>';
+	}while(next($arr));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== for+指针遍历数组
+	
+	$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+	$count=count($arr);
+	for($i=0;$i<$count;$i++){
+		echo key($arr).'--'.current($arr).'<br>';
+		next($arr);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	

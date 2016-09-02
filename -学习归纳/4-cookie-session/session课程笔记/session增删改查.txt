@@ -1,0 +1,40 @@
+<?php
+
+	session_id($sid);			//===给session设置指定的id
+
+	session_start();			//===初始化session
+
+	$sid = session_id();			//===获取session的id
+	echo $sid;				//===查看seesion的id
+
+	session_name();   			//获得服务器现在的session的名字
+
+						//===增
+	$_SESSION["a"]="aaa";			//创建及更新SESSION内容
+
+
+	$_SESSION["a"]="bbb";			//===改
+
+	echo $_SESSION["a"];
+
+						//===查
+	echo $_SESSION["a"]."<br>";		//查看指定SESSION内容	
+
+	echo "<pre>";				//查看所有session内容
+	foreach($_SESSION as $k=>$v){
+		echo $k."=>".$v."<br>";
+	}
+	echo "</pre>";
+
+						//===删
+	unset($_SESSION["a"]);			//删除指定SESSION
+
+	session_destroy();			//删除所有session(包括文件)
+
+	echo $_SESSION["a"];
+
+
+	setCookie('PHPSESSID','',time()-1,'/');		//===删除session的ID
+	//名字保存在 cookie中，上面有cookie保存的地址
+	//  '/'表示服务器的根目录，而不是系统盘根目录
+?>

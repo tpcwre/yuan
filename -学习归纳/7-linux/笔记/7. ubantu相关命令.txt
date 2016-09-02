@@ -1,0 +1,98 @@
+
+
+
+//-- ubantu 上安装xampp 
+
+	//-- 下载地址
+		www.apachefriends.org/index.html
+
+	//-- 安装xampp
+		进入到下载目录找到xampp ,
+		
+		sudo chmod 777 xampp....	给其添加执行权限:
+		sudo ./xampp-.....			安装软件	
+
+
+
+//-- tar.gz 包的解压命令
+	gzip -d httpd-2.4.14.tar.gz		将gz压缩包解压 成 tar 包文件
+	tar xvf httpd-2.4.12.tar 		将tar 包解压成正常的目录
+
+
+
+
+//-- otp-get 软件管理包安装程序命令(相当于CentOs的yum安装)
+	sudo apt-get install apache2	安装apache		
+	sudo apt-get install g++	安装C++的编译器(它是安装其它程序的基础)
+			update 		获取程序包列表
+			remove		移除指定软件包
+			autoremove	自动移除全部不使用的罗件包
+			purge		带配置文件一起移除掉
+			upgrade		升级指定的软件包
+			source 		下载指定包的源码
+			check 		检验依赖是否有损坏
+	
+	sudo apt-get autoremove --purge mysql-server		连带配置文件一起移除程序
+
+
+//-- 源码包安装过程
+	1, 下载并解压源码包
+	2，进入源码目录 进行安装前配置
+		./configure --prefix==/usr/loca/pcre	指定程序的安装目录
+		make					编译
+		sudo make install			安装 (需要sudo权限)
+
+
+
+
+//-- apache的开启，关闭，重启命令
+	sudo /etc/init.d/apache2 stop 			//停止
+	sudo /etc/init.d/apache2 start			//开启
+	sudo /etc/init.d/apache2 restart		//重启
+	sudo /etc/init.d/apache2 graceful		//不中断服务，平滑从启
+
+	sudo ./apachectl start				//源码方式启动apache
+
+
+
+
+//-- 文本编辑器
+	sudo gedit xxxx.xxx				
+
+
+
+
+	
+
+
+
+//-- ubuntu 上安装 git
+	sudo apt-get install git
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

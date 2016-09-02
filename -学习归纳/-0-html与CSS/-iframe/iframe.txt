@@ -1,0 +1,221 @@
+
+//===== iframe 标签的使用
+//===== iframe 属性
+//===== 让a连接的跳转面显示在指定name的iframe框架里
+//===== 在iframe标签中间使用文本来解决有些浏览器不支持iframe的情况。
+//===== iframe 后以后的内容不显示的解决方法
+//===== 设置iframe的背景色
+//===== 示例 ifram 的 ajax 异步提交功能 
+//===== iframe 其它问题的解决
+
+
+
+
+
+
+
+
+//===== iframe 标签的使用
+	
+		<iframe src='bb.html' scrolling='auto' frameborder='0' width=500 height=500 name='ifr'/>
+
+	
+	
+	
+//===== iframe 属性
+
+		name		框架名，可以让a连接的跳转页面指定在哪个iframe框架中显示
+		src		框架载入地址
+		frameborder	是否显示边框，'1'为显示。'0'为不显示(必须带引号)
+		height		iframe的高度
+		width		iframe的宽度
+		marginheight="10px" 	iframe的上下内边距
+		marginwidth="50px"		iframe的左右内边距
+		scrolling	设置iframe的滚动条
+				auto，	自动判断是否显示滚动条
+				yes，	始终显示
+				no，	不显示
+
+				
+		allowTransparency="true"		设置iframe是否透明（好像没有效果）
+		background-color=transparent	设置背景色透明 
+		background-color: green			设置iframe框架的背景色
+		
+		
+		
+		sandbox 			启用一系列对 <iframe> 中内容的额外限制。(h5)
+			allow-forms
+			allow-same-origin
+			allow-scripts
+			allow-top-navigation
+
+			
+		align ： left \ right \ top \ middle \ bottom 
+			不赞成使用。请使用样式代替。
+			规定如何根据周围的元素来对齐此框架。
+	
+			
+			
+			
+			
+			
+//===== 让a连接的跳转面显示在指定name的iframe框架里
+
+		<a href='cc.html' target='ifr'>cc.html</a><br><br>
+		<iframe src='bb.html' scrolling='auto' frameborder='0' width=500 height=200 name='ifr' />
+
+
+        
+		
+		
+
+		
+//===== 在iframe标签中间使用文本来解决有些浏览器不支持iframe的情况。
+
+		<iframe src='bb.html' scrolling='auto' frameborder='0' width=500 height=200 name='ifr'>
+			你的浏览器版本太低，不能正常显示iframe.请更换新版本的浏览器
+		</iframe>
+
+
+
+
+
+
+
+
+
+//===== iframe 后以后的内容不显示的解决方法
+
+
+		注意： 如果使用iframe后面的内容不显示时 就在后面加上一个标签 </iframe>
+
+		如：
+		<iframe src=""></iframe>
+
+
+
+
+
+
+
+
+
+
+
+//===== 设置iframe的背景色
+
+		//指定iframe 背景色为绿色
+		<IFRAME ID="Frame2" SRC="transparentBody.htm" allowTransparency="true" STYLE="background-color: green"> </IFRAME> 
+
+		
+		//设置iframe 透明背景色
+		<iframe src="a.html" allowtransparency="true" style="background-color=transparent" title="test" frameborder="0" width="470" height="308" scrolling="no"></iframe>
+
+
+
+		
+		
+		
+		
+		
+		
+		
+//===== 示例 ifram 的 ajax 异步提交功能 
+
+		当前页提交一个图片地址到另一个页面，同时使用iframe 获取到另一个页面的图片，并显示在当前页
+
+		a.php页面
+		<form action='b.php' method='post' target='a1'>
+			<input name='user' />
+			<input type='submit' value='提交' />
+		</form>
+
+		<iframe src='b.php' name='a1' width=400 height=300 scrolling=no frameborder=0 />
+
+
+
+		b.php页面
+		<?php
+			$img = $_POST['user'];
+			echo "<img src='{$img}' />";
+		?>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== iframe 其它问题的解决	
+			
+	 用iframe进行表单提交时的若干问题总结
+	标签： iframeajax浏览器htmlactionjavascript
+	2010-02-24 09:25 4311人阅读 评论(1) 收藏 举报
+
+	这篇文章主要用来探讨在使用iframe进行表单提交时一系列浏览器兼容性以及iframe本身的一些限制。
+
+	iframe的主要用途一般是运用在无刷新提交数据并做出响应的场景，可以作为ajax方式的有力补充。相对于使用ajax提交数据有一些独特的优势：
+	1、对浏览器是否支持javascript没有要求，因而有更好的浏览型兼容性。
+	2、表单提交时和普通的页面提交没有差别，不用通过脚本来包装提交的数据。
+	3、能很方便地处理enctype="multipart/form-data"的提交表单，而这是通过ajax所不能做到的。因此在像上传图像而要不刷新当前页面时，一般都会采用iframe来处理表单。
+
+	不过，应用iframe来处理表单也还是需要应对一些ajax处理表单时所没有的问题。把这些问题解决了，应用iframe就是手到擒来的事情了。
+
+	1、如何设定保证表单提交给iframe
+	只需要将form的target指定为iframe的name即可，这个在各个浏览器里边都是兼容的，不用额外的指定iframe的id了。
+	如：
+	########container.htm
+	<iframe name="frm_dealer"></iframe>
+	<form action="iframe.htm" target="frm_dealer">
+		<input type="submit" value="提交">
+	</form>
+	###########iframe.htm
+	Hello,World!
+
+
+	2、表单提交后如何用js获取iframe的页面内容
+	这是和ajax如何获取到响应的数据一个类似的问题，需要处理好各种浏览器的兼容性。通过对一些日常开发的对比，总结出这么一套模式来获取iframe页面的内容，屡试不爽：
+	给iframe定义一个onload事件，并且将iframe以this传进相应的处理函数，然后就可以通过其contentWindow.document属性获取到iframe的document了。接下来用document.body.innerHTML就可以获取到body中的html代码了。这里需要考虑的一个问题是，页面加载时iframe没有src时也会产生onload事件，这时需要检查其innerHTML是否为空，如果为空，则不进行任何处理。
+
+	将1中的container.htm改成如下：
+	<iframe name="frm_dealer" onload="onIFrameLoaded(this);"></iframe>
+
+	<form action="iframe.htm" target="frm_dealer">
+		<input type="submit" value="提交">
+	</form>
+
+	<script type="text/javascript">
+	function onIFrameLoaded(iframe) {
+		var doc = iframe.contentWindow.document;
+		var html = doc.body.innerHTML;
+		if (html != '') {
+			alert(html);
+		}
+	}
+	</script>
+
+
+	3、如何使嵌入iframe的页面自适应iframe的高度变化
+	通过iframe的document的body.scrollHeight属性即可获知iframe文档的高度，然后调整iframe的height即可，可以通过修改2中的代码看到效果：
+	在conatiner.htm中的onIFrameLoaded函数最后增加一行：iframe.style.height = doc.body.scrollHeight + 'px';
+	然后，修改iframe.htm为：
+	<div style="height:200px">Hello,World!</div>
+	点击container.htm中的按钮，就会看到iframe的高度自动变到200px了。
+
+
+	四、iframe里边的表单提交的设置问题
+	当iframe里边有表单需要提交时，如果需要其父窗口一起提交，则需要设置其表单的target属性为_top。
+
+	五、iframe的缓存问题
+	当iframe里边的页面是一个静态页面时，其缓存往往比较严重，比如conatiner.htm的代码为：
+	<iframe src="iframe.htm"></iframe>
+	如果iframe.htm为一个静态页面，那么当改变了iframe.htm的页面内容，无论如何刷新container.htm，都有可能出现iframe.htm不发生改变的情况。只有单独访问iframe.htm，并且强制刷新一下，才会使得container.htm页面iframe里边的内容也发生变化。如果是在这样的情况下发布了一个网站的新版后，用户们却丝毫看不到改变，那么抓狂的只能是开发者了。不过，其实也不用着急，在src里边的路径后边加一个版本标识符即可，比如将src改成iframe.htm?v=1，这样，浏览器自然回去获取最新的版本内容了。
+
+			
+			
+		

@@ -1,0 +1,122 @@
+			--prefix将MYSQL安装到/usr/local/mysql, 
+
+			--datadir将数据库生成/usr/local/mysql/data1 
+
+			--sysconfdir是指定mysql使用到的my.cnf配置文件的搜索路径为/etc  
+
+
+1.--prefix=PREFIX：指定程序安装路径；
+
+2.--enable-assembler：使用汇编模式；（文档说明：compiling in x86 (and sparc) versions of common string operations, which should result in more performance.  汇编x86的普通操作符，可以提高性能）
+
+3.--enable-local-infile：启用对LOAD DATA LOCAL INFILE语法的支持(默认不支持)；
+
+4.--enable-profiling：Build a version with query profiling code (req.community-features)
+
+5.--enable-thread-safe-client：使用编译客户端；(让客户端支持线程的意思)
+
+6.--with-big-tables：启用32位平台对4G大表的支持；
+
+7.--with-charset=CHARSET：指定字符集；
+
+8.--with-collation=：默认collation；
+
+9.--with-extra-charsets=CHARSET,CHARSET,...：指定附加的字符集；
+
+10.--with-fast-mutexes：Compile with fast mutexes
+
+11.--with-readline：
+
+12.--with-ssl：启用SSL的支持；
+
+13.--with-server-suffix=：添加字符串到版本信息；
+
+14.--with-embedded-server：编译embedded-server，构建嵌入式MySQL库；
+
+15.--with-pthread：强制使用pthread类库；
+
+16.--with-mysqld-user=：指定mysqld守护进程的用户；
+
+17.--with-mysqld-ldflags=：静态编译MySQL服务器端；（静态链接提高13%性能）
+
+18.--with-client-ldflags=：静态编译MySQL客户端；（静态链接提高13%性能）
+
+19.--with-plugins=PLUGIN,PLUGIN 等等等（MySQL服务器端支持的存储引擎组件(默认为空)，可选值较多：
+
+partition：MySQL Partitioning Support；
+
+daemon_example：This is an example plugin daemon；
+
+ftexample：Simple full-text parser plugin；
+
+archive：Archive Storage Engine；
+
+blackhole：Basic Write-only Read-never tables；
+
+csv：Stores tables in text CSV format，强制安装；
+
+example：Example for Storage Engines for developers；
+
+federated：Connects to tables on remote MySQL servers；
+
+heap：Volatile memory based tables，强制安装；
+
+ibmdb2i：IBM DB2 for i Storage Engine；
+
+innobase：Transactional Tables using InnoDB；
+
+innodb_plugin：Transactional Tables using InnoDB；
+
+myisam：Traditional non-transactional MySQL tables，强制安装；
+
+myisammrg：Merge multiple MySQL tables into one，强制安装；
+
+ndbcluster：High Availability Clustered tables；） 
+
+20.--with-plugin-PLUGIN：强制指定的插件链接至MySQL服务器；
+
+21.--with-zlib-dir=：向MySQL提供一个自定义的压缩类库地址；
+
+22.--without-server：仅安装MySQL客户端；
+
+23.--without-query-cache：不要编译查询缓存；
+
+24.--without-geometry：不要编译geometry-related部分；
+
+25.--without-debug：编译为产品版，放弃debugging代码；
+
+26.--without-ndb-debug：禁用special ndb debug特性；
+
+基于以上，我的配置：
+
+./configure --prefix=/usr/local/mysql/ 
+
+--with-server-suffix=yu
+
+--enable-assembler 
+
+--enable-local-infile 
+
+--enable-thread-safe-client 
+
+--with-big-tables 
+
+--with-charset=utf8  
+
+--with-extra-charsets=gbk,gb2312,utf8,ascii  
+
+--with-readline 
+
+--with-ssl 
+
+--with-embedded-server 
+
+--with-pthread 
+
+--with-mysqld-user=mysql 
+
+--with-mysqld-ldflags=-all-static 
+
+--with-client-ldflags=-all-static 
+
+--with-plugins=partition,innobase,innodb_plugin 

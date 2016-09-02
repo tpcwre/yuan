@@ -1,0 +1,85 @@
+
+
+一：安装xampp
+
+		安装好后在 php.ini 中开启相应模块
+
+			extension=php_fileinfo.dll
+			extension=php_mbstring.dll
+			extension=php_mbstring.dll
+			extension=php_openssl.dll
+
+
+
+二： 在php.ini中最后补充以下节点内容并修改路径
+
+		在xampp的php.ini中补充一节openssl，从备用的php.ini文件末尾复制之，修改openssl.cafile
+		注意要把 
+		openssl.cafile= "G:\xampp\php\extras\openssl\cacert.pem"  
+		中的 盘符 ‘G’  换成真实盘符
+				
+
+		[openssl]
+		; The location of a Certificate Authority (CA) file on the local filesystem
+		; to use when verifying the identity of SSL/TLS peers. Most users should
+		; not specify a value for this directive as PHP will attempt to use the
+		; OS-managed cert stores in its absence. If specified, this value may still
+		; be overridden on a per-stream basis via the "cafile" SSL stream context
+		; option.
+		openssl.cafile= "G:\xampp\php\extras\openssl\cacert.pem"
+
+		; If openssl.cafile is not specified or if the CA file is not found, the
+		; directory pointed to by openssl.capath is searched for a suitable
+		; certificate. This value must be a correctly hashed certificate directory.
+		; Most users should not specify a value for this directive as PHP will
+		; attempt to use the OS-managed cert stores in its absence. If specified,
+		; this value may still be overridden on a per-stream basis via the "capath"
+		; SSL stream context option.
+		;openssl.capath=
+
+		; Local Variables:
+		; tab-width: 4
+		; End:
+
+		添加并修改内容后重启apache
+
+	
+三：下载 cacert.pem文件 
+
+		到 http://curl.haxx.se/docs/caextract.html  选择下面对应的文件 下载下来！
+			
+			HTTP from curl.haxx.se: cacert.pem （使用这个）
+			HTTPS from github: ca-bundle.crt 
+
+		将文件 cacert.pem 复制到 "？:\xampp\php\extras\openssl\cacert.pem"   中
+
+
+四：安装 Composer-Setup
+
+		选择 Install Shell Menus
+
+		选择 ?:\xampp\php\php.exe
+
+		Composer 安装 时会出现一些问题
+		1，如果出现 mbstring 0  等字样的错误 ，那么就在php.ini配置文件中，把
+			extension=php_mbstring.dll 扩展关掉
+
+
+		2， 如果出现 connect 连接失效等问题，
+			检查 cacert.pem ,是否最新，可是使用代理来下载即可
+		
+		
+五：安装完后将 .composer/vendor/bin  添加到环境变量PATH 中
+
+
+六：下载lavavel框架
+
+		创建一个目录并右击选择 Use Composer here
+
+
+		在 CMD 窗口中输入以下命令开始下载 lavavel 框架
+		composer create-project laravel/laravel blog --prefer-dist
+
+
+		
+异常问题源引： http://blog.sina.com.cn/s/blog_489988100102vt46.html

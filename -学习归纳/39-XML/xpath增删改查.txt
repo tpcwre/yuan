@@ -1,0 +1,22 @@
+﻿<?php
+	$xmldom = new DOMDocument();
+	$xmldom->load("xml.xml");
+	$xpath = new DOMXPath($xmldom);		//加载xpath
+
+	$name=$xpath->query("/class/stu/name");		//查
+	echo $name->item(0)->nodeValue;
+
+	$stu=$xpath->query("/class/stu")->item(0);	//增
+	$age=$xmldom->createElement("age");
+	$age->nodeValue=28;
+	//$stu->appendChild($age);
+
+	$sexs=$xpath->query("/class/stu/sex");		//改
+	$sex1=$sexs->item(1);
+	$sex1->nodeValue="lv";
+
+	$sex2=$sexs->item(2);
+	$sex2->parentNode->removeChild($sex2);		//删
+
+	$xmldom->save("xml.xml");			//保存操作
+?>

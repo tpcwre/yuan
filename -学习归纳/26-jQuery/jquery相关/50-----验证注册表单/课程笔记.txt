@@ -1,0 +1,443 @@
+
+		第50课 知问前端-验证注册表单 16
+//-----课程笔记
+
+学习要点：
+	1，HTML部分
+	2，CSS部分
+	3，jquery部分
+
+//-----获取验证到错误的个数
+//-----随错误个数变换对话框的高度
+//-----输入框获得焦点高亮失去焦点恢复（变化样式）
+	//--获取焦点时变亮
+	//--失去焦点时恢复
+//-----验证正确后星号变换成图标或其它文字
+//-----为元素添加一个类样式。
+//-----将获取到的验证错误存放到指定的元素中
+
+$(function(){
+	$("#reg").dialog({
+		autoOpen:true,
+		modal:true,
+		resizable:false,
+		width:320,
+		height:360,
+		buttons:{
+			"提交":function(){
+				$(this).submit();
+			}
+		}
+	}).buttonset().validate({
+		suis.numberOfInvalids();
+
+
+//-----随错误个数变换对话框的高度
+			if(errors >0){
+				$("#reg").dialog("option","height",errors*20+340);
+			}else{
+				$("#reg").dialog("option","height",340);
+			}
+	
+			this.defaultShowErrors();
+		},
+
+//-----输入框获得焦点高亮失去焦点恢复（变化样式）
+		highlight:function(element,errorClass){
+			//element得到的是当前操作的input元素
+	//--获取焦点时变亮
+			$(element).css("border","1px solid #630");
+		},
+	//--失去焦点时恢复
+		unhighlight:function(element,errorClass){
+			$(element).css("border","1px solid #ccc");
+//-----验证正确后星号变换成图标或其它文字
+			//$(element).parent().find("span").html("ok");
+//-----为元素添加一个类样式。
+			$(element).parent().find("span").html("&nbsp").addClass("succ");
+		},
+//-----将获取到的验证错误存放到指定的元素中
+		errorLabelContainer:"ol.reg_error",
+		wrapper:"li",
+		rules:{
+			user:{
+				required:true,
+				minlength:2,
+			},
+			pass:{
+				required:true,
+				minlength:6,
+			},
+			email:{
+				required:true,
+				email:true,
+			},
+			date:{
+				date:true,
+			},
+		},
+		messages:{
+			user:{
+				required:"账号不能为空",
+				minlength:"至少要{0}个字符",
+			},
+			pass:{
+				required:"密码不能为空",
+				minlength:"密码至少要{0}个字符",
+			},
+			email:{
+				required:"邮箱不能为空",
+				email:"请输入正确的邮箱格式",
+			}
+		}
+	});
+});
+
+
+
+
+======================================================
+
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.js"></script>
+	<script type="text/javascript" src="js/b.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/b.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<button class="search_button">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<form action="123.html" id="reg" title="会员注册">
+
+<ol class="reg_error"></ol>
+
+<p>
+	<label for="user">用户名：</label>
+	<input type="text" name="user" class="text" id="user" />
+	<span class="star"> * </span>
+	
+</p>
+
+<p>
+	<label for="pass">密　码：</label>
+	<input type="password" name="pass" class="text" id="pass"  />
+	<span class="star">*</span>
+</p>
+
+<p>
+	<label for="email">邮　箱：</label>
+	<input type="text" name="email" class="text" id="email"  />
+</p>
+<p>
+	<label>性　别：</label>
+	<input type="radio" name="sex" value="male" id="male" checked="checked">
+	<label for="male">男</label></input>	
+   	
+	<input type="radio" name="sex" value="female" id="female">
+	<label for="female">女</label></input>
+</p>
+<p>
+	<label for="date">生　日：</label>
+	<input type="text" name="date" class="text" id="date" readonly="readonly" title="请输入日期"/>
+</p>
+
+</form>
+<input type="text" id="abc"/>
+</body>
+</html>
+
+
+=======================================================
+
+css页面
+
+
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+
+
+#reg{
+	padding:15px 0 0 15px;
+}
+
+#reg p{
+	margin:10px 0;
+	padding:0;
+}
+
+#reg p label{
+	font:normal bold 14px normal;
+	color:#666;
+}
+
+/*星号的样式*/
+#reg .star{
+	font-sie:20px;
+	color:maroon;
+}
+
+/*错误提示的样式*/
+#reg ol{
+	margin:0;
+	padding:0 0 0 20px;
+	color:maroon;
+}
+
+
+/*限制错误提示的高度*/
+#reg ol li{
+	height:20px;
+}
+
+/*验证成功后添加的class*/
+#reg .succ{
+	display:inline-block;
+	width:20px;
+	background:url(../img/right.jpg)no-repeat;
+}
+
+#reg .text{
+	border-radius:5px;
+	border:1px solid #ccc;
+	background:#fff;
+	width:180px;
+	height:25px;
+	line-height:25px;
+	text-indent:5px;
+	font-size:13px;
+	color:#666;
+}
+
+
+/*设置对话框标题域与对话框中日历的标题域的背景*/
+.ui-widget-header{
+	background:url(../img/bj.png);
+}
+
+
+/*日历UI的今天单元格样式*/
+/*这里的.ui-datepicker-today是父元素的类名，.ui-stat-highlight是当前元素的类名*/
+.ui-datepicker-today .ui-state-highlight{
+	border:1px solid blue;
+	color:red;
+}
+
+
+/*日历UI的日期选定单元格样式*/
+/*选定是指选完后再次点击出现时显示的样式*/
+.ui-datepicker-current-day .ui-state-active{
+	border:1px solid black;
+	color:black;
+}
+
+
+
+/*beforeShowDay日历筛选限制的第二个参数赋予的类*/
+.a{
+	font:italic bold 30px normal;
+}
+
+
+
+=============================================================
+
+//-----课程笔记
+
+学习要点：
+	1，HTML部分
+	2，CSS部分
+	3，jquery部分
+
+	本节课，将使用validate.js验证插件功能，完成表单注册验证的功能。
+
+一，HTML部分
+	html部分几乎不需要更改太多，只要加个存放错误提示的列表标签即可。
+	<ol class=""reg_error></ol>
+
+
+二，CSS部分
+	css部分主要是成功后引入一张小图标，不有错误列表样式。
+	#reg p.star{
+		color:maroon;
+	}
+	#reg p.success{
+		display:inline-block;
+		width:28px;
+		background:url(../img/reg_succ.png)no-repeat;
+	}
+	#reg ol{
+		margin:0;
+		padding:0 0 0 20px;
+	}
+	#reg ol li{
+		color:maroon;
+	}
+
+
+三，jquery部分
+	jquery部分很常规，基本使用了validate.js的核心功能。
+	$("#reg").dialog({
+		autoOpen:false,
+		modal:true,
+		resizable:false,
+		width:320,
+		height:340,
+		buttons:{
+			"提交":function(){
+				$(this).submit();
+			}
+		}
+	}).buttonset().validate({
+		submitHandler:function(form){
+			alert("验证完成，准备提交");
+		},
+		showErrors:function(errorMa,errorList){
+			if(errors>0){
+				$("#reg").dialog("option","height",20*errors+320);
+			}
+			this.defaultShowErrors();
+		},
+		highlight:function(element,errorClass){
+			$(element).css("border","1px solid #630");
+		},
+		unhighlight:function(element,errorClass){
+			$(element).css("border","1px solid #ccc");
+			$(element).parent().find("span").html("&nbsp").addClass("success");
+		},
+		errorLabelContainer:"lo.reg_error",
+		wrapper:"li",
+		rules:{
+			user:{
+				required:true,
+				minlength:2,
+			},
+			pass:{
+				required:true,
+				minlength:6,
+			},
+			email:{
+				required:true,
+				email:true,
+			},
+			date:{
+				date:true,
+			},
+		},
+		messages:{
+			user:{
+				required:"账号不能为空！",
+				minlength:jQuery.format("账号不得小于{0}位！"),
+			},
+			pass:{
+				required:"密码不能为空！",
+				minlength:jQuery.format("密码不得小于{0}位！"),
+			},
+			email:{
+				required:"邮箱不能为空！",
+				eamil:"请输入正确的邮箱",
+			},
+			date:{
+				date:"请输入正确的日期",
+			},
+		},
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

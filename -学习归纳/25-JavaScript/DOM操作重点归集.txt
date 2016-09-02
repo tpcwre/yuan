@@ -1,0 +1,70 @@
+﻿
+	========== DOM 操作 ========== 	
+
+获取操作
+//===== document.getElementById('id');			通过ID获取元素对象
+//===== document.getElementsByTagName('name')[0];	通过节点名获取元素对象列表
+//===== document.getElementsByName('name')[0];		通过name名获取元素对象列表
+//===== document.forms 获取当前网页中所有的form表单
+//===== document.images 获取当前网页中所有图片
+//===== document.cookie 获取当前cookie信息
+//===== document.domain获取当前域名
+//===== document.URL获取当前URL
+
+
+属性操作
+//===== obj.getAttribute('name') 		获取节点的非标准属性值
+//===== obj.setAttribute('a','b');		设置节点的非标准属性
+//===== obj.href 				获取节点标准属性值
+//===== aob.href= 				设置节点标准属性
+//===== obj.className 				获取节点的类名
+//===== obj.className= 				设置节点的类名
+
+
+
+节点操作
+//===== ob.removeChild(list[0]);		删除首个子节点
+//===== ob.removeChild(list[list.length-1]);	删除尾个子节点				
+//===== document.createElement('li') 		创建一个节点
+//===== createTextNode  			添加一个自定义的节点				
+//===== ob.appendChild(li);			在尾部添加一个子节点
+//===== ob.insertBefore(li,list[2]);		在指定位置前面添加子节点
+//===== uid.replaceChild(li,ob);		将子节点ob 替换为li
+//===== obj.nodeType 				获取节点的类型
+		元素 1 ,属性 2 ,文本 3 ,注释 8 ,文档 9 
+//===== obj.length 				获取节点数量
+//===== obj.childNodes				获取子节列表
+//===== obj.childNodes.length 			获取子节点的长度(个数)
+//===== document.all 				获取当前文档所有元素节点
+//===== obj.nodeName 				获取节点名
+//===== obj.options 				获取下拉列表中的所有option项
+//===== selectob.add(li) 			添加或移动下拉列表的option项
+//===== sobj.remove(li.index)		 	删除下拉列表的option项
+//===== tid.deleteRow(tr.rowIndex);		删除表格的行
+
+
+内容操作
+//===== obj.innerHTML 				获取对象标签中的内容
+//===== obj.innerHTML= 				设置对象标签中的内容
+//===== document.fm.n1.value; 			通过name直接获取表单对象的值 
+//===== ob.value 				获取表单value值
+//===== ob.value.length 			获取表单值的长度
+//===== ob.value=				设置表单值
+//===== tableob.deleteRow()  			删除表格的一行    
+//===== tableob.inserRow()   			添加表格的一行
+//===== rowob.insertCell()  			为表中行添加一列
+
+//===== js中加载XML文件
+
+	var xmlDoc = null;
+	try{ //Internet Explorer
+		xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+	}catch(e){
+		try{ //Firefox, Mozilla, Opera, etc.
+			xmlDoc=document.implementation.createDocument("","",null);
+		}catch(e){
+			alert(e.message);
+		}
+	}
+	xmlDoc.async=false;
+	xmlDoc.load("./stu.xml");

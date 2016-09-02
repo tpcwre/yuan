@@ -1,0 +1,160 @@
+
+		=========simplexml===========
+
+
+//=====获取
+$books=$lib->book;			- -  //simplexml-获取元素的对象数组
+echo count($books);			- -  //simplexml-获取对象数组中元素的个数
+$book=books[0];				- -  //simplexml-获取对象数组中第一个book元素
+$price=$lib->book[0]->price[0];		- -  //simplexml-获取二级子数组列表中的第一个price
+$price->getName();			- -  //simplexml-获取元素名
+echo $book->title;			- -  //simplexml-获取book中各元素内容
+echo $book["house"];			- -  //simplexml-获取book元素的属性值
+$attrs = $book->attributes();		- -  //simplexml-获取元素的属性列表及属性值
+$childs = $book->children();		- -  //simplexml-获取一级子元素列表
+
+
+//=====添加与创建
+$book->addAttribute("a","aaa");		- -  //simplexml-给元素添加属性
+$book->addChild("节点名","内容");	- -  //simplexml-给元素添加子节点及内容
+
+$str=new simpleXMLElement("<t>2</t>");	- -  //simpleXML中创建与调用字符串(可当节点保存)
+	
+
+
+//=====保存XML文件
+$lib->saveXML("book.xml");		- -  //simplexml-将XML文件保存
+$lib->asXML("book.xml");		- -  //simplexml-将XML文件保存
+
+
+
+//=====simpxml三种加载方式
+$lib=simplexml_load_file("book.xml");	- -  //simplexml加载XML文件
+$lib=simplexml_import_DOM($xmldom);	- -  //simplexml加载DOM对象	
+$string  = <<<XML XML;			- -  //smiplexml加载大型字符串 <<<XML...
+
+//=====其它			
+$res=$lib->xpath("/bks/bk[1]/ahr/aut");	- -  //simplexml与xpath结合						
+	
+
+
+	
+实例：
+
+
+- -PHP页面：
+<?php
+	//$lib=simplexml_load_file("book.xml");		//simplexml加载方式一：加载文件
+	
+	$xmldom=new DOMDocument();			
+	$xmldom->load("book.xml");			
+	$lib=simplexml_import_DOM($xmldom);		//simplexml加载方式二：加载DOM对象
+
+	
+	$books=$lib->book;				//获取元素的对象数组	
+	
+	
+	echo count($books);				//获取对象数组中元素的个数
+	
+	
+	$book=books[0];					//获取对象数组中第一个book元素
+	$price=$lib->book[0]->price[0];			//获取二级子数组列表中的第一个price
+
+	
+	echo $price->getName();				//获取元素名
+	
+				
+							//获取book中各元素内容
+	echo $book->title;
+	echo $book->code;
+	echo $book->price;		
+	
+	
+	$book->addAttribute("c","ccc");			//给元素添加属性
+	
+	
+	echo $book["house"];				//获取book元素的属性值
+	
+	
+	$attrs = $book->attributes();			//获取元素的属性列表及属性值
+	foreach($attrs as $k=>$v){
+		echo $k."- -".$v."<br>";
+	}
+	
+	$book->addChild("aaa","这是一个新节点");		
+
+
+
+	$childs = $book->children();			//获取一级子元素列表
+	foreach($childs as $k=>$v){
+		echo $k."- -".$v."<br>";
+	}
+	
+
+	$simp->stu[0]->sex[1]="aaa";			//更改元素的内容
+	$simp->stu[0]->name["c"]="kkk";			//更改元素的属性
+	
+	echo "<br>".count($book->children());		//获取元素个数
+	
+	
+							//simpleXML中创建与调用字符串(可当节点保存)
+	$strings1=new simpleXMLElement("<tri>2sdfsaf</tri>");
+	echo $strings1;
+	
+	
+							//simplexml与xpath结合 
+	$results=$lib->xpath("/books/book[1]/author/aut");
+	while(list(,$node) = each($results)){
+		echo $node."<br>";
+	}								
+	
+	
+							//smiplexml加载大型字符串 <<<XML...
+	$string  = <<<XML
+	<?xml version="1.0"?> 
+	<document>
+	 <title>Forty What?</title>
+	 <from>Joe</from>
+	 <to>Jane</to>
+	 <body>
+	  I know that"s the answer - - but what"s the question?
+	 </body>
+	</document>
+	XML;
+
+	$xml  =  simplexml_load_string ( $string );
+	print_r ( $xml );
+
+
+	$book->addChild("c","ccc");			//给元素添加子节点及内容
+	
+	
+	$lib->asXML("book.xml");			//将XML文件保存
+	$lib->saveXML("book.xml");			//将XML文件保存
+	
+?>
+	
+
+- --XML页面：
+<?xml version="1.0" encoding="utf-8"?>
+<books>
+	<book house="北大出版社2">
+		<code>sb0022</code>
+		<price>4002</price>
+		<author>
+			<aut>小红2</aut>
+			<aut>小丽2</aut>
+			<aut>小萍2</aut>
+		</author>
+		<title>笑傲江湖2</title>
+		<book house="北大出版社3">
+		<code>sb0023</code>
+		<price>4003</price>
+		<author>
+			<aut>小红3</aut>
+			<aut>小丽3</aut>
+			<aut>小萍3</aut>
+		</author>
+		<title>笑傲江湖3</title>
+	</book>
+</books>

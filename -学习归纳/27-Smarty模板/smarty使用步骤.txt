@@ -1,0 +1,290 @@
+
+//===== smarty 模板使用步骤
+
+	一：拷贝主程序包
+		将libs文件夹复制到应用根目录
+
+	二：在应用根目录中创建相应的配置文件目录
+
+		a : templates		//存放模板文件的目录
+		b : templates_c 	//存放编译文件的目录
+		c : configs		//存放特殊配置文件的目录
+		d : cache		//存放缓存文件的目录
+
+	三：配置主框架文件：
+
+		在根目录创建一个自定义名字的框架调用配置文件  smarty.inc.php
+
+		内容:
+	<?php
+		//将smarty相关的设置文件单独存放在另一个文件中，以便以后其它文件调用，就不用重复写代码了，
+		//define("ROOT",DIRNAME(__FILE__));  		//获取当前文件的绝对路径
+		//require ROOT."/lib/smarty.class.php";   	//用绝对路径引入smarty.class.php文件
+		require "libs/Smarty.class.php";		//也可直接引入smarty.class.php文件
+		$smt = new Smarty();				//创建smarty对象
+				//注意：下面几个目录可以自行设置，但不建议改变系统的原配置方案。
+		$smt->template_dir=ROOT."/templates/";  	//设置模板文件目录
+		$smt->compile_dir=ROOT."/templates_c/";	 	//设置编译文件目录
+		$smt->configs_dir=ROOT."/configs/"; 		//设置配置文件目录
+		$smt->cache_dir=ROOT."/cache/"; 	 	//设置缓存文件目录
+		$smt->caching=true;				//设置缓存，默认false(0)不开启，(1)true为开启缓存
+		$smt->cache_lifetime=5;				//设置缓存有效时间5秒
+								//缓存会随着模板内容改变，不会随着PHP内容改变。
+		$smt->left_delimiter='{';			//设置模板的左右定界符
+		$smt->right_delimiter='}';
+	?>
+
+
+	四：根目录下创建 php 文件注册变量并关联到模板
+
+	a.php 文件
+	<?php
+		require "smart.inc.php";  	 //引入smarty设置文件
+		$name="aaaabbbbbcccccccc";	//声明一个php变量
+		$smt->assign("name",$name);  	//将php变量注册到smarty模板中
+		$smt->display("b.tpl");	  	//将PHP中内容与变量关联到tpl模板
+	?>
+
+
+	五：templates模板目录中创建 tpl（或其它格式）模板文件并调用注册好的变量
+	b.tpl页面 
+	<html>
+	<body>
+		{$name}2		//调用注册好的变量
+	</body>
+	</html>
+
+
+
+	六：测试：使用浏览器访问a.php文件。
+
+	 
+
+	七：注意事项：
+
+	   1. 图片导入路径的使用，要以访问的php文件为相对路径。
+	   2. Smarty模板（tpl文件）文件存在模板路径的子目录下。如：tmplates/aa/b.tpl
+		   那么就是在a.php中，使用$tpl->display("aa/b.tpl");
+	   3. 当tpl模板页被分割成几个小tpl页时，可以使用include导入：
+		   如 <{include file="aa/head.tpl"}>
+
+	   4. 当使用Smarty模板的php页面分目录存储时：
+
+		使用绝对路径：
+		在init.inc.php文件中：
+		
+		$path="D:/Program Files/AppServ/www/lamp10/php_smarty";
+
+		require_once($path."/libs/Smarty.class.php");
+
+		$tpl = new Smarty();
+
+		
+
+
+
+
+
+
+
+//=====smarty 中出现 Strict standards: strftime() 错误的解决方法
+
+	Strict standards: strftime() [function.strftime]: It is not safe to rely on the system's timezone settings.
+
+	解决方法：检查其它文件夹中是否存在 .htaccess 文件
+		可以将其删除 来解决问题
+	或
+		在.htaccess里添加：
+		php_value date.timezone Asia/Chongqing
+		php_value magic_quotes_gpc 0
+		php_value magic_quotes_runtime 0
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 变量调节器
+
+	cat 
+		{$a="hello "}
+		{$b="world!"}
+		{$a|cat:$b} 字串连接 {$a}{$b}
+
+	date_format
+		{$smarty.new|date_format:”%Y-%m-%d”}
+
+	default 
+		{$name|default:"mayao"}
+
+	escape 
+		{$str = "<b style='color:red;'>ccccc</b>"}
+		<h3>{$str|escape}</h3>
+
+	lower 
+		<h3>原字串：{$str}</h3>
+		<h3>小写后：{$str|lower} ： {strtolower($str)}</h3>
+
+	upper 
+		{$str="Hello PHP!"}
+		<h3>大写后：{$str|upper} ： {strtoupper($str)}</h3>
+
+	nl2br 
+		{$str="aaaaaa\nbbbbbbbb\nccccccccc\nddddddddd"}
+		{$str|nl2br}
+
+	regex_replace 
+		{* 将日期2015-09-21替换成：09/21/2015 *}
+		{$str="2015-09-21"}
+		{preg_replace("/(\d\d\d\d)\-(\d\d)\-(\d\d)/","\\2/\\3/\\1",$str)} //php方式
+		{$str|regex_replace:"/(\d\d\d\d)-(\d\d)-(\d\d)/":'$2/$3/$1'}
+
+		{* 将下面字串中的b标签替换成i标签*}
+		{$str="<b>aaa</b><b>bb>b</b><b>ccc</b>"}
+		{$str|regex_replace:"/<b>(.*?)<\/b>/":"<i>\\1</i>"}
+
+	replace 
+	spacify 
+	string_format 
+	strip 
+	strip_tags 
+	truncate 
+	wordwrap 
+	count_characters 
+	count_paragraphs 
+	count_sentences 
+	count_words 
+	capitalize 
+	indent 
+
+
+
+
+
+
+
+//===== 内置函数
+
+	{$var=} 			变量赋值
+	
+	{append} 			用于在模板执行期间建立或追加模板变量数组
+	
+	{assign} 			为模板变量赋值
+		{assign var="name1" value="mayao"}	模板中注册变量
+		{assign "name2" "曾国防"}
+		{$name3="朱凯凯"}
+		{$name1}
+		{$name2}
+		{$name3}
+
+	{block} 			定义一个命名的模板继承源区域
+	
+	{call} 				用来调用{function}标签定义的模板函数，类似于插件函数。
+	
+				{function aa}
+					<ul>
+						<li>aaaaaaaaa</li>
+						<li>aaaaaaaaa</li>
+					</ul>
+				{/function}
+				
+				{call aa}
+		
+	{capture} 			捕获模板输出的数据并将其存储到一个变量里，而不是将它们输出到页面
+	
+	{config_load} 		从配置文件中加载config变量
+						{config_load file='1.ini'} 
+						{$smarty.config.name}	调用变量
+						{#name#}				调用变量
+						
+	{debug} 			调试控制页面
+	
+	{extends} 			模板继承
+	
+	{for} 				循环
+		{for $var=$start to $end}步长为1的简单循环； 
+		{for $var=$start to $end step $step}其它步长循环。
+			{for $i=1 to 10}
+				{$i}
+			{/for}
+
+	{foreach},{foreachelse} 	遍历
+		@index
+		@iteration
+		@first
+		@last
+		@show
+		@total 
+		
+			{foreach $a as $v}
+				{$v}
+			{/foreach}
+		
+	{function}			函数
+	
+	{if},{elseif},{else} 	条件判断
+	{include} 				包含引用 
+	{include_php} 			模板中使用php代码	
+	{insert} 				类似include 但不会被缓存
+	{ldelim},{rdelim} 		转义模板定界符
+	{literal} 				不解析模板变量
+	{nocache} 				不缓存
+	{php} 					
+	{section},{sectionelse} 遍历数组 
+		.index
+		.index_prev
+		.index_next
+		.iteration
+		.first
+		.last
+		.rownum
+		.loop
+		.show
+		.total 
+			{section k $a}
+				{$a[k]}
+			{/section}
+			
+	{strip} 
+	{while} 			循环
+
+
+
+
+
+
+
+
+
+
+//===== 保留变量
+
+
+
+	Request variables[页面请求变量] 
+
+		{$smarty.get.id}			从GET中获取id值:
+		{$smarty.post.name}			从POST中获取name值:
+		{$smarty.session.username}		从session中获取username值:
+		{$smarty.cookies.loginname}		从cookie中获取loginname值:
+		{$smarty.now} 				获取当前时间戳
+		{$smarty.now|date_format:"%Y-%m-%d"} 	获取格式化后的日期
+		{$smarty.const.PI}			获取指定常量值		
+		{$smarty.capture.mycapture}		输出捕获的信息
+		{$smarty.config.name}			获取配置文件中的变量 
+		{$smarty.section} 			指向{section}循环的属性
+		{$smarty.template} 			获取当前模板名
+		{$smarty.current_dir} 			返回经过处理的当前模板目录名
+		{$smarty.version} 			获取当前模板版本
+		{$smarty.ldelim}, {$smarty.rdelim} 	输出左右实体定界符
+		{$smarty.block.child}			返回子模版文本块
+		{$smarty.block.parent}			返回父模版文本块
+
+
+

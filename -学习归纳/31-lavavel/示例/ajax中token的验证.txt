@@ -1,0 +1,19 @@
+<meta name="csrf-token" content="{{ csrf_token() }}" />				//在头部设置token
+
+
+
+var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');			//在js中设置token 变量 
+
+
+
+
+
+$.ajax({								
+    url: '/home/upload/',
+    type: 'POST',
+    data: {'_token': CSRF_TOKEN},							//ajax中使用token验证
+    dataType: 'JSON',
+    success: function (data) {
+        console.log(data);
+    }
+});

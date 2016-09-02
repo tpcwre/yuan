@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>学生信息管理</title>
+    </head>
+    <body>
+        <center>
+            <?php include("menu.php"); //导入导航栏页 ?>
+            <h3>执行学生信息操作</h3>
+            <?php
+                //执行学生信息的增删改操作
+                //1.导入配置文件
+                require("./config.php");
+                //2.创建PDO对象，实现数据库连接
+				try{
+					$pdo = new PDO(DSN,USER,PASS);
+					//改为错误处理为异常模式。
+					$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+					$pdo->query("set names utf8");
+				}catch(PDOException $pe){
+					die("实例化PDO失败！原因：".$pe->getMessage());
+				}
+                //4.根据参数a的值执行对应的操作
+                switch($_GET['a']){
+                    case "insert": //执行添加
+                        //获取添加的信息
+                        $name = $_POST['name'];
+                        $sex = $_POST['sex'];
+                        $age = $_POST['age'];
+                        $classid = $_POST['classid'];
+                        //拼装sql语句
+                        $sql = "insert into stu values(null,'{$name}','{$age}','{$sex}','{$classid}')";
+                        //执行
+                        $pdo->exec($sql);
+                        //根据自增id的值判断是否成功
+                        if($pdo->lastInsertId()>0){
+                            echo "添加成功！";
+                        }else{
+                            echo "添加失败！";
+                        }
+                        break;
+                    case "update": //执行修改
+                         //获取修改的信息
+                        $id = $_POST['id'];
+                        $name = $_POST['name'];
+                        $sex = $_POST['sex'];
+                        $age = $_POST['age'];
+                        $classid = $_POST['classid'];
+                        //拼装sql语句
+                        $sql = "update stu set name='{$name}',age='{$age}',sex='{$sex}',classid='{$classid}' where id={$id}";
+                        //执行
+                        $m = $pdo->exec($sql);
+                        //根据影响的行数判断是否成功
+                        if($m>0){
+                            echo "修改成功！";
+                        }else{
+                            echo "修改失败！";
+                        }
+                        break;
+                    case "del": //执行删除
+                        //定义删除sql语句
+                        $sql = "delete from stu where id=".($_GET['id']+0);
+                        //执行
+                        $m = $pdo->exec($sql);
+                        //通过影响的行数来判断成功与否
+                        if($m>0){
+                            echo "删除成功！";
+                        }else{
+                            echo "删除失败！";
+                        }
+                        break;
+                }
+              
+            ?>
+        </center>
+    </body>
+</html>

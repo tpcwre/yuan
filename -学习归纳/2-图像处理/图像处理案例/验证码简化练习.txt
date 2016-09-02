@@ -1,0 +1,25 @@
+<?php
+	header("content-type:text/html;charset=utf-8");
+	$img=imagecreatetruecolor(120,50);
+	$bgcolor=imagecolorallocate($img,255,255,0);
+	imagefill($img,0,0,$bgcolor);
+	for($i=0;$i<700;$i++){
+		$pcolor=imagecolorallocate($img,rand(0,255),rand(0,255),rand(0,255));
+		$x=rand(0,120);
+		$y=rand(0,50);
+		imagesetpixel($img,$x,$y,$pcolor);
+	}
+	$str='abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$text='';
+	for($i=0;$i<4;$i++){
+		$text.=$str[rand(0,strlen($str)-1)];
+	}
+	$tcolor=imagecolorallocate($img,255,0,255);
+	imagettftext($img,20,0,32,35,$tcolor,'./simfang.ttf',$text);
+	//echo $text.'<br>';
+	//echo strtolower($text);
+	//验证码不区分大小写时，可以将转化小写前后的两种码都存入session,然后用in_array()来判断即可
+	header('content-type:image/jpeg');
+	imagejpeg($img);
+	imagedestroy($img);
+	

@@ -1,0 +1,761 @@
+
+//===== fopen 操作文件的六种方式
+//===== 读取文件内容(fopen方式)
+//===== 读取文件内容(file_get_contents方式)
+//===== 将内容有序的ini文件读取到数组中 
+//===== 文件写入(fwrite)
+//===== 文件上传
+//===== SAE文件上传示例
+//===== 文件下载
+//===== copy() 文件的拷贝
+//===== copy() + iconv() 带中文路径的文件拷贝
+//===== scandir() 扫描一个目录
+//===== 文件和目录的创建
+//===== 向文件添加内容
+//===== 目录或文件的删除 
+//===== 修改文件内容
+//===== 修改文件名或目录名
+//===== 查看文件内容的几种方式 
+//===== 创建多级目录与文件并添加内容
+//===== 删除多级目录与文件及获取目录大小
+//===== 拷贝目录
+//===== 文件做容器的计数器
+//===== 判断文件夹内是否有指定类型文件
+
+
+
+
+
+
+//===== fopen 操作文件的六种方式
+
+		'r'	只读方式打开，将文件指针指向文件头。
+
+		'r+' 	读写方式打开，将文件指针指向文件头。
+
+		'w' 	写入方式打开，将文件指针指向文件头并将文件大小截为零，如果文件不存在，则尝试创建。
+
+		'w+'	读写方式打开，将文件指针指向文件头并将文件大小截为零，如果文件不存在，则尝试创建。
+
+		'a'	写入方式打开，将文件指针指向文件末尾，如果文件不存在则尝试创建。
+
+		'a+'	读写方式打开，将文件指针指向文件末尾，如果文件不存在则尝试创建。
+
+
+
+		  date_default_timezone_set("Asia/Chongqing");
+		  $txt_a="a.txt";					//==映射文件或路径
+		  if(file_exists($txt_a)){				//==查看文件是否存在
+			echo "文件大小：".filesize($txt_a);		//==查看文件大小
+			$fp=fopen($txt_a,"a+");				//==打开文件(指定某种形式)
+			$arr=fstat($fp);				//==查看文件相关信息
+			echo "<pre>";
+				print_r($arr);				
+			echo "</pre>";
+											//==文件上次访问时间
+			echo "上次访问".date("Y-m-d H:i:s",$arr['atime'])."<br>";
+			echo "上次访问".date("Y-m-d H:i:s",fileatime($txt_a))."<br>";
+											//==文件上次修改时间
+			echo "上次修改".date("Y-m-d H:i:s",$arr['mtime'])."<br>";
+			echo "上次修改".date("Y-m-d H:i:s",filemtime($txt_a))."<br>";
+											//==文件上次移动时间
+			echo "上次移动".date("Y-m-d H:i:s",$arr['ctime'])."<br>";
+			echo "上次移动".date("Y-m-d H:i:s",filectime($txt_a))."<br>";
+
+		  }else{
+			echo "文件不存在";
+		  }
+
+
+
+
+
+
+
+
+//===== 读取文件内容(fopen方式)
+
+									
+		//一次性读取文件内容：
+		  $txt_b="a.txt";	//映射文件
+		  if(file_exists($txt_b)){					//==判断文件是否存在
+			$fp=fopen($txt_b,"a+");		//以只读形式打开文件
+			$con=fread($fp,filesize($txt_b));			//==读取文件内容
+			echo $con;			//显示内容	
+			fclose($fp);						//==关闭文件		
+		  }else{
+			echo "文件不存在！";
+		  }
+		echo "<hr>";
+
+
+		//分批读取文件内容：
+		  $txt_b2="a.txt";
+		  if(file_exists($txt_b2)){
+			$fp=fopen($txt_b2,"a+");
+			$str="";
+			$buffer=256;
+			while(!feof($fp)){					//==判断文件指针是否到达结尾
+				$str=fread($fp,$buffer);
+				$str=str_replace("\r\n","<br>",$str);		//==替换字串中空格和换行
+				echo $str;
+			}
+			fclose($fp);
+		  }else{
+			echo "no";
+		  }
+
+
+
+
+
+
+
+//===== 读取文件内容(file_get_contents方式)
+
+	  $txt_c="a.txt";
+	  if(file_exists($txt_c)){
+		$con=file_get_contents($txt_c);			//==将文件内容存放在一个变量中
+		$con=str_replace("\n\t","<br>",$con);
+		echo "<br>".$con."<br>";	//显示
+	  }else{
+		echo "无";
+	  }
+	  echo "<hr>";
+
+
+
+
+
+
+
+
+//===== 将内容有序的ini文件读取到数组中 
+
+	  $ini="a.ini";
+	  $arr=parse_ini_file($ini);
+	  print_r($arr);
+	  echo "<br>".$arr['host']."--".$arr['user']."--".$arr['psw'];
+
+
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+
+
+//===== 文件写入(fwrite)
+
+		//此方法会在文件原有内容后面添加
+		  $txt_d="write.txt";
+		  if(file_exists($txt_d)){
+			$fp=fopen($txt_d,"a+");
+			fwrite($fp,"这是文件写入的内容。。\r\n这是换行符");	//==文件写入内容(尾处添加)
+			echo "写入成功！";
+			fclose($fp);
+		  }else{
+			echo "no";
+		  }
+		
+
+
+
+
+//===== 文件上传
+
+
+	echo "<form action='' method='post' enctype='multipart/form-data'>";
+		echo "<input type='file' name='file' />";
+		echo "<input type='submit' value='上传' />";
+	echo "</form>";
+
+	$name=$_FILES['file']['name'];
+	$tmp=$_FILES['file']['tmp_name'];
+	$type=$_FILES['file']['type'];
+	$size=$_FILES['file']['size'];
+	$error=$_FILES['file']['error'];
+	if($size > 10){
+		echo "文件过大<br>";
+	}
+
+	$types=array('image/jpeg','image/png','image/gif');
+	if(in_array($type,$types)){
+		echo "文件类型不正确<br>";
+	}
+	$exts=array('jpg','jpeg','gif','png','JPG','JPEG','PNG','GIF');
+	$ext=pathinfo($name,PATHINFO_EXTENSION);
+	if(in_array($ext,$exts)){
+		echo "文件格式不正确<br>";
+	}
+	if(is_uploaded_file($tmp)){
+		echo "文件上传非法<br>";
+		if(move_uploaded_file($tmp,$name)){
+			echo "文件上传成功！";
+		}else{
+			echo "文件上传失败";
+		}
+	}
+
+
+	
+	
+	
+	
+	
+
+//===== SAE文件上传示例
+
+	<body>
+		<form action='' method='post' enctype='multipart/form-data'>
+			<input type='file' name='photo'/>
+			<input type="submit" value="提交" name='import'/>
+		</form>
+	</body>
+	<?php
+		$hcname=$_FILES['photo']['tmp_name']; 	//缓存名
+		$wjname=$_FILES['photo']['name'];	//文件名
+		$s2 = new SaeStorage();  		//实例化saestorage对象
+		$img_data = file_get_contents($hcname);//获取本地上传的文件数据
+		$s2->write('imgstorage',$wjname,$img_data);//将文件数据写入到storage指定文件中
+			//imgstorage: 文件夹名	$wjname：指定文件名	$img_data：文件数据
+		$url= $s2->getUrl('imgstorage',$wjname);//获取文件路径
+		echo $url."<br>";
+	?>
+
+	
+	
+	
+	
+
+
+
+
+
+//===== 文件下载
+
+	//download('./img/5.jpg');
+	function download($path){
+		$name=pathinfo($path,PATHINFO_BASENAME);
+		header("content-disposition:attachment;filename={$name}");
+		$size=filesize($path);
+		header("content-length:".$size);
+		readfile($path);
+	}
+
+
+
+
+	//-- header 控制简单文件下载
+
+	<?php
+		$file_name= "aa.wmv";   //关联一个要下载的文件
+		if(!file_exists($file_name)){	//如果此文件不存在，则显示下面信息，并结束！
+			echo "文件不存在！！";
+			return ;
+		}
+		$fp = fopen($file_name,'r');	//打开这个文件
+		$file_size=filesize($file_name);	//读取这个文件的大小
+		header("Content-Type: application/octet-stream"); //设置下载文件类型
+		header("Content-Ranges: bytes");		//设置字节类型（字节）
+		header("Content-Length: $file_size");		//设置下载文件的大小
+		header("Content-Disposition: attchment; filename=".$file_name); //设置文件名，可指定！
+		$buffer=1024;	//设置文件下载时每次读取量的大小。
+		while(!feof($fp)){	//如果文件没有读取结束
+			$file_data=fread($fp,$buffer);	//当前读取量是多少
+			echo "$file_data";	//把当前读取量返回给页面
+		}	
+		fclose($fp);	//下载完成，关闭文件。
+	?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== copy() 文件的拷贝
+	<?php
+	copy("source.txt","target.txt");
+	?> 
+
+
+
+  	if(copy("./a.txt","./aaaaa.txt")){
+		echo "拷贝成功";
+  	}else{
+		echo "拷贝失败";
+  	}
+	echo "<hr>";
+
+	
+
+
+
+
+//===== copy() + iconv() 带中文路径的文件拷贝
+
+	$img=iconv("utf-8","gbk","c:/一二三/aa.jpg");
+	if(copy($img,"d:/img1.jpg")){
+		echo "ok";
+	}else{
+		echo "failed";
+	}
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+//===== scandir() 扫描一个目录
+
+	函数返回一个数组，其中包含指定路径中的文件和目录。
+
+		<?php
+			print_r(scandir("images"));
+		?> 
+
+		输出：
+
+		Array
+		(
+		[0] => .
+		[1] => ..
+		[2] => dog.jpg
+		[3] => house.jpg
+		[4] => logo.gif
+		)
+
+	
+	
+	
+	
+	
+
+
+	
+	
+//===== 文件和目录的创建 
+	
+						//-- 创建一个文件夹
+	  $dir_a="./aa";
+	  if(is_dir($dir_a)){
+		echo "文件夹存在";
+	  }else{
+		mkdir($dir_a);
+		echo "文件夹创建成功";
+	  }
+
+
+
+							//-- 同时创建多级文件夹
+	  $dirs_a="./bb/cc/dd/e";
+	  if(!is_dir($dirs_a)){
+		mkdir($dirs_a,0777,true);
+		echo "文件夹创建成功";
+	  }else{
+		echo "文件夹已存在";
+	  }
+
+	
+	
+	
+	
+	
+	
+						//-- 创建文件及内容
+
+	  $a="aaaa.txt";
+	  if(!is_file($a)){
+		$fp=fopen($a,"w+");
+		//fwrite($fp,"写入内容！");
+		echo "创建文件及内容成功";
+	  }else{
+		echo "文件存在";
+	  }
+
+
+
+	  $a="cc.txt";
+	  if(is_file($a)){
+		echo "文件存在";
+	  }else{
+		file_put_contents($a,"");
+		echo "创建成功a";
+	  }
+		
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 向文件添加内容
+
+	//-- file_put_contents方式添加内容
+	  $txt_c="demo.txt";				
+	  if(is_file($txt_c)){					//注：此方法会清空原有数据
+		$con="";
+		for($i=0;$i<10;$i++){
+			$con.="新添加的内容\r\n";
+		}
+		file_put_contents($txt_c,$con);
+	  }
+					
+	
+	
+	//-- fopen+fwrite 方式添加内容
+	  $txt_d="demo.txt";
+	  if(is_file($txt_d)){
+		$fp=fopen($txt_d,"a+");
+		fwrite($fp,"fopen+fwrite方式添加内容a");	//相同内容不会重复添加
+		echo "添加成功";
+		fclose($fp);
+		
+	  }
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 目录或文件的删除 
+
+				
+		  $txt_g="demo.txt";				//===file_get_contents方式删除文件内容
+		  if(is_file($txt_g)){
+			$con=file_get_contents($txt_g);
+			echo $con."<br>";
+			$con2=str_replace("bbbbbbb","",$con);
+			echo $con2;
+
+		  }
+
+
+		  $txt_h="demo.txt";				//===fopen+fread方式删除文件内容
+		  if(is_file($txt_h)){
+			$fp=fopen($txt_h,"a+");
+			$con=fread($fp,filesize($txt_h));
+			echo $con."<br>";
+			$con2=str_replace("aaaaaaaaaaa","",$con);
+			echo $con2;
+		  }
+
+
+								//-- rmdir 删除文件夹
+		  $dir_e="./bb/cc/dd/e";
+		  if(is_dir($dir_e)){
+			rmdir($dir_e);
+			echo "文件夹删除成功！";
+		  }else{
+			echo "文件夹不存在！";
+		  }
+
+
+								//-- unlink 删除一个文件
+		  $txt_a="./aa/a.txt";
+		  if(is_file($txt_a)){
+			if(unlink($txt_a)){
+				echo "文件删除成功！";
+			}else{
+				echo "删除失败";
+			}
+		  }else{
+			echo "文件不存在";
+		  }
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 修改文件内容
+
+	  $txt_e="demo.txt";					
+	  if(is_file($txt_e)){				//===file_get_contents方式更改文件内容
+		$con=file_get_contents($txt_e);
+		$con2=str_replace("fff","ooo",$con);
+		echo $con."<br>";
+		echo $con2;
+	  }
+
+
+	  $txt_f="demo.txt";				//===fopen+fwrite 方式更改文件内容
+	  if(is_file($txt_f)){
+		$fp=fopen($txt_f,"r+");
+		$con=fread($fp,filesize($txt_f));
+		echo $con."<br>";
+		$con2=str_replace("eee","kkk",$con);
+		echo $con2;
+	  }
+
+	
+	
+	
+	
+	
+	
+//===== 修改文件名或目录名
+
+		//修改文件夹名
+		$file="a";
+		if(is_dir($file)){
+			if(rename($file,"abc")){
+				echo "修改成功";
+			}
+		}else{
+			echo "不存在 ";
+		}
+
+		//修改文件名
+		$file="aaa.php";
+		if(is_file($file)){
+			if(rename($file,"abc.txt")){
+				echo "修改成功!";
+			}
+		}
+		
+	
+
+
+		//redir('./a','./aa');
+		function redir($p1,$p2){
+			if(is_dir($p1)){
+				rename($p1,$p2);
+				if(is_dir($p2)){
+					echo "重命名或剪切目录成功!";
+				}
+			}else{
+				echo "文件夹不存在!";
+			}
+			
+		}
+	
+	
+	
+	
+	
+	
+	
+//===== 查看文件内容的几种方式 
+	
+	//-- file_get_contents方式查看文件内容					
+	  $txt_a="demo.txt";				
+	  if(is_file($txt_a)){
+		 $con=file_get_contents($txt_a);
+		 echo $con."<hr>";
+	  }
+	  
+	//-- fopen+fread方式查看文件内容
+	  $txt_b="demo.txt";				
+	  if(is_file($txt_b)){
+		$fp=fopen($txt_b,"a+");
+		$con=fread($fp,filesize($txt_b));
+		fclose($fp);
+		echo $con."<hr>";
+	  }
+
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+
+//===== 创建多级目录与文件并添加内容
+	$path="a/b/c/d/e";
+	$dir='./a';
+	//mkd($path);
+	//rmd('./a');
+
+	function mkd($path){
+		if(!is_dir($path)){						//判断是否为文件夹
+			mkdir($path,0755,true);				//创建一个文件夹
+			$fp=fopen($path."/e.txt",'a+');		//创建文件（以读写方式打开文件）
+			fwrite($fp,'aaaaaaaabbbbbbbbbbbbaaaaaaaabbbbbbbbbbbb');
+			fclose($fp);
+		}
+		if(file_exists($path."/e.txt")){
+			echo "文件创建成功!<br>";
+		}else{
+			echo "创建失败或文件以存在！<br>";
+		}
+		$fp=fopen($path."/e.txt",'r');
+		while(!feof($fp)){
+			echo fgetc($fp).'<br>';
+		}
+	}
+
+
+
+//===== 删除多级目录与文件及获取目录大小
+
+	function rmd($path){
+		$op=opendir($path);
+		$size=0;
+		while($od=readdir($op)){
+			if($od=='.' || $od=='..'){
+				continue;
+			}
+			$pathn=$path.'/'.$od;
+			if(is_dir($pathn)){
+				rmd($pathn);
+				rmdir($pathn);
+			}else{
+				$size += filesize($pathn);		//累加文件大小
+				unlink($pathn);
+			}
+		}
+		echo "目录总大小为{$size}<br>";
+		closedir($op);
+		echo "目录删除成功!";
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 拷贝目录
+
+
+	//echo cpdir('./aa','./aaa');
+	function cpdir($p1,$p2){
+		if(!is_dir($p1)){
+			echo "文件夹不存在!";
+			return;
+		}
+		$od=opendir($p1);
+		while($ot=readdir($od)){
+			if($ot=='.' || $ot== '..'){
+				continue;
+			}
+			$path1=$p1.'/'.$ot;
+			$path2=$p2.'/'.$ot;
+			if(is_dir($path1)){
+				if(!is_dir($path2)){
+					mkdir($path2,0755,true);
+				}
+				cpdir($path1,$path2);
+			}else{
+				copy($path1,$path2);
+			}
+		}
+		closedir($od);
+		return is_dir($p2)?'拷贝成功！':'拷贝失败';
+	}
+
+
+
+
+
+
+//===== 文件做容器的计数器
+
+	counts();
+	function counts(){
+		if(!is_file('./counts')){
+			file_put_contents('./counts',0);
+		}
+		$gc=file_get_contents('./counts');
+		echo $gc;
+		$gc ++;
+		file_put_contents('./counts',$gc);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 判断文件夹内是否有指定类型文件
+
+
+	$dir=ROOT."/cache";		//将文件夹赋值 给一个变量
+	$arr=glob($dir."/*.tpl");	//将文件夹内的指定类型文件赋值给一个数组
+	if(file_exists($dir)){		//如果指定文件夹存在
+		echo "缓存文件夹存在<br>";
+		if($arr==false){	//如果指定类型文件不存在
+			echo "没有缓存文件";	
+		}else{			//如果指定类型文件存在
+			echo "有缓存文件";
+		}
+	}else{				//如果文件夹不存在
+		echo "缓存文件夹不存在";
+	}
+
+	  

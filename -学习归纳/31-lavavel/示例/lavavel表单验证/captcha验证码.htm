@@ -1,0 +1,717 @@
+<!DOCTYPE HTML>
+
+<!--
+ ______________ 
+< TUICOOL.COM >
+ -------------- 
+        \   ^__^
+         \  (**)\__$__$__
+            (__)\       )\/\
+             U  ||------|
+                ||     ||
+-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="IviIelcYaxS5CzQVpQKFaCX2DYDq/ieWuaAXUt8BTFY=" name="csrf-token" />
+    <title>
+            Laravel-5.1 ---- 将mews captcha整合到项目中！ - 推酷
+   </title>
+    <meta name="description" content="Laravel-5.1 ---- 将mews captcha整合到项目中！"/>
+  <link rel="shortcut icon" href="http://static0.tuicool.com/favicon.ico" type="image/x-icon" />
+  <link href="http://asset.tuicool.com/assets/application-0d4e8cad524c6308f5082fe6be9560f8.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="http://static0.tuicool.com/assets/font-awesome.min.css" rel="stylesheet">
+  <script src="http://asset.tuicool.com/assets/application-5272668a8ed427c5225cac7c6110da64.js" type="text/javascript"></script>
+
+  <!--[if IE 7]>
+  <link rel="stylesheet" href="http://assets.tuicool.com/assets/font-awesome-ie7.min.css">
+  <![endif]--> 
+    <script type="text/javascript" src="http://static2.tuicool.com/assets/tip.js?t=3"></script>
+  
+  <script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script>
+<script src="http://dup.baidustatic.com/js/ds.js"></script>
+<script type="text/javascript" src="http://static1.tuicool.com/assets/spin.min.js"></script>
+<link rel="stylesheet" href="http://static0.tuicool.com/assets/github.css">
+
+</head>
+<body>
+  
+  <div id="header" class="navbar-fixed-top">
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </a>
+          <a href="http://www.tuicool.com/" class="brand">推酷</a>        
+        <nav class="nav-collapse collapse">
+            <ul class="nav navbar primary-nav">                            
+              <li class="active">
+                <a href="http://www.tuicool.com/ah">
+                  文章
+                </a>
+              </li>              
+              <li class="">
+                <a href="http://www.tuicool.com/sites/hot">
+                  站点
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.tuicool.com/topics">
+                  主题
+                </a>
+              </li>
+              <li class="">
+                <a href="http://course.tuicool.com/">
+                  公开课
+                </a>
+              </li>
+              <li class="">
+                <a href="http://huodong.tuicool.com/">
+                  活动
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.tuicool.com/mobile">
+                  客户端
+                    <sup style="font-size:0.8em;color: #16A085;">荐</sup>
+                </a>
+              </li>
+              <li class="dropdown  ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">周刊 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.tuicool.com/mags">编程狂人</a></li>
+                  <li><a href="http://www.tuicool.com/mags/design">设计匠艺</a></li> 
+                  <li><a href="http://www.tuicool.com/articles/weekly">一周拾遗</a></li>                  
+                </ul>
+              </li>
+              
+               <li class="dropdown  ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.tuicool.com/bbs">讨论区</a></li>  
+                  <li><a href="http://www.tuicool.com/about">关于我们</a></li>                 
+                </ul>
+              </li>
+              
+              </ul>
+            <form class="navbar-search pull-left" action="http://www.tuicool.com/search">
+              <input type="text" class="search-query span2" name="kw" placeholder="搜索">
+            </form>
+            <ul class="nav pull-right">
+                <li><a href="http://www.tuicool.com/login">登录</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+  </div>   
+</div>
+  <div id ="flash_container" class="noPrint">    
+  </div>
+  
+  <div class="container-fluid">  
+    <div class="row-fluid article_row_fluid">
+    <div class="span8 contant article_detail_bg">
+        <h1>Laravel-5.1 ---- 将mews captcha整合到项目中！</h1>
+        <div class="article_meta">
+            <div style="margin-bottom: 5px;">
+            <span class="timestamp">时间&nbsp;2015-09-16 17:00:00
+            </span>
+            <span class="from">
+                <i class="icon-globe"></i>
+                    <a class="cut cut28 from" href="/sites/Fn2umm" target="_blank">博客园-原创精华区
+                    </a>
+            </span>
+            </div>
+            <div class="source">
+                <i style="float:left;">原文</i>&nbsp; 
+                <a class="cut cut70" href="http://www.cnblogs.com/Zell-Dinch/p/4813806.html?utm_source=tuicool" style="display:inline-block;">http://www.cnblogs.com/Zell-Dinch/p/4813806.html</a>
+            </div>
+            <div>
+                <span>主题</span>
+                <a href="/topics/11060000" target='_blank' >
+                    <span class="new-label">HTML</span>
+                </a>
+                <a href="/topics/11120025" target='_blank' >
+                    <span class="new-label">Laravel</span>
+                </a>
+                <a href="/topics/11060004" target='_blank' >
+                    <span class="new-label">JavaScript</span>
+                </a>
+            </div>
+        </div>
+        <div class="article_body" id="nei">
+            <div> 
+ <p>经过摸索，终于能在laravel 5.1中应用验证码了。</p> 
+ <p>因为英语渣五水平，所以几乎没搜索到什么有用的，于是考虑在github上搜索验证码包！</p> 
+ <p>提示： github上的package中往往会有使用说明，照着上面的实现，一般都能做出来。</p> 
+ <p>我使用的是mews captcha</p> 
+ <p> git 上的地址： <a href="https://github.com/mewebstudio/captcha" target="_blank" rel="nofollow,noindex">https://github.com/mewebstudio/captcha</a> 上面的使用很详细了。 </p> 
+ <p>动手实现：</p> 
+ <p>-- 手动进入 laravel 项目目录</p> 
+ <p> <img src="http://img0.tuicool.com/7jQNvm.jpg" class="alignCenter" /> </p> 
+ <p>-- 在对应目录下，找到composer.json文件，打开它，添加如下语句：</p> 
+ <p> <img src="http://img2.tuicool.com/nABv6v.jpg" class="alignCenter" /> <img src="http://img0.tuicool.com/VbyInaZ.jpg" class="alignCenter" /> </p> 
+ <p>如图：添加语句</p> 
+ <pre class="prettyprint"><span>{
+	</span>&quot;require&quot;:<span> {
+		</span>....
+		....
+		....
+		&quot;mews/captcha&quot;: &quot;~2.0&quot;<span>
+	}</span>,
+	&quot;minimum-stability&quot;: &quot;dev&quot;<span>
+}	</span>
+</pre> 
+ <p>-- 执行composer update, 如果报错，请先执行composer self-update, 然后再执行 composer update</p> 
+ <p> <img src="http://img1.tuicool.com/Jjmemyv.jpg" class="alignCenter" /> </p> 
+ <p>-- 找到config/app.php打开，添加如下语句：</p> 
+ <p> <img src="http://img0.tuicool.com/JZ32Uzr.jpg" class="alignCenter" /> <img src="http://img2.tuicool.com/b2UZNbQ.jpg" class="alignCenter" /> </p> 
+ <p>1.打开这个文件，找到providers项，添加如下语句</p> 
+ <pre>Mews\Captcha\CaptchaServiceProvider::<span>class</span>,</pre> 
+ <p>2.找到aliases项，添加如下语句：</p> 
+ <p> <img src="http://img2.tuicool.com/iiInUvV.jpg" class="alignCenter" /> </p> 
+ <p>添加语句：</p> 
+ <pre>'Captcha' =&gt; Mews\Captcha\Facades\Captcha::<span>class</span>,</pre> 
+ <p>-- cmd窗口中执行&nbsp;php artisan vendor:publish</p> 
+ <p> <img src="http://img2.tuicool.com/Z7Bviy.jpg" class="alignCenter" /> </p> 
+ <p>通过上面的所有步骤，查看目录，你会发现在vendor下多了mews目录，并且你可以使用命名空间 use Captcha, 在config/captcha.php中存在一个验证码的配置文件captcha.php。</p> 
+ <p> <img src="http://img1.tuicool.com/7zIFZza.jpg" class="alignCenter" /> <img src="http://img2.tuicool.com/URr67r.jpg" class="alignCenter" /> </p> 
+ <p> -- 上面的所有步骤在 <a href="https://github.com/mewebstudio/captcha" target="_blank" rel="nofollow,noindex">https://github.com/mewebstudio/captcha</a> 中同样存在！ </p> 
+ <p>我们来看一看新增的vendor/mews目录</p> 
+ <p>我们找到vendor/mews/captcha/src/captcha.php</p> 
+ <p>查找public 方法， 发现：</p> 
+ <p>public function create($var) --- 生成验证码</p> 
+ <p>public function check($var) --- 判断输入和验证码是否相等</p> 
+ <p>public function src($var) &nbsp; &nbsp; --- 输出img属性src的链接</p> 
+ <p>public function img($var) &nbsp; &nbsp;--- 输出img标签</p> 
+ <p>-- 其中，$var 参数就是，config/captcha.php 中 对应的键，分别可以是：</p> 
+ <p>default, flat, mini, inverse 代表了四种风格的验证码！可以针对不同风格进行配置，直接在config/captcha.php中修改配置项</p> 
+ <p>-- 实例：</p> 
+ <p>1.在app/Http/routes.php中配置路由</p> 
+ <p> <img src="http://img0.tuicool.com/URNV3i.jpg" class="alignCenter" /> </p> 
+ <p>其中captcha/test, 表示测试路径， 映射 CaptchaController 下的 public function index() {}</p> 
+ <p>captcha/mews 映射验证码的输出，映射 CaptchaController 下的 public function mews() {}</p> 
+ <p>2.创建控制器</p> 
+ <p>在cmd窗口中，直接输入</p> 
+ <pre>php artisan make:controller CaptchaController --plain</pre> 
+ <p>如果提示成功，则说明在 app/Http/Controllers/ 下产生了新文件 CaptchaController.php</p> 
+ <p>3.在app/Http/Controllers/CaptchaController.php中新建index() 和 mews() 方法</p> 
+ <pre class="prettyprint">&lt;?<span>php
+namespace App\Http\Controllers;
+</span><span>use</span><span> App\Http\Requests;
+</span><span>use</span><span> App\Http\Controllers\Controller;
+</span><span>use</span><span> Illuminate\Http\Request;
+</span><span>//</span><span>引用对应的命名空间</span><span>use</span><span> Session;
+</span><span>use</span><span> Captcha;
+</span><span>class</span> CaptchaController <span>extends</span><span> Controller {
+	</span><span>/*</span><span>*
+	 * 测试页面
+	 </span><span>*/</span>
+	<span>public</span> <span>function</span><span> index() {
+		</span><span>//</span><span> $mews = Captcha::src('inverse');, compact('mews')</span>
+		<span>return</span> view('captcha.index'<span>);
+	}
+	/*创建验证码*/
+	</span><span>public</span> <span>function</span><span> mews() {
+		</span><span>return</span> Captcha::create('default'<span>);
+	}
+}</span>
+</pre> 
+ <p>4.创建视图</p> 
+ <p>在resources/views/目录下创建captcha目录，分别新建index.blade.php 并且大概做个布局和样式调整</p> 
+ <pre class="prettyprint"><span>&lt;!</span><span>DOCTYPE html</span><span>&gt;</span>
+<span>&lt;</span><span>html </span><span>lang</span><span>=&quot;en&quot;</span><span>&gt;</span>
+<span>&lt;</span><span>head</span><span>&gt;</span>
+	<span>&lt;</span><span>meta </span><span>charset</span><span>=&quot;utf-8&quot;</span><span>&gt;</span>
+	<span>&lt;</span><span>meta </span><span>http-equiv</span><span>=&quot;X-UA-Compatible&quot;</span><span> content</span><span>=&quot;IE=edge&quot;</span><span>&gt;</span>
+	<span>&lt;</span><span>meta </span><span>name</span><span>=&quot;viewport&quot;</span><span> content</span><span>=&quot;width=device-width, initial-scale=1&quot;</span><span>&gt;</span>
+	<span>&lt;</span><span>title</span><span>&gt;</span>Learn Laravel 5.1<span>&lt;/</span><span>title</span><span>&gt;</span>
+	<span>&lt;</span><span>link </span><span>href</span><span>=&quot;{{ asset('/css/app.css') }}&quot;</span><span> rel</span><span>=&quot;stylesheet&quot;</span><span>&gt;</span>
+	<span>&lt;!--</span><span> Fonts </span><span>--&gt;</span>
+	<span>&lt;</span><span>link </span><span>href</span><span>='//fonts.useso.com/css?family=Roboto:400,300' </span><span>rel</span><span>='stylesheet' </span><span>type</span><span>='text/css'</span><span>&gt;</span>
+	<span>&lt;!--</span><span> HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries </span><span>--&gt;</span>
+	<span>&lt;!--</span><span> WARNING: Respond.js doesn't work if you view the page via file:// </span><span>--&gt;</span>
+	<span>&lt;!--</span><span>[if lt IE 9]&gt;
+		&lt;script src=&quot;https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js&quot;&gt;&lt;/script&gt;
+		&lt;script src=&quot;https://oss.maxcdn.com/respond/1.4.2/respond.min.js&quot;&gt;&lt;/script&gt;
+	&lt;![endif]</span><span>--&gt;</span>
+<span>&lt;/</span><span>head</span><span>&gt;</span>
+<span>&lt;</span><span>body</span><span>&gt;</span>
+	<span>&lt;</span><span>h2</span><span>&gt;</span>该页面仅仅用来学习验证码<span>&lt;/</span><span>h2</span><span>&gt;</span>
+	<span>&lt;</span><span>h3</span><span>&gt;</span>mews<span>&lt;/</span><span>h3</span><span>&gt;</span><span>
+	@if(count($errors) &gt; 0)
+	</span><span>&lt;</span><span>div </span><span>class</span><span>=&quot;alert alert-danger&quot;</span><span>&gt;</span>
+		<span>&lt;</span><span>ul</span><span>&gt;</span><span>
+			@foreach($errors-&gt;all() as $error)
+			</span><span>&lt;</span><span>li</span><span>&gt;</span>{{ $error }}<span>&lt;/</span><span>li</span><span>&gt;</span><span>
+			@endforeach
+		</span><span>&lt;/</span><span>ul</span><span>&gt;</span>
+	<span>&lt;/</span><span>div</span><span>&gt;</span><span>
+	@endif
+	</span><span>&lt;</span><span>form </span><span>action</span><span>=&quot;{{ url('test/cpt') }}&quot;</span><span> method</span><span>=&quot;post&quot;</span><span>&gt;</span>
+		<span>&lt;</span><span>input </span><span>type</span><span>=&quot;hidden&quot;</span><span> value</span><span>=&quot;POST&quot;</span><span> name</span><span>=&quot;_method&quot;</span><span>&gt;</span><span>&lt;!--</span>
+	 <span>--&gt;</span><span>&lt;</span><span>input </span><span>type</span><span>=&quot;hidden&quot;</span><span> value</span><span>=&quot;{{ csrf_token() }}&quot;</span><span> name</span><span>=&quot;_token&quot;</span> <span>/&gt;</span><span>&lt;!--</span>
+	 <span>--&gt;</span><span>&lt;</span><span>input </span><span>type</span><span>=&quot;text&quot;</span><span> name</span><span>=&quot;cpt&quot;</span><span> value</span><span>=&quot;&quot;</span> <span>/&gt;</span><span>&lt;!--</span>
+	 <span>--&gt;</span><span>&lt;</span><span>img </span><span>src</span><span>=&quot;{{ url('captcha/mews') }}&quot;</span><span> onclick</span><span>=&quot;this.src='{{ url('captcha/mews') }}?r='+Math.random();&quot;</span><span> alt</span><span>=&quot;&quot;</span><span>&gt;</span><span>&lt;!--</span>
+	 <span>--&gt;</span><span>&lt;</span><span>input </span><span>type</span><span>=&quot;submit&quot;</span><span> value</span><span>=&quot;Submit&quot;</span> <span>/&gt;</span>
+	<span>&lt;/</span><span>form</span><span>&gt;</span>
+	<span>&lt;</span><span>div </span><span>id</span><span>=&quot;footer&quot;</span><span> style</span><span>=&quot;text-align: center; border-top: dashed 3px #eeeeee; margin: 50px 0; padding: 20px;&quot;</span><span>&gt;</span><span>
+	  &copy;2015 </span><span>&lt;</span><span>a </span><span>href</span><span>=&quot;http://www.cnblogs.com/Zell-Dinch/&quot;</span><span>&gt;</span>ZellDincht<span>&lt;/</span><span>a</span><span>&gt;</span>
+	<span>&lt;/</span><span>div</span><span>&gt;</span>
+	<span>&lt;!--</span><span> Scripts </span><span>--&gt;</span>
+	<span>&lt;</span><span>script </span><span>src</span><span>=&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js&quot;</span><span>&gt;&lt;/</span><span>script</span><span>&gt;</span>
+	<span>&lt;</span><span>script </span><span>src</span><span>=&quot;//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js&quot;</span><span>&gt;&lt;/</span><span>script</span><span>&gt;</span>
+<span>&lt;/</span><span>body</span><span>&gt;</span>
+<span>&lt;/</span><span>html</span><span>&gt;</span>
+</pre> 
+ <p>这时候输入：http://your-host/captcha/test 查看</p> 
+ <p> <img src="http://img2.tuicool.com/AF3A3yF.jpg" class="alignCenter" /> </p> 
+ <p>这是我的布局和captcha</p> 
+ <p>5. 添加路由到app/Http/routes.php</p> 
+ <p> <img src="http://img2.tuicool.com/rE3Abu7.jpg" class="alignCenter" /> </p> 
+ <p>我通过post提交到后台进行测试</p> 
+ <p>6.在TestController中cpt方法如下：</p> 
+ <pre class="prettyprint">&lt;?<span>php
+namespace App\Http\Controllers\Test;
+</span><span>use</span><span> Illuminate\Http\Request;
+</span><span>use</span><span> App\Http\Requests;
+</span><span>use</span><span> App\Http\Controllers\Controller;
+</span><span>use</span> Input, Validator, Redirect, Session,<span> Captcha;
+</span><span>class</span> TestController <span>extends</span><span> Controller
+{
+	</span><span>public</span> <span>function</span> cpt(Request <span>$request</span><span>) {
+		</span><span>//</span><span> dd(Input::get('cpt'));</span>
+		<span>$rules</span> =<span> [
+			</span>&quot;cpt&quot; =&gt; 'required|captcha'<span>
+		];
+		</span><span>$messages</span> =<span> [
+			</span>'cpt.required' =&gt; '请输入验证码',
+			'cpt.captcha' =&gt; '验证码错误，请重试'<span>
+		];
+	 //如果仅仅验证captcha的值可以<br />	 //采用 Captcha::check(Input::get('cpt')); //返回bool<br />
+		</span><span>$validator</span> = Validator::make(Input::all(), <span>$rules</span>, <span>$messages</span><span>);
+		</span><span>if</span>(<span>$validator</span>-&gt;<span>fails()) {
+			</span><span>return</span> Redirect::back()-&gt;withErrors(<span>$validator</span><span>);
+		} </span><span>else</span><span> {
+			</span><span>return</span> &quot;验证码OK!&quot;<span>;
+		}
+	}
+}</span>
+</pre> 
+ <p>以上，测试如下，</p> 
+ <p>验证错误：</p> 
+ <p> <img src="http://img0.tuicool.com/aq2Abma.jpg" class="alignCenter" /> </p> 
+ <p>验证正确：</p> 
+ <p> <img src="http://img0.tuicool.com/iEZJnye.jpg" class="alignCenter" /> </p> 
+ <p>这里没有采用使用Captcha::check()的方式，具体情况具体分析吧。</p> 
+ <p>如果对你有帮助，请点下推荐啦 ^_^，谢谢！</p> 
+</div>
+        </div>
+        <div class="article_social">
+        <div class="article_like">
+                <button class="btn btn-large btn-like" id="my_like2" data_id="y2ARFz">
+                    <i class="icon-heart-empty"></i>
+                    赞一个
+                </button>
+                <button class="btn btn-large btn-fav liked" id="my_like" data_id="y2ARFz">
+                    <i class="icon-star-empty"></i>
+                    收 藏
+                </button>
+        </div>
+        <div class="bottom_ad huodong-detail-ad-banner clearfix">
+            <script type="text/javascript">
+    var cpro_id = "u1665123";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+
+        </div>
+        </div>
+           <div id="site_articles">
+              <div class="article-part-title">
+                <span>推荐文章</span>
+              </div>
+          <ul class="side_article_list">
+                <li class="side_article_list_item">
+                    1.<a href="/articles/iqyiuyu" target="_blank" title="jQuery超酷3D网格照片墙动画特效">
+                    jQuery超酷3D网格照片墙动画特效
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    2.<a href="/articles/BR7fY3z" target="_blank" title="js依赖注入初探">
+                    js依赖注入初探
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    3.<a href="/articles/qANrYja" target="_blank" title="angular 零碎">
+                    angular 零碎
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    4.<a href="/articles/mumeMjy" target="_blank" title="jquery倒计时">
+                    jquery倒计时
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    5.<a href="/articles/Q3mqMz" target="_blank" title="web api 初体验之 GET和POST传参">
+                    web api 初体验之 GET和POST传参
+                </a>
+                </li>
+                <li class="side_article_list_item">
+                    6.<a href="/articles/ui6Jfe" target="_blank" title="js模块化历程">
+                    js模块化历程
+                </a>
+                </li>
+         </ul>
+        </div>
+
+        <div id="kan_articles"></div>
+        <div id="article_weibo" style="display:none;">
+            <div class='article-part-title'>
+                <span>相关微博</span>
+                <sub>
+                    <a href="/articles/weibo_list/y2ARFz" target="_blank">(<i id="weibo_num"></i>)</a> 
+               </sub>
+            </div>
+            <div class="related-weibo-list"></div>
+        </div>
+        <div class="comments">
+    <div class="comments-area">
+    <div class="comments-header">
+        <h5>我来评几句</h5>
+        <div class="alert comment-alert alert-error" style="display:none;">
+            错误
+        </div>
+            <textarea cols="60" rows="5" id="comment-body" placeholder="请输入评论内容..." style="resize: none;"></textarea>
+            <span class="btn btn-medium btn-submit"  id="comment-submit">登录后评论</span>
+        <p style="margin-top: 5px;margin-left:10px;">
+            已发表评论数(<span class="comment_cnt"></span>)
+        </p>
+    </div>
+    <div class="comments-list">
+        <div class="empty-cmts alert alert-success" style="display:none;">
+            没有更多评论了^^
+        </div>
+    </div>
+    <div class="more-comments" style="display:none;">
+        <a href="">更多评论</a>
+    </div>
+    <div class="load-fail" style="display:none;">
+        评论加载失败，<a href="javascript:reload_comments('y2ARFz',1,0,-1);">重新加载</a>
+    </div>
+    </div>
+</div>
+
+    </div>
+         <div class="span4 article_right_side">
+            
+            <div class="right_top">
+    <div class="article_related_site article_detail_bg">
+    <h4 class="article-part-title">相关站点</h4>
+    <div class="article_related_site_body clearfix">
+        <div class="logo">
+            <img src="http://stimg3.tuicool.com/Fn2umm.png"/>
+        </div>
+        <div class="name">
+            <div>
+                <a href="/sites/Fn2umm" target="_blank"> 博客园-原创精华区</a>
+            </div>
+            <div>
+                    <input type="button" class="btn btn-success right_site_follow" value="+&nbsp;订阅" id="my_follow" data_id="Fn2umm"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="right-ad">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("1086175");</script>
+
+</div>
+<div class="right-ad" style="margin-top: 8px">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("1086186");</script>
+
+</div>
+<div class="right-ad" style="margin-top: 8px">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("1092367");</script>
+
+</div>
+<div class="right-ad" style="margin-top: 8px">
+      <script type="text/javascript">BAIDU_CLB_fillSlot("1145010");</script>
+
+</div>
+<div id="right_site_articles" class="article_detail_bg">
+    <div class="article-part-title">
+        <span>热门文章</span>
+    </div>
+    <ul class="side_article_list">
+        <li class="side_article_list_item">
+            1.<a href="/articles/iqyiuyu" target="_blank" title="jQuery超酷3D网格照片墙动画特效"> jQuery超酷3D网格照片墙动画特效 </a>
+        </li>
+        <li class="side_article_list_item">
+            2.<a href="/articles/BR7fY3z" target="_blank" title="js依赖注入初探"> js依赖注入初探 </a>
+        </li>
+        <li class="side_article_list_item">
+            3.<a href="/articles/qANrYja" target="_blank" title="angular 零碎"> angular 零碎 </a>
+        </li>
+        <li class="side_article_list_item">
+            4.<a href="/articles/mumeMjy" target="_blank" title="jquery倒计时"> jquery倒计时 </a>
+        </li>
+        <li class="side_article_list_item">
+            5.<a href="/articles/Q3mqMz" target="_blank" title="web api 初体验之 GET和POST传参"> web api 初体验之 GET和POST传参 </a>
+        </li>
+        <li class="side_article_list_item">
+            6.<a href="/articles/mqm2In" target="_blank" title="JavaScript进行RGB和16进制颜色转换"> JavaScript进行RGB和16进制颜色转换 </a>
+        </li>
+    </ul>
+</div>
+</div>
+
+<div class="operate_zone">
+    <div class="container-body share-body">
+        <div class="article-part-title">
+            <span>分享本文</span>
+        </div>
+        <div class="share_zone">
+    <div class="bdsharebuttonbox"> 
+         <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+        <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+        <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_more" data-cmd="more"></a>
+     </div>
+    <script>
+        window._bd_share_config = {
+            "common" : {
+                "bdSnsKey" : {
+                    "tsina" : "3113829255",
+                    "tqq" : "801536792"
+                },
+                "bdText" : "Laravel-5.1 ---- 将mews captcha整合到项目中！ (分享自 @推酷网)",
+                "bdMini" : "2",
+                "bdMiniList" : false,
+                "bdPic" : "http://aimg2.tuicool.com/fM3qEn.jpg",
+                "bdStyle" : "1",
+                "bdSize" : "24"
+            },
+            "share" : {}
+        };
+        with (document)
+        0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+    </script>
+</div>
+    </div>
+        <div class="frd_pos">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-7054762349007490"
+     data-ad-slot="5705695566"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+</div>
+         </div>
+</div>
+
+<div id="myLoginModal" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal" >&times;</a>
+        <h3>用户登录</h3>
+    </div>
+    <div class="modal-body">
+        <form method="post" action="/login" class="form-horizontal" id="login-form">
+            <div class="control-group">
+                <input id="xlEmail" name="email" type="text" placeholder="邮箱" />
+            </div>
+            <div class="control-group">
+                <input id="xlPassword" name="password" type="password" placeholder="密码"/>
+            </div>
+            <div class="control-group">
+                <button type="submit" class="btn btn-primary">
+                    &nbsp;&nbsp;登&nbsp;&nbsp;&nbsp;录&nbsp;&nbsp;
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="read-later-alert">
+</div>
+<div>
+   <a href="#add-article-to-kan" id="add-article-to-kan-btn" class="btn" data-toggle="modal" style="display:none;">添加到推刊</a>
+   <!-- add_article to kan -->
+<div id="add-article-to-kan" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <span class="add-title">收藏到推刊</span>
+    <a href="#new-kan" class="btn pull-right" data-toggle="modal">创建推刊</a>
+    <i class="clearfix"></i>
+  </div>
+  <div class="modal-body">
+    <ul id="add-kan-list">
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <input type="hidden" value="y2ARFz" class="article-id" /> 
+    <button class="btn btn-primary pull-left add-to-btn">  收 藏  </button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+  </div>
+</div>
+<div class="add-article-to-kan-alert">
+  已收藏到推刊！
+</div>
+
+   <div id="new-kan" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+    <input type="text" name="name" id="new-kan-name"  placeholder="推刊名(必填)" required data-validation-required-message="请填写推刊名" />
+    <span class="new-ness-name">请填写推刊名</span>
+    <br/>
+    <textarea name="desc" id="desc" rows="6" placeholder="推刊描述"></textarea>
+    <span class="new-ness-desc">描述不能大于100个字符!</span>
+    <br/>
+    权限设置：<input type="radio" name="type" value="1" checked="checked" /> 公开
+    <input type="radio" name="type" value="0"> 仅自己可见
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary pull-left create-kan-btn" disabled>创建</button>
+    <button class="btn dismiss-new-kan" data-dismiss="modal" aria-hidden="true">取消</button>
+  </div>
+</div>
+
+
+</div>
+<style type="text/css">
+    .btn-large {
+        padding: 0;
+    }
+    .load-fail {
+        display: none;
+    }
+</style>
+<script src="http://static1.tuicool.com//assets/highlight.pack.js"></script>
+<script type="text/javascript">
+    $('table').each(function(i) {
+        var size = $(this).children().size();
+        if (size > 1) {
+            $(this).attr('class',"table table-bordered");
+        } else if (size == 1) {
+            var e11 = $(this).children(":first");
+            var e1 = e11[0];
+            var name = e1.nodeName.toLowerCase();
+            if ("tbody" == name) {
+                if (e11.children().size() > 1) {
+                     $(this).attr('class',"table table-bordered");
+                }
+            }
+        }
+    });
+            related_kan("y2ARFz");
+        window.page = 0;
+        window.last = 0;    
+        window.first = true;
+        resize_article_image('#nei', 550);
+                load_comments("y2ARFz",1,0,-1);
+                window.uid = -1;
+        open_add_article_to_kan("false");
+        async_do_like2_article(); 
+        $('pre').each(function(i, e) {
+            hljs.highlightBlock(e, "<span class='indent'>  </span>", false)
+        });
+       
+          
+       handle_follow_site("#my_follow","已订阅","+ 订阅");
+</script>
+
+
+  </div>
+
+    <div class="footer">
+    <div class="footer-inner">
+    <dl class="about-link site-link">
+        <dt>
+            网站相关
+        </dt>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/about">关于我们</a>
+        </dd>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/mobile">移动应用</a>
+        </dd>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/bbs/go/issues">建议反馈</a>
+        </dd>
+    </dl>
+    <dl class="site-link follow-link">
+        <dt>
+            关注我们
+        </dt>
+        <dd>
+            <a target="_blank" href="http://e.weibo.com/tuicool2012"><img src="http://static1.tuicool.com/images/weibo-32.png">推酷网</a>
+        </dd>
+        <dd><img src="http://static1.tuicool.com/images/weixin-32.png">tuicool2012
+        </dd>
+        <dd><img src="http://static1.tuicool.com/images/qun-54.png">QQ群:164644910
+        </dd>
+    </dl>
+    <dl class="site-link links">
+        <dt>
+            友情链接
+        </dt>
+        <dd>
+                <a href="http://www.woshipm.com/" title="人人都是产品经理" target="_blank">人人都是产品经理</a>
+                <a href="http://www.tmtforum.com/" title="TMTForum" target="_blank">TMTForum</a>
+                <a href="http://www.moobuu.com/" title="魔部网" target="_blank">魔部网</a>
+                <a href="http://www.pm265.com/" title="PM256" target="_blank">PM256</a>
+                <a href="http://www.pintu360.com/" title="品途网" target="_blank">品途网</a>
+                <a href="http://www.yidonghua.com/" title="移动信息化" target="_blank">移动信息化</a>
+                <a href="http://www.snsiu.com/" title="行晓网" target="_blank">行晓网</a>
+                <a href="http://code4app.com/" title="Code4App" target="_blank">Code4App</a>
+                <a href="http://www.taskcity.com/" title="智城外包网" target="_blank">智城外包网</a>
+                <a href="http://blog.lamper.cn/" title="LAMP人" target="_blank">LAMP人</a>
+                <a href="http://www.apkway.com/forum.php" title="安卓航班网" target="_blank">安卓航班网</a>
+                <a href="http://www.huxiu.com/" title="虎嗅" target="_blank">虎嗅</a>
+                <a href="http://www.ycpai.com/" title="缘创派" target="_blank">缘创派</a>
+                <a href="http://www.iterduo.com/" title="IT耳朵" target="_blank">IT耳朵</a>
+                <a href="http://www.iresearch.cn/" title="艾瑞网" target="_blank">艾瑞网</a>
+                <a href="http://mediaworks.caixin.com/" title="创媒工场" target="_blank">创媒工场</a>
+                <a href="http://www.leiphone.com/" title="雷锋网" target="_blank">雷锋网</a>
+                <a href="http://www.managershare.com/" title="经理人分享" target="_blank">经理人分享</a>
+                <a href="http://www.shichangbu.com/" title="市场部网" target="_blank">市场部网</a>
+                <a href="http://www.ikanchai.com/" title="砍柴网" target="_blank">砍柴网</a>
+                <a href="http://www.cocoachina.com/" title="CocoaChina" target="_blank">CocoaChina</a>
+                <a href="http://www.ibeifeng.com/" title="北风网" target="_blank">北风网</a>
+                <a href="http://www.jiankongbao.com/" title="云智慧" target="_blank">云智慧</a>
+                <a href="http://www.wyzc.com" title="我赢职场" target="_blank">我赢职场</a>
+                <a href="http://www.thebigdata.cn/" title="大数据时代" target="_blank">大数据时代</a>
+                <a href="http://www.qidic.com/" title="奇笛网" target="_blank">奇笛网</a>
+                <a href="http://www.cngulu.com/" title="咕噜网" target="_blank">咕噜网</a>
+                <a href="http://www.linuxdiyf.com/" title="红联linux" target="_blank">红联linux</a>
+                <a href="http://win10.ithome.com" title="Win10之家" target="_blank">Win10之家</a>
+                <a href="http://www.niaogebiji.com/" title="鸟哥笔记" target="_blank">鸟哥笔记</a>
+                <a href="http://www.play.cn" title="爱游戏" target="_blank">爱游戏</a>
+                <a href="http://www.investide.cn/" title="投资潮" target="_blank">投资潮</a>
+                <a href="http://www.31huiyi.com/" title="31会议网" target="_blank">31会议网</a>
+                <a href="https://www.jpush.cn/" title="极光推送" target="_blank">极光推送</a>
+                <a href="https://www.teambition.com/" title="Teambition" target="_blank">Teambition</a>
+                <a href="http://cn.cocos2d-x.org/ " title="Cocos引擎中文官网" target="_blank">Cocos引擎中文官网</a>
+                <a href="http://www.guigu.org/" title="硅谷网" target="_blank">硅谷网</a>
+            <a href="/links">更多链接>></a>&nbsp;&nbsp;
+        </dd>
+    </dl>
+    <div class="clear"></div>
+    </div>
+</div>
+
+<div style="display:none;">
+   <script src="http://s22.cnzz.com/stat.php?id=5541078&web_id=5541078&show=pic" language="JavaScript"></script>
+</div>
+
+
+</body>
+</html>

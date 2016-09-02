@@ -1,0 +1,87 @@
+
+<script type='text/javascript' src='jquery-1.8.3.min.js'></script>
+<script type='text/javascript'>
+/*
+	$(function(){
+		imglunbo();
+	
+	});
+	function imglunbo(){
+		$("#did").css({
+			width:'300px',
+			height:'200px',
+			border:'1px solid',
+			margin:'50px auto',
+			overflow:'hidden',
+		
+		});
+//===== 图片上滚轮播效果：
+		//setInterval(function(){
+		//	$("#did div").animate({marginTop:'-200px'},1000,function(){
+		//		$(this).css({marginTop:'0px'}).find('img:first').appendTo('#did div');
+		//	});
+		//},1000);
+//===== 图片下滚轮播效果
+		//$("#did div").css('marginTop','-800');
+		//setInterval(function(){
+		//	$("#did div").animate({marginTop:'-600px'},1000,function(){
+		//		$(this).css({marginTop:'-800px'}).find("img:last").prependTo('#did div');
+		//	});
+		//},1000);
+		
+//===== 图片下滚轮播效果：
+
+		//setInterval(function(){
+		//	$("img:last").hide().prependTo("div").slideDown(1000);
+		//},1000);
+}
+*/
+</script>
+<div id='did'>
+	<div>
+	<img src="images/1.jpg"  width=300 height=200/>
+	<img src="images/2.jpg"  width=300 height=200/>
+	<img src="images/3.jpg"  width=300 height=200/>
+	<img src="images/4.jpg"  width=300 height=200/>
+	<img src="images/5.jpg"  width=300 height=200/>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+--------------------需要分开单独使用-----------------------------------
+
+//===== 从右往左滚动
+
+
+
+<style type="text/css">
+	div,ul,li,img,a{margin:0px;padding:0px;}
+	#did{width:384px;height:240px;border:1px solid blue;margin:200px;overflow:hidden;}
+	#did div img{float:left;}
+</style>
+<script type='text/javascript' src='jquery-1.8.3.min.js'></script>
+<script type="text/javascript">
+	$(function(){
+		setInterval(function(){
+			$("#did div").animate({marginLeft:"-384px"},1000,function(){
+				$(this).css({ marginLeft: "0px" }).find("img:first").appendTo(this);
+			});
+		},1000);
+	});
+</script>
+<div id="did">
+	<div style="width:999999px">
+	<img src="./images/1.jpg" width="384" height="240" />
+	<img src="./images/2.jpg" width="384" height="240" />
+	<img src="./images/3.jpg" width="384" height="240" />
+	<img src="./images/4.jpg" width="384" height="240" />
+	 </div>
+</div>

@@ -1,0 +1,15 @@
+
+
+
+	ThinkPHP/Library/Think/Think.class.php 下有一个 static function autoload(） 方法
+	在其里面var_dump($class); 会看到程序在如下目录中搜寻并自动加载传递进来的类 
+
+
+	string(13) "Think\Storage"
+	string(25) "Think\Storage\Driver\File"
+	string(30) "Behavior\ReadHtmlCacheBehavior"
+	string(26) "Behavior\CheckLangBehavior"
+	string(31) "Home\Controller\IndexController"
+	string(12) "Think\Verify"
+	string(30) "Behavior\ShowPageTraceBehavior"
+	string(9) "Think\Log"

@@ -1,0 +1,138 @@
+mysql> show variables like 'table_type';  --当前数据库默认表存储类型
++---------------+--------+
+| Variable_name | Value  |
++---------------+--------+
+| table_type    | MyISAM |
++---------------+--------+
+1 row in set (0.00 sec)
+
+mysql> show engines \G   --查看当前数据库所支持所有表存储类型
+*************************** 1. row ***************************
+ Engine: MyISAM
+Support: DEFAULT
+Comment: Default engine as of MySQL 3.23 with great performance
+*************************** 2. row ***************************
+ Engine: MEMORY
+Support: YES
+Comment: Hash based, stored in memory, useful for temporary tables
+*************************** 3. row ***************************
+ Engine: InnoDB
+Support: YES
+Comment: Supports transactions, row-level locking, and foreign keys
+*************************** 4. row ***************************
+ Engine: BerkeleyDB
+Support: NO
+Comment: Supports transactions and page-level locking
+*************************** 5. row ***************************
+ Engine: BLACKHOLE
+Support: YES
+Comment: /dev/null storage engine (anything you write to it disappears)
+*************************** 6. row ***************************
+ Engine: EXAMPLE
+Support: NO
+Comment: Example storage engine
+*************************** 7. row ***************************
+ Engine: ARCHIVE
+Support: YES
+Comment: Archive storage engine
+*************************** 8. row ***************************
+ Engine: CSV
+Support: NO
+Comment: CSV storage engine
+*************************** 9. row ***************************
+ Engine: ndbcluster
+Support: NO
+Comment: Clustered, fault-tolerant, memory-based tables
+*************************** 10. row ***************************
+ Engine: FEDERATED
+Support: YES
+Comment: Federated MySQL storage engine
+*************************** 11. row ***************************
+ Engine: MRG_MYISAM
+Support: YES
+Comment: Collection of identical MyISAM tables
+*************************** 12. row ***************************
+ Engine: ISAM
+Support: NO
+Comment: Obsolete storage engine
+12 rows in set (0.00 sec)
+
+mysql> show variables like 'have%';  --查看当前数据库所支持所有表存储类型
++-----------------------+----------+
+| Variable_name         | Value    |
++-----------------------+----------+
+| have_archive          | YES      |
+| have_bdb              | NO       |
+| have_blackhole_engine | YES      |
+| have_compress         | YES      |
+| have_crypt            | NO       |
+| have_csv              | NO       |
+| have_dynamic_loading  | YES      |
+| have_example_engine   | NO       |
+| have_federated_engine | YES      |
+| have_geometry         | YES      |
+| have_innodb           | YES      |
+| have_isam             | NO       |
+| have_merge_engine     | YES      |
+| have_ndbcluster       | NO       |
+| have_openssl          | DISABLED |
+| have_ssl              | DISABLED |
+| have_query_cache      | YES      |
+| have_raid             | NO       |
+| have_rtree_keys       | YES      |
+| have_symlink          | YES      |
++-----------------------+----------+
+20 rows in set (0.00 sec)
+
+mysql>
+
+mysql> show create table student \G;   --查看某表的建表语句，可以看到表的存储类型
+*************************** 1. row ***************************
+       Table: student
+Create Table: CREATE TABLE `student` (
+  `name` varchar(100) default NULL,
+  `class` varchar(100) default NULL,
+  `score` varchar(100) default NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql> alter table student engine=innodb; --修改表的存储类型为：innodb
+Query OK, 8 rows affected (0.02 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> show create table student \G; --查看某表的建表语句，可以看到表的存储类型
+*************************** 1. row ***************************
+       Table: student
+Create Table: CREATE TABLE `student` (
+  `name` varchar(100) default NULL,
+  `class` varchar(100) default NULL,
+  `score` varchar(100) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+1 row in set (0.02 sec)
+
+ERROR:
+No query specified
+
+mysql> alter table student type=myisam;  --修改表的存储类型为：innodb
+Query OK, 8 rows affected, 1 warning (0.06 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> show create table student \G; --查看某表的建表语句，可以看到表的存储类型
+*************************** 1. row ***************************
+       Table: student
+Create Table: CREATE TABLE `student` (
+  `name` varchar(100) default NULL,
+  `class` varchar(100) default NULL,
+  `score` varchar(100) default NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+1 row in set (0.01 sec)
+
+ERROR:
+No query specified
+
+mysql>
+
+

@@ -1,0 +1,389 @@
+//-- session_set_cookie_params()
+	把session变量存在cookie中就可以正常使用session了 ，这样就不用在每个页面都要调用session_start() 
+
+
+
+		=========session========
+
+
+	//=====初始化session
+	//=====创建与更新session
+	//=====获取全部session数据		
+	//=====获取指定session数据 (查)
+	//=====删除指定session项
+	//=====删除所有session项（包括文件）	
+	//=====删除session的ID
+	//=====获取session的ID
+	//=====指定session的id
+	//=====删除session的ID
+	//=====获得服务器现在的session的名字
+	//=====session手册位置
+	//=====更改session保存的位置
+	//=====初始化session
+	//=====创建与更新session
+	//=====获取session数据
+	//=====获取全部session数据
+	//=====获取指定session数据
+	//=====获取数组型session数据
+	//=====获取对象型session数据	
+	//=====删除指定session项
+	//=====删除所有session项（包括文件）			
+	//=====获取session的ID
+	//=====session手册位置
+	//=====session 设置生命周期（指发呆时间）
+	//=====为什么访问多个页面时都会找到相同的session文件
+	//=====禁用cookie后实现session的方案
+	//=====session接收传送的id值
+	//=====指定session_id()值
+	//=====初始化session
+	//=====获取session_id()值 
+	//=====传送session_id值
+	//=====获取传送的sid值
+	//=====设置session_id()值
+	//=====初始化session
+	//=====更改session_name()
+	//=====将页面中所有的URL启用自动传递session的键值对。
+	//=====设置session存放的路径
+	//=====设置session文件存在的时间及session的时效
+	//=====session是否启用cookie
+	//=====session是否使用cookie
+	//=====cookie保存的路径
+	//=====用户自定义session会话文件标题头
+	//=====session数据可以存放的位置
+
+
+							
+							
+							
+							
+							
+							
+							
+
+session_start();					//=====初始化session
+
+$_SESSION['name']="shunping";				//=====创建与更新session
+
+print_r($_SESSION);					//=====获取全部session数据		
+								 
+echo $_SESSION['name'];					//=====获取指定session数据 (查)
+foreach($_SESSION as $k=>$v){					//查看所有
+		echo $k."=>".$v."<br>";
+	}
+	echo "</pre>";
+
+unset($_SESSION['name']);				//=====删除指定session项
+	
+session_destroy();					//=====删除所有session项（包括文件）	
+
+setCookie('PHPSESSID','',time()-1,'/');			//===删除session的ID
+	//名字保存在 cookie中，上面有cookie保存的地址
+	//  '/'表示服务器的根目录，而不是系统盘根目录
+		
+$sid = session_id();					//=====获取session的ID
+session_id($sid);					//=====指定session的id
+
+
+setCookie('PHPSESSID','',time()-1,'/');			//===删除session的ID
+	//名字保存在 cookie中，上面有cookie保存的地址
+	//  '/'表示服务器的根目录，而不是系统盘根目录
+
+
+session_name();   					//=====获得服务器现在的session的名字
+
+
+
+
+
+
+
+
+
+
+demo1.php页面:
+
+<?php
+	session_start();					//=====初始化session
+	//注意：每个页面使用session时分别都需要先初始化
+	//或配置php.ini -> seesion.auto_start=1;				
+
+								//=====创建与更新session
+	$_SESSION['name']="shunping";			//字符型
+	$_SESSION['age']='100';				
+	$_SESSION['isBoy']=true;			//bool型
+	$arr1=array('北京','小明','hello');		//数组型
+	$_SESSION['arr1']=$arr1;
+	class Dog{					//对象型
+		private $name;
+		private $age;
+		private $intro;
+		function __construct($name,$age,$intro){
+			$this->name=$name;
+			$this->age=$age;
+			$this->intro=$intro;
+		}
+		public function name(){
+			return $this->name;
+		}
+	}
+	$dog1=new Dog('大狗','5','好狗');
+	$_SESSION['dog1']=$dog1;
+?>
+
+
+
+
+demo2.php页面：
+<?php					
+	session_start();
+								//=====获取session数据
+	//获取全部session数据									
+	echo "<pre>";						//=====获取全部session数据
+		print_r($_SESSION);				
+	echo "</pre>";
+
+
+								 
+	echo $_SESSION['name']."<br>";				//=====获取指定session数据		
+
+	
+	
+	if(!empty($_SESSION['arr1'])){				//=====获取数组型session数据
+	$arr1=$_SESSION["arr1"];
+		foreach($arr1 as $k=>$v){
+			echo $v."<br>";
+		}
+	}
+								//=====获取对象型session数据	
+	//声明对像
+	class Dog{
+		private $name;
+		private $age;
+		private $intro;
+		function __construct($name,$age,$intro){
+			$this->name=$name;
+			$this->age=$age;
+			$this->intro=$intro;
+		}
+		public function name(){
+			return $this->name;
+		}
+	}
+	//或把这个对象写在单独的一个页面中然后再require_once该页面。
+	if(!empty($_SESSION['dog1'])){
+		$dog=$_SESSION['dog1'];
+		echo $dog->name();	
+	}
+	
+	//注意：session在调用对象时不能直接调用，会提示The script tried to execute a method or access a property of an incomplete object.只有把原来的类再本页面如上面声明一下即可！
+	
+	//unset($_SESSION['name']);				//=====删除指定session项
+	
+	//session_destroy();					//=====删除所有session项（包括文件）			
+								//=====获取session的ID
+	echo "本次会话的session ID是：".session_id();
+	
+								//=====session手册位置
+	PHP Manual->函数参考->session扩展->sessions
+	
+								//=====更改session保存的位置
+	打开PHP.INI文件
+	找到[session项]下面的
+	session.save_path="/tmp" 
+	
+	//=====session是对应每次会话的。如果浏览器关闭再打开后，会创建一个新的session
+	
+								//=====session 设置生命周期（指发呆时间）
+		//在php.ini文件中找到[session]节下面一段代码 
+		// session.gc_maxlifetime=1440 		默认为1440秒，也可自行设置。
+	
+
+
+							//=====为什么访问多个页面时都会找到相同的session文件
+
+		原理：在session初始化时，会自动创建一个cookie文件，将本次会话分配一个ID号保存在浏览器中。当本次会话每打一个页面时，都会把该COOKIE中保存的ID号发送给服务器。所以在一次会话中的多个页面就是找到相同的session文件。		
+		会话的定义：
+		浏览器关闭算一次会话完毕！	
+?>
+
+
+
+
+
+
+								//=====禁用cookie后实现session的方案
+
+当cookie被禁用后每开启或刷新一个页面时都会创建一个全新的session,要实现多页面共享一个session的方案有要在session_start()初始化前，设置使用指定的session_id()值，这样session_start()就不会创建全新的ID号了。
+
+方法一：在超链接时用GET传送session_id(),将多个页面的session_id()统一。
+例：
+
+book.php页面：
+<?php
+	$sid=$_GET['sid'];					//=====session接收传送的id值
+	if($sid){
+		session_id($sid);				//=====指定session_id()值
+		session_start();				//=====初始化session
+	}else{
+		session_start();		
+		$sid=session_id();				//=====获取session_id()值 
+	}
+?>
+<body>
+<h1>三味书屋</h1>
+<p><a href="control.php?id=b01&name=三国志&sid=<?php echo $sid ?>">三国志</a></p>
+<p><a href="control.php?id=b02&name=水浒传&sid=<?php echo $sid ?>">水浒传</a></p>
+<p><a href="control.php?id=b03&name=红楼梦&sid=<?php echo $sid ?>">红楼梦</a></p>
+<p><a href="control.php?id=b04&name=西游记&sid=<?php echo $sid ?>">西游记</a></p>
+<p>
+<a href="show.php?sid=<?php echo $sid ?>">我的购物车</a>	//=====传送session_id值
+</p>
+</body>
+
+
+book2.php页面：
+<?php
+	$id=$_GET['id'];					
+	$name=$_GET['name'];		
+	$sid=$_GET['sid'];					//=====获取传送的sid值
+	session_id($sid);					//=====设置session_id()值
+	session_start();					//=====初始化session
+	$_SESSION[$id]=$name;
+	echo $_SESSION[$id]." ：成功添加到购物车！<br>";
+	echo "<a href='book.php?sid=".$sid."'>返回继续购买</a>";
+?>
+
+
+
+
+
+
+
+
+方法二：用PHP提供的常量 SID
+
+echo "sid=".SID;
+sid=PHPSESSID=94a211bf11414929254a63ad36f23e1f
+在超链接传送时就不用写键值对了，直接写一个 &".SID." 就可以了，SID本身就是一个键值对
+如：
+echo "<a href='aa.php?id=n1&name=aaa&".SID."'>aaa</a>";
+
+例：
+book.php页面
+<?php
+	$sid=$_GET['PHPSESSID'];
+	if($sid){
+		session_id($sid);
+	}
+	session_start();	
+?>
+<body>
+<h1>三味书屋</h1>
+<p><a href="control.php?id=b01&name=三国志&<?php echo SID ?>">三国志</a></p>
+<p><a href="control.php?id=b02&name=水浒传&<?php echo SID ?>">水浒传</a></p>
+<p><a href="control.php?id=b03&name=红楼梦&<?php echo SID ?>">红楼梦</a></p>
+<p><a href="control.php?id=b04&name=西游记&<?php echo SID ?>">西游记</a></p>
+<p><a href="show.php?<?php echo SID ?>">我的购物车</a></p>
+</body>
+
+
+control.php页面：
+<?php
+	$id=$_GET['id'];
+	$name=$_GET['name'];
+	$sid=$_GET['PHPSESSID'];
+	if($sid){
+		session_id($sid);
+	}
+	session_start();
+	$_SESSION[$id]=$name;
+	echo $_SESSION[$id]." ：成功添加到购物车！<br>";
+	echo "<a href='book.php?".SID."'>返回继续购买</a>";
+?>
+
+
+
+
+
+
+方法三：启用sessin.use_trans_sid   透明SID
+在php.ini中找到该项，默认为0 ，启动为1. 它会将会话中所有跳转连接（action,header,href）中默认添加并传送一个SID （session_id的键值对）
+
+注：本方法不支持JS跳转，所在的做JS跳转时要手动添加SID.
+
+此方法只会在三种情下有效：href  , header , action  
+
+
+
+
+
+
+
+
+
+
+
+								//=====更改session_name()
+
+	//在php.ini的session节中，找到 "session.name = PHPSESSID"  可以将“PHPSESSID”改成其它。
+
+
+
+							//=====将页面中所有的URL启用自动传递session的键值对。
+	//php.ini页面中找到 	session.use_trans_sid = 0	0为关闭；  1为开启；
+
+
+
+								//=====设置session存放的路径
+	//php.ini页面中找到	session.save_path="绝对路径"
+
+
+
+							//=====设置session文件存在的时间及session的时效
+	php.ini页面中
+	//session.gc_maxlifetime=1440	设置生命周期
+
+	//session.gc_probalility=1
+
+	//session.gc_divisor=1000
+
+	以上三组函数组合使用。大意为:session的生命周期是1440秒，每启动1000次session_start()就会触发一次垃圾回收机制。
+	如何设置垃圾回收要根据网站的流量来决定。当流量很大时，那么垃圾回收机制比率就要设置的越小，不然回收机制触发的过多会造成服务器资源的过多浪费。
+
+
+
+
+							//=====session是否启用cookie
+
+	session.use_cookie=1				//=====session是否使用cookie
+
+	session.cookie_path= /  			//======cookie保存的路径
+
+	session.domain_name=				//=====根据规范产生域名，自动生成，无需设置。
+
+	session.cookie_lifetime=0	//cookie保存时间，默认0为关闭浏览器就失效、
+	它关联如下：
+	setCookie("a","aa",time()+3600);	设置了cookie的时效是3600秒
+	setCookie("a","aa");			设置了cookie在浏览器关闭时失效
+
+
+
+
+							//=====用户自定义session会话文件标题头
+
+有两种方式：
+session.save_handler = files  //使用系统默认的
+session.save_handler = user  //使用自己设置的
+
+自设文件参考韩顺平第121课内容
+
+
+
+
+							//=====session数据可以存放的位置
+1，文件
+2，数据库
+3，内存（memcache）
+4，网络文件nfs(network file system)
+	
+

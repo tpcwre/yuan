@@ -1,0 +1,256 @@
+﻿//=====解决时差问题的两种方案
+
+//=====取得文件的修改与访问时间
+
+//=====PHP页面显示时间
+
+//=====获取文件的时间戳，将时间戳转换成时间格式
+
+//=====smarty-模板中选择日期的下拉列表<br>
+
+//=====smarty-模板中选择时间的下拉列表<br>
+
+//=====smarty模板中显示时间
+
+//=====用时间形式设置转存的文件名(解决文件同名)
+
+//=====javascript显示年月日等时间并时时更新
+
+//=====jquery中获取时间戳并转换成时间
+
+//=====setTimeout() 设置指定时间后执行(jquery操作)
+
+//=====数据库添加当前时间
+
+//===== 计算两个时间的时间差
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 计算两个时间的时间差
+
+		$a=strtotime('1997-6-7');
+		$b=strtotime('1997-8-8');
+		
+		
+		echo ($b-$a)/60/60/24;		//计算天的时间差
+
+
+
+
+
+
+
+//=====数据库添加当前时间
+	$sql = insert into(time) values(now());
+	
+	now() 所显示的时间为： 2015-04-11 15:31:45
+
+
+
+
+
+//=====setTimeout() 设置指定时间后执行(jquery操作)
+
+	setTimeout(function(){				//时间间隔1秒钟后执行以下操作
+		$('#loading').dialog('close');		//关闭loading对话框
+		$("#reg").dialog('close');		//关闭reg对话框
+		$("#reg").resetForm();			//重置所有表单项
+	},1000);					//1000 是1秒
+	
+
+
+
+
+
+
+
+
+
+
+//=====jquery中获取时间戳并转换成时间
+
+	$(document).bind('click',function(e){
+		var time= e.timeStamp;
+		alert(time);
+		time = new Date(time);
+		var year=time.getFullYear()+'年';
+		alert(year);
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====javascript显示年月日等时间并时时更新
+
+<script>
+setInterval(function dt(){
+	var dt = new Date();
+	var str="";
+	switch(dt.getDay()){
+		case 0:
+			str="日";
+			break;
+		case 1:
+			str="一";
+			break;
+		case 2:
+			str="二";
+			break;
+		case 3:
+			str="三";
+			break;
+		case 4:
+			str="四";
+			break;
+		case 5:
+			str="五";
+			break;
+		case 6:
+			str="六";
+			break;
+	}
+	var hours=dt.getHours();
+	var minutes=dt.getMinutes();
+	var seconds=dt.getSeconds();	
+	if(hours < 10){
+		hours="0"+hours;
+	}
+	if(minutes <10){
+		minutes="0"+minutes;
+	}
+	if(seconds <10){
+		seconds="0"+seconds;
+	}
+
+
+	var times = "今天是："+dt.getFullYear()+"年"+(dt.getMonth()+1)+"月"+dt.getDate()+"日&nbsp;星期"+str+"&nbsp"+hours+":"+minutes+":"+seconds;
+	document.getElementById('t2').innerHTML=times;
+},1000);
+</script>
+
+<body>
+	<div id="t2"></div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+//=====用时间形式设置转存的文件名(解决文件同名)
+$name="xxx.jpg";
+$file_name = time().rand(1,1000).substr($name,strrpos($name,".")); 
+
+
+
+
+//=====smarty-模板中选择日期的下拉列表<br>
+	{html_select_date month_format=%m start_year=1990 end_year=2050 field_order=YMD}
+
+//=====smarty-模板中选择时间的下拉列表<br>
+	{html_select_time}
+
+
+//=====smarty模板中显示时间
+	{$smarty.now|date_format:"%Y-%m-%d %H:%M:%S"}
+
+
+
+
+
+
+//=====获取文件的时间戳，将时间戳转换成时间格式
+<?php
+	date_default_timezone_set("Asia/Chongqing");
+	$a=filemtime("a.aa");			//获取文件的时间戳
+	echo date("Y-m-d H:i:s",$a);		//将时间戳转换成时间格式
+?>
+
+
+
+//=====PHP页面显示时间
+	echo date("Y-m-d H:i:s")."<br>";
+	echo date("Y-m-d")."<br>";
+	echo date("H:i:s");
+
+
+
+
+
+
+
+//=====取得文件的修改与访问时间
+filectime()		 取得文件的 inode 修改时间
+fileatime()		取得文件的上次访问时间 
+filemtime()		取得文件的上次修改时间
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+
+//=====解决时差问题的两种方案
+
+方案一：
+	在PHP文件中设置：
+	date_default_timezone_set("Asia/Chongqing");
+
+
+方案二：
+	在php.ini 文件中找到下列代码：
+[Date]
+; Defines the default timezone used by the date functions
+;date.timezone =
+
+	添加如下内容：
+	date.timezone = Aisa/Chongqing

@@ -1,0 +1,333 @@
+﻿
+<?php
+header("content-type:text/html;charset=utf-8");
+
+//===== PDO 查询单条数据
+
+try{
+	$pdo = new PDO("mysql:host=localhost;dbname=test1",'root','1234567'); //= 连接数据库
+	$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);	//= 设置异常处理模式
+	$pdo->query("set names utf8");	//= 设置编码 
+}catch(PDOException $e){	//= 初始异常对象
+	die($e->getMessage());	//= 获取异常信息
+}
+	$sql="select * from user where id=?";
+	$stmt= $pdo->prepare($sql);				//= 预处理sql语句
+	if($stmt->execute(array(427))){			//= 执行sql语句并判断是否成功
+		while($row= $stmt->fetch(PDO::FETCH_ASSOC)){	//= 获取数据
+			print_r($row);
+		}
+	}
+		echo "<hr>";
+	
+	
+
+
+
+
+//===== PDO预处理查询方式一
+
+require "config.php";
+
+try{
+	$pdo= new PDO(DSN,ROOT,PASS);
+	$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+	$pdo->query("set names utf8");
+}catch(PDOException $e){
+	die($e->getMessage());
+}
+	$sql = "select id,name,age,sex from user where classid= ?";
+	$stmt= $pdo->prepare($sql);
+	$stmt->execute(array('lamp113'));
+	$res= $stmt->fetch(PDO::FETCH_BOUND);
+	
+
+
+
+
+	
+	
+	
+//===== PDO 预处理查询二
+	
+try{
+	$pdo=new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);	
+	$pdo->query("set names utf8");
+}catch(PDOException $e){
+	die($e->getMessage());
+}
+	$sql = "select * from user where id >?";
+	$stmt=$pdo->prepare($sql);
+
+	if($stmt->execute(array(5))){
+		$arr= '';
+		while($row=$stmt->fetchAll(PDO::FETCH_ASSOC)){
+			$arr[]=$row;
+		}
+		echo "<pre>";
+		print_r($arr);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	echo "<hr>";
+	
+//===== PDO 添加数据
+
+
+
+try{
+	$pdoadd=new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	$pdoadd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+	$pdoadd->query("set names utf8");
+}catch(PDOException $e){
+	die("数据库连接失败!".$e->getMessage());
+}
+
+
+	//=== 索引数组传值方式
+	$sqladd = "insert into user(name,sex,age,classid) values(?,?,?,?)";	
+	$stmt=$pdoadd->prepare($sqladd);
+	if($stmt->execute(array('liuji','nv',21,'tianjin'))){
+		echo "添加--成功---<br>";
+	}else{
+		echo "添加--失败---<br>";
+	}
+
+
+	//== 绑定值方式（绑定时须赋值）
+	$sqladd = "insert into user(name,sex,age,classid) values(?,?,?,?)";	//== 设置
+	$stmt = $pdoadd->prepare($sqladd);	//== 发送预处理语句
+	$stmt->bindValue(1,'aaa');			//== 给占位符‘？’绑定值
+ 	$stmt->bindValue(2,'nv');
+	$stmt->bindValue(3,'22');
+	$stmt->bindValue(4,'beijing16');
+	$stmt->execute();					//== 执行绑定后的语句
+	if($pdoadd->lastInsertId()>0){		//== 判断语句是否执行成功
+		echo "添加数据成功！";
+		$pid = $pdoadd->lastInsertId();
+	}else{
+		echo "添加数据失败!";
+	}
+
+
+
+	//== 绑定变量方式(执行前赋值即可);
+	
+	$sqladd = "insert into user(name,sex,age,classid) values(?,?,?,?)";
+	$stmt = $pdoadd->prepare($sqladd);
+	$stmt->bindParam(1,$name);		//== 给占位符‘?’绑定变量
+	$stmt->bindParam(2,$sex);
+	$stmt->bindParam(3,$age);
+	$stmt->bindParam(4,$classid);
+	$name='abc';
+	$sex='nvn';
+	$age='28';
+	$classid="shanghia22";
+	$stmt->execute();
+	if($pdoadd->lastInsertId()>0){
+		echo "第{$pdoadd->lastInsertId()}条数据添加成功!";
+	}else{
+		echo "数据添加失败！";
+	}
+
+	
+	echo "<hr>--";
+	
+	//=== 绑定别名方式 
+	
+	$sqladd = "insert into user(name,sex,age,classid) values(:name,:sex,:age,:classid)";
+						// :name 将点位符设置成别名
+	$stmt = $pdoadd->prepare($sqladd);
+	// $stmt->bindValue(":name","aabb");	//== 通过别名给占位符绑定值 
+	// $stmt->bindValue("sex",'nv');
+	// $stmt->bindValue("age","28");
+	// $stmt->bindValue('classid','jilin28');
+	$stmt->bindParam("name",$name);			//== 通过别名给占位符绑定变量
+	$stmt->bindParam("age",$age);
+	$stmt->bindParam('sex',$sex);
+	$stmt->bindParam('classid',$classid);
+	$name="new1";
+	$age=39;
+	$sex='nan';
+	$classid="liuhe";
+	$stmt->execute();
+	if($pdoadd->lastInsertId()>0){
+		echo "第{$pdoadd->lastInsertId()}条数据添加成功!";
+	}else{
+		echo "添加数据失败!";
+	}
+		
+	
+	
+	echo "--<hr>";
+	
+	
+	
+	
+	
+	
+	
+//===== PDO 数据删除
+
+try{
+	$pdodel = new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	$pdodel->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+	$pdodel->query("set names utf8");
+}catch(PDOException $e){
+	die('数据库连接失败'.$e->getMessage());
+}
+
+
+	//=== 索引数组传值方式
+	$sqldel="delete from user where id = ?";
+	$stmt=$pdodel->prepare($sqldel);
+	if($stmt->execute(array(390))){
+		echo "<br>---数据删除成功----<br>";
+	}else{
+		echo "<br>---数据删除失败----<br>";
+	}
+
+	//== 绑值方式
+	$sqldel="delete from user where id = ?";
+	$stmt= $pdodel->prepare($sqldel);
+	$stmt->bindValue(1,"307");
+	$stmt->execute();
+	if($stmt->rowCount()>0){		//= 判断是不有受影响的行数
+		echo "删除成功";
+	}else{
+		echo "删除失败";
+	}
+
+	
+	//== 绑定变量方式
+	$sqldel="delete from user where id= ?";
+	$stmt=$pdodel->prepare($sqldel);
+	$stmt->bindParam(1,$id);
+	$id="306";
+	$stmt->execute();
+	if($stmt->rowCount()>0){
+		echo "删除成功！";
+	}else{
+		echo "删除失败!";
+	}
+
+	
+	//== 绑定别名方式
+	$sqldel="delete from user where id=:id";
+	$stmt=$pdodel->prepare($sqldel);
+	//$stmt->bindParam('id',$id);		//==绑别名+绑变量
+	$stmt->bindValue('id',303);			//==绑别名+绑值
+	$id=304;
+	$stmt->execute();
+	if($stmt->rowCount()>0){
+		echo "删除成功";
+	}else{
+		echo "删除失败";
+	}
+		
+	
+
+	
+	
+	
+	
+	
+	
+//===== PDO 修改数据
+
+try{
+	$pdou=new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	$pdou->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+	$pdou->query("set names utf8");
+}catch(PDOException $e){
+	die("数据库连接失败".$e->getMessage());
+}
+
+
+
+	//=== 索引数组传值方式
+	
+	$sqlu="update user set name=?,age=?,sex=? where id=?";
+	$stmt=$pdou->prepare($sqlu);
+	if($stmt->execute(array('wenhao',18,1,389))){
+		echo "数据修改成功";
+	}else{
+		echo "数据修改失败";
+	}
+	
+	
+
+	//== 绑定值方式
+	
+	$sqlu="update user set name=?,age=?,sex=? where id=?";
+	$stmt=$pdou->prepare($sqlu);
+	$stmt->bindValue(1,'eee');
+	$stmt->bindValue(2,'33');
+	$stmt->bindValue(3,'nan');
+	$stmt->bindValue(4,'298');
+	$stmt->execute();
+	if($stmt->rowCount()>0){
+		echo "修改成功！";
+	}else{
+		echo "修改失败！";
+	}
+
+
+	//== 绑定变量方式
+	$sqlu="update user set name=?,age=?,sex=? where id=?";
+	$stmt=$pdou->prepare($sqlu);
+	$stmt->bindParam(1,$name);
+	$stmt->bindParam(2,$age);
+	$stmt->bindParam(3,$sex);
+	$stmt->bindParam(4,$id);
+	$name="pei";
+	$age=28;
+	$sex='nv';
+	$id=298;
+	$stmt->execute();
+	if($stmt->rowCount()>0){
+		echo "修改成功";
+	}else{
+		echo "修改失败";
+	}
+	
+		
+		
+	
+	//== 绑定别名+绑值
+	
+	$sqlu="update user set name=:name,age=:age,sex=:sex where id=:id";
+	$stmt = $pdou->prepare($sqlu);
+	 $stmt->bindValue('name','fff');		//别名+绑值
+	 $stmt->bindValue('sex','1');
+	 $stmt->bindValue('age','18');
+	 $stmt->bindValue('id',298);
+	
+	// $stmt->bindParam('name',$name);		//别名+变量
+	// $stmt->bindParam('age',$age);
+	// $stmt->bindParam('id',$id);
+	// $stmt->bindParam('sex',$sex);
+	// $name='zong';
+	// $age=22;
+	// $id=298;
+	// $sex=0;
+	$stmt->execute();
+	if($stmt->rowCount()>0){
+		echo "修改成功";
+	}else{
+		echo "修改失败";
+	}
+	
+	
+	
+
+	
+	
+	

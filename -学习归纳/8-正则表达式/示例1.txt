@@ -1,0 +1,319 @@
+<?php
+
+
+
+
+//=====用正则去除(替换)字符串中间的空格
+
+	$a='abcd abc';
+	echo $a.'<br>';
+	echo preg_replace('# #','',$a);	
+
+
+
+
+echo "<hr><h1>//===== 正则表达式的使用</h1>";
+
+	$str="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
+	$pattern='/bc/';		//设置一个正则表达式
+	
+	preg_match_all($pattern,$str,$result);	//执行正则表达式
+	echo "<pre>";
+		var_dump($result);
+
+
+
+echo "<hr><h1>//===== []声明一个原子表</h1>";
+	
+	$pattern='/[a-z]/';
+	$str='abcde';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+echo "<hr><h1>//===== \d 匹配任意一个数字 </h1>";
+	
+	$pattern='/\d/';
+	$str="ab3cdoie5jf;lakf";
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+	
+echo "<hr><h1>//===== \W 匹配任意一个非字符数字和下划线 </h1>";
+	$pattern="/\W/";
+	$str="laskf23_*d";
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+echo "<hr><h1>//===== ^ 在原子表首位就是排除 </h1>";
+	
+	$pattern='/[^abc]/';
+	$str="abc2defg";
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+
+	
+	
+	
+	
+	
+	
+echo "<hr><h1>//===== * 表示前面的原子可以出现0-n次 </h1>";
+	
+	$pattern='/ab*c/';
+	$str='lskfdabbbbbbbbbbbbccccjlsf';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+	
+echo "<hr><h1>//===== {n} 表示前面的原子只能出现n次 </h1>";
+	
+	$pattern='/a{3}/';
+	$str='lskjflaaaksfj;laaaksf';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+echo "<hr><h1>//===== {n,m} 表示前面的原子出现的次数限制在n-m次 </h1>";
+	$pattern='/a{2,5}/';
+	$str='alskjfaaaaaaaalksaajfsaaalkhfdsa';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+
+	
+	
+echo "<hr><h1>//===== | 表示匹配左侧或右侧的原子都可以</h1>";
+	$pattern="/aaa|bbb/";
+	$str="lksfjdaaaslbbbkf";
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+echo "<hr><h1>//===== $ 表示以指定的原子结尾</h1>";
+	$pattern="/php$/";
+	$str='mysqlphp';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+echo "<hr><h1>//===== ^ * %  混合式表达式</h1>";
+	$pattern="/^p\w*p$/";
+	$str='pklsjfdl29384p';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+	
+	
+	
+echo "<hr><h1>//===== ^ 与 $ 不能使用同一个字符</h1>";
+	
+	$pattern="/^p\w*p$/";
+	$str='p';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+echo "<hr><h1>//===== . 代表任意一个字符</h1>";
+	
+	$pattern='/.*/';
+	$str="a3#";
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+	
+	echo "<hr><h1>//=====() 提高优先级 </h1>";
+	$pattern='/mysq(l|p)hp/';
+	$str='mysqlhp';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+echo "<hr><h1>//=====() 将小原子变成大原子 </h1>";
+	
+	$pattern='/(mysql)*/';
+	$str='mysqls';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	$pattern="/(mysql)+/";
+	$str="mysqlmysql";
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+//===== m：将匹配的字符串中的每个断行都当作新的一行
+	
+	$str="I LOVE YOU
+I LOVE YOU";
+	
+	ECHO $str.'<br>';
+	
+	$pattern='/^I LOVE YOU/m';
+	preg_match_all($pattern,$str,$result);
+	echo '<pre>';
+	var_dump($result);
+	
+	
+	
+	
+	
+	
+	
+	
+//=====  s：修正正则表达式中的. ，让其能够匹配换行回车
+	
+	$str=file_get_contents("../text");
+	$pattern="/a.{2}z/s";
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+	
+	
+//===== x: 修正正则中可以忽略空白
+	
+	$str=file_get_contents('../text');
+	$pattern='/a .* z/sx';
+	preg_match_all($pattern,$str,$result);
+	var_dump($result);
+	
+	
+	
+	
+	
+	
+	
+//===== U: 修正正则中的贪婪 ，用(.*?)来替换该功能<
+		$str="<b>aaa</b><b>aaa</b>";
+	$p1="/\<b\>(.*)\<\/b\>/";
+	
+	preg_match_all($p1,$str,$re1);
+	var_dump($re1);
+	
+	
+	
+	$p2='/\<b\>(.*)\<\/b\>/U';
+	preg_match_all($p2,$str,$re2);
+	var_dump($re2);
+	
+	
+	$p3='/\<b\>(.*?)\<\/b\>/';
+	preg_match_all($p3,$str,$re3);
+	var_dump($re3);
+	
+
+
+
+
+
+
+	
+	
+	
+	
+	
+echo "<hr><h1>//===== 正则打出网址</h1>";
+	$string = 'wo.hu.mehttp://www.sina.cnzmp3.baidu.comghttps://www.baidu.com';
+	
+	$pattern='/(http:\/\/|https:\/\/)?(www|mp3|[a-zA-Z]{1,})\.\w+\.(com|cn|[a-zA-Z]2+)/';
+	preg_match_all($pattern,$string,$result);
+	foreach($result as $k=>$v){
+		foreach($v as $vv){
+			if(!empty($vv)){
+				echo $vv.'<br>';
+			}
+		}
+		echo "<hr>";
+	}	
+
+
+
+
+
+
+//===== 将字串中的id,路径，名称提取并做成表格</h1>";
+	
+	$str = "<a href='./xxoo.php?id=21'><img src='../img/1.jpg' alt='Nokia 1100'/></a>
+            <a href='./xxoo.php?id=22'><img src='../img/2.jpg' alt='iphone 18'/></a>
+            <a href='./xxoo.php?id=23'><img src='../img/3.jpg' alt='三星 S6'/></a>";
+			
+			
+	$pattern="/\<a href\=\'\.\/xxoo\.php\?id\=(\d{2})\'\>\<img src\=\'(.*)\' alt\=\'(.*)\'/";
+
+	preg_match_all($pattern,$str,$result);
+
+	
+	
+	$ids=$result[1];
+	$imgs=$result[2];
+	$alts=$result[3];
+	
+	
+	echo "<table border=1>";
+		echo "<tr>";
+			echo "<th>id</th>";
+			echo "<th>名称</th>";
+			echo "<th>图片</th>";
+		echo "</tr>";
+		foreach($imgs as $k=>$v){
+			echo "<tr>";
+				echo "<td>$ids[$k]</td>";
+				echo "<td>$alts[$k]</td>";
+				echo "<td><img src='{$v}' width=50 /></td>";
+			echo "</tr>";
+		}
+	echo "</table>";
+	
+	
+	
+	
+	
+?>

@@ -1,0 +1,79 @@
+﻿<script type='text/javascript' src = "jquery-1.8.3.min.js"></script>
+<script type='text/javascript'>
+/*
+
+//===== 放大镜的jquery实现方式
+		$(function(){
+			$('img').mousemove(function(e){
+//===== e.pageX,Y 获取鼠标在页面中的坐标
+//===== obj.offset().left,top 获取元素与浏览器边框的距离
+//===== obj.scrollTop,Left 获取或设置元素的滚动条位置
+//===== obj.width(),height() 获取元素的高和宽
+				var x =e.pageX-$(this).offset().left;	
+				var y =e.pageY-$(this).offset().top;
+				$("#d").css('display','block');
+				$("#d").scrollTop(y*6-150);
+				$("#d").scrollLeft(x*6-150);
+				$("#d").css('left',$(this).offset().left+$(this).width());
+				$("#d").css('top',$(this).offset().top);
+			}).mouseout(function(){
+				$('#d').css('display','none');
+			});
+		});
+*/
+
+
+
+//===== 放大镜的javascript的实现方式
+	$(function(){
+		var img = document.getElementsByTagName('img')[0];
+		var d = document.getElementById('d');
+		img.onmouseover=function(e){
+			d.style.display='block';
+//===== obj.offsetLeft,Top 获取元素与浏览器的边距
+//===== obj.offsetWidth,Height 获取元素的宽和高
+			d.style.left=this.offsetLeft+this.offsetWidth;
+			d.style.top=this.offsetTop;
+		}
+		img.onmouseout=function(e){
+			d.style.display='none';
+		
+		}
+		img.onmousemove=function(e){
+//===== e.clientX,Y 获取鼠标的坐标
+			var x =e.clientX-this.offsetLeft;
+			var y =e.clientY-this.offsetTop;
+//===== obj.scrollLeft,Top 获取或设置元素的滚动条距离
+				d.scrollLeft=x*6-150;
+				d.scrollTop=y*6-150;
+			}
+	});
+
+
+
+
+</script>
+<img src = '1.jpg' width=300/>
+<div id='d' style="width:300;height:300;position:absolute;overflow:hidden;display:none">
+	<img src = '1.jpg'/>
+</div>
+
+
+
+
+javascript效果：
+
+//===== obj.offsetLeft,Top 获取元素与浏览器的边距
+//===== obj.offsetWidth,Height 获取元素的宽和高
+//===== e.clientX,Y 获取鼠标的坐标
+//===== obj.scrollLeft,Top 获取或设置元素的滚动条距离
+
+
+jquery的效果
+			
+$('img').mousemove(function(e){
+//===== e.pageX,Y 获取鼠标在页面中的坐标
+//===== obj.offset().left,top 获取元素与浏览器边框的距离
+//===== obj.scrollTop,Left 获取或设置元素的滚动条位置
+//===== obj.width(),height() 获取元素的高和宽
+

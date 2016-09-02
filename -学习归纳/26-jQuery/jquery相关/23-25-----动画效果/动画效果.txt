@@ -1,0 +1,671 @@
+
+	第23课	动画效果
+
+$(function(){
+/*
+学习要点：
+	1 显示，隐藏
+	2 浮动，卷动
+	3 淡入，淡出
+	4 自定义动画
+	5 列队动画方法
+	6 动画相关方法
+	7 动画全局属性
+
+
+一：jQuery中显示方法为： show(), 隐藏方法为: hide(),在无参数的时候只是硬性的显示和隐藏内容。
+	1, show(),hide() 可以传两个参数，一个是速度，另一个是回调函数
+
+//-----show()显示方法和 hide() 隐藏方法
+
+	$(':button').eq(0).on('click',function(){
+		$('#box').show();
+	});
+	$(':button').eq(1).on('click',function(){
+		$('#box').hide();
+	});
+	
+
+
+//-----show(),hide() 加速度参数
+	$(':button').eq(0).on('click',function(){
+		$('#box').show(1000);
+	});
+	$(':button').eq(1).on('click',function(){
+		$('#box').hide(1000);
+	});
+
+
+
+//-----当show(),hide()使用在内联元素上时，会先将该元素转成区块元素
+	// 内联元素：如span ,a ,u ,i 等，不占用一行，不会自动换行的元素
+	// 区块元素：如 div  , p  等占用一行，会自动换行的元素。
+	$(':button').eq(1).on('click',function(){
+		$('span').hide(1000);
+	});
+	$(':button').eq(0).on('click',function(){
+		$('span').show(1000);
+	});
+
+
+
+//-----show(),hide()的三种速度预设值 slow,normal,fast
+	//slow-600,norma-400,fast-200
+	$(':button').eq(1).on('click',function(){
+		$('#box').hide('slow');
+		$('span').hide('normal');
+		$('div.one').hide('fast');
+	});
+	$(':button').eq(0).on('click',function(){
+		$('#box').show('fast');
+		$('span').show('normal');
+		$('div.one').show('slow');
+	});
+
+
+//-----当show(),hide()方法速度参数错误或为空时的默认速度为400毫秒
+	$(':button').eq(1).on('click',function(){
+		$('#box').hide('sdfsdf');
+		$('div.one').hide('');
+	});
+
+
+
+//-----使用show(),hide()的回调函数，可以实现列队效果
+	//显示或隐藏后弹出提示框
+	$(':button').eq(1).on('click',function(){
+		$('#box').hide(1000,function(){
+			alert('隐藏完毕');
+		});
+	});
+	$(':button').eq(0).on('click',function(){
+		$('#box').show(1000,function(){
+			alert('显示完毕');
+		});
+	});
+
+//-----同步动画，多个区块同时显示或隐藏
+	$(':button').eq(1).on('click',function(){
+		$('.text').hide('slow');
+	});
+	$(':button').eq(0).on('click',function(){
+		$('.text').show('fast');
+	});
+
+
+//-----列队动画的两种方法
+	//一：普通方法	
+	$(':button').eq(1).click(function(){
+		$('.text').eq(0).hide('slow',function(){
+			$('.text').eq(1).hide('slow',function(){
+				$('.text').eq(2).hide('slow',function(){
+					$('.text').eq(3).hide('slow');
+				});	
+			});
+		});
+	});
+	$(':button').eq(0).click(function(){
+		$('.text').eq(0).show('slow',function(){
+			$('.text').eq(1).show('normal',function(){
+				$('.text').eq(2).show('fast',function(){
+					$('.text').eq(3).show('slow');
+				});	
+			});
+		});
+	});
+
+	//二：递归自调用
+	$(':button').eq(1).click(function(){
+		$('.text').last().hide('fast',function test(){
+			$(this).prev().hide('fast',test);
+		});
+	});
+	$(':button').eq(0).click(function(){
+		$('.text').first().show('fast',function test(){
+			$(this).next().show('fast',test);
+		});
+	});
+	
+
+
+
+//-----toggle() 切换显示与隐藏
+	$('.toggle').click(function(){
+		$('#box').toggle('slow');
+	});
+
+
+
+//-----向下渐显slideDown，向上渐消失slideUp，渐变的切换 slideToggle
+
+	$('.up').click(function(){
+		$('#box').slideUp(3000);
+		$('.one').slideUp('slow');
+	});
+
+	$('.down').click(function(){
+		$('#box').slideDown('slow');
+		$('.one').slideDown(3000);
+	});
+	
+	$('.toggle').click(function(){
+		$('#box').slideToggle('fast');
+	});
+
+
+//-----淡入fadeIn,淡出fadeOut,淡入出的切换fadeToggle
+	$('.out').click(function(){
+		$('#box').fadeOut('slow');
+	});
+	$('.in').click(function(){
+		$('#box').fadeIn('fast');
+	});
+
+	$('.toggle').click(function(){
+		$('#box').fadeToggle('normal');
+	});
+//-----fadeTo使透明度到百分比
+	$('.to').click(function(){
+		$('#box').fadeTo('slow',0.5);
+	});
+
+
+
+//-----无限循环切换元素的显示和隐藏
+	$('.to').click(function(){
+		$('#box').fadeTo('slow',0.5,function t(){
+			$(this).toggle(t)
+		});
+或
+		$(".to").fadeOut(500,function(){
+			$(this).fadeToggle(500,arguments.callee);
+		});
+	});
+
+
+*/
+});
+
+
+html页面
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<script src='jquery-1.11.1.js'></script>
+	<script src='a.js'></script>
+	<style>
+		#box{
+			width:100px;
+			height:100px;
+			background:#ccc;
+		}
+		.one{
+			width:100px;
+			height:100px;
+			background:#ccc;
+		}
+		.text{
+			font-size:1cm;
+			paddin:5px;
+			margin-left:5px;
+			background:yellow;
+			float:left;
+		}	
+	</style>
+</head>
+<body>
+	<div class='text'>你</div>
+	<div class='text'>好</div>
+	<div class='text'>吗</div>
+	<div class='text'>?</div>
+	<input type='button' value='显示'/>
+	<input type='button' value='隐藏'/>
+	<input type='button' value='切换' class='toggle'/>;
+	<input type='button' class='up' value='上'/>
+	<input type='button' class='down' value='下'/>
+	<input type='button' class='out' value='淡出'/>
+	<input type='button' class='in' value='淡入'/>
+	<input type='button' class='to' value='透明度到，，'/>
+	<div id='box'>
+		div
+	</div>
+	<span class='one'>
+		span
+	</span>
+	<div class='one'></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+	第24课 动画效果
+
+$(function(){
+/*	
+	//-----animate() 自定义动画-多重动画同步运动效果
+	//必传的参数有一个，就是对象的CSS模式键值对，还有两个可选参数速度和回调函数。
+	$(':button').click(function(){
+		$('div').animate({
+			width:'200px',
+			height:'200px',
+			opacity:'0.5',
+			fontSize:'50px'
+		});
+	});
+
+//-----自定义动画函数的两个可选参数，速度和回调函数
+	$(':button').click(function(){
+		$('#box').animate({
+			width:'300px',
+			height:'300px',
+			opacity:'0.4',
+			fontSize:'50px'
+		},2000,function(){
+			alert('动画运行完毕');
+		});
+	});
+
+
+
+
+
+//-----用回调函数达到无限动画效果
+
+	$(":button").click(function(){
+		$("#box1").animate({
+			width:"500px",
+			height:"300px",
+			opacity:'0.2',
+			fontSize:'3cm',
+		},500,function a(){
+			$("#box1").animate({
+				width:'100px',
+				height:'100px',
+				opacity:0.8,
+				fontSize:'30px',
+			},500,function(){
+				$("#box1").animate({
+					width:'500px',
+					height:'300px',
+					opacity:0.2,
+					fontSize:'3cm',
+				},500,a);
+			});
+		});
+		
+	});
+
+
+
+
+
+
+
+
+//-----设置元素的position产生移动动画效果
+	$(':button').click(function(){
+		$('#box').animate({
+			top:'300px',
+			left:'300px'
+		},5000,function(){
+			alert('广告漂浮效果');
+		});
+	});
+
+
+
+
+//-----动画效果的累加累减速功能
+	$(':button').click(function(){
+		$('#box').animate({
+			left:'+=200px'
+		},1000,function(){
+			alert('移动了');
+		});
+	});
+
+
+//-----实现列队动画（两种方式）
+	//1.在回调函数中再执行一个动画。
+	//2.通过连缀或顺序来实现列队动画。
+
+
+	//列队动画-回调函数方式
+	
+	$(':button').click(function(){
+		$('div').animate({
+			width:'300px'
+		},2000,function(){
+			$('div').animate({
+				height:'300px'
+			},function(){
+				$('div').animate({
+					opacity:'0.2'
+				},function(){
+					$('div').animate({
+						fontSize:'1cm'
+					});
+				});
+			});
+		});
+	});
+
+	// 列队动画-连缀或顺序方式（需同一个元素）
+	//连缀方式 
+	$(':button').click(function(){
+		$('div').animate({width:'300px'}).animate({height:'300px'}).animate({opacity:0.2}).animate({fontSize:'2cm'});
+	});
+	或
+
+	$(':button').click(function(){
+		$('div').animate({width:'300px'})
+			.animate({height:'300px'})
+			.animate({opacity:0.1})
+			.animate({fontSize:'5cm'});
+	});	
+
+	//顺序方式
+	$(':button').click(function(){
+		$('div').animate({width:'300px'});
+		$('div').animate({height:'300px'});
+		$('div').animate({opacity:0.5});
+		$('div').animate({fontSize:'5cm'});
+	});
+
+	
+//-----顺序方式操作多个元素时不能列队动画，回调函数方式则可以
+	//顺序方式显示的是同步效果
+	$(':button').click(function(){
+		$('#box').animate({width:'300px'});
+		$('#pox').animate({height:'300px'});
+		$('#box').animate({opacity:0.5});
+		$('#pox').animate({fontSize:'5cm'});
+	});
+
+	//回调函数方式显示的是队列效果
+	$(':button').click(function(){
+		$('#box').animate({width:'300px'},function(){
+			$('#pox').animate({height:'300px'},function(){
+			$('#box').animate({opacity:0.2},function(){
+			$('#pox').animate({fontSize:'3cm'});
+		});
+		});
+		});
+	});
+
+//-----css不是动画方法，会默认排列到和第一个动画方法同步
+	$(':button').click(function(){
+		$('#box').slideUp('slow').slideDown('slow').css('background','yellow');
+	});
+
+
+//-----用函数参数的方式可以解决CSS与动画效果的列队问题，
+	$(':button').click(function(){
+		$('#box').slideUp('slow').slideDown('slow',function(){
+			$(this).css('background','yellow');
+		});
+	});
+
+//-----解决queue()后无法执行列队动画的两个方法
+	$(':button').click(function(){
+		$('#box')
+			.slideUp('slow')
+			.slideDown('slow')
+			.queue(function(){
+				$(this).css('background','yellow');
+			}).hide('slow');
+	});
+
+	//注意： 使用queue方法时，其后面的方法就不会调用了，如果想调用则要在queue方法内传入一个next参数，(老版可能不支持)，可用dequeue 解决。如下：
+	//next参数解决方法
+	$(':button').click(function(){
+		$('#box')
+			.slideUp('slow')
+			.slideDown('slow')
+			.queue(function(next){
+				$(this).css('background','yellow');
+				next();
+			}).hide('slow');
+	});
+	
+	//dequeue()解决方法
+	$(':button').click(function(){
+		$('#box')
+			.slideUp('slow')
+			.slideDown('slow')
+			.queue(function(){
+				$(this).css('background','yellow');
+				$(this).dequeue();  //执行这句话，后面的代码才会继续执行，否则不会执行。
+			}).hide('slow');
+	});
+
+//-----queue()也可以使用在顺序方式列队动画中
+	$(':button').click(function(){
+		$('#box').slideUp('slow');
+		$('#box').slideDown('slow');
+		$('#box').queue(function(){
+			$(this).css('background','yellow');
+			$(this).dequeue();
+		});
+		$('#box').hide('slow');
+	});
+
+//-----queue() 也可以得到列队动画的长度个数 (queue()需要传一个参数 -'fx')
+	$(':button').click(function(){
+		$('#box')
+			.slideUp('slow')
+			.slideDown('slow')
+			.queue(function(){
+				$(this).css('background','blue');
+				$(this).dequeue();
+			})
+			.hide('slow',function(){alert(count())});
+	});
+	function count(){
+		return $('#box').queue('fx').length;
+	}
+*/
+//-----clearQueue() 清除队列动画指定项后面的属性
+
+	$(':button').click(function(){
+		$('#box')
+			.slideUp('slow')
+			.slideDown('slow',function(){$(this).clearQueue()})  //后面将不会执行
+			.queue(function(){
+				$(this).css('background','silver');
+				$(this).dequeue();
+			})
+			.hide('slow');
+	});
+});
+
+
+
+
+html页面
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<script src='jquery-1.11.1.js'></script>
+	<script src='a.js'></script>
+	<style>
+		#box{
+			width:100px;
+			height:100px;
+			background:red;
+			position:absolute;
+		}
+		#pox{
+			width:100px;
+			height:100px;
+			background:green;
+			position:absolute;
+			top:150px;
+		}
+		.test{
+			padding:5px;
+			margin-right:5px;
+			background:orange;
+			float:left;
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<input type='button' value='按钮'/>
+	<div id='box'>box</div>
+	<div id='pox'>pox</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+	第25课 动画效果（下）
+
+$(function(){
+
+/*	
+动画相关方法：
+	很多时候需要停止正在运行中的动画，jQuery为此提供了一个stop()方法，它有两个可选参数：stop(clearQueue , gotoEnd) , clearQueue传递一个布尔值，代表是否清空未执行完的动画列队，gotoEnd代表是否直接将正执行的动画跳转到末尾状态。
+
+
+//-----stop() 暂停正在运行中的单独的动画效果
+	$('#start').click(function(){
+		$('#box').animate({left:'800px'},3000);
+	});
+	$('#stop').click(function(){	
+		$('#box').stop();
+	});
+
+
+//-----无参数的stop()不会停止所有的列队动画
+	//无参的stop()不会停止所有的列队动画，只会停止正在运行中的当前的那一项动画效果，而其它的动画效果依然会继续执行。
+	$('#start').click(function(){
+		$('#box')
+			.animate({left:'500px'},1000)
+			.animate({top:'300px'},1000)
+			.animate({width:'300px'},1000)
+			.animate({height:'300px'},1000);
+	});
+	$('#stop').click(function(){
+		$('#box').stop();
+	});
+
+//-----带一个参数true的stop()可以暂停全部列队动画
+	//会停在运行的当前状态，当点击触发时，动画会继续执行。
+	$('#stopAll').click(function(){
+		$('#box').stop(true);
+	});
+//-----带两个参数true的stop()会马上完成当前动画步骤，进行下一动画
+	//注：测试当在第一个动画运行没完成前触发此方法，会直接停止在当前的位置上。
+	$('#end').click(function(){
+		$('#box').stop(true,true);
+	});
+
+
+
+//-----delay() 列队动画时间延迟
+	$('#start').click(function(){
+		$('#box').delay(2000)
+			.animate({left:'500px'})
+			.animate({top:'300px'}).delay(3000)
+			.animate({width:'300px'})
+			.animate({height:'300px'});
+	});
+
+
+//-----无限slide 动画上下消失显示运动
+	$('#start').click(function(){
+	$('#box').slideToggle('slow',function(){
+		$(this).slideToggle('slow',arguments.callee);
+	});
+	});
+//-----:animated查找当前运动的动画，并更换其背景色
+	$('#find').click(function(){
+		$(':animated').stop().css('background','blue');
+	});
+
+
+//-----$.fx.interval 浏览器运行的帧数，默认为13毫秒每帧
+//需设置在页面中所有动画效果的前面，不然无效。
+	$.fx.interval=300;
+	$('#start').click(function(){
+		$('#box').toggle(1000);
+	});
+
+
+//-----$.fx.off 关闭动画效果 
+	//在低端的浏览器，动画可能会出现各种异常而导致错误，所以jquery用此来关闭动画效果。
+
+	$.fx.off=true; //此方法放在任何位置都可以，会关闭本页所有动画效果
+	$('#start').click(function(){
+		$('#box').toggle(1000);
+	});
+*/
+//----- animate动画运动参数 swing(缓动),linear(匀速)
+	$('#start').click(function(){
+		$('#box').animate({left:'800px'},3000,'swing');
+		$('#pox').animate({left:'800px'},3000,'linear');
+	});
+});
+
+
+
+
+html页面
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<script src='jquery-1.11.1.js'></script>
+	<script src='a.js'></script>
+	<style>
+		#box{
+			width:100px;
+			height:100px;
+			background:red;
+			position:absolute;
+		}
+		#pox{
+			width:100px;
+			height:100px;
+			background:green;
+			position:absolute;
+			top:150px;
+		}
+		.test{
+			padding:5px;
+			margin-right:5px;
+			background:orange;
+			float:left;
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<input type='button' value='动画' id='start' />
+	<input type='button' value='停止' id='stop' />
+	<input type='button' value='完全停止' id='stopAll'/>
+	<input type='button' value='终止' id='end'/>
+	<input type='button' value='查找运动的动画' id='find'/>
+	<div id='box'>box</div>
+	<div id='pox'>pox</div>
+</body>
+</html>
+
+

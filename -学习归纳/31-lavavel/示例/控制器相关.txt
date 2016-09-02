@@ -1,0 +1,17 @@
+
+//===== 模板中路径GET带参数跳转到show方法
+
+	模板中 路径带参数
+ 		<a style="color:white;" href='{{url('admin_login')}}/exit'>　退出</a>	
+
+
+
+	路由指定跳转规则
+		Route::resource('/admin_login','admin\LoginController');   
+			意思是：如果 admin_login 跳转 且带参数，那么就会跳转到 show 方法
+
+
+   	 public function show($id)
+    	{
+        	echo 2;
+   	 }

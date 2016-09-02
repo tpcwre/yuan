@@ -1,0 +1,60 @@
+
+
+
+
+
+	//{name:'user1'} == array('name'=>'user1')	mongodb中的json等同于php中的关联数组
+	//[1,2] == array(1,2)				mongodb中的数组等同于php中的索引数组
+
+
+连接mongodb
+
+	$conn= new Mongo("mongodb://user:123@localhost:12345/test");
+	$db = $conn->test;		//选择数据库
+
+查
+	$c1 = $db->c1;			//选择表c1
+	$arr=array();
+	$res = $c1->find($arr);		//查找表c1中的数据 等同于 db.c1.find(),这里其实是有一个空json,所以$c1->find($arr)中要使用一个空数组 
+	foreach($res as $v){
+		print_r($v[_id]);
+	}
+	
+	$oid = new Mongoid($_GET['oid']);	//将接收到的字串id 转化成mongo识别的对象id
+	$arr = array('_id'=>$oid);
+	$res = $c1->find($arr);			//这样根据对象id查找数据才可以
+
+
+	其它查询相关语句
+	$cursor = $tt1->find()->limit(1);		limit() 相关
+
+
+添加
+	//db.c1.insert({name:'user3',age:18,sex:'nan'})
+	$arr=array('name'=>'user3','age'=>'18','sex'=>'nan');
+	$c1->insert($arr);
+
+
+删除	
+	//db.c1.remove({name:'user2'})
+	$arr = array('name'=>'user2');
+	$c1->remove($arr);
+
+修改
+	//db.c1.update({name=>'user1'},{$set:{age:38,sex:'nv']})
+	$arr1 = array('name'='user1');
+	$arr2 = array('$set'=>array('sex'=>'nv','age'=>38));		//注：这里将$set 要使用用单引号包含起来
+	$arr3 = array('upsert'=>0,'multiple'=>1);	//uupsert:1：当数据不存在时自动创建，0：不自动创建	multiple: 1 修改多条，0：只修改首条
+	$c1->update($arr1,$arr2,$arr3);
+
+
+关闭连接
+
+	$conn->close();
+
+
+	//观注 php手册中mongo 的Types mongo与php 数据转化小节
+
+
+
+		

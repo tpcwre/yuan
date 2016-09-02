@@ -1,0 +1,119 @@
+﻿<?php
+header("content-type:text/html;charset=utf-8");
+error_reporting(E_ALL & ~E_NOTICE);
+
+//===== PDO 查询数据
+
+
+try{
+	
+	$pdo= new PDO("mysql:host=localhost;dbname=test1",'root','1234567'); //= 创建PDO 数据库连接
+	
+	$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING); //= 设置PDO异常处理模式
+	
+	$pdo->query("set names utf8");	//= 设置数据库字符编码 
+	
+}catch(PDOException $e){	//= 初始化异常对象
+	
+	die("数据库连接失败".$e->getMessage()); //= 调用异常提示方法
+}
+
+//===== PDO 查询数据
+	$sql="select * from user where id >(select max(id) from user)-5";
+	$stmt=$pdo->query($sql);		//= 发送操作语句 
+	if($pdo->errorCode()>0){		//= 获取错误信息
+		echo $pdo->errorCode();
+		print_r($pdo->errorInfo());
+	}
+	$list = $stmt->fetch(PDO::FETCH_ASSOC); //= 关联方式获取一行数据
+	print_r($list);
+	echo "<br>";
+
+	$list2=$stmt->fetchAll(PDO::FETCH_ASSOC); //= 关联方式获取所有数据
+	foreach($list2 as $v){
+		print_r($v);
+		echo "<br>";
+	}
+	echo '<hr>';
+	
+
+	
+	
+	
+//===== PDO 添加数据
+
+try{
+	$pdoadd=new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	$pdoadd->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+	$pdoadd->query("set names utf8");
+}catch(PDOException $e){
+	die($e->getMessage());
+}
+	$sqladd="insert into user(name,age) values('tiger','18')";
+	$stmt=$pdoadd->exec($sqladd);  //= 执行添加语句
+	if($pdoadd->errorCode()>0){		//= 判断错误号是否存在
+		echo $pdoadd->errorCode();		//= 显示错误号
+		print_r($pdoadd->errorInfo());	//= 显示错误信息
+	}
+	if($stmt>0){						//= 判断受影响行数
+		echo "数据添加成功";
+	}else{
+		echo "数据添加失败";
+	}
+	echo "<hr>";
+	
+	
+	
+	
+	
+	
+	
+//===== PDO 删除数据
+
+try{
+	$pdodel=new PDO('mysql:host=localhost;dbname=test1','root','1234567');
+	$pdodel->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+	$pdodel->query("set names utf8");
+}catch(PDOException $e){
+	die($e->getMessage());
+}
+	$sqldel="delete from user where id=399";
+	$stmt = $pdodel->exec($sqldel);
+	if($pdodel->errorCode()>0){
+		echo $pdodel->errorCode();
+		print_r($pdodel->errorInfo());
+	}
+	if($stmt>0){
+		echo "删除成功";
+	}else{
+		echo "数据不存在";
+	}
+	echo "<hr>";
+
+
+	
+	
+//===== PDO 修改数据
+
+try{
+	$pdou=new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	$pdou->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+	$pdou->query("set names utf8");
+}catch(PDOException $e){
+	die($e->getMessage());
+}
+	$sqlu="update user set name='LION',age=23,sex='nan',classid='jilin'";
+	$stmt=$pdou->exec($sqlu);
+	if($pdou->errorCode()>0){
+		echo $pdou->errorCode();
+		print_r($pdou->errorInfo());
+	}
+	if($stmt>0){
+		echo "修改成功";
+	}else{
+		echo "修改失败";
+	}
+
+
+
+

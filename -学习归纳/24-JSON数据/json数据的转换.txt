@@ -1,0 +1,78 @@
+<?php
+	//字串形式的json数据
+	$a='[{"lotteryId":206,"codes":"07","num":1,"method":"bdw","multiple":1,"model":"yuan","code":1944}]';
+	
+	//打印json字串
+	echo $a;	
+	
+	//json字串转成对象
+	$b = json_decode($a);	
+	echo "<br><pre>";
+	var_dump($b);			
+	echo '<br>'.$b[0]->codes;	//调取对象中的某个数据
+	
+
+	//json字串转成数组(加参数 true)
+	$c = json_decode($a,true);	
+	echo '<br>';
+	var_dump($c);
+	echo '<br>'.$c[0]['codes'];	//调取数组中的某个数据
+	
+	
+	
+	$a = '你好';
+	//json_encode() 编码成json数据
+	$b = json_encode($a);		//没有参数：中文会进行编码处理
+	$b = json_encode($a,JSON_UNESCAPED_UNICODE);	//带参数：会直接显示中文
+	
+	// joson_decode()	将json数据解码
+	$c = json_decode($b);
+	var_dump($b);
+	echo '<br>';
+	var_dump($c)
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 将接收到的PHPJSON数据转化成JS对象
+
+
+	//PHP页面的JSON数据
+	echo $arr = $r->redis->hget('sck_data',$id);
+	
+	{"title":"BBBBBBBBB","vadio":"vbbbbbbbbbbbbb","img2":"http:\/\/qianxing.b0.upaiyun.com\/sck_imgs\/2016042722013320422.jpg","img3":"","img4":"","img5":"","img6":"","img7":"","img8":"","img9":"","img10":"","img11":"","img12":"","img13":"","img14":"","img15":"","img1":"http:\/\/qianxing.b0.upaiyun.com\/public\/ggwz_gw.jpg"}
+
+
+	//html页面接收JSON数据并转化成JS 的JSON对象
+        $.ajax({
+                url:'ydyw_list_js.php',
+                success:function(res){
+                        $('#d1').html(res);
+                        var a1 = JSON.parse(res);	//将数据转化JSON对象
+                        alert(a1.title);		//弹出对象中的title属性
+                        alert(a1.img1);
+                }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+

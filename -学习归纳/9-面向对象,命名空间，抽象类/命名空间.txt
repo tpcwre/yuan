@@ -1,0 +1,73 @@
+
+
+
+//=====命名空间的定义和使用
+
+	namespace aa\bb\cc;
+	function strlen($str){
+		return "自定义字串strlen函数";
+	}
+
+	//echo strlen("aa");  		//默认使用当前定义的函数	
+
+	//通过完整路径调用
+	echo \strlen("aa");  		//使用系统函数strlen
+	echo \aa\bb\cc\strlen("cc"); 	//使用指定空间中函数
+
+
+
+
+
+
+
+//=====多个空间的定义和使用
+
+	namespace aa\bb;
+	const AA="aa\bb下的常量<br/>";
+	function fun(){
+		echo "aa\bb空间下的函数fun()<br/>";
+	}
+	echo "当前空间".__NAMESPACE__."<br/>";
+	namespace aa\cc;
+	const AA="aa\cc下的常量<br/>";
+	function fun(){
+		echo "aa\cc空间下的函数fun()<br/>";
+	}
+					//使用
+	namespace aa;
+					//限定名称调用（相对）
+	bb\fun();
+	echo bb\AA;
+	cc\fun();
+	echo cc\AA;
+	echo "<hr/>";
+					//完全限定名称(绝对)
+	\aa\bb\fun();
+	echo \aa\bb\AA;
+	\aa\cc\fun();
+	echo \aa\cc\AA;
+	//$a = "\\aa\\cc\\fun()";
+	//$a;
+
+
+
+
+
+
+
+
+
+
+
+//=====命名空间类的使用
+
+
+	namespace myname\demo;
+	use aa\Stu as Student; //使用指定空间的类，并起个别名
+	require("./aa/Stu.class.php");
+	/*
+	$s = new \aa\Stu("zhangsan",20);
+	echo $s->getInfo();
+	*/
+	$s = new Student("qq",25);
+	echo $s->getInfo();

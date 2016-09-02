@@ -1,0 +1,605 @@
+
+//===== document.write('aa');		//向网页输出内容
+//===== indexOf,lastIndexOf 获取字符的下标
+//===== slice 截取字串 
+//===== substring 截取字串
+//===== e 科学计数法
+//===== toExponential	以指数记数法表示的数字
+//===== typeof 获取数据类型
+//===== 布尔转型时遇字串会转字串型，遇数值则不变
+//===== toString 强转成字串
+//===== 数值的进制转换 2，3，8，16进制
+//===== parseInt 数据转成整形
+//===== parseFloat 数据转型为浮点数
+//===== length 获取数组长度
+//===== array[?]直接获取数组指定下标元素
+//===== 向数组指定下标处插入元素
+//===== 数组插入元素时可跨下标操作
+//===== 将数组转换成字串
+//===== join 将数组转成字串 
+//===== split 分割字串，返回数组。再用 join 将数组以指定字符连成字串
+//===== 将数组元素反转
+//===== split,reverse,join 组合将字串反转
+//===== sort 将数组元素排序
+//===== push 向数组中添加新元素，返回数组的新长度。
+//===== pop 删除数组中的最后一个元素并返回该值。
+//===== toString 返回一个对象的字符串表示
+//===== 字符的比较
+//===== 字符的比较
+//===== 数值比较 && || 短路
+//===== prompt 可输入内容的弹框
+//===== isNaN 判断数据是否为非数值
+//===== prompt 配合switch 做输入和判断
+//===== 100的累加
+//===== prompt 做累加器
+//===== 运算两次时间戳的时间差
+//===== 获取日期
+//===== 时间戳计算
+//===== 获取用户浏览器及操作系统信息
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== document.write('aa');		//向网页输出内容
+
+
+
+
+
+//===== indexOf,lastIndexOf 获取字符的下标
+
+	var sMyString = "Tsnghua University";
+	document.write(sMyString.indexOf("i")+"<br>");		//从前往后获取首个i的下标			10
+	document.write(sMyString.indexOf("i",3)+"<br>");	//可选参数，从第3个字符开始往后找为i的下标	10
+	document.write(sMyString.lastIndexOf("i")+"<br>");	//从后往前找i					15
+	document.write(sMyString.lastIndexOf("i",11)+"<br>");	//可选参数，从第11个字符开始往前找为i的下标	10
+	document.write(sMyString.lastIndexOf("V")+"<br>");	//大写“V”找不到，返回-1			-1
+
+
+
+
+//===== slice 截取字串 
+
+
+	var sMyString = "Tsinghua University";
+	document.write(sMyString.slice(1,3) + "<br>");		//截取字串中下标从1到3的字符(不包含3)  		//si
+	document.write(sMyString.slice(4) + "<br>");		//截取字串中下标从4开始以后的所有字符  		//ghua University
+	document.write(sMyString.slice(2,-3) + "<br>");		//截取字串中下标从2开始到倒数第3个为止的字符  	//inghua Univers
+
+
+
+
+
+
+
+//===== substring 截取字串
+
+	var sMyString = "Tsinghua University";
+	document.write(sMyString.substring(1,3) + "<br>");	//截取字串中下标从1到3的字符(不含3) 	//si
+	document.write(sMyString.substring(3,-7) + "<br>");	//截取字串中前3个字符，所有负数都为0  	//Tsi
+	document.write(sMyString.substring(6,0) + "<br>");	//截取字串中下标为6以前的所有字符  	//Tsingh
+
+
+
+
+
+
+//===== e 科学计数法
+
+
+	var mynum1 = 23.345;
+	var mynum2 = 45;
+	var mynum3 = -34;
+	var mynum4 = 9e5;		//科学计数法  e5就是后面加5个0
+	alert(mynum1 + " " + mynum2 + " " + mynum3 + " " + mynum4);  	//23.345 45 -34 900000
+
+
+
+
+
+
+
+
+//===== toExponential	以指数记数法表示的数字
+
+	var fNumber = 895.4;
+	alert(fNumber.toExponential(1));	//9.0e+2	//5进位到9，9+进位=10再进位 结果为9.0
+	alert(fNumber.toExponential(3));	//8.95e+2	//这里保留两位小数
+
+
+
+
+
+
+//===== typeof 获取数据类型
+//===== 布尔转型时遇字串会转字串型，遇数值则不变
+
+	var married = true;
+	alert("1." + typeof(married));		//1.boolean
+	married = "true";
+	alert("2." + typeof(married));		//2.string
+
+
+
+
+
+
+//===== toString 强转成字串
+
+	var a = 3;
+	var b = a + "";
+	var c = a.toString();	//转型为字串
+	var d = "student" + a;
+	alert(typeof(a) + " " + typeof(b) + " " + typeof(c) + " " + typeof(d));  // number string string string
+
+
+
+
+
+//===== 数值的进制转换 2，3，8，16进制
+
+	var a=11;			//数值换算
+	document.write(a.toString(2) + "<br>");		//1011	转成二进制以字串方式显示
+	document.write(a.toString(3) + "<br>");		//102	转成三进制以字串方式显示
+	document.write(a.toString(8) + "<br>");		//13	转成八进制以字串方式显示
+	document.write(a.toString(16) + "<br>");	//b	转成十六进制以字串方式显示
+
+
+
+
+
+
+//===== parseInt 数据转成整形
+
+	document.write(parseInt("4567red") + "<br>");	//4567
+	document.write(parseInt("53.5") + "<br>");	//53
+	document.write(parseInt("0xC") + "<br>");	//12  直接进制转换成十六进制 
+	document.write(parseInt("isaacshun@gmail.com") + "<br>");	//NaN  
+
+	document.write(parseInt("AF",16) + "<br>");	//175 	自动识别字母为十六进制并转为整形的十进制
+	document.write(parseInt("11",2) + "<br>");	//3 	自动识别字符为二进制并转为整形的3
+	document.write(parseInt("011") + "<br>");	//11  	默认转为十进制整形
+	document.write(parseInt("011",8) + "<br>");	//9	转成八进制
+	document.write(parseInt("011",10) + "<br>");	//11	指定为十进制
+
+
+
+
+
+
+//===== parseFloat 数据转型为浮点数
+
+	document.write(parseFloat("34535orange") + "<br>");	//34535
+	document.write(parseFloat("0xA") + "<br>");		//0  转浮点数不再有默认进制，直接输出第一个字符“0”
+	document.write(parseFloat("435.34") + "<br>");		//435.34	
+	document.write(parseFloat("435.34.564") + "<br>");	//435.34
+	document.write(parseFloat("isaacshun@gmail.com") + "<br>"); 	//NaN
+
+
+
+
+
+
+
+
+
+
+
+
+//===== length 获取数组长度
+//===== array[?]直接获取数组指定下标元素
+
+	var aMap = new Array("China","USA","Britain");
+	alert(aMap.length + " " + aMap[1]);		//3 USA
+
+
+
+
+
+
+
+
+
+//===== 向数组指定下标处插入元素
+//===== 数组插入元素时可跨下标操作
+
+	var aMap = new Array("China","USA","Britain");
+	aMap[20] = "Korea";
+	alert(aMap.length + " " + aMap[10] + " " + aMap[20]);	//21 undefined Korea
+
+
+
+
+
+
+//===== 将数组转换成字串
+
+	var aMap = ["China","USA","Britain"];
+	alert(aMap.toString() + " " + typeof(aMap.toString()));    //China,USA,Britain string
+
+
+
+
+
+
+
+
+
+//===== join 将数组转成字串 
+	返回一个由数组中的所有元素连接在一起的 String 对象
+
+	var aMap = ["China","USA","Britain"];
+	document.write(aMap.join() + "<br>");			//China,USA,Britain	无参数，等同于toString()
+	document.write(aMap.join("") + "<br>");			//ChinaUSABritain	不用连接符
+	document.write(aMap.join("][") + "<br>");		//China][USA][Britain	用“][”来连接
+	document.write(aMap.join("-isaac-") + "<br>");	//China-isaac-USA-isaac-Britain
+
+
+
+
+
+
+
+
+
+
+//===== split 分割字串，返回数组。再用 join 将数组以指定字符连成字串
+
+
+	var sFruit = "apple,pear,peach,orange";
+	var aFruit = sFruit.split("p");
+	alert(aFruit.join("--"));		//a----le,--ear,--each,orange
+
+
+
+
+
+
+
+
+
+
+//===== 将数组元素反转
+
+	var aFruit = ["apple","pear","peach","orange"];
+	alert(aFruit.reverse().toString());		//orange,peach,pear,apple
+
+
+
+
+
+
+
+
+
+
+
+//===== split,reverse,join 组合将字串反转
+
+	var sMyString = "abcdefg";
+	alert(sMyString.split("").reverse().join(""));		// gfedcba
+	/*	split("")将每一个字符转为一个数组元素
+	reverse()反序数组的每个元素
+	join("")再最后将数组无连接符的转为字符串
+	*/
+
+
+
+
+
+
+
+
+
+
+
+//===== sort 将数组元素排序
+
+	var aFruit = ["pear","apple","peach","orange"];
+	aFruit.sort();
+	alert(aFruit.toString());	// apple,orange,peach,pear
+
+
+
+
+
+
+
+
+
+//===== push 向数组中添加新元素，返回数组的新长度。
+//===== pop 删除数组中的最后一个元素并返回该值。
+//===== toString 返回一个对象的字符串表示
+
+	var stack = new Array();
+	stack.push("red");
+	stack.push("green");
+	stack.push("blue");
+	document.write(stack.toString() + "<br>");	//red,green,blue
+	var vItem = stack.pop();
+	document.write(vItem + "<br>");			//blue
+	document.write(stack.toString());		//red,green
+
+
+
+
+
+
+
+//===== 字符的比较
+
+	document.write("Pear" == "Pear");	//true
+	document.write("<br>");
+	document.write("appleaaaa" < "Orange"); //true 以第一个字母的顺序作比较
+	document.write("apple" < "Orange");	//false
+
+
+
+
+
+
+
+
+//===== 数值比较 && || 短路
+
+	document.write(3>2 && 4>3);	//true
+	document.write(3>2 && 4<3);	//false
+	document.write(4<3 || 3>2);	//true
+	document.write(!(3>2));		//false
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== prompt 可输入内容的弹框
+//===== isNaN 判断数据是否为非数值
+
+	//首先获取用户的一个输入，并用Number()强制转换为数字
+	var iNumber = Number(prompt("输入一个5到100之间的数字", ""));
+	if(isNaN(iNumber))		//判断输入的是否是数字
+		document.write("请确认你的输入正确");
+	else if(iNumber > 100 || iNumber < 5)		//判断输入的数字范围
+		document.write("你输入的数字范围不在5和100之间");
+	else
+		document.write("你输入的数字是:" + iNumber);
+
+
+
+
+
+
+
+
+
+
+//===== prompt 配合switch 做输入和判断
+
+	<script language="javascript">
+	iWeek = parseInt(prompt("输入1到7之间的整数",""));
+	switch(iWeek){
+		case 1:
+			document.write("Monday");
+			break;
+		case 2:
+			document.write("Tuesday");
+			break;
+		case 3:
+			document.write("Wednesday");
+			break;
+		case 4:
+			document.write("Thursday");
+			break;
+		case 5:
+			document.write("Friday");
+			break;
+		case 6:
+			document.write("Saturday");
+			break;
+		case 7:
+			document.write("Sunday");
+			break;
+		default:
+			document.write("Error");
+	}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 100的累加
+
+	var i=iSum=0;
+	while(i<=100){
+		iSum += i;
+		i++;
+	}
+	alert(iSum);
+
+
+
+
+
+
+
+
+
+//===== prompt 做累加器
+
+	var aNumbers = new Array();
+	var sMessage = "你输入了:\n";
+	var iTotal = 0;
+	var vUserInput;
+	var iArrayIndex = 0;
+	do{
+		vUserInput = prompt("输入一个数字，或者'0'退出","0");
+		aNumbers[iArrayIndex] = vUserInput;
+		iArrayIndex++;
+		iTotal += Number(vUserInput);
+		sMessage += vUserInput + "\n";
+	}while(vUserInput != 0)		//当输入为0（默认值）时退出循环体
+	sMessage += "总数:" + iTotal;
+	alert(sMessage);
+
+
+
+
+
+
+
+
+
+
+
+//===== 运算两次时间戳的时间差
+
+	var myDate1 = new Date();	//运行代码前的时间
+	for(var i=0;i<3000000;i++);
+	var myDate2 = new Date();	//运行代码后的时间
+	alert(myDate2-myDate1);		//运算两次时间的差（毫秒）
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 获取日期
+
+
+	var oMyDate = new Date();
+	var iYear = oMyDate.getFullYear();
+	var iMonth = oMyDate.getMonth() + 1;	//月份是从0开始的
+	var iDate = oMyDate.getDate();
+	var iDay = oMyDate.getDay();
+	var h = oMyDate.getHours();
+	var i = oMyDate.getMinutes();
+	var s = oMyDate.getSeconds();
+	switch(iDay){
+		case 0:
+			iDay = "星期日";
+			break;
+		case 1:
+			iDay = "星期一";
+			break;
+		case 2:
+			iDay = "星期二";
+			break;
+		case 3:
+			iDay = "星期三";
+			break;
+		case 4:
+			iDay = "星期四";
+			break;
+		case 5:
+			iDay = "星期五";
+			break;
+		case 6:
+			iDay = "星期六";
+			break;
+		default:
+			iDay = "error";
+	}
+	h=h<10?'0'+h:h;i=i<10?'0'+i:i;s=s<10?'0'+s:s;   //让时间全部保证双位制
+	document.write("今天是" + iYear + "年" + iMonth +"月" + iDate + "日," + iDay+' '+h+':'+i+':'+s);
+
+
+
+
+
+
+//===== 时间戳计算
+
+	function disDate(oDate, iDate){
+		var ms = oDate.getTime();		//获取指定时间的时间戳（就是换成毫秒数）
+		ms -= iDate*24*60*60*1000;		//计算相差的毫秒数
+		return new Date(ms);			//返回新的时间对象
+	}
+	var oBeijing = new Date(2008,7,8);
+	var iNum = 100;						//前100天
+	var oMyDate = disDate(oBeijing, iNum);
+	document.write(oMyDate.getFullYear()+"年"+(oMyDate.getMonth()+1)+"月"+oMyDate.getDate()+"日" + "距离"+oBeijing.getFullYear()+"年"+(oBeijing.getMonth()+1)+"月"+oBeijing.getDate()+"日为"+iNum+"天");
+
+
+
+
+
+
+
+//===== 获取用户浏览器及操作系统信息
+
+
+	var sUserAgent = navigator.userAgent;  		//获取用户表头
+	//检测Opera、KHTML
+	var isOpera = sUserAgent.indexOf("Opera") > -1;		//-1没查到指定的值
+	var isKHTML = sUserAgent.indexOf("KHTML") > -1 || sUserAgent.indexOf("Konqueror") > -1 || sUserAgent.indexOf("AppleWebKit") > -1;
+	//检测IE、Mozilla  判断KHTML,Konqueror,AppleWebKit 是否存在于用户表头信息中
+	var isIE = sUserAgent.indexOf("compatible") > -1 && sUserAgent.indexOf("MSIE") > -1 && !isOpera;
+	//判断compatible,MSIE是否存在于表头信息中并且!isOpera浏览器
+	var isMoz = sUserAgent.indexOf("Gecko") > -1 && !isKHTML;
+	//判断Gecko是否存在于表头信息并且!isKHTML浏览器
+	//检测操作系统
+	var isWin = (navigator.platform == "Win32") || (navigator.platform == "Windows"); //判断系统平台是否为window系列
+	var isMac = (navigator.platform == "Mac68K") || (navigator.platform == "MacPPC") || (navigator.platform == "Macintosh");
+	//判断系统平台是否为Mac系列
+	var isUnix = (navigator.platform == "X11") && !isWin && !isMac;
+	//判断系统平台是否为unix并且不是win和mac系统
+	if(isOpera) document.write("Opera ");
+	if(isKHTML) document.write("KHTML ");
+	if(isIE) document.write("IE ");
+	if(isMoz) document.write("Mozilla ");
+	if(isWin) document.write("Windows");
+	if(isMac) document.write("Mac");
+	if(isUnix) document.write("Unix");
+
+
+
+
+
+
+
+
+
+

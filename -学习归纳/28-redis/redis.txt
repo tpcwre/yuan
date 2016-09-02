@@ -1,0 +1,266 @@
+﻿
+
+//-- REDIS 下载
+
+	http://redis.io/download
+	
+	
+	
+//===== 特殊效果
+
+	//-- 设置库的数量 
+		redis.conf 文件中找到  databases 16 		//这里表示redis的库有 从0到16个
+			
+			
+			
+	//-- 给redis库设置密码
+		redis.conf 文件中找到 requirepass foobared 
+		设置成	requirepass 123 					//给redis库设置密码：123
+		
+		auth 123									//用密码登陆redis
+		
+		
+	
+			
+	//-- redis.conf 中 找到 port 	设置u端口
+	
+		
+	
+	
+	
+//====redis 使用
+
+	//--安装
+		复制到指定目录-》运行cmd-》找到该 目录-》
+		
+		redis-server.exe redis.conf    //启动redis
+
+		再另开一个cmd 运行客户端	
+		redis-cli.exe					//连接redis
+		
+		redis-cli.exe shutdown			//关闭redis
+		
+		
+	//--字符串数据类型操作
+	
+		> set name zhangsan			//创建一个字符串 
+		> get name					//获取一个字符串
+		
+		> mset a1 111 b2 b222		//批量创建字符串
+		> mget a1 b2				//批量获取字符串
+		
+		> setnx name zhangsan 		//如果不存在则创建字串
+		> msetnx a1 a11 b2 b22		//批量创建不存在的字串
+		
+		> setex age 10 20 			//创建带时效的字符串   10 秒过期
+		
+		
+		
+		
+	//-- 哈希数据类型操作
+		
+		hset s1 name zhangsan		//创建哈希数据
+		hset s1 age 20
+		
+		hget s1						//获取哈希数据
+		
+		
+		hmset s1 name lisi age 22 classid lamp113		//批量设置哈希键值
+		
+		hgetall s1					//批量获取哈希中的键值
+		
+		
+		
+		
+		
+	//-- list 双向链表类型操作
+	
+		rpush list1 aaa			//在链表左侧压入数据
+		rpush list1 bbb
+		rpush rist1 ccc			//在链表右侧压入数据
+		rpush rist1 ddd
+		
+		lrange list1 0 -1 		//获取链表中下标为0到最后一个范围的数据
+		
+		linsert list2 before 'hello' 'three'
+								//在指定的key 前或后添加数据
+								
+		lset list2 1 'for'		//修改指定位置上的值
+		
+		lrem list2 2 'hello'		//删除前两个hello值
+		lrem list2 -2 'hello'		//删除后两个hello值
+		lrem list2 0 'hello'		//删除所有hello值
+		lrem('stulist',$id,1);		//从右侧删除从指定id开始的一条数据
+	
+		ltrim mylist8 1 -1 			//删除此范围外的值
+		
+		lpop list2 				//从左侧删除元素，并反回该元素
+		rpop list2 				//从右侧删除元素，并返回该 元素
+		
+		lindex list 2 1 		//获取list2中 指定索引位置上的元素
+		llen list2				//获取list2 上的长度
+		
+
+		使用链表可以实现列队效果，从右压，从左出
+		
+		
+		
+		
+	//--- sets 集合类型操作
+		
+		sadd myset 'hello' 			//向myset 中添加一个元素 返回1或0
+		
+		smembers myset 				//获取myset中所有元素
+		
+		srem myset 'one'			//删除myset中的one 元素  返回1或0
+		
+		spop myset 					//随机删除并返回myset中的一个元素
+		
+		sdiff myset1 myset2 		//返回两个集合的差集
+							//获取myset2中与myset1不同的元素
+							
+		sinter s1 s2				//返回两个集合交集
+							//返回两个集合中相同的元素
+		
+			
+		
+		
+
+		
+		
+	//-- redis 常用命令
+	
+
+		
+		incr m 		// 运行一次自增1 效果同++ 默认起始为0
+		
+		incrby m 4	// 每次加4
+		
+		decr 		// 运行一次自减1 效果同-- 默认起始为0
+		
+		
+		key * 				//查看库中所有的键
+		key s* 	
+		key *s
+	
+		exists list1 			//判断键名是否存在,返回1 或0
+		
+		del list1			//删除一个元素
+
+		flushall			//删除所有元素
+		
+		expire list1 10 		//设置元素的过期时间
+		
+		persist list1			//移除list1的过期时间
+		
+		ttl list1 				//查看元素的过期时间
+		
+		move age 1				//将元素age 移动到 1 库中  (redis的库默认0到15)
+
+		select 1 				//选择库 1
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== redis 主从复制
+
+	1，复制一个redis  打开redis.conf  
+	2, 设置 slaveof 192.168.113.250 6379	//主库的ip与端口
+			masterauth 123				/	/主库的密码
+	
+	
+	
+	
+//===== 订阅 （数据推送）
+
+
+
+
+
+
+
+
+
+//===== PHP 中的 redis 操作
+
+	http://www.cnblogs.com/stephen-liu74/archive/2012/02/14/2351859.html
+
+	$redis = new Redis();			//实例化redis对象
+
+	$redis->connect('localhost');		//连接服务器
+
+	$redis->auth('123');			//授权(密码)
+
+	//查
+	
+	$ids=$redis->lrange('stulist',0,-1);		//先获取链表中的id
+	
+	foreach($ids as $v){				//遍历所有id
+		$stu = $reids->hgetall('stu:'.$v);	//获取哈希表中每条ID对应的数据
+		echo $v;
+		echo $stu['name'];
+	}
+
+	//增
+h
+	$arr['name']=$_POST['name'];
+	
+	$redis->incr('sid');			//设置一个自增的id索引(字串型)
+
+	$id=$redis->get('sid');			//然后再获取这个id来作为添加数据的id
+
+	$m = $redis->hmset('stu:'.$id,$arr);	//以哈希类型添加数据
+
+	if($m){
+		$redis->rpush('stulist',$id);	//数据添加成功后再把id保存到链表中
+	}
+	
+
+	//改
+
+	$data['name']=$_POST['name'];
+	$id=$_POST['id'];
+	$m=$redis->hmset('stu:'.$id,$data);	//修改整条数据
+	if($m){
+		echo '成功';
+	}
+	$redis->hset('h1','name','ccc');	//修改指定字段	php操作
+	hset h1 name bbb			//修改指定字段 redis操作
+
+	select 3				//更换使用的数据库
+	$redis->select(3);			//更换数据库（php操作）
+	
+	
+	//删
+	
+	$id=$_POST['id'];
+	$redis->del("stu:".$id);		//删除指定键名的数据
+	$redis->lrem('stulist','h5',1);		//从链表右侧删除从指定id开始的一条数据
+				//参数三：
+					大于1时从左向右删除 n个匹配到的
+					小于1时从右向左删除 n个匹配到的
+					等于0时删除所有匹配到的
+
+	//判断电影票是否售出
+	$id=$_GET['id'];
+	if($redis->getbit("play:2015001022:06",$id)){		
+		echo '此位以售出';
+	}else{
+		$redis->setbit("play:2015-01-22:06",$id,1);	//1售出
+	}
+
+
+

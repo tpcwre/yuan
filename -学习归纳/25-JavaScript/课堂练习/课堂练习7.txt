@@ -1,0 +1,535 @@
+
+//===== 获取当前文档所有元素节点
+//===== obj.className 获取对象的类名
+//===== 遍历设置他们的属性颜色
+//===== nodeName 获取对象的标签名及遍历输出所有标签
+//===== document.open() 打开一个wirte收集流 
+//===== document.forms 获取当前网页中所有的form表单
+//===== document.images 获取当前网页中所有图片
+//===== 获取当前cookie信息
+//===== 获取当前域名
+//===== 获取当前URL
+//===== obj.close() 关闭write收集流	
+//===== document.getElementById() 通过ID获取节点对象
+//===== obj.nodeName 获取节点名
+//===== obj.href 获取连接地址
+//===== obj.innerHTML 获取节点中文本内容
+//===== obj.title 获取title属性
+//===== obj.href= 修改链接地址
+//===== obj.innerHTML= 修改标签中的内容
+//===== obj.title= 修改title属性
+//===== obj.getContext() 获取canvas 图像对象
+//===== obj.fillStyle=	设置图像的颜色
+//===== obj.fillRect(0,0,0,0)	设置图像的位置与大小
+//===== event 获取事件对象	
+//===== e.cancelBubble=	禁止或开启冒泡（ie类）
+//===== e.stopPropagation() 禁止冒泡 (非ie类)
+//===== iframe配合onsubmit事件做异步提交(局部刷新) 
+//===== obj.forms.name.value 获取表单值的(七种)方式
+//===== document.forms[1].submit() 提交表单
+//===== document.myform.rest() 重置表单
+//===== obj.getAttribute() 获取对象节点的非竹编属性值
+//===== 获取ul节点中的input子节点
+//===== obj.checked 获取复选框的checked 是否自动选择属性
+//===== obj.cheded= 设置复选框是否自动选择
+//===== 可互移的选项表对
+//===== obj.options 获取下拉列表中的所有option项
+//===== selectob.selected 设置下拉列表的自动选择属性
+//===== selectob.add() 添加或移动下拉列表的option项
+//===== selectob.remove 删除下拉列表的option项
+//===== 给表格增删内容	
+//===== tableob.inserRow() 为表添加一行
+//===== rowob.insertCell() 为表中行添加一列并赋值
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <ul id="uid">
+            <li>aaaaaaa</li>
+			<li class="cc">bbbbbb</li>
+        </ul>
+        <ol>
+            <li class="cc">cccccc</li>
+            <li>dddddddd</li>
+        </ol>
+		
+        <script type="text/javascript">
+			function getAll(classname){
+//===== 获取当前文档所有元素节点
+				var list = document.all;
+				var res = new Array();
+				for(var i=0;i<list.length;i++){
+//===== obj.className 获取对象的类名
+					if(list[i].className==classname){
+						res[res.length]=list[i];
+					}
+				}
+				return res;
+			}
+			
+//===== 遍历设置他们的属性颜色
+			var data = getAll("cc");
+			for(var i=0;i<data.length;i++){
+				data[i].style.color="red";
+			}
+			
+//===== nodeName 获取对象的标签名及遍历输出所有标签
+			var list = document.all;
+			alert(list.length);
+			for(var i=0;i<list.length;i++){
+				document.write(list[i].nodeName+" ");
+			}
+        </script>
+    </body>
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 可互移的选项表对
+
+    <head>
+        <meta charset="utf-8"/>
+        <title>JavaScript实例</title>
+        <style>
+            select,option,div,button{margin:0px;padding:0px;}
+            #lid,#rid,div{
+                width:80px;
+                height:260px;
+                float:left;
+            }
+            div{
+                text-align:center;
+                padding-top:60px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2>JavaScript实例:HTML DOM 中的select实例</h2>
+        <select id="lid" multiple>
+            <option value="1">古天乐</option>
+            <option value="2">周杰伦</option>
+            <option value="3">刘欢</option>
+            <option value="4">韩红</option>
+            <option value="5">林志玲</option>
+            <option value="6">成龙</option>
+            <option value="7">梁家辉</option>
+            <option value="8">刘德华</option>
+        </select>
+        <div>
+        <button onclick="doMove('lid','rid')">&nbsp;&nbsp;>>&nbsp;&nbsp;</button><br/><br/><br/><br/><br/><br/>
+        <button onclick="doMove('rid','lid')">&nbsp;&nbsp;<<&nbsp;&nbsp;</button>
+        </div>
+        <select id="rid" multiple>
+        </select>
+        <script type="text/javascript">
+           //移动下拉项函数
+           function doMove(id1,id2){
+               //获取两个下拉框对象
+			   var select1 = document.getElementById(id1);
+			   var select2 = document.getElementById(id2);
+//===== obj.options 获取下拉列表中的所有option项
+				// 获取select1中的所有option
+			   var list = select1.options;
+			   //遍历
+			   for(var i=0;i<list.length;i++){
+				   //判断是否选中
+				   if(list[i].selected){
+//===== selectob.selected 设置下拉列表的自动选择属性
+						list[i].selected=false; //取消选中
+//===== selectob.add() 添加或移动下拉列表的option项
+						//select2.add(list[i]); //移动过去
+						var ob = list[i];
+//===== selectob.remove 删除下拉列表的option项
+						select1.remove(list[i].index); //删除
+						select2.add(ob);
+						i--;
+				   }
+			   }
+           }
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<form action="#" method="get"></form>
+        <img src="./images/a.jpg"/>
+        <img src="./images/a.jpg"/>
+        <img src="./images/a.jpg"/>
+	<form action="#" method="get"></form>
+	<form action="#" method="get"></form>
+	<button onclick="fun()">点击</button>
+        <script type="text/javascript">
+		  function fun(){
+//===== document.open() 打开一个wirte收集流 
+			var newDoc=document.open("text/html","replace");
+//===== document.forms 获取当前网页中所有的form表单
+			newDoc.write("当前网页的表单数量："+document.forms.length+"<br/>");
+//===== document.images 获取当前网页中所有图片
+			newDoc.write("网页中的img数量:"+document.images.length+"<br/>");
+//===== 获取当前cookie信息
+			newDoc.write("当前网页的cookie信息："+document.cookie+"<br/>");
+//===== 获取当前域名
+			newDoc.write("当前网页的域名信息："+document.domain+"<br/>");
+//===== 获取当前URL
+			newDoc.write("当前网页的URL信息："+document.URL+"<br/>");
+//===== obj.close() 关闭write收集流	
+			newDoc.close();
+		}		
+        </script>
+
+
+
+
+
+
+
+		
+		
+		
+		<a href="http://www.baidu.com" title="百度网站" id="aid">百度</a>
+		<button onclick="fun()">获取并替换</button>
+		<a href="1.html">1.html</a>
+        <script type="text/javascript">
+			function fun(){
+//===== document.getElementById() 通过ID获取节点对象
+				var a = document.getElementById("aid");
+//===== obj.nodeName 获取节点名
+				alert("节点名称："+a.nodeName);
+//===== obj.href 获取连接地址
+				alert("链接地址："+a.href);
+//===== obj.innerHTML 获取节点中文本内容
+				alert("链接名字："+a.innerHTML);
+//===== obj.title 获取title属性
+				alert("链接title："+a.title);
+				
+				//修改链接
+//===== obj.href= 修改链接地址
+				a.href="http://www.lampbrother.net";
+//===== obj.innerHTML= 修改标签中的内容
+				a.innerHTML="兄弟连";
+//===== obj.title= 修改title属性
+				a.title="LAMP兄弟连！";
+				
+			}
+        </script>
+
+
+
+		
+		
+		
+		
+		
+       <h2 class="cc">JavaScript实例:HTML DOM--Canvas对象</h2>
+		<canvas id="myCanvas"></canvas>
+        <script type="text/javascript">
+			var canvas=document.getElementById('myCanvas');
+//===== obj.getContext() 获取canvas 图像对象
+			var ctx=canvas.getContext('2d');
+//===== obj.fillStyle=	设置图像的颜色
+			ctx.fillStyle='#FF0000';
+//===== obj.fillRect(0,0,0,0)	设置图像的位置与大小
+			ctx.fillRect(0,0,80,100);
+        </script>
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		<div id="did" style="width:300px;height:300px;background-color:#ddd;">
+		<div id="aid" style="width:100px;height:100px;background-color:red;"></div>
+		</div>
+        <script type="text/javascript">
+			var did = document.getElementById("did");
+			var aid = document.getElementById("aid");
+			//绑定事件
+			did.onclick=function(){
+				alert("大div被点击");
+			}
+//===== event 获取事件对象	
+			aid.onclick=function(ent){
+				alert("小div被点击");
+				//兼容IE和火狐浏览器兼容
+				var event=ent || window.event;
+				if(document.all){
+					//IE浏览器
+//===== e.cancelBubble=	禁止或开启冒泡（ie类）
+					event.cancelBubble=true;
+				}else{
+					alert('NOIE');
+					//非IE浏览器
+//===== e.stopPropagation() 禁止冒泡 (非ie类)
+					event.stopPropagation();
+				}
+			}
+        </script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<form></form>
+//===== iframe配合onsubmit事件做异步提交(局部刷新) 
+		<iframe src="1.html" name="myframe" style="display:none"></iframe>
+		<form name="myform" target="myframe" action="5.html" method="post">
+			姓名：<input type="text" name="username"/><br/><br/>
+		</form>
+		<button onclick="dosubmit()">提交</button>
+		<button onclick="doreset()">重置</button>
+		<button onclick="doget()">获取表单输入框中的值</button>
+		<script type="text/javascript">
+			function doget(){
+				//获取页面中第二form表单中，一个username输入框的值（7种方式）
+//===== obj.forms.name.value 获取表单值的(七种)方式
+				//alert(document.forms[1].username.value);
+				alert(document.myform.username.value);
+				//alert(document.forms.myform.username.value);
+				//alert(document.forms['myform'].username.value);
+				//alert(document['myform'].username.value);
+				//alert(document.forms.item(1).username.value);
+				//alert(document.forms.item('myform').username.value); //非IE不兼容
+			}
+		
+			function dosubmit(){
+//===== document.forms[1].submit() 提交表单
+				document.forms[1].submit();
+			}
+			function doreset(){
+//===== document.myform.rest() 重置表单
+				document.myform.reset();
+			}
+		</script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	    <img src="./images/b.gif" asrc="./images/a.jpg" /><br/><br/>
+        <img src="./images/b.gif" asrc="./images/c.jpg" /><br/><br/>
+        <img src="./images/b.gif" asrc="./images/a.jpg" /><br/><br/>
+        <img src="./images/b.gif" asrc="./images/c.jpg" /><br/><br/>
+        <script type="text/javascript">
+            //定时延迟加载
+            setTimeout(function(){
+				var list = document.getElementsByTagName("img");
+				for(var i=0;i<list.length;i++){
+//===== obj.getAttribute() 获取对象节点的非竹编属性值
+					list[i].src=list[i].getAttribute("asrc");
+					//将自身的asrc属性值赋给src属性
+				}
+            },3000);
+        </script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+        <ul id="uid">
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+        </ul>
+        <input id="cid" type="checkbox" name="aa"/>
+        <script type="text/javascript">
+//===== 获取ul节点中的input子节点
+		   var ul = document.getElementById("uid");
+		   var list = ul.getElementsByTagName("input");
+		   //获取cid的input,并添加点击事件
+		   document.getElementById("cid").onclick=function(){
+//===== obj.checked 获取复选框的checked 是否自动选择属性
+			   var b = this.checked;
+			   //遍历所有上面的input
+			   for(var i=0;i<list.length;i++){
+				   list[i].checked=b; //设置checked属性实现全选和全不选
+//===== obj.cheded= 设置复选框是否自动选择
+			   }
+		   }
+        </script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== 给表格增删内容	
+		
+    <head>
+        <meta charset="utf-8"/>
+        <title>JavaScript实例</title>
+        <style>
+            select,option,div,button{margin:0px;padding:0px;}
+            #lid,#rid,div{
+                width:80px;
+                height:260px;
+                float:left;
+            }
+            div{
+                text-align:center;
+                padding-top:60px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2>JavaScript实例:HTML DOM 中table</h2>
+        <table id="tid" width="500" border="1">
+            <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1001</td>
+                    <td>张三</td>
+                    <td>男</td>
+                    <td>20</td>
+                    <td><button onclick="dodel(this)">删除</button></td>
+                </tr>
+                <tr>
+                    <td>1002</td>
+                    <td>李四</td>
+                    <td>女</td>
+                    <td>21</td>
+                    <td><button onclick="dodel(this)">删除</button></td>
+                </tr>
+                <tr>
+                    <td>1003</td>
+                    <td>王五</td>
+                    <td>男</td>
+                    <td>22</td>
+                    <td><button onclick="dodel(this)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <br/><br/><br/>
+        <h2>添加学生信息</h2>
+        <form action="#" name="myform" onsubmit="return doAdd()">
+            学号：<input type="text" name="sno"/><br/><br/>
+            姓名：<input type="text" name="name"/><br/><br/>
+            性别：<input type="text" name="sex"/><br/><br/>
+            年龄：<input type="text" name="age"/><br/><br/>
+            <input type="submit" value="添加"/>
+        </form>
+        <script type="text/javascript">
+            //执行删除的方法
+            function dodel(bt){
+               var table = document.getElementById("tid");
+			   table.deleteRow(bt.parentNode.parentNode.rowIndex);
+            }
+            
+            //执行添加
+            function doAdd(){
+                //获取表格节点
+                var table = document.getElementById("tid");
+                //获取要添加的数据
+                var sno = document.myform.sno.value;
+                var name = document.myform.name.value;
+                var sex = document.myform.sex.value;
+                var age = document.myform.age.value;
+                
+//===== tableob.inserRow() 为表添加一行
+				var row = table.insertRow();
+				//为行添加单元格
+//===== rowob.insertCell() 为表中行添加一列并赋值
+				row.insertCell(0).innerHTML=sno;
+				row.insertCell(1).innerHTML=name;
+				row.insertCell(2).innerHTML=sex;
+				row.insertCell(3).innerHTML=age;
+				row.insertCell(4).innerHTML='<button onclick="dodel(this)">删除</button>';
+				//重置表单
+				document.myform.reset();
+                return false;
+            }
+        </script>
+    </body>
+		

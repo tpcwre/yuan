@@ -1,0 +1,299 @@
+
+//===== PHP数学函数手册位置
+//===== abs — 绝对值
+//===== floor — 舍去法取整
+//===== ceil()  —  进一法取整
+//===== round() — 四舍五入
+//===== min() — 求最小值或数组中最小值
+//===== max() — 求最大值或数组中最大值
+//===== pow() — 计算几次方的结果
+//===== rand — 产生一个随机整数
+//===== mt_rand — 生成更好的随机数
+//===== getrandmax — 显示随机数最大的可能值
+//===== mt_getrandmax — 显示随机数的最大可能值
+//===== hexdec  十六进制转换为十进制
+//===== dechex   十进制转换为十六进制
+//===== base_convert  在任意进制之间转换数字
+//===== number_format() 千位分组格式化数字
+
+
+	acos — 反余弦
+	acosh — 反双曲余弦
+	asin — 反正弦
+	asinh — 反双曲正弦
+	atan2 — 两个参数的反正切
+	atan — 反正切
+	atanh — 反双曲正切
+	bindec — 二进制转换为十进制
+	cos — 余弦
+	cosh — 双曲余弦
+	decbin — 十进制转换为二进制
+	decoct — 十进制转换为八进制
+	deg2rad — 将角度转换为弧度
+	exp — 计算 e 的指数
+	expm1 — 返回 exp(number) - 1，甚至当 number 的值接近零也能计算出准确结果
+	fmod — 返回除法的浮点数余数
+	hypot — 计算一直角三角形的斜边长度
+	is_finite — 判断是否为有限值
+	is_infinite — 判断是否为无限值
+	is_nan — 判断是否为合法数值
+	lcg_value — 组合线性同余发生器
+	log10 — 以 10 为底的对数
+	log1p — 返回 log(1 + number)，甚至当 number 的值接近零也能计算出准确结果
+	log — 自然对数
+	mt_srand — 播下一个更好的随机数发生器种子
+	octdec — 八进制转换为十进制
+	pi — 得到圆周率值
+	rad2deg — 将弧度数转换为相应的角度数
+	sin — 正弦
+	sinh — 双曲正弦
+	sqrt — 平方根
+	srand — 播下随机数发生器种子
+	tan — 正切
+	tanh — 双曲正切
+
+
+
+
+
+
+//===== abs — 绝对值
+
+	$b=-238;
+	$c=abs($b);
+	echo $b."-->".$c;
+
+
+
+
+
+//===== floor — 舍去法取整
+
+	$a=3.19;
+	echo floor($a).'<br>';	//结果：3
+	$b=3.99;
+	echo floor($a).'<br>';	//结果：3
+
+
+
+
+
+//===== ceil()  —  进一法取整
+
+	$a=2.9;
+	echo ceil($a).'<br>';	//结果：3
+	$a=2.1;
+	echo ceil($a);		//结果：3
+
+
+
+
+
+//===== round() — 四舍五入
+
+	$a=3.49;
+	$b=3.59;
+	echo $a."<br>";
+	echo round($a)."<br>";
+	echo $b."<br>";
+	echo round($b)."<br>";
+
+	指定小数点后的位数-round(1.95583,-2)指定精度。
+	将数值指定精度 例：
+
+	echo round(3.4);   		//3
+	echo round(3.5);   		//4
+	echo round(3.6);   		//4
+	echo round(3.6,0);   		//4
+	echo round(1.95583, -2);   	//1.96
+	echo round(1241757, -3);   	//1242000
+	echo round(5.045, 2);   	//5.05
+	echo round(5.055, 2);   	//5.06
+
+
+
+
+
+//===== min() — 求最小值或数组中最小值
+
+	$a=array(1,3,6,8,2,7);
+	echo min($a)."<br>";		//	1
+	echo min(11,88,2,5,83,249,523); //	2
+
+
+
+
+
+//===== max() — 求最大值或数组中最大值
+
+	$a=array(1,3,6,8,2,7);
+	echo max($a);			//结果：8
+	echo max(11,88,2,5,83,249,523); //结果：523
+
+
+
+
+
+//===== pow() — 计算几次方的结果
+
+	echo pow(2,3);	结果：8
+
+
+
+
+
+
+
+
+
+//===== rand — 产生一个随机整数
+
+	echo rand(1,10).'<br>';
+
+
+
+
+
+//===== mt_rand — 生成更好的随机数
+
+	echo mt_rand(1,10).'<br>';
+
+
+
+
+
+
+
+//===== getrandmax — 显示随机数最大的可能值
+
+	echo getrandmax().'<br>';
+
+
+
+
+
+
+//===== mt_getrandmax — 显示随机数的最大可能值
+
+	echo mt_getrandMax();
+
+
+
+
+
+
+
+//===== PHP数学函数手册位置
+
+	PHP Manual => 函数参考 => 数学扩展 => Math => Math 函数
+
+
+
+
+
+
+
+//===== hexdec  十六进制转换为十进制
+
+	$a="aef234";
+	echo $a."<br>";
+	echo hexdec($a);
+
+
+
+
+
+
+
+
+
+//===== dechex   十进制转换为十六进制
+
+	for($i=0;$i<5;$i++){
+		$a=dechex(rand(1,15));
+		$b.=$a;
+	}
+	echo $b;	//结果：372a4
+
+
+
+
+
+
+//===== base_convert  在任意进制之间转换数字
+
+
+	$a=23445;
+	echo base_convert($a,10,2);	//十转二
+	echo "<br>";
+	echo base_convert($a,10,16);	//十转十六
+	echo "<br>";
+	echo base_convert($a,10,8);	//十转八
+	echo "<br>";
+	$b="fad34";
+	echo base_convert($b,16,2);	//十六转二
+	echo "<br>";
+	echo base_convert($b,16,10);	//十六转十
+	echo "<br>";
+	echo base_convert($b,16,8);	//十六转八
+	echo "<br>";
+	for($i=0;$i<4;$i++){		//验证码应用
+		$a=rand(1,15);
+		$b.=base_convert($a,10,16);
+	}
+	echo $b;
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== number_format() 千位分组格式化数字
+
+	$number = 1234.56;
+	echo $number.'<br>';
+
+	//--默认舍去小数部分，大数分隔符默认使用','
+	$english_format_number = number_format($number);
+	echo $english_format_number.'<br>';
+	// 1,235
+
+	//--取小数点后两位,小数分隔符用','，大数位分隔符为一个空格
+	$nombre_format_francais = number_format($number, 2, ',', ' ');
+	echo $nombre_format_francais.'<br>';
+	// 1 234,56
+
+	//--取小数点后两位,小数分隔符用'.'，大数位分隔符为空
+	$number = 1234.5678;	
+	$english_format_number = number_format($number, 2, '.', '');
+	echo $english_format_number;
+	// 1234.57
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

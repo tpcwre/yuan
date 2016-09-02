@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>JavaScript实例</title>
+        
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2 class="cc">JavaScript实例:使用Ajax加载json数据</h2>
+		<button onclick="doLoad()">加载</button><br/>
+		<div id="did" style="width:300px;height:300px;background-color:#ddd;"></div>
+        <script type="text/javascript">
+			//
+			function doLoad(){
+				
+				//1. 创建Ajax请求对象
+				var xmlhttp = null;
+				if(window.XMLHttpRequest){
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				}else{
+					// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				//2. 设置回调函数
+				xmlhttp.onreadystatechange=function(){
+					//判断请求状态为4，响应状态为200
+					if(xmlhttp.readyState==4 && xmlhttp.status==200){
+						//获取响应信息
+						var info = xmlhttp.responseText;
+						//将info数据转码
+						eval("var data="+info+";");
+						
+						//处理数据
+						//alert(data[2].name);
+						var str="<ul>";
+						for(var i=0;i<data.length;i++){
+							str += "<li>";
+							str += "name:"+data[i].name+"; ";
+							str += "age:"+data[i].age+"; ";
+							str += "sex:"+data[i].sex+"; ";
+							str += "</li>";
+						}
+						str += "</ul>";
+						
+						//将拼装处理的结果放到div中
+						document.getElementById("did").innerHTML = str;
+					}
+				}
+				
+				//3. 初始化请求信息
+				xmlhttp.open("get","4.php",true);
+				
+				//4. 发送请求
+				xmlhttp.send();
+			}
+        </script>
+    </body>
+</html>

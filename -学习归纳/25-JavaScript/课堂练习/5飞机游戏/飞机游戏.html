@@ -1,0 +1,218 @@
+<style>
+	#bj{				/*背景*/
+		overflow:hidden;
+		width:512;
+		height:500;
+		border:5px solid;
+		position:relative;
+		background:url(images/bg2.jpg)no-repeat 0px -1036px;
+	}
+	#feiJi{				/*飞机*/
+		//width:106;
+		//height:76;
+		//background:url(images/me.png);
+	}
+	
+	.pao{				/*炮弹*/
+		width:10px;
+		height:15px;
+		background:url(images/pao.png);
+	}
+	
+	#feiJi, .pao, #d0, #d1, #d2, #bom{
+		position:absolute;
+	}
+</style>
+<body>
+<div id='bj'>	<!--全景-->
+
+	<!--<div id='feiJi'></div>		飞机-->
+	<img src="images/me.png" id='feiJi'/>
+	<div id='p1' class='pao' style='display:none'></div>		<!--炮弹-->
+	<div id='p2' class='pao' style='display:none'></div>		
+	<div id='p3' class='pao' style='display:none'></div>		
+	<div id='p4' class='pao' style='display:none'></div>		
+	<div id='p5' class='pao' style='display:none'></div>		
+	<div id='p6' class='pao' style='display:none'></div>		
+
+	<!--显示敌机-->
+	<img src='images/e1.png' id="d0" style='display:none'/>
+	<img src='images/e2.png' id="d1" style='display:none'/>
+	<img src='images/e3.png' id="d2" style='display:none'/>
+
+	
+	<!--显示爆炸-->
+	<img id='bom' src='images/boom.gif' style='display:none'/>
+</div>
+<script>
+	var feiJi = document.getElementById('feiJi');	//飞机对象
+	
+	var bj = document.getElementById('bj');			//背景
+	
+	var bom = document.getElementById('bom');		//爆炸对象
+	
+			alert(bom);
+	m=0;	//控制背景移动
+	b=0;
+//=====控制飞机方向
+
+	window.onkeydown=function(e){
+		var event=e || window.event;
+		switch(event.keyCode){
+			case 37:
+				feiJi.style.left=Math.max(0,feiJi.offsetLeft-20);
+			break;
+			case 38:
+				feiJi.style.top=Math.max(0,feiJi.offsetTop-20);
+			break;
+			case 39:
+				feiJi.style.left=Math.min(415,feiJi.offsetLeft+20);
+			break;
+			case 40:
+				feiJi.style.top=Math.min(424,feiJi.offsetTop+20);
+			break;
+			case 32:
+				pao(feiJi.offsetLeft+48,feiJi.offsetTop); //发射炮弹
+			break;
+		}
+	}
+	
+	
+	
+	
+	
+//=====	//炮弹函数
+
+	function pao(x,y){					
+		for(var i=1;i<=6;i++){
+			var p= document.getElementById('p'+i);
+			if(p.style.display=='none'){
+				p.style.display='block';
+				p.style.left=x;
+				p.style.top=y;
+				break;
+			}
+		}
+	}
+	
+	
+	
+	
+//===== 显示敌机
+	function show(){
+		for(var i=0;i<3;i++){
+			var d = document.getElementById('d'+i);
+			if(d.style.display=='none'){
+				d.style.display='block';
+				d.style.top="-82px";
+				d.style.left=Math.ceil(Math.random()*400)+'px';
+				return;
+			}
+		
+		}
+	}
+
+
+	
+
+
+	
+	
+	
+//===== 碰撞检测 
+	function checkpp(p,d){
+		var px = p.offsetLeft;
+		var py = p.offsetTop;
+		
+		var dx1 = d.offsetLeft;
+		var dx2 = dx1+96;
+		var dy1 = d.offsetTop;
+		var dy2 = dy1+74;
+		if(px>dx1 && px<dx2 && py>dy1 && py<dy2){
+			p.style.display="none";
+			d.style.display='none';
+			
+			bom.style.left=px-190;
+			bom.style.top=py-130;
+			bom.style.display='block';
+		}
+	}
+	
+	
+	
+	function running(){
+		b++;
+		if(bom.style.display=='block'){
+			if(b>80){
+				bom.style.display='none';
+				b=0;
+			}
+		}
+	//敌机移动
+		if(Math.ceil(Math.random()*10000)%10==5){
+			show();
+		}
+		for(var i=0;i<3;i++){
+			var d = document.getElementById('d'+0);
+			if(d.style.display=='block'){
+				d.style.top=(d.offsetTop+2)+'px';
+				if(d.offsetTop>500){
+					d.style.display='none';
+				}
+			}
+		}
+	
+	
+	//炮弹移动
+		for(var i=1;i<7;i++){
+			var p = document.getElementById('p'+i);
+			if(p.style.display=='block'){
+				p.style.top = (p.offsetTop-10)+'px';
+	
+				for(var j=0;j<3;j++){
+					var d = document.getElementById('d'+j);
+					checkpp(p,d);
+				}
+				
+				
+				
+				
+				if(p.offsetTop<-20){
+					p.style.display='none';
+				}
+			}
+		
+			
+		}
+		
+		//if(p.style.display=='block'){
+			
+			
+	//	}
+		
+		
+//===== 1.背景移动
+		
+		m++;
+		if(m>768){
+			m=0;
+		}
+		bj.style.backgroundPosition="0px -"+(1036-m)+'px';
+		
+		//setTimeout("running()",100);
+	}
+	setInterval("running()",33);
+</script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+

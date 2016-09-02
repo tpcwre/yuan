@@ -1,0 +1,189 @@
+
+
+//===== img 图像标签 
+
+//===== img图像的属性 
+
+//===== align 设置文字中间夹图片的位置 
+
+//===== map 图像映射 
+
+//===== 图像超连接
+
+//===== 字包图
+
+//===== 滤镜和伪类使超链接图片变色。
+
+
+
+
+
+	
+	
+//===== img 图像标签
+
+	<img src='../a/b/a.jpg' alt='图片出错' width=100 height=100 border='10px'/>
+	<img src="http://www.baidu.com/img/login.jpg" alt='百度' width=100 tilte='图片'/>
+
+
+
+	
+	
+//===== img图像的属性
+
+	align 	设置或返回与内联内容的对齐方式。
+	alt 	设置或返回无法显示图像时的替代文本。
+	border 	设置或返回图像周围的边框。
+	complete 	返回浏览器是否已完成对图像的加载。
+	height 	设置或返回图像的高度。
+	hspace 	设置或返回图像左侧和右侧的空白。
+	id 	设置或返回图像的 id。
+	isMap 	返回图像是否是服务器端的图像映射。
+	longDesc 	设置或返回指向包含图像描述的文档的 URL。
+	lowsrc 	设置或返回指向图像的低分辨率版本的 URL。
+	name 	设置或返回图像的名称。
+	src 	设置或返回图像的 URL。
+	useMap 	设置或返回客户端图像映射的 usemap 属性的值。
+	vspace 	设置或返回图像的顶部和底部的空白。
+	width 	设置或返回图像的宽度。
+	标准属性
+	属性 	描述
+	className 	设置或返回元素的 class 属性。
+	title 	设置或返回元素的 title。
+	Image 对象的事件句柄
+	事件句柄 	描述
+	onabort 	当用户放弃图像的装载时调用的事件句柄。
+	onerror 	在装载图像的过程中发生错误时调用的事件句柄。
+	onload 	当图像装载完毕时调用的事件句柄。
+
+
+
+
+
+
+
+
+
+
+//===== align 设置文字中间夹图片的位置 
+
+	<p>没有设<img src='../1.jpg' width=50 height=50/>置的图片</p>
+
+	<p>设置为top<img src='../1.jpg' width=50 height=50 align='top' />的图片</p>
+
+	<p>设置为middle<img src='../1.jpg' width=50 height=50 align='middle' />的图片</p>
+
+	<p>设置为bottom<img src='../1.jpg' width=50 height=50 align='bottom' />的图片</p>
+
+	<p>设置为left<img src='../1.jpg' width=50 height=50 align='left' />的图片</p><br><br>
+
+	<p>设置为right<img src='../1.jpg' width=50 height=50 align='right' />的图片,在本行的最右边</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== map 图像映射 
+
+	<p>
+		<img src='a5a.jpg' usemap='#map1' alt='图片错误啦' height=300 width=300/>
+		<map name='map1' id='map1'>   
+			<area border=5px border-color=red shape='circle' coords='100,100,20' href='a.html' target='_blank' />
+		</map>
+		shape：		形状
+		coords:		坐标  x,y,形状大小（半径）
+			注间：coords="0,10,100,200";
+			0:	top 起点
+			10:	left 起点
+			100:	top终点   注意这个不是指长度或宽度，一定要大于前面的0或10 两个参数
+			200:	left终点 
+		href:		跳转地址
+		target:		跳转方式
+		注：因浏览器不同，最好同时设置 name  和 id 
+	</p>
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 图像超连接
+
+		<p>
+		<a href='http://www.baidu.com' target='_blank' >
+			<img src='../1.jpg' width=100 >
+		</a>
+
+		</p>
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 字包图
+
+	<style>
+		.zhi{
+			word-break:break-all;
+		}
+		.zhi img{
+			float:right;
+		}
+	</style>
+	<p class='zhi'>
+		<img src='a.jpg' width=300 height=300 alt='错误的图片' title='图片' />
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+	</p>
+
+
+	<img src='1.png' alt='图片出错啦' title='图片' style='float:right'/>
+	<p>时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时时...</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 滤镜和伪类使超链接图片变色。					
+	a:link img{
+		filter:gray;
+	}
+	a:hover img{
+		filter:"";
+	}
+	<a href="#"><img src="../img/img/11.jpg" /></a>
+	<a href="#"><img src="../img/img/22.jpg" /></a>
+
+
+

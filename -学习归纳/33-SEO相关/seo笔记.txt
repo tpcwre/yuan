@@ -1,0 +1,56 @@
+
+
+
+//-- nofollow 告诉引擎 哪些链接不要爬行
+
+
+
+
+
+
+
+//-- http://tool.chinaz.com/	站长工具
+
+
+	http://tool.chinaz.com/pagestatus		HTTP状态查询
+
+
+
+
+
+
+
+
+
+
+
+//-- 下载“网站日志分析工具”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

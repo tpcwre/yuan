@@ -1,0 +1,757 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第42课 知问前端-自动补全UI 8
+
+//-----课件笔记
+
+学习要点：
+	1，调用autocomplete()方法
+	2，修改autocomplete()样式
+	3，autocomplete()方法的属性
+	4，autocomplete()方法的事件
+	5，autocomplete中使用on()
+
+
+一：调用 autocomplete()方法
+$("#email").autocomplete({
+	source:["aaa","bbb","ccc"]
+});
+
+
+二：修改autocomplete()样式
+	由于autocomplete()方法是弹窗，然后鼠标悬停的样式，我们通过firebug或审查元素想获取到悬停时背景样式，可以直接通过jquery.ui.css里面找相应的CSS.无须修改ui里的CSS，直接用style.css替代掉。
+
+.ui-menu-item a.ui-state-focue{
+	background:url(../img/ui_header_bg.png);
+}
+注意：其它修改方案类似。
+
+
+
+三：autocomplete()方法的属性
+	自动补全方法有两种形式:1, autocomplete(options),options是以以象键值对的形式传参，每个键值对表示一个选项： 2， autocomplete("action",param), action是操作对话框方法的字符串，param则是options的某个选项。
+
+1，	autocomplete外观选项
+属性		默认值/类型		说明 
+disabled	false/布尔值		设置为true,将禁止显示自动补全。
+source		无/数值			指定数据源，可以是本地的，也可以是远程的。
+minLength	1/数值 			默认为1，触发补全列表最少输入字符数。
+delay		300毫秒/数值		默认为300毫秒，延迟显示设置。
+autoFocus	false/布尔值		设置为true时，第一个项目会自动被选定。
+
+$("#email").autocomplete({
+	source:["aaa","bbb","ccc"],
+	disabled:false,
+	minLength:2,
+	delay:50,
+	aotuFocus:true,
+});
+
+
+2,	autocomplete页面位置选项
+属性		默认值/类型		说明
+position	无/对象		使用对象的键值对赋值，有两个属性：my和at 表示坐标。my 是以目标的左上角为基准，at 以目标点右下角为基准。
+
+$("#email").autocomplete({
+	position:{
+		my:"left center",
+		at:"right center"
+	}
+});
+
+
+
+
+
+
+
+四：autocomplete()方法的事件
+	除了属性设置外，autocomplete()方法也提供了大量的事件。这些事件可以给各种不同状态时提供回调函数，这些回调函数中的this值等于对话框内容的div对象，不是整个对话框的div
+
+事件名		说明 
+create		当自动补全被创建时会调用create方法，该方法有两个参数(event,ui),此事件中的ui参数为空。
+
+open		当自动补全被显示时，会调用open方法，该方法有两个参数（event,ui）,此事件中的ui参数为空。
+
+close		当自动补全被关闭时，会调用close方法，该方法有两个参数(event,ui),此事件中的ui参数为空。
+
+focus		当自动补全获取焦点时，会调用focus方法，该方法有两个参数(event,ui)，此事件中的ui有一个子属性对象item,分别有两个属性：label,补全列表显示的文本：value,将要输入框的值，一般label和value值相同，如果是键值对的话，label相当于key,value就是val。
+
+select 		当自动补全被选定时，会调用select方法,该方法有两个参数(event,ui),此事件中的ui有一个子属性对象item,分别有两个属性：label,补全列表显示的文本：value,将要输入框的值，一般lable和value值相同。如果是键值对的话，label相当于key,value就是val。
+
+change		当自动补全失去焦点且内容发生改变时，会调用change方法，该方法有两个参数（event,ui）.此事件中的ui参数为空。
+
+search		当自动补全搜索完成后，会调用search方法，该方法有两个参数（event,ui）.此事件中的ui参数为空。
+
+response	当自动补全搜索完成后，在菜单显示之前，会调用response方法，该方法有两个参数(event,ui),此事件中的ui 参数有一个子对象content,他会返回label和value值，可通过遍历了解。
+
+$("#email").autocomplete({
+	source:["aaa","bbb","ccc"],
+	disabled:false,
+	minLength:1,
+	delay:0,
+	focus:function(e,ui){
+		ui.item.valu="123"
+	},
+	select:function(e,ui){
+		ui.item.value="123"
+	},
+	change:function(e.ui){
+		alert("");
+	},
+	search:function(e,ui){
+		alert("");
+	}
+});
+
+
+1,	autocomplete("action",param)方法
+方法				返回		说明 
+autocomplete("close")		jquery对象	关闭自动补齐
+autocomplete("disable")		jquery对象	禁用自动补齐
+autocomplete("enabel")		jquery对象	启用自动补齐
+autocomplete("destory")		jquery对象	删除自动补齐，直接阻断
+autocomplete("widget")		jquery对象	获取工具提示的jquery对象
+autocomplete("search",value)	jquery对象	按指定值自动触发自动补全
+autocomplete("option",param)	 一般值		获取options属性的值(内容)
+autocomplete("option",param,value)  jquery对象   设置options属性的值(内容)
+
+
+//关闭自动补全
+$("#email").autocomplete("close");
+
+//禁用自动补全
+$("#email").autocomplete("disable");
+
+//启用自动补全
+$("#email").autocomplete("enable");
+
+//删除自动实例
+$("#email").autocomplete("destroy");
+
+//获取自动补全jquery对象
+$("#email").autocomplete("widget");
+
+//按指定值自动触发自动补全
+$("#email").autocomplete("search","a"); //为空时，再加上minLength=0 进就会显示全部菜单内容。
+
+//获取某个options的param选项的值
+var delay=$("#email").autocomplete("option","delay");
+alert(delay);
+
+//设置某个options的param选项的值
+$("#email").dialog("option","delay",0);
+
+
+
+
+
+五： autocomplete 中使用 on()
+	在autocomplete的事件中，提供了使用on()方法处理的事件方法
+1，	on()方法触发的对话框事件
+事件名称		说明
+autocompleteopen	显示时触发
+autocompleteclose	关闭时触发
+autocompletesearch	查找时触发
+autocompletefocus	获得焦点时触发
+autocompletechange	改变时触 发
+autocompleteselect	选定时触发
+autocompleteresponse	搜索完毕后，显示之前
+
+$("#reg").on("autocompleteopen",function(){
+	alert("打开自动补全时触发事件");
+});
+
+
+=======================================
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<button class="search_button">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<div id="reg">
+<p>
+	<label for="user">用户名：</label>
+	<input type="text" name="user" class="text" id="user" title="请输入用户名" />
+	<span class="star"> * </span>
+	
+</p>
+
+<p>
+	<label for="pass">密　码：</label>
+	<input type="password" name="pass" class="text" id="pass" title="请输入密码" />
+	<span class="star">*</span>
+</p>
+
+<p>
+	<label for="email">邮　箱：</label>
+	<input type="text" name="email" class="text" id="email" title="请输入邮箱" />
+</p>
+<p>
+	<label>性　别：</label>
+	<input type="radio" name="sex" value="male" id="male" checked="checked">
+	<label for="male">男</label></input>	
+   	
+	<input type="radio" name="sex" value="female" id="female">
+	<label for="female">女</label></input>
+</p>
+<p>
+	<label for="date">生　日：</label>
+	<input type="text" name="date" class="text" id="date" readonly="readonly" title="请输入日期"/>
+</p>
+
+</div>
+
+</body>
+</html>
+
+
+
+======================================
+
+
+js页面
+
+
+$(function(){
+$(".search_button").button({
+	icons:{
+		primary:"ui-icon-search",
+	}
+});
+$("#reg").dialog({
+	title:"会员注册",
+	autoOpen:true,
+	modal:true,
+	resizable:false,
+	width:320,
+	height:340,
+	buttons:{
+		"提交":function(){},
+		"取消":function(){
+			$(this).dialog("close");
+		}
+	}
+});
+$("#date").datepicker();
+$("#reg").buttonset()
+
+
+//-----调用自动补全
+arr=['a','aaa','aaaaa','bbb'];
+$("#email").autocomplete({
+	source:arr,
+});
+
+/*
+//-----修改自动补全鼠标悬停背景样式
+
+//首先通过审查元素查看相关元素的类名，然后在jquery.ui.css中找到其名下对应的focus(悬停),active(点击)，然后进行重写冲突。如下：
+//重写自动补全鼠标悬停的背景图片
+.ui-menu .ui-menu-item a.ui-state-focus{
+	background:blue;
+}
+.ui-menu .ui-menu-item a.ui-state-active{
+	background:red;
+}
+//-----修改自动补全字体颜色的样式
+.ui-menu .ui-menu-item a{
+	color:red;
+}
+
+
+//-----自动补全的外观选项
+//-----禁用自动补全
+$("#email").autocomplete({
+	//disabled:true
+});
+
+disabled	false/布尔值		设置为true,将禁止显示自动补全。
+source		无/数值			指定数据源，可以是本地的，也可以是远程的。
+minLength	1/数值 			默认为1，触发补全列表最少输入字符数。
+delay		300毫秒/数值		默认为300毫秒，延迟显示设置。
+autoFocus	false/布尔值		设置为true时，第一个项目会自动被选定。
+
+
+//-----设置触发自动补全至少要输入的字数。
+$("#email").autocomplete({
+	//minLength:2
+	//minLength:0  至少输入0时，需要先输入后删除时才会全部显示。
+});
+
+//-----设置触发自动补全后显示内容的时间，默认300毫秒
+$("#email").autocomplete({
+	delay:1000
+	delay:0
+});
+
+
+//-----设置自动补全触发后自动选择第一条内容
+$("#email").autocomplete({
+	autoFocus:true
+});
+
+
+//-----设置自动补全提示内容的位置
+$("#email").autocomplete({
+	position:{
+		my:"left center",
+		at:"right center"
+	}
+});
+
+
+//-----自动补全创建触发事件
+var user=['b','bbb','bbbbb'];
+$("#user").autocomplete({
+	source:user,
+	create:function(){
+		alert("自动补全创建后触发");
+	}	
+});
+
+//-----自动补全打开触发事件
+$("#email").autocomplete({
+	open:function(){
+		alert("自动补全打开后触发");
+	}
+});
+
+
+//-----自动补全关闭触发事件
+$("#email").autocomplete({
+	close:function(){
+		alert("自动补全关闭后触发");
+	}
+});
+
+
+//-----补全菜单获得焦点触发事件
+//-----获取补全菜单的值
+//-----设置补全菜单要显示的内容
+//ui有一个子属性对象item,分别有两个属性：label,补全列表显示的文本：value,将要输入框的值，一般label和value值相同，
+$("#email").autocomplete({
+	focus:function(e,ui){
+		//alert("补全菜单获得焦点触发");
+		//获取补全菜单的值
+		//alert(ui.item.label);	
+		//设置补全菜单要显示的内容
+		//ui.item.value=123;
+		ui.item.value=ui.item.label+"新加内容";
+	}
+});
+
+
+
+//-----选定自动补全菜单内容触发事件
+$("#email").autocomplete({
+	select:function(){
+		alert("选定补全菜单内容触发");
+	}
+});
+
+
+//-----光标离开前后，文本框内容发生改变触发事件
+$("#email").autocomplete({
+	change:function(){
+		alert("光标离开后，内容发生改变事件");
+	}
+});
+
+
+//-----自动补全菜单搜索完毕触发事件
+$("#email").autocomplete({
+	search:function(){
+		alert("搜索完毕触发事件");
+	}
+});
+
+
+//-----自动菜单搜索完事件，并返回菜单内容值
+$("#email").autocomplete({
+	response:function(e,ui){
+		alert("搜索完毕触发事件");
+		alert(ui.content[0].label);
+		alert(ui.content[1].value);
+		alert(ui.content[2].value);
+	}
+});
+
+
+//-----按指定字符自动触发自动补全菜单
+//$("#email").autocomplete("search","b");
+
+//自动触发设置为空时，只有配合最小字数才会显示全部内容
+$("#email").autocomplete({
+	minLength:0
+});
+$("#email").autocomplete("search","");
+
+
+//-----关闭自动补全
+$("#email").autocomplete("close");
+
+//-----禁用自动补全
+$("#email").autocomplete("disable");
+
+//-----启用自动补全
+$("#email").autocomplete("enable");
+
+//-----删除自动实例
+$("#email").autocomplete("destroy");
+
+//-----获取自动补全jquery对象
+$("#email").autocomplete("widget");
+
+//-----获取某个options的param选项的值
+var delay=$("#email").autocomplete("option","delay");
+alert(delay);
+
+//-----设置某个options的param选项的值
+$("#email").dialog("option","delay",0);
+
+
+
+
+
+
+//-----自动补全打开on事件
+$("#email").on("autocompleteopen",function(){
+	alert("自动补全打开触发事件");
+});
+
+//-----自动补全关闭时触发
+$("#email").on("autocompleteclose",function(){
+	alert("补全关闭触发事件");
+});
+
+//-----自动补全查找时触发
+$("#email").on("autocompletesearch",function(){
+	alert("自动补全搜索时触发事件");
+});
+
+//------自动补全获得焦点时触发事件
+$("#email").on("autocompletefocus",function(){
+	alert("自动补全获得焦点时触发事件");
+});
+
+
+//-----光标离开后文本框内容改变触发事件
+$("#email").on("autocompletechange",function(){
+	alert("光标离开后文本框内容改变触发事件");
+});
+
+
+//-----自动补全选择内容后触发事件
+
+$("#email").on("autocompleteselect",function(){
+	alert("自动补全选择内容触后发事件");
+});
+
+
+//-----自动补全搜索完毕后显示之前触发事件并可返回值。
+
+$("#email").on("autocompleteresponse",function(e,ui){
+	alert("搜索后，显示前触发事件");
+	alert(ui.content[0].value);
+	alert(ui.content[1].value);
+	alert(ui.content[2].value);
+});
+
+*/
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第43课 知问前端-邮箱自动补全 ui 9
+学习要点：
+	1，数据源function
+	2，邮箱自动补全
+
+
+
+js页面：
+$(function(){
+	$(".search_button").button({
+		icons:{
+			primary:"ui-icon-search",
+			secondary:"ui-icon-bottom"
+		}
+	});
+	
+	$("#reg").dialog({
+		title:"会员注册",
+		buttons:{
+			"确定":function(){},
+			"取消":function(){}
+		}
+	});
+
+
+	var hosts=["qq.com","163.com","263.com","sina.com.cn","gmail.com"];
+	$("#email").autocomplete({
+		delay:0,		//设置补全信息显示的延迟时间
+		autoFocus:true,		//设置自动选择第一条补全内容
+		source:function(value,response){
+		    var term=value.term,	//获取文本框内容
+			name=term,		//将获取的内容当作邮箱前缀
+			host="",		//邮箱后缀
+			ix=term.indexOf("@");	//获取@的下标
+
+			var resultall=[];	//预设一个总结果的变量。
+			resultall.push(term); 	//将输入的内容放入总结果
+			
+			if(ix >=0){	//如果下标大于-1表示输入内容中包括@
+			//当有@时前在获取的内容中截取前缀和后缀
+				name=term.slice(0,ix);
+				host=term.slice(ix+1);
+			}	
+			if(name){	//如果前缀和后缀都存在时
+				if(host){
+				//在hosts数组中筛选出host后缀名相同的内容
+					var findhosts=$.grep(hosts,function(value,index){
+						return value.indexOf(host)>-1;
+					});
+				}else{
+				//如果没筛选出来则显示全部。
+					findhosts=hosts;
+				}
+				//将动态前缀和每个后缀结合
+				var result = $.map(findhosts,function(value,index){
+					return name+"@"+value;
+				});
+				//将结合后的结果放入到总结果中， 另一种效果是当结合上面的push时，将会把未收录的的后缀直接显示在补全菜单中。
+				resultall=resultall.concat(result);
+			}
+			response(resultall);
+
+		}
+	});
+});
+
+
+
+===========================================
+css页面
+
+
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+
+.ui-widget-header{
+	background:url(../img/bj2.png);
+}
+.ui-dialog-title{
+	color:blue;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+	background:url(../img/bj.png);
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-default{
+	background:url(../img/bj2.png);
+}
+
+p .text{
+	border-radius:5px;
+	width:180px;
+	height:25px;
+	align:center;
+}
+
+.ui-menu .ui-menu-item a.ui-state-focus{
+	background:#999;
+}
+.ui-menu .ui-menu-item a{
+	color:blue;
+}
+
+
+====================================
+
+html页面:
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<button class="search_button">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<div id="reg">
+<p>
+	<label for="user">用户名：</label>
+	<input type="text" name="user" class="text" id="user" title="请输入用户名" />
+	<span class="star"> * </span>
+	
+</p>
+
+<p>
+	<label for="pass">密　码：</label>
+	<input type="password" name="pass" class="text" id="pass" title="请输入密码" />
+	<span class="star">*</span>
+</p>
+
+<p>
+	<label for="email">邮　箱：</label>
+	<input type="text" name="email" class="text" id="email" title="请输入邮箱" />
+</p>
+<p>
+	<label>性　别：</label>
+	<input type="radio" name="sex" value="male" id="male" checked="checked">
+	<label for="male">男</label></input>	
+   	
+	<input type="radio" name="sex" value="female" id="female">
+	<label for="female">女</label></input>
+</p>
+<p>
+	<label for="date">生　日：</label>
+	<input type="text" name="date" class="text" id="date" readonly="readonly" title="请输入日期"/>
+</p>
+
+</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,305 @@
+
+
+//-- 用户的创建
+	超级管理员可为每个库创建库管理，库管理可以直接登陆到该库并操作该库，但无法操作其它库
+
+
+	./bin/mongod --dbpath=/usr/local/mongo/data --logpath=/usr/local/mongo/log --port=11111 --auth --fork			//启动服务
+		--dbpath		指定数据库目录
+		--logpath		指定日志文件及位置
+		--port			指定使用端口
+		--auth			开启用户认证
+		--fork			后台运行
+
+
+
+	./bin/mongo 127.0.0.1:11111				//登陆到数据库 
+
+	use admin						//切换到admin库
+
+	db.createUser({user:'admin1',pwd:'admin1',roles:[{role:'userAdminAnyDatabase',db:'admin'},{role:'dbAdminAnyDatabase',db:'admin'},{role:'readWriteAnyDatabase',db:'admin'}]})			//创建一个全库超级管理员(可以给每个库创建管理员)
+
+	use t1							//切换到t1库
+	db.createUser({user:'t1',pwd:'t1',roles:[{role:'dbOwner',db:"t1"}]})		//为t1库创建一个所有权限的管理员
+
+	db.auth('t1','t1')					//切换用户到t1	(t1的权限是t1库的所有者，不可操作其它库)
+	
+
+	./bin/mongo 127.0.0.1:11111/t1 -u t1 -p t1		//使用用户名密码直接登陆拥有权限的t1库
+
+
+
+
+
+
+
+
+//-- 用户权限其它设置
+
+
+
+MongoDB 2.4新引入了一套权限控制的机制，而旧的addUser的方法在3.0已经不再提供，这对我们管理MongoDB造成了诸多不便。本文简单总结一下新版MongoDB关于权限管控的一些技巧。 · MongoDB使用了基于角色的访问策略来管理MongoDB的安全控制。可以赋予用于一个或多个权限来让用户能访问数据库的资源并进行某项数据库的操作。如果不对用于赋予权限，用户没有任何权限。
+
+·MongoDB默认不启用安全授权机制。你需要在启动mongod时指定–auth，或者在参数里设置 auth=true 来启用这个特性。
+
+·MongoDB提供了很多内建角色，用户通用的数据库管理。内建角色的文档在这里 http://docs.mongodb.org/manual/reference/built-in-roles/ 。MongoDB提供了数据库管理权限和数据库用户权限两种类型，其他的权限只能作用于admin数据库上。具体如下：
+
+
+
+
+(1).数据库用户角色
+
+针对每一个数据库进行控制。
+
+read:
+提供了读取所有非系统集合，以及系统集合中的system.indexes, system.js, system.namespaces
+读取集合列表，读取集合中的数据
+
+readWrite: 
+包含了所有read权限，以及修改所有非系统集合的和系统集合中的system.js的权限.
+读取集合列表，对集合的创建和删除，对集合数据的增删改查。
+
+
+
+(2).数据库管理角色
+
+每一个数据库包含了下面的数据库管理角色。
+
+dbOwner：
+该数据库的所有者，具有对该库的数据，集合，库，用户的全部操作权限。
+
+dbAdmin：
+对本库的创建和删除，对库内集合的创建和删除，查看库内的集合列表，但不能查看和操作集合数据
+
+userAdmin：
+为当前用户创建、修改用户和角色。拥有userAdmin权限的用户可以将该数据库的任意权限赋予任意的用户。
+针对本库创建和删除用户,查看集合列表，对集合的创建和，删除，对集合数据的增删改查，但不能删除本库
+
+
+
+(3).集群管理权限
+
+admin数据库包含了下面的角色，用户管理整个系统，而非单个数据库。这些权限包含了复制集和共享集群的管理函数。
+
+clusterAdmin：
+提供了最大的集群管理功能。相当于clusterManager, clusterMonitor, and hostManager和dropDatabase的权限组合。
+
+clusterManager：
+提供了集群和复制集管理和监控操作。拥有该权限的用户可以操作config和local数据库（即分片和复制功能）
+
+clusterMonitor：
+仅仅监控集群和复制集。
+
+hostManager：
+提供了监控和管理服务器的权限，包括shutdown节点，logrotate, repairDatabase等。
+
+备份恢复权限：admin数据库中包含了备份恢复数据的角色。包括backup、restore等等。
+
+
+
+
+(4).所有数据库角色
+
+admin数据库提供了一个mongod实例中所有数据库的权限角色：
+
+readAnyDatabase：
+具有read每一个数据库权限。但是不包括应用到集群中的数据库。
+
+readWriteAnyDatabase：
+具有readWrite每一个数据库权限。但是不包括应用到集群中的数据库。
+
+userAdminAnyDatabase：
+具有userAdmin每一个数据库权限，但是不包括应用到集群中的数据库。
+
+dbAdminAnyDatabase：
+提供了dbAdmin每一个数据库权限，但是不包括应用到集群中的数据库。
+
+
+
+
+
+
+(5). 超级管理员权限
+
+root: dbadmin到admin数据库、useradmin到admin数据库以及UserAdminAnyDatabase。但它不具有备份恢复、直接操作system.*集合的权限，但是拥有root权限的超级用户可以自己给自己赋予这些权限。
+
+了解权限了之后，就是赋权语句了。新版的函数比之前的要麻烦很多：
+db.createUser(user, writeConcern)
+
+user 关于用户的身份认证和访问信息（JSON）；
+
+writeConcern 这个文档描述保证MongoDB提供写操作的成功报告。
+
+user文档，定义了用户的以下形式：
+
+{ user: "<name>",
+  pwd: "<cleartext password>",
+  customData: { <any information> },
+  roles: [
+    { role: "<role>", db: "<database>" } | "<role>",
+    ...
+  ]
+}
+
+user文档字段介绍：
+
+user字段，用户的名字；
+
+pwd字段，用户的密码；
+
+cusomData字段，为任意内容，例如可以为用户全名介绍；
+
+roles字段，指定用户的角色，可以用一个空数组给新用户设定空角色； roles 字段,可以指定内置角色和用户定义的角色。
+
+那么创建一个管理员，直接给几个所有数据库权限即可。
+
+db.createUser({
+user:"test",
+pwd:"test.com",
+roles:
+[ 
+  {
+    role:"userAdminAnyDatabase",
+    db:"admin"
+  },
+  {
+    role:"readWriteAnyDatabase",
+    db:"admin"
+  },
+  {
+    role:"dbAdminAnyDatabase",
+    db:"admin"
+  }
+]})
+
+创建某个数据库的只读权限:
+
+db.createUser({
+user:"test",
+pwd:"test.com",
+roles:
+[ 
+  {
+    role:"read",
+    db:"test"
+  }
+]
+
+以此类推。我们可以通过 db.auth("username","password") 或者下面的方式来验证：
+mongo -u test -p test.com --authenticationDatabase test
+
+
+
+
+
+
+
+
+
+
+(6). 用户角色权限相关函数
+
+除了  ,下面几个函数也是常用的：
+
+
+查看角色列表： db.getRoles()
+
+获得某个角色信息: db.getRole()
+
+创建角色: db.createRole()
+
+更新角色： db.updateRole()
+
+删除角色： db.dropRole()
+
+删除所有用户：db.dropAllRoles()
+
+
+
+
+获得用户列表： db.getUsers()
+
+获得某个用户的权限信息： db.getUser()
+
+创建用户：db.createUser()
+
+删除用户： db.dropUser()
+
+删除所有用户: db.dropAllUsers()
+
+将一个角色赋予给用户： db.grantRolesToUser()
+
+撤销某个用户的某个角色权限： db.revokeRolesFromUser()
+
+更改密码： db.changeUserPassword() 
+
+
+
+
+
+
+更多权限角色实例操作参见： http://docs.mongoing.com/manual-zh/reference/method/db.createRole.html
+
+
+创建角色: db.createRole()
+	use admin
+	db.createRole(
+	   {
+		 role: "tpcwre",
+		 privileges: [
+		   { resource: { cluster: true }, actions: [ "addShard" ] },   //对集群设置特权
+		   { resource: { db: "config", collection: "" }, actions: [ "find", "update", "insert", "remove" ] }, //对某库设置特权
+		   { resource: { db: "users", collection: "usersCollection" }, actions: [ "update", "insert", "remove" ] }, //对某库某集合设置特权
+		   { resource: { db: "", collection: "" }, actions: [ "find" ] }	//对所有库和所有集合设置特权
+		 ],
+		 roles: [
+		   { role: "read", db: "admin" }	//本角色的基本权限
+		 ]
+	   },
+	   { w: "majority" , wtimeout: 5000 }
+	)
+	
+
+
+
+更新角色： db.updateRole()
+use products
+db.updateRole(
+    "inventoryControl",
+    {
+      privileges:
+          [
+            {
+              resource: { db:"products", collection:"clothing" },
+              actions: [ "update", "createCollection", "createIndex"]
+            }
+          ],
+      roles:
+          [
+            {
+              role: "read",
+              db: "products"
+            }
+          ]
+    },
+    { w:"majority" }
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

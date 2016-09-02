@@ -1,0 +1,40 @@
+/===== define() 常量的声明
+/===== defined() 判断常量是否存在
+ 
+//===== __FILE__ __DIR__ __LINE__魔术常量
+
+
+
+
+
+
+
+
+
+//===== __FILE__ __DIR__ __LINE__魔术常量
+
+	echo "同时获取文件目录及文件名__FILE__:".__FILE__.'<BR>';
+	echo "获取当前的行数__LINE__：".__LINE__.'<BR>';
+	echo "获取当前文件所在的路径__DIR__:".__DIR__;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/===== define() 常量的声明
+/===== defined() 判断常量是否存在
+ 
+	define('A','aaa');
+	echo A.'<br>';
+	define('B','bbb',true);
+	echo b.'--define的每三个参数 为ture时，常量不区分大小写，false时区分大小写<br>';
+	
+	echo defined('B').'--defined判断常量是否存在';

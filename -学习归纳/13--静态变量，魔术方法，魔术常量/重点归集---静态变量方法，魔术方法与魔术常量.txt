@@ -1,0 +1,475 @@
+
+//===== static 静态方法与属性
+
+
+	class Demo{
+		public static $name='lisi';		//静态属性
+		
+		public static function add($a,$b){
+			return $a+$b;
+		}
+		public static function max($a,$b){
+			return $a>$b?$a:$b;
+		}
+		public static function fun(){
+			echo self::$name;		//类中调用静态变量
+			echo self::max(10,200);		//类中调用静态方法
+		}
+	}
+	$demo=new Demo();
+
+						//对象方式调用静态方法
+	echo $demo->add(10,20).'<br>';
+	echo $demo->max(5,18).'<br>';
+
+						//静态属性不可通过对象方式调用
+	//echo $demo->name;		
+
+						//类名方式调用静态方法
+	echo Demo::add(20,25).'<br>';
+	echo Demo::max(29,98).'<br>';
+	echo Demo::$name;			//在类外调用静态属性
+	Demo::fun();
+	echo "<hr>";
+
+
+
+	static关键字:表示静态的意思: 用于修饰类的属性和方法
+	   *static关键字修饰方法称为静态方法，可以不用new（实例化）就可以直接使用方法：如 类名::方法名
+			注意：静态方法在实例化后的对象也可以访问  //$对象名->静态方法名
+		  
+   	   static关键字修饰属性称为静态属性，可以不用new（实例化）就可以直接访问属性：如 类名::属性名
+			 注意：静态属性在实例化后的对象不可以访问； //$对象名->静态属性名
+	   
+	   注意：静态属性是共享的。也就是new很多对象也是共用一个属性
+			*在静态方法中不可以使用非静态的内容。就是不让使用$this
+			 在类的方法中可以使用其他静态属性和静态方法，不过要使用self关键字：
+				 如 【self::静态属性名】或【self::静态方法名】
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 魔术常量
+
+
+	__LINE__ 	返回文件中的当前行号
+	__FILE__ 	返回文件的完整路径和文件名
+	__DIR__		文件所在的目录
+	__FUNCTION__	返回函数名称
+	__CLASS__	返回类的名称
+	__METHOD__	返回类的方法名
+	__NAMESPACE__	获取命名空间的名称
+	__TRAIT__	Trait 的名字
+
+
+
+
+	__LINE__ 		返回文件中的当前行号。
+
+	__FILE__ 		返回文件的完整路径和文件名。如果用在包含文件中，则返回包含文件名。自 PHP 4.0.2 起，__FILE__ 总是包含一个绝对路径，而在此之前的版本有时会包含一个相对路径。
+ 
+	__DIR__			文件所在的目录。如果用在被包括文件中，则返回被包括的文件所在的目录。它等价于 dirname(__FILE__)。除非是根目录，否则目录中名不包括末尾的斜杠。（PHP 5.3.0中新增）
+
+	__FUNCTION__		返回函数名称（PHP 4.3.0 新加）。自 PHP 5 起本常量返回该函数被定义时的名字（区分大小写）。在 PHP 4 中该值总是小写字母的。
+
+	__CLASS__		返回类的名称（PHP 4.3.0 新加）。自 PHP 5 起本常量返回该类被定义时的名字（区分大小写）。在 PHP 4 中该值总是小写字母的。
+ 
+	__TRAIT__		Trait 的名字（PHP 5.4.0 新加）。自 PHP 5.4 起此常量返回 trait 被定义时的名字（区分大小写）。Trait 名包括其被声明的作用区域（例如 Foo\Bar）。
+
+	__METHOD__		返回类的方法名（PHP 5.0.0 新加）。返回该方法被定义时的名字（区分大小写）。 格式：类名::方法名
+ 
+	__NAMESPACE__		当前命名空间的名称（区分大小写）。此常量是在编译时定义的（PHP 5.3.0 新增）
+
+
+
+
+
+
+
+
+
+	魔术方法
+
+
+//===== __construct() 构造-实例对象时执行的函数
+//===== __destruct() 析构-对象销毁时执行的函数
+//===== __get()  获取非公有属性时执行函数
+//===== __set()  设置非公有属性时自动执行函数
+//===== __isset();  检测非公有属性时自动执行函数
+//===== __unset(); 销毁非公有属性时自动执行函数
+//===== __clone() 克隆对象自动执行函数
+//===== __toString   echo对象时自动执行函数
+//===== __call() 调用不空方法时自动执行函数
+//===== __autoload() 自动加载其它页的类
+//===== __sleep() 序列化自动执行函数
+//===== __wakeup() 反序列化自动执行函数
+
+
+
+
+
+
+
+//===== __construct() 构造-实例对象时执行的函数
+		
+		触发时机：在对象实例化的时候自动触发
+		作用：初始化成员属性
+		参数：可以有 可以没有
+		返回值： 没有
+
+
+			class A{
+				public function __construct(){
+					echo "对象实例化时就执行的函数!";
+				}
+			}
+		
+		
+				$a = new A();
+
+					结果：
+						对象实例化时就执行的函数!
+				
+		
+		
+		
+		
+		
+//===== __destruct() 析构-对象销毁时执行的函数
+
+		触发实际：在销毁对象的时候自动触发 （unset或者页面执行完毕）
+		作用：回收对象使用过程中的资源
+		参数：没有
+		返回值：没有
+
+			class A{
+				public function __destruct(){
+					echo "对象实例化最后执行的函数<br>";
+				}
+			}
+
+				$a = new A();
+				
+					结果：
+						对象实例化最后执行的函数
+
+			
+			
+			
+
+
+//===== __get()  获取非公有属性时执行函数
+		
+		触发时机： 访问私有和受保护成员属性是自动触发
+		功能：1 防止报错，2  为私有成员属性访问提供后门
+		参数：1个   访问私有成员属性的名称(变量名称随意)
+		返回值：可以有 ，可以没有
+		
+
+			class A{
+				private $name='aaa';
+				public function __get($param){
+					return $this->$param;
+				}
+			}
+			
+				$a = new A();
+				echo $a->name;
+				
+					结果：
+						aaa
+
+
+
+		
+	
+	
+	
+
+//===== __set()  设置非公有属性时自动执行函数
+
+		触发时机：对私有受保护成员属性进行设置的时候自动触发
+		功能：1 屏蔽错误 2 为私有成员属性设置值
+		参数：2个  第一个是 私有成员属性名，第二个 要设置的私有成员属性值
+		返回值： 无
+		
+
+			class A{
+				private $name='aaa';
+				public function __get($param){
+					return $this->$param;
+				}
+				public function __set($param,$v){
+						$this->$param=$v;
+				}
+			}
+			
+				$a = new A();
+				echo $a->name.'<br>';
+				$a->name='bbb';
+				echo $a->name;
+				
+					结果：
+						aaa
+						bbb
+		
+	
+	
+	
+	
+	
+//===== __isset();  检测非公有属性时自动执行函数
+
+		触发时机：  对私有受保护成员属性进行isset检测时自动触发
+		功能：  代替对象外部的isset检测  返回检测结果
+		参数：  1个  私有成员属性名
+		返回值：  一般返回isset(成员属性)结果
+		
+			class A{
+				private $name='aaa';
+				public function __isset($param){
+					return isset($this->$param);
+				}
+			}
+
+				$a = new A();
+				var_dump(isset($a->name));
+
+					结果：
+						bool(true)
+
+	
+	
+	
+	
+	
+	
+	
+//===== __unset(); 销毁非公有属性时自动执行函数
+
+		触发时机：在对象外部对私有受保护的成员属性进行unset操作的时候自动触发
+		功能：  代替对象外部的unset  
+		参数：  1个  要删除的私有成员属性名
+		返回值：无 （如果强制返回 会产生语法错误）
+		
+		
+			class A{
+				private $name='aaa';
+				public function __get($param){
+					return $this->name;
+				}
+				public function __unset($param){
+					//unset($this->$param);
+				}
+			}
+
+				$a = new A();
+				echo $a->name;		// 结果：aaa
+				unset($a->name);
+				echo $a->name;		// 提示变量不存在
+	
+	
+	
+	
+	
+	
+	
+	
+//===== __clone() 克隆对象自动执行函数
+
+		触发时机：  对象克隆的时候自动触发
+		功能：  修改克隆之后的对象的成员属性值
+		 参数：无
+		返回值：  无
+		注意：  对象赋值默认就是直接的赋值方式，相当与给了他一个新的空间，克隆操作是给了他一个新的对象
+		格式：  变量名 = clone 对象变量名  
+		
+		
+		class A{
+			public $name='aaa';
+			public function __clone(){
+				echo "当对象被克隆时自动执行";
+			}
+		}
+		
+			$a = new A();
+			echo $a->name;		//结果  aaa
+			$b = $a;			//等号赋值相当于引用，两个变量名操作一个对象 
+			$a->name='bbb';		//当一个对象被改变时，另一个也会随着改变
+			echo $b->name;		//结果 	bbb
+			echo "<hr>";
+
+			$aa = new A();
+			echo $aa->name;		
+			$bb = clone $aa;	//clone 等于复制了一个全新的对象， 
+			$aa->name='bbb';	//各对象的操作互不影响
+			echo $aa->name;
+			echo $bb->name;	
+
+				结果：
+				
+					aaabbb
+					aaa当对象被克隆时自动执行bbbaaa
+
+				
+				
+				
+				
+		
+		
+//===== __toString   echo对象时自动执行函数
+
+	   触发时机：  当对一个对象直接进行 echo的时候 ，自动触发
+	   功能：  直接返回对象的字符穿
+	   参数：  无
+	   返回值：  必须有且必须是字符串类型
+		   
+			class A{
+				public function __toString(){
+					return "echo对象时，自动执行本函数中文本内容";
+				}
+				
+			}
+
+			$a = new A();
+			echo $a;
+				
+				结果：
+					echo对象时，自动执行本函数中文本内容
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+//===== __call() 调用不空方法时自动执行函数
+
+		触发时机： 当，调用一个对象中不存在的(或者是不能在外部进行访问的)方法是自动调用
+		功能： 1 屏蔽错误， 2 为不存在的（或者不能在外部进行访问的）方法定义一个功能
+		 参数：  1  不存在的方法名称，2  所有实参组成的数组
+		返回值：  可有可无
+	
+	
+		class A{
+			public function __call($name,$param){
+				echo "调用不存在的方法时自动执行本函数<br>";
+				echo "方法名：".$name;
+				print_r($param);
+
+			}
+			
+		}
+
+			$a = new A();
+			$a->run(1,2,3);
+			
+				结果
+				调用不存在的方法时自动执行本函数
+				方法名：runArray ( [0] => 1 [1] => 2 [2] => 3 )
+		
+	
+	
+	
+	
+//===== __autoload() 自动加载其它页的类
+
+		触发时机：当页面中需要一个类，而该类不存在的时候自动触发
+		功能： 实现类的自动加载
+		参数：  1  个  自动加载的类名
+		返回值：无
+		注意：  类自动加载的时候类名要与文件名相同
+		
+		
+		function __autoload($fname){
+		if(file_exists("./class/".$fname.'.class.php')){
+			require "./class/".$fname.'.class.php';
+		}else{
+			echo "加载的类不存在";
+		}
+
+
+			$new = new makes();
+			echo $new->name;
+		
+		
+		
+		
+//===== __sleep() 序列化自动执行函数
+//===== __wakeup() 反序列化自动执行函数
+
+
+		
+		//----- 魔术方法：  __sleep();
+
+		触发时机：  在对象进行串行的时候自动触发
+		功能：  指定需要串行化的成员属性
+		参数： 无
+		返回值：  需要返回一个数组类型，每个需要串行化成员属性
+
+		
+		//----- 魔术方法： __wakeup()
+
+		触发时机：  在对象进行反串行化的时候自动触发
+		功能：  反串行话的时候修改需要的成员属性
+		参数：  无
+		返回值：无
+		
+		
+		class A{
+			public $name='aaa';
+			public $age = 18;
+			public $sex = 'nan';	//__sleep():是执行串行化时自动调用的方法，目的是实现资源类型属性的关闭释放等操作。注意：sleep方法需要返回一个数组，其中数组中的值是串行化时要保留的属性名
+			public function __sleep(){
+				return array('name','age');	//serialize序列化时自动执行
+			}
+			public function __wakeup(){
+				echo '反序列化时自动执行';
+			}
+		}
+
+			$a = new A();
+			$str = serialize($a);		//将对象序列化成字串
+			file_put_contents("aa.txt",$str);	//保存到指定文件
+			$gstr = file_get_contents("aa.txt");	//获取文件内容
+			echo $gstr.'<br>';					
+			$bb = unserialize($gstr);			//将文本反序列化成对象
+			echo $bb->name;						//调用对象的属性
+
+				结果：
+				O:1:"A":2:{s:4:"name";s:3:"aaa";s:3:"age";i:18;}
+				反序列化时自动执行aaa
+
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		

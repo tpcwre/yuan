@@ -1,0 +1,75 @@
+
+//=====thinkphp 下载地址
+
+www.thinkphp.cn
+
+
+
+
+
+
+
+//=====zendstudio 下载地址
+http://www.zendstudio.net/
+
+zend studio 8 注册码(适用于7.0以上所有版本)
+Username: zendstudio.net
+Serial Number: 3727234F6095F72034F6095F
+
+
+
+
+//=====ecshop 网店系统下载
+http://www.ecshop.com
+
+
+
+
+
+//=====discuz 论坛系统下载
+http://www.discuz.com
+
+http://www.comsenz.com/		北京康盛
+
+
+
+
+//=====php 下载地址; 
+
+http://php.net/
+http://windows.php.net/download/
+
+
+
+
+
+
+//=====mysql 下载地址：
+
+http://www.mysql.com/downloads/mysql/
+
+
+
+
+
+//=====apache 下载地址
+
+http://www.apachelounge.com/download/
+
+
+
+
+
+
+//=====myadmin下载
+
+www.phpmyadmin.net		
+
+
+
+
+
+//=====appserver wamp集成环境 下载官网
+
+http://www.appservnetwork.com/
+

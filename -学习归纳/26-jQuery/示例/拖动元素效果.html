@@ -1,0 +1,54 @@
+<script type='text/javascript' src='jquery-1.8.3.min.js'></script>
+<script type='text/javascript'>
+/*
+//===== 元素拖动效果jquery的实现方式
+	$(function(){
+		var cc=null;
+//===== obj.mousedown() 鼠标按下事件
+		$("#d").mousedown(function(){
+			cc= $(this).css('background');
+			$(this).css('background','red');
+//===== obj.mousemove() 鼠标移动事件
+			$(document).mousemove(function(e){
+				var x =$('#d').width()/2;
+				var y =$('#d').height()/2;
+				$('#d').css('left',e.pageX-x);
+				$("#d").css('top',e.pageY-y);
+			});
+		}).mouseup(function(){
+			$(this).css('background',cc);
+			$(document).off('mousemove');
+		});
+	});
+*/
+
+
+
+//===== 元素的拖动效果javascript方式
+
+	$(function(){
+		var cc = null;
+		var d = document.getElementById('d');
+		d.onmousedown=function(){
+			cc = this.style.background;
+			this.style.background='red';
+			document.onmousemove=function(e){
+//===== obj.offsetWidth,Height 获取元素的宽和高
+				var x = d.offsetWidth/2;
+				var y = d.offsetHeight/2;
+//===== e.clientX,Y 获取鼠标的坐标
+				d.style.left=e.clientX-x;
+				d.style.top=e.clientY-y;
+			}
+		}
+		d.onmouseup=function(){
+			this.style.background=cc;
+//===== obj.event=null 清空事件
+			document.onmousemove=null;
+		}
+	});
+</script>
+<div id='d' style="width:150px;height:150px;background:#ccc;position:absolute;"></div>
+
+
+

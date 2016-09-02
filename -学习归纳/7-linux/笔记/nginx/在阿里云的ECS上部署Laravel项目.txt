@@ -1,0 +1,187 @@
+
+在阿里云的ECS上部署Laravel项目
+
+
+http://segmentfault.com/a/1190000002955120 	原文
+
+
+
+
+配置nginx服务器
+
+
+
+server {
+        listen 80 default_server;
+        #listen [::]:80 default_server ipv6only=on;
+
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+
+        server_name localhost;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
+
+其中root，index ，server_name和location这几行需要稍微修改一下
+
+root修改
+
+root /var/www/laravel/public;
+
+这里就是将nginx服务器的根目录指向Laravel的public文件夹下，后续的Laravel项目的代码我们会放在我们之前创建的/var/www/laravel目录下
+
+index修改
+
+index index.php index.html index.htm;
+
+这里需要注意的是，将index.php排在最前面
+
+server_name修改
+
+server_name server_domain_or_IP;
+
+将server_domain_or_IP修改为你的公网IP
+
+location修改
+
+location / {
+        try_files $uri $uri/ /index.php?$query_string;
+}
+
+修改完是这样的：
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    root /var/www/laravel/public;
+    index index.php index.html index.htm;
+
+    server_name server_domain_or_IP;	
+
+    location / {
+            try_files $uri $uri/ /index.php?$query_string;
+    }
+}
+
+最后我们还需要配置一下Nginx，让其执行PHP文件。同样是在这个文件里，在location下方添加下面的配置：
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    root /var/www/laravel/public;
+    index index.php index.html index.htm;
+
+    server_name server_domain_or_IP;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+}
+
+注意，这一块是自己加上去的：
+
+ location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+配置完之后重启Nginx，使上面的配置项生效。
+
+sudo service nginx restart
+
+
+
+
+
+
+
+
+
+
+
+
+3.创建Laravel项目
+
+在配置完nginx后，怎么获取Laravel的项目代码呢？有以下几种方法：
+
+(1).直接composer安装
+
+直接通过composer来安装，你可以在CES上通过执行
+
+cd ~
+curl -sS https://getcomposer.org/installer | php
+
+上面命令会安装composer
+
+composer全局使用：
+
+sudo mv composer.phar /usr/local/bin/composer
+
+然后在/var/www目录下直接执行
+
+sudo composer create-project laravel/laravel laravel
+
+因为我们之前创建/var/www目录，你可以直接cd /var/www然后执行上面的命令。然后坐等安装完成。
+
+(2).直接上传代码
+
+使用下面命令上传
+
+scp -r laravel root@your_IP:
+
+然后在阿里云的ECS上将laravel移动到/var/www目录下
+
+sudo mv laravel/ /var/www
+
+(3).使用Git和Coding平台
+
+个人比较喜欢使用git来上传代码，可以很方便的更新代码和进行回滚，一旦版本更新出Bug我可以借助Git的强大版本管理能力来修复Bug。流程大概是这样：
+
+本地代码－－－－>Coding－－－－>阿里云ECS
+
+既然要使用git，那么先在ECS上安装git：
+
+sudo apt-get install git
+
+安装完成就可以使用git了，然后在Coding上创建一个私有项目laravel，里面包含所有该Laravel项目所需代码。
+
+一旦本地代码都推送到Coding，然后在/var/www目录下直接使用
+
+git clone your-project-git-link
+
+your-project-git-link替换为你Coding上的laravel项目地址
+4.最后的最后
+
+不管哪种方式安装的代码，/var/www/都是属于root用户的，而访问网站的用户则需要正确的权限和访问限制，我们可以通过下面的命令来实现。
+
+sudo chown -R :www-data /var/www/laravel
+
+根据Laravel的官方文档，/var/www/laravel/app/storage目录需要给网站的用户写权限
+
+sudo chmod -R 775 /var/www/laravel/app/storage
+
+5.BINGO
+
+在浏览器输入：
+
+http://server_domain_or_IP
+
+至此，你可以在阿里云的ECS上随意地用Laravel了，Happy Hacking

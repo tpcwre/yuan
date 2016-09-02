@@ -1,0 +1,20 @@
+<?php
+	$xmldom=new DOMDocument();
+	$xmldom->load("xml.xml");
+	$simp=simplexml_import_DOM($xmldom);				//初始化simple
+							//查
+	echo $simp->stu[0]->sex[1];			  		//获取元素内容
+	echo $simp->stu[0]['atr'];					//获取元素属性
+							//增
+	//$simp->stu[0]->name[0]->addAttribute('d','accc');		//给元素添加属性
+	//$simp->stu[0]->addChild("height","188");			//给元素添加子元素及内容
+
+							//改
+	$simp->stu[0]->sex[1]="aaa";					//更改元素的内容
+	$simp->stu[0]->name["c"]="kkk";					//更改元素的属性
+							//删
+	$simp->stu[0]->age[0]="";					//删除元素的内容
+	$simp->stu[0]->name["c"]="";					//删除元素的属性值
+	
+	$simp->saveXML("xml.xml");	
+?>

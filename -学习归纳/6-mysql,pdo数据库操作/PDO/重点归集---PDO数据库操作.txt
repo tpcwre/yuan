@@ -1,0 +1,229 @@
+
+//========== PDO 普通操作 增删改查
+//========== PDO 预处理 增删改查
+//=====使用PDO的异常处理来实现事务操作（批量添加）
+//=====不使用PDO的异常处理来实现事务操作（批量添加）
+
+
+
+
+
+
+
+
+
+
+<?php
+try{
+	$pdo= new PDO("mysql:host=localhost;dbname=test1",'root','1234567');
+	$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+	$pdo->query("set names utf8");	
+}catch(PDOException $e){
+	die($e->getMessage());
+}
+
+
+
+//========== PDO 普通操作 增删改查
+
+
+	//----- 查询数据 
+
+	$sql="select * from user where id > ((select max(id) from user)-5)";
+	$stmt= $pdo->query($sql);
+	$list = $stmt->fetchAll(PDO::FETCH_ASSOC);		//查询多条(关联方式)
+	
+	$sql2="select max(id) from user";
+	$stmt2=$pdo->query($sql2);
+	$mid = $stmt2->fetch(PDO::FETCH_NUM)[0];		//查询单条(索引方式)
+	echo $mid.'<br>';
+	
+	foreach($list as $v){
+		print_r($v);
+		echo "<br>";
+	}
+
+	
+	
+	
+	
+	//----- 添加数据
+
+	//$sql="insert into user(name,age) values('a','10')";		//= 添加数据
+	//$sql="delete from user where id=618"; 			//= 删除数据
+	$sql="update user set name='aa' where id=619";			//= 修改数据
+	$stmt=$pdo->exec($sql);
+	echo $stmt>0?'操作成功':'操作失败';
+	echo "<hr><hr><hr>";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//========== PDO 预处理 增删改查
+
+
+	//----- 预处理查询数据
+	
+	$cid=$mid-5;	//设置查询最后五条数据
+	$sql="select * from user where id>?";
+	$stmt=$pdo->prepare($sql);				//预处理语句
+	if($stmt->execute(array($cid))){			//用数组方式传值给占位符并判断是否成功
+		$list = $stmt->fetchAll(PDO::FETCH_ASSOC);	//获取数据
+		//$list = $stmt->fetch(PDO::FETCH_ASSOC);	//查询单条数据
+		foreach($list as $v){
+			print_r($v);
+			echo "<br>";
+		}
+	}
+	
+	
+	
+	
+	//----- 预处理 添加数据
+	
+	$sql="insert into user(name,age) values(?,?)";  	// 占位符方式一： ？ 
+	$stmt=$pdo->prepare($sql);				// 提交预处理语句
+	$stmt->bindValue(1,'tingjie');				// 传值方式一：绑定值
+	$stmt->bindParam(2,$age);				// 传值方式二：绑定变量
+	$age=23;
+	$sex=1;
+	//$stmt->execute();					// 执行sql语句
+	echo $pdo->lastInsertId()>0?"预添加成功":"预添加失败";	//判断新添加的ID是否存在 
+	echo "<br>";
+	
+	
+	//----- 预处理 删除数据
+	
+	$did=$mid-3;
+	$sql = "delete from user where id > :id";		//占位符方式二： 别名
+	$stmt=$pdo->prepare($sql);
+	$stmt->bindValue('id',$did);				// 使用别名传值
+	//$stmt->execute();
+	echo $stmt->rowCount()>0?'预删除成功':'预删除失败';	// 判断受影响的行数
+	echo "<br>";
+	
+	
+	
+	//----- 预处理 修改数据 
+	
+	$sql="update user set name=:name,age=:age where id>:id";
+	$stmt=$pdo->prepare($sql);
+	$stmt->bindValue("name",'xiuGai');			//别名+绑值
+	$stmt->bindValue('age',22);
+	$stmt->bindValue("id",$did);
+	//$stmt->bindValue("limit",2);
+	$stmt->execute();
+	echo $stmt->rowCount()>0?"修改成功":"修改失败";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+//=====使用PDO的异常处理来实现事务操作（批量添加）
+
+
+$list = array(
+			array("name"=>'uu017','sex'=>'1','age'=>20,'classid'=>'lamp113'),
+			array("name"=>'uu018','sex'=>'0','age'=>21,'classid'=>'lamp114'),
+			array("name"=>'uu019','sex'=>'1','age'=>24,'classid'=>'lamp113'),
+		);
+require("config.php");		//导入配置文
+try{
+	$pdo = new PDO(DSN,USER,PASS);					//实例化PDO对象
+	$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); 	//设置pdo的错误处理模式为异常模式
+}catch(PDOException $e){
+	die("实例化PDO失败！原因：".$e->getMessage());
+}
+try{
+	$pdo->beginTransaction();					//开启事务
+	$sql = "insert into stu values(null,:name,:sex,:age,:classid)";	//定义添加sql语句
+	$stmt = $pdo->prepare($sql);					//预处理
+	$m=0;								//设置存储成功行数
+	foreach($list as $data){					//遍历要添加的信息并执行
+		$stmt->execute($data);					//执行
+		$m+=$stmt->rowCount();					//获取成功的行数
+	}
+	$pdo->commit();							//提交事务
+}catch(PDOException $pe){
+	$pdo->rollback();						//如果出错就回滚事务
+	$m=0;								//如果出错就将成功数置0
+	
+}
+echo "成功添加{$m}条。";						//显示成功条数
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====不使用PDO的异常处理来实现事务操作（批量添加）
+
+
+
+$list = array(
+	array("name"=>'uu023','sex'=>'1','age'=>20,'classid'=>'lamp113'),
+	array("name"=>'uu024','sex'=>'0','age'=>21,'classid'=>'lamp114'),
+	array("name"=>'uu022','sex'=>'1','age'=>24,'classid'=>'lamp113'),
+);
+require("config.php");
+try{
+	$pdo = new PDO(DSN,USER,PASS);
+	//$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); 
+}catch(PDOException $e){
+	die("实例化PDO失败！原因：".$e->getMessage());
+}
+$pdo->beginTransaction();		//开启事务
+$sql = "insert into stu values(null,:name,:sex,:age,:classid)";
+$stmt = $pdo->prepare($sql);		//预处理语句
+$m=0;					//设置存储成功数
+$b=true;				//设置判断是否全部成功的开关
+foreach($list as $data){
+	$stmt->execute($data);		//执行语句 
+	if($stmt->errorCode()>0){	//获取错误号
+		$b=false;		//如果出错就关闭开关
+		break;
+	}
+	$m+=$stmt->rowCount();		//累加成功号
+}
+if($b){					//判断是否成功
+	$pdo->commit();			//成功就提交事务
+}else{
+	$pdo->rollback();		//失败就回滚事务
+	$m=0;				//成功号置0
+}
+	
+echo "成功添加{$m}条。";
+
+	
+	
+	
+	
+
+	
+	
+	

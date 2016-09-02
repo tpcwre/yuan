@@ -1,0 +1,1921 @@
+//=====数组函数 xxx() 与 array_xxx()的区别
+
+//===== php中的注释
+
+//===== 变量的类型
+
+//===== gettype()，settype() 获取和设置变量类型
+
+//=====isset()判断变量是否存在，unset()销毁一个变量
+
+//=====empty() 判断变量是否为空
+
+//===== 其它测试函数 is_array(),is_double(),is_float(),is_real(),is_long(),is_int(),is_integer(),is_string(),is_object(),is_resource(),is_null(),is_numeric()
+
+//=====intval(),floatval(),strval()数据类型临时转换
+
+//=====超全局变量 $GLOBALS,$_SERVER,$_GET,$_POST,$_COOKIE,$_FILES,$_ENV,$_REQUEST,$_SESSION
+
+//=====define()  定义常量
+
+//===== phpinfo() 下的系统常量 （环境变量）
+
+//=====PHP获取表单值的三种方法
+
+//=====单引与双引号对变量的影响
+
+//=====代码中的转义字符 \n , \r , \t , \\ , \$ , \"
+
+//=====算术运算符 + , - , * , / , %
+
+//=====复合赋值操作 += , -= , *= , /= , %= , = 
+
+//===== ++ -- 递增，递减
+
+//=====比较运算符 ==, ===,!=,!==,<>,<,>,<=,>= 
+
+//=====逻辑运算符 ! , && , || , and , or
+
+//=====数组操作符 +, ==, ===,!=,<>,!==
+
+//=====三元运算
+
+//===== if() 控制语句
+
+//===== switch() 控制语句
+
+//=====do while()  先执行后循环
+
+//=====while() 循环控制
+
+//=====for() 循环控制
+
+//=====break 结束循环体, exit 退出程序, continue 略过符合条件的结果 
+
+//=====PHP会自动转换数据类型
+
+//===== rand(),mt_rand()和getrandMax(),mt_getrandMax() 随机数
+
+//=====number_format() 数字格式化
+
+//=====数学函数	abs(), floor() ,ceil() ,round() ,min() , max() 
+
+//=====数组的创建与显示
+
+//=====修改数组内容的值
+
+//=====获取数组内容的个数与循环显示数组
+//=====count() 获取数组中的长度
+
+//=====数组追加内容
+
+//=====省略关键字创建与追加数组
+
+//=====each() 遍历数组 
+
+//=====!! 将数据转换成布尔值来显示
+
+//=====list() 把数组中的值赋给一些变量
+
+//=====reset() 把数组的内部指针指向首个元素
+//=====each() 遍历中途返回首个元素
+
+//=====array_unique() 移除数组中value值相同的元素
+
+//=====array_flip() 掉换数组中的键和值
+
+//=====多维数组 与 遍历多维数组
+
+//=====sort() 按字母，数字升序排列数组元素
+
+//===== asort() 对数组进行排序并保留原有索引值
+
+//===== ksort() 以键名字母升序对关联数组排序
+
+//=====shuffle() 打乱数组中元素的排列顺序
+
+//===== array_reverse() 倒序排列数组中元素
+
+//===== array_unshift() 向数组开头插入一个或多个元素
+
+//===== array_push() 向数组尾部插入一个或多个元素
+
+//===== array_shift() 删除数组首个元素
+
+//===== array_pop() 删除数组尾个元素
+
+//===== array_rand() 从数组中随机抽取一个或多个元素和其下标
+
+//===== 数组指针操作类函数 
+
+//===== current() 取出数组首个元素（当前指针元素）
+
+//===== next() 取出数组中第二位元素,并将指针指向该元素（当前指针后面的元素）
+
+//===== prev() 取出数组指针前一位元素，并将指针移到该元素
+
+//===== count(), sizeof() 获取数组中元素的个数
+
+//===== array_count_values() 统计数组中各相同元素的个数
+
+//===== extract() 把数组元素key转换成变量名，value转换成变量值。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== extract() 把数组元素key转换成变量名，value转换成变量值。
+
+<?php
+	$arr=array('a'=>'aa','b'=>'bb','c'=>'cc');	
+	print_r($a);
+	echo '<br>';
+	extract($arr);
+	echo $a.'<br>';
+	echo $b.'<br>';
+	echo $c.'<br>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== array_count_values() 统计数组中各相同元素的个数
+
+<?php
+	$a=array(1,2,3,4,5,1,2,3,1,2,1);	
+	print_r($a);
+	echo '<br>';
+	print_r(array_count_values($a));
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== count(), sizeof() 获取数组中元素的个数
+
+<?php
+	$a=array('aaa','bbb','ccc');	
+	print_r($a);
+	echo '<br>'.sizeof($a);
+	echo '<br>'.count($a);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== prev() 取出数组指针前一位元素，并将指针移到该元素
+
+<?php
+	$a=array('aaa','bbb','ccc');	
+	print_r($a);
+	echo '<br>'.next($a).'<br>';	// next() 将数组指针后移一位 
+
+	echo prev($a);		// 取出数组指针前一个元素,并将指针移到该元素
+
+	echo '<br>'.current($a);	//结果 aaa
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== next() 取出数组中第二位元素,并将指针指向该元素（当前指针后面的元素）
+
+<?php
+	$a=array('aaa','bbb','ccc');	
+	print_r($a);
+	echo '<br>'.next($a).'<br>';	//结果 bbb 
+	print_r($a);
+	echo '<br>'.current($a);	//结果 bbb ,因为next()把指针指向了第二个元素bbb
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== next() 取出数组中第二位元素（当前指针后面的元素）
+
+<?php
+	$a=array('aaa','bbb','ccc');	
+	print_r($a);
+	echo '<br>'.next($a);	//结果： bbb
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== current() 取出数组首个元素（当前指针元素）
+
+<?php
+	$a=array('aaa','bbb','ccc');	
+	echo current($a);	//结果是 aaa
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 数组指针操作类函数 
+
+each(),current(),reset(),end(),next(),pos(),prev() 
+
+这里pos() 和current() 效果相同 都是取出数组当前指针的元素。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== array_rand() 从数组中随机抽取一个或多个元素和其下标
+
+<?php
+	$a=array('aaa','bbb','ccc');	
+	print_r($a);
+	echo '<br>';
+	$rand=array_rand($a);	//默认取出1个元素的下标
+	echo $rand.'---'.$a[$rand]."<br>"; //随机取出数组下标和元素
+
+	$rand=array_rand($a,2);	//指定取出2个元素的下标	
+	echo $rand[0].'--'.$rand[1].'<br>';	//随机取出两个元素的下标和元素
+	echo $rand[0].'--'.$a[$rand[0]].'<br>';
+	echo $rand[0].'--'.$a[$rand[1]].'<br>';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== array_pop() 删除数组尾个元素
+
+<?php
+	$a=array('aaa','bbb','ccc');	
+	print_r($a);
+	echo '<br>';
+	array_pop($a);
+	print_r($a);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== array_shift() 删除数组首个元素
+
+<?php
+	$a=array('aaa','bbb','ccc');	
+	print_r($a);
+	echo '<br>';
+	array_shift($a);
+	print_r($a);
+	
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== array_push() 向数组尾部插入一个或多个元素
+
+<?php
+	$a=array('aaa');	
+	print_r($a);
+	echo '<br>';
+	array_push($a,'bbb');	//尾部插入一个元素
+	print_r($a);
+	echo '<br>';
+	array_push($a,'ccc','ddd','eee');	//尾部插入多个元素
+	print_r($a);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== array_unshift() 向数组开头插入一个或多个元素
+
+array_unshift(插入到哪个数组,要插入的内容)   
+该函数会返回当前操作的数组中的元素个数
+
+<?php
+	$a=array('aaa');	
+	print_r($a);
+	echo '<br>';
+	array_unshift($a,'bbb');	//插入一个元素
+	print_r($a);
+	echo '<br>';
+	array_unshift($a,'ccc','ddd','eee');	//插入多人元素
+	print_r($a);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== array_reverse() 倒序排列数组中元素
+
+<?php
+	$a=array('mm1.jpg','mm2.jpg','mm3.jpg','mm4.jpg','mm5.jpg');
+	print_r($a);
+	echo '<br>';
+	$b=array_reverse($a);
+	print_r($b);
+
+	结果：
+Array ( [0] => mm1.jpg [1] => mm2.jpg [2] => mm3.jpg [3] => mm4.jpg [4] => mm5.jpg ) 
+Array ( [0] => mm5.jpg [1] => mm4.jpg [2] => mm3.jpg [3] => mm2.jpg [4] => mm1.jpg )
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====shuffle() 打乱数组中元素的排列顺序
+
+<?php
+	$a=array('mm1.jpg','mm2.jpg','mm3.jpg','mm4.jpg','mm5.jpg');
+	print_r($a);
+	echo "<br>";
+	shuffle($a);
+	print_r($a);
+
+	//结果：
+Array ( [0] => mm1.jpg [1] => mm2.jpg [2] => mm3.jpg [3] => mm4.jpg [4] => mm5.jpg ) 
+Array ( [0] => mm5.jpg [1] => mm1.jpg [2] => mm3.jpg [3] => mm4.jpg [4] => mm2.jpg )
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+//===== ksort() 以键名字母升序对关联数组排序
+	
+	sort()和asort() 是按字母或数字升序来排列索引数组的
+	ksort() 是以元素中的key值字母升序来排序 关联数组 的。
+
+
+
+
+
+
+
+//===== asort() 对数组进行排序并保留原有索引值
+
+	sort()排序是以字母或数字升序来排列，索引顺序也会随之改变。
+	asort() 排序也以字母或数字升序来排列，但保留原来的索引顺序
+
+
+
+
+
+
+
+
+
+
+
+//=====sort() 按字母，数字升序排列数组元素
+	//汉字也会按拼音的升序来排列
+<?php
+	$sg=array('banana','orange','apple');
+	print_r($sg);	
+			//Array ( [0] => banana [1] => orange [2] => apple )
+	echo '<br>';
+	sort($sg);
+	print_r($sg);
+			//Array ( [0] => apple [1] => banana [2] => orange )
+	
+
+	//--  sort()有两个可选参数，可以指定按字母或数字形式来排序
+
+	$a=array(2,12);
+	print_r($a);
+	echo '<br>';
+	sort($a,SORT_NUMERIC);	//指定按数字排序
+	print_r($a);
+	echo '<br>';
+	sort($a,SORT_STRING);	//指定按字母排序
+	print_r($a);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====多维数组 与 遍历多维数组
+
+<?php
+	$a=array(
+		array('产品'=>'苹果','数量'=>'3','价格'=>12),
+		array('产品'=>'猪肉','数量'=>'2','价格'=>5.6),
+		array('产品'=>'饼干','数量'=>'1','价格'=>22),
+	);
+	
+	//--list,each方式
+	for($i=0;$i<count($a);$i++){
+		while(!!list($k,$v)=each($a[$i])){	//将数据转换成布尔型
+			echo $k.'=>'.$v.' | ';
+		}
+		echo '<br>';
+	}
+	echo "<br>";
+
+	//--foreach方式
+	for($i=0;$i<count($a);$i++){
+		foreach($a[$i] as $k=>$v){
+			echo $k.'->'.$v.' \ ';
+		}
+		echo '<br>';
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====array_flip() 掉换数组中的键和值
+
+<?php
+	$a=array(1=>'a',2=>'d',3=>'e',4=>'f');
+	print_r($a);
+	echo '<br>';
+	$b=array_flip($a);
+	print_r($b);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====array_unique() 移除数组中value值相同的元素
+
+<?php
+	$a=array(1=>'a',2=>'d',3=>'e',4=>'f',5=>'a');
+	print_r($a);
+	echo '<br>';
+	$b=array_unique($a);
+	print_r($b);
+?>
+
+
+
+
+
+
+
+
+
+
+
+//=====reset() 把数组的内部指针指向首个元素
+//=====each() 遍历中途返回首个元素
+
+<?php
+	$a=array('a'=>'aa','b'=>'bb','c'=>'cc');
+	print_r($a);
+	$b = each($a);			
+	echo '<br>'.$b[0].'--'.$b[1];	
+
+	$b = each($a);
+	echo '<br>'.$b[0].'--'.$b[1];
+	reset($a);		//利用reset将指针返回首个元素
+	
+	$b = each($a);		//reset()后，each将显示首个元素
+	echo '<br>'.$b[0].'--'.$b[1];
+?>
+
+
+
+
+
+
+
+
+
+
+
+//=====list() 把数组中的值赋给一些变量
+
+	//注意：list() 遍历数组只能针对索引数组，不能对关联数组使用！
+<?php
+	//--list()的使用
+	$a=array('aaa','bbb','ccc');
+	print_r($a);
+	list($a1,$a2,$a3)=$a;	//将数组$a中的每个元素按下标分别对应赋值给 a1,a2,a3 
+	echo '<br>'.$a1.'<br>'.$a2.'<br>'.$a3.'<br><br><br><br><br>';
+	
+	//--list() 和 each() 结合使用遍历关联数组
+	$b=array('a'=>'aa','b'=>'bb','c'=>'cc');
+	print_r($b);	//数组中有三个关联的元素
+	echo '<br>';
+	$bb=each($b);	//取出首个元素同时以关联和索引方式赋值给新数组$bb
+	print_r($bb);
+	list($k,$v)=$bb; //list会用$bb的索引方式取出元素并赋值给两个新数组。
+	echo '<br>'.$k.'=>'.$v.'<br>';
+
+	也可以这样
+	list($k,$v)=each($b);
+	echo $k.'--'.$v;
+?>
+
+
+
+
+
+
+
+
+
+
+//=====!! 将数据转换成布尔值来显示
+
+<?php
+	$a=array('a5'=>'aaa5','a6'=>'aaa6','a7'=>'aaa7');
+	
+	//echo each($a).'<Br>';		//结果显示：Array
+	//echo !each($a);		//结果显示：空
+	echo !!each($a);		//结果显示：1
+?>
+
+
+
+
+
+
+
+
+//=====each() 取出数组中首个元素，并将指针后移到第二个元素 
+
+<?php
+	$a=array('a'=>'aaa','b'=>'bbb');
+	$a=array(1,2,3);
+	print_r($a);
+	echo '<br>';
+	print_r(each($a));
+	//结果：Array ( [1] => aaa [value] => aaa [0] => a [key] => a ) 
+		// 	[1] => aaa
+		//	[0] => a
+		//	[value] => aaa
+		//	[key] => a
+	//注解：each是将数组内首个元素取出，并将指针指向下一个元素，each会把一数组中的一个元素同时以索引[0][1]和关联[key][value]的两种方式存储，调用时亦可用该两种方法。
+
+	echo "<br><br>";
+	$b=array('a'=>'aa','b'=>'bb','c'=>'cc');
+	$bb=each($b);			//每each一次就会取出首个元素，每二个元素变首个
+	echo $bb[key].'--'.$bb[value].'<br>';	//用关联方式调取
+	$bbb=each($b);
+	echo $bbb[key].'--'.$bbb[value].'<br>';
+	$bbbbb=each($b);
+	echo $bbbbb[key].'--'.$bbbbb[value].'<br>';
+	
+	echo $bb[0].'--'.$bb[1];	//用索引方式调取
+?>
+
+<?php
+	$a=array('a5'=>'aaa5','a6'=>'aaa6','a7'=>'aaa7');
+	
+	while(!!$b=each($a)){	//!!是将返回值转换成布尔值
+		echo $b[0].'---'.$b[1].'<br>';
+		echo $b[key].'==='.$b[value].'<br>';
+	}
+
+
+	
+?>
+
+
+
+
+
+
+
+
+
+
+
+//=====省略关键字创建与追加数组
+
+<?php
+	$name['a']='aaa';	
+	print_r($name);
+	$name['b']='bbb';
+	$name['c']='ccc';
+	print_r($name);
+?>
+
+
+
+
+
+
+
+
+
+//=====数组追加内容
+
+<?php
+	$name=array('a'=>'aaa');	//原数组内容
+	print_r($name);
+	echo '<br>';
+	$name['b']='bbb';		//给数组追加内容
+	$name['c']='ccc';
+	print_r($name);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====获取数组内容的个数与循环显示数组
+//=====count() 获取数组中的长度
+
+1：for循环
+$a=array('a','b','c','d','e');
+$count=count($a);		//获取数组内容的个数
+for($i=0;$i<$count;$i++){	//循环数组内容
+	echo $a[$i].'<br>';
+}
+
+2：foreach循环	foreach只适用于数组
+$a=array('a','b','c','d','e');
+if(is_array($a)){		//判断$a是否为一个数组
+	foreach($a as $k=>$v){
+		echo $k.'=='.$v.'<br>'.;
+	}
+}
+
+
+
+
+
+
+
+//=====修改数组内容的值
+
+	$a=array('a','b','c','d','e');
+	print_r($a);
+	echo '<br>'.$a[3].'<br>';
+	$a[3]='hhhh';			修改数组的值
+	echo '<br>'.$a[3].'<br>';
+	print_r($a);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====数组的创建与显示
+
+创建方式一 array()
+
+$name=array('a','b','c');	array()  创建数组
+
+echo $name[2];			结果：c 	显示数组内容
+
+print_r($name);			print_r() 显示数组全部内容
+
+创建方式二 range()
+
+$a=range(1,10);			range() 创建数组
+$a=range('a','z');
+print_r($a);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====数学函数	abs(), floor() ,ceil() ,round() ,min() , max() 
+	
+其它数学函数参考手册：PHPManual->函数参考->数学扩展->Math  
+						   ->BC Math
+
+abs() 绝对值
+
+floor() 	舍去法取整
+
+ceil() 		进一法取整
+
+round()		四舍五入
+
+min()		求最小值或数组中最小值
+echo min(1,2,3,4,5);	结果：1
+
+max()		求最大值或数组中最大值
+
+pow()		计算几次方的结果
+echo pow(2,3);	结果：8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====number_format() 数字格式化
+
+<?php
+	$a=123456.789;
+	echo $a.'<br>';	
+	echo number_format($a).'<br>';		//按英文习惯格式化数字，四舍五入保留整数
+	echo number_format($a,2).'<br>';	//第二个参数2：表示保留小数点后两位
+	echo number_format($a,2,'#','@');
+				//第三，四个参数要同时存在，分别代表格式化分隔符和小数点。
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== rand(),mt_rand()和getrandMax(),mt_getrandMax() 随机数
+
+
+
+
+rand():
+echo rand();	随机产生一个int整形数值范围内的整数值
+
+echo rand(0,10); 	随机产生一个0到10之间的整数值
+
+
+mt_rand();	理论上比rand更好的随机数
+echo mt_rand();
+
+echo mt_rand(0,100);
+
+
+echo getrandMax();	获取最大随机数值
+echo mt_getrandMax();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====PHP会自动转换数据类型
+
+	$a='5a';
+	$b=71+$a;
+	echo $b.'<br>';	//结果：76  在数值运算中，自动将$a的字串转换成数值
+	
+
+
+
+
+
+
+
+
+
+
+
+
+//=====break 结束循环体, exit 退出程序, continue 略过符合条件的结果 
+
+<?php
+//--break 结束整个循环体
+	for($a=1;$a<5;$a++){
+		for($b=1;$b<5;$b++){
+			if($b==2){
+				break;
+			}
+			echo $a.$b.'<br>';
+		}
+	}
+	echo '程序还在进行中....';
+
+//--exit 结束整个页面程序
+	for($a=1;$a<5;$a++){
+		for($b=1;$b<5;$b++){
+			if($b==2){
+				exit;
+			}
+			echo $a.$b.'<br>';
+		}
+	}
+	echo '程序还在进行中....';
+
+//--continue 跳过符合条件的结果，继续往后循环
+	for($a=1;$a<5;$a++){
+		for($b=1;$b<5;$b++){
+			if($b==2){
+				continue;
+			}
+			echo $a.$b.'<br>';
+		}
+	}
+	echo '程序还在进行中....';
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====for() 循环控制
+
+<?php
+	for($a=1;$a<11;$a++){
+		echo $a.'<br>';
+	}
+	echo '循环结束';
+?>
+
+
+
+
+
+
+
+
+
+//=====do while()  先执行后循环
+
+无论条件是否成立，先执行一次语句，然后再判断，判断为真时继续执行，为假时，结束。
+<?php
+	$a=10;
+	do{
+		echo $a.'<br>';
+		$a++;
+	}
+	while($a<20);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====while() 循环控制
+
+<?php
+	$a=10;
+	while($a>0){		//括号里的表达式返回的需要是一个布尔值
+		echo $a;
+		$a--;
+		echo "<br>";
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== switch() 控制语句
+
+<?php
+	$a=12;
+	switch($a){
+		case 1:
+			echo '1111';
+			break;
+		case 2:
+			echo '2222';
+			break;
+		default:
+			echo '88888';
+	}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== if() 控制语句
+
+$a=10;
+if($a>16){
+	echo '成年了';
+}
+或
+if($a<16){
+	echo "未成年";
+}elseif($a>16 && $a<30){
+	echo '成年了';
+}elseif($a>30){
+	echo '养家了';
+}else{
+	echo '父母养着';
+}
+
+if()语句简写形式
+	$a=20;
+	if($a>16);
+	echo '成年了aaa';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====数组操作符 +, ==, ===,!=,<>,!==
+
++	联合		返回一个包含了$a和$b中所有元素的数组
+
+==	等价		如果$a和$b具有相同的元素，返回true
+
+===	恒等		如果$a和$b具有相同的元素以及相同的顺序，返回true
+
+!=	非等价		如果$a和$b不是等价的，返回true.
+
+!==	非恒等		如果$a和$b不是恒等的，返回true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== @() 错误抑制 
+
+$a=100/0;		//页面会提示错误，因为0不能当做除数
+
+解决
+$a=@(100/0);		//@() 抑制错误的出现。当有错误就会直接显示为空
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====三元运算
+
+?：判断结果是否为真。
+: : 区分前后两个结果
+当判断为真时，返回第一个结果，为假时，返回第二个结果
+
+<?php
+	$a=160;
+	$sum=$a>100?'成功':'失败';	当$a>100为真时，返回'成功',为假时返回'失败'
+	echo $sum;
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====逻辑运算符 ! , && , || , and , or
+
+!	非 	!$b	如果$b是false,则返回true,否则相反。
+
+&&	与	$a&&$b	如果$a和$b都是true,则结果为true,否则为false.
+
+|| 	或	$a||$b	如果$a和$b中有一个为true或者都为true,则结果为true,否则为false.
+
+and	与	$a and $b	与 && 相同，但其优先级较低。
+
+or 	或	$a or $b 	与 || 相同，但其优先级较低。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====比较运算符 ==, ===,!=,!==,<>,<,>,<=,>= 
+
+比较运算的结果正确时返回true,否则返回false; 在网页上体现的真为1，假为0或空.
+
+==	等于
+
+===	恒等
+
+!=	不等
+
+!==	不恒等
+
+<>	不等
+
+<	小于
+
+>	大于
+
+<=	小于等于
+
+>=	大于等于
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== ++ -- 递增，递减
+
+++ 等同于 +1  
+-- 等同于 -1
+如
+
+<?php
+	$a=1;
+	$b=$a++;	// ++在后是先赋值后运算
+	echo $b;	//结果：1
+
+	$aa=1;
+	$bb=++$aa;	// ++在前是先运算后赋值
+	echo $bb;	//结果：2
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====复合赋值操作 += , -= , *= , /= , %= , = 
+
+操作符	使用方法	等价于
++=	$a+=$b		$a=$a+$b
+
+-=	$a-=$b		$a=$a-$b	
+
+*=	$a*=$b		$a=$a*$b
+
+/=	$a/=$b		$a=$a/$b
+
+%=	$a%=$b		$a=$a%$b
+
+.= 	$a.=$b		$a=$a.$b
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====算术运算符 + , - , * , / , %
+
++	加	$a+$b
+
+-	减	$a-$b
+
+*	乘	$a*$b
+
+/	除	$a/$b
+
+%	取余	$a%$b
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====代码中的转义字符 \n , \r , \t , \\ , \$ , \"
+
+注意：这里的转义字符的效果是产生在源代码中的，不是网页页面上的效果
+
+\n	换行符	代码中的换行不同于 页面中的换行<br>
+\r	回车	
+\t	制图表	相当于大空格(tab键)
+\\	反斜杠	
+\$	美元符	
+\"	双引号
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====单引与双引号对变量的影响
+
+双引号会解析变量和转义字符，而单引号不会解析，但如果双引号中的变量与汉字参杂就会出错。如下，
+<?php
+	$name='吴祁';
+	echo "my name is $name,my age is 19<br>";	//英文中夹变量，正常
+	echo "我的名字叫：$name<br>";			//前面中文，后面变量 ，正常
+	echo "我的名字叫$name我今年19"; 		//中文中夹变量，或变量后有中文，错误
+	//注：当双引号中混杂着英文与变量时，可以正常解析，但如果是汉字时，就会出错。	解决：可以用字符串连接的方式来解决，如
+	echo "<br>我的名字叫$name".'我今年19';		//保持变量后面没有中文，正常
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====PHP获取表单值的三种方法
+
+<input type='text' name='userName'/>
+
+$userName;			//简短风格
+
+$_POST['userName'];		//中等风格
+$_GET['userName'];
+
+$HTTP_POST_VARS['userName'];	//冗长风格
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====define()  定义常量
+常量：定义后不可更改，且为大写字母，不带$符号，
+常量只可以保存布尔值，整数，浮点数或字符串数据。
+
+define('TOTAL',100);		定义常量
+echo TOTAL;			显示常量
+
+
+
+
+
+
+//===== phpinfo() 下的系统常量 （环境变量）
+
+<?php  phpinfo(); ?>
+页面显示后，有一栏 PHP Variables 就是系统常量（环境变量）
+
+$_SERVER['HTTP_HOST'];		代表主机名和端口号
+$_server['DOCUMENT_ROOT'];	绝对路径
+
+
+
+
+
+
+//=====超全局变量 $GLOBALS,$_SERVER,$_GET,$_POST,$_COOKIE,$_FILES,$_ENV,$_REQUEST,$_SESSION
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====intval(),floatval(),strval()数据类型临时转换
+
+$sum=22.22;
+
+echo intval($sum);	数据临时转型(相当于将变量中的数据转型)
+echo gettype($sum);	还是浮点
+
+echo settype($sum,'integer');	数据整体转型(直接将变量转型)
+echo gettype($sum);		变成整形
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 其它测试函数 is_array(),is_double(),is_float(),is_real(),is_long(),is_int(),is_integer(),is_string(),is_object(),is_resource(),is_null(),is_numeric()
+
+$a=array(1,2);
+echo is_array($a);
+
+//--is_int()	检测变量是否为整数
+
+//--is_numeric() 检测变量是否为一个数字或是数字字串
+$a=123;		$a='123';
+if(is_numeric($a)){
+	echo 'a是一个数字';
+}else{
+	echo 'a不是一个数字';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====empty() 判断变量是否为空
+
+	变量为空是返回 1 (true) 否则返回 false 或不显示
+$a='';
+echo empty($a);
+
+
+
+
+
+
+
+
+
+
+
+
+//=====isset()判断变量是否存在，unset()销毁一个变量
+
+$a=5;
+
+unset($a);		销毁一个变量
+
+echo isset($a); 	判断变量是否存在 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== gettype()，settype() 获取和设置变量类型
+
+$a=123;
+echo gettype($a);	//获取变量类型
+
+settype($a,'string');	//设置变量类型
+echo gettype($a);
+
+
+
+
+
+
+
+//===== php中的注释
+
+//内容	 	两个斜杠代表单行注释	
+		多行同步快捷键：  ctrl + /
+
+#内容		井号也代表单行注释
+
+/*内容*/ 	这个代表多行注释 
+
+
+
+
+//===== 变量的类型
+
+变量可以是 null(空), 整形，浮点型，布尔型，数组型，对象型，资源型。
+
+
+
+
+//=====数组函数 xxx() 与 array_xxx()的区别
+
+一般 xxx() 类型的数组函数，不会产生新变量，它会直接影响原有数组
+
+而 array_xxx() 函数 会在处理原数组后把结果赋值给一个新的数组变量

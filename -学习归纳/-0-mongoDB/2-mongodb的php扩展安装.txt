@@ -1,0 +1,69 @@
+
+
+
+
+1，下载mongodb的扩展包
+	wget http://pecl.php.net/get/mongo-1.6.14.tgz
+
+
+2，将扩展包解压并进入该目录
+	tar vzxf mongo--1.6.14.tgz
+	cd mongo--1.6.14
+
+3，使用phpize关联PHP
+	/usr/local/php/bin/phpize
+
+4，configure 生成PHP关联文件
+	./configure --with-php-config=/usr/local/php/bin/php-config --enable-mongo
+
+5，生成二进制文件
+	make
+
+6，安装
+	make install
+	如出现 install no role 异常，需要先make clear 和 make clean 后再make install
+
+7，开启php中mongo的扩展
+	vim /usr/local/php/etc/php.ini
+		extension=mongo.so		//在php.ini的extension小节中添加该语句
+
+
+8，重启apache
+	service httpd restart
+
+
+
+
+9，php连接测试
+
+	<?php
+
+        	$conn= new Mongo("mongodb://admin:admin@localhost:11111/admin");
+        	var_dump($conn);
+		phpinfo();
+
+
+	如果能出现对象资源说明安装成功！如果失败请尝试下面（10）操作
+
+
+10，其它异常
+	如果无法正常使用php连接 请尝试以下办法 
+	
+	//开启selinux
+	vim /etc/selinux/config		
+		SELINUX=enforcing			
+
+	//开启apache 的网络连接
+	/usr/sbin/setsebool -P httpd_can_network_connect 1 	
+
+
+
+11，php中的mongo操作请参见 "4-PHP的CURD操作"
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>{$title}</title>
+    </head>
+    <body>
+        <h2>{$title}</h2>
+		<h3><a href="index.php">返回首页</a></h3>
+		{assign var="name1" value="mayao"}
+		{assign "name2" "曾国防"}
+		{$name3="朱凯凯"}
+		{$name1}
+		{$name2}
+		{$name3}
+		<hr/>
+		
+		{function aa}
+			<ul>
+				<li>aaaaaaaaa</li>
+				<li>aaaaaaaaa</li>
+			</ul>
+		{/function}
+		
+		{call aa}
+		<hr/>
+		
+		{for $i=1 to 10}
+			{$i}
+		{/for}
+		
+		<hr/>
+		{foreach $a as $v}
+			{$v}
+		{/foreach}
+		
+		<hr/>
+		
+		{section k $a}
+			{$a[k]}
+		{/section}
+		
+		</body>
+</html>

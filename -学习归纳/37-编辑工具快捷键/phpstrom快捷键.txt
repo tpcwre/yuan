@@ -1,0 +1,59 @@
+
+
+Ctrl + Shift + Enter 添加完成标识符
+Ctrl + P 显示参数信息
+Ctrl + Q 快速查找函数文档
+Ctrl + mouse 快速跳转到当前鼠标代码的源出处
+Alt + Insert 快速添加魔术方法
+Ctrl + O 选中并重写当前类的一个方法
+Ctrl + I 实现一个魔术方法
+Ctrl + Alt + T 需要回环的结构体
+Ctrl + / 开启/关闭当前行的注释
+Ctrl + Shift + / 开启/关闭当前块的注释
+Ctrl + W 增量式的选中当前块
+Ctrl + Shift + W 与ctrl+w相反
+Ctrl + Alt + L 格式化选中代码块
+Ctrl + Alt + I 自动缩进代码
+Tab / Shift + Tab 添加/减少缩进
+Ctrl + X or Shift + Delete Cut current line or selected block to clipboard
+Ctrl + C or Ctrl + Insert Copy current line or selected block to clipboard
+Ctrl + V or Shift + Insert Paste from clipboard
+Ctrl + Shift + V Paste from recent buffers…
+Ctrl + D Duplicate current line or selected block
+Ctrl + Y 删除当前行
+Ctrl + Shift + J Smart line join (HTML and JavaScript only)
+Ctrl + Enter Smart line split (HTML and JavaScript only)
+Shift + Enter 开启新行
+Ctrl + Shift + U 选中块代码大/小写
+Ctrl + Shift + ] / [ 增量选中块结构标识符代码段
+Ctrl + Shift + R  查找文件，一个项目如果很大的话，查找文件太重了
+Ctrl + Shift + NumPad+ 折叠所有
+Ctrl + Shift + NumPad- 开启所有折叠
+Ctrl + Shift + N 寻找一个文件
+Ctrl + F4 关闭当前tab
+Ctrl + Delete 删除一个单词至结尾
+Ctrl + Backspace 删除一个单词至词头
+Ctrl + NumPad+/- 折叠代码段
+
+Ctrl + N 寻找一个类
+Ctrl + Alt + Shift + N 寻找一个符号
+Alt + Right/Left 去上一个/下一个tab框
+F12 返回前一个工具栏
+Esc 返回编辑框
+Shift + Esc 隐藏其他活动窗口
+Ctrl + G 去到指定行
+Ctrl + E 最近编辑的文件
+Alt + F1 当前文件的一些选择模式，很有用
+Ctrl + B or Ctrl + Click 代码源出处
+Alt + Up/Down 去上一个/下一个方法体
+Alt + Home 显示文件层级浏览工具
+F11 开启/关闭书签
+Ctrl + F11 开启/关闭数字书签
+Ctrl + #[0-9] 中转到数字书签
+Shift + F11 显示所有的书签
+
+
+
+
+设置字体大小 
+	file->setting->Editor->Colors & Fonts -> font

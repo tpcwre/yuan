@@ -1,0 +1,385 @@
+
+
+
+mysql> delimiter $$
+mysql> create procedure myrollback()
+    -> begin
+    -> declare done int default 0;
+    -> declare i,a int;
+    -> declare n varchar(16);
+    -> declare s char(2);
+    -> declare ag tinyint;
+    -> declare cur1 cursor for select id,name,sex,age,addtime from stu_bak;
+    -> open cur1;
+    -> repeat
+    ->    fetch cur1 into i,n,s,ag,a;
+    ->    if not done then
+    ->    insert into stu values(i,n,s,ag,a);
+    ->    delete from stu_bak where id=i;
+    ->    end if;
+    -> until done end repeat;
+    -> close cur1;
+    -> end;
+    -> $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call myrollback();
+
+
+
+
+
+
+
+存储过程与函数的语法结构
+
+1.存储过程：
+  CREATE PROCEDURE sp_name ([proc_parameter[,...]])
+    [characteristic ...] routine_body
+
+  说明：
+  # sp_name -- 存储过程名称
+  # proc_parameter -- 参数
+    参数语法：[ IN | OUT | INOUT ] param_name type 
+     其中：IN、OUT、INOUT 是传入或传出的参数
+       param_name表示参数名称 type参数类型。   
+  # characteristic -- 说明存储过程的特征
+    可有如下值：
+     CONTAINS SQL：表示子程序不包含读或写数据的语句。
+     NO SQL：表示子程序不包含SQL语句。
+     READS SQL DATA：表示子程序包含读数据的语句，但不包含写数据的语句。
+     MODIFIES SQL DATA：表示子程序包含写数据的语句。如果这些特征没有明确给定，
+     默认的是CONTAINS SQL
+
+   # routine_body -- 存储过程主体代码，一般由BEGIN开始 END结束
+    注意：在主体代码中一般是多条语句，要用分号隔开。
+          需要使用delimiter 来将分号临时改为其它符号，如：delimiter //改为双斜线
+	  最后再使用delimiter ; 语句改回来
+
+   具体语法：
+   delimiter //
+   CREATE PROCEDURE 存储过程名 ([ 参数列表 [,...]])
+    [特征说明] 
+    BEGIN
+         存储过程主体内容。。。（这语句中）
+    END
+    //
+    delimiter ;
+   
+
+  示例：
+	mysql> select * from grade;
+	+--------+----------+------+------+--------+---------+
+	| sno    | sname    | php  | java | system | network |
+	+--------+----------+------+------+--------+---------+
+	| 200602 | zhangsan |   78 |   89 |     65 |      70 |
+	| 200603 | lisi     |   79 |   89 |     80 |      70 |
+	| 200604 | aa       |   88 |   90 |     80 |      78 |
+	| 200605 | bb       |   68 |   96 |     82 |      78 |
+	| 200606 | cc       |   89 |   64 |     78 |      91 |
+	| 200607 | dd       |   56 |   68 |     70 |      45 |
+	| 200608 | ee       |   69 |   89 |     68 |      80 |
+	+--------+----------+------+------+--------+---------+
+	7 rows in set (0.00 sec)
+
+	mysql> delimiter //
+	mysql> create procedure mycount(out p1 int)
+	    -> begin
+	    -> select count(*) into p1 from grade;  #into表示将count(*)值赋给p1参数
+	    -> end
+	    -> //
+	Query OK, 0 rows affected (0.08 sec)
+
+	mysql> delimiter ;
+	mysql> call mycount(@m);
+	Query OK, 0 rows affected (0.00 sec)
+
+	mysql> select @m;
+	+------+
+	| @m   |
+	+------+
+	| 7    |
+	+------+
+	1 row in set (0.00 sec)
+
+
+2、函数的定义：
+   
+   CREATE FUNCTION sp_name ([func_parameter[,...]])
+    RETURNS type
+    [characteristic ...] routine_body
+   说明：
+    # sp_name -- 定义的函数名称
+    # func_parameter -- 函数的参数 
+        参数语法格式：param_name type 如 p1 int
+    # type -- 本函数的返回类型，可以是数据的所有类型。如: varchar(20)
+    # characteristic -- 说明函数的特征，详见存储过程里的内容。
+    # routine_body --函数主体代码，一般由BEGIN开始 END结束
+    注意：在主体代码中一般是多条语句，要用分号隔开。
+          需要使用delimiter 来将分号临时改为其它符号，如：delimiter //改为双斜线
+	  最后再使用delimiter ; 语句改回来
+
+   示例：
+       mysql> delimiter //
+	mysql> create function hello(p1 varchar(20))
+	    -> returns varchar(30)
+	    -> return concat("hello ",p1,"! ");
+	    -> //
+	Query OK, 0 rows affected (0.03 sec)
+
+	mysql> delimiter ;
+	mysql> select hello("zhangsan");
+	+-------------------+
+	| hello("zhangsan") |
+	+-------------------+
+	| hello zhangsan!   |
+	+-------------------+
+	1 row in set (0.00 sec)
+
+	mysql> select hello("AA");
+	+-------------+
+	| hello("AA") |
+	+-------------+
+	| hello AA!   |
+	+-------------+
+	1 row in set (0.00 sec)
+
+	mysql> drop function hello;
+	Query OK, 0 rows affected (0.16 sec)
+
+	mysql> select hello("AA");
+	ERROR 1305 (42000): FUNCTION mystudb.hello does not exist
+	mysql>
+
+
+3. 查看存储过程和函数信息
+SHOW CREATE PROCEDURE和SHOW CREATE FUNCTION
+
+4、查看存储过程或函数的状态
+SHOW PROCEDURE STATUS和SHOW FUNCTION STATUS
+
+5. DECLARE局部变量
+DECLARE var_name[,...] type [DEFAULT value]
+
+6. 变量SET语句
+SET var_name = expr [, var_name = expr] ...
+
+7. SELECT ... INTO语句
+SELECT col_name[,...] INTO var_name[,...] table_expr
+
+
+
+
+mysql> delimiter $$
+mysql> create function mysum(a int(2),b int(2))
+    -> returns int(2) //设置返回类型
+    -> return a+b;
+    -> $$
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> delimiter ;
+mysql> select mysum(10,20);
++--------------+
+| mysum(10,20) |
++--------------+
+|           30 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select mysum(10,200);
++---------------+
+| mysum(10,200) |
++---------------+
+|           210 |
++---------------+
+1 row in set (0.00 sec)
+
+//定义一个函数，负责统计指定班级名，返回人数。
+mysql> \d//
+mysql> create function myfun(cid varchar(16))
+    -> returns int(2)
+    -> begin
+    -> select count(*) into @m from stu where classid=cid;
+    -> return @m;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> \d;
+mysql> select myfun('lamp61');
++-----------------+
+| myfun('lamp61') |
++-----------------+
+|              11 |
++-----------------+
+1 row in set (0.02 sec)
+
+
+//综合练习：
+   要求：定义一个存储过程实现php成绩的提升，
+     要求每次对不及格的php成绩加2分，直至都及格为止，
+     最后返回提升成绩次数。
+	mysql> select * from grade;
+	+--------+----------+------+------+--------+---------+
+	| sno    | sname    | php  | java | system | network |
+	+--------+----------+------+------+--------+---------+
+	| 200602 | zhangsan |   50 |   89 |     65 |      70 |
+	| 200603 | lisi     |   79 |   89 |     80 |      70 |
+	| 200604 | aa       |   49 |   90 |     80 |      78 |
+	| 200605 | bb       |   54 |   96 |     82 |      78 |
+	| 200606 | cc       |   89 |   64 |     78 |      91 |
+	| 200607 | dd       |   56 |   68 |     70 |      45 |
+	| 200608 | ee       |   69 |   89 |     68 |      80 |
+	+--------+----------+------+------+--------+---------+
+	7 rows in set (0.00 sec)
+
+	mysql> delimiter //
+	mysql> create procedure updatephp(out num int)
+	    ->   begin
+	    ->     declare myphp int default 0; 
+	    ->     set num=0;
+	    ->     select min(php) into myphp from grade;
+	    ->     while myphp<60 do
+	    ->       update grade set php=php+2 where php<60;
+	    ->       select min(php) into myphp from grade;
+	    ->       set num=num+1;
+	    ->     end while;
+	    ->   end;
+	    -> //
+	Query OK, 0 rows affected (0.08 sec)
+
+	mysql> delimiter ;
+	mysql> select * from grade;
+	+--------+----------+------+------+--------+---------+
+	| sno    | sname    | php  | java | system | network |
+	+--------+----------+------+------+--------+---------+
+	| 200602 | zhangsan |   50 |   89 |     65 |      70 |
+	| 200603 | lisi     |   79 |   89 |     80 |      70 |
+	| 200604 | aa       |   49 |   90 |     80 |      78 |
+	| 200605 | bb       |   54 |   96 |     82 |      78 |
+	| 200606 | cc       |   89 |   64 |     78 |      91 |
+	| 200607 | dd       |   56 |   68 |     70 |      45 |
+	| 200608 | ee       |   69 |   89 |     68 |      80 |
+	+--------+----------+------+------+--------+---------+
+	7 rows in set (0.00 sec)
+
+	mysql> call updatephp(@m);
+	Query OK, 0 rows affected (0.00 sec)
+
+	mysql> select @m;
+	+------+
+	| @m   |
+	+------+
+	| 6    |
+	+------+
+	1 row in set (0.01 sec)
+
+	mysql> select * from grade;
+	+--------+----------+------+------+--------+---------+
+	| sno    | sname    | php  | java | system | network |
+	+--------+----------+------+------+--------+---------+
+	| 200602 | zhangsan |   60 |   89 |     65 |      70 |
+	| 200603 | lisi     |   79 |   89 |     80 |      70 |
+	| 200604 | aa       |   61 |   90 |     80 |      78 |
+	| 200605 | bb       |   60 |   96 |     82 |      78 |
+	| 200606 | cc       |   89 |   64 |     78 |      91 |
+	| 200607 | dd       |   60 |   68 |     70 |      45 |
+	| 200608 | ee       |   69 |   89 |     68 |      80 |
+	+--------+----------+------+------+--------+---------+
+	7 rows in set (0.00 sec)
+
+	mysql>
+
+	
+
+创建一个触发器
+=========================================
+格式：1、触发器的定义：
+  CREATE TRIGGER trigger_name trigger_time trigger_event
+    ON tbl_name FOR EACH ROW trigger_stmt
+  
+  说明：
+  # trigger_name：触发器名称
+  # trigger_time:触发时间，可取值：BEFORE或AFTER
+  # trigger_event：触发事件，可取值：INSERT、UPDATE或DELETE。
+  # tb1_name：指定在哪个表上
+  # trigger_stmt：触发处理SQL语句。
+  
+	示例：
+		mysql> delimiter $$
+		mysql> create trigger del_stu before delete on stu for each row
+			-> begin
+			->  insert into stu_bak values(old.id,old.name,old.sex,old.age,old.addtime);
+			-> end;
+			-> $$
+		Query OK, 0 rows affected (0.05 sec)
+
+		mysql> delimiter ;
+		
+
+视图：（虚拟表信息）
+===========================================
+格式：
+CREATE [OR REPLACE] [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+    VIEW view_name [(column_list)]
+    AS select_statement
+    [WITH [CASCADED | LOCAL] CHECK OPTION]
+	
+	
+	
+
+  function aa($a,$b,&$c){
+     $c =  $a+$b;
+  }
+
+	aa(10,20,$cc);	
+		
+		echo $cc;
+
+
+存储过程的创建
+//============================================		
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `lamp34`.`adddemo`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `adddemo`(in n varchar(16),in s varchar(2))
+BEGIN
+	set n=UPPER(n);
+	set s=UPPER(s);
+	insert into demo values(n,s);
+    END$$
+DELIMITER ;
+
+--定义一个存储过程，实现求指定值的累加结果，第一参数是要累加值，第二参数是返回累加结果，
+mysql> \d//
+mysql> create procedure mycount(in m int,out total int) begin
+    -> set @i=0;
+    -> set @sum=0;
+    -> while @i<=m do
+    -> set @sum=@sum+@i;
+    -> set @i=@i+1;
+    -> end while;
+    -> set total=@sum;
+    -> end;
+    -> //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> \d;
+mysql> call mycount(100,@aa);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @aa;
++------+
+| @aa  |
++------+
+| 5050 |
++------+
+
+	
+
+
+
+	
+

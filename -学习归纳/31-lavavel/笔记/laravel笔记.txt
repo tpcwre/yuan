@@ -1,0 +1,3087 @@
+
+
+
+
+
+
+//===== 需要拓展学习
+
+	linux 下 svn 的使用
+
+	linux 下 git 的使用
+
+	数据库建模工具的使用
+
+	七牛云存储
+
+	
+	lavavel 的  fakey
+
+	lavavel 的  计划任务 与 console 与数据抓取 
+
+	容联云通讯：http://www.yuntongxun.com/  短信接口
+
+
+
+
+
+
+	套二视频第一集，需要补听
+
+//===== 
+
+
+//===== lavavel框架的目录结构
+//===== laravel 异常错误的解决
+//===== 特殊效果
+	
+	
+	//-- echo app_path();   获取app目录的绝对路径 
+	//-- echo storage_path();   获取storage目录的绝对路径 
+	//-- require app_path()."/Sdk/Sdk.php";		require 引用app目录下的文件(被引页面无需设置命名空间)
+	//--  log日志
+	//-- 自定义类的使用
+	//-- .gitignore 版本控制配置忽略文件 （或svn忽略以下文件）
+	//-- \Request::getClientIp() 获取访问的ip地址
+	//-- 表单POST方式提交时的token验证
+	//-- get默认值的用法
+	//-- mysql 数据库建模工具
+	//-- ajax的token验证
+	//-- 如果不知道函数调用情况，
+	//-- provider 提供器，用来注册服务，第三方，和自定义类，使laravel可自动加载
+	//-- laravel 中使用自定义类
+	//-- laravel 创建使用自定义redis类
+//===== 路由，控制器，视图的关系
+//===== 添加自定义方法及给方法注册路由 
+//===== 路由
+//===== 控制器
+//===== 模板 
+//===== 中间件 及使用步骤
+//===== 搜索加分页的实现 
+//===== 验证码的生成
+//===== 方法欺骗
+//===== 环境与部署
+//===== mysql 数据库操作
+//===== Eloquent 数据库交互
+//===== Request 请求
+//===== session 会话
+//===== 数据验证
+//===== hash()  加密与验证
+	//-- make()  加密	
+	//-- check() 验证
+//===== 数组帮助函数
+	//-- dd()	打印数据并终止后面的程序
+	//-- token 加密验证函数
+	//-- head()  获取数组中第一个元素
+	//-- array_only() 	获取数组中指定的元素
+	//-- first() 过滤并返回满足条件的第一个元素
+	//-- add() 给数组添加元素
+	//-- except()	获取数组中除指定元素以外的所有元素
+	//-- flatten()	平面获取将多维数组的值
+	//-- where()	获取数组中匹配条件的元素
+	//-- last() 获取数组中最后一个元素
+//===== 路径帮助函数
+	//-- app_path()	获取app目录绝对路径 
+	//-- config_path()	获取配置文件路径
+	//-- publci_path()	获取public目录路径
+	//-- storage_path() 	获取缓存等过程文件的目录路径
+//===== 字符串帮助函数
+	//-- str_plural()	将单词变为复数形式（有些不可变）
+	//-- starts_with()	 判断字串是否以某个字符开始的
+	//-- ends_with()	判断字串是否以某字符结尾的
+	//-- camel_case()	将下卉线式的字串按驼锋命名法转化 
+	//-- class_basename()	提取使命空间的文件名
+	//-- str_limit() 	设置字串显示的长度（其余的用省略号代替）
+	//-- str_is()	判断字串是否满足指定条件
+//===== 字符串帮助函数
+	//-- str_plural()	将单词变为复数形式（有些不可变）
+	//-- starts_with()	 判断字串是否以某个字符开始的
+	//-- ends_with()	判断字串是否以某字符结尾的
+	//-- camel_case()	将下卉线式的字串按驼锋命名法转化 
+	//-- class_basename()	提取使命空间的文件名
+	//-- str_limit() 	设置字串显示的长度（其余的用省略号代替）
+	//-- str_is()	判断字串是否满足指定条件
+//===== 常量
+	//--  __FUNCTION__ 	返回当前方法名
+//===== linux 下使用 SVN
+	//-- linux 下svn的使用
+//===== github
+//===== linux生成密钥 与 密钥与git的应用
+	//-- 密钥的创建
+	//-- git客户端免密登陆
+//===== weui 微信前端界面 
+//===== laravel 邮件发送
+//===== laravel 项目在linux中的注意事项 
+	//-- storage和vendor目录的权限需要可读可写
+	//-- laravel在apache与nginx的重写规则注意事项
+	//-- nginx 解析PHP 配置
+	//-- 在阿里云的ECS上的nginx部署Laravel项目
+//===== laravel框架的命令行大全
+//===== lavavel的搭建
+//===== 文件上传及存储操作：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== lavavel框架的目录结构
+
+	\resource			存放视图模板的目录
+	\app				路由，控制器等存放目录
+		\app\Console			数据填充模块及命令相关文件存放目录
+		\app\Evente			通过一些事件响应来完成某些任务的事件命令	
+		\app\http				路由,控制器,中间件,Request
+			\app\http\Controllers\		控制器存放目录
+			\app\http\Middlewar\		中间件存放目录
+			\app\http\Request\		POST.GET等数据接收处理类目录
+			\app\http\routes.php		路由配置文件
+		\app\jobs		存放后台进行的任务，异步处理等
+		\app\Exception		存放所有的异常
+		\app\listeners		存放监听器
+		\app\library		自定义类存放目录
+		\app\providers 		服务提供者和相关组件
+	\public 			存放css,js等配置文件的目录
+	\config				配置目录 
+		\config\app.app		lavavel基本设置默认语言，时区，命名空间,类的别名,国际化等
+	\storage			存放缓存的目录
+	\vendor				扩展插件目录
+	.env				数据库等配置信息文件
+	.gitignore  			设置版本控制器想要略的文件
+
+
+
+
+
+
+
+
+//===== laravel 异常错误的解决
+
+	//-- linux下的laravel 不显示模板内容
+		将 storage  和vendor 目录的权限改成 777 
+	     或
+		根据环境将这两个目录的属主修改成相应的apache或nginx 
+			chown -R apache:apache storage
+		
+		storage 存放着日志，缓存，session等,
+		vendor 存放着composer 安装的一些服务组件 插件和类库
+
+
+	//--  页面修改或内容删除不起作用，是缓存的原因
+		找到storae/framework/view 目录 ，将下面的缓存文件删除即可
+
+
+
+	//--  路由有时出错，且路由都清了，控制器也删除了还是报错
+		Whoops,looks like something went wrong,
+		ErrorExceplion in Filesystem.php line 81:
+		file_put_contents(/Users/chenyulong..../web/ad/bootstrap/cache/services.json):failed to open stream:Permission denied
+		
+		将下面两个目录的权限提升即可
+			/bootstrap/cache
+			/storage
+
+
+	//-- composer 安装laravel 时的错误 
+		报错提示： The "https://packagist.org/packages.json" file could not be downloaded: failed to open stream: HTTP request failed!
+
+		解决：
+			composer config -l -g		//找到composer 主目录，其中的[home]配置项内容就是了。
+
+    			然后编辑composer主目录下的config.json文件为：
+
+			{
+ 				"config": {},
+    				"repositories": [
+      					{"type": "composer", "url": "http://pkg.phpcomposer.com/repo/packagist/"},
+      					{"packagist": false}
+    				]
+			}
+
+		注： 有时可以先不用这种方法，试着多 运行几次 composer create-project laravel/laravel blog --prefer-dist
+			因为是国外的主站，会因为网络的原因而导致无法安装，偶尔也会成功
+
+
+
+
+
+
+
+
+//===== 特殊效果
+
+
+	//--  log日志
+	
+		日志默认存放位置 \storage\logs\laravel.log
+		
+		public function stat(){
+			$user = \DB::table('stu')->where('id',75)->first();
+			\Log::info($user->name);
+			return redirect($user->name);	
+		}
+		//将每次访问指定网站的行为记录到日志当中。
+
+
+
+	//-- 自定义类的使用
+
+		1，在app下创建目录或文件
+		2，设置命名空间编写类代码 ，注意类名与文件名要相同
+		3, 在控制器中引用 时，先引用命名空间，然后new 类的对象并调用方法
+
+
+
+
+	//-- .gitignore 版本控制配置忽略文件 （或svn忽略以下文件）
+		/vendor
+		/node_nodules
+		.env
+		上面三个内容表示，在版本控制上传时，它们三个会被忽略！
+		在该文件内存放的内容是不会上传给版本控制 的文件，这里一般会把 .env 添加进来 ，这样本地的.env 
+		文件就不会上传而覆盖服务器上的.env文件了，来达到服务器用的数据库和本地用的数据库不同也能运行的效果。
+
+
+
+		
+	//-- \Request::getClientIp() 获取访问的ip地址
+
+	
+	
+	
+	//-- 表单POST方式提交时的token验证
+
+		<form action='test' method='post'>
+			<input type='hidden' name='_token' value="{{csrf_token()}}">		传送一个隐藏的token项
+		</form>
+		
+			
+		//示例：_token + except + insert 表单提交时用_token验证
+		//模板页面
+			<form action="{{url('stu')}}" method="post">  	
+					//这里虽没指明提交到哪，但 下面的store方法会通过_token自动识别将数据添加到数据库
+				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">		
+					// _token 验证添加数据的功能 
+				<td><input type="text" name="name"/></td>
+				<input type="submit" value="添加"/>
+			</form>
+		
+	    //控制器页面
+			public function create()
+			{
+				return view('stu/create');		//跳转到添加表单页
+			}
+
+			public function store(Request $request)	//自动识别表单的提交行为，并添加数据到数据库
+			{
+				$result = $request->except("_token");		
+				//将数据集合中的_token相关数据筛选出去
+				\DB::table('stu')->insert($result);	//向数据表插入数据
+				return redirect('stu');
+			}
+	   
+	   
+
+
+	//-- get默认值的用法
+		Route::get('test',function(){
+			return Request::get('name','aaa');	//如果传值name有值时则使用其值，如果name不存在则会使用aaa的默认值.
+
+
+		});
+
+
+	//-- mysql 数据库建模工具
+
+		mysql workbench 	名字
+
+		要求：	需要注册oracle 的账号才可以下载
+
+
+
+
+	//-- ajax的token验证
+
+		$.ajax({
+			url:'',
+			data:{
+				phone:phoen,
+				_token:"{{csrf_token}}"		用数据方式传递token值
+			}
+		});
+
+		或
+		//模板中的ajax
+			<meta name="csrf-token" content="{{ csrf_token() }}" />			//在头部设置token
+			var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');		//在js中设置token 变量 
+			$.ajax({								
+					url: '/home/upload/',
+					type: 'get',
+					data: {'_token': CSRF_TOKEN},		//ajax中使用token验证
+					dataType: 'JSON',
+					success: function (data) {
+						console.log(data);
+					}
+			});
+
+
+		//路由设置
+			Route::get('/home/upload/','IndexController@rand');
+
+
+		//控制器中的验证
+			IndexControlle.php 页面
+			public function rand(){
+				$token = csrf_token();
+				if(\Request::get('_token')!=$token){
+						exit;
+				}
+			}
+
+		
+		
+
+	//-- 如果不知道函数调用情况，
+		可以在controller中throw new Exception();，然后在/config/app.php的debug更改为debug=>true。可以看到函数的调用关系。
+
+
+	//-- provider 提供器，用来注册服务，第三方，和自定义类，使laravel可自动加载 
+		一般情况下是这样的，先在require里添加想要使用的第三方插件，然后composer update，之后在app/config/app.php中添加ServiceProvider和alias。 
+		config->app.php下 有一个'providers'=>[....];  注册了laravel所拥有的很多服务，可以在这里注册第三方和自定义类,来完成自动加载
+
+
+
+
+	//-- laravel 中使用自定义类
+	//-- laravel 创建使用自定义redis类
+
+		App目录下的 自定义类文件 Myredis.php 页面
+			<?php
+			namespace App;
+			use Redis;
+			class Myredis{
+					public $redis;
+					public function __construct(){
+							$this->redis = new Redis();
+							$this->redis->connect('localhost');
+					}
+					public function get($name){
+							return $this->redis->get($name);
+					}
+			}
+		
+		控制器文件
+			use Illuminate\Http\Request;
+			use App\Http\Requests;
+			use App\Http\Controllers\Controller;
+			use App\Myredis;
+			class testController extends Controller
+			{
+				public function index()
+				{   
+					$r = new Myredis();
+					echo $r->get('b');
+				}  
+			}
+			
+		
+		
+		
+//===== 路由，控制器，视图的关系
+
+		Route::resource('user','StuController@index');	
+		//当一个请求路径为 'user' 时， 会自动访问控制器StuController下的index方法
+		
+			class StuController{
+				public function index(){
+					return view('hello');
+					 //这里将返回一个resource/Stu/hello.blade.php 的模板视图
+				}
+			}
+		
+			
+			
+			
+			
+//===== 添加自定义方法及给方法注册路由 
+
+	一：在控制器中创建自定义方法。
+		public function del($id){
+			echo 'del';
+		}
+	
+	二：在路由中注册该 方法以哪种方式
+		手册位置-》基础--HTTP控制器-》资源控制器处理的动作
+		Route::get('stu/del/{id}','StuController@del');
+		
+	三：在模板中调用该方法
+		<a href="stu/del/{{$user->id}}">删除</a>
+		//模板中的路径与路由中相同时就会触发路由中指定的方法
+	
+	
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+//===== 路由
+		注意：编写路由时下面两个文件是要有足够权限的
+					/bootstrap/cache
+					/storage
+
+
+	//-- 查看所有的路由方式
+		
+		php artisan roote:list
+
+		
+		
+	//-- 路由的请求方式 
+		这里路由的原理使用的是观察者的模式：就是根据不同的访问路径来调用不同的方法
+		
+		Route::get('/',function(){});		//GET方式请求
+		Route::get('/','xxxController@xxx');
+
+		Route::post('/',function(){});		//post请求方式
+		Route::post('/','xxxController@xxx');
+
+		Route::resouce('/',"UserController");	//资源请求方式会自动匹配get和post并自动分配到相应的方法中，也可使用@来指定方法
+
+		Route::any('/',function(){...});		//任何请求方式都可以
+		Route::any('/','xxxController@xxx');
+
+		Route::get('/',function(){
+			return view('welcome');
+		})
+		//当一个get请求的路径为 '/' 时， 那么会返回给浏览器一个为welcome的视图
+
+
+		Route::get('/a',function(){
+			echo 'hello ';
+		});
+		//当一个get请求的路径为 ‘/a’时，那么会返回浏览器一个字串 ‘hello’
+		
+		
+		Route::resource('user','StuController');	
+		//自动识别get请求路径为 'user' 时， 会自动访问控制器StuController/index方法
+		//自动识别post请求路径为'user'时，会自动访问控制 器Stucontroller/store方法
+		
+		Route::get('stu/del/{id}', 'StuController@del');
+		//	@del 指定绑定控制器中的del方法
+		
+		
+		Route::resource('user','StuController',['only'=>['index']]);
+		//only=>index 只绑定index方法
+		//当一个请求路径为 'user' 时， 会自动访问控制器StuController 的index方法，并且只绑定index这一个方法
+		//因为resource带单参数user时可以自动匹配到 index和store 所以本控制器中的指定只绑定了index方法
+			
+			
+			
+	//-- 路由指定访问二级子控制 器	
+		Route::get('foo','Photo\AdminController@method');
+			
+			
+				
+	//-- 路由限制域名访问 
+		
+		//只有访问的域名为 www.burj.com 时才可以访问	
+		Route::group(['domain' => 'www.burj.com'], function()
+		{
+			。。。。
+		}	
+			
+	
+	
+	//-- 路由绑定 
+
+		Route::bind('user',function($value)
+		{
+			return User::where('name',$value->first();
+		});
+		//意为： 如果接收了一个为 'user' 的参数 ,那么就用 User 对象去查询一个名字为指定传值的数据
+	
+			
+			
+			
+	//-- 群组路由 
+
+		Route::group(['middleware'=>['login']],function(){
+			Route::get('admin',function(){
+				echo 'admin';
+			});
+		});
+			
+			
+
+			
+			
+			
+	//-- 路由 get 方式 
+
+		//模板页面
+		 <li><a href="{{url('type/type/sss')}}" target='_blank'><p class="sc"></p><span>彩票游戏</span></a></li>
+		//指定跳转到type控制器的type方法并带参数sss
+								  
+
+		//路由页面
+		Route::Controller('type',"TypeController");		//接收到type路径就指向 Typecontroller 控制器
+				//::Controller方式不用接收路径上不用指定方法及是否带参数默认的就是使用getIndex方法
+				//如果 路径 为 {{url('type/type')}	就会重定向到 getType方法,而不用在路由中来指定
+
+		// 控制器页面
+		class TypeController extends Controller
+			{
+			public function getIndex()		//默认的处理方法
+			{
+				echo 1;
+			}
+								
+			public function getType($type)	//接收 type/type/type 并处理  意为type控制器的type方法，并传送type参数
+			{
+				dd($type);
+			}
+		}	
+			
+			
+			
+
+	//-- 路由将带参数的路径请求，重定向到控制器的指定方法中
+
+		//模板页面
+			$(".cp_sscq").click(function(){
+				location.href="{{url('type')}}/sscq"; 		//路径/参数
+			});
+
+		//路由页面
+			//将路径/参数格式的请求，重定向到Typecontroller 控制器中的type方法
+			Route::get('type/{type}',"TypeController@type");  	
+
+		//控制器
+			class TypeController extends Controller{
+				public function type($type){			//接收定向到本方法的请求及参数
+					$path="home/type/".$type;
+					return view($path);					//显示指定的页面
+				}
+			}
+
+
+
+
+
+
+
+
+
+
+			
+			
+			
+			
+			
+
+//===== 控制器
+
+	
+	
+	//-- 待理解语法
+
+		return Redirect::to('/');
+
+		
+		
+	//-- artisan命令创建控制器
+		在lavavel 根目录下打开命令行，输入命令： 
+		php artisan make:controller StuController	
+		//意思是创建一个 StuController的控制器,存放在 app/http/controller目录下
+			
+
+	//-- 控制器中注册变量模板中显示
+		示例注册数组变量
+			控制器中
+				$pyjs['time']=$time;
+				return view('pyj.index',$pyjs);
+			模板中提取变量
+				{{$time}}
+			
+
+		示例一：
+			public function index(){
+				$data=array(
+					'a'=>'aa',
+					'b'=>'bb'
+				);
+				return view('index',$data);		//返回一个index视图并附带数组形式注册的变量
+				或
+				
+				$name='lala';
+				return view('index',compact('name'));	//函数形式注册变量
+			}
+			
+			模板中显示 
+				<?php echo $a; ?> 
+				或
+				{{$a}}
+
+			
+		示例二：
+
+			//控制器中注册变量
+				class obj{					//对象
+					public $name='huge';
+				}
+
+				class Stu3Controller extends Controller
+				{
+					public function index()
+					{
+						$o = new obj();		//对照也可以传到模板中去
+						$c=['n1'=>'11111','n2'=>'22222'];	//数组也可以传到模板中去
+						$b=2;				//普通变量可以传到模板中去
+						$a=333;
+						return view("Stu3/index",['name'=>$b,'age'=>$a,'num'=>$c,'o'=>$o]);
+							//控制器中所有注册的变量都会以一个数组方式传送到模板中去。
+					}
+					
+			//模板中使用变量
+				{{$name}}{{$age}}  
+					//调用时直接使用注册时数组中的下标即可
+				
+
+
+				
+				
+
+	//-- [] 数组方式控制器中注册变量，{{}}模板中使用变量 
+
+		Route::get('cpyx/{type}',function($type){
+			return view('home/cpyx',['type'=>$type]);		//用数组形式注册变量 type
+		});
+
+		<body>{{$type}}aaaaaaaa</body>					//{{}}在模板中调用变量
+
+					
+				
+	
+
+	//-- 页面中直接访问控制器中的指定方法
+
+		localhost/user/show		//将显示user控制器中的show方法
+
+
+
+	//-- 控制器的 store 方法接收表单数据以数组方式直接插入数据库
+		//接收开奖信息并添加到数据库.注意： 该 方法的数组下标个数必须与数据库中字段完全匹配！
+		public function store(Request $request)
+		{
+			$data=$request->except('_token');			
+			$stat = \DB::table('record_cqssc_2015')->insert($data);			
+			if($stat>0){
+				\Session::put('caipiao_add',1);
+			}else{
+				\Session::put('caipiao_add',2);
+			}
+			return back();
+		}
+			
+		
+		
+		
+		
+		
+		
+		
+	//-- redirect() 控制器内的重定向
+
+		其它重定向带参数等，参看手册 的响应
+
+		public function stat(){
+			return redirect("http://www.baidu.com");	
+			//重定向到一个指定的页面
+			return redirect()->back();
+			//返回上一页
+		}
+
+
+
+
+
+	//-- redirect() 控制器中带参数的重定向
+
+		return redirect()->back()->withInput()->with('mes','登陆'); 
+
+		这个是参数是存到Session里的，用 \Session::get('mes'); 获取；
+
+
+			
+		
+	//-- 数据库中动态调取连接来重写向页面	
+		public function stat(){
+			$user = \DB::table('stu')->where('id',75)->first(); //从数据库中调取数据 
+			return redirect($user->name);	// $user->naem 的取值 是www.baidu.com ,这里的意思就是跳转到百度页面
+		}
+		
+		
+	//-- 控制器中从一个方法重定向到另一个方法中
+	
+		class Burjpl3Controller extends Controller
+		{
+			public function index()
+			{
+				return redirect('burjpl3@create'); 	//重定向到下面的 create 方法 burjpl3为控制器名，create为方法名 ,
+			}						//重定向如果有目录的话还要在前面添加如： admin\burjpl3@create
+			public function create()
+			{
+				echo 'create';
+			}
+		}
+
+		
+		
+	//-- 'stu/create' 控制器中方法之间的跳转
+	
+		public function create()
+		{
+		  return view('stu/store');
+		  //echo 111;
+		}
+		public function store()
+		{
+		  return view('stu/create');
+		  //echo 111;
+		}	
+
+
+
+	//-- 路由将带参数的路径请求，重定向到控制器的指定方法中
+
+		//模板页面
+			$(".cp_sscq").click(function(){
+				location.href="{{url('type')}}/sscq"; 		//路径/参数
+			});
+
+		//路由页面
+			//将路径/参数格式的请求，重定向到Typecontroller 控制器中的type方法
+			Route::get('type/{type}',"TypeController@type");  	
+
+		//控制器
+			class TypeController extends Controller{
+				public function type($type){			//接收定向到本方法的请求及参数
+					$path="home/type/".$type;
+					return view($path);					//显示指定的页面
+				}
+			}
+
+
+		
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+//===== 模板 
+
+	//-- 模板中输出变量的两种方式
+	//-- 模板中的三元方式判断
+		//php 方式
+		hello <?php echo !empty($name) ? $name : '无名' ?> //判断名字变量不存在，则显示 '无名' 
+		//模板方式
+		hello {{ $name  or '无名'}}			//判断名字变量不存在，则显示 '无名' 
+
+
+		
+	
+	
+	//-- 模板中的页面跳转
+		1， 首先要在 app\Http\routes.php 路由中指定路由 
+			Route::resource('stu3','Stu3Controller');	
+				//将指定的控制器添加到路由中
+
+		2, 在 模板页面中使用 {{url()}}来获取指定的路径或地址 如：
+			<a href="{{url('stu3')}}">跳转到学生页面</a> 	 
+				//指定跳转到 app\Http\Controllers\Stu3Controller.php 控制器
+			
+		3, 在控制器中设置好模板的路径及参数
+			public function index(){
+				$list['users'] = \DB::table('stu')->get();
+			   return view('stu/index',$list);
+			}
+
+
+		
+		
+
+	//-- @{{..}}		@让模板不解析{{}} 并显示出{{}}
+		如	@{{xxx}}		结果显示：  {{xxx}}
+				
+
+
+	//-- 模板中解析script   （注：尽量不要用，容易被注入很危险）
+		{!! '<script>alert('aaa')</script>' !!}
+
+
+	//-- 将模板中的代码转义成实体字符，
+		{{{'<html>aaa</html>'}}}
+			结果 ： <html>aaa</html>
+
+	//-- 模板中的token 函数
+		{{ csrf_token() }}
+
+
+
+
+	//-- 械板中的判断控制
+
+		@if($name)
+			你好{{$name}}
+		@else
+			不知道你叫什么名字
+		@endif
+		
+		 <td><input type="radio" name="sex" value="1" @if($user[0]->sex ==1) checked @endif/>男
+	
+
+	//-- 模板中的foreach循环
+		public function index(){
+			$data = ['a','b','c'];
+			retrun view('index',compact('data'));   //控制器中注册一个变量数组
+		}
+
+
+		@foreach($data as $v)				//模板中遍历变量数组
+			<li>{{$v}}</li>
+		@endforeach
+
+
+
+
+
+	//-- 模板中的 for循环
+		@for($i=0;$i<100;$i++)
+			{{$i}}
+		@endfor
+
+
+
+	//-- 模板中的 while循环
+		@while(true)
+			aaa
+		@endwhile
+	
+
+	//-- include 可引用的模板组件
+
+		创建组件文件 /views/components/head.blade.php
+			内容：aaaaa
+
+
+		模板/views/a.blade.php
+			bbb
+				@include('components.head');		//引入head.blade.php组件 
+			ccc
+
+
+			结果页面会显示  
+					bbb
+					aaa
+					ccc
+	
+	
+
+	//-- 模板继承与内容重写
+		// @yield 模板占位符
+		// extends() 模板继承语句，指定继承哪个父模板
+		// section() 重写指定占位符
+		// endsection 结束重写占位符
+		// @show  续写占位符
+		// @parent 继承父模板占位符中的内容,没有该命令将不会继承父模板占位符中的内容
+
+
+		示例一：
+		
+			//master.blade.php页面
+				<html>
+				<head>
+					<title>@yield('title')</title>
+				</head>
+				<body>
+					@yield('content')
+				</body>
+					<sccript src='...'></script>
+					@yield('my-js')
+				</html>
+			
+			//login.blade.php页面
+				@extends('master')
+			
+				@section('title','登陆')   	//重写title的标题
+
+				@section('content')
+					这里可以重写content内容
+				@endsection
+
+				@section('my-js')
+					<script src='...'></script> //添加更多的引入文件
+				@endsection
+
+
+		示例二：给占位符添加内容
+
+			//父模板 myfile/a.blade.php  页面 
+				<!DOCTYPE thml>
+				<html>
+				<head>
+					@yield("header")		//@yield 	//模板点位符
+				</head>
+				<body>
+					aaaaaaaaaaaaa<br>
+					@yield("content")
+					ccccccc<br>
+					@yield("footer")
+					dddddddddd<br>
+				</body>
+				</html>
+
+			//子模板
+				@extends('myfile.a')			//继承指定模板文件			
+				@section('content')			//向点位符content 添加内容
+				ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff<br>
+				@endsection
+				@section('footer')			//向点位符footer 添加内容
+				footer<br>
+				@endsection
+
+
+
+		示例三：@section 配合 @show 继承并续写父模板的占位符中内容
+
+			//父模板 
+				<body>
+					<div style='color:red'>
+						@section('one')
+						<p>aaaaaaaaaaaaaaaaa</p>
+											//@show  续写占位符
+						@show				//show 集合了 endsection 和 yield两个功能 
+					</div>
+				</body>
+
+			//子模板
+				@extends("myfile.a");
+				@section('one')	
+					//@parent 继承父模板占位符中的内容,没有该命令将不会继承父模板占位符中的内容
+					@parent
+					这是又加1111111111			
+				@endsection                   
+
+				结果显示：
+					aaaaaaaaaaaaaaaaa
+					这是又加1111111111 
+
+
+
+
+			
+			
+			
+			
+			
+			
+			
+
+	//-- {{url('css/css.css')}}	模板中引入其它目录的文件
+
+		<li><a href="{{url('type/type/sss')}}" target='_blank'><p class="sc"></p><span>彩票游戏</span></a></li>
+		//指定跳转到type控制器的type方法并带参数sss
+
+
+	
+	
+
+
+		
+//===== 中间件 及使用步骤
+
+		一：创建中间件
+			命令行在根目录下输入：
+			
+			php artisan make:middleware regMiddleware    
+				//这个命令会在app/Http/Middleware目录下创建一个新的中间件regMiddleware
+
+			//参数一: 所有的用户请求信息都会存放在里面
+			//参数二：$next 对像就是下一步的操作
+			// Closure 是一个lvavel提供的类
+		二：编辑中间件
+			打开 app/Http/Middleware/RedirectIfAuthenticated.php 并编辑
+			
+				class regMiddleware{
+					public function handle($request, Closure $next)
+						{
+							if(\Session::get('username')!=null){		
+
+							//判断如果用户名以登陆则执行下一步
+								return $next($request);
+							}else{
+								return redirect('/');		//如果用户没登陆则重定向到主页
+							}
+						}
+					}
+				}
+		三：注册中间件使其生效:
+			到 \app\Http\Kernel.php 的配置文件中添加一条命令如下 ：
+		
+			protected $routeMiddleware={
+				'reg'=> \App\Http\Middleware\regMiddleware::class,
+			}
+		
+		四： 配置路由
+			编辑 app/http/routes.php 路由文件 添加如下路由
+			
+			Route::group(['middleware'=>['reg']],function(){  //指定以下行为会触发reg中间件
+				Route::get('/reg',function(){	//路径为reg时触发 reg中间件，如果中间件验证通过则执行 echo 'reg';
+					echo 'reg';
+				});
+			});
+
+	
+
+	
+	
+
+	
+	
+	
+	
+//===== 搜索加分页的实现 
+
+	// where() 查询数据表指定字段
+	// paginate() 指定查询多少条数据
+	// csrf_token() 表单防跨域攻击验证
+	// appends() 在url中添加GET键值对
+	// render() 实现分页的对象
+
+	//-- 示例一：
+		//路由页面
+			Route::get('/', function () {
+				return view('welcome');
+			});
+			Route::get('stu','StuController@index');
+
+		//控制器页面
+			public function index()
+			{
+				if(@$_GET['search']!=null){
+					$list = \DB::table('stu')->where('name','like','%'.@$_GET['search'].'%')->paginate(5);
+				}else{
+					$list = \DB::table('stu')->paginate(5); 
+				}
+				$list->setPath('stu');  //如果跳转地址有误，用setPath重置一下
+				return view('Stu/index',['list'=>$list]);
+			}
+
+		//首页面
+			<a href='{{url('stu')}}'>分页</a>
+
+		//分页页面
+			<form action='{{url('stu')}}' method="get">
+				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+				<input name='search' />
+				<input type='submit' value='搜索'/>
+			</form>
+			@foreach($list as $li)
+				{{$li->id}}--
+				{{$li->name}}--
+				{{$li->age}}--
+				{{$li->sex}}--
+				{{$li->classid}}<br>
+			@endforeach
+			<?php
+				echo $list->appends(['search'=>@$_GET['search']])->render(); 
+					//appends 用于保持搜索的状态
+				//echo $list; //这个对象拥有__toString,适用于不带搜索的分页
+			?>
+
+		
+	//--示例二：
+		//路由
+			Route::resource('Stu','StuController');
+
+		//控制器
+			public function index()
+			{
+				if(@$_GET['search'] != null){
+					$stus = \DB::table('stutest') -> where('name','like','%'.$_GET['search'].'%') -> paginate(1); 
+					//$stus -> url = 
+				}else{
+					$stus = \DB::table('stutest')->paginate(5);
+				}
+				return view('Stu/index')->with('stus',$stus);
+				//echo $stus -> url();
+				//return view('Stu/index',['stus'=>$stus]);
+				}
+
+		//搜索+遍历+保持状态
+				<form action="{{url()}}" method="get">
+						<input type="text" name="search" size="10" />
+						<input type="submit" value="搜索" />
+					</form>
+					<table width="700" border="1">
+						<tr><th>学号</th></tr>
+						@foreach($stus as $stu)
+							<tr>
+								<td>{{$stu -> id}}</td>
+								<td>{{$stu -> name}}</td>
+							</tr>
+						@endforeach
+					</table>
+					<div class="pclass">       
+						<?php
+							echo $stus->appends(['search'=>@$_GET['search']])->render();  //保持状态
+						 ?>
+					</div>
+
+
+	
+
+
+	//-- 修改分页的样式
+		
+		注：Laravel自带的分页链接样式由 Illuminate\Pagination\BootstrapThreePresenter 的 render 方法生成，要想自定义分页样式，需要在这些类和方法上做文章。 
+
+		依次修改：
+			    public function render()	
+				   	//'<ul class="pagination">%s %s %s</ul>',
+                	'<div class="pagination">%s %s %s</div>',
+
+				protected function getDisabledTextWrapper($text)
+				{
+					//return '<li class="disabled"><span>'.$text.'</span></li>';
+					return '<span class="disabled"><span>'.$text.'</span></span>';
+				}
+				protected function getActivePageWrapper($text)
+				{
+					//return '<li class="active"><span>'.$text.'</span></li>';
+					return '<span class="active"><span>'.$text.'</span></span>';
+				}
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+
+//===== 验证码的生成
+
+
+	//模板中显示验证码及点击变换
+		<a onclick="javascript:re_captcha();" ><img src="http://admin.html5adver.com/admin/code/"  alt="验证码" title="看不清？点一下！" width="100" height="40" id="code" border="0"></a><br>
+		<script type="text/javascript">  
+			function re_captcha() {
+			$url = "/admin/code/";
+				$url = $url + "?" + Math.random();
+				document.getElementById('code').src=$url;
+			}
+		</script>
+
+		
+	//验证码的路由
+		Route::get('/burj_code',"home\RegsController@codes");
+		
+		
+	//控制器中生成验证码
+		home\RegsController@codes 控制器页面
+		use Illuminate\Http\Request;
+		use Redis;
+		use App\Http\Requests;
+		use App\Http\Controllers\Controller;	//引用对应的命名空间
+		use Gregwar\Captcha\PhraseBuilder;
+		use Gregwar\Captcha\CaptchaBuilder;
+
+		public function code()
+		{
+			$phrase= new PhraseBuilder;
+			$code=$phrase->build(4);			//验证码字符
+				
+			//生成验证码图片的Builder对象，配置相应属性
+			$captcha= new CaptchaBuilder($code,$phrase);
+			$captcha->setBackgroundColor(220,220,220);
+			$captcha->setMaxBehindLines(0);			//设置在文字下方出现的横线的最大条数
+			$captcha->setMaxFrontLines(0);			//设置在文字上方出现的横线的最大条数
+			$captcha->setMaxAngle(5);				//设置在验证码的最大旋转角度
+			$captcha->setMaxOffset(3);				//设置验证码最大旋转角度
+			$captcha->build(100,48,null,null);			//宽、高、字体、指纹模式
+			//\Session::put() 把内容存入session
+			\Session::put('code', $captcha->getPhrase());
+			//生成图片
+			header("Cache-Control: no-cache, must-revalidate");
+			header('Content-Type: image/jpeg');
+			$captcha->output();
+		}
+
+
+
+	
+	
+	
+	
+	
+	
+//===== 方法欺骗
+
+	HTML 表单没有支持 PUT 、PATCH 或 DELETE 请求。所以当定义 PUT 、PATCH 以及 DELETE 路由并在 HTML 表单中被调用的时候，您将需要添加隐藏 _method 字段在表单中。发送的 _method 字段对应的值会被当做 HTTP 请求方法。举例来说：
+
+
+	//信息页
+	
+		<a href="stu/{{$user->id}}/edit">编辑s</a>
+
+
+	//缟辑页
+		<form action="{{url('stu')}}/{{$user[0]->id}}" method="post">
+			<input type="hidden" name="_method" value="PUT">
+			//PUT方法验证
+			<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> //  _token 验证
+			<input type="text" name="name" value="{{$user[0]->name}}"/></td>
+			<input type="submit" value="编辑"/>
+			<input type="reset" value="重置"/>
+		</form>
+   
+	//控制器
+		public function edit($id)		
+		{
+			$info['user'] = \DB::table('stu')->where("id",$id)->get();
+			return view('stu/edit',$info);
+		}
+		public function update(Request $request, $id)
+		{
+			$result = $request->except('_method','_token');
+			\DB::table('stu')->where('id',$id)->update($result);
+			return redirect('stu');
+		}
+   
+
+	
+
+
+
+
+
+
+
+
+//===== 环境与部署
+
+
+	//-- 版本控制时需要忽略的文件的配置
+			
+		/laravel/.gitIgnore
+			//以下是被忽略的文件，将不会被版本控制上传或下载
+			/vendor
+			/node_modules
+			Homestead.yaml
+			Homestead.json
+			.env	
+
+
+	/laravel/.env   全局生效的环境配置文件 如果该文件不存在可复制env.example并重命名为.env 
+
+		APP_ENV=local		设置开始环境 是本地还是
+		APP_DEBUG=true		是否调试
+		APP_KEY=xxxxx		设置session,cookie或文件等加密的参数
+
+		DB_HOST=localhost	是否本地或远程 
+			DB_HOST=localhost:3307  如果端口不是默认的要在这里指定
+		DB_DATABASE=		数据库名
+		DB_USERNAME=		用户名
+		DB_PASSWORD=		密码
+
+		CACHE_DRIVER=file	缓存方式（文件方式或memcache等其它）
+		SESSION_DRIVER=file	session保存方式（文件方式或memcache等其它）
+		QUEUE_DRIVER=sync
+
+		MAIL_DRIVER=smtp
+		MAIL_HOST=smtp.yinnote.com
+		MAIL_PORT=25
+		MAIL_USERNAME=magina@yinnote.com	发送邮件所使用的邮箱
+		MAIL_PASSWORD=test1234					密码
+		MAIL_ENCRYPTION=NULL	加密方式
+		
+
+		//.env配置关联到config目录中相关的文件，它们都会首先调用 .env中相对应的配置
+
+
+
+	//-- /laravel/config/app.php 配置文件
+		内容：
+
+		'debug'=> env('APP_DEBUG');  	//该属性就会先去 /laravel/.env文件中去搜索 APP_DEBUG=true 这个键值对，并根据其值来执行是否开启调试模式.
+		'timezone'=>'PRC',		//设置中国的时区
+		
+		'locale'=>'zh',			//设置为中文
+
+		'key'=>env('APP_KEY','xxx'),	//设置session,cookie或文件等加密的参数的默认值
+			//建议这里再配置一下，以防env文件不存在时加密参数就会使用这里的默认值
+		'cipher'=>'AES-256-CBC',	//上面key的加密方式	
+	
+		'log'=>'single',		//laravel的配置日志
+
+
+
+	//-- /laravel/config/database.php 		//数据库配置文件
+		//下面是default指定使用的数据库，connections 是配置所使用数据库的信息
+		'default'=>env('DB_CONNECTION','mysql'),	//获取env配置信息，如不存在默认使用mysql数据库
+		
+
+		'connections'=>[				//数据库的具体配置信息
+			'mysql'=>[
+				‘driver’=>'mysql',		
+				'host'=>env('DB_HOST','localhost'), //主机地址，先去/laravel/.env配置文件中去找，看是否以设置，如果没有设置那么就使用默认的localhost
+				'collation'=>'utf8_unicode_ci',		//指定编码集的版本
+				'strict'=>false,			//是否使用严格模式
+			],
+			'sqlite'=>[],				//其它数据库配置
+
+
+			
+			
+
+		]
+
+
+
+
+	//-- /laravel/config/session.php		//session配置文件
+
+		'driver' => env('SESSION_DRIVER','file'),	//先检测并根据 .env配置文件中的session配置选项设置session使用模式，如果没有设置，则使用默认的file 文件方式
+
+
+
+	//-- config/mail.php 邮件发送相关配置
+
+		'port'=>env('MAIL_PORT',587);
+				// 指定发送邮件所使用的邮箱及呢称
+		'from'=>['address'=>'xx@163.com','name'=>'xxx'],	
+	
+
+
+	//-- laravel 站点的关闭和开启
+
+		运行 php.artisan down 			//关闭网站
+
+		运行 php artisan up 			//开启网站
+
+		关闭开启的显示页面： laravel/resouce/views/errors/503.blade.php  
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+//===== mysql 数据库操作
+
+
+
+	//-- 读写分离：
+	
+		config\database.php里
+			‘mysql‘ => array(
+				‘read‘ => array(
+					‘host‘ => ‘192.168.1.1‘,
+				),
+				‘write‘ => array(
+					‘host‘ => ‘196.168.1.2‘
+				),
+				‘driver‘    => ‘mysql‘,
+				‘database‘  => ‘database‘,
+				‘username‘  => ‘root‘,
+				‘password‘  => ‘‘,
+				‘charset‘   => ‘utf8‘,
+				‘collation‘ => ‘utf8_unicode_ci‘,
+				‘prefix‘    => ‘‘,
+			),
+	
+	//-- 多重读写分离
+			‘mysql‘ => array(
+				‘read‘ => array(
+					‘host‘ => ‘192.168.1.1‘,
+					‘host‘ => ‘192.168.1.3‘,
+				),
+				‘write‘ => array(
+					‘host‘ => ‘196.168.1.2‘,
+					‘host‘ => ‘192.168.1.4‘,
+				),
+				‘driver‘    => ‘mysql‘,
+				‘database‘  => ‘database‘,
+				‘username‘  => ‘root‘,
+				‘password‘  => ‘‘,
+				‘charset‘   => ‘utf8‘,
+				‘collation‘ => ‘utf8_unicode_ci‘,
+				‘prefix‘    => ‘‘,
+			),
+			
+			
+
+	//-- skip(),take() 从第几条开始查询多少条
+		$arr = \DB::table('user')->skip(3)->take(3)->get(); //从第3条开始，查询3条数据
+
+
+	//-- get() 获取user表中所有数据
+		$users =  \DB::table('user')->get();	
+
+		$arr = \DB::table('user')->distinct()->get();			
+
+
+	//-- first() 获取符合条件的首条数据
+		$arr =\DB::table('user')->where('phone','111')->first();	//获取符合条件的首条数据
+		$arr =\DB::table('user')->first();	//获取数据表的首条数据
+
+
+	//-- pluck() 获取指定字段的值
+		$arr =\DB::table('user')->where('phone','111')->pluck('phone');	 //获取匹配条件的某字段的值（数组）
+		$arr =\DB::table('user')->pluck('phone');		//获取某字段的值(数组)
+
+	//-- where( < )
+		$arr = \DB::table('user')->where('phone', '<', 100)->get();	//获取满足条件的数据
+
+		$arr = \DB::table('user')->whereId(3)->first();			//获取id为3的首条数据
+					
+		$john = DB::table('users')->whereIdAndEmail(2, 'john@doe.com')->first(); //and 与  要同时满足两个条件
+
+		$jane = DB::table('users')->whereNameOrAge('Jane', 22)->first();	//or 或 只要满足一个条件
+
+
+	//-- lists() 获取表中某字段所有的值  效果类似于pluck()
+		$arr =\DB::table('user')->lists('openid');	//获取user表每条数据的openid字段的值(数组)
+
+	//-- select()
+		$arr = \DB::table('user')->select('phone','openid')->get();	//获取表中指定的某些字段的值(数组)
+
+		$arr = \DB::table('user')->select('phone as abb')->get();	//获取所有指定字段数据并给该字段重新指定名称
+		echo $arr[0]->abb;
+
+
+	//--	addSelect() 增加查询子句到现有的查询中
+		$arr = \DB::table('user')->select('phone');
+
+		$arr = $arr->addSelect('openid')->get();
+
+
+
+	//-- DB::connection() 	连接数据库
+	//-- getDatabaseName()	获取当前数据库名
+	
+		Route::get('/',function(){
+			$name= DB::connection()->getDatabaseName();		
+			echo $name;
+		});
+
+	
+			
+			
+		
+	//-- 只取第一条数据
+		$user = \DB::table('stu')->where('id',75)->first();
+		print_r($user);
+			
+		
+		
+	//--数据库取地址并跳转
+		public function stat(){
+			$user = \DB::table('stu')->where('id',75)->first();  
+			return redirect($user->name);	
+		}
+		// $user->naem 的取值 是www.baidu.com ,这里是从数据库中调取要跳转的地址来达到跳转页面的效果
+
+		
+		
+	//-- 获取指定字段					
+   		$user=\DB::table('tb_home_user')->where('username',$name)->get()[0]->password;		
+
+		
+	
+	
+	//-- 数据库删除数据 
+		\DB::table('stu')->where('id',$id)->delete() 
+	
+		public function del($id){
+			\DB::table('stu')->where('id',$id)->delete();
+			return redirect('stu');
+		}
+
+
+	
+	
+	//-- \DB::table('stu')->get()  获取数据表中的所有数据 并使用@foreach() 遍历
+
+		//控制器中注册数组变量
+		public function index()
+		{
+			$list['users'] = \DB::table('stu')->get();	
+		   return view('stu/index',$list);		//将获取到的数据库中的数据注册到模板中
+		}
+
+		//视图页面
+		@foreach ($users as $user)
+			<tr>
+				<td>{{ $user->id }}</td>
+				<td>{{ $user->name }}</td>
+				<td>{{ $user->sex}}</td>
+				<td>{{ $user->age }}</td>
+				<td>{{ $user->classid }}</td>
+				<td><a href="stu/del/{{$user->id}}">删除</a> <a href="stu/{{$user->id}}/edit">编辑</a></td>
+			</tr>
+		@endforeach
+	
+	
+	
+	//-- SQL源生查询方式
+		public function selects(){
+			$users['ids'] = \DB::select('select * from stu where id> ?', [1]);
+			$users['ids'] = \DB::select('select * from stu where id limit ?,?', [10,1]);
+			return view('stu/selects',$users);
+		} 
+
+
+
+	//-- 查询总条数
+		public function selects(){
+			$count = \DB::select('select count(*) as count from stu');
+			return view('stu/selects',['count'=>$count]);
+		} 
+
+	
+	//-- paginate() 相当于limit指定查询条数
+		use DB;
+		$users = DB::table('stu')->paginate(15);		// paginate 只查询15条
+
+
+
+	
+	
+	
+	
+
+
+
+//===== Eloquent 数据库交互
+
+	Eloquent 默认需要 有两个字段一个更新时间，一个创建时间	，如果运行因为这个而报错，有两个解决方案要，一是关闭对这两个字段的检索 (在下面配置文件中关闭)，二是手动创建这两个字段
+	
+
+
+	//-- 创建 User 模型 
+		php artisan make:model User		//在app目录下创建一个 User.php 模型文件
+
+			protected $table='users';	//将本数据模型关联指定的数据表
+				
+			protected $primaryKey = 'user_id';	//设置主键字段(可选，默认为id)
+				
+
+			proteted $fillable=['name','email',...];	//设置可操作的字段
+
+			protected $guarded=['id',...];			//设置不可操作字段
+
+			protected $hidden=['password','remember_token'];	//设置打印时是否显示 
+
+			publci $timestamps = false;			//关闭创建和更新时间两字段的检索
+			查方法
+			public function userTest(){			//设置查找方法，返回表中所有数据
+				return $this->all();		
+			}
+			
+			增方法
+			public function userAdd(){			//创建添加数据方法
+				$this->username='user1';
+				$this->age=48;
+				$this->save();
+				或使用数组填充方式
+				$data = ['name'=>'aaa','age'=>'28'];
+				$this->fill($data);			
+				$this->save();			
+			}
+
+			改方法
+			public funciton updateUser(){
+				$user= $this->find(14);			//先获取指定的数据
+				$user->username='aaa';			//修改字段值
+				$user->age=18;
+				$user->save();				//保存
+			}
+
+			批量修改
+			public function userUpdates(){
+				$users = $this->where('id','<','8');
+				$users->update(['name'=>'a','age'=>'28']);
+			}
+
+			删方法
+			public function userdel(){
+				$user = $this->find(14);		//先找到指定的数据
+				$user->delete();			//执行删除
+			}
+						
+
+
+	查调用
+			
+	//-- 使用 Eloque 模型
+
+		Route::get('/',function(){
+			$user = new App\User();		//实例化User 模型
+	//-- all() 获取表中全部数据
+			return $user->all();		//获取user表的所有数据
+			或
+			return $user->userTest();	//调用了user模型中的userTest 方法
+			或
+	//-- find(?)	获取第几条数据	(如果数据不存在会反回空白)
+			return $this->find(1);	
+			或
+	//-- findOrFail(?)  获取第几条数据（如果数据不存在停止并报致使错误）	
+			return $this->findOrFail(1);	
+	
+	//-- where() 按指定条件获取一条数据
+	//-- get() 	获取一条数据
+			return $this->where('name','lala')->get();
+	//-- where() 三个参数 可带判断条件
+			return $this->where('id','>',1)->get();
+	增调用 
+	//-- 调用添加数据的方法
+			return $this->userAdd();
+
+	改调用 
+	//-- 调用改方法
+			return $this->updateUser();
+	//-- 调用批量修改
+			 return $this->userUpdates();
+	
+	删除调用
+	//-- 调用删除方法
+			return $this->userdel();
+	
+		});
+
+
+	
+
+	//-- $user->all() 获取集合原型
+		$user = new App/User();
+		$users = $user->all();		获取$user 对象中所有数据(集合)
+		dd($users);			打印出所有数据并终止程序
+		或
+	//-- toArray() 将数据转换成数组
+		$users->toArray();		将$users转换成数组
+
+
+	//-- collect($arr)			将数组转换成集合原型	
+		$arr= ['a'=>1,'b'=>2,'c'=>3];
+		$collection= collect($arr);
+		dd($collection);
+
+	//-- has()		判断集合中是否存在某键
+		$r = $collection->has('a');
+		return $r ? '有':'没有';	结果：有
+
+
+	//-- contains()		判断集合中是否存在某值
+		$r = $colllection->contains(1);
+		return $r ? '有':'没有';	结果：有
+
+
+	//-- take(?)		获取集合中指定个数的元素
+		$r=$collection->take(2);	//从左向右取2个元素
+		或
+		$r=$collection->take(-2);	//从右向左取2个元素
+		return $r;		结果：	会获取到a 和b 两个元素
+
+
+
+	//-- 集合其它方法
+		见文档：
+			https://laravel.com/docs/5.1/collections#method-listing
+
+
+
+
+
+	//-- 使用示例
+		1,命令生成模型文件
+			php artisan make:model Member		//在app目录下生成一个 Member.php 模型文件
+			内容如下:
+			<?php
+			namespace App;
+			use Illuminate\Database\Eloquent\Model;
+			class Menber extends Model{		//继承model类
+				protected $table = 'member';	//关联member数据表
+				protected $primarykey = 'id';	//关联主键
+				public $timestamps = false;	//关闭laravel对数据表中两个时间字段的维护
+
+			}
+		2,使用模型，调取数据
+			<?php
+				use App\Member;			//引用Member.php文件
+				Route::get('/',function(){
+					return Member::all();		//获取Member模型关联的表中所有的数据
+				});
+
+				
+
+
+	//-- 数据库操作示例
+		use App\xxx\tempPhone;
+		$tempPhone = new TempPhone;
+		$tempPhone->phone = $phone;
+		$tempPhone->code = $code;
+		$tempPhone->deadline = date('Y-m-d',time()+60*60);
+		$tempPhone->save();
+		
+		$tempPhone = TempPhone::where('phone',$phone)->first();
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== Request 请求
+
+	//-- \Request::getClientIp() 获取访问的ip地址
+	
+	
+
+	//-- Input::get('xx');		//获取GET传值
+
+		localhost/test?name=aaa
+
+		Route::get('test',function(){
+			return Input::get('name');	//获取GET传值
+			或
+			
+	//-- Request::input 获取表单输入的数据
+
+		public function reg(){
+				  $username = \Request::input('name');		//接收post和get传值 
+				  $username = \Request::input()->all();		//接收全部的post和get传值 
+				 echo $pass = \Hash::make($pwd).'<br>';
+		}
+
+	
+	
+	//-- 控制器中接收表单的传值
+	
+		public function logins(Request $request)		
+		{
+			echo $request->input('username');		方式一
+			echo \Request::input('username');		方式二
+		}
+
+			
+			
+
+	//-- Request->all(); 		//获取所有的输入值
+			return Request->all();		//会获取所有的GET.POST,json或文件参数及值
+
+
+
+
+	//-- Request->query('xxx');		//获取GET传值的另一种方式
+			return Request::query('name');
+
+
+	//-- 给get传值为空时设置默认值
+		
+			return Request::get('name','aaa');		//如果传值name有值时则使用其值，如果name不存在则会使用aaa的默认值.
+
+
+	//-- has('xx')   判断某传值是否存在且不为空
+
+			Request::has('name');	//判断name名的传值是否存在且不为空 ，返回一个面尔值
+
+	//-- exists('xx')  判断某传值是否存在(是否为空无所谓)
+
+			Request::exists('name');	//判断传值中是否有name键,无论是否为空
+
+
+
+
+	//-- only() 	过滤获取的传值
+			
+			Request::only('name');		//只获取name传值，其它都过滤掉
+			或
+			Request::only('name','age');	//只获取name和age的传值，其它都过滤掉
+		
+
+	//-- except();	反向过滤获取传值			
+
+			Request::except('name','age');		//获取除了name和age以外的其它所有传值.
+
+	
+	//-- url()	获取当前域名的url  （不含传值）
+
+			Request::url();			//会得到 http://localhost/test/
+
+	//-- fullUrl()	获取当前完整域名加传值
+
+			Request::fullUrl();		//会得到http://localhost/text?name=xxx&age=18
+
+
+	//-- flash()	将所有传值数据保存到SESSION中
+
+			Request::flash();		//如用户提交信息时填错了，返回时想保保留原有数据就使用这个
+
+	//-- flashOnly()	保存指定字段的传值数据
+	
+			Request::flashOnly('name');	//只将为name的传值保存到session中
+
+	//-- flashExcept()	保存除指定字段以外的所有数据
+
+			Request::flashExcept('name');	//除了name字段的传值，其它全部保存到session中
+
+	
+	//-- old()	获取flash() 保存的数据
+		
+			Request::old();			//用户输错信息，返回可以显示原有信息
+
+
+
+	//-- file()	获取用户上传的文件对象
+
+			Request::file();		//返回上传文件的所有信息的对象
+
+
+	//-- file('profile')	获取上传文件指定信息
+
+			Request::file('profile');	//返回指定项信息的数组
+
+	//-- hasFile('profile');	判断该上传文件信息是否存在
+
+			Request::hasFile('profile');	//返回布尔值
+
+
+	//-- getSize();		获取上传文件的大小
+
+			Request::file('profile')->getSize();		//返回文件大小字节数
+
+	//-- getClientOriginalName();	获取上传文件的原名
+
+			Request::file('profile')->getClientOriginalName();		//文件的原名
+
+	//-- getClientOriginalExtenstion()	获取上传文件的后缀名
+
+			Request::file('profile')->getClientOriginalExtension();		//获取上传文件的后缀名
+
+
+
+
+	//-- Request 的session对象
+		注意：laravel中的session会加密，不要用PHP的方法和laravel的混合使用
+			$request->session()->put('a','aaa');	//存放SESSION
+
+			$request->session()->get('a','');	//取值 如果a 不存在，默认为空
+
+			$sessions = $request->session()->all();
+		});
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== session 会话
+
+	配置文件路径： config/session.php
+	
+	//-- session 的数组操作
+		\Session::put('arr',$arr);			//直接添加一个数组
+		\Session::push('arr.a','a');      		//向数组a 中添加元素
+        \Session::push('arr.b','b');
+        \Session::forget('arr.b');			//删除数组中元素b
+        print_r(\Session::get('arr'));			//获取数组
+
+
+	//-- flash 闪存操作   (session被操作两次后就会自动删除 )
+		flash ：保存的值，本次请求可以使用，下次http请求可以使用，再下一次就不存在了。
+ 
+		\Session::flash('key', 'value');  		//保存key，value 
+	 
+		\Session::get('key');  				//取值方法还是一样的  
+	 
+		\Session::keep(array('username', 'email')); 	//刷新快闪数据时间，保持到下次请求  	
+
+
+		
+		
+	//-- session 的另一种使用方式
+
+		public function session(Request $request){
+			 $request->session()->flash('message', '欢迎访问Laravel学院！');
+		}
+
+		
+		
+		
+	//-- all()  获取所有的session
+
+		\Session::all();		//session相当于一个数组，all()会获取session中所有数据
+						结果：
+						array(
+							'_provious'=>...		//保存的历史URL
+							'flash'=>...			//保存的历史传值信息
+							'_token'=>...			//保存的token 验证码
+
+						);
+
+	//-- put()	添加指定session数据								
+		\Session::put('name','la');		//向session里添加一个键值对键为name,值为la	
+			
+			
+	//-- 数组方式添加session数据
+		\session(['name'=>'li']);		//向session中添加数据( 数组形式)
+		
+
+	//-- get()	获取指定session数据
+		\Session::get('name');
+		或
+		$value = \Session::get('key', 'default');  	//当session值为空，使用默认值 
+
+	//-- 获取session指定数据
+		$name = \session('name');		//获取session中name的数据
+		
+		
+	//-- has() 	判断session中是否存在指定的数据
+		\Session::has('name');		//返回布尔值
+		
+	//-- forget()	删除指定的session数据
+		\Session::forget('name');	//删除session中的name
+	
+	//-- flush() 删除所有session
+		\Session::flush();				
+		
+	//-- pull()		获取SESSION指定数据并同时删除（类似数组函数POP弹出）
+		\Session::pull('name');		//将name数据从SESSION中取出并删除
+		
+	//-- save() 保存session
+		\Session::save();		//如果设置put不能保存时再另添加使用save
+		
+		
+	//-- 设置session的存储方式为数据库
+	
+			/laravel/config/session.php
+				'driver'=> env('SESSION_DRIVER','file'),	//这里会调用 env文件的配置，如果该配置不存在，则使用默认的方式 file
+			
+			1,想要修改session的存储方式可以在env文件中修改
+				SESSION_DRIVER=database				
+				
+			2,laravel根目录下使用artisan命令创建数据库
+				php artisan session:table
+				
+			3,composer 下载自动加载文件
+				composer dump-autoload
+				
+			4, 生成session使用的数据库
+				php artisan migrate
+			
+	//-- session 详解
+	
+		Laravel 5.1 中 Session 数据存储、访问、删除及一次性Session实例教程
+		时间 2015-11-18 23:51:13 Laravel学院
+		原文
+		  http://laravelacademy.org/post/2045.html
+		主题 Laravel 数据库
+		1、Session的由来及其实现
+		HTTP协议是无状态的协议，同一个客户端的这次请求和上次请求是没有对应关系的。也就是说我们无法在服务器端确认两次请求是否是同一个用户所为，这为我们在一些应用场景中实现在多次请求间记住用户状态带来麻烦，比如电子商务网站，用户浏览商品、加入购物车、下单、购买需要多个请求才能完成，如果在这些请求之间无法记住用户状态，根本无法完成正常的购买行为，为此，引入了Session的概念，其目的就是在请求中记住用户状态。
+		Session的实现机制有两种，一种是我们通常所见的基于Cookie，即将针对每个用户生成的唯一Session ID存放在Cookie中，然后用户每次请求都会带上这个Session ID，这样服务器端就能判断是否是同一个用户，这种机制需要浏览器支持Cookie（现在的浏览器默认都支持）；另一种是将基于URL重写，即将Session ID作为参数放到URL中，这样每次请求也会带上Session ID，当浏览器不支持Cookie时可以使用这种方式。
+		上述两种实现机制是针对客户端的，服务器端也可以将Session存放到不同介质，常见的存储方式有文件、数据库、 Memcached 和Redis等。和之前的缓存、队列一样，Laravel也为不同的存储提供了统一的接口，下面我们就来看一下如何在Laravel中实现Session的存储、访问、删除以及更多其它用法。
+		2、Session配置
+		Laravel 中 Session 配置文件位于 config/session.php ，默认设置如下：
+		return [
+		  'driver' => env('SESSION_DRIVER', 'file'),
+		  'lifetime' => 120,
+		  'expire_on_close' => false,
+		  'encrypt' => false,
+		  'files' => storage_path('framework/sessions'),
+		  'connection' => null,
+		  'table' => 'sessions',
+		  'lottery' => [2, 100],
+		  'cookie' => 'laravel_session',
+		  'path' => '/',
+		  'domain' => null,
+		  'secure' => false,
+		];
+		driver 配置项用于设置Session存储方式，默认是 file ，即存储在文件中，该文件位于 files 配置项配置的路径，即 storage/framework/sessions 。此外Laravel还支持其它存储方式：
+			database ：将Session数据存放到指定数据表中，该数据表由配置项 table 设置
+			memcached ：将Session数据存放到Memcached中
+			redis ：将Session数据存放到Redis中
+			array ：将Session数据存放到数组中，该配置仅用于测试环境
+		要修改 driver 配置，需要去项目根目录下 .env 文件修改其中的 SESSION_DRIVER 选项。
+		lifetime 配置项用于设置Session有效期，默认为120分钟。
+		expire_on_close 配置项用于设置是否在浏览器关闭时立即让Session失效。
+		encrypt 配置项用于配置Session数据是否加密。
+		lottery 配置项用于配置回收Session存放位置。
+		cookie 配置项用于配置存放Session ID的Cookie名称，默认是 laravel_session。
+		path 配置项用于配置存放Session ID的Cookie存放路径，默认为项目根目录。
+		domain 配置项用于配置存放Session ID的Cookie存放域名。
+		secure 配置项用于配置是否只有在HTTPS协议下发送Session ID到服务器。
+		使用数据库存储Session
+		需要将 .env 文件中的SESSION_DRIVER修改为 database ，然后将 config/session.php 中 connection 配置修改为 mysql （如果使用的数据库是MySQL的话），该配置值对应 config/database.php 中 connections 相应数据库配置项，也可以使用默认值 null 不做修改。
+		然后需要在项目根目录下运行如下Artisan命令：
+		php artisan session:table
+		composer dump-autoload
+		php artisan migrate
+		生成存放Session的数据表 sessions 。
+		使用Memcached/Redis存储Session
+		使用Memcached存储Session只需将 .env 文件中SESSION_DRIVER修改为 memcached 即可。
+		使用Redis存储Session需要将 .env 文件中SESSION_DRIVER修改为 redis ，然后将 config/session.php 中 connection 配置修改为 default （对应 config/database.php 中 redis 主机配置项），当然也可以使用默认值 null 不做修改。
+		这里我们使用默认配置不做改变（使用文件存储Session）。
+		3、Session 使用示例
+		其实我们之前已经接触到了Session存储，比如之前的用户登录就会用到，用户登录成功之后会将用户数据存放到Session中。这里我们使用Session存放一些简单的测试数据。
+		使用帮助函数session
+		存放Session可以使用全局帮助函数 session ：
+		session(['site'=>'LaravelAcademy.org']);
+		对应Session的访问方法：
+		$site = session('site');
+		此外还支持对Session数组操作：
+		session(['site.xxx'=>'LaravelAcademy.org']);
+		$site = session('site');
+		dd($site);
+		打印结果为：
+		使用Request实例
+		以上是快捷存取Session，我们还可以在Request实例上实现对Session更高级的一些操作。
+		我们可以以这种方式获取所有Session数据：
+		$sessions = $request->session()->all();
+		我们可以像这样存取Session数据：
+		$request->session()->put('site', 'http://LaravelAcademy.org');
+		if($request->session()->has('site')){
+			$site = $request->session()->get('site');
+			dd($site);
+		}
+		此外还可以这样获取Session数据（如果对应Session不存在，返回默认值）：
+		$sitename = $request->session()->get('sitename','Laravel学院');
+		dd($sitename);
+		此外还可以使用 push 方法推送多个数据到Session数组：
+		$request->session()->push('site.xxx', 'http://LaravelAcademy.org');
+		$request->session()->push('site.xxx', 'Laravel学院');
+		if($request->session()->has('site')){
+			$site = $request->session()->get('site');
+			dd($site);
+		}
+		对应输出为：
+		当然我们可以使用如下方式实现异曲同工之效：
+		$request->session()->put('site.xxx', ['http://LaravelAcademy.org','Laravel学院']);
+		我们可以使用 pull 方法获取数据然后将其删除：
+		$siteid = $request->session()->pull('siteid','LaravelAcademy');
+		echo $siteid;
+		$siteid = $request->session()->get('siteid');
+		echo $siteid;
+		结果只能打印一个 LaravelAcademy 。
+		删除指定Session数据还可以使用 forget 方法：
+		$request->session()->put('site.name','Laravel学院');
+		$sitename = session('site.name');
+		echo $sitename;
+		$request->session()->forget('site.name');
+		$sitename = session('site.name');
+		echo $sitename;
+		结果只能打印一个 Laravel学院 。
+		还可以通过 flush 方法一次性删除所有Session数据：
+		$request->session()->flush();
+		$sessions = $request->session()->all();
+		dd($sessions);
+		打印结果为空数组。
+		一次性Session数据
+		所谓一次性数据就是下一次请求中（仅仅是下一次）有效的Session数据，常见的应用场景就是表单验证错误信息。用法也很简单，使用 flash 方法即可。
+		比如我们在 TestController@session 中编写测试代码如下：
+		public function session(Request $request){
+			$request->session()->flash('message', '欢迎访问Laravel学院！');
+		}
+		然后在 TestController@sessionx 中编写测试代码如下：
+		public function sessionx(){
+			$message = session('message');
+			echo $message;
+		}
+		然后在 routes.php 中定义路由规则如下：
+		Route::get('test/session','TestController@session');
+		Route::get('test/sessionx','TestController@sessionx');
+		在浏览器中访问 http://laravel.app:8000/test/session ，然后再访问 http://laravel.app:8000/test/sessionx ，打印出：
+		欢迎访问Laravel学院！
+		再次刷新 http://laravel.app:8000/test/sessionx ，则页面显示空白，说明Session数据已经被销毁，这就是一次性Session数据。
+		当然，如果我们想要继续保持一次性Session数据有效，可以定义 TestController@sessionx 代码如下：
+		public function sessionx(Request $request){
+			$request->session()->reflash();
+			$message = session('message');
+			echo $message;
+		}
+		这样不管怎么刷新Session数据始终有效。此外还可以指定哪些Session数据有效：
+		$request->session()->keep(['message']);
+
+
+	
+	
+	
+	
+	
+	
+//===== 数据验证
+
+	//-- 常规数据的验证
+	
+		<?php
+		namespace App\Http\Controller;
+		use Request, Validator;			//引用数据获取类和验证类
+		class TestController extends Controller{
+			public function create(){
+				$rq = Request::all();		//获取想要验证的数据
+				//调用验证对象并对数据验证，参数一: $rq 要验证的数据。 参数二：数组，指定数据中的某项,返回数组形式的结果
+				$vali = Validator::make($rq,[
+					'username'=>'require',		//required		必填字段
+					'phone'=>'numeric',			//numeric		必须是数字
+					'phone'=>'numeric|required',	// | 同时验证多个规则
+							 'min:4',		//长度最少4位
+							 ‘max:32’，		//长度最大32位
+							 'between:4,32',	//长度最小4，最大32位
+							'size:11',		//指定长度(数字类型)
+							 
+					'name'=>'unique:users',		//验证数据库字段的唯一性（特殊：此处会自动连接验证数据库的user表）		 
+					//这里的验证规则可以自定义
+				]);
+				if($vali->fails()){			//如果验证失败
+					return $vali->errors();		//返回验证失败的提示信息
+				}
+				return '验证成功';			//验证成功返回的信息
+			}
+		}	
+		
+		
+		
+		
+
+
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+//===== hash()  加密与验证
+
+	//-- make()  加密
+		Route::any('test',function(){
+			$pwd = Request::get('pwd');	//获取表单提交的密码
+			$hashPwd = Hash::make($pwd);	//将密码hash加密
+			return $hashPwd;				
+		});
+		
+		
+	//-- check() 验证
+		
+		Route::any('test',function(){
+			$pass1 = session('pass');
+			$pass2 = Request::get('pass2');
+			if(Hash::check($pass1 , $pass2)){
+				return "密码正确";
+			}
+			return '密码错误';
+		});		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 数组帮助函数
+	//-- dd()	打印数据并终止后面的程序
+		dd($arr);		//相当于var_dump()+ die(); 
+	
+	//-- token 加密验证函数
+		csrf_token();			//安全验证token -- 会返回一个字串
+
+
+	//-- head()  获取数组中第一个元素
+		$arr=[1,2,3];
+		echo head($arr);		//结果：1
+
+
+
+	//-- array_only() 	获取数组中指定的元素
+		$arr=[
+			'a'=>'aa',
+			'b'=>'bb',
+			'c'=>'cc',
+		];
+
+		return array_only($arr,['a','c']);		//就只返回a和c 元素
+
+
+	//-- first() 过滤并返回满足条件的第一个元素
+		$arr=[10,20,30];
+		return array_first($arr,function($key,$value){
+			return $value > 20;
+		});
+		结果：只会返回30 ，而10和20则被过滤掉 
+
+
+	//-- add() 给数组添加元素
+		$arr=[
+			'a'=>'aa',
+			'b'=>'bb',
+		];
+		return array_add($arr,'c','ccc')
+		//结果： 数组就有三个元素  a,b,c	
+	
+
+	//-- except()	获取数组中除指定元素以外的所有元素
+		$arr=[
+			'a'=>'aa',
+			'b'=>'bb',
+			'c'=>'cc',
+		];
+		return array_except($arr,'b');
+		结果：返回 a,c  ,b则被过滤掉
+
+
+	//-- flatten()	平面获取将多维数组的值
+		$arr=[
+			'a'=>1,
+			'b'=[
+				'a'=>2,
+				'b'=>3
+			]
+		];
+		return array_flatten($arr);
+		//结果：123  (不论维度多深都依次返回每个值）		
+
+
+	//-- where()	获取数组中匹配条件的元素
+		$arr=[
+			'a'=>'aa',
+			'b'=>123,
+			'c'=>'cc',
+		];
+		return array_where($arr,function($k,$v){
+			return is_string($v);			//只获取数组中值为字串的元素
+			或
+			return is_numeric($v);			//只获取数组中值为数值的元素
+		});
+
+
+	//-- last() 获取数组中最后一个元素
+		$arr=[
+			'a'=>'aa',
+			'b'=>'bb',
+			'c'=>'cc',
+		];
+		return last($arr);	//结果：c
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 路径帮助函数
+
+	//-- app_path()	获取app目录绝对路径 
+
+		return app_path();
+
+
+	//-- config_path()	获取配置文件路径
+
+		return config_path();
+
+
+	//-- publci_path()	获取public目录路径
+
+		return public_path();
+
+
+	//-- storage_path() 	获取缓存等过程文件的目录路径
+	
+		return storage_path();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 字符串帮助函数
+
+
+	//-- str_plural()	将单词变为复数形式（有些不可变）
+		
+		return str_plural('boy');		//结果 boys  变成了复数形式
+		return str_plural('sheep');		//结果 sheep  因其没有复数形式则保持原型
+		return str_plural('ability');		//结果 abilites  (很智能)
+
+
+	//-- starts_with()	 判断字串是否以某个字符开始的
+
+		$stat = starts_with('abc','a');		
+		dd($stat);			//结果true
+
+
+
+	//-- ends_with()	判断字串是否以某字符结尾的
+
+		$stat = ends_with('abc','c');		//判断字串abc 是否以c结尾
+		dd($stat);			//结果 true
+
+
+	//-- camel_case()	将下卉线式的字串按驼锋命名法转化 
+
+		dd(camel_case('hello_world'));		//结果 helloWorld 
+
+
+	//-- class_basename()	提取使命空间的文件名
+
+		dd(class_basename('App\controller\TestController'));	//结果：TestController
+
+
+
+	//-- str_limit() 	设置字串显示的长度（其余的用省略号代替）
+		
+		dd(str_limit('abcd',3));	//结果： abc...
+
+
+	//-- str_is()	判断字串是否满足指定条件
+
+		dd(str_is('ab*','abcd'));	//判断字串是字串'abcd' 是否以 'ab' 开头。 结果 true;
+
+
+		dd(str_is('cb*','abcd'));	//判断字串是字串'abcd' 是否以 'cb' 开头。 结果 false;
+
+
+
+
+
+//===== 常量
+
+
+	//--  __FUNCTION__ 	返回当前方法名
+
+		public function index(){
+			return __FUNCTION__;		//返回当前方法名
+		}
+
+
+
+
+
+
+
+
+
+
+//===== linux 下使用 SVN
+
+	//-- 上传项目
+	   //--windows服务器要使用https:// 形式
+		svn import -m "..." https://192.xxx.xx.xxx/svn/Program/Test				
+	   //--linux服务器要使用 svn:// 形式
+		svn import -m '...' svn://192.xx.xx.xxx/svn/...
+			
+			"..."		//每次上传的注释内容
+
+	//-- 下载版本控制中的项目
+		svn checkout https://192.xxx.xx.xxx/svn/Program/Test		
+		或
+		svn co https://192.xxx.xx.xxx/svn/Program/Test
+
+	//-- 添加新文件
+
+		svn add login.php		//添加了一个login.php文件
+		svn commit -m "..."		//提交添加并加以注释
+		或
+		svn ci -m ",,,"			//commit 也可用ci代替
+	
+	//--	删除文件
+		 svn rm index.html
+
+
+
+	//-- 更新文件
+	
+		svn update			//更新文件
+		或
+		svn up
+			注意，更新文件要首先保证项目是处于版本控制中否则会报错。
+			解决办法： 使用 svn checkout 或co 检出文件后再更新
+
+	//-- 查看SVN状态
+
+		svn status
+		或
+		svn st
+
+
+
+
+	//-- linux下安装 SVN
+
+		yum -y install svn
+
+
+	//-- linux 下svn的使用
+		mkdir svn	//创建目录
+		cd svn		//进入目录 
+
+
+
+		svnadmin create /xx/svn/yinnote			// 创建项目仓库名为 yinnote
+
+		cd yinnote/conf/				//进入SVN配置文件目录
+
+		vim svnserve.conf				//编辑SVN配置文件
+
+			anon-access = none
+			auth-access = write
+			password-db = passwd
+			
+
+		vim passwd			//配置用户与密码
+			
+			xxx = xxx	密码是用明文
+		
+		svnserve -d -r /xxx/svn/	//指定远程访问SVN的根目录 
+
+		xxx/svn/yinnote 库访问如下
+		svn co svn://xxx.com/yinnote		//检出项目 注：linux搭建的SVN不能使用https方式,而是使用地址+仓库名的方式
+
+
+		// 在客户端的版本控制中新建并添加文件
+		touch index.php			//创建文件
+		
+		svn add index.php		//添加文件到SVN
+
+		svn ci -m 'add index.php'	//将新添加文件提交到版本控制中
+
+
+
+
+
+
+
+
+
+//===== github
+
+	yum install -y git	//安装git
+
+	useradd git		//1，添加一个GIT用户
+
+		cd /home		//进入家目录会看到创建的git用户目录
+		vim /etc/passwd		//查看用户表
+		vim /etc/group		//查看用户组
+
+	vim /etc/passwd			//2,禁用git用户的shell登录
+		git:x:1001:1001:,,,:/home/git:/bin/bash
+		改为：
+		git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+
+
+	cd /home/git/.ssh		//3,创建证书文件
+	touch authorized_keys
+		//注：这里是存放免密登陆的公钥的文件
+	
+					//4，初始化git仓库
+	mkdir /opt/git				//创建目录
+	cd /opt/git
+	git init --bare test.git		//在指定目录中初始化GIT
+
+	chown git:git test.git		//5,更改仓库的属主和属组为git用户和组
+
+	mkdir .ssh
+	cd .ssh
+	passwd git			//6,给GIT创建密码
+
+
+					//7,客户端上获取版本库
+	git clone ssh://git@192.xx.x.x:250/opt/git/test.git	
+			git : 操作使用的用户名
+			19x...:服务器地址
+			:250 ：端口
+
+
+
+
+//===== linux生成密钥 与 密钥与git的应用
+
+	//-- 密钥的创建
+		cd /
+		
+		mkdir .ssh			//创建存放密钥的隐藏目录
+	
+		ssh-keygen -t rsa		//创建密钥
+			
+			~/.ssh			//密钥的存储位置
+
+					//为创建的公钥和私钥起名
+		Enter file in which to save the key (/root/.ssh/id_rsa):
+
+					//设置密码
+		Enter passphrase (empty for no passphrase): 
+		 
+		Enter same passphrase again:	//再次输入密码
+
+
+	//-- git客户端免密登陆
+
+		cd /home/git/.ssh		//进入git服务器仓库
+		touch authorized_keys		//创建免密公钥文件
+
+		vim authorized_keys		//编辑并将客户端的公钥字串加入
+
+		注意：免密需要相关目录设置好权限才可以
+		1,
+			.ssh 目录权限必须 是700
+		2,
+			.ssh/authorized_keys 文件权限必须是600
+		3,
+			authorized_keys 文件的属组和属主要改成相应的git:git(这里要根据实际情况更改用户的属主和属组)
+
+		至此，客户端使用GIT时只需要输入证书的密码而不需要使用GIT密码了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== weui 微信前端界面 
+	https://github.com/weui/weui 		微ui 的git地址
+
+	git clone https://github.com/weui/weui.git	//在linux上下载 weui
+
+	下载完后将其放在 public 目录下
+
+	可打开 dist 中的index.html 查看示例 或扫描 https://github.com/weui/weui 下方的手机预览
+
+
+
+
+
+
+
+
+
+//===== laravel 邮件发送
+
+	//-- 邮件模型页面
+	<?php
+	namespace App\Models;
+	class M3Email{
+		public $from;	//发件人邮箱
+		public $to;	//收件人邮箱  发一人就用字串，发多人就用数组
+		public $cc;	//抄送
+		public $attach;	//附件
+		public $subject;//主题
+		public $content;//内容
+
+	}
+	?>	
+
+
+	//-- 控制器调用页面
+	use App\Models\M3Email;
+	use Mail;
+
+	$m3 = new M3Email;
+	$m3->to = $mail;
+	$m3->cc = 'xx@xx.com';
+	$m3->subject='书店';
+	$m3->content='...';
+
+	Mail::send('view',['m3'=>$m3],function($m) use ($m3) {
+		$m->to($m3->to,'用户')
+		  ->cc($m3->cc)
+		  ->subject($m3->subject);
+	});
+
+	send()方法参数：
+		一：发送邮件所显示的对应的视图(收件人显示的内容)
+		二：必须是数组，供参数一的模板使用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== laravel 项目在linux中的注意事项 
+
+	//-- storage和vendor目录的权限需要可读可写
+
+		sudo chmod -R 777 storage
+
+		sudo chmod -R 777 vendor
+
+		将以上两个目录的权限设置为完全权限
+
+
+
+
+	//-- laravel在apache与nginx的重写规则注意事项
+
+		参看laravel文档：http://www.golaravel.com/laravel/docs/5.1/     下面的美化链接部分
+
+		public/.htaccess 文件是将所有对域名的所有请求重定向到index.php去处理。默认支持apache，所以必须开启 mod_rewrite模块.
+
+		//apache
+			如果laravel自带的.htaccess文件在你的apache中不起作用，请尝试下面的配置
+			Options +FollowSymLinks
+			RewriteEngine On
+			RewriteCond %{REQUEST_FILENAME} !-d
+			RewriteCond %{REQUEST_FILENAME} !-f
+			RewriteRule ^ index.php [L]
+			
+
+		//Nginx 
+
+			在 Nginx 中，将下面的指令放到站点配置文件中就可以实现美化链接的功能：
+
+				location / {
+    					try_files $uri $uri/ /index.php?$query_string;
+				}
+
+				
+				
+
+	//-- nginx 解析PHP 配置
+
+		sudo vim nginx.conf		编辑nginx 配置文件
+
+		server{
+			listen	8080;		指定端口
+			server_name book.xxx.com	指定域名
+			root /home/www/laravel/public;	指定服务器根目录
+			index index.php index.html	指定默认使用文件类型		
+
+
+			location / {			配置重写规则	laravel必有项
+					try_files $uri $uri/ /index.php?$query_string;
+			}
+
+			location ~ \.php${		nginx解析 PHP的配置
+				fastcgi_pass 127.0.0.1:9000;
+				fastcgi_index index.php;
+				fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+				include fastcgi_params;
+			}
+
+		}
+
+
+
+		
+		
+	//-- 在阿里云的ECS上的nginx部署Laravel项目
+		http://segmentfault.com/a/1190000002955120 	原文
+		配置nginx服务器
+		server {
+				listen 80 default_server;
+				listen [::]:80 default_server ipv6only=on;
+
+				root /usr/share/nginx/html;
+				index index.html index.htm;
+
+				server_name localhost;
+
+				location / {
+						try_files $uri $uri/ =404;
+				}
+		}
+		其中root，index ，server_name和location这几行需要稍微修改一下
+		root修改
+		root /var/www/laravel/public;
+		这里就是将nginx服务器的根目录指向Laravel的public文件夹下，后续的Laravel项目的代码我们会放在我们之前创建的/var/www/laravel目录下
+		index修改
+		index index.php index.html index.htm;
+		这里需要注意的是，将index.php排在最前面
+		server_name修改
+		server_name server_domain_or_IP;
+		将server_domain_or_IP修改为你的公网IP
+		location修改
+		location / {
+				try_files $uri $uri/ /index.php?$query_string;
+		}
+		修改完是这样的：
+		server {
+			listen 80 default_server;
+			listen [::]:80 default_server ipv6only=on;
+			root /var/www/laravel/public;
+			index index.php index.html index.htm;
+			server_name server_domain_or_IP;	
+			location / {
+					try_files $uri $uri/ /index.php?$query_string;
+			}
+		}
+		最后我们还需要配置一下Nginx，让其执行PHP文件。同样是在这个文件里，在location下方添加下面的配置：
+		server {
+			listen 80 default_server;
+			#listen [::]:80 default_server ipv6only=on;
+			root /var/www/laravel/public;
+			index index.php index.html index.htm;
+			server_name server_domain_or_IP;
+			location / {
+				try_files $uri $uri/ /index.php?$query_string;
+			}
+			location ~ \.php$ {
+				try_files $uri /index.php =404;
+				fastcgi_split_path_info ^(.+\.php)(/.+)$;
+				fastcgi_pass unix:/var/run/php5-fpm.sock;
+				fastcgi_index index.php;
+				fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+				include fastcgi_params;
+			}
+		}
+		注意，这一块是自己加上去的：
+		 location ~ \.php$ {
+				try_files $uri /index.php =404;
+				fastcgi_split_path_info ^(.+\.php)(/.+)$;
+				fastcgi_pass unix:/var/run/php5-fpm.sock;
+				fastcgi_index index.php;
+				fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+				include fastcgi_params;
+			}
+		配置完之后重启Nginx，使上面的配置项生效。
+		sudo service nginx restart
+
+
+		
+		
+		
+
+
+		
+		
+//===== laravel框架的命令行大全
+
+		Usage:(用法)
+		  command [options] [arguments]         命令 [选项][参数]
+
+		Options: [选项列表]
+		  -h, --help            Display this help message           显示帮助信息
+		  -q, --quiet           Do not output any message           不显示任何信息
+		  -V, --version         Display this application version    显示应用版本
+			  --ansi            Force ANSI output         强制ANSI( 美国国家标准学会)标准输出
+			  --no-ansi         Disable ANSI output       关闭ANSI( 美国国家标准学会)标准输出
+		  -n, --no-interaction  Do not ask any interactive question     不让问任何交互性问题
+			  --env[=ENV]       The environment the command should run under.   命令应该在何种环境下执行
+		  -v|vv|vvv, --verbose  Increase the verbosity of messages:   增加详细(冗长)信息
+								1 for normal output, 2 for more verbose output and 3 for debug  1.正常输出  2.详细输出  3.调试输出
+
+		Available commands: 可用命令
+		  clear-compiled      Remove the compiled class file    清除编译类文件
+		  down                Put the application into maintenance mode     将应用切换到维护(维修)模式
+		  env                 Display the current framework environment     显示当前框架环境配置
+		  help                Displays help for a command       显示命令的帮助信息
+		  inspire             Display an inspiring quote        显示一条名言警句        
+		  list                Lists commands        命令列表
+		  migrate             Run the database migrations   运行数据库迁移
+		  optimize            Optimize the framework for better performance     优化框架，达到更好性能，更好表现
+		  serve               Serve the application on the PHP development server   在PHP开发服务器启动应用(http://localhost:8000) 
+		  tinker              Interact with your application    和你的应用交互(命令行交互)
+		  up                  Bring the application out of maintenance mode 从维护(维修)模式中退出
+		 app
+		  app:name            Set the application namespace     设置应用目录的命名空间
+		 auth
+		  auth:clear-resets   Flush expired password reset tokens   清除过期密码，重置记号  
+		 cache
+		  cache:clear         Flush the application cache   清除应用缓存数据
+		  cache:table         Create a migration for the cache database table   为缓存数据表执行数据迁移
+		 config
+		  config:cache        Create a cache file for faster configuration loading  为配置文件建立缓存文件，方便快速加载
+		  config:clear        Remove the configuration cache file   清除配置缓存文件
+		 db
+		  db:seed             Seed the database with records    将记录填充数据库
+		 event
+		  event:generate      Generate the missing events and listeners based on registration   产生事件并依据注册监听
+		 handler
+		  handler:command     Create a new command handler class    创建一个命令处理类,新建在\App\Handlers\Commands\
+		  handler:event       Create a new event handler class      创建一个事件处理类，位置在\App\Handlers\Events\   
+		 key
+		  key:generate        Set the application key               设置应用配对密钥，存放于.env文件中的APP_KEY选项
+		 make
+		  make:command        Create a new command class            创建一个命令类，目录\App\Commands\
+		  make:console        Create a new Artisan command          创建一个Artisan命令，目录 \App\Console\Commands\
+		  make:controller     Create a new resource controller class    创建一个RESTful控制器类,目录\App\Http\Controllers\
+		  make:event          Create a new event class              创建一个事件类，目录\App\Events\
+		  make:job            Create a new job class                创建一个工作类，目录\App\Jobs\                
+		  make:listener       Create a new event listener class     创建一个事件监听类,目录\App\Listens\
+		  make:middleware     Create a new middleware class         创建一个中间件，目录\App\Http\Middleware
+		  make:migration      Create a new migration file           创建一个数据库迁移文件，目录\database\migrations\          
+		  make:model          Create a new Eloquent model class     创建一个ORM model类文件，目录\App\
+		  make:provider       Create a new service provider class   创建一个服务提供类(类工厂)，目录\App\Providers\
+		  make:request        Create a new form request class       创建一个Request(请求)类，目录\App\Http\Requests\
+		  make:seeder         Create a new seeder class             创建一个数据库种子(数据)类,目录\database\seeds\
+		 migrate
+		  migrate:install     Create the migration repository       创建一个数据库迁移仓库 
+		  migrate:refresh     Reset and re-run all migrations       重置并重新执行所有的数据库迁移
+		  migrate:reset       Rollback all database migrations      回滚所有的数据库迁移操作
+		  migrate:rollback    Rollback the last database migration  回滚最近一次的数据库迁移操作
+		  migrate:status      Show the status of each migration     显示每次数据库迁移的状态
+		 queue
+		  queue:failed        List all of the failed queue jobs     列出所有失败的队列(查询的表格为:failed_jobs)
+		  queue:failed-table  Create a migration for the failed queue jobs database table   为失败的队列创建一个数据库迁移
+		  queue:flush         Flush all of the failed queue jobs    清除所有失败的工作队列
+		  queue:forget        Delete a failed queue job             删除一个失败的工作队列
+		  queue:listen        Listen to a given queue               监听一个指定的队列
+		  queue:restart       Restart queue worker daemons(守护进程) after their current job  完成当前工作队列后重置队列守护进程
+		  queue:retry         Retry a failed queue job      继续尝试一个失败的队列
+		  queue:subscribe(订阅)     Subscribe a URL to an Iron.io push queue 订阅一个URL地址(?)       
+		  queue:table         Create a migration for the queue jobs database table  为工作队列数据库表创建数据库迁移
+		  queue:work          Process the next job on a queue   处理的队列的下一个工作(?)
+		 redis
+		  redis:subscribe     Subscribe to a Redis channel      订阅一个redis频道 
+		 route
+		  route:cache         Create a route cache file for faster route registration   创建一个路由的缓存文件，用于快速路由注册
+		  route:clear         Remove the route cache file       清除路由缓存文件
+		  route:list          List all registered routes        列出所有的注册路由
+		 schedule
+		  schedule:run        Run the scheduled commands        执行计划命令
+		 session
+		  session:table       Create a migration for the session database table     对session数据库表创建一个数据库迁移
+		 vendor
+		  vendor:publish      Publish any publishable assets(优点) from vendor packages   列出所有的第三方扩展包的优点(特点)
+		 view
+		  view:clear          Clear all compiled view files     清除所有的编译以后的视图文件
+
+
+
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		
+//===== lavavel的搭建
+	一：安装xampp
+			安装好后在 php.ini 中开启相应模块
+				extension=php_fileinfo.dll
+				extension=php_mbstring.dll
+				extension=php_mbstring.dll
+				extension=php_openssl.dll
+	二： 在php.ini中最后补充以下节点内容并修改路径
+			在xampp的php.ini中补充一节openssl，从备用的php.ini文件末尾复制之，修改openssl.cafile
+			注意要把 
+			openssl.cafile= "G:\xampp\php\extras\openssl\cacert.pem"  
+			中的 盘符 ‘G’  换成真实盘符
+					
+			[openssl]
+			; The location of a Certificate Authority (CA) file on the local filesystem
+			; to use when verifying the identity of SSL/TLS peers. Most users should
+			; not specify a value for this directive as PHP will attempt to use the
+			; OS-managed cert stores in its absence. If specified, this value may still
+			; be overridden on a per-stream basis via the "cafile" SSL stream context
+			; option.
+			openssl.cafile= "G:\xampp\php\extras\openssl\cacert.pem"
+
+			; If openssl.cafile is not specified or if the CA file is not found, the
+			; directory pointed to by openssl.capath is searched for a suitable
+			; certificate. This value must be a correctly hashed certificate directory.
+			; Most users should not specify a value for this directive as PHP will
+			; attempt to use the OS-managed cert stores in its absence. If specified,
+			; this value may still be overridden on a per-stream basis via the "capath"
+			; SSL stream context option.
+			;openssl.capath=
+
+			; Local Variables:
+			; tab-width: 4
+			; End:
+
+			添加并修改内容后重启apache
+
+	三：下载 cacert.pem文件 
+			到 http://curl.haxx.se/docs/caextract.html  选择下面对应的文件 下载下来！
+				
+				HTTP from curl.haxx.se: cacert.pem （使用这个）
+				HTTPS from github: ca-bundle.crt 
+
+			将文件 cacert.pem 复制到 "？:\xampp\php\extras\openssl\cacert.pem"   中
+
+	四：安装 Composer-Setup
+			选择 Install Shell Menus
+			选择 ?:\xampp\php\php.exe
+			Composer 安装 时会出现一些问题
+			1，如果出现 mbstring 0  等字样的错误 ，那么就在php.ini配置文件中，把
+				extension=php_mbstring.dll 扩展关掉
+			2， 如果出现 connect 连接失效等问题，
+				检查 cacert.pem ,是否最新，可是使用代理来下载即可
+			
+	五：安装完后将 .composer/vendor/bin  添加到环境变量PATH 中
+
+	六：下载lavavel框架
+			创建一个目录并右击选择 Use Composer here
+			在 CMD 窗口中输入以下命令开始下载 lavavel 框架
+			composer create-project laravel/laravel blog --prefer-dist	
+	异常问题源引： http://blog.sina.com.cn/s/blog_489988100102vt46.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 文件上传及存储操作：
+
+	http://laravel-china.org/docs/5.0/filesystem	文档-》文件系统 / 云存储-》基本用法
+	http://www.cnblogs.com/zyf-zhaoyafei/archive/2015/12/25/5076515.html		
+	http://www.tuicool.com/articles/3AZNra						
+
+
+        $stat = $request->hasFile('bg1');       //判断文件是否为空
+      	$file = $request->file('bg1');          //获取文件
+	$file = \Input::file('bg1');                
+	$stat = $file->isValid();               //判断文件是否有效
+	echo $file->getClientOriginalExtension();       //获取文件扩展名
+	echo $file->getClientoriginalName();            //获取文件名
+	echo $file->getClientmimeType();        //获取文件类型
+	echo $file->getClientsize();            //获取文件大小
+	echo $file->getFileName();              //获取tmp缓存文件名
+	echo $file->getRealPath();              //临时缓存文件的绝对路径
+	echo $file->move(app_path().'...');     //移动文件到指定目录
+        echo app_path();                        //获取app目录的绝对路径 
+
+
+	文件存储
+
+	\Storage::put($path,'aaaaaaaaa');	//将内容存储文件
+        \Storage::get($path);			//获取文件内容
+	或
+	$stat = Storage::put($savePath,file_get_contents($file->getRealPath()));
+	if(!Storage::exists($savePath)){
+		exit('保存文件失败');
+	}
+	Storage::get($savePath);
+	
+

@@ -1,0 +1,464 @@
+
+//===== 教程地址：http://www.liaoxuefeng.com/
+
+
+
+
+
+//===== 异常与错误的解决
+
+	1，出现 *(no branch)： 使用 git checkout -b working 来将当前数据添加到一个新分支上，然后可以用合并分支来处理自己想要的效果
+
+
+	2，当使用 git log 或其它查看历史版本时退不出来 ，按 'q' 键即可退出	
+
+
+
+
+
+
+//-- 安装GIT
+
+	yum install -y git
+
+
+
+
+
+
+
+
+//-- git 设置相关
+
+	--global参数是全局参数，也就是这些命令在这台电脑的所有Git仓库下都有用。
+
+	git config --global color.ui true		//设置显示着色	
+	git config --global color.ui false		//取消着色
+
+	git config --global alias.st status		//给git命令设置别名(status 设置成st)
+	git config --global alias.unstage 'reset HEAD'	//给暂存区撤回命令设置为unstage别名
+
+	git config --global user.name "your_username"			//设置git用户名
+
+	git config --global user.email your_email@domain.com		//设置git邮箱
+
+	git config --global push.default simple				//设置默认推送值
+	
+
+	
+	.git/config 配置文件中设置了远程库，分支信息等
+
+
+
+
+
+	
+
+//-- GTI使用
+
+
+
+	git init			//-- 将当前目录初始化为空仓库
+	git init --bare sample.git	创建一个名字为sample的裸仓库
+	
+
+	git add 1.txt			//-- 将文件纳入GIT版本控制	
+	git add 1.txt,2.txt		//-- 同时添加多个文件
+	git add .			//-- 将工作区所有文件添加到暂存区
+	git add -A			//-- 将工作区所有文件添加到暂存区
+
+
+	git log 			//-- 查看版本历史(每次commit的快照)
+	git log --pretty=oneline		查看版本历史的简化显示方式
+	git log --oneline --decorate --graph --all		//查看历史示意图
+	git log --graph			//命令可以看到分支合并图
+	git log --graph --pretty=oneline --abbrev-commit	//查看历史分支合并图
+
+	
+	git diff 				//获取工作区与暂存区的差异
+	git diff HEAD -- 1.txt		//-- 对比指定文件在工作区与最新版本库中的差异
+	git diff --cached			//查看暂存区与当前历史提交的差异
+	git diff --cached HEAD~2		//查看当前暂存 区与其它历史提交的差异
+	git diff HEAD~1	-- master.txt		//查看当前工作区与其它历史提交的某一个特定文件的差异
+	git diff HEAD HEAD~2			//查看当前提交与前两个历史提交的差异
+	git diff HEAD HEAD~2 -- master.txt	//查看当前提交与前两个提交中的指定文件的差异
+	git diff --color-words			//比较出两个文件中有差异的单词
+	git diff --word-diff
+
+
+	git checkout -- 1.txt		//-- 撤销工作区中文件的修改(还原到最新的commit状态)
+	git checkout HEAD -- master.txt		//-- 将暂存区还原到最新提交状态 
+	git checkout 085bb3bcb		//-- 回滚到指定版本
+	git checkout test 		//切换到 test 分支 上
+	git checkout v1.0		//切换到 标记为 'v0' 的分支上
+
+	git reset master.txt		//还原暂存区
+	git reset HEAD 1.txt 		//-- 撤消暂存区修改
+	git reset HEAD 1.txt		//-- reset HEAD 结合 checkout -- 来恢复以add 的文件
+	git checkout -- 1.txt
+	git reset --hard HEAD^		//-- 版本回撤	
+	git reset --hard f3e433205019a		//-- 根据ID恢复到指定版本
+	git reset INITIAL_COMMIT -- master.txt 	// 用指定的历史提交文件还原暂存区
+
+	
+	git rm b.txt 			//-- 同时删除版本库与目录中的指定文件
+	git rm –r * 			//-- 删除该目录下的所有文件和子目录）
+	git rm --cached a 		//-- 只删除暂存区中的a 文件
+
+
+	git mv a c 			//-- 将文件a重命名为c	（其实是删除了a创建了c ）
+
+
+	git status			//-- 查看版本库当前状态，会提示1.txt 文件有改动
+
+
+	git commit -m 'add'		//-- 提交文件版本
+
+
+	git reflog			//-- 查看历史操作ID记录
+
+
+
+
+
+
+
+
+//-- 标签tag 
+
+	Git有commit，为什么还要引入tag？
+	“请把上周一的那个版本打包发布，commit号是6a5819e...”“一串乱七八糟的数字不好找！”如果换一个办法：
+	“请把上周一的那个版本打包发布，版本号是v1.2”“好的，按照tag v1.2查找commit就行！”
+	所以，tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
+
+	git tag 			//查看标签列表 
+
+	git tag v1.0			//给当前最新的commit 打标签 (v1.0)
+
+	git tag v0.9 6224937		//给指定id的 commit 打标签
+
+	git tag -a <tagname> -m "blablabla..."		//-a 创建标签并指定提示信息
+
+	git tag -s v0.2 -m "signed version 0.2 released" fec145a	//-s用私钥签名一个标签
+
+	git tag -d v1.0			//删除指定标签
+
+	git push origin v2.0		//将指定标签的版本推送到origin 库中
+
+	git push origin --tags 		//将所有标签一起推送到origin 库中
+
+	git push origin :refs/tags/v1.0		//删除远程库中的标签(需先本地删除)
+
+	git push origin --delete v1.0		//直接删除远程库中的指定标签
+
+
+
+
+
+
+
+//-- 分支操作
+	
+
+	git branch			//查看当前所有分支和当前分支
+
+	git branch -r			//查看远程分支
+
+	git branch -a			//查看所有分支包括远程库中分支 
+
+	git branch dev 			//创建分支
+
+	git checkout -b dev		//创建并切换到新分支
+
+	git checkout dev		//切换到dev分支
+
+	git branch -d dev 		//删除分支dev
+
+	git branch -D <name>		//强制删除一个未合并的分支(未合并的分支需强制删除)
+
+	git push origin dev		//向远程库推送dev分支
+	git push origin dev:dev2		//推送到远程库的dev2分支上
+
+	git push origin --delete dev 	//删除远程库中的dev分支
+
+	git clone git://github.com/tpcwre/obj.git	//克隆远程主分支
+
+	git checkout -b dev origin/dev			//克隆远程dev分支
+
+	git merge dev 			//将分支dev合并到当前分支
+
+	git merge --abort		//放弃本次分支合并
+
+	git reset --hard a394c84e1e	//放弃本次分支合并，恢复到合并的版本
+
+	git merge --no-ff -m "merge with no-ff" dev	//禁用Fast forward模式的分支合并，这样可以在历史中体现出合并
+
+	git fetch 			//
+	git merge origin/dev_a		//合并远程与当地有差异的分支
+
+	git pull			//更新本地分支与远程分支合并（功能同上面的 fetch 与 git merge 组合）
+	git pull origin 		//关联远程库
+	git pull origin dev 		//将本地dev分支与远程dev分支同步更新(如无法更新，则需先 git pull origin)
+
+	git remote show origin		//查看远程库信息
+
+	git remote prune origin		//删除本地库中相比较的远程库中已经不存在的分支：
+	
+
+	git log --graph			//命令可以看到分支合并图
+	
+	git log --graph --pretty=oneline --abbrev-commit	//查看历史分支合并图
+
+	合并分支冲突的解决:
+		使用 git status 找到有冲突的文件，然后打开该文件，Git会用<<<<<<<，=======，>>>>>>>标记出不同分支的内容，我们修改后保存：再合并即可
+
+
+
+	
+	//示例
+		查看本地与远程库某分支的差异
+			git fetch origin		关联并刷新远程库
+			git diff dev origin/dev 	查看本地与远程的 dev分支的差异
+			git pull origin dev 		更新本地dev分支与远程库同步
+
+		查看远程库信息
+			git remote show origin
+
+		删除远程库指定分支
+			git push origin --delete dev 	
+
+		将本地分支同步更新到远程库分支
+			git pull origin dev 
+
+		查看某分支的本地与远程库的差异
+			git diff dev origin/dev
+		
+
+
+
+
+
+
+//--  stash 暂存未完成的工作到另一个区域
+
+	git stash			//暂存当前内容，先做别的，回头再恢复继续工作
+		
+	git stash list 			//查看暂存列表
+
+	git stash apply			//恢复暂存的工作内容（但暂存版本还存在）
+
+	git stash apply stash@{0}	//恢复指定序号的暂存内容
+
+	git stash pop			//恢复暂存工作内容，并同时删除暂存版本
+
+	git stash drop stash@{0}	//清除指定备份区
+
+	git stash clear 		//清除所有暂存备份
+
+
+
+
+
+//-- ignore 忽略文件或目录的设置
+	在仓库目录下新建一个名为.gitignore的文件 并添加如下规则内容
+		# 		以'#'开始的行，被视为注释.                                                                                               
+		foo.txt		忽略掉所有文件名是 foo.txt的文件.
+		*.html		忽略所有生成的 html文件,
+		!foo.html	foo.html是手工维护的，所以例外.
+		*.[oa]		以o或a结尾的文件不要暂存
+		*.py[cod]	忽略所有 pyc,pyo,pyd 文件
+		foo/		匹配到的是目录不被暂存
+		**/res 		匹配所有为res的目录不被暂存
+
+			然后将设置好的 .ignore 文件提交就生效了
+
+	git add -f App.class		// -f 强制提交一个被忽略的文件
+
+	git check-ignore
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 设置远程仓库
+	1.创建 ssh密钥
+		ssh-keygen -t rsa -C "youremail@example.com"	
+		创建好后会在家目录中生成 .ssh目录 如(/root/.ssh)	
+		你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。
+
+	2.登陆GitHub，创建项目后打开“Account settings”，“SSH Keys”页面：然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容：点“Add Key”，你就应该看到已经添加的Key：有若干电脑,只要把每台电脑的Key都添加到GitHub
+
+	
+	git remote add origin git@github.com:michaelliao/learngit.git		//关联远程库(可重复关联多个)
+				--origin 	GIT默认远程库名
+				--github.com	远程库地址（可设为其它）
+				--michaelliao	账号
+				--learngit	项目名
+		fatal: remote origin already exists. 错误的解决：git remote rm origin （删除远程git库再重新添加，如果删除时报错，就手动修改 vim .git/config）
+
+	git push -u origin master				//向远程库推送master 分支
+	git push origin master
+	git push origin dev					//向远程库推送dev分支
+			-- -u	适用于首次推送，是关联本地和远程的分支 	
+			
+
+	git clone git://github.com/tpcwre/obj.git		//从远程库下载项目
+	git clone git://github.com/tpcwre/obj.git newobj	//从远程库下载项目并指定新目录名
+	git clone -b v2.6.3 git@github.com:mongodb/mongo.git	//克隆远程项目的指定版本
+
+	git remote		//查看远程库信息
+	git remote -v		//查看远程库更详细信息
+	git fetch 			//查看远程库中都有哪些分支与版本
+	
+
+
+	远程比对
+	git fetch					对比前最好先获取远程数据
+	git diff master origin/master			比对本地与远程的master分支区别
+
+		注：当与远程做比较时，都是以远程为基准来提示,如下，
+
+				//比对状态：本地有1.txt 远程没有1.txt
+		diff --git a/1.txt b/1.txt
+		deleted file mode 100644		当远程没有而本地有时，会以远程为基准提示该文件被删除
+		index e69de29..0000000
+
+
+				//比对状态：本地没有1.txt 远程有1.txt
+		diff --git a/1.txt b/1.txt
+		new file mode 100644			当远程有，本地没有时，会以远程为基准提示该文件为全新文件
+		index 0000000..e69de29
+
+
+					本地文件内容有1111，远程文件内容没有1111
+		diff --git a/git/1.txt b/git/1.txt
+		index 6fff8d1..e69de29 100644
+		--- a/git/1.txt
+		+++ b/git/1.txt
+		@@ -1 +0,0 @@
+		-11111111111				当本地有，远程没有时，会以远程为基准提示该内容不存在
+		\ No newline at end of file
+
+
+					本地文件内容没有111，远程文件内容有1111
+		diff --git a/git/1.txt b/git/1.txt
+		index e69de29..6fff8d1 100644
+		--- a/git/1.txt
+		+++ b/git/1.txt
+		@@ -0,0 +1 @@
+		+11111111111				当本地无，远程有时，会以远程为基准提示该内容为新加
+		\ No newline at end of file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 搭建Git服务器
+
+
+	第一步，安装git：
+
+	$ sudo apt-get install git	或 yum install -y git
+
+	第二步，创建一个git用户，用来运行git服务：
+
+	$ sudo adduser git
+
+	第三步，创建证书登录：
+
+	收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到/home/git/.ssh/authorized_keys文件里，一行一个。
+
+	第四步，初始化Git仓库：
+
+	先选定一个目录作为Git仓库，假定是/srv/sample.git，在/srv目录下输入命令：
+
+	$ sudo git init --bare sample.git
+
+	Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以.git结尾。然后，把owner改为git：
+
+	$ sudo chown -R git:git sample.git
+
+	第五步，禁用shell登录：
+
+	出于安全考虑，第二步创建的git用户不允许登录shell，这可以通过编辑/etc/passwd文件完成。找到类似下面的一行：
+
+	git:x:1001:1001:,,,:/home/git:/bin/bash
+
+	改为：
+
+	git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+
+	这样，git用户可以正常通过ssh使用git，但无法登录shell，因为我们为git用户指定的git-shell每次一登录就自动退出。
+
+	第六步，克隆远程仓库：
+
+	现在，可以通过git clone命令克隆远程仓库了，在各自的电脑上运行：
+
+	$ git clone git@121.42.158.110:/srv/sample.git
+	Cloning into 'sample'...
+	warning: You appear to have cloned an empty repository.
+
+	剩下的推送就简单了。
+	管理公钥
+
+	如果团队很小，把每个人的公钥收集起来放到服务器的/home/git/.ssh/authorized_keys文件里就是可行的。如果团队有几百号人，就没法这么玩了，这时，可以用Gitosis来管理公钥。
+
+	这里我们不介绍怎么玩Gitosis了，几百号人的团队基本都在500强了，相信找个高水平的Linux管理员问题不大。
+	管理权限
+
+	有很多不但视源代码如生命，而且视员工为窃贼的公司，会在版本控制系统里设置一套完善的权限控制，每个人是否有读写权限会精确到每个分支甚至每个目录下。因为Git是为Linux源代码托管而开发的，所以Git也继承了开源社区的精神，不支持权限控制。不过，因为Git支持钩子（hook），所以，可以在服务器端编写一系列脚本来控制提交等操作，达到权限控制的目的。Gitolite就是这个工具。
+
+	这里我们也不介绍Gitolite了，不要把有限的生命浪费到权限斗争中。
+	小结
+
+		搭建Git服务器非常简单，通常10分钟即可完成；
+
+		要方便管理公钥，用Gitosis；
+
+		要像SVN那样变态地控制权限，用Gitolite。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- whindow 下创建 id_rsa 密钥
+
+	1. 安装git，从程序目录打开 "Git Bash" 
+	2. 键入命令：ssh-keygen -t rsa -C "email@email.com"
+		  "email@email.com"是github账号
+	3. 提醒你输入key的名称和密码，可不设置一路回车。
+	4. 在C:\Documents and Settings\Administrator\下产生两个文件：id_rsa和id_rsa.pub   或.ssh目录
+	5. 把4中生成的密钥文件复制到C:\Documents and Settings\Administrator\.ssh\ 目 录下。
+	6. 用记事本打开id_rsa.pub文件，复制内容，在github.com的网站上到ssh密钥管理页面，添加新公钥，随便取个名字，内容粘贴刚
+	7. 运行Git CMD 用cmd命令进入指定目录 进行git 命令操作 

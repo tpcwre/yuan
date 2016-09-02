@@ -1,0 +1,228 @@
+//-- session_set_cookie_params()
+	把session变量存在cookie中就可以正常使用session了 ，这样就不用在每个页面都要调用session_start() 
+
+		=====COOKIE=====
+
+setCookie("save","true",time()+3600); 				//=====创建及更新COOKIE
+
+								//=====创建时间COOKIE
+setCookie("Time",date("Y-m-d H:i:s"),time()+3600);	
+
+setCookie("save","true",time()-1);				//=====删除COOKIE
+
+								//=====删除所有COOKIE
+foreach($_COOKIE as $key=>$val){
+	setCookie($key,"",time()-1);
+}
+
+echo $_COOKIE['save']						//=====调用COOKIE
+
+
+
+
+
+
+
+								//===== cookie可以添加数组
+setCookie('user[sex]','nv',time()+10000);
+
+echo $_COOKIE['user']['sex'];
+
+
+
+
+								//===== 不加下标的索引数组COOKIE
+
+setCookie('user[1]','A',time()+1000);
+	//当上一个COOKIE有索引时，下一个会自动增长，
+setCookie('user[]','B',time()+1000);
+	//当上一个COOKIE没有索引时，下一个会覆盖掉上一个
+setCookie('user[]','C',time()+1000);
+var_dump($_COOKIE)
+	//结果：array(1) { ["user"]=> array(2) { [0]=> string(1) "C" [1]=> string(1) "A" } } 
+
+
+
+
+								//===== COOKIE的第四个参数 保存目录
+
+setCookie('user','abc',time()+1000,'/113/20150728');
+echo $_COOKIE['user'];
+
+
+
+								//===== cookie的保存位置
+	
+火狐-》工具-》选项-》隐私-》历史记录下拉列
+-》使用自定义历史记录设置 -》显示Cookie
+
+			
+IE浏览器：C:\Documents and Settings\用户名\Cookies
+
+
+
+
+
+			//=====案例（用户登陆及利用COOKIE是否保存用户名）
+
+
+
+
+
+登陆页面：
+test.php
+
+
+<html>
+<head>
+<title>管理登陆</title>
+<link type="text/css" rel="stylesheet" href="test.css"/>	
+</head>
+<body>
+<div class="top"></div>
+<hr>
+<div class="center">
+<form action="control.php" method="post">
+<h1>管理员登陆系统<h1></tr>
+<table>
+<tr>
+<td>用户名：</td><td><input type="text" name="user" <?php user()?> /></td>
+</tr>
+<tr>
+<td>密　码：</td><td><input type="password" name="pass"/></td>
+</tr>
+<tr>
+<td colspan=2><label>是否保存用户名
+<input type="checkbox" value="save" name="keep" <?php save() ?>/></label></td>
+</tr>
+<tr>
+<td><input type="submit" value="登陆"/></td>
+<td><input type="reset" value="重置"/></td>
+</tr>
+</table>
+</form>
+</div>
+<hr>
+<div class="bottom"></div>
+</body>
+</html>
+<?php
+//判断保存用户名的COOKI是否为空
+function save(){
+	if(empty($_COOKIE['save'])){		//调用COOKIE
+		echo "";
+	}else{
+		echo "checked=save";
+	}
+}
+//判断用户名的COOKIE是否为空及返回值
+function user(){	
+	if(!empty($_COOKIE['user'])){
+		echo  "value=".$_COOKIE['user'];
+	}else{
+		return "";
+	}
+}
+?>
+
+
+
+
+
+
+
+控制页面：
+control.php
+
+
+<?php
+	$user=$_POST['user'];
+	$pass=$_POST['pass'];
+	$keep=$_POST["keep"];
+	if($user=="aaa" && $pass==123){
+	//判断是否保存用户名及是否创建用户名的COOKIE
+	//如果保存用户名则创建用户COOKIE
+		if(!empty($keep)){	
+			setCookie("save","true",time()+3600); 
+			setCookie("user",$user,time()+3600);
+	//如果不保存用户名则删除saveCOOKIE
+		}else{				
+			setCookie("save","true",time()-1);
+			setCookie("user","",time()-10);
+		}
+		if(empty($_COOKIE['lastTime'])){
+			setCookie("lastTime",date("Y-m-d H:i:s"),time()+3600);
+			$time="欢迎您首次登陆本站！";
+			setCookie("time","$time",time()+3600);
+		}else{
+			$time = "您上次登陆时间是：".$_COOKIE["lastTime"];
+			setCookie("time","$time",time()+3600);
+			setCookie('lastTime',date("Y-m-d H:i:s"),time()+3600);
+		}
+		//跳转页面
+		header("Refresh: 0; url=test2.php");	
+	}else{
+		echo "用户名或密码错误！！！";
+		header("Refresh: 3; url=test.php");
+		echo "<br><a href='test.php'/>返回</a>";
+	}
+	function lastTime(){
+		if(empty($_COOKIE['lastTime'])){
+			echo "欢迎您首次登陆本站！";
+			setCookie("lastTime",date("Y-m-d H:i:s"),time()+3600);
+		}else{
+			echo "您上次登陆时间是：".$_COOKIE["lastTime"];
+			setCookie('lastTime',date("Y-m-d H:i:s"),time()+3600);
+		}
+	}
+?>
+
+
+
+
+
+
+成功登陆页面：
+test2.php
+
+<html>
+<head>
+<title>管理登陆</title>
+<link type="text/css" rel="stylesheet" href="test.css"/>	
+</head>
+<body>
+<div class="top"></div>
+<hr>
+<div class="center">
+	<div class="welcom">
+		欢迎 <span class="user"><?php echo $_COOKIE['user'] ?></span> 登陆成功！
+	</div>
+	<div class="time">
+		<a href="test.php">返回重新登陆，</a><?php echo $_COOKIE['time'] ?>
+	</div>
+	<div class="main">主界面</div>
+	<div class="conf">
+		<p><a href="#">管理用户</a></p>
+		<p><a href="#">添加用户</a></p>
+		<p><a href="#">查询用户</a></p>
+		<p><a href="#">退出用户</a></p>
+	</div>
+</div>
+<hr>
+<div class="bottom"></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

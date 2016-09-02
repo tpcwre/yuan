@@ -1,0 +1,9 @@
+
+
+//====== /根 跳到 /admin ,再通过/admin 指定显示模板
+
+		Route::get('/', function()
+		{
+			return redirect('/admin');
+		});
+		Route::resource('/admin','admin\AdminProController');

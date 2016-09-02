@@ -1,0 +1,342 @@
+
+-----php-WAMP环境的配置
+http://wenku.it168.com/d_001535668.shtml
+
+-----php 5.3.5如何配置
+-----myadmin 无法在发生错误时创建会话 故障的解决
+
+
+//=====Cannot send session cookie 错误
+
+//=====Cannot modify header information错误
+
+//=====apache配置虚拟目录
+
+//=====appserver wamp集成环境 下载官网
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====appserver wamp集成环境 下载官网
+
+http://www.appservnetwork.com/
+
+
+
+
+//=====apache配置虚拟目录
+
+找到conf.conf文件
+设置如下
+<IfModule dir_module>
+    DirectoryIndex index.php index.html index.htm
+	Alias /tools "E:/tools"
+	<Directory "E:/tools">
+	Order allow,deny
+	Allow from all
+	</Directory>
+</IfModule>
+
+
+
+
+
+<IfModule dir_module>
+    DirectoryIndex index.php index.html index.htm
+	Alias /tools "E:/tools"
+	<Directory "E:/tools">
+	Order allow,deny
+	Allow from all
+	</Directory>
+</IfModule>
+
+
+
+
+
+
+
+
+
+-----php-WAMP环境的配置.
+
+
+一：安装apache 
+二：解压php
+三：修改及配置文件；
+1， 修改文件;
+	a:在ini 文件中 找到 extension_dir = "./" 加入路径如："C:/php/ext "
+	b:取消 extension=php_mysql.dll 前分号
+	  取消 extension=php_mysqli.dll 前分号
+	c:取消 extension=php_mbstring.dll 前分号
+	d:把php.ini-dist  名字改为 php.ini    
+		d-注释；其它版本不一定是ini-dist 要找到带ini的文件，查看其内容是否有上面三条。
+
+2,把 ../mysql/bin/libmySQL.dll   拷贝到 php5.0 下面，还有拷贝到 php5.0/ext 目录下//这条不准
+然后把php.ini复制到C盘windows下.把 php5ts.dll 和libmysql.dll复制到 c:/windows/system32下
+	
+3.修改httpd.conf文件
+	a:在	LoadModule ssl-module modules/mod_ssl.so  的下一行加上如下代码：
+		LoadModule php5_module c:/php/php5apaceh2_2.dll   //2.0版的就改成php5apache2.dll
+	b:在 	AddType application/x-gzip.gz.tgz  的下一行加上
+		AddType application/x-httpd-php .php    //识别并解析.php的文件 也可加入其它类型。
+		增加PHPIniDir "php安装目录"
+
+	保存后关闭
+4.写一个PHP文件<?php phpinfo() ?> 放到htdocs下，浏览localhost 看是否成功.
+
+
+四：安装mysql 
+	运行index.php时不要在同层级，要在上一层级.不然会报错！
+	建一个 <?php  $link = mysql_connect(); ?> 连接PHP文件测试
+五：解压安装myadmin;
+	将文件直接解压到apache指定的web目录下即可。
+	!!!注：有时myadmin 会莫明出现错误，需要清空一下缓存就会解决问题！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----php 5.3.5如何配置
+
+
+
+配置Apache
+双击运行httpd-2.2.17-win32-x86-openssl-0.9.8o.msi
+注意：版本  no_ssl:HTTP
+           openssl:HTTPS
+一般情况下no_ssl即可
+1. Network Domain:localhost
+   Server Name:localhost
+   Administrator's Email Address: 任写
+2.Typical
+3.一个重要的文件 conf/httpd.conf
+  一个重要的文件夹  htdocs
+
+修改配置文件
+1.DocumentRoot
+2.查找<Directory/>
+Deny from all修改为allow from all
+重启Apache
+
+配置PHP 5.3.5
+注意：安装包有问题，选用压缩包，自己配置
+php版本区别：VC6就是legacy Visual Studio 6 compiler
+            VC9就是the Visual Studio 2008 compiler
+如果你选用的是Apache或者其他服务软件，那么选择VC6，选用的是IIS的话，那么请下载VC9的
+            Thread Safe 是线程安全
+            Non Thread Safe就是非线程安全
+官方并不建议你将Non Thread Safe 应用于生产环境，所以一般选择Thread Safe版本的下载
+步骤1.将php-5.3.5-Win32-VC6-x86.zip文件解压缩到D:/WAMP/PHP中（可自定义路径）
+    2.将php.ini-development文件备份，并重命名为php.ini
+    3.打开php.ini，找到：
+; On windows:
+; extension_dir = "ext" 
+
+修改为：
+
+; On windows:
+extension_dir = "E:/WAMP/PHP/ext" 
+
+
+即去掉extension_dir前面的分号（注意斜杠方向），表示指定PHP扩展包的具体目录，以便调用相应的DLL文件。
+   4.默认PHP并不支持自动连接Mysql，需开启相应的扩展库功能，比如php_mysql.dll等，即将：
+
+extension=php_curl.dll           //CURL，客户端 URL 库函数库
+extension=php_gd2.dll            //GD绘图函数模块
+extension=php_mbstring.dll       //多字节函数模块
+extension=php_mysql.dll          //MySql函数模块
+extension=php_mysqli.dll          //MySqli函数模块
+extension=php_pdo_mysql.dll      //PDO MySql函数模块
+extension=php_pdo_odbc.dll       //PDO ODBC函数模块
+extension=php_xmlrpc.dll         //XML-RPC函数库
+extension=php_xsl.dll            //XSL函数模块
+这些extension之前的分号(;)去除。
+
+   5.配置PHP的Session功能
+在php.ini配置文件中找到：
+;session.save_path = "/tmp" 
+
+修改为：
+  session.save_path = "/tmp" 
+6.配置PHP的文件上传功能
+在php.ini配置文件中找到：
+
+
+;upload_tmp_dir = 
+
+
+修改为：
+
+
+upload_tmp_dir =
+
+五、修改date.timezone，否则在执行phpinfo时date部分会报错：
+
+Warning: phpinfo() [function.phpinfo]…
+
+
+找到：
+
+;date.timezone =
+修改为：
+date.timezone = Asia/Shanghai 
+
+我们需要Apache支持PHP，所以还需要在Apache配置文件中完成相应的PHP配置。
+以下是配置Apache以支持PHP：
+
+   找到Apache安装目录下的conf文件夹下的httpd.conf，打开：
+
+一、在#LoadModule vhost_alias_module modules/mod_vhost_alias.so下添加如下（路径适你自己的情况而定）：
+
+
+LoadModule php5_module "c:/php/php5apache2_2.dll"
+PHPIniDir "c:/php"
+AddType application/x-httpd-php .php .html .htm 
+
+二。默认Apache服务器执行WEB主程序的目录为Apache2.2/htdocs，所以当你的WEB主程序目录变更时，我们需要修改相应的Apache配置，
+注意：httpd.conf用/，
+
+即将：
+
+
+DocumentRoot "D:/Program Files/Apache Software Foundation/Apache2.2/htdocs" 
+
+
+修改为：
+
+
+DocumentRoot "E:/PHPWeb" 
+
+
+令将：
+
+
+
+<Directory "D:/Program Files/Apache Software Foundation/Apache2.2/htdocs"> 
+
+
+修改为：
+
+<Directory "E:/PHPWeb">
+
+测试Apache+PHP
+重启Apache服务器
+    至此，在Apache服务器上PHP环境配置工作就完成了，你只需要在E:/PHPWeb目录下新建一个PHP文件，写入：
+<?php
+phpinfo();
+?>
+
+测试Apache+PHP+Mysql
+验证PHP是否能连接Mysql，你可以在index.php中创建如下代码：
+<?php
+$connect=mysql_connect("127.0.0.1","root","你的数据库密码");
+if(!$connect) echo "Mysql Connect Error!";
+else echo "连接成功";
+mysql_close();
+?>
+
+
+配置Mysql
+一般都使用默认项
+在Manual Selected Default Character Set/Collation中Character Set:选择gb2312
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----myadmin 无法在发生错误时创建会话 故障的解决
+
+	出现这种情况很大的原因是没有开启session功能而引起的
+
+	1，首先开启php.ini 中      session.save_path = "d:/server/tmp"  的功能  这里的路径根据实际情况设置。
+	2，设置权限，选择上面指定session的文件夹，在属性的安全项中设置user用户为完全控制。如果看不到安全选项，就在工具的文件夹选项里选择查看一栏，取消“使用简单文件共享”、就可以看到安全项了。
+	这样，设置了session路径并指定了权限基本就可以解决问题了。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====Cannot send session cookie 错误
+
+解决方案：
+
+output_buffering =改为on
+
+1)适用于有权限编辑PHP。INI的人
+打开php。ini文件(你应试比我清楚你的php。ini在哪里)，找到
+output_buffering =改为on或者任何数字。如果是IIS6，请一定改为ON，不然你的PHP效率会奇慢。
+2)使用虚拟主机，不能编辑PHP。INI，怎么办？
+简单：
+在你的空间根目录下建立一个.htaccess文件，内容如下：
+AllowOverride All
+PHP_FLAG output_buffering On
+不幸的情况是：还是不行？全部网页都不能显示啦？
+那么，你可以打电话骂一通空间商，然后让他给你把apache的。htaccess AllowOverride打开
+3)在PHP文件里解决
+ob_start()
+启用output buffering机制。 Output buffering支持多层次 
+
+
+
+
+
+
+
+//=====Cannot modify header information错误
+
+在C盘的WINDOWS中找到php.ini 这个配置文件，然后查找一项：output_buffering将其值由原来的off改为on，
+
+重新启动Apache就ok了

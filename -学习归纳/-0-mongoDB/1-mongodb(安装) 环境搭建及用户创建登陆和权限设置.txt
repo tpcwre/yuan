@@ -1,0 +1,118 @@
+
+
+
+//===== mongodb 环境搭建及用户创建登陆和权限设置
+
+
+	https://pan.baidu.com/s/1o7Yok8y	mongo 下载地址
+
+	https://pan.baidu.com/s/1ch0jam		mongod 下载地址
+
+	环境配置
+		mkdir /usr/local/mongodb/			(创建mongodb目录及其子目录：bin,log,data,conf)
+					bin/mongodb
+					bin/mongo		
+
+					log/mongod.log
+
+					data
+
+					conf/mongod.conf
+						port = 12345
+						dbpath = /usr/local/mongodb/data
+						logpath = /usr/local/mongodb/log/mongodb.log
+						#auth=true	设置用户后再开启
+						fork=true
+
+
+						bind_ip	= 127.0.0.1	指定连接地址
+						verbose = vvvvv		指定日志的记录详细等级 1-5个v 
+	
+
+
+
+
+	一：运行 mongod 启动 数据库
+		./bin/mongod -f conf/mongod.conf	用指定配置文件启动服务
+
+
+	二：登陆客户端
+		./bin/mongo 127.0.0.1:12345
+
+
+	三：创建并切换到admin库
+		use admin
+
+
+	四：创建用户并指配权限
+		db.createUser({user:'imooc',customData:{description:"imooc"},pwd:"imooc",roles:[{role:"dbAdmin",db:'t1'},{role:"dbOwner",db:'t2'},{role:"userAdmin",db:'t3'},{role:"read",db:"t6"},{role:"readWrite",db:"t7"}]})
+
+		db.createUser({user:"admin",customData:{description:"this is all auth"},pwd:"admin",roles:[{role:"userAdminAnyDatabase",db:"admin"}]})
+
+		//创建成功状态
+		{					
+		"user" : "imooc",
+		"customData" : {
+			"description" : "imooc"
+		},
+		"roles" : [
+			{
+				"role" : "dbAdmin",
+				"db" : "t1"
+			}	
+		]
+		}
+
+
+		//权限角色类型：
+			数据库角色：read(读)，readWrite(读写),dbAdmin(库管理),dbOwner(库所有者),userAdmin(最高管理),userAdminAnyDatabase(全局管理员)
+
+			集群角色：clusterAdmin,clusterManager..
+
+			备份角色：backup,restore...
+
+			其它特殊权限：DBAdminAnyDatabase...
+
+
+	db.system.users.remove({user:"java1"});			//删除指定用户
+
+
+
+	五：查看当前用户分配情况 
+		show users
+		db.system.users.find()
+
+	六：退出重启服务，修改配置文件，开启用户权限认证
+		vim conf/mongod.conf
+			auth=true		开启权限认证
+
+
+
+	七：启动服务
+		./bin/mongod -f conf/mongod.conf
+		或
+		./bin/mongod --auth --dbpath=/usr/local/mingodb/data/ --logpath=/usr/local/mongodb/log/mongod.log --fork 	
+
+
+	八：连接数据库并使用用户登陆
+		方式一：直接登陆（注：该方式必须要指定登陆到用户管理admin库，否则无法登陆）
+			./bin/mongo 127.0.0.1:12345/admin -uimooc -pimooc
+
+		方式二：
+			./bin/mongo 127.0.0.1:12345
+			use admin
+			db.auth("imooc","imooc")		//用户登陆后，可进行其它相应权限的操作
+		
+
+	九：切换用户
+
+		db.auth("admin","admin")
+		db.auth("imooc","imooc")
+
+
+
+
+
+
+
+

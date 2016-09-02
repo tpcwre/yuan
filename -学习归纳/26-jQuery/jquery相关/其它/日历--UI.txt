@@ -1,0 +1,1338 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//第44课 知问前端-日历UI 上 10
+
+学习要点：
+	1，日历的调用datepicker()方法
+	2，修改datepicker()样式
+	3，datepicker()方法的属性
+	4，datepicker()方法的事件
+	日历（datepicker）UI，可以让用户更加直观的，更加方便的输入日期，并且还考虑不同国家的语言限制，包括汉语等。
+		
+=========================================
+js页面：
+
+$(function(){
+$(".search_button").button({
+	icons:{
+		primary:"ui-icon-search",
+	}
+});
+$("#reg").dialog({
+	title:"会员注册",
+	autoOpen:true,
+	modal:true,
+	resizable:false,
+	width:320,
+	height:340,
+	buttons:{
+		"提交":function(){},
+		"取消":function(){
+			$(this).dialog("close");
+		}
+	}
+});
+
+//-----1，日历 datepicker()方法的调用
+//$("#date").datepicker();
+
+
+
+
+//-----2，修改datepicker()样式。
+
+
+//-----修改日历标题域的背景
+	//日历UI的header(标题)背景和对话框UI的背景采用的是同一个class,所以，在此之前已经被修改，所以，这里无须再修改了。    以下内容需要在CSS中设置。
+	//.ui-widget-header{
+	//	background:url(../img/bj.png);
+	//}
+
+	
+
+//-----修改当天日期的样式
+	//注意修改当天的样式时要记得限制是某个区域的，预防此类名也许会与其它域中的类名相同。
+	/*日历UI的今天单元格样式
+	/*这里的.ui-datepicker-today是父元素的类名，.ui-stat-highlight是当前元素的类名
+	.ui-datepicker-today .ui-state-highlight{
+	
+		border:1px solid blue;
+		color:red;
+	}*/
+
+	
+//-----修改选定日期的样式
+	/*日历UI的日期选定单元格样式
+	选定是指选完后再次点击出现时显示的样式
+	.ui-datepicker-current-day .ui-state-active{
+		border:1px solid black;
+		color:black;
+	}*/
+	
+
+
+
+
+//-----3，datepicker()方法的属性
+	//日历方法有两种形式：1，datepicker(options),options是以对象键值对的形式传参，每个键值对表示一个选项：2:datepicker("option",param),action是操作对话框方法的字符串，param则是option的某个选项。
+	
+//-----把日历改成中文版
+	//注意：默认情况下，日历显示为英文，如果你想使用中文日历，直接引入中文语言包即可，或者把中文语言包的几行代码整合到某个js文件里即可。 各种语言包存放在：jquery-ui-1.10.4.custom\development-bundle\ui\i18n 中。中文包名为jquery.ui.datepicker-zh-CN.js  、将包中的内容全部复制到jquery.ui.js中，然后再把jquery.ui.js文件的类型改为utf-8，即可得到中文版的日历。
+
+//-----日期格式代码
+/*
+	d	月份中的天，从1到31
+	dd	月份中的天，从01到31
+	o	年份中的天，从1到366
+	oo	年份中的天，从01到366
+	D	星期中的天的缩写名称（Mon,Tue等）
+	DD	星期中的天的全写名称（Monday,Tuesday等）
+	m	月份，人1到12
+	mm	月份，从01到12
+	M	月份的缩写名称(Jan,Feb等)
+	MM	月份的值全写名称(January,February等)
+	y	两位数字的年份（14表示2014）
+	yy	四位数字的年份(2014)
+	@	从01/01/1997至今的毫秒数
+	
+
+//-----指定日历返回的日期格式 dateFormat mm/dd/yy(时间)
+$("#date").datepicker({
+	//dateFormat:"yy-mm-dd",	//年，月，日
+	//dateFormat:"d-m-y"		//日，月，年
+	dateFormat:"mm-dd-yy"
+});
+
+
+
+//-----指定星期中的天的长格式。dayNames(英文日期/数组)
+	//比如：Sunday,Monday等，中文，星期日  长格式就是全名的意思。
+	//中文的长格式（全名）因为太长，放不下，所以在日历中不会显现出效果，
+$("#date").datepicker({
+	dayNames:["星期一","星期二","星期三","星期四","星期五","星期六","星期日"],
+});
+
+
+//-----指定星期中的天的短格式。 dayNamesShort(英文日期/数组)
+	//比如：Sun, Mon等。
+	//中文的短格式和长格式一样在日历中不会显现出效果，
+$("#date").datepicker({
+	dayNamesShort:["星期一","星期二","星期三","星期四","星期五","星期六","星期日"],
+});
+
+
+
+//-----指定星期中天的最小格式。 dayNamesMin(英文日期/数组)
+	//比如： Su, Mo 等。
+$("#date").datepicker({
+	dayNamesMin:["日","一","二","三","四","五","六"]
+});
+
+
+//-----指定月份的长格式 。 monthNames(英文月分/数组)
+//-----指定月份的短格式。 monthNamesShort(英文月份/数组)
+//-----让日期显示到指定的input域。altField（无/字符串）
+//-----设置显示在其它input域中的日期格式
+//-----在日期的<input>域后面附加文本。 appendText(无、字符串)
+//-----显示周。 showWeek(false、布尔值)	
+//-----显示周的标题。 weekHeader("WK"/字符串)
+//-----设置日历面板以星期几开头。firstDay(0/数值)
+	//如：January,February等,数组必须从January开始。
+$("#date").datepicker({
+	monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+});
+
+
+
+//-----指定月份的短格式。 monthNamesShort(英文月份/数组)
+	//如: Jan, Feb等，数组必须从January开始。
+	//注： 中文的月份短格式在日历中没有效果。
+$("#date").datepicker({
+	monthNamesShort:["一","二","三","四","五","六","七","八","九","十","十一","十二"]
+});
+
+//-----让日期显示到指定的input域。altField（无/字符串）
+$("#date").datepicker({
+	altField:"#abc"
+});
+
+
+
+//-----设置显示在其它input域中的日期格式
+$("#date").datepicker({
+	altFormat:"dd-mm-yy",
+});
+
+
+//-----在日期的<input>域后面附加文本。 appendText(无、字符串)
+$("#date").datepicker({
+	appendText:"日历",
+});
+
+
+//-----显示周。 showWeek(false、布尔值)	
+$("#date").datepicker({
+	showWeek:true,	
+});
+
+
+//-----显示周的标题。 weekHeader("WK"/字符串)
+$("#date").datepicker({
+	weekHeader:"周",
+});
+
+
+//-----设置日历面板以星期几开头。firstDay(0/数值)
+$("#date").datepicker({
+	firstDay:1, //1就是星期一
+});
+------------------------------------------
+
+*/
+
+	//汇总
+
+$("#date").datepicker({
+	//指定日历返回的日期格式 dateFormat mm/dd/yy(时间)
+	dateFormat:"yy-mm-dd",
+	//星期中天的长格式
+	//dayNames:["星期一","星期二","星期三","星期四","星期五","星期六","星期日"],
+
+  	//星期中的天的短格式。 dayNamesShort(英文日期/数组)
+	//dayNamesShort:["星期一","星期二","星期三","星期四","星期五","星期六","星期日"],
+
+	//指定星期中天的最小格式。 dayNamesMin(英文日期/数组)
+	dayNamesMin:["日","一","二","三","四","五","六"],
+
+	//指定月份的长格式 。 monthNames(英文月分/数组)
+	monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+
+	//指定月份的短格式
+	//monthNamesShort:["一","二","三","四","五","六","七","八","九","十","十一","十二"]
+
+	//让日期显示到指定的input域
+	altField:"#abc",
+
+	//设置显示在其它input域中的日期格式
+	altFormat:"dd-mm-yy",
+
+	//在日期的<input>域后面附加文本
+	appendText:"日历",
+
+	//显示周。 showWeek(false、布尔值)
+	showWeek:true,		
+
+	//显示周的标题。 weekHeader("WK"/字符串)
+	weekHeader:"周",
+
+	//设置日历面板以星期几开头。firstDay(0/数值)
+	firstDay:1, //1就是星期一
+});
+
+});
+
+
+===============================================
+
+CSS页面：
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+
+
+#reg{
+	padding:15px 0 0 15px;
+}
+
+#reg p{
+	margin:10px 0;
+	padding:0;
+}
+
+#reg p label{
+	font:normal bold 14px normal;
+	color:#666;
+}
+
+#reg .star{
+	font-sie:20px;
+	color:red;
+}
+
+
+#reg .text{
+	border-radius:5px;
+	border:1px solid #ccc;
+	background:#fff;
+	width:200px;
+	height:25px;
+	line-height:25px;
+	text-indent:5px;
+	font-size:13px;
+	color:#666;
+}
+
+
+/*设置对话框标题域与对话框中日历的标题域的背景*/
+.ui-widget-header{
+	background:url(../img/bj.png);
+}
+
+
+/*日历UI的今天单元格样式*/
+/*这里的.ui-datepicker-today是父元素的类名，.ui-stat-highlight是当前元素的类名*/
+.ui-datepicker-today .ui-state-highlight{
+	border:1px solid blue;
+	color:red;
+}
+
+
+/*日历UI的日期选定单元格样式*/
+/*选定是指选完后再次点击出现时显示的样式*/
+.ui-datepicker-current-day .ui-state-active{
+	border:1px solid black;
+	color:black;
+}
+
+
+=============================================
+
+
+html页面
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<button class="search_button">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<div id="reg">
+<p>
+	<label for="user">用户名：</label>
+	<input type="text" name="user" class="text" id="user" title="请输入用户名" />
+	<span class="star"> * </span>
+	
+</p>
+
+<p>
+	<label for="pass">密　码：</label>
+	<input type="password" name="pass" class="text" id="pass" title="请输入密码" />
+	<span class="star">*</span>
+</p>
+
+<p>
+	<label for="email">邮　箱：</label>
+	<input type="text" name="email" class="text" id="email" title="请输入邮箱" />
+</p>
+<p>
+	<label>性　别：</label>
+	<input type="radio" name="sex" value="male" id="male" checked="checked">
+	<label for="male">男</label></input>	
+   	
+	<input type="radio" name="sex" value="female" id="female">
+	<label for="female">女</label></input>
+</p>
+<p>
+	<label for="date">生　日：</label>
+	<input type="text" name="date" class="text" id="date" readonly="readonly" title="请输入日期"/>
+</p>
+
+</div>
+<input type="text" id="abc"/>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第45课 知问前端-日历UI 中 11
+
+学习要点：
+	1，日历的调用datepicker()方法
+	2，修改datepicker()样式
+	3，datepicker()方法的属性
+	4，datepicker()方法的事件
+	日历（datepicker）UI，可以让用户更加直观的，更加方便的输入日期，并且还考虑不同国家的语言限制，包括汉语等。
+		
+
+$(function(){
+$(".search_button").button({
+	icons:{
+		primary:"ui-icon-search",
+	}
+});
+$("#reg").dialog({
+	title:"会员注册",
+	autoOpen:true,
+	modal:true,
+	resizable:false,
+	width:320,
+	height:340,
+	buttons:{
+		"提交":function(){},
+		"取消":function(){
+			$(this).dialog("close");
+		}
+	}
+});
+
+
+$("#date").datepicker({
+	//指定日历返回的日期格式 dateFormat mm/dd/yy(时间)
+	dateFormat:"yy-mm-dd",
+
+	//指定星期中天的最小格式。 dayNamesMin(英文日期/数组)
+	dayNamesMin:["日","一","二","三","四","五","六"],
+
+	//指定月份的长格式 。 monthNames(英文月分/数组)
+	monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+
+	//让日期显示到指定的input域
+	altField:"#abc",
+
+	//设置显示在其它input域中的日期格式
+	altFormat:"dd-mm-yy",
+
+	//在日期的<input>域后面附加文本
+	//appendText:"日历",
+
+	//显示周。 showWeek(false、布尔值)
+	showWeek:true,		
+
+	//显示周的标题。 weekHeader("WK"/字符串)
+	weekHeader:"周",
+
+	//设置日历面板以星期几开头。firstDay(0/数值)
+	firstDay:1, //1就是星期一
+//-----禁用日历 disabled 
+	//disabled:true,  //默认false 
+
+//-----日历同时显示多个月分的面板 numberOfMonths
+	//日历中同时显示的月分个数。默认为1,如果设置3，就同时显示3个月分。也可以设置数组：[3,2],就是3行2列共6个。
+	//numberOfMonths:3,		同时显示三个月份的内容。
+	//numberOfMonths:[2,3],  	同时显示两行三列共六个月的内容
+	//numberOfMonths:1,		只显示一个月分的内容
+	
+
+//-----显示其它月份内容，但无法选择 showOtherMonths
+	//默认为false ，如果设置为true,当月中没有使用的单元格会显示填充，但无法使用，设置为false时，会隐藏本月以外的其它日期单元格。
+	//showOtherMonths:true,
+
+
+//-----显示并可选择其它月份内容 selectOtherMonths
+	//默认值为false.如果设置为true,表示可以选择其它月份的日期。前提是showOtherMonths设置为ture.
+	//showOtherMonths:true,
+	//selectOtherMonths:true,
+
+
+//-----显示月份下拉列表  changeMonth
+	//默认false,如果设置为true,显示快速选择月份的下拉列表，
+	//下拉列表时就可以应用到中文的月份短格式了。	
+	monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+	//changeMonth:true,
+
+
+
+//----显示年份下拉列表  changeYear
+	//默认false,  如果设置为true,显示快速选择年份下拉列表
+	//changeYear:true,
+
+
+
+//-----变换日历的显示顺序是从左还是从右开始  isRTL
+	//isRTL:true,
+
+
+
+//-----是否自动调整日历输入的文本框以适应日期格式的大小，
+	//默认值为false,是否自动调整控件大小以适应当前的日期格式的输入。此方法在没有对文本框进行CSS设置时有效。
+	//autoSize:true,
+
+
+
+//-----以按钮形式及获取焦点的形式触发日历的显示 showOn
+	//默认值为focus , 获取焦点触发。还有button 点击按钮触发和both任一事件触发。
+	//showOn:"button",  //注：当以按钮形式时，默认的获取焦点形式就失效了。
+	//showOn:"both",   //获取焦点和点击按钮都可触发显示日历。
+
+
+//-----设置触发日历按钮上的文本	buttonText
+	//showOn:"button",
+	//buttonText:"按钮",
+
+
+//-----设置触发日历按钮上的图片（能看到按钮） buttonImage
+	//showOn:"button",
+	//buttonImage:"../img/1.jpg",
+//-----设置用图片代替按钮（看不到按钮） buttonImageOnly
+	//设置为true则会使图片代替按钮。
+	//showOn:"button",
+	//buttonImageOnly:true,
+
+
+//-----日历面板上显示“今天和关闭”按钮  showButtonPanel
+	//默认值 false,开户显示按键面板。
+	//showButtonPanel:true,
+//-----设置“今天”按钮上的的文本
+	//showButtonPanel:true,
+	//currentText:"今天",
+	//closeText:"关闭",
+
+
+//-----设置鼠标悬停在上月下月的时的提示信息
+	//nextText:"下月",
+	//prevText:"上月",
+
+	
+//-----让上月，下月和今天的按钮上显示当前的日期。  navigationAsDateFormat
+	//默认false,设置prev,next 和current的文字可以是format的日期格式。
+	showButtonPanel:true,
+	currentText:"今天dd",
+	close:"关闭",
+	nextText:"下月mm",
+	prevText:"上月mm",
+	navigationAsDateFormat:true,	
+
+
+
+//-----在日历面板上的年后面加上文本  yearSuffix
+	yearSuffix:"年",
+
+
+
+//-----将日历中的月份放在年的后面  showMonthAfterYear
+	showMonthAfterYear:true,
+});
+
+});
+
+
+========================================
+
+css页面
+
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+
+
+#reg{
+	padding:15px 0 0 15px;
+}
+
+#reg p{
+	margin:10px 0;
+	padding:0;
+}
+
+#reg p label{
+	font:normal bold 14px normal;
+	color:#666;
+}
+
+#reg .star{
+	font-sie:20px;
+	color:red;
+}
+
+
+#reg .text{
+	border-radius:5px;
+	border:1px solid #ccc;
+	background:#fff;
+	width:180px;
+	height:25px;
+	line-height:25px;
+	text-indent:5px;
+	font-size:13px;
+	color:#666;
+}
+
+
+/*设置对话框标题域与对话框中日历的标题域的背景*/
+.ui-widget-header{
+	background:url(../img/bj.png);
+}
+
+
+/*日历UI的今天单元格样式*/
+/*这里的.ui-datepicker-today是父元素的类名，.ui-stat-highlight是当前元素的类名*/
+.ui-datepicker-today .ui-state-highlight{
+	border:1px solid blue;
+	color:red;
+}
+
+
+/*日历UI的日期选定单元格样式*/
+/*选定是指选完后再次点击出现时显示的样式*/
+.ui-datepicker-current-day .ui-state-active{
+	border:1px solid black;
+	color:black;
+}
+
+
+=================================================
+html页面
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<button class="search_button">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<div id="reg">
+<p>
+	<label for="user">用户名：</label>
+	<input type="text" name="user" class="text" id="user" title="请输入用户名" />
+	<span class="star"> * </span>
+	
+</p>
+
+<p>
+	<label for="pass">密　码：</label>
+	<input type="password" name="pass" class="text" id="pass" title="请输入密码" />
+	<span class="star">*</span>
+</p>
+
+<p>
+	<label for="email">邮　箱：</label>
+	<input type="text" name="email" class="text" id="email" title="请输入邮箱" />
+</p>
+<p>
+	<label>性　别：</label>
+	<input type="radio" name="sex" value="male" id="male" checked="checked">
+	<label for="male">男</label></input>	
+   	
+	<input type="radio" name="sex" value="female" id="female">
+	<label for="female">女</label></input>
+</p>
+<p>
+	<label for="date">生　日：</label>
+	<input type="text" name="date" class="text" id="date" readonly="readonly" title="请输入日期"/>
+</p>
+
+</div>
+<input type="text" id="abc"/>
+</body>
+</html>
+
+================================
+
+CSS页面：
+同下面45课CSS页面
+
+=================================
+html页面
+同下面45html页面
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		第46课 知问前端-日历UI 下 12
+
+学习要点：
+	1，日历的调用datepicker()方法
+	2，修改datepicker()样式
+	3，datepicker()方法的属性
+	4，datepicker()方法的事件
+	日历（datepicker）UI，可以让用户更加直观的，更加方便的输入日期，并且还考虑不同国家的语言限制，包括汉语等。
+
+
+$(function(){
+$(".search_button").button({
+	icons:{
+		primary:"ui-icon-search",
+	}
+});
+$("#reg").dialog({
+	title:"会员注册",
+	autoOpen:true,
+	modal:true,
+	resizable:false,
+	width:320,
+	height:340,
+	buttons:{
+		"提交":function(){},
+		"取消":function(){
+			$(this).dialog("close");
+		}
+	}
+});
+
+$("#date").datepicker({
+
+//-----选择日期范围的代码
+/*
+x	当前日期后的X天（其中x范围从1到n）比如：1,2
+-x	当前日期之前的X天（其中x范围从1到n）比如：-1，-2
+xm	当前日期之后的x个月（其中x范围从1到n）比如：1m，2m
+-xm	当前日期之前的x个月（其中范围从1到n）比如：-1m，-2m
+xw	当前日期之后的x周（其中x范围从1到n）比如：1w，2w
+-xw	当前日期之前的x周（其中x范围从1到n）比如：-1w，-2w
+*/
+	//指定日历返回的日期格式 dateFormat mm/dd/yy(时间)
+	dateFormat:"yy-mm-dd",
+	//指定星期中天的最小格式。 dayNamesMin(英文日期/数组)
+	dayNamesMin:["日","一","二","三","四","五","六"],
+	//让日期显示到指定的input域
+	altField:"#abc",
+	//设置显示在其它input域中的日期格式
+	altFormat:"dd-mm-yy",
+	monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+	changeMonth:true,
+		
+	//显示周的标题。 weekHeader("WK"/字符串)
+	weekHeader:"周",
+	//设置日历面板以星期几开头。firstDay(0/数值)
+	firstDay:1, //1就是星期一
+	//让上月，下月和今天的按钮上显示当前的日期。  navigationAsDateFormat
+	//默认false,设置prev,next 和current的文字可以是format的日期格式。
+	//showButtonPanel:true,
+	//currentText:"今天dd",
+	//close:"关闭",
+	nextText:"下月mm",
+	prevText:"上月mm",
+	navigationAsDateFormat:true,
+//-----设置年分的后缀“年”	
+	//在日历面板上的年后面加上文本  yearSuffix
+	yearSuffix:"年",
+
+//-----设置日期显示的范围（天，周，月）
+	//日历中可以选择的最大日期
+	//在设置日期时maxDate,minDate,yearRange会相互牵制，要配合使用。
+	//maxDate:2,   //显示并可选择后2天的日期
+	//minDate:-2,  //显示并可选择前2天的日期，
+	//maxDate:"1w",	//显示并可选择后1周的日期，
+	//minDate:"-1w",//显示并可选择前1周的日期。
+	//maxDate:"1m",	//显示并可选择后一个月的日期。
+	//minDate:"-1m",	//显示并可选择前一个月的日期。
+
+
+
+//-----隐藏不存在的上月或下月	hideIfNoPrevNext
+	//在设置日期时maxDate,minDate,yearRange会相互牵制，要配合使用。
+	//设置为true,如果上月或下月不存在。则隐藏prev或next按钮。
+	//maxDate:0,
+	//minDate:-8000,	//显示之前的8000天
+	hideIfNoPrevNext:true,
+
+//-----设置日历显示年份的范围
+	changeMonth:true,
+	changeYear:true,
+	//在设置日期时maxDate,minDate,yearRange会相互牵制，要配合使用。
+	yearRange:"1950:2020",
+
+
+//-----预设默认选定日期，没有指定，则是当天。
+	//当触发日历后直接点回国，就会返回预设的日期。
+	//defaultDate:"-2", //这里预设日期为前第二天。
+
+
+
+//-----设置“今天”按钮指向的是实际的今天还是选定的当天 gotoCurrent
+	//设置为true时，“今天”按键会指向选定的当天，而不是指向实际的今天。
+	showButtonPanel:true,
+	currentText:"今天dd",
+	close:"关闭",
+	gotoCurrent:true,
+
+
+//-----设置日历弹出时的效果 showAnim
+	//false效果为fideIn淡入淡出
+	//showAnim:false,
+//-----设置日历弹出及隐藏时延迟时间  duration
+	//默认为300毫秒
+	//showAnim:false,
+	//duration:1000,
+
+
+//-----设置日历弹出隐藏的各种效果
+	showAnim:"slide",
+/*
+bind	日历从顶部显示或消失
+bounce	日历断断续续地显示或消失，垂直运动。
+clip	日历从中心垂直地向上下伸展显示或消失。
+slide	日历从左边显示或消失。
+drop	日历从左边显示或消失，有透明度的变化。
+fold	日历从左上角显示或消失。
+highlight	日历显示或消失，伴随透明度和背景色的变化。
+puff	日历从中心开始绽放，显示时“收缩”，消失时“生长”。
+scale	日历从中心开始缩放，显示时“生长”，消失时“收缩”。
+pulsate	日历以闪烁形式显示或消失。
+fadeIn	日历以淡入淡出形式显示消失。
+*/
+
+
+
+//-----日历显示时触发事件	beforeShow
+	//beforeShow:function(){
+	//	alert("日历显示之前被调用");
+	//}
+
+
+//-----日期的筛选或限制	beforeShowDay
+	//可以用来限制每个月的某天无法选择等。
+	// beforeShowDay()方法在显示日历中的每个日期时会被调用（date参数是一个Date类对象），该方法必须返回一个数组来指定每个日期的信息。
+	//参数一:该日期是否可以被选择（true：可选，false:不可选）
+	//参数二：该日期单元格上使用的CSS类。
+	//参数三：该日期单元格上显示的字符串提示信息。
+//-----限制日历每月的1号为不可选状态 (beforeShowDay)
+/*	beforeShowDay:function(date){
+		if(date.getDate()==1){
+			return [false];
+		}else{
+			return [true];
+		}
+	}
+//-----限制日历每个周一为不可选状态  (beforeShowDay)
+	beforeShowDay:function(date){
+		if(date.getDay()==1){
+			return [false];
+		}else{
+			return [true];
+		}
+	}
+
+//-----同时限制日历的多种情况的日期为不可状态。(beforeShowDay)
+	beforeShowDay:function(date){
+		if(date.getDay()==1 || date.getDay()==2 || date.getDate()==12 ||date.getDate()==21){
+			return [false];
+		}else{
+			return [true];
+		}
+	}
+
+
+//-----设置日历中每月1号的字体都是大号字体
+//-----日历筛选限制beforeShowDay的第二个参数“指定类名”
+//-----日历筛选限制beforeShowDay的第三个参数，为筛选的对象设置悬停的提示文本
+	//这里为日历对象生成了一个名为“a”的样式。在CSS中可以对其进行设置
+	beforeShowDay:function(date){
+		if(date.getDate()==1){
+			//beforeShowDayr的三个参数如下
+			return [false,"a","不能选择1号"]; 
+		}else{
+			return [true];
+		}
+	}
+
+
+//-----日历中年份或月份改变时触发 onChangeMonthYear
+	//onChangeMonthYear(year,month,inst)方法在日历中显示的月份或年份改变时会被调用，或者changMonth或changeYear为true时，下拉改变时也会触发。Year-当前的年，month-当年的月，inst是一个对象，可以调用一些属性获取值。
+
+	onChangeMonthYear:function(year,month,inst){
+		//alert("当前的年份是："+year);
+		//alert("当前的月份是："+month);
+		//for(var i in inst){
+		//	document.write(i+"<br>");
+		//} 
+		alert(inst.currentDay);
+	}
+*/
+/*
+inst对象中包含的属性：
+id 		//日历的ID名
+input		//对象
+selectedDay	//当前被选择的是几号
+selectedMonth	//当前被选择的月份
+selectedYear	//当前被选择的年份
+drawMonth	//当前被选择月份的下标值。注：1月是0 ，2月是1，，，
+drawYear	//当前被选择年份的下标值。（与年份相同）
+inline
+dpDiv		//对象
+settings
+append
+trigger
+lastVal
+currentDay
+currentMonth
+currentYear
+yearshtml
+_keyEvent
+
+
+//-----得到日历当前选择的日期   onSelect
+	//onSelect(dateText,inst)方法在日历被关闭的时候调用，dateText是当时选中的日期字符串，inst是一个对象，可以调用一些属性获取值。
+	onSelect:function(dateText,inst){
+		alert("当前选择的日期是："+dateText);
+	}
+
+
+
+//-----得到日历关闭后所选择日期  onClose
+	//onClose(dateText,inst)方法日历被关闭的时候调用，dateText是当时选中的日期字符串，inst是一个对象，可以调用一些属性获取值。
+	onClose:function(dateText,inst){
+		alert(dateText);
+	}
+*/
+
+
+
+});
+
+//-----获得日历的日期的用外部方法（当前的年份）
+$("#date").click(function(){
+	//alert($("#date").datepicker("getDate").getFullYear());
+});
+
+
+//-----设置日历的日期的外部方法
+//$("#date").datepicker("setDate","2011-1-1");
+
+
+//-----日历隐藏与显示的外部方法-
+//没试为：show  隐藏，hide 显示   
+//$("#date").datepicker("hide");
+
+
+//-----删除日历的外法方法
+//$("#date").datepicker("destroy");
+
+//-----获取日历的jQuery对象的外部方法
+//alert($("#date").datepicker("widget"));
+
+
+//-----刷新日历的外部方法
+//$("#date").datepicker("refresh");
+
+
+//-----获取是否禁用日历的外部方法
+//alert($("#date").datepicker("isDisabled"));
+
+
+//-----设置属性的值的外部方法
+//$("#date").datepicker("option","disabled",true);
+
+//-----获取属性的值的外部方法
+//alert($("#date").datepicker("option","disabled"));
+
+
+});
+
+
+
+
+
+
+=======================================
+
+CSS页面
+
+body{
+	margin:51px 0 0 0;
+	padding:0;
+	font-size:12px;
+	background:#fff;
+}
+#header{
+	width:100%;
+	height:51px;
+	background:url(../img/bj2.png);
+	position:absolute;
+	top:0;
+}
+#header .header_main{
+	width:800px;
+	height:51px;
+	margin:0px auto;
+}
+
+#header .header_main h1{
+	font-size:20px;
+	margin:0;
+	padding:0 10px;
+	color:blue;
+	height:40px;
+	line-height:40px;
+	float:left;
+}
+
+#header .header_search{
+	padding:6px 0 0 0;
+	float:left;
+}
+#header .header_search .search{
+	width:300px;
+	height:24px;
+	border:1px solid #ccc;
+	background:white;
+	color:#666;
+	font-size:14px;
+	text-indent:5px;
+}
+
+#header .header_button{
+	padding:3px;
+	float:left;
+}
+
+#header .header_member{
+	float:right;
+	color:#555;
+	height:51px;
+	line-height:51px;
+	font-size:16px;
+}
+
+#header .header_member a{
+	text-decoration:none;
+	color:#555;
+	font-size:14px;
+}
+
+
+#reg{
+	padding:15px 0 0 15px;
+}
+
+#reg p{
+	margin:10px 0;
+	padding:0;
+}
+
+#reg p label{
+	font:normal bold 14px normal;
+	color:#666;
+}
+
+#reg .star{
+	font-sie:20px;
+	color:red;
+}
+
+
+#reg .text{
+	border-radius:5px;
+	border:1px solid #ccc;
+	background:#fff;
+	width:180px;
+	height:25px;
+	line-height:25px;
+	text-indent:5px;
+	font-size:13px;
+	color:#666;
+}
+
+
+/*设置对话框标题域与对话框中日历的标题域的背景*/
+.ui-widget-header{
+	background:url(../img/bj.png);
+}
+
+
+/*日历UI的今天单元格样式*/
+/*这里的.ui-datepicker-today是父元素的类名，.ui-stat-highlight是当前元素的类名*/
+.ui-datepicker-today .ui-state-highlight{
+	border:1px solid blue;
+	color:red;
+}
+
+
+/*日历UI的日期选定单元格样式*/
+/*选定是指选完后再次点击出现时显示的样式*/
+.ui-datepicker-current-day .ui-state-active{
+	border:1px solid black;
+	color:black;
+}
+
+
+
+/*beforeShowDay日历筛选限制的第二个参数赋予的类*/
+.a{
+	font:italic bold 30px normal;
+}
+
+
+===========================================
+
+html页面：
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>自定义插件</title>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript" src="js/jquery.ui.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="img/1.jpg" />
+	<link type="text/css" rel="stylesheet" href="css/uistyle/jquery.ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/style.css"/>
+	<style>
+
+	</style>
+</head>
+<body>
+<div id="header">
+	<div class="header_main">
+		<h1>知问</h1>
+		<div class="header_search">
+			<input type="text" name="search" class="search"/>
+		</div>
+		<div class="header_button">
+			<button class="search_button">but版查询</button>
+		</div>
+		<div class="header_member">
+			<a href="#" id="reg_a">注册</a>|<a href="#" id="login_a">登陆</a>
+		</div>
+	</div>
+</div>
+<div id="reg">
+<p>
+	<label for="user">用户名：</label>
+	<input type="text" name="user" class="text" id="user" title="请输入用户名" />
+	<span class="star"> * </span>
+	
+</p>
+
+<p>
+	<label for="pass">密　码：</label>
+	<input type="password" name="pass" class="text" id="pass" title="请输入密码" />
+	<span class="star">*</span>
+</p>
+
+<p>
+	<label for="email">邮　箱：</label>
+	<input type="text" name="email" class="text" id="email" title="请输入邮箱" />
+</p>
+<p>
+	<label>性　别：</label>
+	<input type="radio" name="sex" value="male" id="male" checked="checked">
+	<label for="male">男</label></input>	
+   	
+	<input type="radio" name="sex" value="female" id="female">
+	<label for="female">女</label></input>
+</p>
+<p>
+	<label for="date">生　日：</label>
+	<input type="text" name="date" class="text" id="date" readonly="readonly" title="请输入日期"/>
+</p>
+
+</div>
+<input type="text" id="abc"/>
+</body>
+</html>
+
+
+
+

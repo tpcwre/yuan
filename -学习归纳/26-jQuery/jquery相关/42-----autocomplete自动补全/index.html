@@ -1,0 +1,112 @@
+<head>
+<script src='../js/jquery-1.11.1.js'></script>
+<script src='../js/jqueryui.js'></script>
+<script src='a.js'></script>
+<link type="text/css" rel="stylesheet" href="../css/ui-lightness/jqueryui.css"/>
+<link rel="shortcut icon" type="image/x-icon" href="../img/a.ico" />
+<style>
+	.ui-widget-header{		/*更改对话框标题区背景样式*/
+		background:url(../img/bj2.png);
+	}
+	.ui-dialog-title{		/*更改对话框标题区字体样式*/
+		color:blue;	
+	}
+
+					/*修改全局按钮UI的样式
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+		background:blue;
+	}*/
+
+					/*修改UI局部按钮UI的样式
+	.ui-widget-header{
+		background:blue;
+	}*/
+
+
+
+					/*修改全局按钮hover样式（将上面CSS的default全改成hover）*/
+	.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-default{
+		background:url(../img/bj.png);
+	}
+
+
+					/*修改局部按钮hover样式（将上面CSS的首default改成hover）
+	.ui-state-hover, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+		background:url(../img/bj.png);
+	}*/
+
+
+					/*修改全局按钮的点击后的样式（将全部default改为active）*/
+	.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+		background:url(../img/bj2.png);
+	}
+
+
+					/*修改局部按钮的点击后的样式（将首个default改为active）*/
+	.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-default{
+		background:url(../img/bj2.png);
+	}
+
+
+					/*设置日历年月字体样式*/
+	.ui-datepicker-title{
+		color:blue;
+	}
+
+
+					/*设置提示UI文字内容的样式*/
+	.ui-tooltip{
+		color:red
+		
+	}
+	.big{
+		font-weight:bold;
+	}
+
+
+					/*自动补全背景样式
+	.ui-menu-item{
+		background:red;
+	}*/
+
+					/*自动补全鼠标悬停时的文字样式
+	.ui-menu-item a{
+		color:yellow;
+	}*/
+
+
+</style>
+</head>
+<body>
+<div id="reg">
+<table>
+<tr>
+<td>用户名：</td><td><input type='text' name='user' id='user' title="输入用户名"/></td>
+</tr>
+<tr>
+<td>密　码：</td><td><input type='password' name='pass' id='pass' title="输入密码"/></td>
+</tr>
+<tr>
+<td>邮　箱：</td><td><input type='email' name='email' id='email' title="输入邮箱"/></td>
+</tr>
+<tr>
+<td>性　别：</td><td>
+<input type='radio' name='sex' id='mele'/><label for='mele'>男</label></input>
+<input type='radio' name='sex' id='fmele'/><label for='fmele'>女</label></input>
+</td>
+</tr>
+<tr>
+<td>生　日：</td><td><input type='text' name='date'  title="选择日期"/></td>
+</tr>
+
+</div>
+
+</body>
+
+
+
+
+
+
+
+

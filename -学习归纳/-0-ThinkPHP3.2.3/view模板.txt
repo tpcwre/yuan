@@ -1,0 +1,311 @@
+
+
+//-- 特殊重点
+	当引用CSS样式中所带的背景图片时， 其引用的图片位置是基于当前CSS文件位置的，要使用../或./层级关系来确定
+
+
+
+//-- 常用的系统常量
+
+             __ROOT__       	// 当前网站地址		/one
+            __APP__        	// 当前应用地址		/one/index.php
+            __MODULE__		// 当前应用模块		/one/index.php/Admin
+            __CONTROLLER__	// 当前控制器		/one/index.php/Admin/Index
+            __ACTION__     	// 当前方法		/one/index.php/Admin/Index/right
+            __URL__ 		// 等同于__CONTROLLER__	/one/index.php/Admin/Index
+            __SELF__  		// 当前页面地址 	/one/index.php/Admin/Index/right
+            __PUBLIC__  	// 项目公共目录		/one/Public
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 模板继承
+
+		基础模板：
+			View/Public/base.html
+				aaaaaaaaaaaaaaaa
+				<block name='b'>bbbbbbbbbbbbbb</block>
+				cccccccccccc
+		子模板：
+			View/Index/index.html
+				<extend name="Public:base" />
+				<block name='b'>kkkkkkkkkkkkkk</block>
+					
+		结果：aaaaaaaaaaaaaaaa kkkkkkkkkkkkkk cccccccccccc
+
+
+
+
+//-- <include file= > 引入其它页面内容
+
+	<include file="Index/aaa" />	
+	<include file="Admin/bbb" />
+		只要模板文件存在即可
+
+
+
+
+
+
+//-- 模板中使用的常用命令
+
+	{$Think.version}		// 查看当前版本号
+
+	<?php echo $xx;?>		// PHP 方式输出变量
+	<php>echo $a;</php>
+
+	{$xxx}				// 输出变量
+
+	{$xxx|default='aaa'}		// 如果变量不存在就显示默认值 
+
+	{$xx['yy']+1}			// 数值运算
+
+	{$xxx|md5}			// 将变量md5加密
+
+	{$sex2|md5|substr=0,5}		// 截取字符串
+
+	{$now|date='Y-m-d H:i:s',###}	// 将时间戳格式化
+		
+	{$Think.now}			// Think系统时间
+
+	{$Think.server.http_host}	// 输出当前域名
+	
+	{$Think.session.a}		// 获取session中的a的值 
+
+	{$num>13?'大于':'不大于'}	// 三元运算
+	
+
+					// {literal}/  禁止模板解析
+
+	<style>{literal}
+		li{list-style:none}
+	{/literal}</style>
+
+
+
+	<volist name="arr" id='vo'>	// 遍历数组（相当于foreach）
+		id:{$vo.id}--name:{$vo.name}--sex:{$vo.sex}<br>
+	</volist>
+
+
+					// foreach 循环
+	<foreach name='data' item='d'>		//只输出两个元素
+		{$d['name']}----{$d['sex']}<br>
+	</foreach>
+
+
+					// for循环
+	<for start='1' end='10' comparison='elt' name='k'>
+		{$k}<br>
+	</for>
+		start：开始值 , end：结束值,	comparison：elt,egt,gt,lt,eq...	相当于 $i<100,$i<=100,,,,,
+
+
+
+
+					// if判断
+
+	注意：除了首个 if 其余的后面都要加上 ‘/’
+	<if condition="$num gt 10"> num 大于10
+	<elseif condition="$num lt 10" />num 小于10
+	<else/>num 等于10    
+	</if>
+
+					// switch 判断
+
+	<switch name='name'>
+		<case value='xm'>这是小明</case>
+		<case value='xh|xl'>这是小红或小亮</case>
+		<default/>谁都不是
+	</switch>
+
+
+
+					//-- 比较标签
+
+	$this->assign('num',10);
+
+	<比较标签 name='变量名' value='比较值'></比较标签>
+	<eq name='num' value='10'>num == 10</eq>
+	<neq name='num' value='12'>num != 10 </neq>
+	<eq name='num' value='11'>num=11<else/>num!=11</eq>
+	<compare name='num' value='11' type='eq'>num=11<else/>num!=11</compare>
+			
+
+
+					//-- 区间判断标签
+	$this->assign('num',10);
+
+	<in name='num' value='11,12,13'>在</in>
+	<in name='num' value='11,12,14'>在<else/>也不在</in>
+	<notin name='num' value='1,2,3,11,13'>不在<else/>也在</notin>		
+	<between name='num' value='1,13'>在</between>
+	<notbetween name='num' value='1,5'>不在</notbetween>
+	<between name='num' value='1,10'>在<else/>不在</between>
+	<range name='num' value='1,12' type='in'> 有<else/>没有</range> 只能代替in 不能代替beteew区间
+
+
+
+					// foreach 结合比较标签 判断输出
+
+	<foreach name='data' item='d'>
+		<egt name='d.sex' value='18'>{$d.name}成年了<else/>{$d.name}未成年</egt></br>
+	</foreach>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- 模板中的 逻辑运算符
+		
+			eq		=
+			neq 		!=
+			gt 		>
+			egt 		>=
+			lt 		<
+			elt		<=
+			heq		===
+			nheq 		!===
+
+
+
+
+
+
+
+
+
+//-- 自定义常量的声明及调用
+
+	define('SITE_URL','http://web.1116.com/');	//入口文件中定义常量
+	define('CSS_URL',SITE_URL.'shop/public/css/');		
+	
+	{$Think.const.CSS_URL}				//模板中调用路径的常量	
+
+
+
+
+
+
+//-- 系统内置常量的调用与引入相关文件
+
+	<limk href='/shop/public/css/style.css' rel='stylesheet' type='text/css'>	//css引用 该方式不利于后期维护
+	<limk href='__PUBLIC__/css/style.css' rel='stylesheet' type='text/css'>		//__PUBLIC__调用系统内置常量
+
+
+
+
+
+
+//-- GET传值
+
+	<a href='http://xxxx/index.php/Home/Index/index/id/2/name/lili'>修改</a>
+
+	<a href='__ACTION__/id/2/name/lili'>修改</a>
+
+	<a href='__CONTROLLER__/edit/id/2/name/lili'>修改</a>
+
+	<a href='__MODUL__/Index/edit/id/2/name/lili'>修改</a>
+
+
+
+
+
+
+
+//-- 引入public目录文件
+
+	<link href="__PUBLIC__/bootstrap/bootstrap.css" rel="stylesheet">
+
+
+
+	
+
+
+
+
+
+
+
+
+
+	
+//-- ajax异步提交
+
+		模板
+		<script>
+			$(function(){
+				$.ajax({
+					url:'__MODULE__/Index/sums',	//传值到Index控制器的sums方法
+					type:'post',
+					async:false,			//是否异步
+					data: {
+						abc:'1',
+						bcd:2,
+					},
+					success:function(response){
+						alert(response);	//显示出返回的数据
+					}
+				});
+			});
+		</script>
+		
+		控制器
+		class IndexController extends Controller {
+			public function index(){
+			   $this->display();
+			}
+			public function sums(){
+				$a = I('abc');				//接收POST,GET传值
+				$b = I('bcd');
+				//die(json_encode($a+$b));		//返回数据
+				$this->ajaxReturn($a+$b);		//返回数据
+				echo ($a+$b*$a*$b);			//显示数据
+			}
+		}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

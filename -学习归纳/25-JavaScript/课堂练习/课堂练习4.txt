@@ -1,0 +1,393 @@
+
+//===== 触发事件的三种形式 
+//===== contextmenu 禁用鼠标右键和自定鼠标右键菜单 
+//===== function(e) 事件对象-显示div中光标点击时的坐标 
+//===== clientX,clientY 鼠标的坐标 
+//===== ondblclick 双击事件-双击改变背景色 
+//===== onmouseover,onmouseout 移入移出事件
+//===== 隔行换色,及移入移出换色
+//===== 放大镜的实例
+//===== obj.offsetWidth,obj.offsetHeight 获取元素的宽和高
+//===== obj.offsetLeft,obj.offsetTop 获取元素与左边和上边的距离
+//===== e.clientX,e.clientY 获取鼠标的坐标
+//===== obj.scrollLeft,obj.scrollTop 获取或设置流动条的位置
+//===== 键盘事件-坦克开炮
+//===== 键盘事件-坦克开炮
+//===== onkeydown 键盘按下事件
+//===== e.keyCode 获取键盘码
+//===== Math.min() 数值比较
+//===== 鼠标拖动元素(双事件套用)
+//===== onmousemove=null; 解除事件
+
+
+
+
+
+
+
+
+
+//===== 触发事件的三种形式 
+
+
+	<button onclick='cf1()'>触发方式一</button>
+	<script>
+		function cf1(){
+			document.getElementById('cf').innerHTML='触发事件方式一：tag  on事件=事件处理程序';
+		}
+	</script>
+	
+	<button id='cf2'>触发方式二</button>
+	<script>
+		var cf2 = document.getElementById('cf2');
+		cf2.onclick=function(){
+			document.getElementById('cf').innerHTML="触发事件方式二：对象.on事件=事件处理程序";
+		}
+	</script>
+	
+	<script for="事件源ID" event="on事件">触发事件方式三</script>
+	<div id='cf'></div>
+
+
+
+
+
+
+
+
+
+
+	
+//===== contextmenu 禁用鼠标右键和自定鼠标右键菜单 
+
+	<style>
+		#d2>li{list-style:none;text-align:center;padding:0;margin:0;border:1px solid #eee;disp}
+		#d2>li:hover{background:#ec0;};
+	</style>
+	<div id='d2' style="width:100px;backgroun:#ccc;position:absolute;display:none">
+		<li>复制</li>
+		<li>粘贴</li>
+		<li>剪切</li>
+	</div>
+	<script>
+		window.document.oncontextmenu=function(e){
+			var event=e || window.event;
+			//先获鼠标坐标
+			var x = event.clientX;
+			var y = event.clientY;
+			//获取菜单对象并设置位置
+			
+			var d2 = document.getElementById('d2');	
+			d2.style.top=y;
+			d2.style.left=x;
+			d2.style.display='block';
+			return false;    //直接返回false就是禁用鼠标右键
+		}
+	</script>
+
+	
+	
+	========================点击右键弹出菜单=====================================
+	
+	
+	
+	
+	
+	
+	
+	
+//===== function(e) 事件对象-显示div中光标点击时的坐标 
+//===== clientX,clientY 鼠标的坐标 
+
+	<div id="did" style="width:300px;height:100px;background-color:#ddd;"></div>
+	<script>
+		var dd = document.getElementById('did');//获取源对象
+		dd.onclick=function(e){
+			var event=e || window.event;
+			
+			var x = event.clientX-this.offsetLeft;
+			var y = event.clientY-this.offsetTop;
+			dd.innerHTML=x+':'+y;
+		}
+	</script>
+
+	
+	
+	
+	
+
+
+	
+	
+//===== ondblclick 双击事件-双击改变背景色 
+
+	<style>
+		ul,li{margin:0px;padding:0px;}
+		ul{list-style:none;}
+		li{height:30px;line-height:30px;margin-top:4px;background-color:#ddd;}
+	</style>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	<script>
+		var lis = document.getElementsByTagName('li');
+		//alert(lis.length);
+		var color=null;
+		for(var i=0;i<lis.length;i++){
+			lis[i].ondblclick=function(){
+				this.style.backgroundColor='#ec0'; 
+				//注意这里要用this，不能用lis[i],类似刻舟求剑
+			}
+		}
+	</script>
+
+
+	
+
+
+
+
+	
+//===== onmouseover,onmouseout 移入移出事件
+//===== 隔行换色,及移入移出换色
+
+	<style>
+		#d3>i{
+			display:block;
+			width:100%;
+			height:30px;
+			background:#ccc;
+			border:1px solid;
+		}
+	</style>
+	<div id='d3'>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+	</div>
+	<script>
+		var ii = document.getElementsByTagName('i');
+		var color=null;
+		for(var i=0;i<ii.length;i++){	//隔行换色
+			if(i%2==0){
+				ii[i].style.background='#aaa';
+			}else{
+				ii[i].style.background='#eee';
+			}
+			ii[i].onmouseover = function(){
+				color=this.style.backgroundColor;
+				this.style.background='#ec0';
+			}
+			ii[i].onmouseout = function(){
+				this.style.background=color;
+			}
+		
+		}
+	
+	</script>
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+	
+//===== 放大镜的实例
+//===== obj.offsetWidth,obj.offsetHeight 获取元素的宽和高
+//===== obj.offsetLeft,obj.offsetTop 获取元素与左边和上边的距离
+//===== e.clientX,e.clientY 获取鼠标的坐标
+//===== obj.scrollLeft,obj.scrollTop 获取或设置流动条的位置
+
+
+	<style>
+		#t2{
+			width:380px;
+			height:300px;
+			border:1px solid;
+			position:absolute;
+			overflow:hidden;
+			display:none;
+		}
+	</style>
+		<div>
+		<img id='t1' src='1.jpg' width=320/>
+		<div id='t2'>
+			<img src='1.jpg' />
+		</div>
+	</div>
+	<script>
+		var t1 = document.getElementById('t1');
+		var t2 = document.getElementById('t2');
+		t1.onmouseover=function(){
+			var x = this.offsetLeft+this.offsetWidth+5;
+			var y = this.offsetTop;
+			t2.style.top=y;
+			t2.style.left=x;
+			t2.style.display='block';
+		}
+		t1.onmouseout=function(){
+			t2.style.display='none';
+		}
+		t1.onmousemove=function(ent){
+			var event=ent || window.event;
+			var x = event.clientX-this.offsetLeft;
+			var y = event.clientY-this.offsetTop;
+			t2.scrollLeft=x*6-150;
+			t2.scrollTop=y*6-150;
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 键盘事件-坦克开炮
+
+<div style="width:500px;height:500px;background:#eee;">
+	//设置坦克
+	<div id='tk' style="width:70px;height:70px;background:#aaa;position:absolute"></div>
+	//设置六枚炮弹
+	<div id='p1' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p2' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p3' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p4' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p5' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p6' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+</div>
+<script>
+//===== onkeydown 键盘按下事件
+	var tk = document.getElementById('tk');		//创建坦克对象
+	window.document.onkeydown=function(ent){	//设置窗口按键事件并获取事件对象ent
+		var event=ent || window.event;		//让事件对象兼容不同的浏览器
+//===== e.keyCode 获取键盘码
+		switch(event.keyCode){			//获取事件对象中的键盘码
+			case 37:
+				tk.style.left=Math.max(10,tk.offsetLeft-5);	
+				//如果按左键时，坦克元素的绝对位置向左-5
+			break;
+			case 38:
+				tk.style.top=Math.max(55,tk.offsetTop-5);	
+				//如果按上键时，坦克元素的绝对位置向上-5
+			break;
+			case 39:
+//===== Math.min() 数值比较
+				tk.style.left = Math.min(435,tk.offsetLeft+5);
+				//如果按右键时，坦克元素的绝对位置向右+5
+			break;
+			case 40:
+				tk.style.top=Math.min(485,tk.offsetTop+5);	
+				//如果按下键时，坦克元素的绝对位置向下+5
+			break;
+			case 32:
+				pao(tk.offsetLeft+30,tk.offsetTop); 
+				//如果点击空格调用 pao() 炮弹方法 并传入坐标
+			break;
+		}
+	}
+	function pao(x,y){
+		for(i=1;i<7;i++){			//遍历六次对应六颗炮弹
+			var p=document.getElementById('p'+i);	//将六个炮弹元素都创建成对象
+			if(p.style.display=='none'){	//依次判断将没有发射过的炮弹显示出来
+				p.style.display='block';	
+				p.style.left=x;			//设置炮弹初始位置
+				p.style.top=y
+				break;					//结束本次循环，保证每次只显示一个元素
+			}
+		}
+	}
+	function running(){
+		for(var i=1;i<7;i++){		//遍历六次对应六颗炮弹
+			var p = document.getElementById('p'+i); //分别创建六个炮弹的对象
+			p.style.top=p.offsetTop-5;	//设置每个炮弹的移动位置
+			p.style.left=p.offsetLeft;
+			if(p.offsetTop<-20){		//判断出格就再次隐藏，让其可再循环显示使用
+				p.style.display='none';
+			}
+		}
+	}
+	setInterval("running()",33);	//每隔33毫秒触发running函数 使炮弹动态移动
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 鼠标拖动元素(双事件套用)
+//===== onmousemove=null; 解除事件
+
+	
+	<div id='dd' style ='width:200px;height:200px;background:#ccc;position:absolute;'></div>
+	<script>
+		var d = document.getElementById('dd');
+		d.onmousedown = function(e){
+			var event=e || window.event;
+			//得到鼠标在元素内的坐标
+			var x = event.clientX-this.offsetLeft; 
+			var y = event.clientY-this.offsetTop;
+			this.style.background='#ec0';
+			window.document.onmousemove=function(ent){
+				var event=ent || window.event;
+				d.style.left=(event.clientX-x)+'px';
+				d.style.top=(event.clientY-y)+'px';
+			}
+		}
+		d.onmouseup=function(){
+			this.style.background='#ccc';
+			window.document.onmousemove=null;
+		}
+	</script>

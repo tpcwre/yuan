@@ -1,0 +1,304 @@
+//
+MySQL 触发器：
+
+//
+
+1、触发器的定义：
+  CREATE TRIGGER trigger_name trigger_time trigger_event
+    ON tbl_name FOR EACH ROW trigger_stmt
+  
+  说明：
+  # trigger_name：触发器名称
+  # trigger_time:触发时间，可取值：BEFORE或AFTER
+  # trigger_event：触发事件，可取值：INSERT、UPDATE或DELETE。
+  # tb1_name：指定在哪个表上
+  # trigger_stmt：触发处理SQL语句。
+
+示例：
+  要求：创建一个触发器实现在删除学生信息表数据时把成绩表对应的信息一块删除。
+mysql> delimiter //
+mysql> create trigger stu_del
+    -> before delete on  student for each row begin
+    -> delete from grade  where sno=old.sno;
+    -> end;
+    -> //
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> delimiter ;
+mysql> select * from student;
++--------+----------+------+------+------------+
+| sno    | sname    | ssex | sage | sdept      |
++--------+----------+------+------+------------+
+| 200602 | zhangsan | m    |   20 | gongzhufen |
+| 200603 | lisi     | w    |   20 | shangdi    |
+| 200604 | aa       | w    |   28 | gongzhufen |
+| 200605 | bb       | m    |   22 | shangdi    |
+| 200609 | ff       | w    |   23 | gongzhufen |
+| 200610 | qq       | m    |   26 | beida      |
++--------+----------+------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from grade;
++--------+----------+------+------+--------+---------+
+| sno    | sname    | php  | java | system | network |
++--------+----------+------+------+--------+---------+
+| 200602 | zhangsan |   60 |   89 |     65 |      70 |
+| 200603 | lisi     |   79 |   89 |     80 |      70 |
+| 200604 | aa       |   61 |   90 |     80 |      78 |
+| 200605 | bb       |   60 |   96 |     82 |      78 |
+| 200606 | cc       |   89 |   64 |     78 |      91 |
+| 200607 | dd       |   60 |   68 |     70 |      45 |
+| 200608 | ee       |   69 |   89 |     68 |      80 |
++--------+----------+------+------+--------+---------+
+7 rows in set (0.00 sec)
+
+mysql> delete from student where sno='200602';
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from grade;
++--------+-------+------+------+--------+---------+
+| sno    | sname | php  | java | system | network |
++--------+-------+------+------+--------+---------+
+| 200603 | lisi  |   79 |   89 |     80 |      70 |
+| 200604 | aa    |   61 |   90 |     80 |      78 |
+| 200605 | bb    |   60 |   96 |     82 |      78 |
+| 200606 | cc    |   89 |   64 |     78 |      91 |
+| 200607 | dd    |   60 |   68 |     70 |      45 |
+| 200608 | ee    |   69 |   89 |     68 |      80 |
++--------+-------+------+------+--------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student;
+
+
+//==================示例二：===============================================
+mysql> desc stu;
++---------+------------------+------+-----+---------+----------------+
+| Field   | Type             | Null | Key | Default | Extra          |
++---------+------------------+------+-----+---------+----------------+
+| id      | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(16)      | NO   | UNI | NULL    |                |
+| sex     | enum('w','m')    | NO   |     | m       |                |
+| age     | tinyint(4)       | YES  |     | NULL    |                |
+| addtime | int(11)          | NO   |     | NULL    |                |
++---------+------------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> desc stu_bak;
++---------+------------------+------+-----+---------+-------+
+| Field   | Type             | Null | Key | Default | Extra |
++---------+------------------+------+-----+---------+-------+
+| id      | int(10) unsigned | NO   |     | 0       |       |
+| name    | varchar(16)      | NO   |     | NULL    |       |
+| sex     | enum('w','m')    | NO   |     | m       |       |
+| age     | tinyint(4)       | YES  |     | NULL    |       |
+| addtime | int(11)          | NO   |     | NULL    |       |
++---------+------------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+//定义一个触发器del_stu,实现：将stu表中的数据在删除时会在stu_bak表中自动备份。
+
+mysql> delimiter $$
+mysql> create trigger del_stu before delete on stu for each row
+    -> begin
+
+    ->  insert into stu_bak values(old.id,old.name,old.sex,old.age,old.addtime);
+
+    -> end;
+    -> $$
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> delimiter ;
+
+
+
+
+mysql> show triggers \G;
+*************************** 1. row ***************************
+  Trigger: stu_del
+    Event: DELETE
+    Table: student
+Statement: begin
+delete from grade  where sno=old.sno;
+end
+   Timing: BEFORE
+  Created: NULL
+ sql_mode: NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+  Definer: root@localhost
+1 row in set (0.06 sec)
+
+ERROR:
+No query specified
+
+mysql> desc triggers;
+ERROR 1146 (42S02): Table 'mystudb.triggers' doesn't exist
+mysql> desc stu_del;
+ERROR 1146 (42S02): Table 'mystudb.stu_del' doesn't exist
+mysql> desc information_schema.triggers;
++----------------------------+--------------+------+-----+---------+-------+
+| Field                      | Type         | Null | Key | Default | Extra |
++----------------------------+--------------+------+-----+---------+-------+
+| TRIGGER_CATALOG            | varchar(512) | YES  |     | NULL    |       |
+| TRIGGER_SCHEMA             | varchar(64)  | NO   |     |         |       |
+| TRIGGER_NAME               | varchar(64)  | NO   |     |         |       |
+| EVENT_MANIPULATION         | varchar(6)   | NO   |     |         |       |
+| EVENT_OBJECT_CATALOG       | varchar(512) | YES  |     | NULL    |       |
+| EVENT_OBJECT_SCHEMA        | varchar(64)  | NO   |     |         |       |
+| EVENT_OBJECT_TABLE         | varchar(64)  | NO   |     |         |       |
+| ACTION_ORDER               | bigint(4)    | NO   |     | 0       |       |
+| ACTION_CONDITION           | longtext     | YES  |     | NULL    |       |
+| ACTION_STATEMENT           | longtext     | NO   |     | NULL    |       |
+| ACTION_ORIENTATION         | varchar(9)   | NO   |     |         |       |
+| ACTION_TIMING              | varchar(6)   | NO   |     |         |       |
+| ACTION_REFERENCE_OLD_TABLE | varchar(64)  | YES  |     | NULL    |       |
+| ACTION_REFERENCE_NEW_TABLE | varchar(64)  | YES  |     | NULL    |       |
+| ACTION_REFERENCE_OLD_ROW   | varchar(3)   | NO   |     |         |       |
+| ACTION_REFERENCE_NEW_ROW   | varchar(3)   | NO   |     |         |       |
+| CREATED                    | datetime     | YES  |     | NULL    |       |
+| SQL_MODE                   | longtext     | NO   |     | NULL    |       |
+| DEFINER                    | longtext     | NO   |     | NULL    |       |
++----------------------------+--------------+------+-----+---------+-------+
+19 rows in set (0.03 sec)
+
+
+mysql> select trigger_name from information_schema.triggers;
++--------------+
+| trigger_name |
++--------------+
+| stu_del      |
++--------------+
+1 row in set (0.95 sec)
+
+mysql> drop trigger stu_del \c
+
+
+
+
+
+创建视图表：
+
+CREATE [OR REPLACE] [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+    VIEW view_name [(column_list)]
+    AS select_statement
+    [WITH [CASCADED | LOCAL] CHECK OPTION]
+
+
+mysql> select * from grade;
++--------+-------+------+------+--------+---------+
+| sno    | sname | php  | java | system | network |
++--------+-------+------+------+--------+---------+
+| 200603 | lisi  |   79 |   89 |     80 |      70 |
+| 200604 | aa    |   61 |   90 |     80 |      78 |
+| 200605 | bb    |   60 |   96 |     82 |      78 |
+| 200606 | cc    |   89 |   64 |     78 |      91 |
+| 200607 | dd    |   60 |   68 |     70 |      45 |
+| 200608 | ee    |   69 |   89 |     68 |      80 |
++--------+-------+------+------+--------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from grade where php>80;
++--------+-------+------+------+--------+---------+
+| sno    | sname | php  | java | system | network |
++--------+-------+------+------+--------+---------+
+| 200606 | cc    |   89 |   64 |     78 |      91 |
++--------+-------+------+------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> create view vgrade as select * from grade where php>80;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from vgrade;
++--------+-------+------+------+--------+---------+
+| sno    | sname | php  | java | system | network |
++--------+-------+------+------+--------+---------+
+| 200606 | cc    |   89 |   64 |     78 |      91 |
++--------+-------+------+------+--------+---------+
+1 row in set (0.06 sec)
+
+mysql> update grade set php=82 where sno="200603";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from vgrade;
++--------+-------+------+------+--------+---------+
+| sno    | sname | php  | java | system | network |
++--------+-------+------+------+--------+---------+
+| 200603 | lisi  |   82 |   89 |     80 |      70 |
+| 200606 | cc    |   89 |   64 |     78 |      91 |
++--------+-------+------+------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+mysql> drop table vgrade;
+ERROR 1051 (42S02): Unknown table 'vgrade'
+mysql> drop view vgrade;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from grade;
++--------+-------+------+------+--------+---------+
+| sno    | sname | php  | java | system | network |
++--------+-------+------+------+--------+---------+
+| 200603 | lisi  |   82 |   89 |     80 |      70 |
+| 200604 | aa    |   61 |   90 |     80 |      78 |
+| 200605 | bb    |   60 |   96 |     82 |      78 |
+| 200607 | dd    |   60 |   68 |     70 |      45 |
+| 200608 | ee    |   69 |   89 |     68 |      80 |
++--------+-------+------+------+--------+---------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+DELIMITER $$
+
+CREATE
+
+	/*[DEFINER = { user | CURRENT_USER }]*/
+
+	TRIGGER `region_add` AFTER INSERT
+ ON `region`
+ FOR EACH ROW BEGIN
+	if new.id>0 then
+		LOCK?TABLE?`region`?WRITE;
+
+			SELECT?rgt into @myRight?FROM?`region` WHERE?id = new.parent_id;
+			UPDATE?`region`?SET?rgt?=?rgt?+?2?WHERE?rgt?>?@myRight;
+			UPDATE?`region`?SET?lft?=?lft?+?2?WHERE?lft?>?@myRight;
+			UPDATE?`region`?SET?lft = @myRight?+?1,rgt = @myRight?+?2 WHERE id=new.id;
+		UNLOCK?TABLES;
+	end if;
+
+END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+CREATE
+	TRIGGER region_add AFTER INSERT
+ ON region
+ FOR EACH ROW BEGIN
+	if new.id>0 then
+		LOCK?TABLE?region?WRITE;
+			declare cnt int;
+			SELECT?rgt into cnt?FROM?region WHERE?id = new.parent_id;
+			UPDATE?region?SET?rgt?=?rgt?+?2?WHERE?rgt?>?cnt;
+			UPDATE?region?SET?lft?=?lft?+?2?WHERE?lft?>?cnt;
+			UPDATE?region?SET?lft = cnt?+?1,rgt = cnt?+?2 WHERE id=new.id;
+		UNLOCK?TABLES;
+	end if;
+
+END$$
+
+DELIMITER ;
+
+
+  
+

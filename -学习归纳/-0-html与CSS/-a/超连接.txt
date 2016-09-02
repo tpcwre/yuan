@@ -1,0 +1,209 @@
+
+
+
+//===== 滤镜和伪类使超链接图片变色。
+//===== target 属性：
+//===== A 连接锚点
+//===== base target 设置页面中全部a连接的跳转形式
+//===== A 链接相关样式
+//===== mailto 用a链接发送邮件
+//===== confirm确定是否跳转
+//===== <a>连接上中下划线的设置
+//===== 超链接伪类
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== <a>连接上中下划线的设置
+
+	在css中设置属性：
+	text-decoration:none;		无样式
+	text-decoration: overline	上划线。 
+	text-decoration: line-through	删除线。 
+	text-decoration: underline	下划线
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 超链接伪类
+
+        a:target{}			选择匹配的E的所有的，且匹配元素被相关URL指向（锚点指向的时候生效）
+
+        a:link{}			链接没有被访问过是什么样子
+
+        a:visited{}			元素被访问过是什么样子
+
+        a:hover{}			用户鼠标停留在元素上是什么样子
+
+        a:active{}			点击鼠标的那一刹那是什么样子 
+
+       			 	伪：不直接存在于HTML中，只有当用户和网站交互时才体现出来。
+
+   			注意：
+       			 	1、链接伪类，需要遵守一个规则，“爱/恨原则”  LoVe/HAte
+
+       			 	l link->v visted->h hover -> a active
+
+
+
+
+
+
+
+//===== confirm确定是否跳转
+
+	<a href="abc.html" onclick="return confirm('确认跳转？')">跳转</a>
+
+
+
+
+
+
+
+
+//===== 滤镜和伪类使超链接图片变色。
+	a:link img{
+		filter:gray;
+	}
+	a:hover img{
+		filter:"";
+	}
+	<a href="#"><img src="../img/img/11.jpg" /></a>
+	<a href="#"><img src="../img/img/22.jpg" /></a>
+
+
+
+
+
+
+
+
+
+
+
+//===== target 属性：
+
+	<a href="http://www.baidu.com" target='_self'>百度</a>
+	<a href="../a/b/index.php" target="_blank">我的主页</a>
+
+	<a href='' target='_blank'>	//-- _blank每次跳转都弹出新页面
+	<a href='' target='_'>		//-- _所有跳转都在一个新页面中跳转
+	<a href='' target='_self'>	//-- 在本页面直接跳转
+	<a href='' target='_top'>	//-- 到顶层的整体页面一起跳转   （适用frameset 多页面框架跳转）
+	<a href='' target='_parent'>	//-- 使整个父级页面跳转  （适用frameset 多页面框架跳转）
+	
+	1，连接地址不能写c:\xampp\htocs这种的绝对路径
+        2，链接到其他的网站要加上协议名	
+
+
+
+
+
+
+
+
+//===== A 连接锚点
+            
+	<a href='#a1'>跳转到a1</a>  指定跳转到哪个锚点
+	<a href='#a2'>跳转到a2</a>
+
+	<a name='a1'>a1</a>	设置分段和锚点
+	<a name='a2'>a2</a>
+
+	<a href='b.html?#aaa'>跳到b页面的锚点aaa</a><br>
+	<a href='b.html?#bbb'>跳到b页面的锚点bbb</a><br>
+
+
+
+
+
+//===== base target 设置页面中全部a连接的跳转形式
+
+
+	在<head>体中设置如下：
+	<base target='_blank'/>
+
+
+
+
+
+//===== A 链接相关样式
+
+	//-- 去除超连接的下划线<br><br>
+
+		<a href='a.html' >有下划线的超连接</a><br><br>
+
+
+		<a href="a.html" style='text-decoration:none'>没有下划线的超连接</a>
+
+
+
+	//-- 伪类选择器
+                E:link		访问前
+                E:visited	访问后
+                E:hover		悬停时
+                E:active	点击时
+
+                E:target 目标伪类选择器	锚点时
+
+
+
+
+
+
+
+
+
+
+//===== mailto 用a链接发送邮件	
+
+	//方式一
+	<a href='mailto:sihan@163.com?subject=Hello%20again'>发送邮件</a>
+		?subject=Hello%20again		//发送的主题
+		注意：%20 用来替换单词之间的空格，这样浏览器就可以正确地显示文本了。
+	
+	//方式二
+		<a href="mailto:someone@microsoft.com?cc=someoneelse@microsoft.com&bcc=andsomeoneelse2@microsoft.com&subject=Summer%20Party&body=You%20are%20invited%20to%20a%20big%20summer%20party!">发送邮件！</a>
+		:some...	//收件人
+		?cc=		//抄送
+		&Bcc=		//密送
+		&subject	//主题
+		&body		//信件内容
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

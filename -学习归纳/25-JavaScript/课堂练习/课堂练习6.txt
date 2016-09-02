@@ -1,0 +1,295 @@
+
+//===== 获取网页中所有li节点
+//===== 获取ul中所有li节点
+//===== childNodes 获取ul中所有节点(包括文本)
+//===== length 获取节点数量
+//===== nodeType 获取节点类型
+//===== frames 获取子窗口的个数
+//===== screenLeft,screenTop 获取浏览器与屏幕的距离
+//===== alert 警告消息弹框
+//===== confirm 询问弹框
+//===== prompt 可输入的弹框
+//===== resizeBy 修改浏览器窗口大小
+//===== open 点击打开一个不带地址栏及其它选项的浏览器窗口
+//===== navigator 获取浏览器信息
+//===== 获取屏幕高宽，可用高宽，可工作高宽，
+//===== location.reload 重载页面
+//===== location.replace 加载页面
+//===== location.href 跳转页面
+//===== 获取当前页面地址,路径，端口，协议，主机名
+//===== history.go(1),history.forward 前进一步
+//===== history.go(-1),history.back 后退一步
+
+
+
+
+
+
+
+
+<ul id='uid'>
+	<li>aaa</li>
+	<li>aaa</li>
+	<li>aaa</li>
+	<li>aaa</li>
+</ul>
+<ol id='ol1'>
+	<li>bbb</li>
+	<li>bbb</li>
+	<li>bbb</li>
+	<li>bbb</li>
+	<li>bbb</li>
+	<li>bbb</li>
+</ol>
+<script>
+
+
+
+//===== 获取网页中所有li节点
+
+	//var list = document.getElementsByTagName('li');
+	//document.write(list.length);
+	
+	
+
+
+//===== 获取ul中所有li节点
+
+	//var list = document.getElementById("uid").getElementsByTagName("li");
+	
+
+
+	
+//===== childNodes 获取ul中所有节点(包括文本)
+
+	var list = document.getElementById("uid").childNodes; //这里会夹带着#text文本节点
+	//alert(list.length);
+	
+
+
+
+//===== length 获取节点数量
+
+	for(var i=0;i<list.length;i++){
+		document.write(list[i].nodeName);
+		
+
+
+
+//===== nodeType 获取节点类型
+
+		if(list[i].nodeType==1){
+			list[i].onmouseover=function(){
+				this.style.background='#aaa';
+			}
+			list[i].onmouseout=function(){
+				this.style.background='#fff';
+			}
+			list[i].onclick=function(){
+				this.style.background='blue';
+			}
+		}
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<iframe src='1.html'></iframe>
+<script>
+
+
+
+//=====frames 获取子窗口的个数
+
+	document.write('aaaaaaa');
+	var list=window.frames;
+	//alert(list.length);
+
+
+	
+	
+//===== screenLeft,screenTop 获取浏览器与屏幕的距离
+
+	window.onload=function(){
+		//document.write("浏览器到屏幕的宽度是："+window.screenLeft+'<br>');
+		//document.write("浏览器到屏幕的高度是："+window.screenTop+'<br>');
+	}
+
+	
+	
+	
+
+
+//===== alert 警告消息弹框
+
+	//window.alert('警告消息');
+
+	
+	
+	
+//===== confirm 询问弹框
+
+	if(window.confirm('吃了吗？')){
+		//alert('点击了确认');
+	}else{
+		//alert('点击了取消');
+	}
+	
+	
+	
+	
+	
+	
+	
+//===== prompt 可输入的弹框
+
+	//prompt('请输入密码');
+
+
+
+
+
+
+//===== resizeBy 修改浏览器窗口大小
+
+	<button onclick='resizeWindow()'>resizeWindow</button>
+	<script>
+		function resizeWindow(){
+			window.resizeBy(+100,+100);
+		}
+	</script>
+
+	
+	
+	
+//===== open 点击打开一个不带地址栏及其它选项的浏览器窗口
+	
+	<button onclick="window.open('1.html','','width=300,height=300,menubar=no,location=no')">打开一个新窗口</button>
+
+
+
+
+
+
+
+
+
+//===== navigator 获取浏览器信息
+
+	<script>
+	   with(document){
+		write('代码'+navigator.appCodeName+'<br>');
+		write('名称'+navigator.appName+'<br>');
+		write('版本'+navigator.appVersion+'<br>');
+		write('语言'+navigator.language+'<br>');
+		write('编译平台'+navigator.platform+'<br>');
+		write('用户表头'+navigator.userAgent+'<br>');
+	
+	   }
+	</script>
+
+
+
+
+
+
+
+
+
+
+//===== 获取屏幕高宽，可用高宽，可工作高宽，
+
+	with(document){
+		write("屏幕高度"+screen.height+'<br>');
+		write('屏幕宽度'+screen.width+'<br>');
+		write('屏幕可用高度'+screen.availHeight+'<br>');
+		write('屏幕可用宽度'+screen.availWidth+'<br>');
+		write('屏幕可用工作区高度'+window.screen.availHeight+'<br>');
+		write('屏幕可用工作区宽度'+window.screen.availWidth+'<br>');
+	}
+
+
+
+
+
+
+
+	
+//===== location.reload 重载页面
+
+	<button onclick="window.location.reload()">刷新</button><br>
+	
+	
+
+
+
+
+	
+//===== location.replace 加载页面
+
+	<button onclick='window.location.replace("6.html")'>加载1.html页面</button><br>
+	
+	
+	
+
+
+
+	
+	
+//===== location.href 跳转页面
+
+	<button onclick='window.location.href="6.html"'>跳转到6.html页面</button>
+	<button onclick="window.location='1.html'">跳转2</button><br>
+	
+	
+	
+	
+
+
+
+	
+//===== 获取当前页面地址,路径，端口，协议，主机名
+
+	with(document){
+		write("当前页面的地址："+window.location.href+'<br>');
+		write("当前页面的路径"+window.location.pathname+'<br>');
+		write('当前页面的访问端口'+window.location.port+'<br>');
+		write('当前页面的访问协议:'+window.location.protocol+'<br>');
+		write('当前页面的访问主机名'+window.location.hostname+'<br>');
+	}
+	
+	
+
+
+
+	
+	
+	
+	
+//===== history.go(1),history.forward 前进一步
+
+	<button onclick="window.history.go(1)">前进一步</button><br>
+	<button onclick="window.history.forward()">前进一步</button><br>
+	
+
+
+
+
+
+//===== history.go(-1),history.back 后退一步
+
+	<button onclick="window.history.go(-1)">后退一步</button><br>
+	<button onclick="window.history.back()">后退一步</button>
+	
+	
+	

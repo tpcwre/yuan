@@ -1,0 +1,54 @@
+一：准备好一个备案过的域名和服务器
+
+二：进入微信公众平台-》设置-》公众号设置-》 功能设置-》JS接口安全域名 		进行添加准备好的域名
+
+三：将 demo 文件上传到自己的服务器
+
+四：将公从号的 AppId 和 Secret	添加到 sample.php 文件中 并配置好相关接口代码
+
+
+
+	sample页面代码 ：
+		//-- 调用验证文件并输入appid,secret
+			<?php
+			require_once "jssdk.php";	
+			$jssdk = new JSSDK("wxcbe3c6b60cf3f8ac", "a4df55b002a366debcde50c7f1d436c3");
+			$signPackage = $jssdk->GetSignPackage();
+			?>
+
+
+
+		//-- 注入微信验证并调用接口
+			wx.config({
+				debug: true,
+				appId: '<?php echo $signPackage["appId"];?>',
+				timestamp: <?php echo $signPackage["timestamp"];?>,
+				nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+				signature: '<?php echo $signPackage["signature"];?>',
+				jsApiList: [
+					"onMenuShareTimeline",
+				]
+			});
+			
+			//-- 接口->分享到朋友圈
+			wx.ready(function () {  
+					document.getElementById('hit').onclick=function(){
+							wx.onMenuShareTimeline({
+									title: '神曲，纤夫滴爱！', // 分享标题
+									link: 'http://mp.weixin.qq.com/s?__biz=MzIyMDEwODYwNQ==&mid=400423473&idx=1&sn=28519730cef87487edbdf174f8490386#rd', // 分享链接
+									imgUrl: 'https://mmbiz.qlogo.cn/mmbiz/fG8MR2hFXU8YlGk7PdpAINB0YYFyEaiayM6WrxZ8fOVAv4UIXCAZuDFZAIez5FDLrdwryZJAlxcrPfJk3fRE3yg/0?wx_fmt=jpeg', // 分享图标
+									success: function () { 
+											alert('分享了');
+									},
+									 cancel: function () { 
+											alert('没分享');
+									}
+							});
+					};
+			})
+			
+			
+			
+
+五：启动该页面，并用手机扫二维码  
+	在开启debug模式下，如果弹出 {errMsg:"config:ok"}	字样说明接口连接成功！

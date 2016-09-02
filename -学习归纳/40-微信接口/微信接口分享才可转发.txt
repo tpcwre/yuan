@@ -1,0 +1,118 @@
+
+
+//===== 微信接口分享才可转发
+
+		<?php
+		require_once "jssdk.php";
+		$jssdk = new JSSDK("wxd3a746b31f4632ab", "5d5f1ae02732f4fc33f46b0d2f0742e5");
+		$signPackage = $jssdk->GetSignPackage();
+
+		?>
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+		  <meta charset="UTF-8">
+		  <meta name='viewport' content="width=device-width,initital-scale=1">
+		  <title></title>
+		  <style>
+			  .foot span{
+				  float:left;
+				  margin:6px;
+				  font-size:12px;
+			  }
+			  #zao{
+				  width:100%;
+				  height:100%;
+				  background:#000;
+				  opacity:0.7;
+				  position:absolute;
+				  top:0;
+				  left:0;
+				  display:none;
+			  }
+			  #zao .text{
+				  width:310px;
+				  height:200px;
+				  border:1px solid;
+				  border:1px solid;
+				  margin:0 auto;
+				  padding-top:10px;
+			  }
+		  </style>
+			
+		</head>
+		<body>
+			<div id='vedio' style="width:310px;border:1px solid #ccc;margin:0 auto;text-indent:6px">
+				  <!--标题栏-->	
+				<h2>败家娘们儿怎么整！</h2>							      
+				<div style='font-size:13px'>	
+					<!--日期-->
+					<span><?php echo date('Y-m-d'); ?></span>　　		
+					<!--作者-->
+					<span style="font-size:18px;color:blue">每日神曲</span>
+				</div><hr color='#ccc' size=1>
+				<!--链接展示图片-->
+				<div>
+					<img id='one' src='2.png' width=310/>
+					<iframe id='two' scrolling="no" style="display:none;width: 310px;height: 222.5px;overflow: hidden;" src="https://v.qq.com/iframe/player.html?vid=v001688heja&amp;width=310&amp;height=222.5&amp;auto=0" allowfullscreen="" frameborder="0" height="222.5" width="310"></iframe>
+				</div>
+				<div style='font-size:10px;padding:6px'>腾讯视频</div>
+				<!--页脚-->
+				<div class='foot' style="padding-top:50px">
+					<span>阅读</span>
+					<span>赞</span>
+					<span style="float:right">举报</span>
+					<div style="clear:both"></div>
+				</div>
+			</div>
+			
+			<!--遮罩-->
+			<div id='zao'>
+				<div class="text">
+					<!--点击的弹出提示框-->
+					<img src='a.png' width=310/>		
+				</div>
+			</div>
+		</body>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script>
+		  wx.config({
+			   debug: true,
+			appId: '<?php echo $signPackage["appId"];?>',
+			timestamp: <?php echo $signPackage["timestamp"];?>,
+			nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+			signature: '<?php echo $signPackage["signature"];?>',
+			jsApiList: [
+			  "openlocation",		//显示地图位置
+			  "chooseImage",		//照相
+			  'onMenuShareTimeline',//转发
+			]
+		  });
+			wx.ready(function(){
+				 zao = document.getElementById('zao');
+				 one = document.getElementById('one');
+				 two = document.getElementById('two');
+
+				 document.getElementById('vedio').onclick=function(){
+					document.getElementById('zao').style.display='block';
+					 
+					 //分享朋友圈接口
+					wx.onMenuShareTimeline({
+						title: '败家娘们儿怎么整！', // 分享标题
+						link: 'youlejs.sinaapp.com', // 分享链接
+						imgUrl: 'http://1.youlejs.sinaapp.com/2.png', // 分享图标
+						success: function () { 
+							zao.style.display='none';
+							one.style.display='none';
+							two.style.display='block';
+						},
+						cancel: function () { 
+							alert('用户未转发');
+						}
+					});
+				  };
+			});	 
+		</script>
+		</html>
+
+

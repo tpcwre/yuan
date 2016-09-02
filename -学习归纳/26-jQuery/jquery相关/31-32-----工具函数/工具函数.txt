@@ -1,0 +1,366 @@
+
+
+$(function(){
+		//第31课工具函数
+/*
+	学习要点：
+		1，字符操作
+		2，数组和对象操作
+		3，测试操作
+		4，URL操作
+		5，浏览器检测
+		6，其他操作
+//-----字符串操作,去除字串左右的空格 $.trim()
+	在jquery中，字符串的工具函数只有一个，就是去除字符串左右空格的工具函数：$.trim()
+
+$(document).click(function(){
+	var str= "             jquery               ";
+	alert(str);
+	alert($.trim(str));
+});
+
+//-----数组和对象操作
+	//jquery 为处理数组和对象提供了一些工具函数 ，这些函数可以便利的给数组或对象进行遍历，筛选，搜索等操作。 
+//-----$.each()遍历数组
+$(document).click(function(){
+	var arr = ["张三","李四","王五","马六"];
+	$.each(arr,function(index,value){
+		$("#box").html($("#box").html()+(index+1)+"=="+value+"<br>");
+	}); 
+});
+
+//-----$.each()遍历对象
+//遍历window对象
+$.each(window,function(name,fn){
+	$("#box").html($("#box").html()+name+"<br>")
+});
+
+
+
+//遍历ajax()对象
+$.each($.ajax(),function(name,fn){
+	$("#box").html($("#box").html()+name+"<br>");
+});
+
+//遍历ajax()对象的fn
+$.each($.ajax(),function(name,fn){
+	$("#box").html($("#box").html()+fn+"<br><br>");
+});
+
+//-----$.grep 数组的筛选
+var arr=[4,2,6,9,11,25,38,59];
+var greparr = $.grep(arr,function(element,index){
+	return index < 7 && element < 22;
+	//注释：返回下标小于7 ，与 值小于22的、这里按理应返回一个bool值，但是这里返回的是一个数组。
+});
+alert(greparr);
+
+
+//-----$.map()修改数据 
+var arr=[4,2,6,9,11,25,38,59];
+var maparr= $.map(arr,function(element,index){
+	if(index <5 && element < 9){
+		return element+1;
+	}
+});
+alert(maparr);
+
+
+
+//-----$.inArray()获取指定元素的下标
+var arr=[4,2,6,9,11,25,38,59];
+alert($.inArray(11,arr));
+alert($.inArray(38,arr));
+
+
+
+//-----$.merge()合并两个数组
+var arr1=[2,4,6,7,32,83];
+var arr2=[299,388];
+alert($.merge(arr1,arr2));
+
+
+
+
+//-----$.unique()删除重复的DOM元素
+//-----获取所有的指定元素将其放进一个数组
+var arr1=[2,4,6,45,234,64,234];
+var arr2=[2,4,6,83,787,3324];
+var arr3=$.merge(arr1,arr2);
+alert(arr3);
+alert($.unique(arr3));
+//这里注意，在删除相同数值时因为浏览器的不同，效果会不同，有的浏览器去除不了。
+
+
+//-----.get()获取所有的指定元素将其放进一个数组
+//-----.concat() 将元素加入到指定对象数组中
+var divs=$("div").get();
+divs=divs.concat($(".box").get());//将.box的所有元素加入到divs数组里。
+alert(divs.length); //获取数组divs的长度个数。
+alert($(divs).size());//size()是jquery的方法，所以要以$(divs),的方式才有效。
+//删除数组中相同的DOM元素
+$.unique(divs);
+alert($(divs).size());
+*/
+
+//-----$.toArray()合并多个DOM组成元素
+
+alert($("li").toArray().length);
+alert($($("li").toArray()).size()); //以jquery对象的方式
+
+
+});
+
+
+
+html页面
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>ajax</title>
+	<script src='jquery-1.11.1.js'></script>
+	<script src='a.js'></script>
+	<style>
+	</style>
+</head>
+<body>
+	<div></div>
+	<div></div>
+	<div class="box"></div>
+	<div class="box"></div>
+	<div class="box"></div>
+	<div></div>
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+</ul>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(function(){
+		//第32课 工具函数 (下)
+/*
+	学习要点：
+		3，测试操作
+		4，URL操作
+		5，浏览器检测
+		6，其它操作
+
+//=====测试操作（文本）
+	在jquery中，数据有着各种类型和状态。有时，我们希望能通过判断数据的类型和状态做相就的操作。jquery提供了五级测试用的工具函数。
+
+   函数名			说明 
+$.isArray(obj)			判断是否为数组对象，是返回true
+$.isFunction(obj)		判断是否为函数，是返回true
+$.isEmptyObject(obj)		判断是否为空对象，是返回true
+$.isPlainObject(obj)		判断是否为纯粹对象，是返回true
+$.contains(obj)			判断DOM节点是否含有另一个DOM节点，是返回true
+$.type(data)			判断数据类型
+$.isNumeric(data)		判断数据是否为数值
+$.isWindow(data)		判断数据是否为window对象
+
+
+
+
+
+
+
+//-----$.isArray() 判断目标是否为一个数组
+var arr=[1,2,3];
+var arr2="123";
+alert($.isArray(arr));
+alert($.isArray(arr2));
+
+
+
+//-----$.isFunction() 判断是否为一个函数
+var fn=function(){};
+alert($.isFunction(fn));
+
+
+//-----$.isEmptyObject() 判断对象是否为空
+var obj1={};
+var obj2={name:"lee"};
+alert($.isEmptyObject(obj1));
+alert($.isEmptyObject(obj2));
+
+
+
+
+//-----$.isPlainObject() 判断是否为一个纯粹的对象
+//纯粹对象就是用{}或new object 不能传参的对象 
+
+var obj={}; //纯粹的对象 
+obj = new Object();  //纯粹的对象
+alert(obj);  //显示为object object 是一个对象
+alert($.isPlainObject(obj));
+
+obj=window; //
+obj=new Object('name');  //传参后会变成一个字串
+alert(obj);
+alert($.isPlainObject(obj));
+
+
+
+//-----$.contains() 判断DOM节点是否包含另一个DOM节点
+//注意对象后要有get(0)
+alert($.contains($("#box").get(0),$("#pox").get(0)));
+
+
+
+
+//----$.type() 判断数据的类型
+var arr=[1,2,3];
+var obj={};
+var str="1,2,3";
+alert($.type(arr));
+alert($.type(obj));
+alert($.type(str));
+
+
+
+
+//-----$.isNumeric() 判断是否为数值
+var num=1.23;
+alert($.isNumeric(num));
+
+
+
+//-----$.isWindow() 判断是否为window对象
+var win=window;
+alert($.isWindow(win));
+
+
+
+
+
+
+//=====URL操作（文本）
+	//URL地址操作，在之前的Ajax章节其实已经讲到过，只有一个方法： $.param(),将对像的键值对转化为URL键值对字符串形式。
+
+//-----$.param()将对象的键值对转换为URL中GET形式的字符串键值对
+var obj={
+	name:"Lee",
+	age:100
+}	
+alert($.param(obj)); //结果为 name=Lee&age=100  
+
+
+
+
+
+
+//=====浏览器测试
+	由于在早期的浏览器中，分IE和W3C浏览器，而IE678使用的覆盖率还很高，所以，早期的jquery提供了$.browser工具对象。而现在的jquery以经废弃删除了这个工具对象 ，如果还想使用这个对象来获取浏览器版本型号的信息，可以使用兼容插件。
+
+   属性		$.browser对象属性
+webkit		判断webkit浏览器，如果是则为true
+mozilla		判断mozilla浏览器，是为true
+safari		判断safari浏览器 , 是为true
+opera		判断opera浏览器，是为true
+msie		判断IE浏览器，是为true
+version		获取浏览器版本号
+
+
+//-----获取IE浏览器版本号。
+alert($.browser.msie+":"+$.browser.version);
+
+//-----获取火狐浏览器版本号
+//alert($.browser.mozilla+":"+$.browser.version);
+
+//注意：火狐采用的是mozilla引擎，一般就是指火狐；而谷歌Chrome采用的引擎是webkit,一般验证Chrome就用webkit,
+//还有一种浏览器检测 ，是对浏览器内容 的检测 。比如，W3C的透明 度为opacity,而IE的透明度为alpha.这个对象是$.support.
+
+
+
+//注意：由于jquery越来越放弃低端的浏览器，所以检测功能在未来使用频率也越来越低。所以，$.browser以被废弃删除，而$.support .boxModel检测 W3C或IE盒子也被删除。并且，http://api.jquery.com/jQuery.support/官网也不提供属性列表和解释，给出一个Modemizr第三方小工具来辅佐检测。
+
+
+//-----$.support.ajax 判断是否能创建ajax
+alert($.support.ajax);
+
+
+//-----$.support.opacity 设置不同浏览器的透明度
+//-----通过$.support.opacity 来检测浏览器是IE类还是W3C类
+
+if($.support.opacity==true){  //true为支持W3C
+	$("#box").css("opacity",0.5);
+}else{
+	$("#box").css("filter","alpha(opacity=10)");
+}
+
+
+
+
+//-----$.proxy()解决this指向问题
+//=====其它操作（文本）
+	//jquery提供了一个预备绑定函数上下文工具函数：$.proxy(),这个方法，可以解决诸如外部事件触发调用对象方法时this的指向问题。
+
+//问题原型
+var obj={
+	name:"Lee",
+	test:function(){
+		alert(this.name);
+	}
+};
+//obj.test();  //如此直接调用上面的对象中的函数，this不会混乱
+//$("#box").click(obj.test); //但是在对象之前加上一个事件触发对象，那么this指向就混乱了
+
+//解决方法一（不推荐）
+
+var obj={
+	name:"Wang",
+	test:function(){
+		var _this=obj;  //如此这样锁定this this指向就不会混乱。
+		alert(_this.name);
+	}
+}
+obj.test();
+$("#box").click(obj.test);
+
+*/
+//解决方法二（推荐）
+//-----$.proxy() 调整this指向
+var obj={
+	name:"Zhang",
+	test:function(){
+		alert(this.name);
+	}
+};
+obj.test();
+$("#box").click($.proxy(obj,"test"));
+
+});
+
+
+
+
+

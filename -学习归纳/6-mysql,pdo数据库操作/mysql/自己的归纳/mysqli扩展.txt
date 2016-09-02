@@ -1,0 +1,456 @@
+
+
+
+		=====使用php的mysqli扩展库操作mysql数据库
+
+简单介绍：
+	mysqli(mysql improve )mysql扩展库的增强版
+	mysql扩展库和mysqli扩展库的比较
+1, mysqli 的稳定性和安全性，效率有所提高，
+2，mysqli支持面向对象编程，同时mysqli扩展库考虑到老程序员，同时提供面向过程的编程风格。
+
+
+	mysqli 快速入门
+编写一个程序，这个程序从user1表中读取数据，并打印在网页中，使用mysqli完成
+
+1,先使用mysqli面向对象的风格，完成案例
+2，配置PHP。INI文件让PHP支持mysqli扩展库: extension=php_mysqli.dll
+3, 建库，建表，
+
+
+
+
+
+	-----mysqli操作数据库（对象与过程的区别）
+
+<?php
+	//mysqli用面向过程的方式操作数据库
+	$mysqli = mysqli_connect('localhost','root','abcd','words')or die('连接失败');
+	mysqli_set_charset($mysqli,'utf8');
+	
+	//创建一个表
+	//$sql = "create table order1(id int primary key auto_increment,name varchar(32) not null,age int(16) not null )";
+	
+	
+	//插入一条数据
+	//$sql="insert into order1(name,age) values('小王',18)";
+	
+	//删除一条数据
+	//$sql="delete from order1 where id = 8";
+	
+	//更新一条数据；
+	$sql="update order1 set name='屁的',age=33 where id = 2";
+	
+	
+	$res = mysqli_query($mysqli,$sql);
+	$showtable= mysqli_query($mysqli,"show tables");
+	while($row=mysqli_fetch_row($showtable)){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+	echo "<hr>";
+	$sel =mysqli_query($mysqli,"select * from order1");
+	while($row=mysqli_fetch_row($sel)){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+	echo "<hr>";
+	
+	$id=mysqli_insert_id($mysqli);
+	echo "上次操作的ID是: $id";
+	
+
+
+
+	
+/*	//mysqli用面向对象的方式来操作数据库
+	$mysqli=new mysqli('localhost','root','abcd','words');
+	$mysqli->query("set names utf8");
+
+	//创建一个表	
+	//$sql="create table test(id int primary key auto_increment,name varchar(32) not null,age int(32) not null,sex varchar(8) not null)";
+	
+	//添加一条数据：
+	//$sql="insert into test(name,age,sex) values('don1',18,'nv')";
+	
+	//删除一条数据：
+	//$sql="delete from test where id = 4";
+	
+	//更新一条数据；
+	$sql="update test set name='bbbb',age=88,sex='nan' where id=9";
+	
+	$res = $mysqli->query($sql);
+
+	//查看操作的行数是否受的影响：
+
+	if($res){
+		if($mysqli->affected_rows>0){
+			echo "操作成功";
+		}else{
+			echo "没有受到影响的行数";
+		}
+	}else{
+		echo "操作失败！";
+	}
+	
+	//查看表的内容
+	echo "<br>";
+	$sel=$mysqli->query("select * from test");
+	while($row=$sel->fetch_row()){
+		foreach($row as $k=>$v){
+			echo "--$v";
+		}
+		echo "<br>";
+	}
+	$sel->free();
+	$mysqli->close();
+	*/
+?>
+
+
+
+
+
+
+
+
+	-----mysqli 批量执行sml语句
+
+
+
+//关键字（$sqls.="xxxx;";  - 点和等号中不能有空格，后面的两个分号不能少）
+//关键字($mysqli->multi_query($sqls)  -- 批量发送及接收返回值)
+//关键字($result=$mysqli->store_result() -- 调取结果集,每调一次$result指针就会向后移一位！)
+
+
+
+批量执行 dml语句,可以同时操作 删除，添加，更新，但不能同时操作select 语句
+基本语法	注意第二条语句的等号前面要加一个点 '.'
+	$sqls="sql1,,,;";
+	$sqls.="sql1,,,;";
+	$sqls.="sql1,,,;";
+	mysqli::nulti_query($sqls);
+
+案例；使用mysqli的 mysqli::multi_query()一次性添加三个用户 
+<?php
+	//header("content-type:text/html;charset=utf-8");
+	$mysqli =new mysqli('localhost','root','abcd','test');
+	$mysqli->query("set names utf8");
+
+	$sqls = "insert into user1(name,age) values('宋江',20);";
+	$sqls.= "insert into user1(name,age) values('吴用',30);";
+		//关键字（$sqls.="xxxx;";  - 点和等号中不能有空格，后面的两个分号不能少）
+	$sqls.= "insert into user1(name,age) values('林冲',40);";
+	$res = $mysqli->multi_query($sqls);
+		//关键字($mysqli->multi_query($sqls)  -- 批量发送及接收返回值)
+	if($res){
+		echo "操作成功";
+	}else{
+		echo "操作失败";
+	}
+?>
+
+
+
+
+	-----mysqli批量执行dml语句
+
+
+<?php
+	$mysqli= new mysqli('localhost','root','abcd','dbone');
+	$mysqli->query("set names utf8");
+	
+	$sqls = "select * from tab;";
+	$sqls.="select * from tabone;";
+	$sqls.="select * from tabtwo;";
+	$sqls.="select * from tabthree;";
+	$sqls.="show databases;";
+	$sqls.="show tables;";
+	$sqls.="desc tab;";
+	if($res=$mysqli->multi_query($sqls)){
+		do{
+//关键字($result=$mysqli->store_result() -- 调取结果集,每调一次$result指针就会向后移一位！)
+			$result=$mysqli->store_result();
+			while($row=$result->fetch_row()){
+//关键字($res->fetch_row()  -- 取出当前行的结果集相当一个数组)
+				foreach($row as $k=>$v){
+					echo "--".$v;
+				}
+				echo "<br>";
+			}
+			echo "<br>";
+			$result->free();
+//关键字($result->free()  -- 释放当前资源的内存)
+			if(!$mysqli->more_results()){
+//关键字($mysqli->more_results()  -- 查询后面是否还有结果集)
+				break;
+			}
+		}while($mysqli->next_result());
+//关键字($mysqli->next_result()  --  操作下一个结果集)
+	}else{
+		echo "faild....";
+	}
+?>
+
+
+
+
+
+	=====mysqli事务类型处理=====
+
+	事务用于保证数据的一致性，它由一组相关的dml语句组成，该组的dml语句要么全部成功，要么全部失败。如网上转账就是典型的要用事务来处理，用以保证数据的一致性。
+
+
+	-----mysqli 事务控制 acid
+
+原子性-Atomicity : 原子性是指事务是一个不可分割的工作单位，事务中的要么都发生，要么都不发生。比如说一个事务由几名代码完成，要么全部成立，要么有一个失败，就全部失败。
+
+一致性-Consistency:事务必须使数据库从一个一致性状态变换到另外一个一致性状态。
+
+隔离性-Isolation: 事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其它事务的操作数据所干扰，多个并发事务之间要相互隔离。	
+
+
+持久性-Durability: 持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响。
+
+
+
+
+
+	-----事务处理-账号转账案例
+<?php
+	$mysqli=new mysqli('localhost','root','abcd','dbone')or die('连接失败');
+	$mysqli->query("set names utf8");
+//关键字($mysqli->query("set names utf8")  -- mysqli面向对象的形式设置数据库的编码格式)
+
+	//将提交设置为false ,不让其自动提交。
+	$mysqli->autocommit(false);			
+//关键字($mysqli->autocommit(false)  -- 设置自动提交为非自动)
+	$sql1="update accounta set balance = balance-2 where id=1"; 
+	$sql2="update account set balance = balance+2 where id=2";
+//关键字(balance+2  -- 设置表中 balance 项 增加2)
+				
+//关键字($mysqli->query($sql) - 发送并获得返回值)
+	$res1=$mysqli->query($sql1);	
+	$res2=$mysqli->query($sql2);
+	if($res1 && $res2){
+		echo "操作成功----";
+		$mysqli->commit();			
+//关键字(commit - 提交)
+	}else{
+		echo "操作失败,回滚";
+		$mysqli->rollback;			
+//关键字(rollback - 回滚)
+	}
+	$mysqli->close();				
+//关键字($mysqli->close - 关闭连接)
+?>
+
+
+
+
+
+	-----事务处理-节点备份与恢复
+基本流程：
+	1，关键字(start transaction - 启动事务处理)
+	2，关键字(savepoint a - 备份一个事务节点，以便恢复)
+	3，关键字(rollback to a - 恢复到 a 事务节点)
+	4，关键字(commit - 提交并保存事务操作)
+
+
+<?php
+	//header("content-type:text/html;charset=utf-8");
+	$mysqli= new mysqli('localhost','root','abcd','dbone')or die('连接失败');
+	$mysqli->query("set names utf8");
+
+	$sql =$mysqli->query("start transaction");	
+//关键字(start transaction - 启动事务处理)
+	$sql =$mysqli->query("savepoint a");
+//关键字(savepoint a - 备份一个事务节点，以便恢复)
+	$sql =$mysqli->query('insert into account(id,balance) values(115,50)');
+	$sql=$mysqli->query("rollback to a");
+//关键字(rollback to a - 恢复到 a 事务节点)
+	$sql=$mysqli->query("commit");
+//关键字(commit - 提交并保存事务操作)
+
+	$sql=$mysqli->query("select * from account");
+	while($row=$sql->fetch_row()){
+		foreach($row as $k=>$v){
+			echo "--".$v;
+		}
+		echo "<br>";
+	}
+?>
+
+
+
+
+
+
+
+
+
+	=====mysqli stmt 预处理技术 
+
+
+
+	-----使用预处理语句有什么好处？
+1，效率高，执行速度快
+2，安全性高，可以防止sql注入
+
+
+问题的提出？
+	现在需要向mysql数据库添加100个用户，请问如何实现
+
+
+	-----mysql工作原理及预处理技术
+
+PHP发送数据到mysql的工作原理  
+	1, 建立连接
+	2，发送指令
+	3, mysql进行编译进行接收
+	4，断掉连接
+所以，当PHP操作数据库时，每发送一次数据都会建立一次连接，进行一次编译。这样很浪费资源.而预处理技术就会大大减少这样的资源浪费。
+
+预处理就是提出预编译，把sql第一次发送的语句做好编译，后面只需要发送数据，而且不会断掉连接。这样只用一个连接，只作一次编译就把成百上千条语句完成了。不然成百上千次的连接，编译会浪费很多的资源。
+
+
+
+
+
+	-----mysqli预处理技术prepare  添加实例
+
+<?php
+		
+			$sql = "insert into stmt(id,name,age) values(?,?,?)";
+//关键字($sql = "insert into stmt(id,name,age) values(?,?,?)";  --  预处理设置)
+			$stmt = $mysqli->prepare($sql);
+//关键字($stmt = $mysqli->prepare($sql);   --  预处理语句)
+			$id= 6;
+			$name = 'aaa';
+			$age = 111;
+			$stmt->bind_param('isi',$id,$name,$age);
+//关键字($stmt->bind_param('isi',$id,$name,$age);   -- 绑定参数)
+			$b = $stmt->execute();
+//关键字($b = $stmt->execute();   -- 执行预处理功能)
+			
+			$id=7;
+			$name='bbb';
+			$age = 222;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=8;
+			$name="ccc";
+			$age =333;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=9;
+			$name='ddd';
+			$age = 444;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			
+			$id=10;
+			$name='eee';
+			$age = 555;
+			$stmt->bind_param('isi',$id,$name,$age);
+			$stmt->execute();
+			if($b){
+				echo "ok";
+			}else{
+				echo "faild".$stmt->error;
+			}
+			$mysqli->close();
+			
+?>
+
+
+
+
+
+
+	-----mysqli预处理技术-prepare  ---查询实例
+
+<?php
+//关键字($mysqli_stmt->bind_param('i',$id)	设置预处理语句)
+//关键字($mysqli_stmt->bind_result($a,$b,$c)    绑定结果集)
+//关键字($mysqli_stmt->execute()		执行语句)
+//关键字($mysqli_stmt->fetch()			逐个获取结果集的行结果)
+//关键字($mysqli_stmt->free_result()		释放预处理资源)
+//关键字($mysqli_stmt->close();			关闭预处理操作)
+//关键字($mysqli->close();			关闭连接)
+
+	$sql="select * from stmt where id>?";
+	$mysqli_stmt=$mysqli->prepare($sql);
+	$id=5;
+	$mysqli_stmt->bind_param('i',$id);	//关键字
+	$mysqli_stmt->bind_result($a,$b,$c);	//关键字
+	$mysqli_stmt->execute();		//关键字
+	while($mysqli_stmt->fetch()){		//关键字
+		echo "<br>--$a--$b--$c";
+	}
+	echo "<br>--------";
+	$id=10;
+	$mysqli_stmt->bind_param('i',$id);
+	$mysqli_stmt->execute();		
+	while($mysqli_stmt->fetch()){		
+		echo "<br>--$a--$b--$c";
+	}
+	$mysqli_stmt->free_result();		//关键字
+	$mysqli_stmt->close();			//关键字
+	$mysqli->close();			//关键字
+
+
+?>
+
+
+
+
+
+
+
+
+-----------------------------------------------------------
+
+
+
+
+
+
+	-----预编译可以自动防止sql（结构化查询语句）注入攻击
+
+//关键字 password='aa' or 1='1';
+
+-----sql注入漏洞，使用万能密码攻击：
+以下是利用数据库万能密码进入数据库：
+select * from user1 where name='gao1' and password='aa' or 1='1';
+
+//看看有没查询到用户
+if(查询到){
+	header(“其它页面”);
+}else{
+	header(“其它页面”);
+}
+
+
+	-----防攻击的解决方案
+
+1, 使用预处理编译
+2，改变验证数据库用户逻辑
+$sql = "select password from user1 where name='xx'";
+ //先看看有没有查询的记录，如果有，说明用户存在。
+
+if(从数据库查询的密码==用户输入的密码){
+	//用户名和密码合法
+	header("其它页面");
+}else{
+	header('其它页面');
+}
+
+
+

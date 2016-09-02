@@ -1,0 +1,890 @@
+
+
+//===== LINUX 下apache的相关配置
+
+	//----- 默认网页保存位置：
+	//----- apache服务器的重启
+	//----- apache服务器的配置文件位置
+	//----- 日志的存放位置
+	//----- apache 环境的基本配置
+	//----- serverRoot 设置服务器的主目录(存放和服务相关配置文件)
+	//----- listen 	设置服务器使用的端口
+	//----- LoadModule...	加载的相关模块
+	//----- <IfModule unixd_module>  定义服务器的默认用户 (基本用不上)
+	//----- ServerAdmin you@xamp.com	定义服务器邮箱
+	//----- <Directory />	定义全局读写的权限
+	//----- DocumentRoot 网页的存放目录
+	//----- <IfModule dir_module> 	设置自动识别打开的网页类型
+	//----- ErrorLog 错误日志存放设置
+	//----- CustomLog "logs/access_log" common	设置正确日志的存放位置
+	//----- <IfModule log_config_module> 设置日志的保存格式 
+	//----- <IfModule alias_module> 定义目录别名 (完善)
+	//----- 限制特定目录，只允许指定用户可以访问
+	//----- <Directory "/usr/local/apache2//htdocs"> 	设置目录的访问权限
+	//----- <IfModule mime_module>   识别文件类型的设置 
+	//----- 域名解析
+	//----- 配置虚拟主机	(完善)
+	//----- rewrite 重写功能 (须开启虚拟主机)
+
+
+
+
+
+//===== window下的 apache的命令行和相关的配置
+//===== apache 配置虚拟目录：
+//===== apache-虚拟主机
+//=====  一个IP绑定多个域名。
+//===== LAMP 开发环境的搭建。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== window下的 apache的命令行和相关的配置
+
+		httpd -k start 
+		httpd -k shutdown
+		httpd -k restart
+
+
+		1，一台机器可以有1-65535号端口
+
+		2,netstat -an 来查看机器有哪些端口在监听。
+
+		3,netstat -anb  扫描并列出正在监听的端口和所对应的相关程序和服务
+				可以通过资源管理器关闭相应程序来关闭端口
+		4，一个端口只能被一个程序监听。
+
+		5，端口的类别：
+			有名端口： 1-1024 以经被分配。
+			其它端口： 可以根据需要不同设置。
+
+
+
+		apache如何配置端口；
+		1，apache的配置文件是 apache目录下的conf文件夹中,名为httpd.conf的文件。
+			修改端口就是把 httpd.conf文件中的 Listen 80 改成如 : listen (端口号)
+				注意修改后一定要重新启动apache
+
+		2，apache 可以同时监听多个端口：
+			Listen 80 
+			Listen 81 
+			Listen 82 
+
+
+
+		apache 各目录文件的意义：
+
+		bin -- : 该目录下存放apache的常用命令，比如httpd
+		cgi-bin -- : 该目录存放linux下的常用命令 .sh
+		conf -- ；存放配置文件 如 httpd.conf
+		error -- : 存放错误记录.
+		htdocs -- : 存放我们的站点文件（默认情况下）如果有多个站点，可以通过文件夹来分类。
+		icons -- : 存放图标。
+		logs -- : 记录apache的相关日志。
+		manual -- : 手册。
+		modules -- : apache 模块。
+
+
+
+
+
+
+
+
+
+//===== apache 配置虚拟目录：
+
+		如果，我的apache是安装在C盘，但是出现C盘空间不足，而D盘有更多空间，能不能把D盘的一个文件夹
+		下的网页html.php当做网站管理。可以的，如下！！！
+		配置虚拟目录在apache的conf目录下httpd.conf的<IfModule dir_module>节点后添加如下代码：如下：
+			
+		一，首先在httpd.conf文件中找到下面三行代码。
+		<IfModule dir_module>
+			DirectoryIndex index.html
+		</IfModule>
+		二，在上面三行代码后面加入如下代码。
+		<IfModule dir_module>
+			//下面一行是web应用的默认访问页面，类似欢迎页面。web应用名称，可以自行指定。
+				它的意思是浏览器默认会找寻index.html.如果没有就找，index.htm如果没有就找index.php
+				依此类推，你可以加入,xxx.htm,或xxx.html等。
+			DirectoryIndex index.html index.htm index.php   
+			Alias /myblog "D:/myblog"				
+			<Directory "d:/myblog">				
+			Order allow，deny
+			Allow from all
+			</Directory>
+		</IfModule>
+
+
+		三，注销httpd.conf文件中的 <DocumentRoot "D:/AppServ/www">在前头加#就是注销。这行代码是默认指定的路径。  
+
+		（如果注销了，就只能访问你所设置的文件夹，如果不注销，可以访问全部！）
+
+
+
+
+
+		文件权限设置：
+
+		<Directory d:/myblog">	// 表示对d:/myblog这个指定的文件权限设置			
+			Order allow.deny // allow表示，先许可所有的IP访问，deny表示又拒绝所有。
+			Allow from all  //许可所有IP
+		</Directory>
+		示例：
+
+		order deny,allow      //这一行规定了访问权限的规则。有拒绝，有允许。
+		allow from 218.20.253.2 //这一行规定了，ip:218.20.253.2 是被允许访问的。
+		deny from 218.20	//这一行规定了，以ip;218.20开头的IP地址都被拒绝访问。
+		综上可以看出，先是拒绝了218.20IP段的访问权，然后又允许了218.20.253.2的访问权，结果只有218.20.253.2的这个IP是有访问权的，
+
+		又例如；
+		order allow,deny      //先允许，后拒绝
+		allow from 218.20.253.2 //这一行规定了，ip:218.20.253.2 是被允许访问的。
+		deny from 218.20	//这一行规定了，以ip;218.20开头的IP地址都被拒绝访问。
+		这里可以看出是先允许了218.20.253.2,然后又拒绝了218.20的IP段。 所以这个例子中任何IP都没有访问权。
+
+
+
+
+
+
+
+
+//===== apache-虚拟主机
+
+		配置虚拟主机的步骤如下；
+			1，启用 httpd-vhosts.conf
+			在httpd.conf文件中找到下面节点
+		#Virtual hosts
+		#Include conf/extra/httpd-vhosts.conf               //启用的话就把前面的#号去掉  #号相当于注释
+
+			2,在httpd-vhost.conf文件中做配置:
+		打开conf/extra/httpd-vhost.conf文件并进行相关配置，
+
+		设置虚拟主机有两种方法。
+
+		一：在文件节点中找到下面这段代码。复制，进行改动设置。
+		<VirtualHost *:80>
+			ServerAdmin webmaster@dummy-host2.x
+			DocumentRoot "C:/Apache2.2/docs/dummy-host2.x"
+			ServerName dummy-host2.x
+			ErrorLog "logs/dummy-host2.x-error.log"
+			CustomLog "logs/dummy-host2.x-access.log" common
+		</VirtualHost>
+
+
+		二:自行设置相应数据；
+		<VirtualHost 127.0.0.1:80>       //这个主机被访问时。会被指向下面的"d:/myblog"
+			DocumentRoot "d:/myblog"
+			#这里配置欢迎首页面
+			DirectoryIndex index.html index.htm index.php
+			<Directory />
+			Options FollowSymLinks
+			#不允许别人修改我们的页面
+			AllowOverride None
+			#设置访问权限
+			Order allow,deny
+			Allow from all
+			</Directory>
+		</VirtualHost>
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=====  一个IP绑定多个域名。
+
+
+		解决方案一：通过端口区分来解决一个IP绑定多个站点。
+			1，备好开发完的网站 d:/myblog
+			2, 配置我们的httpd.conf文件,启用httpd-vhost.conf
+			3, 配置我们的 httpd-vhost.conf
+			4, 在hosts文件中添加 ip 和域名的对应关系
+				c:/windows/system32/dirvers/etc/hosts
+			5,建议注销 DocumentRoot
+				#DocumentRoot "C:/,,,,"
+			6,测试
+
+		添加一个新的域名于该IP绑定。
+			
+			1，开发新的网站：d:/myblog2
+			2,配置我们的httpd-vhosts.conf
+			添加新的虚拟主机
+			<VirtualHost 127.0.0.1:81>
+			DocumentRoot "d:/myblog2"
+			DirectoryIndex index.html
+			<Directory />
+			Options FollowSymLinks
+			AllowOverride None
+			Order allow,deny
+			Allow from all
+			</Directory>
+			</virtualHost>
+		3.在httpd.conf文件让apache 监听81端口listen81
+		4,在hosts文件中在添加新的域名127.0.0.1 wwwshunping3.com
+		5,测试
+
+
+
+		解决方法二：通过ServerName端来区分不同的域名.
+
+			!!!注意!!! 这个方法需要开启本页当中的 #NameVirtualHost 功能 找到它，去掉#号.
+
+		<VirtualHost *:80>
+			DocumentRoot "d:/myblog"
+			#这里指定域名；
+			ServerName www.shunping1.com              //与端口绑定的唯一区别就在这一句的域名绑定上！
+			DirectoryIndex index.html
+			<Directory />
+			Options FollowSymLinks
+			AllowOverride None
+			Order allow,deny
+			Allow from all
+			</Directory>
+		</virtualHost>
+
+		<VirtualHost *:80>
+			DocumentRoot "d:/myblog2"
+			#这里指定域名；
+			ServerName www.shunping2.com
+			DirectoryIndex index.html
+			<Directory />
+			Options FollowSymLinks
+			AllowOverride None
+			Order allow,deny
+			Allow from all
+			</Directory>
+		</virtualHost>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== LAMP 开发环境的搭建。
+
+		在windows 搭建:
+		windows + apache(iis)  + mysql(+myadmin)+ php == wamp
+
+		在linux下搭建：
+		linux + apache + mysql(_myadmin) + php == lamp
+
+
+		1，安装apache
+			安装完成后，在浏览器输入：http://localhost 查页面是否安装成功。
+		2. 安装php  下载地址:www.php.net官网
+		VC6 就是 legacy Visual Studio 6 compiler.就是使用这个编译器编译的。
+		VC9 就是 the Visual Studio 2008 compiler.就是用微软的VS编辑器编译的。
+
+		如果你是在windows 下使用Apsche + php ，请选择VC6版本
+		如果你是在windows 下使用IIS + PHP ,请选择 VC 9 版本。
+
+		 Thread Safe 线程安全
+
+		比如说：A和B两个资源，都要向C里写入，那么谁先定，怎么写？
+		如果安排顺序，一个先写，另一个后写，那么就是线程安全，不易出错，但是这样效率慢！
+		如果不按顺序，两个随便写，就会容易出错，但效率高。
+		官方不建议将Non Thread Safe 应用于生产环境，所以我们选择 Thread Safe
+
+		PHP下载完成后，直接解压即可！
+
+
+				整合apache和PHP （如何连接它们）
+				也就是说，怎样才能让apache处理php
+			
+
+
+
+			重启后在浏览器输入 http://localhost 看是否出现php的环境介绍页面。
+
+
+
+			5，安装mysql
+			一，下载安装：下载地址：www.mysql.com  
+			二，启用mysql功能：
+				在php.ini中找到 extension_mysql.dll
+						extension=php_mysqli.dll
+				并把启用它们，就是把前面用来注释的 ; 分号去掉就可以了。
+			安装完成后测试是否安装成功.  
+			<?php  
+				$link = mysql_connect('localhost','root','abcd')
+				if($link){
+					echo "连接成功";
+				}else{
+					echo "连接失败";
+				}
+
+
+
+			6,安装一个phpmyadmin
+			把文件直接解压到htdocs目录，然后直接访问
+			localhost/phpMyAdmin/index.php 即可
+
+		安装、重装MySQL时,出现could not start the service mysql error:0的解决办法
+		当各位在安装、重装时出现could not start the service mysql error:0
+		原因: 卸载mysql时并没有完全删除相关文件和服务，需要手动清除。
+
+		安装到最后一步execute时不能启动服务的解决方法：
+		首先，在管理工具->服务里面将MySQL的服务给停止(有的是没有安装成功,有这个服务,但是已经停止了的)，win+R—>cmd,打开命令提示符窗口，
+		输入命令：sc delete mysql(查看服务，此时服务中已没有mysql),将已停的服务删除,卸载MySQL记得选择remove。最后将MySQL安装目录删除，还有数据库的目录也删除。
+
+		解决的方法：命令提示符下输入regedit,打开注册表
+		把注册表
+		HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services
+		HKEY_LOCAL_MACHINE/SYSTEM/ControlSet001/Services/Eventlog/Applications/MySQL
+		HKEY_LOCAL_MACHINE/SYSTEM/ControlSet002/Services/Eventlog/Applications/MySQL
+		HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Services/Eventlog/Applications/MySQL
+		将相关目录下的键值，如果有相关mysql键值(mysql、mysqladmin)则删掉
+		注册表中有关MySQL的东西可能删除的不彻底,ctrl+F查找mysql,之后用F3循环查找,将有关MySQL这个软件的全部有关项删除
+		 
+		注意(删除项时出错):
+		无法删除 LEGACY_MYSQL51(自己建数据库时置的用户名): 删除项时出错。解决办法:注册表项里右键增加administrators所有权限
+		 
+		之后打开360安全卫士或金山卫士清理一下注册表！
+
+		删除MYSQL数据表目录（C:/Documents and Settings/All Users/Application Data/MySQL/MySQL Server 5.1/Data/）(Application Data是隐藏的,要在查看里面将其设置为显示
+		win7下一般在C:\ProgramData\MySQL目录下,注意ProgramData这个文件夹默认是隐藏的)，
+
+		最后重启计算机,重新安装mysql. 运行向导Server Instance Configuration wizard，进行相关设置即可。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+//===== LINUX 下apache的相关配置
+
+
+
+
+
+	//-----默认网页保存位置：
+
+				源码包：/usr/local/apache2/htdocs/
+				rpm包安装：/var/www/html/
+
+
+
+
+
+
+	//----- apache服务器的重启
+
+		yum版
+			service httpd restart
+			service httpd stop
+
+		源码版
+			/usr/local/apache2/bin/apachectl stop
+			/usr/local/apache2/bin/apachectl start
+
+
+
+
+
+
+
+	//----- apache服务器的配置文件位置
+
+				源码包安装：/usr/lcoal/apache2/etc/httpd.conf
+						/usr/local/apache/etc/extra/*.conf
+						
+				rpm包安装：/etc/httpd/conf/httpd.conf
+
+
+
+
+
+
+
+	//----- 日志的存放位置
+
+		源码版：	/usr/local/apache2/logs/
+					access_log	正确的日志文件
+					error_log	错误的日志文件
+
+		yum版：		/var/log/http/
+					access_log	
+					error_log
+
+
+
+
+
+	//----- apache 环境的基本配置
+
+			ServerRoot		apache主目录
+			Listen			监听端口
+			LoadModule		加载的相关模块
+			
+			User
+			Group			用户和组
+			ServerAdmin		管理员邮箱
+			ServerName		服务器名（没有域名解析时，使用临时解析。不开启）
+			ErrorLog "logs/error_log	错误日志
+			CustomLog "logs/access_log" common		正确访问日志
+			DirectoryIndex index.html index.php		默认网页文件名,优先级顺序
+			Include  etc/extra/httpd-vhosts.conf		子配置文件中内容也会加载生效
+
+
+
+
+
+
+
+
+
+
+
+	//----- serverRoot 设置服务器的主目录(存放和服务相关配置文件)
+
+			serverRoot "/usr/local/apache2"	
+
+				软件安装时 ./configure --prefix=/usr/local/apache2		时指定的就是该目录
+
+
+
+
+
+
+
+
+	//----- listen 	设置服务器使用的端口
+
+		listen 80		默认使用端口
+
+
+
+
+	//----- LoadModule...	加载的相关模块
+
+		LoadModule authz_module modules/mod-authz-owner.so
+		LoadModule php5_module modules/libphp5.so	
+
+
+
+
+
+
+
+	//----- <IfModule unixd_module>  定义服务器的默认用户 (基本用不上)
+
+		<IfModule unixd_module> 
+			User:daemon
+			Group:daemon
+		</IfModule>
+
+
+
+
+	//----- ServerAdmin you@xamp.com	定义服务器邮箱
+
+
+
+
+
+
+	//----- <Directory />	定义全局读写的权限
+
+		<Directory />
+			AllowOverride none
+			Require all denied
+		</Directory>
+
+
+
+
+
+	//----- DocumentRoot 网页的存放目录
+		
+		DocumentRoot "/usr/local/apache2//htdocs"
+		<Directory "/user/local/apache2//htdocs">
+			Options Indexes FollowSymLinks
+			AllowOverride None
+			Require all granted
+		</directory>
+
+
+
+
+
+
+	//----- <IfModule dir_module> 	设置自动识别打开的网页类型
+
+		<IfModule dir_module>
+			DirectoryIndex index.html index.php  
+		</IfModule>
+
+
+
+
+
+
+
+
+
+
+	//----- ErrorLog 错误日志存放设置
+
+		ErrorLog "Logs/error_log"
+		
+			#Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+			
+			LogLevel warn 		//设置指定级别以上的错误才会记录
+			
+
+
+
+	//----- CustomLog "logs/access_log" common	设置正确日志的存放位置
+
+
+
+	//----- <IfModule log_config_module> 设置日志的保存格式 
+
+		<IfModule log_config_module>
+			.......
+
+		</IfModule>
+
+
+
+
+
+
+
+	//----- <IfModule alias_module> 定义目录别名 (完善)
+
+		修改配置文件： vim /usr/local/apache2/etc/httpd.conf
+			1, 开启子文件引用模块
+				Include etc//extra/httpd-autoindex.conf
+
+			2, 在 <IfModule alias_module> 中 将其它目录映射到别名
+
+				Alias /icons /tmp/tpcw		
+
+
+			3，找到 <IfModule "/xxx/xxx/"> 模块 进行配置权限
+
+				<Directory "/tmp/tpcw">   	//这里的路径要和映射的一致
+					Options Indexes MultiViews
+					AllowOverride All
+					Require all granted | denied		//设置访问权限
+					Require ip 192.168.113.2		//指定IP或网段访问权限
+					Require ip 192.168.113.0/24		
+					Require not ip 192.168.113.232		//禁止IP或网段访问	
+					Require not ip 192.168.113.0/24
+				</Directory>
+
+
+			
+			6, 重启apache服务器   
+					/usr/local/apache2/bin/apachectl stop		关闭服务
+					/usr/local/apache2/bin/apachectl start		开启服务
+
+
+
+
+
+
+
+
+
+
+
+
+	//----- 限制特定目录，只允许指定用户可以访问
+
+
+			1, 修改配置文件： vim /usr/local/apache2/etc/httpd.conf
+				
+				Include etc//extra/httpd-autoindex.conf		开启子文件引用模块
+
+			2, 在 <IfModule alias_module> 中 将其它目录映射到别名
+
+				Alias /icons /tmp/tpcw		
+
+
+			3，创建 <IfModule "/tmp/tpcw"> 模块 进行配置权限
+
+				<Directory "/tmp/tpcw">   	
+					Options Indexes MultiViews
+					AllowOverride All		//开启权限认证文件 .htaccess
+					Require all granted		
+				</Directory>
+
+
+
+		在/tmp/tpcw创建 .htaccess文件 内容如下：
+
+			AuthName "50 docs"
+				#提示信息
+			AuthType basic
+				#加密类型
+			AuthUserFile /share/apache.passwd
+				#密码文件，文件名自定义。
+			require valid-user
+				#允许密码文件中所有用户访问
+
+
+
+		建立密码文件，加入允许访问的用户。用户和系统用户无关
+			/usr/local/apache2/bin/htpasswd  -c  /tmp/tpcw/pw  test1    //这是个命令直接打在linux命令行下
+				-c  建立密码文件，只有添加第一个用户时，才能-c
+			/usr/local/apache2/bin/htpasswd  -m  /tmp/tpcw/pw  test2
+				-m  再添加更多用户时，
+
+
+
+			6, 重启apache服务器   
+					/usr/local/apache2/bin/apachectl stop		关闭服务
+					/usr/local/apache2/bin/apachectl start		开启服务
+
+		视频位置  1小时47分钟
+
+
+
+
+
+
+
+
+
+
+
+	//----- <Directory "/usr/local/apache2//htdocs"> 	设置目录的访问权限
+
+		<Directory "/usr/local/apache2//htdocs">
+			Options Indexes FollowSymLinks		//允许软连接到其他目录
+					None			//没有任何权限
+					All			//拥有所有权限
+			AllowOverride None			
+					None		//.htaccess文件中权限不生效
+					All		//.htaccess文件中所有权限都生效	
+					Authconfig	//文件中只有网页认证的权限生效
+			Require all granted		//允许所有访问
+			Require all denied		//拒绝所有访问
+
+			Require ip 192.168.113.123	//限制只允许指定IP访问
+			Require ip 192.168.0.0/24	//限制只允许指定网段访问
+
+			Require not ip 192.168.113.123	//禁止指定IP访问
+			Require not ip 192.168.0.0/24	//禁止指定网段访问
+
+		</Directory
+
+		
+
+
+
+
+
+
+
+
+
+	//----- <IfModule mime_module>   识别文件类型的设置 
+
+		<IfModule mime_module>
+			Typesconfig etc//mime.types
+			AddType application/x-compress .Z
+			AddType application/x-gzip .gz .tgz
+			AddType application/x-httpd-php .php .phtml .phps
+		</IfModule>
+
+
+
+
+
+
+
+
+
+	//----- 域名解析
+		
+		本地有个hosts文件
+
+		C:/windows/system32/drivers/etc/hosts		windows
+		/etc/hosts					linux
+		
+			192.168.113.251 	www.baidu.com
+			192.168.113.252		book.baidu.com
+
+
+		
+
+
+
+	//----- 配置虚拟主机	(完善)
+
+		虚拟主机的类型
+
+			1，基于IP的虚拟主机： 一台服务器，多个IP，搭建多个网站
+			2，基于端口的虚拟主机，一台服务器，一个IP，搭建多个网站，每个网络使用不同端口
+			3，基于名字的虚拟主机，一台服务器，一个IP，搭建多个网站，每个网站全用不同域名访问
+
+		
+
+		虚拟主机的配置
+
+			1，配置文件  vim /usr/local/apache2/etc/httpd.conf		
+			
+				Include etc/extra/httpd-vhosts.conf		//关联虚拟主机配置文件
+
+
+		
+
+			2, 给主机再添加一个IP
+				ifconfig eth0:0 192.168.113.231
+
+			3, 配置文件 vim /usr/local/apache2/etc/extra/httpd-vhosts.conf
+				
+
+				<VirtualHost 192.168.150.230>				//这里只能写IP
+					ServerAdmin webmaster@sina.com 			//管理员邮箱
+					DocumentRoot "/usr/local/apache2/baidu"		//网站主目录
+					ServerName www.sina.com				//完整域名
+					Errorlog "logs/sina-error_log"			//错误日志
+					CustomLog "logs/sina-access_log" common		//访问日志
+				</VirtualHost>
+
+				<VirtualHost 192.168.150.231>				//第二个虚拟主机
+					...
+
+
+
+			4， 创建与虚拟配置中相就的文件目录
+
+
+			5, 设置windows 中的hosts 和  linux 中的hosts
+
+			验证：   elinks www.baidu.com | book.baidu.com
+
+
+			6, 重启apache服务器   
+					/usr/local/apache2/bin/apachectl stop		关闭服务
+					/usr/local/apache2/bin/apachectl start		开启服务
+
+
+
+			7, elinks www.baidu.com | www.sina.com		测试是否成功
+
+
+
+
+
+
+	//----- rewrite 重写功能 (须开启虚拟主机)
+
+		重写：就是在URL中输入一个地址，会自动跳转到另一个地址 ,必须开启虚拟主机
+
+		
+
+		// 域名跳转	如输入 www.sina.con 	会跳转到 www.sohu.con
+
+			1, 先到主配置文件中开启模块
+			LoadModule rewrite_module modules/mod_rewrite.so
+
+			2, 修改虚拟主机配置文件
+				vim extra/httpd-vhosts.conf
+
+				<Directory "/usr/local/apache2/htdocs/sina">
+					Options Indexes FollowSymlinks
+					AllowOverride All
+					Require all granted
+				</Directory>
+					修改或创建配置文件.htaccess
+						vim /usr/local/apache2/htdocs/sina/.htaccess
+							RewriteEngine on	开启rewrite功能
+							RewriteCond %{HTTP_HOST} www.sina.com
+								把以www.sina.con开头的内容赋值给HTTP_HOST变量
+							RewriteRule .* http://www.sohu.com
+								.* 输入任何地址，都跳转到http://www.sohu.com
+				
+				
+				<Directory "/usr/local/apache2/htdocs/sohu">
+					Options Indexes FollowSymlinks
+					AllowOverride All
+					Require all granted
+				</Directory>
+						修改或创建配置文件.htaccess
+						vim /usr/local/apache2/htdocs/sina/.htaccess
+							RewriteEngine on	开启rewrite功能
+							RewriteRule index(\d+).html index.php?id=$1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

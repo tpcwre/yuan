@@ -1,0 +1,3587 @@
+特殊效果：
+//===== ob.setAttribute('k','v'),ob.getAttribute('k') 设置和获取元素的非标准属性
+//===== style.background  获取或设置元素的style属性， ob.id 获取元素的标准属性
+//===== document.forms[0] 取表单对象，tagName 取元素名， value 取表单值， innerHTML 取元素内容
+
+
+//===== style.display=	获取或设置 style样式属性
+//===== indexOf 获取匹配到的字串下标
+//===== obj.submit(); 触发表单提交 (js方式)
+//===== JS用 name方式 获取表单，下拉框，value获取下拉框及表单项的值
+//===== return false 阻止表单提交
+//===== value 取表单值，length 取值长度
+//===== !window.opera	检测浏览器是否为opera 
+
+
+
+//===== GET方式的异步加载
+//===== POST方式的异步加载
+//===== 异步加载json 数据
+//===== 手册地图
+//===== JavaScript 的三种连接方式
+//===== JS中的特殊转义字符
+//===== 提示框的三种方式
+//===== 元素的类型
+//===== docuemnt.write();	向页面输入内容
+//===== 获取元素对象的三种方式
+//===== JS 事件
+//===== JS 字符串操作属性及函数
+//===== JS 数组操作属性及函数
+//===== JS Math 数学 属性和函数
+//===== Date 日期属性和函数 
+//===== JavaScript 的三种连接方式
+//===== alert("aaa"); 	弹出一个提示框
+//===== document.write('aaa'); 	向页面输入指定内容	
+//===== onclick 点击事件
+//===== window.history.go 前进或后退 
+//===== location.href 页面跳转
+//===== typeof()  判断数据类型				*
+//===== 数据类型
+//===== setTimeout() 单次定时 				*
+//===== clearTimout() 	清除单次定时			*
+//===== setInterval()	无限重复定时
+//===== clearInterval() 清除无限重复定时
+//===== getElementById() 通过id获取指定对象并设置	*
+//===== getElementsByTagName 通过 标签名获取元素	*
+//===== getElementsByName 通过name获取元素对象		*
+//===== 通过name直接获取表单对象的值 
+//===== value 获取或修改表单项的值			*
+//===== innerHTML  获取或修改改对象标签中的内容
+//===== 定义函数的三种方式
+//===== 全局变量与局部变量的区别
+//===== arguments 获取函数中可变的参数个数
+//===== 用递归累加   
+//===== escape,unescape 将字串特殊符号编码与反编码
+//===== eval 将参数字串作为脚本代码执行	
+//===== isNaN 判断变量是否为非数值 
+//===== parseInt 转型为整形	 
+//===== parseFloat 转型为浮点型	
+//===== 创建对象的三种方式
+//===== delete 删除对象的属性 
+//===== 倒计时让失效同意按钮可用 
+//===== 可暂停的时分秒倒计时 
+//===== 全选/全不选/反选 
+//===== 显示进度条
+//===== 下拉菜单效果 
+//===== 触发事件的四种形式 
+	一：标签中+on事件
+	二：obj.on=fun()
+	三：for='id' event='on事件'
+	四：href="javascript:en()"
+//===== contextmenu 禁用鼠标右键和自定鼠标右键菜单 
+//===== function(e) 事件对象-显示div中光标点击时的坐标 
+//===== clientX,clientY 鼠标的坐标 
+//===== ondblclick 双击事件-双击改变背景色 
+//===== onmouseover,onmouseout 移入移出事件
+//===== 隔行换色,及移入移出换色
+//===== 键盘事件-坦克开炮
+//===== onkeydown 键盘按下事件
+//===== e.keyCode 获取键盘码					*
+//===== Math.min() 数值比较
+//===== 鼠标拖动元素(双事件套用)
+//===== onmousemove=null; 解除事件				*
+//===== 放大镜的实例
+//===== obj.offsetWidth,obj.offsetHeight 获取元素的宽和高	*
+//===== obj.offsetLeft,obj.offsetTop 获取元素与左边和上边的距离	*
+//===== e.clientX,e.clientY 获取鼠标的坐标			*
+//===== obj.scrollLeft,obj.scrollTop 获取或设置流动条的位置	*
+//===== onload() 网页加载完后触发此函数
+//===== unload 离开或关闭页面时加载
+//===== focus 获取焦点事件
+//===== blur 失去焦点事件
+//===== blur 与submit 事件做表单验证
+//===== 多下拉列表关联控制
+//===== add(new Option(k,v) 添加下拉列表项
+//===== obj.length=? 控制下拉列表项
+//===== 获取网页中所有li节点
+//===== 获取ul中所有li节点
+//===== childNodes 获取ul中所有节点(包括文本)		*
+//===== length 获取节点数量				*
+//===== nodeType 获取节点类型				*
+//===== frames 获取子窗口的个数
+//===== screenLeft,screenTop 获取浏览器与屏幕的距离	*
+//===== alert 警告消息弹框				*
+//===== confirm 询问弹框				*
+//===== prompt 可输入的弹框
+//===== resizeBy 修改浏览器窗口大小			*
+//===== open 点击打开一个不带地址栏及其它选项的浏览器窗口
+//===== navigator 获取浏览器信息			*
+//===== screen 获取屏幕高宽，可用高宽，可工作高宽	*
+//===== location.reload 重载页面
+//===== location.replace 加载页面
+//===== location.href 跳转页面				*
+//===== 获取当前页面地址,路径，端口，协议，主机名
+//===== history.go(1),history.forward 前进一步
+//===== history.go(-1),history.back 后退一步		
+//===== document.all 获取当前文档所有元素节点		*
+//===== obj.className 获取对象的类名			*
+//===== 遍历设置他们的属性颜色
+//===== nodeName 获取对象的标签名及遍历输出所有标签	
+//===== document.open() 打开一个wirte收集流 
+//===== document.forms 获取当前网页中所有的form表单	*
+//===== document.images 获取当前网页中所有图片		*
+//===== document.cookie 获取当前cookie信息		*
+//===== document.domain获取当前域名			*
+//===== document.URL获取当前URL				*			
+//===== obj.close() 关闭write收集流	
+//===== document.getElementById() 通过ID获取节点对象	*
+//===== obj.nodeName 获取节点名				*
+//===== obj.href 获取连接地址
+//===== obj.innerHTML 获取节点中文本内容		*
+//===== obj.title 获取title属性
+//===== obj.href= 修改链接地址
+//===== obj.innerHTML= 修改标签中的内容			*
+//===== obj.title= 修改title属性
+//===== obj.getContext() 获取canvas 图像对象
+//===== obj.fillStyle=	设置图像的颜色
+//===== obj.fillRect(0,0,0,0)	设置图像的位置与大小
+//===== event 获取事件对象				*
+//===== e.cancelBubble=	禁止或开启冒泡（ie类）		*
+//===== e.stopPropagation() 禁止冒泡 (非ie类)		*
+//===== iframe配合onsubmit事件做异步提交(局部刷新) 
+//===== obj.forms.name.value 获取表单值的(七种)方式
+//===== document.forms[1].submit() 提交表单
+//===== document.myform.rest() 重置表单
+//===== obj.getAttribute() 获取对象节点的非标准属性值	*
+//===== 获取ul节点中的input子节点
+//===== obj.checked 获取复选框的checked 是否自动选择属性
+//===== obj.cheded= 设置复选框是否自动选择
+//===== 可互移的选项表对
+//===== obj.options 获取下拉列表中的所有option项
+//===== selectob.selected 设置下拉列表的自动选择属性
+//===== selectob.add() 添加或移动下拉列表的option项
+//===== selectob.remove 删除下拉列表的option项
+//===== 给表格增删内容	
+//===== tableob.inserRow() 为表添加一行
+//===== rowob.insertCell() 为表中行添加一列并赋值
+
+//===== 示例-XML文档
+//===== 示例-获取列表中的内容
+	//----- document.getElementsByTagName() 通过标签名获取节点对象或列表
+	//----- obj.getElementsByTagName() 获取某节点对象中的子节点列表 
+	//----- obj.length 获取子节点的长度(个数)
+	//----- obj.nodeTyype 获取节点类型
+	//----- obj.childNodes 获取子节点列表
+//===== 示例-加载XML文件并获取文件中内容
+	//----- 加载解析xml文件 (暂只支持火狐)
+	//----- obj.load() 加载 xml文件
+	//----- obj.getAttribute()	获取节点的非标准属性值
+//===== 示例-用节点标,非属性值替换来判断所点击的是哪项
+	//----- document.getElementById() 通过ID获取节点对象
+	//----- aob.href= 	设置节点的链接性情地址
+	//----- obj.innerHTM= 设置节点标签中的内容
+	//----- obj.setAttribute() 修改节点的非标准属性值
+	//----- ob.value 获取表单value值
+	//----- ob.value.length 获取表单值的长度
+//===== 示例-从首部或尾部删除列表项
+	//----- obj.removechild()	删除某个子节点
+//===== 示例-向列表中添加子项内容
+	//----- document.createElement() 创建一个节点
+	//----- obj.innerHTML=	向节点中添加内容
+//===== 向列表中添加子内容并同时添加事件
+//===== 示例-向列表中指定位置添加子项内容
+	//----- obj.inertBefore() 从首位子节点
+	//----- obj.appendChild() 从末位添加子节点
+//===== 示例-替换列表中子项内容
+	//----- obj.className 获取节点的类名
+	//----- obj.className= 设置节点的类名
+	//----- obj.replaceChild() 替换子节点
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 手册地图
+
+	-> JS 事件 
+		手册位置：w3school -> BrowserScripting -> JavaScript -> JavaScript 基础 -> JS事件 -> (右)JavaScript 事件参考手册
+		手册位置：w3school -> (上)BrowserScripting ->  HTML DOM -> DOM Event
+
+
+	-> JS 字符串操作属性及函数
+		手册位置：w3school -> (上)BrowserScripting -> JavaScript -> JavaScript 对象 -> JS 字符串 -> (右)JavaScript String 对象参考手册 
+
+
+	-> JS 数组操作属性及函数 
+		手册位置：w3school -> (上)BrowserScripting -> JavaScript -> JavaScript 对象 -> JS 数组 -> JavaScript Array 对象参考手册
+
+
+	->Date 日期属性和函数
+		手册位置：w3school -> (上)BrowserScripting -> JavaScript -> JavaScript 对象 -> JS日期 -> JavaScript Date 对象参考手册
+
+
+	-> JS Math 数学 属性和函数
+		手册位置：w3school -> (上)BrowserScripting -> JavaScript -> JavaScript 对象 -> JS 算数 -> JavaScript JavaScript Math 对象的参考手册
+
+
+	-> BOM 浏览器相关信息属性及函数
+		手册位置：w3school -> (上)BrowserScripting ->  HTML DOM -> Browser 对象
+
+
+	-> DOM 各元素属性及函数
+		手册位置：w3school -> (上)BrowserScripting ->  HTML DOM -> HTML DOM 对象
+
+
+
+
+
+
+
+
+
+
+//===== JavaScript 的三种连接方式
+
+	一：外链方式
+
+		<head><script type="text/javascript" src="my.js"></script></head>
+
+	二：内链方式
+
+		<script type="text/javascript">
+			document.write("hello world!");
+		</script>
+	
+	三：内嵌方式
+
+		<div onclick="alert('aaaa')"></div>
+
+
+
+
+
+
+
+//===== JS中的特殊转义字符
+
+		\' 单引号 
+		\" 双引号 
+		\& 和号 
+		\\ 反斜杠 
+		\n 换行符 
+		\r 回车符 
+		\t 制表符 
+		\b 退格符 
+		\f 换页符 
+
+
+
+
+
+
+
+
+
+
+//===== 提示框的三种方式
+
+	//--- alert() 警告框（\n带折行）
+
+		alert("再次向您问好！在这里，我们向您演示" + '\n' + "如何向警告框添加折行。")
+
+
+	//--- confirm() 确认框
+	
+		<script>
+			function show_confirm(){
+				var r=confirm("Press a button!");
+				if (r==true) {
+			 		alert("You pressed OK!");
+			 	}else{
+			  		alert("You pressed Cancel!");
+			  	}
+			}
+		</script>
+		<input type="button" onclick="show_confirm()" value="Show a confirm box" />
+
+
+
+	//--- prompt() 可输入的提示框
+
+		<script type="text/javascript">
+		function disp_prompt(){
+		  	var name=prompt("请输入您的名字","Bill Gates")
+		  	if (name!=null && name!=""){
+				document.write("你好！" + name + " 今天过得怎么样？")
+			}
+		}
+		</script>
+		<input type="button" onclick="disp_prompt()" value="显示提示框" />
+
+
+
+
+
+
+
+//===== docuemnt.write();	向页面输入内容
+
+	document.write('向页面输入内容');
+
+
+
+
+
+
+
+//===== 获取元素对象的三种方式
+
+	document.getElementById('id');			通过ID获取元素对象
+	document.getElementsByTagName('name');	通过节点名获取元素对象列表
+	document.getElementsByName('name');		通过name名获取元素对象列表
+	alert(document.getElementsByName('div')[0].innerHTML);
+
+
+
+//===== 元素的类型
+
+	obj.nodeType 的结果有以下几种：
+
+		元素 1 
+		属性 2 
+		文本 3 
+		注释 8 
+		文档 9 
+
+
+
+
+		
+		
+		
+		
+
+//===== JS 事件
+		
+	手册位置：w3school -> (上)BrowserScripting ->  HTML DOM -> DOM Event
+
+		onabort 	图像加载被中断 1 3 4 
+		onblur 		元素失去焦点 1 2 3 
+		onchange 	用户改变域的内容 1 2 3 
+		onclick 	鼠标点击某个对象 1 2 3 
+		ondblclick 	鼠标双击某个对象 1 4 4 
+		onerror 	当加载文档或图像时发生某个错误 1 3 4 
+		onfocus 	元素获得焦点 1 2 3 
+		onkeydown 	某个键盘的键被按下 1 4 3 
+		onkeypress 	某个键盘的键被按下或按住 1 4 3 
+		onkeyup 	某个键盘的键被松开 1 4 3 
+		onload 		某个页面或图像被完成加载 1 2 3 
+		onmousedown 某个鼠标按键被按下 1 4 4 
+		onmousemove 鼠标被移动 1 6 3 
+		onmouseout 	鼠标从某元素移开 1 4 4 
+		onmouseover 鼠标被移到某元素之上 1 2 3 
+		onmouseup 	某个鼠标按键被松开 1 4 4 
+		onreset 	重置按钮被点击 1 3 4 
+		onresize 	窗口或框架被调整尺寸 1 4 4 
+		onselect 	文本被选定 1 2 3 
+		onsubmit 	提交按钮被点击 1 2 3 
+		onunload 	用户退出页面 1 2 3 
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== JS 字符串操作属性及函数
+		
+	手册位置：w3school -> (上)BrowserScripting -> JavaScript -> JavaScript 对象 -> 字符串 -> (右)JavaScript String 对象参考手册 
+
+	//--- 字符串对象属性 
+		constructor 	对创建该对象的函数的引用 1 4 
+		length 			字符串的长度 1 3 
+		prototype 		允许您向对象添加属性和方法 1 4 
+
+	//--- 字符串对象函数 
+		anchor() 		创建锚点
+		big() 			用大号字体显示字符串。 1 3 
+		blink() 		显示闪动字符串。 1   
+		bold() 			使用粗体显示字符串。 1 3 
+		charAt() 		返回在指定位置的字符。 1 3 
+		charCodeAt() 		返回在指定的位置的字符的 Unicode 编码。 1 4 
+		concat() 		连接字符串。 1 4 
+		fixed() 		以打字机文本显示字符串。 1 3 
+		fontcolor() 		使用指定的颜色来显示字符串。 1 3 
+		fontsize() 		使用指定的尺寸来显示字符串。 1 3 
+		fromCharCode() 		从字符编码创建一个字符串。 1 4 
+		indexOf() 		获取字符的下标
+		italics() 		使用斜体显示字符串。 1 3 
+		lastIndexOf() 		从后向前搜索字符串。 1 3 
+		link() 			将字符串显示为链接。 1 3 
+		localeCompare() 	用本地特定的顺序来比较两个字符串。 1 4 
+		match() 		正则匹配
+		replace() 		替换与正则表达式匹配的子串。 1 4 
+		search() 		检索与正则表达式相匹配的值。 1 4 
+		slice() 		提取字符串的片断，并在新的字符串中返回被提取的部分。 1 4 
+		small() 		使用小字号来显示字符串。 1 3 
+		split() 		把字符串分割为字符串数组。 1 4 
+		strike() 		使用删除线来显示字符串。 1 3 
+		sub() 			把字符串显示为下标。 1 3 
+		substr() 		从起始索引号提取字符串中指定数目的字符。 1 4 
+		substring() 		提取字符串中两个指定的索引号之间的字符。 1 3 
+		sup() 			把字符串显示为上标。 1 3 
+		toSource() 		代表对象的源代码。 1 - 
+		toString() 		返回字符串。 - - 
+		valueOf() 		返回某个字符串对象的原始值。 1 4 
+		toLowerCase() 		把字符串转换为小写。 1 3 
+		toUpperCase() 		把字符串转换为大写。 1 3 
+		toLocaleLowerCase() 	把字符串转换为小写。 - - 
+		toLocaleUpperCase() 	把字符串转换为大写。 - - 
+		
+		
+		
+		
+
+
+		
+		
+//===== indexOf 获取匹配到的字串下标
+
+	var a = 'abcdefg';
+	alert(a.indexOf('h'));
+	返回匹配到的下标，匹配不到返回-1
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== JS 数组操作属性及函数 
+
+	手册位置：w3school -> (上)BrowserScripting -> JavaScript -> JavaScript 对象 -> 数组 -> JavaScript Array 对象参考手册
+
+	
+	
+	//--- 数组对象属性
+		constructor 	返回对创建此对象的数组函数的引用。 1 4 
+		index   		1 4 
+		input   		1 4 
+		length 			设置或返回数组中元素的数目。 1 4 
+		prototype 		使您有能力向对象添加属性和方法。 1 4 
+
+		
+		
+	//--- 数组对象函数
+		toString() 		把数组转换为字符串，并返回结果。 1 4 
+		concat() 		连接两个或更多的数组，并返回结果。 1 4 
+		join() 			把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。 1 4 
+		shift() 		删除并返回数组的第一个元素 1 5.5 
+		pop() 			删除并返回数组的最后一个元素 1 5.5 
+		push() 			向数组的末尾添加一个或更多元素，并返回新的长度。 1 5.5 
+		reverse() 		颠倒数组中元素的顺序。 1 4 
+		slice() 		从某个已有的数组返回选定的元素 1 4 
+		sort() 			对数组的元素进行排序 1 4 
+		splice() 		删除元素，并向数组添加新元素。 1 5.5 
+		toSource() 		返回该对象的源代码。 1 - 
+		unshift() 		向数组的开头添加一个或更多元素，并返回新的长度。 1 6 
+		valueOf() 		返回数组对象的原始值 1 4 
+		toLocaleString() 	把数组转换为本地数组，并返回结果。 1 4 
+		
+		
+//===== 数组的相关操作		
+
+
+1、创建数组
+var array = new Array();
+var array = new Array(size);//指定数组的长度
+var array = new Array(item1,item2……itemN);//创建数组并赋值
+
+2、取值、赋值
+var item = array[index];//获取指定元素的值
+array[index] = value;//为指定元素赋值
+
+3、添加新元素
+array.push(item1,item2……itemN);//将一个或多个元素加入数组，返回新数组的长度
+array.unshift(item1,item2……itemN);//将一个或多个元素加入到数组的开始位置，原有元素位置自动后移，返回  新数组的长度
+array.splice(start,delCount,item1,item2……itemN);//从start的位置开始向后删除delCount个元素，然后从start的位置开始插入一个或多个新元素
+
+4、删除元素
+array.pop();//删除最后一个元素，并返回该元素
+array.shift();//删除第一个元素，数组元素位置自动前移，返回被删除的元素
+array.splice(start,delCount);//从start的位置开始向后删除delCount个元素
+
+5、数组的合并、截取
+array.slice(start,end);//以数组的形式返回数组的一部分，注意不包括 end 对应的元素，如果省略 end 将复制 start 之后的所有元素
+array.concat(array1,array2);//将多个数组拼接成一个数组
+
+6、数组的排序
+array.reverse();//数组反转
+array.sort();//数组排序，返回数组地址
+
+7、数组转字符串
+array.join(separator);//将数组原因用separator连接起来
+
+列了这么都就是没有发现删除数组元素的方法！于是查了一些资料找到了解决方法。
+删除数组元素需要扩展Array原型prototype.
+
+Array.prototype.del=function(index){
+        if(isNaN(index)||index>=this.length){
+            return false;
+        }
+        for(var i=0,n=0;i
+            if(this[i]!=this[index]){
+                this[n++]=this[i];
+            }
+        }
+        this.length-=1;
+    };
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== JS Math 数学 属性和函数
+
+	手册位置：w3school -> (上)BrowserScripting -> JavaScript -> JavaScript 对象 -> 算数 -> JavaScript JavaScript Math 对象的参考手册
+
+		
+		
+	//--- Math 对象属性
+		E 			返回算术常量 e，即自然对数的底数（约等于2.718）。 1 3 
+		LN2 		返回 2 的自然对数（约等于0.693）。 1 3 
+		LN10 		返回 10 的自然对数（约等于2.302）。 1 3 
+		LOG2E 		返回以 2 为底的 e 的对数（约等于 1.414）。 1 3 
+		LOG10E 		返回以 10 为底的 e 的对数（约等于0.434）。 1 3 
+		PI 			返回圆周率（约等于3.14159）。 1 3 
+		SQRT1_2 	返回返回 2 的平方根的倒数（约等于 0.707）。 1 3 
+		SQRT2 		返回 2 的平方根（约等于 1.414）。 1 3 
+
+
+	//---Math 对象方法
+		abs(x) 		返回数的绝对值。 1 3 
+		acos(x) 	返回数的反余弦值。 1 3 
+		asin(x) 	返回数的反正弦值。 1 3 
+		atan(x) 	以介于 -PI/2 与 PI/2 弧度之间的数值来返回 x 的反正切值。 1 3 
+		atan2(y,x) 	返回从 x 轴到点 (x,y) 的角度（介于 -PI/2 与 PI/2 弧度之间）。 1 3 
+		ceil(x) 	对数进行上舍入。 1 3 
+		cos(x) 		返回数的余弦。 1 3 
+		exp(x) 		返回 e 的指数。 1 3 
+		floor(x) 	对数进行下舍入。 1 3 
+		log(x) 		返回数的自然对数（底为e）。 1 3 
+		max(x,y) 	返回 x 和 y 中的最高值。 1 3 
+		min(x,y) 	返回 x 和 y 中的最低值。 1 3 
+		pow(x,y) 	返回 x 的 y 次幂。 1 3 
+		random() 	返回 0 ~ 1 之间的随机数。 1 3 
+		round(x) 	把数四舍五入为最接近的整数。 1 3 
+		sin(x) 		返回数的正弦。 1 3 
+		sqrt(x) 	返回数的平方根。 1 3 
+		tan(x) 		返回角的正切。 1 3 
+		toSource() 	返回该对象的源代码。 1 - 
+		valueOf() 	返回 Math 对象的原始值。 1 4 
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== Date 日期属性和函数 
+
+	手册位置：w3school -> (上)BrowserScripting -> JavaScript -> JavaScript 对象 -> JS日期 -> JavaScript Date 对象参考手册
+
+
+	//--- Date 对象属性
+
+		constructor 	返回对创建此对象的 Date 函数的引用。 1 4 
+		prototype 		使您有能力向对象添加属性和方法。 1 4 
+		
+	
+	//--- Date 对象方法
+	
+		UTC() 				获取指定日期的时间戳
+							Date.UTC(year,month,day,hours,minutes,seconds,ms)
+		Date() 				获取当前或指定的时间对象	//var date= new Date()
+		getDate() 		获取月中的天 (1 ~ 31)。 		//var d = date.getDate();
+		getDay() 		获取周中的天 (0 ~ 6)。 1 3 
+		getMonth() 	获取月份 (0 ~ 11)。 1 3 
+		getFullYear() 	获取四位的年份。 1 4 			//var y = date.getFullYear();
+		getYear() 		获取两位的年份 
+		getHours() 	获取小时 (0 ~ 23)。 1 3 
+		getMinutes() 	获取分钟 (0 ~ 59)。 1 3 
+		getSeconds() 	获取秒数 (0 ~ 59)。 1 3 
+		getMilliseconds() 获取毫秒(0 ~ 999)。 1 4 
+		getTime() 		当前的时间戳
+		getTimezoneOffset() 返回本地时间与格林威治标准时间 (GMT) 的分钟差。 1 3 
+		getUTCDate() 	根据世界时从 Date 对象返回月中的一天 (1 ~ 31)。 1 4 
+		getUTCDay() 	根据世界时从 Date 对象返回周中的一天 (0 ~ 6)。 1 4 
+		getUTCMonth() 	根据世界时从 Date 对象返回月份 (0 ~ 11)。 1 4 
+		getUTCFullYear() 根据世界时从 Date 对象返回四位数的年份。 1 4 
+		getUTCHours() 	根据世界时返回 Date 对象的小时 (0 ~ 23)。 1 4 
+		getUTCMinutes() 根据世界时返回 Date 对象的分钟 (0 ~ 59)。 1 4 
+		getUTCSeconds() 根据世界时返回 Date 对象的秒钟 (0 ~ 59)。 1 4 
+		getUTCMilliseconds() 根据世界时返回 Date 对象的毫秒(0 ~ 999)。 1 4 
+		parse() 			返回1970年1月1日午夜到指定日期（字符串）的毫秒数。 1 3 
+		setDate() 			设置 Date 对象中月的某一天 (1 ~ 31)。 1 3 
+		setMonth() 			设置 Date 对象中月份 (0 ~ 11)。 1 3 
+		setFullYear() 		设置 Date 对象中的年份（四位数字）。 1 4 
+		setYear() 			请使用 setFullYear() 方法代替。 1 3 
+		setHours() 			设置 Date 对象中的小时 (0 ~ 23)。 1 3 
+		setMinutes() 		设置 Date 对象中的分钟 (0 ~ 59)。 1 3 
+		setSeconds() 		设置 Date 对象中的秒钟 (0 ~ 59)。 1 3 
+		setMilliseconds() 	设置 Date 对象中的毫秒 (0 ~ 999)。 1 4 
+		setTime() 			以毫秒设置 Date 对象。 1 3 
+		setUTCDate() 		根据世界时设置 Date 对象中月份的一天 (1 ~ 31)。 1 4 
+		setUTCMonth() 		根据世界时设置 Date 对象中的月份 (0 ~ 11)。 1 4 
+		setUTCFullYear()	根据世界时设置 Date 对象中的年份（四位数字）。 1 4 
+		setUTCHours() 		根据世界时设置 Date 对象中的小时 (0 ~ 23)。 1 4 
+		setUTCMinutes() 	根据世界时设置 Date 对象中的分钟 (0 ~ 59)。 1 4 
+		setUTCSeconds() 	根据世界时设置 Date 对象中的秒钟 (0 ~ 59)。 1 4 
+		setUTCMilliseconds() 根据世界时设置 Date 对象中的毫秒 (0 ~ 999)。 1 4 
+		toSource() 			返回该对象的源代码。 1 - 
+		toString() 			把 Date 对象转换为字符串。 1 4 
+		toTimeString() 		把 Date 对象的时间部分转换为字符串。 1 4 
+		toDateString() 		把 Date 对象的日期部分转换为字符串。 1 4 
+		toGMTString() 		请使用 toUTCString() 方法代替。 1 3 
+		toUTCString() 		根据世界时，把 Date 对象转换为字符串。 1 4 
+		toLocaleString() 	根据本地时间格式，把 Date 对象转换为字符串。 1 3 
+		toLocaleTimeString() 根据本地时间格式，把 Date 对象的时间部分转换为字符串。 1 3 
+		toLocaleDateString() 根据本地时间格式，把 Date 对象的日期部分转换为字符串。 1 3 
+		valueOf() 			返回 Date 对象的原始值。 1 4 
+
+		
+
+		
+		
+		
+		
+		
+	
+
+
+
+
+
+
+//===== onclick 点击事件
+
+	<button onclick="alert('干嘛？')">点击我</button>
+
+
+
+
+
+
+//===== window.history.go 前进或后退 
+
+	<button onclick="window.history.go(-1)">后退一步</button>
+	<button onclick="window.history.go(1)">前进一步</button>
+
+
+
+
+
+
+//===== window.location.href 页面跳转
+
+	<button onclick="window.location.href='1.html'">跳转</button>
+
+
+
+
+
+
+
+//===== typeof()  判断数据类型
+
+	var b = 100;
+	document.write(typeof(b)+"<br/>"); //number 数值类型
+
+
+
+
+
+
+
+//===== 数据类型
+
+	1, undefined  	不存在的变量
+	2, number 	数值类型
+	3, string 	字串类型
+	4, object 	对象类型
+	5, boolean 	布尔类型
+	6, function 	函数类型
+
+
+
+
+
+
+//===== parseFloat()	转换数据类型为浮点数
+
+	 parseFloat(document.myform.num1.value); //强转浮点数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== setTimeout() 单次定时 
+
+	方式一：
+	setTimeout("aa()",3000);	三秒后调用 
+	
+	方式二：
+	setTimeout(function(){		三秒后调用 
+		alert(11);
+	},3000);
+
+	
+	
+	
+
+//===== clearTimout() 	清除单次定时
+
+		<script type="text/javascript">
+			var m=0;
+			var mytime=null;
+			function doStop(){
+				if(mytime!=null){
+					clearTimeout(mytime); //清除定时
+					mytime=null;
+				}
+			}	
+			//定时累加输出数值
+			function running(){
+				m++;
+				document.getElementById("did").innerHTML=m;
+				mytime = setTimeout("running()",1000);
+			}
+		</script>
+
+
+
+
+
+
+
+//===== setInterval()	无限重复定时
+//===== clearInterval() 清除无限重复定时
+
+	setInterval(function(){
+		aerlt(111);
+	},3000);			每隔三秒执行一次
+
+
+	clearInterval();
+
+	
+	
+
+
+
+
+
+
+
+
+//===== getElementById() 通过id获取指定对象并设置
+
+	var hid = document.getElementById("hid");	以ID获取指定对象
+	hid.style.color="red";						修改对象的字体颜色
+	hid.style.fontSize="30px";					修改字体大小 
+	hid.innerHTML="Hello Wrold!"; 				改变标签中的值	
+
+	
+	
+	
+
+
+	
+	
+
+	
+
+
+
+	
+	
+
+	
+	
+//===== 通过name直接获取表单对象的值 
+
+	<form name='fm'>
+		<input name='n1' /><br>
+	</form>
+	<script>
+		n1 = document.fm.n1.value;	//注意：必须先获取表单然后再向下获取子项
+	</script>
+
+
+	
+	
+	
+
+
+//===== value 获取或修改表单项的值
+	
+	document.form.res.value = 'xxx';	//修改表单项的值
+	alert(form.res.value);				//获取表单项的值
+
+
+
+
+
+//===== innerHTML  获取或修改改对象标签中的内容 
+
+	alaert(hid.innerHTML);
+	hid.innerHTML="Hello Wrold!"; 	//改变标签中的值
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+//===== 定义函数的三种方式
+
+		<script>
+			一：-标准方式	
+			
+				function add(){
+					document.write('标准方式');
+				}
+				add();
+			
+			二：构造方式
+			
+				var add2 = new Function('x','y','return x*y');
+				document.write(add2(5,6));
+			
+			三：匿名函数方式
+			
+				var add3 = function(m){
+					var res = 0;
+					for(var i=0;i<=m;i++){
+						res += i;
+					}
+					return res;
+				}
+				document.write(add3(100));、
+		</script>
+		
+	
+	
+	
+	
+//===== 全局变量与局部变量的区别
+	
+	<script>
+		var a1 = 123;
+		function vars(){
+			document.write('函数外定义的变量是全局变量：'+a1+'<br>');
+			var a2=234;
+			document.write('函数内用var定义的变量是局部变量，'+a1+'<br>');
+			a3=456;
+		}
+		vars();
+		//document.write('函数内用var定义的变量是局部变量，在外部无法访问:'+a2);
+		document.write('函数不用var定义变量也是全局变量:'+a3+'<br>');
+	</script>
+
+
+
+
+	
+//===== arguments 获取函数中可变的参数个数
+
+	<script>
+		function add5(){
+			document.write('第二参数是：'+arguments[1]+'<br>');
+			var len = arguments.length;	//获取参数的个数
+			var res = 0;
+			for(var i=0;i<len;i++){
+				res += arguments[i];
+			}
+			return res;
+		}
+		document.write('参数和为：'+add5(1,2,3,4,5));
+	</script>
+
+
+
+	
+	
+	
+//===== 用递归累加                                      
+
+	<script>
+		function res(m){
+			if(m==1){
+				return 1;
+			}
+			return m += res(m-1);
+		}
+		document.write(res(100));
+	</script>
+
+
+
+	
+	
+
+//===== escape,unescape 将字串特殊符号编码与反编码 
+		
+	<script>
+		var str="http://www.baidu.com/index.php?name=pei&age=18";
+		document.write(str+'<br>');
+		var str2 = escape(str);
+		document.write(str2+"<br>");
+		var str3= unescape(str2);
+		document.write(str3+'<br>');
+	</script>
+	
+	
+	
+	
+
+//===== eval 将参数字串作为脚本代码执行	
+	
+	<script>
+		var str = "var name='peizong';";
+		eval(str);
+		document.write(name+'<br>');
+		
+		var str2 = "{'name':'pei','age':22,'getInfo':function(){return this.name+':'+this.age;}}";
+		eval("var str3 = "+str2);
+		document.write(str3.name+'<br>');
+		document.write(str3.getInfo());
+	</script>
+
+
+
+	
+	
+	
+	
+//===== isNaN 判断变量是否为非数值            
+	<script>
+		var a = 123.123;
+		var b = '123a';
+		document.write(isNaN(a)+'<br>');
+		document.write(isNaN(b)+'<br>');
+	</script>
+
+
+	
+	
+//===== parseInt 转型为整形	                 
+	<script>
+		var a=123.123;
+		document.write('原数值：'+a+'转型后：'+parseInt(a)+'<br>');
+	</script>
+	
+	
+	
+	
+	
+//===== parseFloat 转型为浮点型	
+	         
+	<script>
+		var a ='123.123abc';
+		document.write('原值：'+a+'转型后：'+parseFloat(a)+"<br>");
+	</script>
+
+	
+	
+	
+	
+	
+	
+//===== 创建对象的三种方式
+
+		一：原始方式	                    
+			<script>
+				var ob = new Object();
+				ob.name='aaa';
+				ob.age=73;
+				ob.getInfo=function(){
+					return this.name+':'+this.age;
+				}
+				document.write(ob.name+'<br>');
+				document.write(ob.getInfo()+'<br>');
+			</script>
+
+
+		二：构造函数方式
+			<script>
+				function ob2(name,age){
+					this.name=name;
+					this.age=age;
+					this.getInfo=function(){
+						return this.name+':'+this.age;
+					}
+				}
+				ob3=new ob2('bbb',33);
+				document.write(ob3.name+'<br>');
+				document.write(ob3.getInfo()+"<br>");
+			</script>
+
+
+		三： 直接创建自定义对象	       
+			<script>
+				var ob5 = {'name':'ccc','sex':'nan','getInfo':function(){return this.name+':'+this.sex}};
+				document.write(ob5.name+'<br>');
+				document.write(ob5.getInfo());
+			</script>
+	
+	
+	
+	
+	
+	
+	
+//===== delete 删除对象的属性 
+                       
+		<script>
+			document.write(ob3.age+'<br>');
+			delete(ob3.age);
+			document.write(ob3.age);
+		</script>
+	
+	
+	
+	
+	
+	
+
+//===== 倒计时让失效同意按钮可用 
+      
+		<button id = 'ty'>同意</button>
+		<button onclick='toStart(5)'>开始</button>
+		<script>
+			m=0;
+			myTime=null;
+			function toStart(m){
+				this.m = m;
+				if(myTime==null){
+					running();
+				}
+			}
+			function running(){
+				m--;
+				document.getElementById('ty').disabled=true;
+				document.getElementById('ty').innerHTML='同意'+m;
+				if(m<0){
+					document.getElementById('ty').disabled=false;
+					document.getElementById("ty").innerHTML='同意';
+					return;
+				}
+				myTime=setTimeout("running()",300);
+			}
+		</script>
+		
+
+
+
+
+		
+	
+//===== 可暂停的时分秒倒计时    
+	
+		<form name='mForm'>
+			倒计时：
+			<input name='h' size=4 value='1'/>
+			<input name='i' size=4 value='1'/>
+			<input name='s' size=4 value='16'/>
+		</from>
+		<button onclick='toStart1()' type='button'>开始</button>
+		<button onclick='toStop1(this)' type='button'>暂停</button>
+		<div id='did1'>a</div>
+		<script>
+			var hh=ii=ss=0;
+			myTime2=null;
+			function toStart1(){
+				hh = document.mForm.h.value;
+				ii = document.mForm.i.value;
+				ss = document.mForm.s.value;
+				if(myTime2==null){
+					running2();
+				}
+			}
+			function toStop1(ob2){
+				if(ob2.innerHTML=='暂停'){
+					ob2.innerHTML='继续';
+					clearTimeout(myTime2);
+					mytime2=null;
+				}else{
+					ob2.innerHTML='暂停';
+					running2();
+				}
+			}
+			function running2(){
+				ss--;
+				if(ss<0){
+					ss=59;
+					ii--;
+					if(ii<0){
+						ii=59;
+						hh--;
+						if(hh<0){
+							alert('时间到！');
+							return;
+						}
+					}
+				}
+				var str = (hh<10?'0'+hh:hh)+":"+(ii<10?'0'+ii:ii)+':'+(ss<10?"0"+ss:ss);
+				document.getElementById('did1').innerHTML=str;
+				myTime2=setTimeout("running2()",500);
+			}
+		</script>
+
+		
+		
+		
+		
+		
+		
+		
+		
+//===== 全选/全不选/反选    
+
+		<button onclick='sel(1)' type="button">全选</button>
+		<button onclick='sel(2)' type="button">全不选</button>
+		<button onclick='sel(3)' type="button">反选</button><br>
+		<input type="checkbox" />AA<br>
+		<input type="checkbox" />BB<br>
+		<input type="checkbox" />CC<br>
+		<input type="checkbox" />DD<br>
+		<input type="checkbox" />EE<br>                                        
+		<script>
+			function sel(a){
+				var list = document.getElementsByTagName('input');
+				for(var i=0;i<list.length;i++){
+					switch(a){
+						case 1:list[i].checked=true;break;
+						case 2:list[i].checked=false;break;
+						case 3:list[i].checked=!list[i].checked;break;
+					}
+				}
+			}
+		</script>
+	
+	
+	
+	
+	
+	
+	
+//===== 显示进度条
+
+		<div style="width:100%;height:30;border:1px solid">
+			<div id='read' style="height:30;width:0;background:#ccc"></div>
+		</div>
+		<center><button type='button' onclick="read()">读取进度</button></center>
+		<script>
+			mread = 0;
+			mytime=null
+			function read(){
+				if(mytime==null){
+					running3();
+				}
+			}
+			function running3(){
+				mread++;
+				document.getElementById('read').style.width=mread+'%';
+				if(mread>100){
+					return;
+				}
+				mytime = setTimeout("running3()",50);
+			}
+		</script>
+	
+	
+	
+	
+	
+	
+	
+//===== 下拉菜单效果
+ 
+		<style>
+			.caiDan{
+				border:1px solid;
+				background:#aaa;
+				width:100px;
+				text-align:center;
+				cursor:pointer;
+			}
+			.zilei{
+				cursor:pointer;
+				width:100px;
+				background:#eee;
+				border:1px solid #cce;
+				text-align:center;
+				font-size:12px;
+			}
+		</style>
+		<div onclick="sel2('dy')" class = 'caiDan'>电影</div>
+			<div id='dy' style='display:block'>
+				<div class='zilei'>爱情电影</div>
+				<div class='zilei'>惊恐电影</div>
+				<div class='zilei'>科幻电影</div>
+			</div>
+		<div onclick="sel2('xs')" class = 'caiDan'>小说</div>
+			<div id='xs' >
+				<div class='zilei'>爱情小说</div>
+				<div class='zilei'>惊恐小说</div>
+				<div class='zilei'>科幻小说</div>
+			</div>
+		<div class = 'caiDan' onclick="sel2('yy')">音乐</div>
+			<div id='yy'>
+				<div class='zilei'>流行音乐</div>
+				<div class='zilei'>古典音乐</div>
+				<div class='zilei'>现代音乐</div>
+			</div>
+		<script>
+			var syy=sxs=sdy='block';
+			var stat=null;
+			function sel2(name){
+				switch(name){
+					case 'dy':
+						sdy=sdy=='block'?"none":'block';
+						stat=sdy;
+					break;
+					case 'xs':
+						sxs=sxs=='block'?"none":'block';
+						stat=sxs
+					break;
+					case 'yy':
+						syy=syy=='block'?'none':'block';
+						stat=syy;
+					break;
+				}
+//===== style.display=	获取或设置 style样式属性
+				document.getElementById(name).style.display=stat;
+			}
+		</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>//===== 2,10,16进制示意表效果提示 </h2>
+
+<script>
+alert(CreateRadixTable());
+function CreateRadixTable (){
+   var s, s1, s2, s3, x;                    // 声明变量。
+   s = "Hex    Dec   Bin \n";               // 创建表头。
+   for (x = 0; x < 16; x++)                 // 根据所示值的
+   {                                        // 数字建立
+      switch(x)                             // 表尺寸。
+      {                                     // 设置栏目间空间。
+         case 0 : 
+            s1 = "      ";
+            s2 = "    ";
+            s3 = "   ";
+            break;
+         case 1 :
+            s1 = "      ";
+            s2 = "    ";
+            s3 = "   ";
+            break;
+         case 2 :
+            s3 = "  ";
+            break;
+         case 3 : 
+            s3 = "  ";
+            break;
+         case 4 : 
+            s3 = " ";
+            break;
+         case 5 :
+            s3 = " ";
+            break;
+         case 6 : 
+            s3 = " ";
+            break;
+         case 7 : 
+            s3 = " ";
+            break;
+         case 8 :
+            s3 = "" ;
+            break;
+         case 9 :
+            s3 = "";
+            break;
+         default: 
+            s1 = "     ";
+            s2 = "";
+            s3 = "    ";
+      }                                     // 转换为十六进制、十进制、二进制。
+      s += " " + x.toString(16) + s1 + x.toString(10)
+      s +=  s2 + s3 + x.toString(2)+ "\n";
+      
+   }
+   return(s);                               // 返回整个 radix 表。
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 触发事件的四种形式 
+	一：标签中+on事件
+	二：obj.on=fun()
+	三：for='id' event='on事件'
+	四：href="javascript:en()"
+
+	<button onclick='cf1()'>一：标签中+on事件</button>
+	<script>
+		function cf1(){
+			document.getElementById('cf').innerHTML='触发事件方式一：tag  on事件=事件处理程序';
+		}
+	</script>
+	
+	<button id='cf2'>二：obj.on=fun()</button>
+	<script>
+		var cf2 = document.getElementById('cf2');
+		cf2.onclick=function(){
+			document.getElementById('cf').innerHTML="触发事件方式二：对象.on事件=事件处理程序";
+		}
+	</script>
+
+	
+	<script for="事件源ID" event="on事件">三：for='id' event='on事件'</script>
+	<div id='cf'></div>
+
+
+
+
+	<a href="javascript:alert('aa');">四：href="javascript:en()"</a>
+
+
+
+
+
+	
+//===== contextmenu 禁用鼠标右键和自定鼠标右键菜单 
+
+	<style>
+		#d2>li{list-style:none;text-align:center;padding:0;margin:0;border:1px solid #eee;disp}
+		#d2>li:hover{background:#ec0;};
+	</style>
+	<div id='d2' style="width:100px;backgroun:#ccc;position:absolute;display:none">
+		<li>复制</li>
+		<li>粘贴</li>
+		<li>剪切</li>
+	</div>
+	<script>
+		window.document.oncontextmenu=function(e){
+			var event=e || window.event;
+			//先获鼠标坐标
+			var x = event.clientX;
+			var y = event.clientY;
+			//获取菜单对象并设置位置
+			
+			var d2 = document.getElementById('d2');	
+			d2.style.top=y;
+			d2.style.left=x;
+			d2.style.display='block';
+			return false;    //直接返回false就是禁用鼠标右键
+		}
+	</script>
+
+	
+	
+	========================点击右键弹出菜单=====================================
+	
+	
+	
+	
+	
+	
+	
+	
+//===== function(e) 事件对象-显示div中光标点击时的坐标 
+//===== clientX,clientY 鼠标的坐标 
+
+	<div id="did" style="width:300px;height:100px;background-color:#ddd;"></div>
+	<script>
+		var dd = document.getElementById('did');//获取源对象
+		dd.onclick=function(e){
+			var event=e || window.event;
+			
+			var x = event.clientX-this.offsetLeft;
+			var y = event.clientY-this.offsetTop;
+			dd.innerHTML=x+':'+y;
+		}
+	</script>
+
+	
+	
+	
+	
+
+
+	
+	
+//===== ondblclick 双击事件-双击改变背景色 
+
+	<style>
+		ul,li{margin:0px;padding:0px;}
+		ul{list-style:none;}
+		li{height:30px;line-height:30px;margin-top:4px;background-color:#ddd;}
+	</style>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	<script>
+		var lis = document.getElementsByTagName('li');
+		//alert(lis.length);
+		var color=null;
+		for(var i=0;i<lis.length;i++){
+			lis[i].ondblclick=function(){
+				this.style.backgroundColor='#ec0'; 
+				//注意这里要用this，不能用lis[i],类似刻舟求剑
+			}
+		}
+	</script>
+
+
+	
+
+
+
+
+	
+//===== onmouseover,onmouseout 移入移出事件
+//===== 隔行换色,及移入移出换色
+
+	<style>
+		#d3>i{
+			display:block;
+			width:100%;
+			height:30px;
+			background:#ccc;
+			border:1px solid;
+		}
+	</style>
+	<div id='d3'>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+		<i></i>
+	</div>
+	<script>
+		var ii = document.getElementsByTagName('i');
+		var color=null;
+		for(var i=0;i<ii.length;i++){	//隔行换色
+			if(i%2==0){
+				ii[i].style.background='#aaa';
+			}else{
+				ii[i].style.background='#eee';
+			}
+			ii[i].onmouseover = function(){
+				color=this.style.backgroundColor;
+				this.style.background='#ec0';
+			}
+			ii[i].onmouseout = function(){
+				this.style.background=color;
+			}
+		
+		}
+	
+	</script>
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+	
+
+
+	<style>
+		#t2{
+			width:380px;
+			height:300px;
+			border:1px solid;
+			position:absolute;
+			overflow:hidden;
+			display:none;
+		}
+	</style>
+		<div>
+		<img id='t1' src='1.jpg' width=320/>
+		<div id='t2'>
+			<img src='1.jpg' />
+		</div>
+	</div>
+	<script>
+		var t1 = document.getElementById('t1');
+		var t2 = document.getElementById('t2');
+		t1.onmouseover=function(){
+			var x = this.offsetLeft+this.offsetWidth+5;
+			var y = this.offsetTop;
+			t2.style.top=y;
+			t2.style.left=x;
+			t2.style.display='block';
+		}
+		t1.onmouseout=function(){
+			t2.style.display='none';
+		}
+		t1.onmousemove=function(ent){
+			var event=ent || window.event;
+			var x = event.clientX-this.offsetLeft;
+			var y = event.clientY-this.offsetTop;
+			t2.scrollLeft=x*6-150;
+			t2.scrollTop=y*6-150;
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 键盘事件-坦克开炮
+
+<div style="width:500px;height:500px;background:#eee;">
+	//设置坦克
+	<div id='tk' style="width:70px;height:70px;background:#aaa;position:absolute"></div>
+	//设置六枚炮弹
+	<div id='p1' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p2' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p3' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p4' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p5' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+	<div id='p6' style='width:10px;height:15px;background:#aaa;position:absolute;display:none;'></div>
+</div>
+<script>
+//===== onkeydown 键盘按下事件
+	var tk = document.getElementById('tk');		//创建坦克对象
+	window.document.onkeydown=function(ent){	//设置窗口按键事件并获取事件对象ent
+		var event=ent || window.event;		//让事件对象兼容不同的浏览器
+//===== e.keyCode 获取键盘码
+		switch(event.keyCode){			//获取事件对象中的键盘码
+			case 37:
+				tk.style.left=Math.max(10,tk.offsetLeft-5);	
+				//如果按左键时，坦克元素的绝对位置向左-5
+			break;
+			case 38:
+				tk.style.top=Math.max(55,tk.offsetTop-5);	
+				//如果按上键时，坦克元素的绝对位置向上-5
+			break;
+			case 39:
+//===== Math.min() 数值比较
+				tk.style.left = Math.min(435,tk.offsetLeft+5);
+				//如果按右键时，坦克元素的绝对位置向右+5
+			break;
+			case 40:
+				tk.style.top=Math.min(485,tk.offsetTop+5);	
+				//如果按下键时，坦克元素的绝对位置向下+5
+			break;
+			case 32:
+				pao(tk.offsetLeft+30,tk.offsetTop); 
+				//如果点击空格调用 pao() 炮弹方法 并传入坐标
+			break;
+		}
+	}
+	function pao(x,y){
+		for(i=1;i<7;i++){			//遍历六次对应六颗炮弹
+			var p=document.getElementById('p'+i);	//将六个炮弹元素都创建成对象
+			if(p.style.display=='none'){	//依次判断将没有发射过的炮弹显示出来
+				p.style.display='block';	
+				p.style.left=x;			//设置炮弹初始位置
+				p.style.top=y
+				break;					//结束本次循环，保证每次只显示一个元素
+			}
+		}
+	}
+	function running(){
+		for(var i=1;i<7;i++){		//遍历六次对应六颗炮弹
+			var p = document.getElementById('p'+i); //分别创建六个炮弹的对象
+			p.style.top=p.offsetTop-5;	//设置每个炮弹的移动位置
+			p.style.left=p.offsetLeft;
+			if(p.offsetTop<-20){		//判断出格就再次隐藏，让其可再循环显示使用
+				p.style.display='none';
+			}
+		}
+	}
+	setInterval("running()",33);	//每隔33毫秒触发running函数 使炮弹动态移动
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 鼠标拖动元素(双事件套用)
+//===== onmousemove=null; 解除事件
+
+	
+	<div id='dd' style ='width:200px;height:200px;background:#ccc;position:absolute;'></div>
+	<script>
+		var d = document.getElementById('dd');
+		d.onmousedown = function(e){
+			var event=e || window.event;
+			//得到鼠标在元素内的坐标
+			var x = event.clientX-this.offsetLeft; 
+			var y = event.clientY-this.offsetTop;
+			this.style.background='#ec0';
+			window.document.onmousemove=function(ent){
+				var event=ent || window.event;
+				d.style.left=(event.clientX-x)+'px';
+				d.style.top=(event.clientY-y)+'px';
+			}
+		}
+		d.onmouseup=function(){
+			this.style.background='#ccc';
+			window.document.onmousemove=null;
+		}
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+//===== onload() 网页加载完后触发此函数
+
+		window.onload=function(){
+			var id1 = document.getElementById('id1');
+			id1.style.width='100px';
+			id1.style.height='100px';
+			id1.style.backgroundColor='red';
+		}
+
+
+
+
+
+
+
+
+//===== unload 离开或关闭页面时加载
+
+		<body onunload="alert('bye,bye')">
+
+
+
+
+
+
+
+
+
+
+
+//===== focus 获取焦点事件
+//===== blur 失去焦点事件
+
+		<script>
+		window.onload=function(){
+			var list = document.getElementsByTagName('input');	
+			for(var i=0;i<list.length;i++){
+				list[i].onfocus=function(){
+					this.style.border="1px solid blue";
+				}
+				list[i].onblur=function(){
+					this.style.border="1px solid #ccc";
+				}
+			}
+		}
+		</script>
+		姓名：<input /><br>
+		年龄：<input /><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== blur 与submit 事件做表单验证
+
+
+		<script>
+		  function checkName(){
+			var name = document.myForm.uname;
+			if(name.value.match(/^[\w]{6,16}$/)==null){
+				alert('用户名不合法！');
+				return false;
+			}
+			return true;
+		  }   
+			function checkAge(){
+				var age = document.myForm.age;
+				if(age.value.match(/^[\d]{2}$/)==null || age.value<18){
+					alert('年龄输入不合法');
+					return false;
+				}
+				return true;
+			}
+			function checkMail(){
+				var mail = document.myForm.email;
+				if(mail.value.match(/^[\w]*\@[a-zA-Z0-9]{2,3}\.([a-zA-Z]{2,3}$|[a-zA-Z]{2,3}\.[a-zA-Z]{2}$)/)==null){
+					alert('邮箱不合法');
+					return false;
+				}
+				return true;
+			}
+			function doSubmit(){
+				return checkName() && checkAge() && checkMail();
+			}
+		</script>
+
+		<form name='myForm' onsubmit="return doSubmit()">
+		姓名：<input type='text' name='uname' onblur='checkName()'/><br> 
+		年龄：<input type='text' name='age' onblur='checkAge()'/><br> 
+		邮箱：<input type='text' name='email' onblur='checkMail()'/><br> 
+			<input type='submit' value='提交'/>
+		</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 多下拉列表关联控制
+//===== add(new Option(k,v) 添加下拉列表项
+//===== obj.length=? 控制下拉列表项
+
+		<script>
+			var city = new Array();
+			city[1]=["昌平区","东城区","朝阳区","海淀区"];
+			city[2]=["虹口区","浦东区","宝山区","松江区"];
+			city[3]=["河东区","河西区","河北区","和平区"];
+			city[4]=["南沙区","天河区","白云区","花都区"];
+			function fun(ob){
+				var v = ob.value;
+				var sel2 = document.myForm.sel2;
+				sel2.length=1;
+				for(var i=0;i<city[v].length;i++){
+					sel2.add(new Option(city[v][i],i));
+				}
+			}
+		</script>
+		<form name='myForm' action='4.html' method='post' >
+			<select name='sel1' onchange="fun(this)">
+				<option value="">-请选择-</option>
+				<option value="1">北京</option>
+				<option value="2">上海</option>
+				<option value="3">天津</option>
+				<option value="4">广州</option>
+			</select>
+			<select name='sel2'>
+				<option value="">-请选择</option>
+			</select>
+		</form>
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+
+<ul id='uid'>
+	<li>aaa</li>
+	<li>aaa</li>
+	<li>aaa</li>
+	<li>aaa</li>
+</ul>
+<ol id='ol1'>
+	<li>bbb</li>
+	<li>bbb</li>
+	<li>bbb</li>
+	<li>bbb</li>
+	<li>bbb</li>
+	<li>bbb</li>
+</ol>
+<script>
+
+
+
+//===== 获取网页中所有li节点
+
+	//var list = document.getElementsByTagName('li');
+	//document.write(list.length);
+	
+	
+
+
+//===== 获取ul中所有li节点
+
+	//var list = document.getElementById("uid").getElementsByTagName("li");
+	
+
+
+	
+//===== childNodes 获取ul中所有节点(包括文本)
+
+	var list = document.getElementById("uid").childNodes; //这里会夹带着#text文本节点
+	//alert(list.length);
+	
+
+
+
+//===== length 获取节点数量
+
+	for(var i=0;i<list.length;i++){
+		document.write(list[i].nodeName);
+		
+
+
+
+//===== nodeType 获取节点类型
+
+		if(list[i].nodeType==1){
+			list[i].onmouseover=function(){
+				this.style.background='#aaa';
+			}
+			list[i].onmouseout=function(){
+				this.style.background='#fff';
+			}
+			list[i].onclick=function(){
+				this.style.background='blue';
+			}
+		}
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<iframe src='1.html'></iframe>
+<script>
+
+
+
+//=====frames 获取子窗口的个数
+
+	document.write('aaaaaaa');
+	var list=window.frames;
+	//alert(list.length);
+
+
+	
+	
+//===== screenLeft,screenTop 获取浏览器与屏幕的距离
+
+	window.onload=function(){
+		//document.write("浏览器到屏幕的宽度是："+window.screenLeft+'<br>');
+		//document.write("浏览器到屏幕的高度是："+window.screenTop+'<br>');
+	}
+
+	
+	
+	
+
+
+
+
+
+
+
+//===== resizeBy 修改浏览器窗口大小
+
+	<button onclick='resizeWindow()'>resizeWindow</button>
+	<script>
+		function resizeWindow(){
+			window.resizeBy(+100,+100);
+		}
+	</script>
+
+	
+	
+	
+//===== open 点击打开一个不带地址栏及其它选项的浏览器窗口
+	
+	<button onclick="window.open('1.html','','width=300,height=300,menubar=no,location=no')">打开一个新窗口</button>
+
+
+
+
+
+
+
+
+
+//===== navigator 获取浏览器信息
+
+	<script>
+	   with(document){
+		write('代码'+navigator.appCodeName+'<br>');
+		write('名称'+navigator.appName+'<br>');
+		write('版本'+navigator.appVersion+'<br>');
+		write('语言'+navigator.language+'<br>');
+		write('编译平台'+navigator.platform+'<br>');
+		write('用户表头'+navigator.userAgent+'<br>');
+	
+	   }
+	</script>
+
+
+
+
+
+
+
+
+
+
+//===== screen 获取屏幕高宽，可用高宽，可工作高宽
+
+	with(document){
+		write("屏幕高度"+screen.height+'<br>');
+		write('屏幕宽度'+screen.width+'<br>');
+		write('屏幕可用高度'+screen.availHeight+'<br>');
+		write('屏幕可用宽度'+screen.availWidth+'<br>');
+		write('屏幕可用工作区高度'+window.screen.availHeight+'<br>');
+		write('屏幕可用工作区宽度'+window.screen.availWidth+'<br>');
+	}
+
+
+
+
+
+
+
+	
+//===== location.reload 重载页面
+
+	<button onclick="window.location.reload()">刷新</button><br>
+	
+	
+
+
+
+
+	
+//===== location.replace 加载页面
+
+	<button onclick='window.location.replace("6.html")'>加载1.html页面</button><br>
+	
+	
+	
+
+
+
+	
+	
+//===== location.href 跳转页面
+
+	<button onclick='window.location.href="6.html"'>跳转到6.html页面</button>
+	<button onclick="window.location='1.html'">跳转2</button><br>
+	
+	
+	
+	
+
+
+
+	
+//===== 获取当前页面地址,路径，端口，协议，主机名
+
+	with(document){
+		write("当前页面的地址："+window.location.href+'<br>');
+		write("当前页面的路径"+window.location.pathname+'<br>');
+		write('当前页面的访问端口'+window.location.port+'<br>');
+		write('当前页面的访问协议:'+window.location.protocol+'<br>');
+		write('当前页面的访问主机名'+window.location.hostname+'<br>');
+	}
+	
+	
+
+
+
+	
+	
+	
+	
+//===== history.go(1),history.forward 前进一步
+
+	<button onclick="window.history.go(1)">前进一步</button><br>
+	<button onclick="window.history.forward()">前进一步</button><br>
+	
+
+
+
+
+
+//===== history.go(-1),history.back 后退一步
+
+	<button onclick="window.history.go(-1)">后退一步</button><br>
+	<button onclick="window.history.back()">后退一步</button>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <ul id="uid">
+            <li>aaaaaaa</li>
+			<li class="cc">bbbbbb</li>
+        </ul>
+        <ol>
+            <li class="cc">cccccc</li>
+            <li>dddddddd</li>
+        </ol>
+		
+        <script type="text/javascript">
+			function getAll(classname){
+//===== document.all 获取当前文档所有元素节点
+				var list = document.all;
+				var res = new Array();
+				for(var i=0;i<list.length;i++){
+//===== obj.className 获取对象的类名
+					if(list[i].className==classname){
+						res[res.length]=list[i];
+					}
+				}
+				return res;
+			}
+			
+//===== 遍历设置他们的属性颜色
+			var data = getAll("cc");
+			for(var i=0;i<data.length;i++){
+				data[i].style.color="red";
+			}
+			
+//===== nodeName 获取对象的标签名及遍历输出所有标签
+			var list = document.all;
+			alert(list.length);
+			for(var i=0;i<list.length;i++){
+				document.write(list[i].nodeName+" ");
+			}
+        </script>
+    </body>
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 可互移的选项表对
+
+    <head>
+        <meta charset="utf-8"/>
+        <title>JavaScript实例</title>
+        <style>
+            select,option,div,button{margin:0px;padding:0px;}
+            #lid,#rid,div{
+                width:80px;
+                height:260px;
+                float:left;
+            }
+            div{
+                text-align:center;
+                padding-top:60px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2>JavaScript实例:HTML DOM 中的select实例</h2>
+        <select id="lid" multiple>
+            <option value="1">古天乐</option>
+            <option value="2">周杰伦</option>
+            <option value="3">刘欢</option>
+            <option value="4">韩红</option>
+            <option value="5">林志玲</option>
+            <option value="6">成龙</option>
+            <option value="7">梁家辉</option>
+            <option value="8">刘德华</option>
+        </select>
+        <div>
+        <button onclick="doMove('lid','rid')">&nbsp;&nbsp;>>&nbsp;&nbsp;</button><br/><br/><br/><br/><br/><br/>
+        <button onclick="doMove('rid','lid')">&nbsp;&nbsp;<<&nbsp;&nbsp;</button>
+        </div>
+        <select id="rid" multiple>
+        </select>
+        <script type="text/javascript">
+           //移动下拉项函数
+           function doMove(id1,id2){
+               //获取两个下拉框对象
+			   var select1 = document.getElementById(id1);
+			   var select2 = document.getElementById(id2);
+//===== obj.options 获取下拉列表中的所有option项
+				// 获取select1中的所有option
+			   var list = select1.options;
+			   //遍历
+			   for(var i=0;i<list.length;i++){
+				   //判断是否选中
+				   if(list[i].selected){
+//===== selectob.selected 设置下拉列表的自动选择属性
+						list[i].selected=false; //取消选中
+//===== selectob.add() 添加或移动下拉列表的option项
+						//select2.add(list[i]); //移动过去
+						var ob = list[i];
+//===== selectob.remove 删除下拉列表的option项
+						select1.remove(list[i].index); //删除
+						select2.add(ob);
+						i--;
+				   }
+			   }
+           }
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<form action="#" method="get"></form>
+        <img src="./images/a.jpg"/>
+        <img src="./images/a.jpg"/>
+        <img src="./images/a.jpg"/>
+	<form action="#" method="get"></form>
+	<form action="#" method="get"></form>
+	<button onclick="fun()">点击</button>
+        <script type="text/javascript">
+		  function fun(){
+//===== document.open() 打开一个wirte收集流 
+			var newDoc=document.open("text/html","replace");
+//===== document.forms 获取当前网页中所有的form表单
+			newDoc.write("当前网页的表单数量："+document.forms.length+"<br/>");
+//===== document.images 获取当前网页中所有图片
+			newDoc.write("网页中的img数量:"+document.images.length+"<br/>");
+//===== document.cookie 获取当前cookie信息
+			newDoc.write("当前网页的cookie信息："+document.cookie+"<br/>");
+//===== document.domain获取当前域名
+			newDoc.write("当前网页的域名信息："+document.domain+"<br/>");
+//===== document.URL获取当前URL
+			newDoc.write("当前网页的URL信息："+document.URL+"<br/>");
+//===== obj.close() 关闭write收集流	
+			newDoc.close();
+		}		
+        </script>
+
+
+
+
+
+
+
+		
+		
+		
+		<a href="http://www.baidu.com" title="百度网站" id="aid">百度</a>
+		<button onclick="fun()">获取并替换</button>
+		<a href="1.html">1.html</a>
+        <script type="text/javascript">
+			function fun(){
+//===== document.getElementById() 通过ID获取节点对象
+				var a = document.getElementById("aid");
+//===== obj.nodeName 获取节点名
+				alert("节点名称："+a.nodeName);
+//===== obj.href 获取连接地址
+				alert("链接地址："+a.href);
+//===== obj.innerHTML 获取节点中文本内容
+				alert("链接名字："+a.innerHTML);
+//===== obj.title 获取title属性
+				alert("链接title："+a.title);
+				
+				//修改链接
+//===== obj.href= 修改链接地址
+				a.href="http://www.lampbrother.net";
+//===== obj.innerHTML= 修改标签中的内容
+				a.innerHTML="兄弟连";
+//===== obj.title= 修改title属性
+				a.title="LAMP兄弟连！";
+				
+			}
+        </script>
+
+
+
+		
+		
+		
+		
+		
+       <h2 class="cc">JavaScript实例:HTML DOM--Canvas对象</h2>
+		<canvas id="myCanvas"></canvas>
+        <script type="text/javascript">
+			var canvas=document.getElementById('myCanvas');
+//===== obj.getContext() 获取canvas 图像对象
+			var ctx=canvas.getContext('2d');
+//===== obj.fillStyle=	设置图像的颜色
+			ctx.fillStyle='#FF0000';
+//===== obj.fillRect(0,0,0,0)	设置图像的位置与大小
+			ctx.fillRect(0,0,80,100);
+        </script>
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		<div id="did" style="width:300px;height:300px;background-color:#ddd;">
+		<div id="aid" style="width:100px;height:100px;background-color:red;"></div>
+		</div>
+        <script type="text/javascript">
+			var did = document.getElementById("did");
+			var aid = document.getElementById("aid");
+			//绑定事件
+			did.onclick=function(){
+				alert("大div被点击");
+			}
+//===== event 获取事件对象	
+			aid.onclick=function(ent){
+				alert("小div被点击");
+				//兼容IE和火狐浏览器兼容
+				var event=ent || window.event;
+				if(document.all){
+					//IE浏览器
+//===== e.cancelBubble=	禁止或开启冒泡（ie类）
+					event.cancelBubble=true;
+				}else{
+					alert('NOIE');
+					//非IE浏览器
+//===== e.stopPropagation() 禁止冒泡 (非ie类)
+					event.stopPropagation();
+				}
+			}
+        </script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<form></form>
+//===== iframe配合onsubmit事件做异步提交(局部刷新) 
+		<iframe src="1.html" name="myframe" style="display:none"></iframe>
+		<form name="myform" target="myframe" action="5.html" method="post">
+			姓名：<input type="text" name="username"/><br/><br/>
+		</form>
+		<button onclick="dosubmit()">提交</button>
+		<button onclick="doreset()">重置</button>
+		<button onclick="doget()">获取表单输入框中的值</button>
+		<script type="text/javascript">
+			function doget(){
+				//获取页面中第二form表单中，一个username输入框的值（7种方式）
+//===== obj.forms.name.value 获取表单值的(七种)方式
+				//alert(document.forms[1].username.value);
+				alert(document.myform.username.value);
+				//alert(document.forms.myform.username.value);
+				//alert(document.forms['myform'].username.value);
+				//alert(document['myform'].username.value);
+				//alert(document.forms.item(1).username.value);
+				//alert(document.forms.item('myform').username.value); //非IE不兼容
+			}
+		
+			function dosubmit(){
+//===== document.forms[1].submit() 提交表单
+				document.forms[1].submit();
+			}
+			function doreset(){
+//===== document.myform.rest() 重置表单
+				document.myform.reset();
+			}
+		</script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	    <img src="./images/b.gif" asrc="./images/a.jpg" /><br/><br/>
+        <img src="./images/b.gif" asrc="./images/c.jpg" /><br/><br/>
+        <img src="./images/b.gif" asrc="./images/a.jpg" /><br/><br/>
+        <img src="./images/b.gif" asrc="./images/c.jpg" /><br/><br/>
+        <script type="text/javascript">
+            //定时延迟加载
+            setTimeout(function(){
+				var list = document.getElementsByTagName("img");
+				for(var i=0;i<list.length;i++){
+//===== obj.getAttribute() 获取对象节点的非标准属性值
+					list[i].src=list[i].getAttribute("asrc");
+					//将自身的asrc属性值赋给src属性
+				}
+            },3000);
+        </script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+        <ul id="uid">
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+            <li><input type="checkbox" name="aa"/>aaaaaa</li>
+        </ul>
+        <input id="cid" type="checkbox" name="aa"/>
+        <script type="text/javascript">
+//===== 获取ul节点中的input子节点
+		   var ul = document.getElementById("uid");
+		   var list = ul.getElementsByTagName("input");
+		   //获取cid的input,并添加点击事件
+		   document.getElementById("cid").onclick=function(){
+//===== obj.checked 获取复选框的checked 是否自动选择属性
+			   var b = this.checked;
+			   //遍历所有上面的input
+			   for(var i=0;i<list.length;i++){
+				   list[i].checked=b; //设置checked属性实现全选和全不选
+//===== obj.cheded= 设置复选框是否自动选择
+			   }
+		   }
+        </script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//===== 给表格增删内容	
+		
+    <head>
+        <meta charset="utf-8"/>
+        <title>JavaScript实例</title>
+        <style>
+            select,option,div,button{margin:0px;padding:0px;}
+            #lid,#rid,div{
+                width:80px;
+                height:260px;
+                float:left;
+            }
+            div{
+                text-align:center;
+                padding-top:60px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- html注释 -->
+        <h2>JavaScript实例:HTML DOM 中table</h2>
+        <table id="tid" width="500" border="1">
+            <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1001</td>
+                    <td>张三</td>
+                    <td>男</td>
+                    <td>20</td>
+                    <td><button onclick="dodel(this)">删除</button></td>
+                </tr>
+                <tr>
+                    <td>1002</td>
+                    <td>李四</td>
+                    <td>女</td>
+                    <td>21</td>
+                    <td><button onclick="dodel(this)">删除</button></td>
+                </tr>
+                <tr>
+                    <td>1003</td>
+                    <td>王五</td>
+                    <td>男</td>
+                    <td>22</td>
+                    <td><button onclick="dodel(this)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <br/><br/><br/>
+        <h2>添加学生信息</h2>
+        <form action="#" name="myform" onsubmit="return doAdd()">
+            学号：<input type="text" name="sno"/><br/><br/>
+            姓名：<input type="text" name="name"/><br/><br/>
+            性别：<input type="text" name="sex"/><br/><br/>
+            年龄：<input type="text" name="age"/><br/><br/>
+            <input type="submit" value="添加"/>
+        </form>
+        <script type="text/javascript">
+            //执行删除的方法
+            function dodel(bt){
+               var table = document.getElementById("tid");
+			   table.deleteRow(bt.parentNode.parentNode.rowIndex);
+            }
+            
+            //执行添加
+            function doAdd(){
+                //获取表格节点
+                var table = document.getElementById("tid");
+                //获取要添加的数据
+                var sno = document.myform.sno.value;
+                var name = document.myform.name.value;
+                var sex = document.myform.sex.value;
+                var age = document.myform.age.value;
+                
+//===== tableob.inserRow() 为表添加一行
+				var row = table.insertRow();
+				//为行添加单元格
+//===== rowob.insertCell() 为表中行添加一列并赋值
+				row.insertCell(0).innerHTML=sno;
+				row.insertCell(1).innerHTML=name;
+				row.insertCell(2).innerHTML=sex;
+				row.insertCell(3).innerHTML=age;
+				row.insertCell(4).innerHTML='<button onclick="dodel(this)">删除</button>';
+				//重置表单
+				document.myform.reset();
+                return false;
+            }
+        </script>
+    </body>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-XML文档
+//===== 示例-获取列表中的内容
+	//----- document.getElementsByTagName() 通过标签名获取节点对象或列表
+	//----- obj.getElementsByTagName() 获取某节点对象中的子节点列表 
+	//----- obj.length 获取子节点的长度(个数)
+	//----- obj.nodeTyype 获取节点类型
+	//----- obj.childNodes 获取子节点列表
+//===== 示例-加载XML文件并获取文件中内容
+	//----- 加载解析xml文件 (暂只支持火狐)
+	//----- obj.load() 加载 xml文件
+	//----- obj.getAttribute()	获取节点的非标准属性值
+//===== 示例-用节点标,非属性值替换来判断所点击的是哪项
+	//----- document.getElementById() 通过ID获取节点对象
+	//----- aob.href= 	设置节点的链接性情地址
+	//----- obj.innerHTM= 设置节点标签中的内容
+	//----- obj.setAttribute() 修改节点的非标准属性值
+	//----- ob.value 获取表单value值
+	//----- ob.value.length 获取表单值的长度
+//===== 示例-从首部或尾部删除列表项
+	//----- obj.removechild()	删除某个子节点
+//===== 示例-向列表中添加子项内容
+	//----- document.createElement() 创建一个节点
+	//----- obj.innerHTML=	向节点中添加内容
+//===== 向列表中添加子内容并同时添加事件
+//===== 示例-向列表中指定位置添加子项内容
+	//----- obj.inertBefore() 从首位子节点
+	//----- obj.appendChild() 从末位添加子节点
+//===== 示例-替换列表中子项内容
+	//----- obj.className 获取节点的类名
+	//----- obj.className= 设置节点的类名
+	//----- obj.replaceChild() 替换子节点
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 示例-XML文档	
+
+	<?xml version="1.0" encoding="UTF-8"?>
+	<stulist>
+		<stu id="1001">
+			<name>张三</name>
+			<age>22</age>
+			<sex>女</sex>
+			<classid>lamp113</classid>
+		</stu>
+		<stu id="1002">
+			<name>李四</name>
+			<age>22</age>
+			<sex>女</sex>
+			<classid>lamp113</classid>
+		</stu>
+	</stulist>
+
+
+	
+	
+	
+	
+
+
+//===== 示例-获取列表中的内容
+
+		<table width="200" border="1">
+		  <thead>
+			<tr><th>名字</th><th>性别</th><th>年龄</th></tr>
+		  </thead>
+		  <tbody>
+			<tr><td>张三</td><td>男</td><td>18</td></tr>
+			<tr><td>李四</td><td>女</td><td>20</td></tr>
+		  </tbody>
+		</table>
+		<script type="text/javascript">
+			//获取指定标签名的第一个对象
+	//----- document.getElementsByTagName() 通过标签名获取节点对象或列表
+			var tbody = document.getElementsByTagName("tbody")[0];
+			//获取tbody中的tr对象列表 
+	//----- obj.getElementsByTagName() 获取某节点对象中的子节点列表 
+			var list = tbody.getElementsByTagName("tr");
+			//上面对象列表中第一个对象的子节点列表
+	//----- obj.childNodes 获取子节点列表
+			var data = list[0].childNodes;
+	//----- obj.length 获取子节点的长度(个数)
+			document.write(data.length+"<br/>");
+			
+			//遍历上面列表中所有的元素td节点
+			for(var i=0;i<data.length;i++){
+	//----- obj.nodeTyype 获取节点类型
+				if(data[i].nodeType==1){
+					document.write(data[i].innerHTML+" ");
+				}
+			}
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+//===== 示例-加载XML文件并获取文件中内容
+
+	<script type="text/javascript">
+	//----- 加载解析xml文件 (暂只支持火狐)
+		var xmlDoc = null;
+		try{ //Internet Explorer
+			xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+		}catch(e){
+			try{ //Firefox, Mozilla, Opera, etc.
+				xmlDoc=document.implementation.createDocument("","",null);
+			}catch(e){
+				alert(e.message);
+			}
+		}
+		xmlDoc.async=false;
+	//----- obj.load() 加载 xml文件
+		xmlDoc.load("./stu.xml");
+		
+		//解析xml文件的内容
+		var list = xmlDoc.getElementsByTagName("stu");
+		//alert(list.length);
+		//遍历
+		for(var i=0;i<list.length;i++){
+	//----- obj.getAttribute()	获取节点的非标准属性值
+			document.write("id:"+list[i].getAttribute("id")+" ");
+			document.write("name:"+list[i].getElementsByTagName("name")[0].innerHTML+"<br/>");
+		}
+	</script>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+//===== 示例-用节点标,非属性值替换来判断所点击的是哪项
+
+	<a href="http://www.baidu.com" id="aid">百度</a><br/><br/>
+	姓名：<input type="text" name="name" info="姓名" onblur="doCheck(this)" /><br/><br/>
+	邮箱：<input type="text" name="name" info="邮箱" onblur="doCheck(this)" /><br/><br/>
+	年龄：<input type="text" name="name" info="年龄" onblur="doCheck(this)" /><br/><br/>
+	电话：<input type="text" name="name" info="电话" onblur="doCheck(this)" /><br/><br/>
+	<script type="text/javascript">
+		//获取超级链接a节点对象
+	//----- document.getElementById() 通过ID获取节点对象
+		var a = document.getElementById("aid");
+		
+	//----- aob.href= 	设置节点的链接性情地址
+		//改变a标签的标准属性值
+		a.href="http://www.lampbrother.net";
+	//----- obj.innerHTM= 设置节点标签中的内容
+		a.innerHTML="兄弟连";
+//===== ob.setAttribute('k','v'),ob.getAttribute('k') 设置和获取元素的非标准属性
+	//----- obj.setAttribute() 修改节点的非标准属性值
+		//更改非标准属性
+		//a.aa="bb"; //传统方式不行
+		a.setAttribute("aa","bb");
+		
+		
+		//验证姓名函数
+		function doCheck(ob){
+			//判断是否无值
+	//----- ob.value 获取表单value值
+	//----- ob.value.length 获取表单值的长度
+			if(ob.value.length==0){
+				alert(ob.getAttribute('info')+'不可以为空！');
+			}
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-从首部或尾部删除列表项
+
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	<button onclick="dodel('a')">删除第一个节点</button>
+	<button onclick="dodel('z')">删除最后一个节点</button>
+	<script type="text/javascript">
+		function dodel(c){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取ul中的所有子节点
+			var list = uid.getElementsByTagName('li');
+			//判断并执行删除
+			switch(c){
+				case "a": //删除第一个
+	//----- obj.removechild()	删除某个子节点
+					uid.removeChild(list[0]);
+					break;
+				case "z": //删除末尾节点
+					uid.removeChild(list[list.length-1]);
+					break;
+			}
+			
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-向列表中添加子项内容
+
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	名称：<input type="text" size="10" id="tid" name="name"/> 
+	<button onclick="dodel('i')">创建</button>
+	<button onclick="dodel('a')">删除第一个节点</button>
+	<button onclick="dodel('z')">删除最后一个节点</button>
+	<script type="text/javascript">
+		function dodel(c){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取ul中的所有子节点
+			var list = uid.getElementsByTagName('li');
+			//判断并执行删除
+			switch(c){
+				case "a": //删除第一个
+					uid.removeChild(list[0]);
+					break;
+				case "z": //删除末尾节点
+					uid.removeChild(list[list.length-1]);
+					break;
+				case "i": //添加节点
+					//获取输入框中的值
+					var name = document.getElementById("tid").value;
+	//----- document.createElement() 创建一个节点
+					//创建一个节点
+					var li = document.createElement("li");
+					//将内容添加到节点内
+	//----- obj.innerHTML=	向节点中添加内容
+					li.innerHTML = name;
+					//将li添加ul中
+					uid.appendChild(li);
+			}
+			
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 向列表中添加子内容并同时添加事件
+
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	名称：<input type="text" size="10" id="tid" name="name"/> 
+	<button onclick="doAdd()">创建</button>
+	<script type="text/javascript">
+		function doAdd(){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取输入框中的值
+			var name = document.getElementById("tid").value;
+			//创建一个节点
+			var li = document.createElement("li");
+			//为新创建的li添加事件
+			li.onclick = function(){
+				alert(this.innerHTML);
+			}
+			//将内容添加到节点内
+			li.innerHTML = name;
+			//将li添加ul中
+			uid.appendChild(li);
+			document.getElementById("tid").value=""; //清空
+		}
+		//获取ul里面的所有li子节点
+		var list = document.getElementById("uid").getElementsByTagName("li");
+		//遍历li
+		for(var i=0;i<list.length;i++){
+			list[i].onclick=function(){
+				alert(this.innerHTML);
+			}
+		}
+	</script>
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+//===== 示例-向列表中指定位置添加子项内容
+
+
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	名称：<input type="text" size="10" id="tid" name="name"/> 
+	<button onclick="doadd('a')">添加第一个节点</button>
+	<button onclick="doadd('z')">添加最后一个节点</button>
+	<script type="text/javascript">
+		function doadd(c){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取输入框中的值
+			var name = document.getElementById("tid").value;
+			//创建一个节点
+			var li = document.createElement("li");
+			//将内容添加到节点内
+			li.innerHTML = name;
+			//判断并执行添加
+			switch(c){
+				case "a": //添加第一个
+	//----- obj.inertBefore() 从首位子节点
+					uid.insertBefore(li,uid.getElementsByTagName("li")[1]);
+					break;
+				case "z": //添加末尾节点
+	//----- obj.appendChild() 从末位添加子节点
+					uid.appendChild(li);
+					break;
+			}
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 示例-替换列表中子项内容
+
+	<style>
+		li:hover{background-color:#ddd;}
+		li.cc{background-color:#f0c;}
+	</style>
+	<ul id="uid">
+		<li>aaaaa</li>
+		<li>bbbbb</li>
+		<li>ccccc</li>
+		<li>ddddd</li>
+	</ul>
+	名称：<input type="text" size="10" id="tid" name="name"/> 
+	<button onclick="doreplace()">替换掉节点</button>
+	<script type="text/javascript">
+		//获取ul里面的所有li子节点
+		var list = document.getElementById("uid").getElementsByTagName("li");
+		var ob =null;
+		//遍历li
+		for(var i=0;i<list.length;i++){
+			list[i].onclick=function(){
+	//----- obj.className 获取节点的类名
+	//----- obj.className= 设置节点的类名
+				this.className="cc";
+				ob = this;
+			}
+		}			
+		function doreplace(){
+			//获取ul节点
+			var uid = document.getElementById("uid");
+			//获取输入框中的值
+			var name = document.getElementById("tid").value;
+			//创建一个节点
+			var li = document.createElement("li");
+			//将内容添加到节点内
+			li.innerHTML = name;
+			li.onclick=function(){
+				this.className="cc";
+				ob = this;
+			}		
+			//执行替换
+	//----- obj.replaceChild() 替换子节点
+			uid.replaceChild(li,ob);	 //将ob 替换为li
+		}
+	</script>
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== GET方式的异步加载
+
+
+
+	<h2 class="cc">JavaScript实例:Ajax操作实现数据求和(GET)</h2>
+	<form action="" name="myform" onsubmit="return doAdd()">
+		数值1：<input type="text" name="num1"/><br/><br/>
+		数值2：<input type="text" name="num2"/><br/><br/>
+		结 果：<input type="text" name="res" readonly style="border:0px;"/><br/><br/>
+		<input type="submit" value="求和"/>
+	</form>
+	<script type="text/javascript">
+		function doAdd(){
+			//获取要提交的数值
+			var m1 = document.myform.num1.value;
+			var m2 = document.myform.num2.value;
+			//1. 创建Ajax请求对象
+			var xmlhttp = null;
+			if(window.XMLHttpRequest){
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			}else{
+				// code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			//2. 设置回调函数
+			xmlhttp.onreadystatechange=function(){
+				//判断是否完成
+				if(xmlhttp.readyState==4){
+					//判断响应状态
+					if(xmlhttp.status==200){
+						//获取响应信息
+						var str = xmlhttp.responseText;
+						//将信息输出到结果框
+						document.myform.res.value=str;
+					}
+				}
+			}
+			//3. 初始化请求信息
+			xmlhttp.open("get","2.php?m1="+m1+"&m2="+m2,true);
+			//4. 发送请求
+			xmlhttp.send();
+			return false;
+		}
+	</script>
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+//===== POST方式的异步加载
+	
+		<form action="" name="myform" onsubmit="return doAdd()">
+			数值1：<input type="text" name="num1"/><br/><br/>
+			数值2：<input type="text" name="num2"/><br/><br/>
+			结 果：<input type="text" name="res" readonly style="border:0px;"/><br/><br/>
+			<input type="submit" value="求和"/>
+		</form>
+        <script type="text/javascript">
+			function doAdd(){
+				//获取要提交的数值
+				var m1 = document.myform.num1.value;
+				var m2 = document.myform.num2.value;
+				//1. 创建Ajax请求对象
+				var xmlhttp = null;
+				if(window.XMLHttpRequest){
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				}else{
+					// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				//2. 设置回调函数
+				xmlhttp.onreadystatechange=function(){
+					//判断是否完成
+					if(xmlhttp.readyState==4){
+						//判断响应状态
+						if(xmlhttp.status==200){
+							//获取响应信息
+							var str = xmlhttp.responseText;
+							//将信息输出到结果框
+							document.myform.res.value=str;
+						}
+					}
+				}		
+				//3. 初始化请求信息
+				xmlhttp.open("post","2.php",true);
+				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				//4. 发送请求
+				xmlhttp.send("m1="+m1+"&m2="+m2);
+				return false;
+			}
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 异步加载json 数据
+
+
+	<script type="text/javascript">
+		var xmlhttp = null;		//1. 创建Ajax请求对象
+		if(window.XMLHttpRequest){			//判断并兼容
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}else{
+			// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+								//2. 设置回调函数
+		xmlhttp.onreadystatechange=function(){
+			//判断请求状态为4，响应状态为200
+			if(xmlhttp.readyState==4 && xmlhttp.status==200){
+				//获取响应信息
+				var info = xmlhttp.responseText;
+				//将info数据转码
+				eval("var data="+info+";");
+				
+				//处理数据
+				//alert(data[2].name);
+				var str="<ul>";
+				for(var i=0;i<data.length;i++){
+					str += "<li>";
+					str += "name:"+data[i].name+"; ";
+					str += "age:"+data[i].age+"; ";
+					str += "sex:"+data[i].sex+"; ";
+					str += "</li>";
+				}
+				str += "</ul>";
+				//将拼装处理的结果放到div中
+				document.getElementById("did").innerHTML = str;
+			}
+		}
+		//3. 初始化请求信息
+		xmlhttp.open("get","4.php",true);
+		//4. 发送请求
+		xmlhttp.send();
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== document.referrer 获取当前载入文档的URL
+
+      if (!document.referrer || document.referrer.indexOf("mp.weixin.qq.com/mp/rumor") == -1){
+        location.href = "http://mp.weixin.qq.com/mp/rumor?action=info&__biz=" + biz + "&mid=" + mid + "&idx=" + idx + "&sn=" + sn + "#wechat_redirect";
+      }
+
+
+
+
+
+
+
+
+
+
+
+//===== obj.submit(); 触发表单提交 (js方式)
+
+	<script>
+
+		var next = document.getElementById('nextBtn');
+	
+		var f1 = document.getElementById('form1');
+
+		next.onclick=function(){
+
+			f1.submit();
+		//提交表单
+		}
+
+	</script>
+
+
+
+
+
+
+//===== JS用 name方式 获取表单，下拉框，value获取下拉框及表单项的值
+
+		<form name='a1'  action='' method='post'>
+			 <select name='sel'>
+				echo "<option value='{$i}'>{$i}</option>";  
+			 </select>
+		</form>
+		<script>
+			 var sel = document.a1.sel;			//用name 选择表单及表单项
+			 sel.onchange=function(){
+					 alert(sel.value);			//获取下拉选项值	
+			 }
+		</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== return false 阻止表单提交
+//===== value 取表单值，length 取值长度
+
+	<form name='f' onsubmit='return check()'>
+
+        <script>
+                function check(){
+                        var ot = document.f.outTitle;
+                        var ol = document.f.outLink;
+                        if(ot.value.length<1 || ol.value.length<1){
+                                return false;   
+                        }
+                }
+        </script>
+
+
+
+
+
+
+
+
+
+
+//===== !window.opera	检测浏览器是否为opera 
+
+	if(!window.opera){
+		alert(1);
+	}else{
+		alert(2);
+	}
+
+
+
+
+
+
+
+
+
+//===== document.forms[0] 取表单对象，tagName 取元素名， value 取表单值， innerHTML 取元素内容
+//===== style.background  获取或设置元素的style属性， ob.id 获取元素的标准属性
+		<div id="d">
+			aaaa
+		</div>
+		<form id='f'>
+			<input id='i' name='inp' value='123' />
+		</form>
+		<script>
+			var d = document.getElementById('d');	//获取DIV元素名
+			var f = document.forms[0];				//获取表单元素名
+			var f = document.getElementById('f');
+			var i = document.getElementById('i');	
+			//alert(i.tagName);		//获取元素名
+			//alert(d.innerHTML);		//获取元素内容
+			//alert(i.value);		//获取表单值
+			//alert(f.i.value);
+			//alert(f.inp.value);
+
+			//alert(d.style.background);		//获取style类型属性
+			//d.style.background='blue';		//设置style类型属性
+			//alert(d.id);						//获取元素的标准属性
+		</script>
+

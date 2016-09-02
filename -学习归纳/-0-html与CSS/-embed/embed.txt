@@ -1,0 +1,23 @@
+
+
+//===== embed 音频标签
+//===== embed 属性
+
+
+
+
+//===== embed 音频标签
+
+	<embed id='a' src="xdl.mp4" >
+
+	<embed src="http://mting.info:81/fiction/kongbu/maoshan4/dyl2cns4.mp3" height=500 width=800 />
+
+
+	
+	
+//===== embed 属性
+
+	height 	设置或返回 embed 元素中 height 属性的值。
+	src 	设置或返回 embed 元素中 src 属性的值。
+	type 	设置或返回 embed 元素中 type 属性的值。
+	width 	设置或返回 embed 元素中 width 属性的值。
