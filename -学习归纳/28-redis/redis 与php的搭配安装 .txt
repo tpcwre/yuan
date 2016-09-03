@@ -1,5 +1,0 @@
-一：安装好xampp和WAMP的环境后，将 php_igbinary.dll 和 php_redis.dll 两个文件复制到 php/ext 目录下
-
-二：在php.ini配置文件中 的 Extensions 区域的尾部添加如下两个模块并开启
-	extension=php_igbinary.dll
-	extension=php_redis.dll

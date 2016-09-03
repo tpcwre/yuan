@@ -1,0 +1,355 @@
+
+
+//========== windows上 redis与php 的关联 
+		
+		一：安装好xampp和WAMP的环境后，将 php_igbinary.dll 和 php_redis.dll 两个文件复制到 php/ext 目录下
+
+		二：在php.ini配置文件中 的 Extensions 区域的尾部添加如下两个模块并开启
+			extension=php_igbinary.dll
+			extension=php_redis.dll
+			
+		三：重启Apache 后，运行 redis-server.exe 启动redis服务
+		
+		四：运行 redis-cli.exe 进行命令行的操作
+
+
+
+
+
+
+
+
+
+
+
+//===== redis服务的安装 (linux)
+
+	//----- redis 下载地址：
+
+		https://pan.baidu.com/s/1nuMLWlb  		redis-3.0.1.tar.gz
+
+		https://pan.baidu.com/s/1gfHOI0F		redis-2.8.20.tar.gz
+
+
+
+	//----- redis 的安装 
+
+		tar zxvf redis-3.0.0.tar.gz			//1解压安装包
+
+		cd redis-3.0.0					//进入文件夹
+
+		cd src						//进入src文件夹
+
+		make install					//安装redis
+
+
+
+
+
+	//-- redis 启动服务
+
+
+		安装 完成后 输入命令 ： redis-server &		直接启动redis
+		或
+		redis-server ../redis.conf			使用指定配置文件启动redis	
+
+		如果看到 Server started,Redis version 3.x.x	说明安装成功
+
+
+
+
+
+		//-- 使用redis 启动脚本设置开机自启动方式
+
+		推荐在生产环境中使用启动脚本方式启动redis服务，启动脚本redis_init_script位于redis/utils/目录下
+
+		cd /opt/redis-3.x.x/utils			//1，进入脚本所在目录
+		
+		vim redis_init_script				//2，编辑脚本文件
+		
+			修改以下内容并保存退出
+				EXEC=/usr/local/redis/bin/redis-server
+				CLIEXEC=/usr/local/redis/bin/redis-cli
+		
+		
+		mkdir -p /etc/redis					//3，创建一个配置文件存放目录
+		
+		cp /opt/reids-3.x.x/redis.conf /etc/redis/6379.conf	//4，将配置文件复制到刚创建的目录中并重命名与端口相同
+
+		vim /etc/redis/6379.conf			//5，编辑该配置文件
+
+				daemonize yes 					//将no 修改成 yes 后台启动
+
+		cp radis_init_script /etc/init.d/redisd		//复制脚本文件到自启动目录中
+
+		sudo update-rc.d redisd defaults			//让自启动生效
+		
+		service redisd start						//启动redis服务
+
+
+
+
+
+
+
+
+	//-- 连接服务
+
+
+		redis-cli -a jkxy				直接使用密码连接
+
+
+		redis-cli					连接服务后再验证密码
+		auth xxx					 
+
+
+		redis-cli -h 127.0.0.1 -p 6379			连接指定远程服务
+		auth xxx
+
+
+		redis-cli -h 127.0.0.1 -p 6379 -a xiaodong123	用密码直接连接指定远程服务
+
+
+
+
+
+
+
+
+
+//===== redis.conf 配置文件
+
+
+	redis.conf  是用来设置redis服务相关的配置文件，(yum安装时会存放在 /usr/local/redis/etc 下）
+
+		daemonize 		设置服务是否在后台运行	no:前台，yes:后台
+
+		requirepass		设置登录时需要使用的密码
+					requirepass xiaodong123		设置登陆授权密码
+
+		pidfile 		配置pid文件，默认在/var/run/redis.pid
+					pidfile /var/run/redis.pid
+
+		bind 			绑定IP，设置后只接受来自该 ip的请求.如不设置，则接受所有ip
+
+		port			监听端口，默认为 6379
+		
+		timeout 		设置客户端连接超时，单位为秒
+		
+		loglevel		日志等级的划分
+			|-debug
+			|-verbose
+			|-notice
+			|-warning
+			
+		logfile			配置日志文件的路径 
+			
+		appendonly  （yes）		是否开启AOF方式的持久化 no：关闭   yes：开启
+		
+		appendfilename 'appendonly.aof'		//AOF文件名
+		
+		dir ./					//设置AOF文件的存放路径
+
+
+		databases 		设置数据库的个数据，默认使用下标为0的 ，redis默认有16个数据库
+
+		save			设置redis进行数据库镜像的频率
+					save 900 1          	//900秒内至少一个键被更改，就进行快照
+					save 30  10		//30秒内至少10个键被更改，就进行快照
+					save 60  10000		//60秒内至少10000个键被更改，就进行快照
+
+					镜像持久化设置
+		rdbcompression 		持久化镜像备份时，是否进行压缩
+		dbfilename		数据持久化的镜像文件名
+		Dir			数据库镜像备份的文件放置路径 
+		
+		
+		maxclients		客户端的并发连接数，默认10000,(当达到最大连接数据时，redis会关闭最新的连接，并返回超过连接数的错误信息)
+					maxclients 10000
+		maxmemory		配置redis Server 可占用的最大内存值 (当到达最大值时，将无法进行写入操作，但依然可以读)
+					maxmemory 70000
+			
+		slowlog-log-slower-than 10000	设置慢查询的条件  默认是10000微妙，也就是10ms 
+
+		slowlog-max-len 128	设置慢查询最大的条数，当慢查询记录条数超过设置的最大值后，会将最早的slowlog删除，是个FIFO队列
+		
+
+		slaveof 		设置主从配置时的主服务器的ip和端口 (当前为从服时)
+					slaveof 10.251.135.230 6379
+		
+		
+				
+		
+		
+		
+//===== sentinel.conf 	#redis sentinel配置文件，用于监控
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 关联php设置redis扩展
+
+	https://pan.baidu.com/s/1slAIJsL	下载redis 扩展包 redis-2.2.7.tgz
+
+	tar vzxf redis-2.2.7.tgz 		解压
+
+	cd redis-2.2.7		
+
+	/usr/local/php/bin/phpize		生成configure文件
+	
+	./configure --with-php-config=/usr/local/php/bin/php-config				//生成关联php配置文件
+
+	make 					编译
+
+	make install				安装 
+
+	vim /usr/local/php/etc/php.ini 		编辑php配置文件并添加redis扩展
+		extension=redis.so
+
+	service httpd restart			重启apache服务
+
+	运行phpinfo()，如果看到redis模块表示php对redis扩展成功
+
+
+						使用php操作redis
+	<?php
+        	$redis= new Redis();
+        	$redis->connect('127.0.0.1');
+        	$redis->auth('xiaodong123');
+        	$arr = $redis->keys('*');
+        	var_dump($arr);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+//===== redis 持久化 
+			
+			
+				
+		持久化就是把内存中的数据保存在硬盘上。根目录下的 dump.rdb 是redis持久化在硬盘上的文件。
+		
+	//----- od -c dump.rdb		查看 持久化文件内容 命令
+		
+		
+//===== 设置redis持久化配置
+
+		vim /etc/redis/6379.conf 	打开配置文件
+		
+		|-save				设置redis进行数据库镜像的频率
+								
+								save <seconds><changes>
+								禁用快照(持久化)的话就将下面参数全部删除即可
+								save 900 1          //900秒内至少一个键被更改，就进行快照
+								save 30  10			//30秒内至少10个键被更改，就进行快照
+								save 60  10000		//60秒内至少10000个键被更改，就进行快照
+								三个条件是或的关系
+			
+		|-rdbcompression 	持久化镜像备份时，是否进行压缩
+								rdbcompression yes
+		|-dbfilename		数据持久化的镜像文件
+								dbfilename dump.rdb
+		|-Dir				数据库镜像备份的文件放置路径 
+								dir ./
+	
+
+		
+		
+		
+		
+
+
+
+
+
+		
+				
+
+//===== AOF方式 持久化
+		
+		vim /etc/redis/6379.conf 	打开配置文件
+			
+			Appendfsync 
+				|- always 		不停的写入，不停的同步：将aof_buf缓冲区中的所有内容写入并同步到aof文件
+				|- everysec		不停写入，每隔一秒同步一次：将aof_buf 缓冲区中的所有内容写入到aof文件，如果上次同步aof文件的时间距离 现在超过1秒钟，那么再次对aof文件进行同步，并且这个同步操作是由一个线程专门负责执行的.
+				|- no			不停写入，由系统决定何时同步：将aof_ buf缓冲区中的所有内容写入到AOF文件，但并不对AOF文件进行同步，何时同步由操作系统来决定 
+				
+				安全属性上来看，always 最高，但从效率上看no 最高
+	
+
+
+
+
+
+
+
+
+					
+					
+//===== 配置 AOF持久化
+		
+		vim /etc/redis/6379.conf			//打开配置文件
+
+		appendonly yes					//开启AOF持久化
+		
+		appendfilename 'appendonly.aof'			//AOF文件名
+		
+		dir ./						//设置AOF文件的存放路径
+		
+		
+		#appendfsync always
+		appendfsync everysec				//设置AOF持久化的写入及同步方式
+		#appendfsync no
+			
+			
+			
+				
+		
+			
+			
+//===== 配置 rewrite 重写 (持久化文件的重写)
+
+		vim /etc/redis/6379.conf			//打开配置文件
+
+		auto-aof-rewrite-percentage 100			//当前的aof文件大小超过上一次aof文件大小的百分比时会再次重写
+		auto-aof-rewrite-min-size 64mb			//限制最小aof文件的大小
+
+
+		
+		
+		//手动重写	
+		redis-cli -a jkxy			//登陆redis
+		keys *						//查看 所有的key
+		rpush list A B				//创建一个列表 并压入 A B 两个元素
+		lpop list					//弹出一个元素
+		
+		bgrewriteaof				//重写命令	
+
+
+
+

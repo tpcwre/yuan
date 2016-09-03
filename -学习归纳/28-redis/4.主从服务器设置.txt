@@ -1,0 +1,80 @@
+
+//===== 主重设置
+
+	
+	一：按照 //===== redis服务的安装 搭建好redis服务器
+
+
+
+
+	二：按下面设置好配置文件
+
+		daemonize 		设置服务是否在后台运行	no:前台，yes:后台
+
+		设置不同的pid文件名(主从不在同一台机器上，就不用设置了)
+		pidfile /var/run/redis.pid
+
+
+		设置不同的端口(主从不在同一台机器上，就不用设置了)
+		port 6379
+
+
+		设置不同的日志文件名(主从不在同一台机器上，就不用设置了)
+		logfile "/usr/local/redis/redis1.log"
+
+
+
+		设置不同的持久化文件名(主从不在同一台机器上，就不用设置了)
+		dbfilename dump.rdb
+		dir /usr/local/redis/
+
+
+		从服务器设置连接主服务器的IP和端口
+		slaveof 127.0.0.1 6379
+
+
+
+
+	三：重启服务器环境及redis
+		service httpd restart
+		redis-server ./redis1.conf
+		redis-server ./redis2.conf
+		...
+
+
+
+
+
+	四：查看主从状态
+		>info		查看状态
+
+		主服显示：
+			#Replication
+			role:master
+			connected slaves:1
+			slave0:ip=192.168.0.110,port=6379....
+
+		从服显示：
+			#Replication
+			master_host:192.168.0.110
+			master_port:6379
+
+		看到以上内容说明主从以配置成功，主服负责写操作，从服只能进行读操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

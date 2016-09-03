@@ -1,0 +1,859 @@
+
+//===== 其它特殊命令
+
+	MIGRATE 	将 key 原子性地从当前实例传送到目标实例的指定数据库上，一旦传送成功， key 保证会出现在目标实例上，而当前实例上的 key 会被删除。执行的时候会阻塞进行迁移的两个实例
+	DUMP 		序列化给定 key，返回被序列化的值，使用 RESTORE 命令可以将这个值反序列化为 Redis 键
+	RESTORE 	反序列化给定的序列化值，并将它和给定的 key 关联
+	OBJECT 		从内部察看给定 key 的 Redis 对象
+	SORT 		返回或保存给定列表、集合、有序集合 key 中经过排序的元素
+	SCAN 		增量迭代
+
+	save		手动对redis数据备份,因为redis是用一个主线程来处理所有client请求，所以该方式会阻塞所有client请求,不推荐使用
+	bgsave
+
+
+
+
+
+
+
+
+
+	//-- multi 队列
+
+	multi + exec	执行队列
+			multi			//执行队列
+			set a 100		//其中执行的命令不会立即执行
+			...
+			exec			//执行上面队列中所有的命令
+
+	discard		取消队列
+			multi
+			set a 100
+			...
+			discard			//取消队列，上面所有的操作全部失效
+
+
+		//-- multi队列的特殊情况 
+			
+				age1:19 
+				name:li
+				age2:19
+			multi		
+			incr age1
+			incr name
+			incr age2
+			exec
+				1) (integer) 20
+				2) (error) ERR value is not an integer or out of range
+				3) (integer) 20
+			结果：
+				age1:20 
+				name:li
+				age2:20
+
+	
+
+
+
+
+
+
+
+
+
+
+
+	//-- watch 乐观锁(事务)
+			
+			watch a		对key a 开启乐观锁()
+			multi		开启队列
+			set a 100	修改a的值
+			exec		执行队列 
+
+			结果：
+				1，如果在队列执行中，a没有被其它操作改变，则该队列操作执行成功。
+				2，如果在队列执行中，a被其它操作所改变，则该队列操作执行失败并回滚。
+
+
+
+
+
+
+	//-- sub/pub 订阅
+
+		client1:
+			subscribe tv1			//订阅通道tv1,等待接收tv1的推送
+			
+		client2:
+			subscribe tv1 tv2 ...		//订阅通道tv1,tv2...,等待接收tv1.tv2...的推送
+
+		client3:
+			publish tv1 aaa			//向所有监听tv1的用户推送 aaa ,监听tv1的用户会自动接收到
+			publish tv2 bbb			//向所有监听tv2的用户推送 bbb ,监听tv1的用户会自动接收到	
+
+
+ 
+
+
+
+
+	//-- 二进制存储
+
+
+	setbit 		二进制存储（一般用于数据统计）
+			setbit key index value
+			setbit info 0 1			设置info偏移量0 的值为1  （这里的值只能是1或0）
+			setbit info 10086 1		设置info偏移量10086 的值为1
+
+	bitcount 	统计二进制存储
+			bitcount key
+			bitcount info	结果：7   (在info中的7个位的值为1)
+		
+	getbit 		获取进制制指定位的值
+			getbit info 0			获取info偏移量0结果：1
+			getbit info 15			获取info偏移量15结果：0
+			getbit info 10086		获取info偏移量10086结果：1
+
+
+//===== 系统命令
+
+	 config get dir		//获取备份文件存放位置
+
+
+
+
+
+
+
+//===== 库相关操作
+
+	flushdb		清空当前数据库
+	flushall	清空所有数据库
+
+
+
+	select		选择数据库
+
+			select 0
+			select 1
+			...
+
+
+	move		将key移动到其它数据库中
+
+			move abc2 1	将名为abc2的key移动到数据库1中
+
+
+
+
+
+
+
+
+
+
+
+//===== key相关操作
+
+
+	keys *		查看当前库中的key, 有3个通配符  *、?、[]
+			1) "acd"
+			2) "aa"
+			3) "abc"
+			4) "abcd"
+			5) "set1"
+			6) "abe"
+			127.0.0.1:6379> keys a[c,b]d
+				1) "acd"
+				2) "abd"
+			
+			keys a*
+			keys *a
+			keys *b*
+
+
+
+	randomkey	随机返回库中的一个key
+
+
+	rename		修改key的名字
+			rename aa bb	把key名为aa的修改为bb
+
+	renamenx	修改key名，但新名必须是不存在的，否则操作失败
+			renamenx abc4 set2
+
+
+
+	exists		判断一个key是否存在，存在返回1，不存在返回0
+			exists abc
+
+
+
+	type		查看一个key的类型（string,hash,list,set,zset）
+			type aa		查看key名为aa的类型
+
+
+
+	del		删除指定key,成功返1，失败返0 (这个key 可以是任何类型)
+			del a
+
+
+
+	move		将key移动到其它数据库中
+
+			move abc2 1	将名为abc2的key移动到数据库1中
+
+
+	sort		将列表，集合，有序集合中以数字为值的元素按顺序排列并返回
+			sort key
+
+			rpush aa 2
+			rpush aa 4
+			rpush aa 6
+			rpush aa 1
+			rpush aa 3
+			rpush aa 5
+			
+			lrange aa 0 -1
+				1) "2"
+				2) "4"
+				3) "6"
+				4) "1"
+				5) "3"
+				6) "5"
+			sort aa
+				1) "1"
+				2) "2"
+				3) "3"
+				4) "4"
+				5) "5"
+				6) "6"
+
+
+
+
+
+
+//===== 过期时间相关
+
+	expire		以秒为单位设置 key 的有效时间
+			expire set4 5		将集合set4 设置过期时间为5秒
+
+	expireat 	使用时间戳为key设置有效时间,单位秒
+			expireat s1 1472862553
+
+	pexpire 	以毫秒为单位设置 key 的有效时间
+			pexpire list 1000000
+
+	pexpireat 	使用时间戳为key设置有效时间,单位这毫秒
+
+
+	ttl		查看key 的过期时间
+			ttl set4		查看名为set4的key的过期时间（剩余的秒数）
+
+	pttl	 	以毫秒为单位返回key的剩余有效时间
+
+
+	persist		移除key的过期时间,设置为永久有效
+			persist set4
+
+
+	
+
+
+
+
+
+
+
+
+
+
+//===== string操作
+
+	添加
+
+	set		添加键值对
+				set a a
+
+	setnx		key如果不存才添加 nx 是not exist的意思
+				setnx a a
+
+	setex		添加键值对 bb,bb 并指定过期时间
+				setex bb 10 bb		
+
+	setrange 	替换值中的内容
+				set a1 aaaaaa
+				setrange a1 3 bb	将a1的值从下标3后开始替换内容bbb
+				get a1 结果：aaabba
+
+	mset		一次添加多个键值对
+				mset a aa b bb c cc
+	
+	msetnx      	一次添加多个键值对，如果键值存在则不添加
+				msetnx aa aaa bb bbb		（aa或bb有任何一个都不会添加）
+
+
+
+	追加
+	
+	append		给指定值追加内容，返回新值
+			set a a
+			append a b
+			get a			结果：ab
+
+
+
+
+	查询
+
+	get		获取key的值
+			get a
+
+	getset		修改一个以存在的kv,并返回旧值,如kv不存就创建并返回nil
+			set a aa 
+			getset a bb 	会将值aa 修改为bb,并返回旧值aa
+
+			getset c cc	会添加该kv,并返回nil
+
+	getrange	获取一个key指定区间的值,截取字串中[start, stop]范围的值
+			set a abcdefghijklmn
+			getrange a 0 3		结果：abcd
+			getrange a 3 8		结果：defghi
+			getrange a -3 -1	结果：lmn
+
+
+	mget 		一次获取多个kv,不存在的kv会返回nil
+			set a a
+			set b b 
+			mget a b c 	结果： a b nil
+			
+
+
+	strlen		获取指定key的值的长度
+			set a aa
+			strlen a		结果：2
+	
+
+
+	删除 
+
+	del		删除指定key,成功返1，失败返0
+			del a
+
+
+
+	自增，自减操作
+
+	incr		指定key自增
+			set num 1
+			incr num 		自增1，结果：2
+
+	incrby		指定key自增并指定基数
+			set num 1
+			incrby num 5		自增5，结果：6
+
+			incrby b -2		自减2
+
+	incrbyfloat	以浮点数，做自增自减
+			incrbyfloat a1 0.5
+			incrbyfloat a1 -0.5
+
+
+
+	decr		指定key自减
+			set a 5
+			decr a 			自减1，结果：4
+
+
+
+	decrby		指定key自减并指定基数
+			set a 10
+			decrby a 2		自减2，结果：8
+
+			decrby b -2		自增2
+
+
+
+
+
+
+	其它命令
+
+　　	setbit key offset value：设置offset对应二进制上的值，返回该位上的旧值
+
+　　　　　　　　　　　　　　　　　注意：如果offset过大，则会在中间填充0
+
+　　　　　　　　　　　　　　　　　　　　offset最大到多少
+
+　　　　　　　　　　　　　　　　　　　　　2^32-1，即可推出最大的字符串为512M
+
+　　	bitop operation destkey key1 [key2..]    对key1 key2做opecation并将结果保存在destkey上
+
+　　　　　　　　　　　　　　　　　opecation可以是AND OR NOT XOR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== hash 操作
+
+
+	添加
+
+	hset		向hash内添加单个字段 ，一个hash由多个字段组成 
+			hset info name li
+			hset info age 18
+
+	hsetnx		向hash内添加单个字段，如果字段存在则不添加并返回0,
+			hsetnx info name li
+
+	
+	hmset		向hash同时添加多个字段
+			hmset info2 name bbb age 28 sex nv
+
+
+
+
+	查询
+	
+	hget		查询指定hash中的指定字段
+			hget info name
+
+	hmget		查询指定hash中的多个字段
+			hmget info name age sex
+
+
+	hkeys 		查询指定hash中所有字段名
+			hkeys info
+
+	hvals		获取指定hash中所有字段的值
+			hvals info
+
+
+	hgetall		获取指定hash中所有的字段的键值对
+			hgetall info
+
+
+	hash字段长度
+
+	hlen		获取指定hash字段数量
+			hlen info		结果：3
+
+
+
+	判断字段是否存在 
+
+	hexists 	测试指定hash中指定字段是否存在 存在返1，不存在返0 
+			hexists info name
+
+
+
+
+	删除 
+
+	hdel		删除指定hash中指定字段
+			hdel info sex
+
+
+
+
+	自增，自减
+
+	hincrby 	给指定hash的指定字段自增或自减
+			hincrby info age 5		自增
+			hincrby info age -5		自减
+
+
+	hincrbyfloat 	以浮点数给指定hash的指定字段自增或自减
+			hincrbyfloat info age 0.5	
+			hincrbyfloat info age -0.5
+
+
+
+
+
+
+
+
+
+//===== list 操作（链表）
+
+
+	添加
+
+	lpush 		向列表的头部添加字串元素
+			lpush list  a
+
+
+	rpush 		向列表的尾部添加字串元素
+			rpush list k
+
+
+	linsert 	向列表中指定位置添加字串元素
+		
+			linsert list before g ggg	before 指定元素前添加
+
+			linsert list after g g--	after 指定元素后添加
+	
+
+	lset		设置列表中指定下标的元素
+			lset list 0 hhh
+
+
+
+
+
+
+	查询
+
+	lrange		获取列表中的所有元素
+			lrange list 0 -1 	获取列表中全部元素
+			lrange list 0 3		获取列表中下标从0-3的元素
+			lrange list -3 -1	获取列表中倒数最后三个元素
+
+
+	llen		获取列表中所有元素的总个数
+			llen info2
+
+
+	lindex		获取列表指定下标的元素
+			lindex info2 3		获取列表info2 第4个元素
+
+
+
+
+
+	删除 
+
+	lrem		删除列表中的元素
+
+			lrem info 3 a		从列表头部开始删除3个值为a的元素，
+						x>0时，从头部删除x个匹配到的元素
+
+			lrem info -2 b		从列表尾部开始删除2个值为b的元素
+						x<0时，从尾部删除x个匹配到的元素
+
+			lrem info 0 c		从列表中删除所有值为c元素
+						x=0时，删除全部匹配到的元素
+			
+
+
+
+	ltrim		删除列表中指定范围以外的元素
+			ltrim info 5 8		删除列表中下标从5-8以外的所有元素
+
+
+
+	lpop 		从列表头部删除一个元素
+			lpop info 
+
+
+
+	rpop		从列表尾部删除一个元素
+			rpop info 
+
+
+	rpoplpush	从第一个列表尾部删除一个元素，并添加到第二个列表的头部
+
+			rpoplpush info1 info2		从表info1 将元素导入列表info2
+
+			rpoplpush info2 info2		将列表info2元素循环
+
+
+
+
+
+
+
+
+
+
+
+
+//===== set 操作（无序集合）
+
+
+	添加
+	
+	sadd		向指定集合中添加一个元素,不能添加重复元素，成功返回1，失败返回0
+			sadd set1 a	
+
+
+
+
+	删除
+
+	srem		删除指定集合中的指定元素
+			srem set1 b
+
+
+	spop		随机删除集合中的某个元素，并返回该元素
+			spop set1
+
+
+
+	查看 
+
+	srandmember	随机获取并返回集合中的一个元素，
+			srandmember s1
+
+
+	smembers	获取指定集合中所有元素
+			smembers set1
+
+
+	sismember 	查看集合中是否存在指定元素
+			sismember s1 c		查s1集合中是否存在元素c 
+
+
+	scard		获取集合中元素的总个数
+			scard s1
+
+
+
+	差集，交集,并集
+
+	sdiff		获取第一个集合有，而第二个集合没有的元素，并返回该元素
+
+			set1:a b 	set2:b c
+
+			sdiff set1 set2 	结果：a
+		
+			sdiff set2 set1 	结果：c
+
+	
+	sdiffstore	获取两个集合中的差集并存储到另一个集合中
+		
+			sdiffstore a4 a2 a1	 将集合 a2,a1 的差集存储到 a4 集合中 
+
+
+	sinter		获取两个集合中的交集（相同的元素）,返回该元素
+			sinter a1 a2
+	
+
+	sinterstore	将两个集合的交集（相同元素）存储到另一个集合中
+			sinterstore a6 a1 a2	将集合a1,a2的交集存储到a6集合中
+
+
+
+	sunion		并集（合并两个集合，并去重）
+			s1:a b 	s2:b c 
+
+			sunion s1 s2 		结果：a b c
+
+
+	sunionstore	并集，并把结果存储到另一个集合中
+			sunionstore s7 s1 s2	将s1,s2并集，将结果存储在集合s7中
+
+
+
+
+	smove		将集合中一个元素移动到另一个集合中，返回该元素
+			s1:a b 	
+			smove s1 s2 b	将s1集合中的b移动到集合s2
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== Sorted set (有序集合)
+
+
+	添加
+
+	zadd		向集合中添加元素，并指定排序等级
+				zadd s1 0 aa	向集合s1中添加元素aa,并指定其排序等级为0,数字越小排序越靠前,如下
+							
+				 1) "aa"		元素的排序会以字母顺序来排
+				 2) "0"			数字等级越小越靠前
+				 
+				 3) "cc"
+				 4) "0"
+				 
+				 5) "f"
+				 6) "0"
+				 
+				 7) "a"
+				 8) "1"
+				 
+				 9) "bb"
+				10) "1"
+				
+				11) "dd"
+				12) "1"
+				
+				13) "ee"
+				14) "1"
+				
+				15) "c"
+				16) "2"
+				
+				17) "b"
+				18) "3"
+				
+				19) "e"
+				20) "3"
+
+
+
+
+
+
+
+	查看
+
+
+	zrange		获取集合中指定范围的元素值（按socre值正序排列）
+			zrange s1 0 -1			获取集合中所有元素，不显示数字排序
+		
+			zrange s1 0 -1 withscores	获取集合中所有元素，显示数字排序
+
+	zrevrange	获取集合中的指定范围的元素值(按socre值倒序排列)
+			zrevrange s1 0 -1		倒序获取集合中所有元素，不显示数字排序
+		
+			zrevrange s1 0 -1 withscores	倒序获取集合中所有元素，显示数字排序
+
+
+	zrangebyscore 	获取指定排序等级区间的所有元素
+			zrangebyscore s1 1 2 withscores		获取等级为 1到2 的所有元素
+
+
+	zrank 		获取集合中指定元素的下标
+			zrank s1 e		获取集合中元素e的下标
+
+	zrevrank	获取集合中指定元素的下标(倒序)
+			zrevrank s1 e
+
+
+
+
+	zcount 		获取集合中指定排序等级范围的元素总个数
+			zcount s1 0 3		获取排序等级从0到3 的所有元素的总个数
+
+
+
+	zcard		返回集合中元素的个数
+			zcard s1		获取集合s1中的元素总个数
+
+
+
+	zscore 		返回集合中指定元素的排序等级
+			zscore s1 c		结果：返回的等级为2
+
+
+
+
+	删
+
+
+	zrem 		删除集合中指定元素
+			rzem s1 aa			删除集合中为aa的元素
+
+
+
+
+	zremrangebyrank		删除集合中指定下标区间的元素
+				zremrangebyrank s1 3 5		删除下标从3到5的元素
+				zremrangebyrank s1 3 3		删除下标为3的元素
+
+
+
+
+	zremrangebyscore	删除集合中排序等级在指范围内的元素
+				zremrangebyscore s1 0 5		删除排序等级在 0 到5区间的元素
+
+
+
+
+	自增，自减
+
+	zincrby 	对排序的数字做自增或自减
+
+			zincrby s1 3 cc		将排序等级自增，基数为3
+
+			zincrby s1 -3 cc	将排序等级自减，基数为3
+
+
+
+
+
+
+	交集
+
+	zinterstore	比对多个集合的交集并存储到指定集合中
+			zinterstore test 2 l1 l2
+					test 	指定存储到的集合名
+					2 	设置要并集的个数
+					l1	指定第一个集合名
+					l2	指定第二个集合名
+
+
+
+			zadd list 99 one 88 two 77 three 66 four
+			zadd list 99 one 88 two 77 three 55 four
+			zadd list 99 one 88 two 77 three 33 four
+
+			zinterstore tatal 3 l1 l2 l3		将三个集合并集并保存到tatal集合中
+			
+			zinterstore min 3 l1 l2 l3 aggregate min	并集后，取每项（one,two,three）得分最小的,保存到min
+1) "two"
+2) "22"
+3) "one"
+4) "23"
+5) "three"
+6) "38"
+			zinterstore max 3 l1 l2 l3 aggregate max	并集后，取每项（one,two,three）得分最大的,保存到max
+1) "one"
+2) "43"
+3) "three"
+4) "88"
+5) "two"
+6) "92"
+
+
+
+
+
+
+//===== redis.rdb 使用持久化文件恢复数据
+		在redis.conf 配置文件中 将三个save快照条件注释掉
+		然后将以有的dump.db存放到 redis目录中(可以启动redis后用命令 config get dir查看redis目录位置)
+		重启redis后，数据就会被 redis读取并恢复
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
