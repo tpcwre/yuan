@@ -64,7 +64,7 @@
 
 
 
-	//-- watch 乐观锁(事务)
+	//-- watch 乐观锁 + multi队列 (事务)
 			
 			watch a		对key a 开启乐观锁()
 			multi		开启队列
