@@ -1,0 +1,14 @@
+
+
+
+
+//-- 备份sql并直接压缩
+
+	/usr/bin/mysqldump -uroot -pxiaOdonGsIguO32906802 mytest | gzip > /usr/local/mysql/dump/`date +%Y%m%d%H%M%S`.sql.gz
+
+
+
+
+//-- 查找并删除某日前的指定文件
+
+	rm -rf `find -name '*.sql.gz' -mtime +10`		查找并删除10天前生成的 *.sql.gz 文件

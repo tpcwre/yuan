@@ -1,0 +1,116 @@
+
+//===== 手动备份数据库
+
+	mysqldump -uroot -p mytest | gzip > /usr/local/mysql/dump/`date +%Y%m%d%H%M%S`.sqlbak.gz    //使用动态时间为文件名将数据库备份到指定目录
+
+
+												//做全库备份并清空重置binlog日志(备份所有库，恢复时无需进入指定库，即可恢复所有库)
+	mysqldump --single-transaction --flush-logs --master-data=2 --all-databases --delete-master-logs > /usr/local/mysql/dump/full_dump.sql -uroot -p
+												//备份时直接压缩
+	mysqldump -uroot -pxiaOdonGsIguO32906802 --single-transaction --flush-logs --master-data=2 --all-databases --delete-master-logs | gzip> /usr/local/mysql/binlog/full_dump7.sql.gz 
+
+
+
+
+
+
+
+
+
+//===== 自动备份数据库
+	使用crond定时任务+sh脚本完成每晚自动备份数据库
+
+
+	一：编辑脚本 dbdump.sh
+		mysqldump -uroot -pxiaOdonGsIguO32906802 mytest | gzip > /usr/local/mysql/dump/`date +%Y%m%d%H%M%S`.sql.gz	//备份指定数据库并压缩保存
+																//做全库备份
+		mysqldump --single-transaction --flush-logs --master-data=2 --all-databases --delete-master-logs > /usr/local/mysql/binlog/full_dump6.sql -uroot -pxiaOdonGsIguO32906802
+																//备份时直接压缩
+		mysqldump -uroot -pxiaOdonGsIguO32906802 --single-transaction --flush-logs --master-data=2 --all-databases --delete-master-logs | gzip> /usr/local/mysql/binlog/full_dump7.sql.gz 
+		cd /usr/local/mysql/dump						//进入备份目录
+		rm -rf `find -name '*.sql.gz' -mtime +5`				//删除5天以前的旧备份文件
+
+
+
+	二：编辑 crond 定时任务
+
+		crontab -e 		//打开任务编辑器
+			59 23 * * *  /usr/local/mysql/dump/dbdump.sh			//每晚23：59 运行指定备份脚本
+
+
+		service crond restart	//重启crond服务让新任务生效
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 增量备份
+
+	1，编辑mysql配置文件my.ini，开启binlog日志功能 。
+		添加如下内容后重启mysql 
+		#log-bin=mysql-bin
+		log-bin=/usr/local/mysql/binlog/mylog		//开启binlog日志，并指定存放目录
+
+		重启后会在指定目录中生成以下文件
+			/usr/local/mysql/binlog/mylog.000001		//存放用户对数据库的dml操作
+			...
+			/usr/local/mysql/binlog/mylog.index		//索引文件，有哪些增量操作的文件
+
+
+	2，启动binlog日志后，mysql的所有增删改操作都会被记录到binlog日志中
+
+
+	3，使用 mysqlbinlog 查看 mylog.index 二进制文件
+		C:\Users\Administrator>mysqlbinlog d:\binlog/mylog.000001
+			会得到类似如下结果.... 
+			#160809 12:09:28 server id 1  end_log_pos 324 CRC32 0x36ecce4c  Query   thread_id=3     exec_time=0 error_code=0	//end_log_pos 324 记录了该操作的节点号 324
+			use `ttt`/*!*/;				
+			SET TIMESTAMP=1470715768/*!*/;					//这里记录了该操作的时间戳
+			create table ttt(id int,name varchar(32))			//这里记录了该操作的具体命令
+			
+			通过查看日志文件找到想要恢复的节点
+
+
+
+	4，使用mysqlbinlog 命令恢复 数据
+
+	     //按时间方式恢复 
+
+		mysqlbinlog --start-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定时间以后的所有数据
+	
+		mysqlbinlog --stop-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定时间以前的所有数据
+
+		mysqlbinlog --start-datetime="2016-08-09 13:18:13" --stop-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p  //恢复指定时间段的数据
+
+	     //按节点方式恢复
+
+		mysqlbinlog --start-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p		//恢复指定节点以前的数据
+		
+		mysqlbinlog --stop-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p		//恢复指定节点以后的数据
+
+		mysqlbinlog --start-position="11424" --stop-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定节点区间的数据
+
+
+
+	5， 如何做完全恢复
+
+		每天使用 mysaldump 给数据库做一次完全备份，一旦数据库损坏后先使用 mysqldump 备份的文件恢复数据库，然后再使用 mysqlbinlog 增量 来恢复后续的数据！
+
+
+
+
+
+
+
+
+

@@ -49,7 +49,6 @@
 //-- 数据表的横向分分割
 //-- 数据表的垂直分割
 //-- mysql 配置的优化
-//-- mysql的增量备份
 //-- mysql 数据类型
 
 
@@ -1198,72 +1197,6 @@ mysql_unbuffered_query — 向 MySQL 发送一条 SQL 查询，并不获取和缓存结果的行
 
 
 
-
-
-
-
-
-//-- mysql的增量备份
-
-	什么是增量备份
-
-
-	增量备份示例	
-
-	1，打开配置文件my.ini 添加如下内容 ,重启mysql 
-		#log-bin=mysql-bin
-		log-bin=d:/binlog/mylog		//开启binlog日志，并指定存放目录
-
-		重启后会在指定目录中生成以下文件
-			d:/binlog/mylog/mylog.000001		//存放用户对数据库的dml操作
-			d:/binlog/mylog/mylog.index		//索引文件，有哪些增量操作的文件
-
-
-
-
-
-	2，进行数据库操作  (这时的操作在mylog.000001中以经开始记录了)
-
-		create database ttt;
-		use ttt;
-		create table ttt(id int,name varchar(32));
-		insert into ttt values(2,2);
-
-
-	3，使用 mysqlbinlog 查看 mylog.index 二进制文件
-		C:\Users\Administrator>mysqlbinlog d:\binlog/mylog.000001
-			会得到类似如下结果.... 
-			#160809 12:09:28 server id 1  end_log_pos 324 CRC32 0x36ecce4c  Query   thread_id=3     exec_time=0 error_code=0	//end_log_pos 324 记录了该操作的节点号 324
-			use `ttt`/*!*/;				
-			SET TIMESTAMP=1470715768/*!*/;					//这里记录了该操作的时间戳
-			create table ttt(id int,name varchar(32))			//这里记录了该操作的具体命令
-			
-
-
-
-	4，作用mysqlbinlog 命令恢复 数据
-
-	     //按时间方式恢复 
-
-		mysqlbinlog --start-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定时间以后的所有数据
-	
-		mysqlbinlog --stop-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定时间以前的所有数据
-
-		mysqlbinlog --start-datetime="2016-08-09 13:18:13" --stop-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p  //恢复指定时间段的数据
-
-	     //按节点方式恢复
-
-		mysqlbinlog --start-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p		//恢复指定节点以前的数据
-		
-		mysqlbinlog --stop-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p		//恢复指定节点以后的数据
-
-		mysqlbinlog --start-position="11424" --stop-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定节点区间的数据
-
-
-
-	5， 如何做完全恢复
-
-		每周一使用 mysaldump 给数据库做一次完全备份，如果在周一至周日期间数据损坏了。就可以使用 mysqldump 的备份先恢复，然后再使用 mysqlbinlog 增量 来恢复后续的！
 
 
 
