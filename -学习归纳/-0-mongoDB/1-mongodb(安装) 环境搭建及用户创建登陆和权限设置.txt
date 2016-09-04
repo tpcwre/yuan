@@ -34,6 +34,9 @@
 
 	一：运行 mongod 启动 数据库
 		./bin/mongod -f conf/mongod.conf	用指定配置文件启动服务
+		或
+		mongod --dbpath=/usr/local/mongo/data --logpath=/usr/local/mongo/log/log --port=22222 --fork
+			其它启动参数参看 --help
 
 
 	二：登陆客户端
