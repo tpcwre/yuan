@@ -1,0 +1,224 @@
+//===== mysql慢查询示例
+//===== 其它优化相关命令
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== mysql慢查询示例
+
+
+	//一：设置慢查询配置
+		//配置文件中设置慢查询(windows同)
+		vim /etc/my.cnf					
+		[mysqld]
+		slow_query_log=true			//开启慢查询日志
+		slow_query_log_file=/usr/local/mysql/slow_log/slow_log.txt	//设置慢查询日志存储路径及文件
+		long_query_time=1			//设置查询时间条件
+
+		或
+		//mysql中设置慢查询
+		show variables like "long_query_time";		//查看慢查询的时间条件 默认为10秒
+		set long_query_time = 1;			//设置查询的时间条件为1秒
+
+		show variables like "slow_query_log";		//查看慢查询日志是否开启默认off关闭
+		set global slow_query_log=on;			//开启慢查询日志
+
+
+
+
+
+
+	//二：重启httpd和mysql服务
+		service httpd restart 
+		service mysql restart
+
+
+
+
+
+
+	//三：查看是否存在慢语句
+		如果在mysql操作中有超过设定的时间条件时就会被记录到慢查询日志中。
+		show status like "Slow_queries";
+		+---------------+-------+
+		| Variable_name | Value |
+		+---------------+-------+
+		| Slow_queries  | 3     |		//这里记录有3条慢操作
+		+---------------+-------+		
+
+
+
+
+	//四：打开慢查询日志找到这三条语句
+		vim slow_log.txt
+			# Time: 160906 15:27:11
+			# User@Host: root[root] @ localhost []  Id:     1
+			# Query_time: 2.577292  Lock_time: 0.000134 Rows_sent: 0  Rows_examined: 82880
+			SET timestamp=1473146831;
+			select * from a where img='asdf';		//这里就是被记录到的慢语句
+	
+
+	//五：使用explain 或 desc 来查看语句的状态
+
+		explain select * from a where img='asdf'\G
+		*************************** 1. row ***************************
+		           id: 1
+		  select_type: SIMPLE			//SIMPLE表示简单查询(单表)，没有进行多表或联合查询
+		        table: a			//表名
+		         type: ALL			//all：全表查询，说明没有用到任何索引
+		possible_keys: NULL			//可能要使用到的索引
+		          key: NULL			//使用到的索引
+		      key_len: NULL			//使用索引值的最大长度
+		          ref: NULL			//参考
+		         rows: 82880			//操作时所影响的行数 （越少越好）
+		        Extra: Using where
+		1 row in set (0.00 sec)
+
+
+		到此，慢语句被找到并分析该如何提升效率，
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 其它优化相关命令
+
+
+	show status 
+	show status like "com%"
+	show global status like "com%"
+
+
+	
+	show global status like "connections%";		查看mysql的连接次数
+		+---------------+-------+
+		| Variable_name | Value |
+		+---------------+-------+
+		| Connections   | 3     |
+		+---------------+-------+
+
+	
+	show global status like "uptime%";		查看服务运行时长
+		+---------------------------+-------+
+		| Variable_name             | Value |
+		+---------------------------+-------+
+		| Uptime                    | 3063  |
+		+---------------------------+-------+
+
+
+
+							获取mysql增删改查操作次数
+	show status like "com_insert%";				查询本次登陆以来的操作
+	show global status like "com_insert%";		查询mysql运行以来的操作
+
+
+
+	mysql> show status like "com_insert%";
+		+-------------------+-------+
+		| Variable_name     | Value |
+		+-------------------+-------+
+		| Com_insert        | 15    |
+		| Com_insert_select | 14    |
+		+-------------------+-------+
+
+
+	mysql> show status like "com_delete%";
+		+------------------+-------+
+		| Variable_name    | Value |
+		+------------------+-------+
+		| Com_delete       | 0     |
+		| Com_delete_multi | 0     |
+		+------------------+-------+
+
+
+	mysql> show status like "com_update%";
+		+------------------+-------+
+		| Variable_name    | Value |
+		+------------------+-------+
+		| Com_update       | 0     |
+		| Com_update_multi | 0     |
+		+------------------+-------+
+
+
+	mysql> show status like "com_select%";
+		+---------------+-------+
+		| Variable_name | Value |
+		+---------------+-------+
+		| Com_select    | 45    |
+		+---------------+-------+
+
+
+
+
+
+
+							
+
+	
+
+	show status like "innodb_rows%";		获取innodb 增删改查影响行数的操作次数
+		+----------------------+-------+
+		| Variable_name        | Value |
+		+----------------------+-------+
+		| Innodb_rows_deleted  | 0     |
+		| Innodb_rows_inserted | 711   |
+		| Innodb_rows_read     | 4969  |
+		| Innodb_rows_updated  | 0     |
+		+----------------------+-------+
+		如：查询的结果显示了100条，那么影响的行数就是100，删除了4行，影响的行数就是4.
+	
+
+
+
+
+
+	show status like "uptime%";			获取数据库连接次数
+		+---------------+-------+
+		| Variable_name | Value |
+		+---------------+-------+
+		| Connections   | 2     |
+		+---------------+-------+
+
+
+
+	show global status like "slow_queries%";	查询慢查询条数 
+		+---------------+-------+
+		| Variable_name | Value |
+		+---------------+-------+
+		| Slow_queries  | 0     |
+		+---------------+-------+
+	show variables like "%slow%";		先查看慢查询是否开启
+
+		+---------------------------+--------------------------------+
+		| Variable_name             | Value                          |
+		+---------------------------+--------------------------------+
+		| slow_query_log            | ON                             |		是否开启慢查询
+		| slow_query_log_file       | /usr/local/mysql/slow/slow.log |		慢查询日志保存位置
+		+---------------------------+--------------------------------+
+	
+
+	show variables like "%long%";		查看慢查询的时间条件
+		+--------------------------------------------------------+----------+
+		| Variable_name                                          | Value    |
+		+--------------------------------------------------------+----------+
+		| long_query_time                                        | 1.000000 |
+		+--------------------------------------------------------+----------+

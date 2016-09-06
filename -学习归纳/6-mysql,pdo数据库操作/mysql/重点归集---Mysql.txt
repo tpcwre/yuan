@@ -58,6 +58,28 @@
 
 
 
+
+
+//===== 数据库操作语句
+
+	create table b like a;			//复制数据表a到数据表b
+
+	insert into b select * from a;		//将表a的数据复制到表b;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //===== 操作符：
 
 	is null 	a is null  	若操作数a为null ,为真
