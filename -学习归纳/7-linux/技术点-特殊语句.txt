@@ -9,6 +9,40 @@
 
 
 
+
+
 //-- 查找并删除某日前的指定文件
 
 	rm -rf `find -name '*.sql.gz' -mtime +10`		查找并删除10天前生成的 *.sql.gz 文件
+
+
+
+
+
+//-- 图形界面设置开机自启动
+	
+	ntsysv
+
+
+
+
+//-- 光盘挂载并查看当前磁盘情况 
+
+	mount /dev/sr0 /mnt/m0	将光盘sr0 挂载到目录m0
+
+	df -hT
+		文件系统    类型      容量  已用  可用 已用%% 挂载点
+		/dev/mapper/vg_vm1-lv_root
+		              ext4    7.5G  2.7G  4.5G  37% /
+		tmpfs        tmpfs    503M     0  503M   0% /dev/shm
+		/dev/sda1     ext4    485M   31M  429M   7% /boot
+		/dev/sr0   iso9660    3.5G  3.5G     0 100% /mnt/m1
+
+
+
+
+
+
+
+
+	

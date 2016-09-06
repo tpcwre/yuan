@@ -12,6 +12,8 @@
 //===== linux文件夹挂载时，内容暂不可用
 
 window相关
+	
+	//===== 解决：任务管理器的菜单不见了
 	//===== w7 显示或隐藏桌面上运行的程序 
 	//===== w7 显示文件后缀
 	//===== W7 文件夹共享方法
@@ -203,6 +205,24 @@ window相关
 //===== 给windows 添加隐藏用户
 		
 		找到注册表中的“HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon”项，然后在该项下添加子项“\SpecialAccounts\UserList,并在该项下添加以要隐藏的用户为名的 DWORD值 ，值 为0  
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 解决：任务管理器的菜单不见了
+
+	选择进程框外上方的空白处，双击左键即可
+	
+
+
 
 
 
