@@ -53,6 +53,10 @@
 			show slave status\G		//查看主从连接状态  下面两项都为yes 时则说明 主从设置成功！
 				             	Slave_IO_Running: Yes
            	 				Slave_SQL_Running: Yes
+							如果Slave_IO_Running状态不正常时，请检查以下方面
+								1：网络是否连通。使用ping查看，并且在从服务器上登陆主服务器的mysql。
+								2：登陆主服的密码和账户是否正确。
+								3：mysql-bin文件和master_log_pos是否和主服一致(在主服上用show master status查看文件与节点)
 
 
 		
