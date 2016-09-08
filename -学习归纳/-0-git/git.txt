@@ -311,7 +311,8 @@
 
 	git clone git://github.com/tpcwre/obj.git		//从远程库下载项目
 	git clone git://github.com/tpcwre/obj.git newobj	//从远程库下载项目并指定新目录名
-	git clone -b v2.6.3 git@github.com:mongodb/mongo.git	//克隆远程项目的指定版本
+	git clone -b v2.6.3 git@github.com:mongodb/mongo.git	//直接克隆远程项目的指定版本
+	git clone -b dev git@github.com:tpcwre/yuan.git		//直接克隆远程项目的指定分支
 
 	git remote		//查看远程库信息
 	git remote -v		//查看远程库更详细信息
