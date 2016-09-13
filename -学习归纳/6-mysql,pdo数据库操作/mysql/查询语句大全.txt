@@ -17,6 +17,7 @@
 	
 //===== explain	查看sql语句执行效率
 
+		select id,title from collect where id>=(select id from collect order by id limit 90000,1) limit 10;
 		
 		$sql = "select * from user where id > ((select max(id) from user)-5)";			//双select 语句
 
