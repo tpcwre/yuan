@@ -9,6 +9,7 @@
 	show create table a1;			//查看表信息（字段，索引，引擎，编码等）
 	show index from a1;			//查看表索引信息
 
-	alter table house add key(lx,stat);	//添加普通索引或复合索引
+	alter table house add key(lx,stat);		//添加普通索引或复合索引
+	alter table house add index name(id,stat);	//添加普通索引或复合索引自定义索引名方式
 
 	alter table house drop key lx;		//删除指定索引
