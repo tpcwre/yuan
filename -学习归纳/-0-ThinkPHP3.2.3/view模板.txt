@@ -92,13 +92,13 @@
 
 
 
-	<volist name="arr" id='vo'>	// 遍历数组（相当于foreach）
+	<volist name="arr" item='key' id='vo'>	// 遍历数组（相当于foreach）
 		id:{$vo.id}--name:{$vo.name}--sex:{$vo.sex}<br>
 	</volist>
 
 
 					// foreach 循环
-	<foreach name='data' item='key' id='d'>		//只输出两个元素
+	<foreach name='data' id='d'>		//只输出两个元素
 		{$d['name']}----{$d['sex']}<br>
 	</foreach>
 
