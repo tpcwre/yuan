@@ -812,6 +812,8 @@ mysql_unbuffered_query — 向 MySQL 发送一条 SQL 查询，并不获取和缓存结果的行
 
 //-- 索引相关
 
+	alter table house add key(lx,sj,wz);		//创建复合索引
+
 	alter table user2 add primary key (id);		//给指定字段添加主键索引
 					
 							//删除主键

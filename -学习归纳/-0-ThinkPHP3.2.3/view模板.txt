@@ -92,7 +92,7 @@
 
 
 
-	<volist name="arr" id='vo'>	// 遍历数组（相当于foreach）
+	<volist name="arr" item='key' id='vo'>	// 遍历数组（相当于foreach）
 		id:{$vo.id}--name:{$vo.name}--sex:{$vo.sex}<br>
 	</volist>
 
