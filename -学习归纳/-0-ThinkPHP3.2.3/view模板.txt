@@ -98,7 +98,7 @@
 
 
 					// foreach 循环
-	<foreach name='data' item='d'>		//只输出两个元素
+	<foreach name='data' item='key' id='d'>		//只输出两个元素
 		{$d['name']}----{$d['sex']}<br>
 	</foreach>
 
