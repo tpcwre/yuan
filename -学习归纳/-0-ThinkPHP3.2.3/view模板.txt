@@ -58,6 +58,9 @@
 
 //-- 模板中使用的常用命令
 
+	{:I("get.aid")}			//模板中获取大字母函数内容
+	{:U('Index/index')}
+
 	{$Think.version}		// 查看当前版本号
 
 	<?php echo $xx;?>		// PHP 方式输出变量
