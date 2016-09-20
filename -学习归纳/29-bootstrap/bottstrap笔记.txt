@@ -215,6 +215,7 @@
 	
 	class="glyphicon"				只是用来图标声明
 	class='glyphicon-home'				房子形图标，需要 glyphicon
+	class="fa fa-trash-o "				小垃圾筒
 		.....					其它图标参见 http://getbootstrap.com/components/#glyphicons
 
 

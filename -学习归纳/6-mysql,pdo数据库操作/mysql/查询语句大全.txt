@@ -15,7 +15,13 @@
 	
 	
 	
-//===== explain	查看sql语句执行效率
+//-- explain,desc 	查看sql语句执行效率
+
+
+
+//-- 查询语句大全
+
+		select id,bt,hx from (select id,bt,hx from house where stat=1 order by id desc) h limit 450000,5;
 
 		select id,title from collect where id>=(select id from collect order by id limit 90000,1) limit 10;
 		
