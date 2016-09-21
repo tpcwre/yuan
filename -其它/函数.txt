@@ -1,0 +1,694 @@
+﻿//===== javaScript
+	//-- events() 事件
+	//-- 全局函数 
+	//-- string() 字符串函数
+	//-- array() 数组函数
+	//-- Math() 数学函数
+	//-- Date() 时间函数 
+	//-- RegExp() 正则函数
+
+
+//===== PHP 相关函数	
+	//-- array() 数组函数
+	//-- string() 字符串函数
+	//-- Math() 数学函数
+	//-- Date() 时间函数
+	//-- file 文件函数
+	//-- mysql 操作函数
+
+
+
+
+
+
+
+
+
+
+
+//===== javaScript
+
+	//-- events() 事件
+	
+		onabort 图像加载被中断 1 3 4 
+		onblur 元素失去焦点 1 2 3 
+		onchange 用户改变域的内容 1 2 3 
+		onclick 鼠标点击某个对象 1 2 3 
+		ondblclick 鼠标双击某个对象 1 4 4 
+		onerror 当加载文档或图像时发生某个错误 1 3 4 
+		onfocus 元素获得焦点 1 2 3 
+		onkeydown 某个键盘的键被按下 1 4 3 
+		onkeypress 某个键盘的键被按下或按住 1 4 3 
+		onkeyup 某个键盘的键被松开 1 4 3 
+		onload 某个页面或图像被完成加载 1 2 3 
+		onmousedown 某个鼠标按键被按下 1 4 4 
+		onmousemove 鼠标被移动 1 6 3 
+		onmouseout 鼠标从某元素移开 1 4 4 
+		onmouseover 鼠标被移到某元素之上 1 2 3 
+		onmouseup 某个鼠标按键被松开 1 4 4 
+		onreset 重置按钮被点击 1 3 4 
+		onresize 窗口或框架被调整尺寸 1 4 4 
+		onselect 文本被选定 1 2 3 
+		onsubmit 提交按钮被点击 1 2 3 
+		onunload 用户退出页面 1 2 3 
+		
+		
+		
+	//-- 全局函数 
+	
+		decodeURI() 解码某个编码的 URI。 1 5.5 
+		decodeURIComponent() 解码一个编码的 URI 组件。 1 5.5 
+		encodeURI() 把字符串编码为 URI。 1 5.5 
+		encodeURIComponent() 把字符串编码为 URI 组件。 1 5.5 
+		escape() 对字符串进行编码。 1 3 
+		eval() 计算 JavaScript 字符串，并把它作为脚本代码来执行。 1 3 
+		getClass() 返回一个 JavaObject 的 JavaClass。     
+		isFinite() 检查某个值是否为有穷大的数。 1 4 
+		isNaN() 检查某个值是否是数字。 1 3 
+		Number() 把对象的值转换为数字。 1   
+		parseFloat() 解析一个字符串并返回一个浮点数。 1 3 
+		parseInt() 解析一个字符串并返回一个整数。 1 3 
+		String() 把对象的值转换为字符串。 1   
+		unescape() 对由 escape() 编码的字符串进行解码。 1 3 
+
+	
+
+	//-- string() 字符串函数
+	
+		toLowerCase() 把字符串转换为小写。 1 3 
+		toUpperCase() 把字符串转换为大写。 1 3 
+		charAt() 返回在指定位置的字符。 1 3 
+		concat() 连接字符串。 1 4 
+		fontsize() 使用指定的尺寸来显示字符串。 1 3 
+		anchor() 创建 HTML 锚。 1 3 
+		lastIndexOf() 从后向前搜索字符串。 1 3 
+		replace() 替换与正则表达式匹配的子串。 1 4 
+		slice() 提取字符串的片断，并在新的字符串中返回被提取的部分。 1 4 
+		split() 把字符串分割为字符串数组。 1 4 
+		substr() 从起始索引号提取字符串中指定数目的字符。 1 4 
+		substring() 提取字符串中两个指定的索引号之间的字符。 1 3 
+		sup() 把字符串显示为上标。 1 3 
+		sub() 把字符串显示为下标。 1 3 
+		indexOf() 检索字符串。 1 3 
+		big() 用大号字体显示字符串。 1 3 
+		blink() 显示闪动字符串。 1   
+		bold() 使用粗体显示字符串。 1 3 
+		charCodeAt() 返回在指定的位置的字符的 Unicode 编码。 1 4 
+		fixed() 以打字机文本显示字符串。 1 3 
+		fontcolor() 使用指定的颜色来显示字符串。 1 3 
+		fromCharCode() 从字符编码创建一个字符串。 1 4 
+		italics() 使用斜体显示字符串。 1 3 
+		link() 将字符串显示为链接。 1 3 
+		localeCompare() 用本地特定的顺序来比较两个字符串。 1 4 
+		match() 找到一个或多个正在表达式的匹配。 1 4 
+		search() 检索与正则表达式相匹配的值。 1 4 
+		small() 使用小字号来显示字符串。 1 3 
+		strike() 使用删除线来显示字符串。 1 3 
+		toLocaleLowerCase() 把字符串转换为小写。 - - 
+		toLocaleUpperCase() 把字符串转换为大写。 - - 
+		toSource() 代表对象的源代码。 1 - 
+		toString() 返回字符串。 - - 
+		valueOf() 返回某个字符串对象的原始值。 1 4 
+
+		
+
+	//-- array() 数组函数
+	
+		concat() 连接两个或更多的数组，并返回结果。 1 4 
+		join() 把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。 1 4 
+		pop() 删除并返回数组的最后一个元素 1 5.5 
+		push() 向数组的末尾添加一个或更多元素，并返回新的长度。 1 5.5 
+		reverse() 颠倒数组中元素的顺序。 1 4 
+		shift() 删除并返回数组的第一个元素 1 5.5 
+		slice() 从某个已有的数组返回选定的元素 1 4 
+		sort() 对数组的元素进行排序 1 4 
+		splice() 删除元素，并向数组添加新元素。 1 5.5 
+		toSource() 返回该对象的源代码。 1 - 
+		toString() 把数组转换为字符串，并返回结果。 1 4 
+		toLocaleString() 把数组转换为本地数组，并返回结果。 1 4 
+		unshift() 向数组的开头添加一个或更多元素，并返回新的长度。 1 6 
+		valueOf() 返回数组对象的原始值 1 4 
+		
+		
+		
+	//-- Math() 数学函数
+	
+		abs(x) 返回数的绝对值。 1 3 
+		ceil(x) 对数进行上舍入。 1 3 
+		floor(x) 对数进行下舍入。 1 3 
+		max(x,y) 返回 x 和 y 中的最高值。 1 3 
+		min(x,y) 返回 x 和 y 中的最低值。 1 3 
+		random() 返回 0 ~ 1 之间的随机数。 1 3 
+		round(x) 把数四舍五入为最接近的整数。 1 3 
+		sqrt(x) 返回数的平方根。 1 3 
+		acos(x) 返回数的反余弦值。 1 3 
+		asin(x) 返回数的反正弦值。 1 3 
+		atan(x) 以介于 -PI/2 与 PI/2 弧度之间的数值来返回 x 的反正切值。 1 3 
+		atan2(y,x) 返回从 x 轴到点 (x,y) 的角度（介于 -PI/2 与 PI/2 弧度之间）。 1 3 
+		cos(x) 返回数的余弦。 1 3 
+		exp(x) 返回 e 的指数。 1 3 
+		log(x) 返回数的自然对数（底为e）。 1 3 
+		pow(x,y) 返回 x 的 y 次幂。 1 3 
+		sin(x) 返回数的正弦。 1 3 
+		tan(x) 返回角的正切。 1 3 
+		toSource() 返回该对象的源代码。 1 - 
+		valueOf() 返回 Math 对象的原始值。 1 4 
+
+
+		
+	
+	//-- Date() 时间函数 
+	
+		Date() 返回当日的日期和时间。 1 3 
+		getDate() 从 Date 对象返回一个月中的某一天 (1 ~ 31)。 1 3 
+		getDay() 从 Date 对象返回一周中的某一天 (0 ~ 6)。 1 3 
+		getMonth() 从 Date 对象返回月份 (0 ~ 11)。 1 3 
+		getFullYear() 从 Date 对象以四位数字返回年份。 1 4 
+		getHours() 返回 Date 对象的小时 (0 ~ 23)。 1 3 
+		getMinutes() 返回 Date 对象的分钟 (0 ~ 59)。 1 3 
+		getSeconds() 返回 Date 对象的秒数 (0 ~ 59)。 1 3 
+		getMilliseconds() 返回 Date 对象的毫秒(0 ~ 999)。 1 4 
+		getTime() 返回 1970 年 1 月 1 日至今的毫秒数。 1 3 
+		getTimezoneOffset() 返回本地时间与格林威治标准时间 (GMT) 的分钟差。 1 3 
+		parse() 返回1970年1月1日午夜到指定日期（字符串）的毫秒数。 1 3 
+		setDate() 设置 Date 对象中月的某一天 (1 ~ 31)。 1 3 
+		setMonth() 设置 Date 对象中月份 (0 ~ 11)。 1 3 
+		setFullYear() 设置 Date 对象中的年份（四位数字）。 1 4 
+		setHours() 设置 Date 对象中的小时 (0 ~ 23)。 1 3 
+		setMinutes() 设置 Date 对象中的分钟 (0 ~ 59)。 1 3 
+		setSeconds() 设置 Date 对象中的秒钟 (0 ~ 59)。 1 3 
+		setMilliseconds() 设置 Date 对象中的毫秒 (0 ~ 999)。 1 4 
+		setTime() 以毫秒设置 Date 对象。 1 3 
+		toSource() 返回该对象的源代码。 1 - 
+		toString() 把 Date 对象转换为字符串。 1 4 
+		toTimeString() 把 Date 对象的时间部分转换为字符串。 1 4 
+		toDateString() 把 Date 对象的日期部分转换为字符串。 1 4 
+		toUTCString() 根据世界时，把 Date 对象转换为字符串。 1 4 
+		toLocaleString() 根据本地时间格式，把 Date 对象转换为字符串。 1 3 
+		toLocaleTimeString() 根据本地时间格式，把 Date 对象的时间部分转换为字符串。 1 3 
+		toLocaleDateString() 根据本地时间格式，把 Date 对象的日期部分转换为字符串。 1 3 
+		UTC() 根据世界时返回 1997 年 1 月 1 日 到指定日期的毫秒数。 1 3 
+		valueOf() 返回 Date 对象的原始值。 1 4 
+
+		
+	
+	//-- RegExp() 正则函数
+		//-方法
+			search 检索与正则表达式相匹配的值。 1 4 
+			match 找到一个或多个正则表达式的匹配。 1 4 
+			replace 替换与正则表达式匹配的子串。 1 4 
+			split 把字符串分割为字符串数组。 1 4 
+			exec 检索字符串中指定的值。返回找到的值，并确定其位置。 1 4 
+			test 检索字符串中指定的值。返回 true 或 false。 1 4 
+	
+		//-修饰符
+			i 执行对大小写不敏感的匹配。 
+			g 执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。 
+			m 执行多行匹配。 
+
+		//-表达式  
+			[abc] 查找方括号之间的任何字符。 
+			[^abc] 查找任何不在方括号之间的字符。 
+			[0-9] 查找任何从 0 至 9 的数字。 
+			[a-z] 查找任何从小写 a 到小写 z 的字符。 
+			[A-Z] 查找任何从大写 A 到大写 Z 的字符。 
+			[a-Z] 查找任何从小写 a 到大写 Z 的字符。 
+			[adgk] 查找给定集合内的任何字符。 
+			[^adgk] 查找给定集合外的任何字符。 
+			[red|blue|green] 查找任何指定的选项。
+			
+		//-元字符
+			. 查找单个字符，除了换行和行结束符。 
+			\w 查找单词字符。 
+			\W 查找非单词字符。 
+			\d 查找数字。 
+			\D 查找非数字字符。 
+			\s 查找空白字符。 
+			\S 查找非空白字符。 
+			\b 查找位于单词的开头或结尾的匹配。 
+			\B 查找不处在单词的开头或结尾的匹配。 
+			\0 查找 NUL 字符。 
+			\n 查找换行符。 
+			\f 查找换页符。 
+			\r 查找回车符。 
+			\t 查找制表符。 
+			\v 查找垂直制表符。 
+			\xxx 查找以八进制数 xxx 规定的字符。 
+			\xdd 查找以十六进制数 dd 规定的字符。 
+			\uxxxx 查找以十六进制数 xxxx 规定的 Unicode 字符。 
+			
+		//-量词
+			n+ 匹配任何包含至少一个 n 的字符串。 
+			n* 匹配任何包含零个或多个 n 的字符串。 
+			n? 匹配任何包含零个或一个 n 的字符串。 
+			n{X} 匹配包含 X 个 n 的序列的字符串。 
+			n{X,Y} 匹配包含 X 或 Y 个 n 的序列的字符串。 
+			n{X,} 匹配包含至少 X 个 n 的序列的字符串。 
+			n$ 匹配任何结尾为 n 的字符串。 
+			^n 匹配任何开头为 n 的字符串。 
+			?=n 匹配任何其后紧接指定字符串 n 的字符串。 
+			?!n 匹配任何其后没有紧接指定字符串 n 的字符串。 
+			
+
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+
+				
+//===== PHP 相关函数	
+	
+	//-- array() 数组函数
+	
+		//- 其它
+			array_column() 			返回输入数组中某个单一列的值。
+			array_filter() 			用回调函数过滤数组中的元素。
+			array_map() 			把数组中的每个值发送到用户自定义函数，返回新的值。
+			array_multisort() 		对多个数组或多维数组进行排序。
+			array_reduce() 			通过使用用户自定义函数，以字符串返回数组
+			array_udiff() 			比较数组，返回差集（只比较值，使用一个用户自定义的键名比较函数）。
+			array_udiff_assoc() 		比较数组，返回差集（比较键和值，使用内建函数比较键名，使用用户自定义函数比较键值）。
+			array_udiff_uassoc() 		比较数组，返回差集（比较键和值，使用两个用户自定义的键名比较函数）。
+			array_uintersect() 		比较数组，返回交集（只比较值，使用一个用户自定义的键名比较函数）。
+			array_uintersect_assoc() 	比较数组，返回交集（比较键和值，使用内建函数比较键名，使用用户自定义函数比较键值）。
+			array_uintersect_uassoc() 	比较数组，返回交集（比较键和值，使用两个用户自定义的键名比较函数）。
+			array_walk() 			对数组中的每个成员应用用户函数。
+			array_walk_recursive() 		对数组中的每个成员递归地应用用户函数。
+			extract() 			从数组中将变量导入到当前的符号表。
+			uasort() 			使用用户自定义的比较函数对数组中的键值进行排序。
+			uksort() 			使用用户自定义的比较函数对数组中的键名进行排序。
+			usort() 			使用用户自定义的比较函数对数组进行排序。
+			array_intersect_uassoc() 	比较数组，返回交集（比较键名和键值，使用用户自定义的键名比较函数）。
+			array_intersect_ukey() 		比较数组，返回交集（只比较键名，使用用户自定义的键名比较函数）。
+			array_diff_uassoc() 		比较数组，返回差集（比较键名和键值，使用用户自定义的键名比较函数）。
+			array_diff_ukey() 		比较数组，返回差集（只比较键名，使用用户自定义的键名比较函数）。
+
+		//- 数组排序
+			sort($arr) 				对数组排序。
+			rsort($arr) 				对数组逆向排序。
+			asort($arr) 				对关联数组按照键值进行升序排序。
+			arsort($arr) 				对关联数组按照键值进行降序排序。
+			ksort($arr) 				对数组按照键名排序。
+			krsort($arr) 				对数组按照键名逆向排序。
+			natsort($arr) 				用“自然排序”算法对数组排序。
+			natcasesort($arr) 			用“自然排序”算法对数组进行不区分大小写字母的排序。
+
+		//- 数组键值操作
+			unset($arr/$arr[1]) 			销毁数组或删除数组中指定元素
+			array_pad($arr,3,'b') 			用指定值将数组填充到指定长度。
+			shuffle($arr) 				将数组打乱。
+			count($arr) 				返回数组中元素的个数。
+			sizeof($arr) 				count() 的别名。
+			array_flip($arr) 			交换数组中的键和值。
+			array_keys($arr) 			返回数组中所有的键名。
+			array_values($arr) 			返回数组中所有的值。
+			array_reverse($arr) 			返回一个元素顺序相反的数组。
+			array_count_values($arr) 		统计数组中所有值出现的次数。
+			array_rand($arr) 			返回数组中一个或多个随机的键。
+			array_unique($arr) 			删除数组中的重复值。(值不区分索引或关联数组)
+			array_product($arr) 			计算数组中所有值的乘积。
+			array_change_key_case($arr,0/1) 	把数组中所有键更改为小写或大写。
+
+		//- 数组查找替换
+			array_search('xx',$arr) 		搜索数组中给定的值并返回键名。
+			array_splice($arr1,1,2,$arr2) 		将数组中指定范围的元素用另一个数组元素替换。
+			array_replace($arr1,$arr2) 		使用后面数组的值替换第一个数组的值。
+			array_replace_recursive($arr1,$arr2) 	递归地使用后面数组的值替换第一个数组的值。
+
+		//- 数组判断
+			is_array(variable)			判断一个变量是否为数组
+			in_array('xx',$arr) 			检查数组中是否存在指定的值。
+			array_key_exists('xx',$arr) 		检查指定的键名是否存在于数组中。
+			
+		//- 数组判断比较
+			array_diff($arr1,$arr2) 		比较数组，返回差集（只比较值）。
+			array_diff_key() 			比较数组，返回差集（只比较键）。
+			array_diff_assoc() 			比较数组，返回差集（比较键名和键值）。
+			array_intersect() 			比较数组，返回交集（只比较键值）。
+			array_intersect_key() 			比较数组，返回交集（只比较键名）。
+			array_intersect_assoc() 		比较数组，返回交集（比较键名和键值）。
+
+		//- 数组合并,拆分,替换
+			array_chunk($arr,3) 			以指定的元素个数，把一维数组数组分割为二维数组
+			array_merge($arr1,$arr2) 		把多个数组合并为一个数组
+			array_slice($arr,3/3,5) 		按指定下标范围截取数组中的元素
+			array_merge_recursive($arr1,$arr2) 	递归地合并一个或多个数组。
+
+		//- 创建数组
+			array(1,2,3) 				创建数组。	
+			array_combine($arr1,$arr2) 		用一个数组值作为键名，另一个数组值做为值，合成一个新数组
+			range(1,3) 				创建包含指定范围单元的数组
+			compact('name','age') 			将变量合成数组，变量名为键，变量值为元素值.
+			array_fill(1,3,'blue')  		用指定的值，起始下标，数组长度来生成一个数组
+			array_fill_keys(array('k1','k2'),'val') 	用指定的健名，指定的值生成一个数组
+
+		//- 数组指针操作,元素的添加和删除
+			key($arr) 				从数组中取得当前指针元素的键。
+			current($arr) 				返回数组中的当前元素的值。
+			pos($arr) 				current() 的别名。
+			next($arr) 				返回数组当前指针的下一个元素值。
+			prev($arr) 				返回数组当前指针的上一个元素值。
+			end($arr) 				返回数组中最后一个元素值。
+			reset($arr) 				将数组的内部指针重置到首个元素
+			list($a,$b) 				获取数组中的元素列表，并把每个元素赋值给指定的变量
+			each($arr) 				返回数组中当前的键／值对。并将内部指针向前移动：
+			array_shift($arr) 			删除数组中首个元素，并返回被删除元素的值。
+			array_unshift($arr) 			在数组开头插入一个或多个元素。
+			array_push($arr) 			将一个或多个元素插入数组的末尾（入栈）。
+			array_pop($arr) 			删除数组的最后一个元素（出栈）。
+
+
+
+
+
+
+	//-- string() 字符串函数
+	
+		//- 常用字符串函数
+			addcslashes() 在指定的字符前添加反斜杠。 4 
+			addslashes() 在指定的预定义字符前添加反斜杠。 3 
+			bin2hex() 把 ASCII 字符的字符串转换为十六进制值。 3 
+			chr() 从指定的 ASCII 值返回字符。 3 
+			chunk_split() 把字符串分割为一连串更小的部分。 3 
+			count_chars() 返回字符串所用字符的信息。 4 
+			echo() 输出字符串。 3 
+			explode() 把字符串打散为数组。 3 
+			html_entity_decode() 把 HTML 实体转换为字符。 4 
+			htmlentities() 把字符转换为 HTML 实体。 3 
+			htmlspecialchars_decode() 把一些预定义的 HTML 实体转换为字符。 5 
+			htmlspecialchars() 把一些预定义的字符转换为 HTML 实体。 3 
+			implode(),join()   把数组元素组合为一个字符串。 3 
+			ltrim() 从字符串左侧删除空格或其他预定义字符。 3 
+			md5() 计算字符串的 MD5 散列。 3 
+			md5_file() 计算文件的 MD5 散列。 4 
+			money_format() 把字符串格式化为货币字符串。 4 
+			nl2br() 在字符串中的每个新行之前插入 HTML 换行符。 3 
+			number_format() 通过千位分组来格式化数字。 3 
+			ord() 返回字符串第一个字符的 ASCII 值。 3 
+			parse_str() 把查询字符串解析到变量中。 3 
+			print() 输出一个或多个字符串。 3 
+			printf() 输出格式化的字符串。 3 
+			quotemeta() 在字符串中某些预定义的字符前添加反斜杠。 3 
+			rtrim(),chop() 从字符串的末端开始删除空白字符或其他预定义字符。 3 
+			sha1() 计算字符串的 SHA-1 散列。 4 
+			sha1_file() 计算文件的 SHA-1 散列。 4 
+			similar_text() 计算两个字符串的匹配字符的数目。 3 
+			str_ireplace() 替换字符串中的一些字符。（对大小写不敏感） 5 
+			str_pad() 把字符串填充为新的长度。 4 
+			str_repeat() 把字符串重复指定的次数。 4 
+			str_replace() 替换字符串中的一些字符。（对大小写敏感） 3 
+			str_shuffle() 随机地打乱字符串中的所有字符。 4 
+			str_split() 把字符串分割到数组中。 5 
+			str_word_count() 计算字符串中的单词数。 4 
+			strcasecmp() 比较两个字符串。（对大小写不敏感） 3 
+			strchr() 搜索字符串在另一字符串中的第一次出现。strstr() 的别名 3 
+			strcmp() 比较两个字符串。（对大小写敏感） 3 
+			strip_tags() 剥去 HTML、XML 以及 PHP 的标签。 3 
+			stripcslashes() 删除由 addcslashes() 函数添加的反斜杠。 4 
+			stripslashes() 删除由 addslashes() 函数添加的反斜杠。 3 
+			stripos() 返回字符串在另一字符串中第一次出现的位置(大小写不敏感) 5 
+			stristr() 查找字符串在另一字符串中第一次出现的位置(大小写不敏感) 3 
+			strlen() 返回字符串的长度。 3 
+			strnatcasecmp() 使用一种“自然”算法来比较两个字符串（对大小写不敏感） 4 
+			strnatcmp() 使用一种“自然”算法来比较两个字符串（对大小写敏感） 4 
+			strncasecmp() 前 n 个字符的字符串比较（对大小写不敏感）。 4 
+			strncmp() 前 n 个字符的字符串比较（对大小写敏感）。 4 
+			strpos() 返回字符串在另一字符串中首次出现的位置（对大小写敏感） 3 
+			strrchr() 查找字符串在另一个字符串中最后一次出现的位置。 3 
+			strrev() 反转字符串。 3 
+			strripos() 查找字符串在另一字符串中最后出现的位置(对大小写不敏感) 5 
+			strrpos() 查找字符串在另一字符串中最后出现的位置(对大小写敏感) 3 
+			strspn() 返回在字符串中包含的特定字符的数目。 3 
+			strstr() 搜索字符串在另一字符串中的首次出现（对大小写敏感） 3 
+			strtok() 把字符串分割为更小的字符串。 3 
+			strtolower() 把字符串转换为小写。 3 
+			strtoupper() 把字符串转换为大写。 3 
+			strtr() 转换字符串中特定的字符。 3 
+			substr() 返回字符串的一部分。 3 
+			substr_count() 计算子串在字符串中出现的次数。 4 
+			substr_replace() 把字符串的一部分替换为另一个字符串。 4 
+			trim() 从字符串的两端删除空白字符和其他预定义字符。 3 
+			ucfirst() 把字符串中的首字符转换为大写。 3 
+			ucwords() 把字符串中每个单词的首字符转换为大写。 3 
+			wordwrap() 按照指定长度对字符串进行折行处理。 4 
+
+		//- 其它字符串函数
+			convert_cyr_string() 把字符由一种 Cyrillic 字符转换成另一种。 3 
+			convert_uudecode() 对 uuencode 编码的字符串进行解码。 5 
+			convert_uuencode() 使用 uuencode 算法对字符串进行编码。 5 
+			crc32() 计算一个字符串的 32-bit CRC。 4 
+			crypt() 单向的字符串加密法 (hashing)。 3 
+			fprintf() 把格式化的字符串写到指定的输出流。 5 
+			get_html_translation_table() 返回翻译表。 4 
+			hebrev() 把希伯来文本从右至左的流转换为左至右的流。 3 
+			hebrevc() 同上，同时把(\n) 转为 <br />。 3 
+			levenshtein() 返回两个字符串之间的 Levenshtein 距离。 3 
+			localeconv() 返回包含本地数字及货币信息格式的数组。 4 
+			metaphone() 计算字符串的 metaphone 键。 4 
+			nl_langinfo() 返回指定的本地信息。 4 		
+			quoted_printable_decode() 解码 quoted-printable 字符串。 3 
+			setlocale() 设置地区信息（地域信息）。 3 
+			sscanf() 根据指定的格式解析来自一个字符串的输入。 4 
+			sprintf() 把格式化的字符串写写入一个变量中。 3 
+			soundex() 计算字符串的 soundex 键。 3 
+			strpbrk() 在字符串中搜索指定字符中的任意一个。 5 
+			strcoll() 比较两个字符串（根据本地设置）。 4 
+			str_rot13() 对字符串执行 ROT13 编码。 4 
+			strcspn() 返回在找到任何指定的字符之前，在字符串查找的字符数。 3 
+			vprintf() 输出格式化的字符串。 4 
+			vsprintf() 把格式化字符串写入变量中。 4 
+			substr_compare() 从指定的开始长度比较两个字符串。 5 
+			vfprintf() 把格式化的字符串写到指定的输出流。 5 
+	
+	
+	
+	//-- Math() 数学函数
+	
+		//- 常用数学函数
+			is_nan() 判断是否为合法数值。 4 
+			abs() 绝对值。 3 
+			rand() 返回随机整数。 3 
+			getrandmax() 显示随机数最大的可能值。 3 
+			sqrt() 平方根。 3 
+			pow() 返回 x 的 y 次方。 3 
+			mt_rand() 使用 Mersenne Twister 算法返回随机整数。 3
+			mt_getrandmax() 显示随机数的最大可能值。 3 
+			floor() 向下舍入为最接近的整数。 3 
+			ceil() 向上舍入为最接近的整数。 3 
+			round() 对浮点数进行四舍五入。 3 
+			base_convert() 在任意进制之间转换数字。 3 
+ 			max() 返回最大值。 3 
+			min() 返回最小值。 3 
+			pi() 返回圆周率的值。 3 
+			octdec() 把八进制转换为十进制。 3 
+			bindec() 把二进制转换为十进制。 3 
+			decbin() 把十进制转换为二进制。 3 
+			dechex() 把十进制转换为十六进制。 3 
+			decoct() 把十进制转换为八进制。 3 
+			hexdec() 把十六进制转换为十进制。 3 
+
+		//-- 其它数学函数 
+			acos() 反余弦。 3 
+			acosh() 反双曲余弦。 4 
+			asin() 反正弦。 3 
+			asinh() 反双曲正弦。 4 
+			atan() 反正切。 3 
+			atan2() 两个参数的反正切。 3 
+			atanh() 反双曲正切。 4 
+			cos() 余弦。 3 
+			cosh() 双曲余弦。 4 
+			deg2rad() 将角度转换为弧度。 3 
+			exp() 返回 Ex 的值。 3 
+			expm1() 返回 Ex - 1 的值。 4 
+			fmod() 返回除法的浮点数余数。 4 
+			hypot() 计算直角三角形的斜边长度。 4 
+			is_finite() 判断是否为有限值。 4 
+			is_infinite() 判断是否为无限值。 4 
+			lcg_value() 返回范围为 (0, 1) 的一个伪随机数。 4 
+			log() 自然对数。 3 
+			log10() 以 10 为底的对数。 3 
+			log1p() 返回 log(1 + number)。 4 
+			mt_srand() 播种 Mersenne Twister 随机数生成器。 3 
+			rad2deg() 把弧度数转换为角度数。 3 
+			sin() 正弦。 3 
+			sinh() 双曲正弦。 4 
+			srand() 播下随机数发生器种子。 3 
+			tan() 正切。 3 
+			tanh() 双曲正切。 4 
+			
+
+		
+		
+	//-- Date() 时间函数
+		//-示例
+			$t=time();
+			echo($t . "<br />");
+			echo(date("D F d Y",$t));
+			echo(date("Y-m-d H:i:s"));
+		
+		//-- 时间函数
+			checkdate() 验证格利高里日期。 3 
+			date_default_timezone_get() 返回默认时区。 5 
+			date_default_timezone_set() 设置默认时区。 5 
+			date_sunrise() 返回给定的日期与地点的日出时间。 5 
+			date_sunset() 返回给定的日期与地点的日落时间。 5 
+			date() 格式化本地时间／日期。 3 
+			getdate() 返回日期／时间信息。 3 
+			gettimeofday() 返回当前时间信息。 3 
+			gmdate() 格式化 GMT/UTC 日期/时间。 3 
+			gmmktime() 取得 GMT 日期的 UNIX 时间戳。 3 
+			gmstrftime() 根据本地区域设置格式化 GMT/UTC 时间／日期。 3 
+			idate() 将本地时间/日期格式化为整数 5 
+			localtime() 返回本地时间。 4 
+			microtime() 返回当前时间的微秒数。 3 
+			mktime() 返回一个日期的 Unix 时间戳。 3 
+			strftime() 根据区域设置格式化本地时间／日期。 3 
+			strptime() 解析由 strftime 生成的日期／时间。 5 
+			strtotime() 将任何英文文本的日期或时间描述解析为 Unix 时间戳。 3 
+			time() 返回当前时间的 Unix 时间戳。 3 
+
+			
+			
+	//-- file 文件函数
+		
+		//- 常用文件函数
+			fgetc() 从打开的文件中返回字符。 3 
+			fgets() 从打开的文件中返回一行。 3 
+			fclose() 关闭打开的文件。 3 
+			feof() 测试文件指针是否到了文件结束的位置。 3 
+			delete() 参见 unlink() 或 unset()。   
+			copy() 复制文件。 3 
+			dirname() 返回路径中的目录名称部分。 3 
+			fgetss() 从打开的文件中读取一行并过滤掉 HTML 和 PHP 标记。 3 
+			file() 把文件读入一个数组中。 3 
+			file_exists() 检查文件或目录是否存在。 3 
+			file_get_contents() 将文件读入字符串。 4 
+			file_put_contents 将字符串写入文件。 5 
+			filesize() 返回文件大小。 3 
+			filetype() 返回文件类型。 3 
+			fopen() 打开一个文件或 URL。 3 
+			fputs() fwrite() 的别名。 3 
+			fread() 读取打开的文件。 3 
+			fwrite() 写入文件。 3 
+			is_dir() 判断指定的文件名是否是一个目录。 3 
+			is_executable() 判断文件是否可执行。 3 
+			is_file() 判断指定文件是否为常规的文件。 3 
+			is_uploaded_file() 判断文件是否是通过 HTTP POST 上传的。 3 
+			is_writable() 判断文件是否可写。 4 
+			mkdir() 创建目录。 3 
+			move_uploaded_file() 将上传的文件移动到新位置。 4 
+			parse_ini_file() 解析一个配置文件。 4 
+			pathinfo() 返回关于文件路径的信息。 4 
+			touch() 设置文件的访问和修改时间。 3 
+			unlink() 删除文件。 3 
+			realpath() 返回绝对路径名。 4 
+			rename() 重名名文件或目录。 3 
+			rewind() 倒回文件指针的位置。 3 
+			rmdir() 删除空的目录。 3 
+			set_file_buffer() 设置已打开文件的缓冲大小。 3 
+			
+		//-- 其它文件函数
+			basename() 返回路径中的文件名部分。 3 
+			chgrp() 改变文件组。 3 
+			chmod() 改变文件模式。 3 
+			chown() 改变文件所有者。 3 
+			clearstatcache() 清除文件状态缓存。 3 
+			disk_free_space() 返回目录的可用空间。 4 
+			disk_total_space() 返回一个目录的磁盘总容量。 4 
+			diskfreespace() disk_free_space() 的别名。 3 
+			fflush() 向打开的文件输出缓冲内容。 4 
+			fgetcsv() 从打开的文件中解析一行，校验 CSV 字段。 3 
+			fileatime() 返回文件的上次访问时间。 3 
+			filectime() 返回文件的上次改变时间。 3 
+			filegroup() 返回文件的组 ID。 3 
+			fileinode() 返回文件的 inode 编号。 3 
+			filemtime() 返回文件的上次修改时间。 3 
+			fileowner() 文件的 user ID （所有者）。 3 
+			fileperms() 返回文件的权限。 3 
+			flock() 锁定或释放文件。 3 
+			fnmatch() 根据指定的模式来匹配文件名或字符串。 4 
+			fpassthru() 从打开的文件中读数据，直到 EOF，并向输出缓冲写结果。 3 
+			fputcsv() 将行格式化为 CSV 并写入一个打开的文件中。 5 
+			fscanf() 根据指定的格式对输入进行解析。 4 
+			fseek() 在打开的文件中定位。 3 
+			fstat() 返回关于一个打开的文件的信息。 4 
+			ftell() 返回文件指针的读/写位置 3 
+			ftruncate() 将文件截断到指定的长度。 4 
+			glob() 返回一个包含匹配指定模式的文件名/目录的数组。 4 
+			is_link() 判断指定的文件是否是连接。 3 
+			is_readable() 判断文件是否可读。 3 
+			is_writeable() is_writable() 的别名。 3 
+			link() 创建一个硬连接。 3 
+			linkinfo() 返回有关一个硬连接的信息。 3 
+			lstat() 返回关于文件或符号连接的信息。 3 
+			pclose() 关闭有 popen() 打开的进程。 3 
+			popen() 打开一个进程。 3 
+			readfile() 读取一个文件，并输出到输出缓冲。 3 
+			readlink() 返回符号连接的目标。 3 
+			stat() 返回关于文件的信息。 3 
+			symlink() 创建符号连接。 3 
+			tempnam() 创建唯一的临时文件。 3 
+			tmpfile() 建立临时文件。 3 
+			umask() 改变文件的文件权限。 3 
+
+			
+			
+	//-- mysql 操作函数
+		mysql_query() 发送一条 MySQL 查询。 3 
+		mysql_result() 取得结果数据。 3 
+		mysql_select_db() 选择 MySQL 数据库。 3 
+		mysql_affected_rows() 取得前一次 MySQL 操作所影响的记录行数。 3 
+		mysql_close() 关闭非持久的 MySQL 连接。 3 
+		mysql_charset_set()	设置使用指定字符集
+		mysql_connect() 打开非持久的 MySQL 连接。 3 
+		mysql_fetch_array() 从结果集中取得一行作为关联数组，或数字数组，或二者兼有。 3 
+		mysql_fetch_assoc() 从结果集中取得一行作为关联数组。 4 
+		mysql_fetch_field() 从结果集中取得列信息并作为对象返回。 3 
+		mysql_fetch_object() 从结果集中取得一行作为对象。 3 
+		mysql_fetch_row() 从结果集中取得一行作为数字数组。 3 
+		mysql_free_result() 释放结果内存。 3 
+		mysql_insert_id() 取得上一步 INSERT 操作产生的 ID。 3 
+		mysql_num_fields() 取得结果集中字段的数目。 3 
+		mysql_num_rows() 取得结果集中行的数目。 3 
+
+		mysql_escape_string() 不赞成。转义一个字符串用于 mysql_query。使用 mysql_real_escape_string() 代替。
+		mysql_fetch_lengths() 取得结果集中每个字段的内容的长度。 3 
+		mysql_change_user() 不赞成。改变活动连接中登录的用户 3 
+		mysql_client_encoding() 返回当前连接的字符集的名称 4 
+		mysql_create_db() 不赞成。新建 MySQL 数据库。使用 mysql_query() 代替。 3 
+		mysql_data_seek() 移动记录指针。 3 
+		mysql_db_name() 从对 mysql_list_dbs() 的调用返回数据库名称。 3 
+		mysql_db_query() 不赞成。发送一条 MySQL 查询。使用 mysql_select_db() 和 mysql_query() 代替。
+		mysql_drop_db() 不赞成。丢弃（删除）一个 MySQL 数据库。使用 mysql_query() 代替。
+		mysql_errno() 返回上一个 MySQL 操作中的错误信息的数字编码。 3 
+		mysql_error() 返回上一个 MySQL 操作产生的文本错误信息。 3 
+		mysql_field_flags() 从结果中取得和指定字段关联的标志。 3 
+		mysql_field_len() 返回指定字段的长度。 3 
+		mysql_field_name() 取得结果中指定字段的字段名。 3 
+		mysql_field_seek() 将结果集中的指针设定为指定的字段偏移量。 3 
+		mysql_field_table() 取得指定字段所在的表名。 3 
+		mysql_field_type() 取得结果集中指定字段的类型。 3 
+		mysql_get_client_info() 取得 MySQL 客户端信息。 4 
+		mysql_get_host_info() 取得 MySQL 主机信息。 4 
+		mysql_get_proto_info() 取得 MySQL 协议信息。 4 
+		mysql_get_server_info() 取得 MySQL 服务器信息。 4 
+		mysql_info() 取得最近一条查询的信息。 4 
+		mysql_list_dbs() 列出 MySQL 服务器中所有的数据库。 3 
+		mysql_list_fields() 不赞成。列出 MySQL 结果中的字段。使用 mysql_query() 代替。
+		mysql_list_processes() 列出 MySQL 进程。 4 
+		mysql_list_tables() 不赞成。列出 MySQL 数据库中的表。使用Use mysql_query() 代替。
+		mysql_pconnect() 打开一个到 MySQL 服务器的持久连接。 3 
+		mysql_ping() Ping 一个服务器连接，如果没有连接则重新连接。 4 
+		mysql_real_escape_string() 转义 SQL 语句中使用的字符串中的特殊字符。 4 
+		mysql_stat() 取得当前系统状态。 4 
+		mysql_tablename() 不赞成。取得表名。使用 mysql_query() 代替。 3 
+		mysql_thread_id() 返回当前线程的 ID。 4 
+		mysql_unbuffered_query() 向 MySQL 发送一条 SQL 查询（不获取 / 缓存结果）。 4 
