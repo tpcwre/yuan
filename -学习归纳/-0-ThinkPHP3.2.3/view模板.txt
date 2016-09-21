@@ -123,6 +123,10 @@
 	<else/>num ╣хсз10    
 	</if>
 
+	<if condition="$Think.get.edit_id == $vo['community_id']">
+		aa
+	</if>
+
 					// switch еп╤о
 
 	<switch name='name'>
