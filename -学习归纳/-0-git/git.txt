@@ -261,6 +261,7 @@
 
 //-- ignore 忽略文件或目录的设置
 	在仓库目录下新建一个名为.gitignore的文件 并添加如下规则内容
+	windows 环境下可以使用  echo 111 > .gitignore 的方式来创建文件 
 		# 		以'#'开始的行，被视为注释.                                                                                               
 		foo.txt		忽略掉所有文件名是 foo.txt的文件.
 		*.html		忽略所有生成的 html文件,
