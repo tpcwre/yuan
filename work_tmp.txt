@@ -13,3 +13,14 @@
 	alter table house add index name(id,stat);	//添加普通索引或复合索引自定义索引名方式
 
 	alter table house drop key lx;		//删除指定索引
+
+
+
+
+
+
+
+
+//===== bootstratp 相关
+
+	class='active';		给选中按钮变色
