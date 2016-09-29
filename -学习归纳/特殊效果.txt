@@ -6,6 +6,10 @@ http://lh.syssuper.com:8000/
 
 	
 
+//===== 其它特殊效果
+	
+	//===== 将mysql数据导出保存为excel表
+
 
 //===== 兄弟连云课堂视频地址及密码
 //===== 相关地址
@@ -3605,3 +3609,67 @@ alert(typeof(divs));
 //===== 邮件服务器的搭建
 
 	查看 百度云-》编程相关-》PHP相关-》audio of php-》传智播客PHP培训第二版PHP视频教程 韩顺平 大型门户网站核心技术-Mysql优化-》15，16集
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 将mysql数据导出保存为excel表
+
+	public function output()
+	{
+		$aid = I("get.aid");
+		$cid = I("get.cid");
+		$bid = I("get.bid");
+		$where = array();
+		if ( $aid != '' )
+		{
+			$where['apartment_id'] = $aid;
+		}
+		if ( $cid != '' )
+		{
+			$where['community_id'] = $cid;
+		}
+		if ( $bid != '' )
+		{
+			$where['building_id'] = $bid;
+		}
+		
+		$data = M('view_room')->where($where)->select();
+
+		// dump($data);die;
+		$output = "<HTML>";
+		$output .= "<HEAD>";
+		$output .= "<META http-equiv=Content-Type content=\"text/html; charset=utf-8\">";
+		$output .= "</HEAD>";
+		$output .= "<BODY>";
+		$output .= "<TABLE BORDER=1>";
+		$output .= "<tr><td>楼盘名称</td><td>小区名称</td><td>楼号</td><td>单元</td>
+		<td>房间号</td><td>业主名称</td><td>业主性别</td><td>业主电话</td><td>业主电话2</td><td>备注</td>
+		</tr>";
+		foreach ($data as $value) {
+		$output .= "<tr><td>{$value['region_name']}</td><td>{$value['community_name']}</td><td>{$value['building_name']}</td><td>{$value['apartment_name']}</td>
+		<td>{$value['room_name']}</td><td>{$value['owner_name']}</td><td>{$value['owner_sex']}</td><td>{$value['owner_phone']}</td>
+		<td>{$value['owner_phone2']}</td><td>{$value['owner_remark']}</td>
+		</tr>";
+		}
+		$output .= "</TABLE>";
+		$output .= "</BODY>";
+		$output .= "</HTML>";
+
+		header("Content-type:application/msexcel");
+		header("Content-disposition: attachment; filename=业主信息表.xls");
+		header("Cache-control: private");
+		header("Pragma: private");
+		print($output);
+
+	}
