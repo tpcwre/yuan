@@ -1,0 +1,462 @@
+//-- mysql操作相关
+show variables like 'default_storage_engine';	数据库当前使用引擎
+show engines;	数据库支持哪些引擎
+show char set;	查看系统中的字符集
+show create database lamp;//查看数据库信息
+show create table a1;//查看数据表信息
+set unique_checks=0;//关闭唯一性校验 (适用于表的复制)
+set autocommit=0;//关闭自动提交
+set names gbk;//设置mysql使用的编码
+delimiter $$	//将SQL语句结束符 ; 修改成 $$  如： select * from user$$  
+
+	set autocommit=0;  			//设置是否自动提交
+
+	show tables;				//查看当前库中所有的表
+
+//-- 库操作相关
+create database lamp2;					建库
+create database lamp2 default character set utf8;	建库并指定编码 
+drop database lamp113;					删库
+show databases;						显示所有库
+use lamp113;						选择库
+select database();					查看当前库信息
+
+
+
+//-- 数据表操作
+create table new1(					建表并指定引擎和编码		
+	id int unsigned primary key auto_increment, 无符号,主键，自增, 
+	id int unique,			唯一索引
+	id int(5) zerofill,		0填充			
+	name char(32) not null default 'hehe',		非空,有默认值
+	sex enum('a','b','c'),		枚举
+	type set('a','b','c'),		集合
+	index sy(id),	常规索引
+	unique sy(i2),	唯一索引
+	fulltxt (title,body),	创建全文索引
+	foreign key (classid) references user(id) //将字段classid 与表user 的字段id 关联为主外键
+)engine=myisam default charset=utf8;	引擎为 myisam 编码   utf8
+
+optimize table t4;//清理碎片
+drop table user;删除指定数据表
+show tables;	查看当前库中所有数据表
+desc user;	查看表结构
+show columns from stu 	查看表结构
+show index from user2\G	//查询user2表的索引字段
+show indexes from user2\G // index 等同于 indexex
+drop index sy on t11;	常规，唯一索引的删除
+create index sy1 on t11(id2);	追加常规索引
+create unique index sy on t12(id2);//追加唯一索引
+truncate table stu;//清空数据表
+alter table a1 change id reid char(33) not null;//修改字段名,类型,约束
+alter table a1 modify reid int auto_increment;//修改字段类型,约束
+alter table a1 add sex enum('0','1');//向表中末尾添加一个新字段
+alter table a1 add id int first;//向表中最前面添加一个新字段
+alter table a1 add age int after name;//在指定字段后面添加一个新字段
+alter table a1 drop sex;//删除指定字段
+alter table a1 drop primary key;//删除表a1的主键
+alter table a1 rename as newa1;	//修改表名
+alter table a1 engine=innodb;//修改指定表的引擎
+alter table 表名 disable keys;//关闭表的索引  (适用于表的复制)
+alter table 表名 enable keys;//开启表的索引 
+
+
+//--数据库的导入导出(数据备份)
+mysqldump -u root -p lamp113 > c:/lamp113.sql		数据库导出
+mysqldump -u root -p lamp113 user > c:/user.sql		数据表导出
+mysqldump -u root -p -d lamp113 user > c:/user.sql 	只导出表结构
+source c:/user.sql	导入数据 
+//定时备份
+1，制做 dump.bat 批处理文件,内容如下 
+ E:\>xampp\mysql\bin\mysqldump -uroot -p test userstat > C:/test.userstat3.bak
+ 注：如果路径中包含空格 ，请使用 双引号“”将路径包含起来
+2，在控制面板中的计划任务中将新建的 dump.bat 批处理文件添加定时任务并设置好运行的时间及次数即可定时备份了，
+
+//windows下制做自动定时备份
+1，制做mysql备份命令的 dump.php 文件
+<?php
+$fname = date('YmdHis');
+$com = "E:/xampp/mysql/bin/mysqldump -uroot -p123 test t4 > c:\\$fname";
+echo exec($com);	// exec() 函数是PHP用来执行CMD 命令的一个函数 
+2，制做一个执行 php 的批处理文件 dump.bat 内容如下：
+E:\xampp\php\php.exe E:\xampp\htdocs\dump.php		//意为：使用php.exe 来执行 dump.php文件
+3，开启计划任务，并将 dump.bat 添加到任务中运行即可。
+		
+
+
+
+//-- mysql 修改密码
+mysqladmin -u root -p password 123			密码修改(外部方式)
+set password for 'root'@'localhost' = password('123');	密码修改(内部方式)
+	
+//--if判断语句
+select class,count(if(score>=60,score,null)),count(if(score<60,score,null)) from student group by class
+select class,sum(score>=60),sum(score<60) from student group by class
+create database if not exists mydb;
+
+//-- insert 添加数据
+insert into a2(name,sex,age) values('a1','1',22),('a2','0',21);同时插入多条数据
+insert into a2(name,sex,age) select name,sex,age from a2;复制并插入自身数
+insert into a2 set name='mayao',sex='0',age=88;	插入单条数据 
+
+//-- 复制表数据
+insert into c select * from b；复制表中全部数据
+insert into c(id,name) select id,name from b；复制表中指定字段数据
+
+//-- delete 删除表中数据
+delete from t1 where id=12;
+
+//--update 修改数据
+update t1 set name='aaa',age=22 where id=12;
+
+//--desc,explain 查看sql语句的索引使用情况 
+explain select * from table  where id=1000;
+desc select * from table  where id=1000;
+           id: 1	查询数据当前的序列号
+  select_type: SIMPLE	查询的类型
+        table: user2	查询的表名 
+         type: ALL	查询的方式：all 代表全表查询
+possible_keys: NULL	可能使用到的索引
+          key: NULL	实际使用的索引
+      key_len: NULL	索引长度	
+          ref: NULL	
+         rows: 1080549	sql语句扫描了多少行
+        Extra: Using where	sql语句的额外信息，比如排序方式filesort... 等
+
+//-- group by + order by null 去除文件的排序
+select * from user group by age order by null\G		
+
+//--对象式查询(直接指定库名和表名)
+select t2.name from lamp.t2;				
+
+//--where 与 having 的区别
+where 查询字段只要是表中字段即可
+select id,name,age from user where height>180;	
+having 查询字段必需是 select 所查询的字段,对首次结果的二次筛选
+select id,name,age from user having id > 30;		
+
+
+//--regexp 正则查询
+select * from user where userName regexp '[a-z]{2}';	
+
+//-- 使用全文索引(fulltxt)方式查找内容 ，
+select * from user where match (title,body) against ('content');
+注：
+0，触发全文索引要使用 where match('索引名') against('关键字');
+1，通过where like '%%' 方式查询是不会触发全文索引的。 
+2，该索引只对英文有效，可以使用 sphinx(coreseek) 技术处理中文
+4，全文索引只会对一些不常用的关键字创建索引，而常见的关键字是不会创建的，所以常见词也叫停止词		
+
+
+//--双select 语句
+select * from user where id > ((select max(id) from user)-5)	
+select *,(select gz from level where user1.level=level.id) as gz from user1;
+
+//--having  语句中的后置过滤
+select avg(age) from s2 where name !='bbb' group by name having avg(age) > 18; 
+
+
+//--group by 分组查询
+!xx group by取指定值以外的 分组平均值
+select avg(age) from s2 where name !='aaa' group by name;
+按种类查商品总数
+select category_id,count(*) from table group by category_id;
+按各类查商品总价  
+select category_id,sum(price) from table gruop by category_id; 
+按种类查询平均价
+select category_id,avg(price) from goods group by category_id  
+按各类查询平均价大于1000的
+select category_id,avg(price) as ap from goods group by category_id having ap>1000; 		
+
+//--union 是否排重
+处理两条查询的结果加起来，删除相同的
+select * from stus where id<10 union select * from stus where id<15;
+同时处理两条查询的结果加起来，并且不删除重复项
+select * from stus where id<10 union all select * from stus where id<15;
+
+//--concat 拼接字段
+select concat(id,"-",name,"-",sex,"-",age) from user;	
+
+//-- select 可进行计算
+select * from tp_owner where owner_id = (select 1+2);	
+select age-2 from user;			
+
+
+//-- order by + rand()随机顺序查询表中所有数据
+按字串长度排序
+select name from tt1 order by length(name) desc limit 10;
+select * from test order by rand();	
+select * from user order by id desc ;  	
+
+//-- where xx in() 指定范围内查询
+select * from user where id in(4,5,6,7,8) order by rand();
+select * from s2 where id not in(2,4,6,8,10,12);  	
+
+//-- limit ? 限制查询条数
+select * from test order by rand() limit 2;	
+select * from test order by rand() limit 2,5;	
+
+//-- between 按指定范围查询
+select * from s2 where id between 2 and 5;	
+select * from s2 where id not between 2 and 12;	
+
+//-- like 模糊查询
+select * from s2 where name like 'aaa';				
+select * from s2 where name like '%a';
+select * from s2 where name like 'a%';
+select * from s2 where name like '%a%';
+select * from s2 where name like '_a_';	
+
+//-- count(*) 查询数据总条数
+select count(*) from s2;						
+select count(name) from s2;	
+			
+//-- max() 求最大值
+select max(id) from s2;	
+	
+//-- min() 求最小值					
+select min(id) from s2;	
+		
+//-- avg() 求平均值				
+select avg(id) from s2;	
+				
+//-- sum() 求总和		
+select sum(age) from s2;						
+
+
+//-- 多表关联查询
+标准关联方式
+select t1.name,count(t2.tie) from t1,t2 where t1.id=t2.uid group by age;
+select t1.name,count(t2.age) from t1,t2 where t1.id=t2.uid group by age having age>18;	
+select u.id,u.name,u.sex,u.age,l.name from user1 as u,level as l where u.level=l.id;
+select * from score, student where score.id=student.id and ....;  
+update A a,B b set a.c1=b.c1,a.c2=b.c2 where a.id=b.id and b.age>50;
+join关联方式
+select * from score join student on score.id=student.id; 
+using()方式
+select * from score join student using(id); 
+左连接查询：
+select * from  test1 a left join test2 b on a.id=b.id 	
+右连接查询
+select * from test1 a right join test2 b on a.id= b.id;
+内连接查询：
+select * from  test1 a  join test2 b on a.id=b.id 
+select * from  test1 a inner join test2 b on a.id=b.id 
+select * from  test1 a , test2 b where a.id=b.id 
+其它复杂查询
+select m.id,m.title,m.hits,count(c.comment_id) num from message m left join comment c on m.id=c.id group by m.id order by count(c.coment_id) desc;
+Select p.id,p.name, count(h.product_id) from products p ,product_hit h where p.id=h.product_id  group by  p.id  order by count(h.product_id) desc limit 10;
+Select p.id,p.name, count(h.product_id) num from products p ,product_hit h where p.id=h.product_id  group by  p.id  order by num desc limit 10
+
+
+//-- 多逻辑查询
+select name,count(name) c,id from user group by name having id>10 order by id desc;
+
+
+//-- and , or 混合式查询
+select * from a2 where id=3 and name='lily' or id=5 and name='xiaogang';	
+select * from user where id=3 or (id=1 and name='马尧');			
+select * from user where (id=3 or id=1) and name='马尧';
+
+
+
+
+//-- as 给字段加别名
+select concat(id,"-",name,"-",sex,"-",age) as cons from user;
+
+//-- dual 亚元表（空表，适合执行某些函数并不想操作数据表的命令）
+//-- rand() mysql中的随机数函数
+select rand_() from dual";
+
+//-- unix_timestamp() mysql中的时间戳函数
+select unix_timestamp();
+
+
+//-- 其它select 查询
+select concat(id,a) from one order by concat(b,id);
+
+
+//-- prepare,execute 的预处理
+			
+prepare stmt1 from 'select * from t1 where id=?';//设置预处理
+set @id=1;	//设置变量set @id2=3;
+execute stmt1 using @id;//使用指定变量
+execute stmt1 using @id2;
+drop prepare stmt1;	//删除 指定的预处理
+
+
+//--show status 了解各种SQL的执行频率
+show status 	//会罗列出mysql300多种状态，
+show status like 'uptime';//获取mysql运行时间 （秒）
+show status like "com_select";//获取select语句的执行次数(delete,update)
+show global status like "com_select";//global/session  所有/当前会话
+show status like 'connections';//查看当前连接数
+show status like 'Handler_read_key';//值越高说明索引使用率越好
+show status like 'Handler_read_rnd_next';//值越高说明语句的效率越低
+show status like '';
+show status like '';
+show status like '';
+show status like '';
+
+//-- show variables 查询数据库中设置的变量值
+show variables like 'default_storage_engine';
+show variables like "long_query_time";	//查看慢查询的时间条件 
+show variables like '%long_query_time%';慢查询的时长条件 
+
+
+//--  set 设置 mysql相关变量
+set unique_checks=0;			//关闭唯一性校验 (适用于表的复制)
+set autocommit=0;			//关闭自动提交
+
+//-- 慢查询
+show status like "slow_queries";获取慢查询语句的条数（慢查询）
+show session/global status like "slow_queries";	//session/global  当前会话/全部
+show variables like "long_query_time";	//查看慢查询的时间条件 
+show variables like '%long_query_time%';慢查询的时长条件 
+set long_query_time = 1;//设置查询的时间条件为1秒
+
+//--Linux下设置慢查询
+在/etc/my.cnf配置文件的[mysqld]选项下增加：
+slow_query_log=TRUE
+slow_query_log_file=/usr/local/mysql/slow_query_log.txt
+long_query_time=3
+		
+//--Windows下设置慢查询：
+在my.ini配置文件的[mysqld]选项下增加：
+set global slow_query_log=on;
+slow_query_log_file=c:/slow_query_log.txt
+long_query_time=3
+
+//-- 慢日志
+set global slow_query_log=on;	//开启慢日志
+打开 mysql.ini ,打到关键字 “datadir =。。。。."即是慢查日志的存放位置
+mysqld.exe --safe-mode --slow-quires-log;//使用安全模式并开启慢查询
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-- php 连接mysql 操作 及函数
+$con=mysql_connect("localhost","root","a1");连接数据库	
+mysql_select_db("lamp");选择数据库			
+mysql_set_charset("utf8");设置字符集			
+$sql="select * from t2";设置sql语句		
+$result=mysql_query($sql);执行语句并得到结果集		
+if(mysql_num_rows($result)>0){	取得结果集中的行数		
+  while($array=mysql_fetch_assoc($result)){ 用关联数组方式获取每行结果
+    var_dump($array);
+  }
+}					
+if(mysql_affected_rows() >0){ 取得前一次 MySQL 操作所影响的记录行数
+  echo mysql_insert_id(); 取得上一步 INSERT 操作产生的 ID 
+}
+mysql_close() 关闭数据库连接
+
+
+
+mysql_fetch_assoc 关联数组
+mysql_fetch_row   索引数组
+mysql_fetch_array 关联或索引数组
+mysql_fetch_object 对象
+mysql_fetch_field 从结果集中取得列信息并作为对象返回
+mysql_insert_id() 取得上一步 INSERT 操作产生的 ID
+mysql_free_result() 释放结果内存
+mysql_error() 	返回上一个 MySQL 操作产生的文本错误信息
+mysql_close() 	关闭 MySQL 连接
+mysql_num_fields — 取得结果集中字段的数目
+mysql_create_db 新建一个 MySQL 数据库
+mysql_client_encoding — 返回字符集的名称
+mysql_data_seek — 移动内部结果的指针
+mysql_db_name — 取得结果数据
+mysql_db_query — 发送一条 MySQL 查询
+mysql_drop_db — 丢弃（删除）一个 MySQL 数据库
+mysql_errno — 返回上一个 MySQL 操作中的错误信息的数字编码
+mysql_escape_string — 转义一个字符串用于 mysql_query
+mysql_fetch_lengths — 取得结果集中每个输出的长度
+mysql_field_flags — 从结果中取得和指定字段关联的标志
+mysql_field_len — 返回指定字段的长度
+mysql_field_name — 取得结果中指定字段的字段名
+mysql_field_seek — 将结果集中的指针设定为制定的字段偏移量
+mysql_field_table — 取得指定字段所在的表名
+mysql_field_type — 取得结果集中指定字段的类型
+mysql_get_client_info — 取得 MySQL 客户端信息
+mysql_get_host_info — 取得 MySQL 主机信息
+mysql_get_proto_info — 取得 MySQL 协议信息
+mysql_get_server_info — 取得 MySQL 服务器信息
+mysql_info — 取得最近一条查询的信息
+mysql_list_dbs — 列出 MySQL 服务器中所有的数据库
+mysql_list_fields — 列出 MySQL 结果中的字段
+mysql_list_processes — 列出 MySQL 进程
+mysql_list_tables — 列出 MySQL 数据库中的表
+mysql_pconnect — 打开一个到 MySQL 服务器的持久连接
+mysql_ping — Ping 一个服务器连接，如果没有连接则重新连接
+mysql_real_escape_string — 转义 SQL 语句中使用的字符串中的特殊字符，并考虑到连接的当前字符集
+mysql_stat — 取得当前系统状态
+mysql_tablename — 取得表名
+mysql_thread_id — 返回当前线程的 ID
+mysql_unbuffered_query — 向 MySQL 发送一条 SQL 查询，并不获取和缓存结果的行
+
+
+
+
+
+
+
+//-- mysql 配置的优化
+打开 my.ini
+port=3306  //设置端口号，如果多mysql的话需要设置不同的端口
+max_connections=100  //设置最大连接数  (2000左右算是极限了)
+query_cache_size=15m  //查询的缓存
+innodb_additional_mem_pool_size =64M //innodb的缓存
+innodb_buffer_pool_size=1G
+
+
+
+
+
+//-- mysql的增量备份
+增量备份示例	
+1，打开配置文件my.ini 添加如下内容 ,重启mysql 
+	#log-bin=mysql-bin
+	log-bin=d:/binlog/mylog		//开启binlog日志，并指定存放目录
+	重启后会在指定目录中生成以下文件
+	d:/binlog/mylog/mylog.000001		//存放用户对数据库的dml操作
+	d:/binlog/mylog/mylog.index		//索引文件，有哪些增量操作的文件
+2，进行数据库操作  (这时的操作在mylog.000001中以经开始记录了)
+	create database ttt;
+	use ttt;
+	create table ttt(id int,name varchar(32));
+	insert into ttt values(2,2);
+3，使用 mysqlbinlog 查看 mylog.index 二进制文件
+	C:\Users\Administrator>mysqlbinlog d:\binlog/mylog.000001
+	会得到类似如下结果.... 
+	#160809 12:09:28 server id 1  end_log_pos 324 CRC32 0x36ecce4c  Query   thread_id=3     exec_time=0 error_code=0	//end_log_pos 324 记录了该操作的节点号 324
+	use `ttt`/*!*/;				
+	SET TIMESTAMP=1470715768/*!*/;					//这里记录了该操作的时间戳
+	create table ttt(id int,name varchar(32))			//这里记录了该操作的具体命令
+4，作用mysqlbinlog 命令恢复 数据
+mysqlbinlog --start-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定时间以后的所有数据
+mysqlbinlog --stop-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定时间以前的所有数据
+mysqlbinlog --start-datetime="2016-08-09 13:18:13" --stop-datetime="2016-08-09 13:18:13" d:\binlog\mylog.000001 | mysql -uroot -p  //恢复指定时间段的数据
+mysqlbinlog --start-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p		//恢复指定节点以前的数据
+mysqlbinlog --stop-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p		//恢复指定节点以后的数据
+mysqlbinlog --start-position="11424" --stop-position="11424" d:\binlog\mylog.000001 | mysql -uroot -p	//恢复指定节点区间的数据
+5， 如何做完全恢复
+每周一使用 mysaldump 给数据库做一次完全备份，如果在周一至周日期间数据损坏了。就可以使用 mysqldump 的备份先恢复，然后再使用 mysqlbinlog 增量 来恢复后续的！
+
+
+
+
+
+
