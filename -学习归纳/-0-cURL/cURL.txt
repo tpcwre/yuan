@@ -1,5 +1,6 @@
 ﻿
 
+
 //初始化CURL
 	$curlobj = curl_init();			
 		$curl = curl_init('http://www.baidu.com');	
@@ -90,6 +91,10 @@
 
 
 
+
+//===== CURL 手册位置 
+	
+	//手册位置：php手册-》函数参考-》其它服务-》cURL->cURL函数
 
 
 

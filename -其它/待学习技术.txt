@@ -1,0 +1,21 @@
+冗余技术 （预防单点故障）
+
+apache web 服务监控
+apache ab压力测试
+
+
+磁盘空间监控
+
+流量监控
+
+mysql 数据库监控
+mysqlslap 压力测试
+
+mrtg 监控图
+Cacti监测
+
+
+postfix 发邮件系统
+dovecot 收邮件系统
+
+

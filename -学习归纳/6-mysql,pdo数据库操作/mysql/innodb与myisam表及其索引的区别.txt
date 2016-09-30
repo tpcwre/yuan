@@ -1,0 +1,21 @@
+
+			1：在只做limit n,m 查询时 myisam 表比innodb表的查询速度要快一倍多
+
+
+			1：myisam和innodb表查询时，int会使用索引，varchar不会使用索引,所以varchar字段用不用索引都一样
+			2：myisam表查询时，int字段要比varchar字段的查询速度快。
+			3：myisam比innodb在不使用索引查询情况下要快一倍以上。
+
+
+
+			1：myisam表查询中where单条件+orderby+limit n时，不会使用where中的索引，只会使用orderby中的索引。
+		*	2：innodb表查询中where单条件+orderby+limit n时，
+				2.1：where和orderby的索引都会使用。两都同时有索引时，优先使用order by 中的索引。
+				2.2：使用order by中的索引效率非常高。
+				2.3：使用where中的索引效率非常低。千万不能使用where中的索引。
+			
+
+		1：myism的单where+orderby+limit n,m 只要limit偏移量大的话，基本都不会使用任何索引
+
+
+

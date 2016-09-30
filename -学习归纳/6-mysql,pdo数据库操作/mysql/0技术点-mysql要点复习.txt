@@ -1,3 +1,25 @@
+
+//-- mysql 视图操作 
+	//-- 创建单表视图
+		create view vowner(roomid,owner_name) as select roomid,owner_name from owner;
+			view	声明创建数据库视图
+			vowner 	视图表名
+			as 	关联视图与指定表的字段操作
+			
+	//-- 创建多表关联视图
+		//左连方式	(右表数据为空时会以null来显示字段)
+		create algorithm=merge view ro(id,name,owner_name) as select r.id,r.name,o.owner_name from room r left join owner o on r.id = o.roomid;
+		//普通关联方式  (两个关联的表的字段必须都不为空才会创建视图)
+		mysql> create algorithm=merge view view_ro(id,name,owner_name) as select r.id,r.name,o.owner_name from room r,owner o where r.id=o.roomid with local check option;
+		
+
+	//-- 删除指定的视图
+		drop view vowner;
+			drop 	删除
+			view	指定删除的类型为视图
+			vowner	视图名
+
+
 //-- mysql操作相关
 show variables like 'default_storage_engine';	数据库当前使用引擎
 show engines;	数据库支持哪些引擎
@@ -31,6 +53,8 @@ create table new1(					建表并指定引擎和编码
 	name char(32) not null default 'hehe',		非空,有默认值
 	sex enum('a','b','c'),		枚举
 	type set('a','b','c'),		集合
+	intime timestamp not null default current_timestamp comment "入住时间",		时间戳
+	room_wyamount float(11,2) DEFAULT '0.00' COMMENT '物业缴费金额',		金额的浮点数
 	index sy(id),	常规索引
 	unique sy(i2),	唯一索引
 	fulltxt (title,body),	创建全文索引
@@ -231,6 +255,8 @@ select t1.name,count(t2.age) from t1,t2 where t1.id=t2.uid group by age having a
 select u.id,u.name,u.sex,u.age,l.name from user1 as u,level as l where u.level=l.id;
 select * from score, student where score.id=student.id and ....;  
 update A a,B b set a.c1=b.c1,a.c2=b.c2 where a.id=b.id and b.age>50;
+更多表关联查询
+select c.community_name,b.building_name,a.apartment_name from tp_community c,tp_building b,tp_apartment a,tp_room r where c.community_id=r.room_community and b.building_id=r.room_building and a.apartment_id=r.room_apartment and r.room_id=6;
 join关联方式
 select * from score join student on score.id=student.id; 
 using()方式
