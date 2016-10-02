@@ -1,23 +1,5 @@
 
-//-- mysql 视图操作 
-	//-- 创建单表视图
-		create view vowner(roomid,owner_name) as select roomid,owner_name from owner;
-			view	声明创建数据库视图
-			vowner 	视图表名
-			as 	关联视图与指定表的字段操作
-			
-	//-- 创建多表关联视图
-		//左连方式	(右表数据为空时会以null来显示字段)
-		create algorithm=merge view ro(id,name,owner_name) as select r.id,r.name,o.owner_name from room r left join owner o on r.id = o.roomid;
-		//普通关联方式  (两个关联的表的字段必须都不为空才会创建视图)
-		mysql> create algorithm=merge view view_ro(id,name,owner_name) as select r.id,r.name,o.owner_name from room r,owner o where r.id=o.roomid with local check option;
-		
 
-	//-- 删除指定的视图
-		drop view vowner;
-			drop 	删除
-			view	指定删除的类型为视图
-			vowner	视图名
 
 
 //-- mysql操作相关

@@ -1,0 +1,23 @@
+<?php
+$root = "root";
+$pwd = "root";
+$host = "localhost";
+$database =  "database";
+$conn = new mysqli($host,$root,$pwd,$database);//面向对象的方式实例化一个对象
+$keywords = $_GET['keywords'];
+$search_sql = "select content from mykey where title = ? ";//其中的?是一个占位符
+$search_action = $conn --->prepare($search_sql);//进行预处理操作
+$search_action ->bind_param("s",$keywords);
+	//绑定参数，第一个参数表示为上面预处理的的占位符的数量和每一个参数的数据类型，s为字符串，i为整形，d为双精度小数，有几个参数，就写几个s或d或i，比如说iiii,ssss,sidi这样的。然后后面就是有几个参数就写几个要绑定的变量，比如bind_param('sss',$username,$password,$code);
+$search_action ->bind_result($content);
+	//将结果绑定在相对应的变量上，比如你select了username,password,你就可以写bind_result($usernmae,$password);
+$search_action ->execute();//执行sql操作
+while($search_action ->fetch()){
+	echo $content.'<br>';
+}
+$search_action ->free_result();//释放内存
+$search_action ->close();//结束这个实例化
+
+ 
+
+?>
