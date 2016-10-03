@@ -1,0 +1,84 @@
+//===== php 自学网站推荐
+
+	1.w3school 在线教程
+	php相关文档的查询
+	http://www.w3school.com.cn/php/
+	2.PHPChina
+	PHP技术交流论坛
+	http://bbs.phpchina.com/
+	3.PHP学习网
+	http://www.xuephp.com/
+	4.PHP新手之家
+	http://www.phpxuexi.com/
+	5.PHP100中文网
+	http://www.php100.com/
+	6.PHP爱好者
+	http://www.joyphper.net/
+	7.php免费资料
+	http://www.xuexi111.com/s/php/
+	8.夏日博客
+	http://www.04ie.com/
+
+	http://www.pandorabox.cn/forum.php?mod=viewthread&tid=285
+
+
+
+
+数据库：
+
+	mysql,redis,mongodb,memcache
+
+
+框架：
+
+	yii2,yaf,thinkphp,ci,laravel
+
+
+服务器：
+
+	nginx,
+
+
+
+环境：
+
+	lamp,lnmp，nginx配置，apache配置
+
+
+语言：
+	php,shell编程
+
+
+版本控制器：
+
+	git,svn
+
+开发模式：
+	
+	MVC,面向对象
+
+
+前端：
+	h5,css3,javascript,jquery,xml
+
+
+
+其它：
+
+	技术文档的编写：熟悉tcp/ip协议,多地部署，数据同步,ecshop二次开发,各种接口开发
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

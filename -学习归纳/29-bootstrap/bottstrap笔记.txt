@@ -285,6 +285,7 @@
 	class='btn-xs'					小两号按钮
 	class='btn-group-vertical'			垂直按钮分组,适用DIV
 	class="btn-group-justified"			等分按钮，适用DIV
+	class='active';					给选中按钮变色
 
 
 

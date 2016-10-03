@@ -50,10 +50,17 @@ desc user;	查看表结构
 show columns from stu 	查看表结构
 show index from user2\G	//查询user2表的索引字段
 show indexes from user2\G // index 等同于 indexex
+show index from a1;	//查看表索引信息
 drop index sy on t11;	常规，唯一索引的删除
 create index sy1 on t11(id2);	追加常规索引
 create unique index sy on t12(id2);//追加唯一索引
+create table a like b;			//复制表结构
+create table a select * from b;		//复制表结构及数据（不包括索引 ）
+show create table a1;			//查看表信息（字段，索引，引擎，编码等）
 truncate table stu;//清空数据表
+alter table house add key(lx,stat);		//添加普通索引或复合索引
+alter table house add index name(id,stat);	//添加普通索引或复合索引自定义索引名方式
+alter table house drop key lx;		//删除指定索引
 alter table a1 change id reid char(33) not null;//修改字段名,类型,约束
 alter table a1 modify reid int auto_increment;//修改字段类型,约束
 alter table a1 add sex enum('0','1');//向表中末尾添加一个新字段
@@ -251,6 +258,9 @@ select * from test1 a right join test2 b on a.id= b.id;
 select * from  test1 a  join test2 b on a.id=b.id 
 select * from  test1 a inner join test2 b on a.id=b.id 
 select * from  test1 a , test2 b where a.id=b.id 
+自连接查询
+select t1.name,t2.name,t3.name,t4.name from category t1 left join category t2 on t2.parent=t1.id left join category t3 on t3.parent = t2.id left join category t4 on t4.parent = t3.id where t1.name='xxxxx';
+
 其它复杂查询
 select m.id,m.title,m.hits,count(c.comment_id) num from message m left join comment c on m.id=c.id group by m.id order by count(c.coment_id) desc;
 Select p.id,p.name, count(h.product_id) from products p ,product_hit h where p.id=h.product_id  group by  p.id  order by count(h.product_id) desc limit 10;
