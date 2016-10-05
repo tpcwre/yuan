@@ -151,6 +151,7 @@ select id,name,age from user having id > 30;
 
 //--regexp 正则查询
 select * from user where userName regexp '[a-z]{2}';	
+select * from stu where name regexp '^[a-z]{2}[0-9]{2}$';
 
 //-- 使用全文索引(fulltxt)方式查找内容 ，
 select * from user where match (title,body) against ('content');
