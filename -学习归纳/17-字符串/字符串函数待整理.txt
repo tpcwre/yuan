@@ -1,35 +1,9 @@
 
 
 
-	// 解析URL的组成部分
-	$u="http://www.baidu.com/in.php?s=kljf&sf=8328";
-	var_dump(parse_url($u));
-	结果：
-		array (size=4)
-		  'scheme' => string 'http' (length=4)
-		  'host' => string 'www.baidu.com' (length=13)
-		  'path' => string '/in.php' (length=7)
-		  'query' => string 's=kljf&sf=8328' (length=14)
 
 
 
-
-
-
-
-	// 2. 统计字符串长度
-		$str = 'abcdefg';
-		echo strlen($str);
-		echo '<hr/>';
-
-	// 15. 去除字符串首尾处指定字符
-		$str  = '##aabbcc##';
-		$aa = trim($str);  //  'aabbcc'
-
-		$str = 'aa/bb/cc/';
-		$aa = rtrim($str); // 'aa/bb/cc'
-
-		echo '<hr/>';
 
 
 	// 16. 返回文件路径信息

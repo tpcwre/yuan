@@ -373,6 +373,11 @@
 	//-- string() 字符串函数
 	
 		//- 常用字符串函数
+			parse_url($url) 解析URL的组成部分
+			strlen($str) 返回字符串的长度。 
+			ltrim($str) 从字符串左侧删除空格或其他预定义字符。 3 
+			rtrim($str),chop() 从字符串的末端开始删除空白字符或其他预定义字符。 3 
+			trim($str) 从字符串的两端删除空白字符和其他预定义字符。 3 
 			addcslashes() 在指定的字符前添加反斜杠。 4 
 			addslashes() 在指定的预定义字符前添加反斜杠。 3 
 			bin2hex() 把 ASCII 字符的字符串转换为十六进制值。 3 
@@ -386,7 +391,6 @@
 			htmlspecialchars_decode() 把一些预定义的 HTML 实体转换为字符。 5 
 			htmlspecialchars() 把一些预定义的字符转换为 HTML 实体。 3 
 			implode(),join()   把数组元素组合为一个字符串。 3 
-			ltrim() 从字符串左侧删除空格或其他预定义字符。 3 
 			md5() 计算字符串的 MD5 散列。 3 
 			md5_file() 计算文件的 MD5 散列。 4 
 			money_format() 把字符串格式化为货币字符串。 4 
@@ -397,7 +401,6 @@
 			print() 输出一个或多个字符串。 3 
 			printf() 输出格式化的字符串。 3 
 			quotemeta() 在字符串中某些预定义的字符前添加反斜杠。 3 
-			rtrim(),chop() 从字符串的末端开始删除空白字符或其他预定义字符。 3 
 			sha1() 计算字符串的 SHA-1 散列。 4 
 			sha1_file() 计算文件的 SHA-1 散列。 4 
 			similar_text() 计算两个字符串的匹配字符的数目。 3 
@@ -416,7 +419,6 @@
 			stripslashes() 删除由 addslashes() 函数添加的反斜杠。 3 
 			stripos() 返回字符串在另一字符串中第一次出现的位置(大小写不敏感) 5 
 			stristr() 查找字符串在另一字符串中第一次出现的位置(大小写不敏感) 3 
-			strlen() 返回字符串的长度。 3 
 			strnatcasecmp() 使用一种“自然”算法来比较两个字符串（对大小写不敏感） 4 
 			strnatcmp() 使用一种“自然”算法来比较两个字符串（对大小写敏感） 4 
 			strncasecmp() 前 n 个字符的字符串比较（对大小写不敏感）。 4 
@@ -435,7 +437,6 @@
 			substr() 返回字符串的一部分。 3 
 			substr_count() 计算子串在字符串中出现的次数。 4 
 			substr_replace() 把字符串的一部分替换为另一个字符串。 4 
-			trim() 从字符串的两端删除空白字符和其他预定义字符。 3 
 			ucfirst() 把字符串中的首字符转换为大写。 3 
 			ucwords() 把字符串中每个单词的首字符转换为大写。 3 
 			wordwrap() 按照指定长度对字符串进行折行处理。 4 
@@ -692,3 +693,21 @@
 		mysql_tablename() 不赞成。取得表名。使用 mysql_query() 代替。 3 
 		mysql_thread_id() 返回当前线程的 ID。 4 
 		mysql_unbuffered_query() 向 MySQL 发送一条 SQL 查询（不获取 / 缓存结果）。 4 
+
+
+
+
+
+
+
+
+
+//-- parse_url($url) 解析URL的组成部分
+	$u="http://www.baidu.com/in.php?s=kljf&sf=8328";
+	var_dump(parse_url($u));
+	结果：
+		array (size=4)
+		  'scheme' => string 'http' (length=4)
+		  'host' => string 'www.baidu.com' (length=13)
+		  'path' => string '/in.php' (length=7)
+		  'query' => string 's=kljf&sf=8328' (length=14)
