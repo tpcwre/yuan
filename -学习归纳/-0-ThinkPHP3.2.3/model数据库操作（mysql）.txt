@@ -229,6 +229,10 @@
 
 //-- select(),find(),getByxxx()  查询相关
 
+	
+	$where['name|phone|place'] = array('like',array("%xxx%"));		//where 条件中可以设置查询字段的多选
+
+
 	$goods = D();
 	$goods->table('User')->select();
 	$goods->select(30);

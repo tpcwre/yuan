@@ -76,9 +76,10 @@
 
 	{$sex2|md5|substr=0,5}		// 截取字符串
 
-	{$now|date='Y-m-d H:i:s',###}	// 将时间戳格式化
+	{$now|date='Y-m-d H:i:s',###}	// 将时间戳格式化(如果$now没有值就使用后面的默认时间)
 		
-	{$Think.now}			// Think系统时间
+	{$Think.now}			// Think系统时间  	2016-10-10 2:26 pm
+		{$Think.now|substr=0,15}			2016-10-10 2:25	
 
 	{$Think.server.http_host}	// 输出当前域名
 	
