@@ -112,7 +112,7 @@
 			ln -s /usr/local/php/bin/php /usr/local/bin/php		//如此 php命令即可全局使用了
 
 
-	//-- 查看用记的登陆及历史操作
+	//-- 查看用户的登陆及历史操作
 	
 			查看某用户 cat /home/username/.bash_history 的操作历史
 		　　使用root登陆使用last -x可查看用户登陆历史。
