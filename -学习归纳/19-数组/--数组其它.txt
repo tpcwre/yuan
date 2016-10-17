@@ -1,0 +1,399 @@
+
+
+
+	
+//===== 数组的特性
+
+        1）、声明数组时，索引数组下标可以不连续。指定什么就是什么。
+        2）、负数可以作为下表，但是没有太大意义。
+        3）、声明关联数组时如果下标不加引号来包含下表，会当作常量来使用。如果连这个常量都没有才会转换为字符串
+        4）、如果下标是null，那么下标将为空字符串，如果下标为小数将会舍掉小数位。
+        5）、索引下标和关联下标可以放在同一个数组中，但是我们不经常用。
+        6）、数组的关联下标和索引下表不会相互影响。关联下标不会影响索引下标的排列规则。
+        7）、array()没有指定下标，默认是索引数组，从0开始
+        8）、array()可以指定下标，使用=>操作符来进行声明，索引和关联都这样做
+
+	1）、声明数组时，索引数组下标可以不连续。指定什么就是什么
+        2）、负数可以作为下标，但是没有太大意义
+	$arr[0]='a';
+	$arr[2]='b';
+	$arr[4]='c';
+	$arr[-4]='d';
+	echo '<pre>';
+		var_dump($arr);
+	echo '<pre>';
+
+	
+	3）、声明关联数组时如果下标不加引号来包含下表，会当作常量来使用。如果连这个常量都没有才会转换为字符串<br>";
+	define('hehe','abc');
+    $var[hehe] = 'b';
+    echo '<pre>';
+        var_dump($var);
+    echo '</pre>';
+	
+	
+	4）、如果下标是null，那么下标将为空字符串，如果下标为小数将会舍掉小数位。<br>";
+	
+	$var[null] = 'a';
+    //var_dump($var);
+    echo $var[''].'<br>';
+	
+	$var[3.14234]='kdf';
+	echo $var[3].'<br>';
+                  
+
+				  
+	5）、索引下标和关联下标可以放在同一个数组中，但是我们不经常用。<br>6）、数组的关联下标和索引下表不会相互影响。关联下标不会影响索引下标的排列规则";
+	$arr1=array('a','b','c','d'=>'ddd','e','f');
+	echo '<pre>';
+	var_dump($arr1);
+    echo '<pre>';
+                  
+				  
+				  
+	
+
+
+	
+	
+//===== 数组的声明 
+
+    	使用[]来直接声明，[]是array()的简化方式。
+
+    注意：
+        1、这种写法得是php 5.4版本以后可以这样使用。
+        2、新版本中可以使用一种方式来获取。
+
+        $var = array('a'=>'1',1=>'b');
+        $var = ['a'=>1,1=>'b'];
+	
+	$arr11=array('A','B','C');
+	var_dump($arr11);
+	
+	$arr12=['a','c','d'];
+	var_dump($arr11);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== 多维数组的声明和使用
+
+	
+     $dongMan = array(
+        'maoxianlei'=>array(
+           array('mingCheng'=>'熊出没','jishu'=>104),
+           array('mingCheng'=>'火影忍者','jishu'=>601),
+           array('mingCheng'=>'死神','jishu'=>366)
+        ),
+        'gaoxiaolei'=>array(
+           array('mingCheng'=>'蜡笔小新','jishu'=>1665),
+           array('mingCheng'=>'哆啦A梦','jishu'=>1760),
+           array('mingCheng'=>'樱桃小丸子','jishu'=>367)
+        )
+    );
+
+    echo "<pre>";
+        var_dump($dongMan);
+    echo "</pre>";
+    echo $dongMan['maoxianlei'][2]['mingCheng'];
+    echo $dongMan['gaoxiaolei'][1]['mingCheng'];
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+
+	
+	
+
+	
+	
+	
+//===== while+指针遍历数组
+
+	$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc');
+	while(true){
+		echo key($arr).'===>'.current($arr).'<br>';
+		if(!next($arr)){
+			break;
+		}
+	}
+	
+	
+	
+	
+
+	
+	
+	
+//===== do while+指针遍历数组
+	
+	$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+	do{
+		echo key($arr).'--'.current($arr).'<br>';
+	}while(next($arr));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//===== for+指针遍历数组
+
+$arr=array('a'=>'aaa','b'=>'bbb','c'=>'ccc','d'=>'ddd','e'=>'eee');
+$count=count($arr);
+for($i=0;$i<$count;$i++){
+	echo key($arr).'--'.current($arr).'<br>';
+	next($arr);
+}
+
+	
+
+
+
+
+
+//===== 数组的注意事项：
+
+	//--- 创建数组未指定下标，PHP会以最大的那个下标值加 1 作为该元素的下标（关键字）.
+	
+		$arr=array(5=>"logo",567,90);
+		//要访问“logo”这个值。
+		echo $arr[5];
+		//要访问 567 这个值；
+		echo $arr[6];
+
+
+
+
+
+	//--- 如果我们给某个元素的下标一样，则会覆盖原来的值。 
+
+		$arr=array(5=>"logo",567,90);
+		$arr[5]="yes";//替换某个元素值
+		echo $arr[5]; //这时的结果就不是"logo"了，而是"yes".
+		echo $arr[6]; // 这个还是不变的。
+
+
+
+
+
+	//--- 当以false 和true 做为下标时，那么 false 相当于0, true相当于1.
+
+		如：
+		$arr[true]="hello";
+		$arr[false]="word";
+		echo $arr[0];  //就会显示"word";
+		echo $arr[1];  //就会显示“hello”
+
+
+
+
+
+	//--- 当以 null 做为下标时，那么访问时 null 等同于 " "   
+
+		如：
+		$arr[null]="北京";
+		echo $arr[null]；
+		echo $arr[" "];    它们两个的显示结果都是“北京”。
+		echo $arr[];    //但是这样的访问是错误的，下标处不能为空内容。
+
+
+
+
+	//--- 当下标带有小数部分时，默认是取整数部分，如12.4 等同于 12;
+	
+		如：
+		$arr[12.4]="hhhh";
+		echo $arr[12.4];
+		echo $arr[12];   //它们的结果都是，hhhh;
+		当整数部分相同，小数不同时，后声明的变量值将覆盖前面的；
+		如：
+		$arr[12.4]="hhhh";
+		$arr[12.5]="aaa";
+
+		echo $arr[12.4]; //结果会显示12.5 的aaa.  12.4的hhhh以被覆盖。
+
+
+
+
+
+	//--- 显示数组的方式：echo ,print_r(),var_dump()
+
+		echo 只显示指定下标相关的值。
+		如：
+		echo $arr[0];
+
+		print_r() 同时显示下标与相应的值。
+		如：
+		print_r($arr);
+		Array([1]=>hello [0]=>world []=>北京 [123]=>hhh)
+
+		var_dump() 显示更细致的内容信息
+		如：
+		var_dump($arr);
+		array(4) {[1]=>string(5)"hello [0]=>string(5)"world" [""]=>string(6)"北京" [123]=>string(3)"hhh"}
+
+
+
+
+
+	//--- 访问数组的时候，不要越界。
+
+		如：
+		$arr=array(1,2,43);
+			echo $arr[3] ; //数组越界，无法访问到，将提示，notice.
+
+
+
+
+
+
+
+
+
+
+
+	//--- 一维数组的使用陷井：
+
+		$arr[bar]="hello";
+		echo $arr[bar];
+		这样使用会让处理器误认为这是一个常量，所以在引用时一定要加引号，如下：
+		echo $arr["bar"];
+
+
+
+
+
+
+
+	//--- php的数组可以动态增长。
+
+		如：
+		$a=array(2,3);
+		$a[3]=56;
+		echo $a[3];  //结果：56 ，这里说明PHP的数组是可以动态增长的，且不一定要按照顺序。
+		
+
+
+
+
+
+
+
+
+	//--- php数组遍历的四个方法：for(), while(), do_while(), foreach()
+
+		!!!如果使用 for,while,do_while时，要确定该数组的下标是以整数形式且按顺序排列不间断的。
+		$colors=array('red','blue','green','yellow');
+		//for()
+		for($i=0;$i<count($colors);$i++){
+			echo $color[$i];
+		}
+
+		//while()
+		$i=0;
+		while($i<count($colors)){
+			echo $colors[$i];
+		}
+
+		//do_while()
+		$i=0;
+		do{
+			echo $colors[$i];
+			$i++;
+		}while($i<$count($colors))
+
+		//foreach()
+		foreach($colors as $v=>$k){
+			echo $v."=>".$k;
+		}
+		
+
+		
+
+		
+
+
+
+
+	//--- 数组运算符$a + == != <> !== $b：
+
+		$a + $b 联合   把$b 的内容加入到$a中，当$a中有的就不加了，没有的就加进去
+
+		$a == $b  相等   如果$a和$b 具有相同的键/值对并且顺序和类型都相同则为true
+
+		$a!=$b   不等  如果$a 不等于 $b 则为true
+
+		$a<>$b   不等  如果$a 不等于 $b 则为true
+
+		$a!==$b   不全等 如果$a不全等于$b则为true
+
+		例：
+
+		$a = array('a'=>'apple','b'=>'banana');
+		$b = array('a'=>'pear','b'=>'strawberry','c'=>'cherry');
+
+		$c = $a+$b ; //把$b数组的键值加到$a中.
+		var_dump($c); //结果: 'a'=>'apple','b'=>'banana','c'=>'chery'
+
+		$c = $b+$a; 
+		var_dump($c); //结果：'a'=>'pear','b'=>'banana','c'=>'chery'  它会不变，因为$a有的$b全有，
+
+
+
+
+
+
+	//--- 数组案例：求平均分
+
+		五个小孩比赛滑轮，他们的滑完100米，分别用了10s,12s,5.7s,9s,14s,请编写一个程序，计算他们的
+		平均时间。 时间保留小数点后两位。
+
+		<body>
+			<form action="result.php" method="post">
+				<input type="text" name="grade" />	
+				<input type="submit" value="开始统计" />
+			</form>
+		</body>
+
+		result.php页面：
+		<?php
+			//接收用户提交的学生的成绩
+			$grades=$_REQUEST['grade'];
+				//echo 'grade='.$grades;	
+			$grades=explode(" ",$grade);   //拆分，对成绩进行分割
+			$allGrades=0;
+			//遍历
+			foreach($grades as $k=>$v){
+				$allGrades += $v;      //隐藏转换，，这里会把字符串转化成数值。
+			}
+			echo "平均时间是=".$allGrades/count($grades);		
+
+
+		?>
