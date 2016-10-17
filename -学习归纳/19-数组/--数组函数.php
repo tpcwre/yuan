@@ -25,7 +25,7 @@
 	array_intersect($arr1,$arr2)   返回两个数组中相同的元素-
 	array_diff_assoc($arr1,$arr2) 比较数组的键和值，返回数组1中有，2中没有的元素-
 	filter_has_var(type,variable) 过滤传值的类型，如get,post,cookie-
-	filter 过滤一个值是否匹配某格式，如邮箱，url,int,float-
+	filter(val,type) 过滤一个值是否匹配某格式，如邮箱，url,int,float-
 	
 	
 //== 查找,替换,统计
@@ -742,7 +742,7 @@
 
 
 	
-//-- filter 过滤一个值是否匹配某格式，如邮箱，url,int,float-
+//-- filter(val,type) 过滤一个值是否匹配某格式，如邮箱，url,int,float-
 		
 	//var_dump(filter_var('bob@example.com', FILTER_VALIDATE_EMAIL));		
 		//判断是否为一个邮箱,返回邮箱地址或false
