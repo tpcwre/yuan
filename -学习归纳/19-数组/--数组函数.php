@@ -3,6 +3,7 @@
 /*	
 
 //== 创建数组
+	array(val1,val2|arr2,arr2); 生成一个数组
 	array_combine($arr1,$arr2) 生成一个数组，用一个数组当键，另一个数组当值-
 	compact(variable1,variable2,,,) 	将变量转换成数组-
 	array_fill(index,count,val)  创建数组，并指定起始下标，指定值，指定长度-
