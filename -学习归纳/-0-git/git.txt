@@ -96,7 +96,7 @@
 	git reset HEAD 1.txt 		//-- 撤消暂存区修改
 	git reset HEAD 1.txt		//-- reset HEAD 结合 checkout -- 来恢复以add 的文件
 	git checkout -- 1.txt
-	git reset --hard HEAD^		//-- 版本回撤	
+	git reset --hard HEAD^		//-- 将所有文件恢复到最新提交状态	
 	git reset --hard f3e433205019a		//-- 根据ID恢复到指定版本
 	git reset INITIAL_COMMIT -- master.txt 	// 用指定的历史提交文件还原暂存区
 
