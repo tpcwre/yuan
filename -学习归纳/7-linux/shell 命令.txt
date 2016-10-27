@@ -1,3 +1,10 @@
+//===== 其它功能暂存于此
+	//-- 程序的开机自启动
+		将程序或脚本添加到 /etc/rc.local 文件中
+
+
+
+
 待解答：
 	sed -i "28i\void (*data);"  1.txt
 
@@ -7,7 +14,7 @@
 练习题：
    	1.在全部环境变量中找出匹配‘his’的行，并用=截取前两段，并用第二段排序
 	
-	//sed 练习题
+	//练习题
 	2.把/etc/passwd 复制到 临时目录中，并用sed 打印所有行
 	3.sed打印文件中3到10行
 	4.打印文件中包含‘root’ 的行
@@ -23,8 +30,70 @@
 	14.把文件中第20行到结束的行最前面加'aaa:'
 	15.awk分段，1段匹配root且2段精确匹配x,打印3,4段，并用‘--’连接
 	16.awk分段，取行数大于28且段数大于5的，并将3，4段的乘积赋值给段1，打印全行
+	17.计算1-100的和
+	18.输入一个数字，并计算出从1到该数字的和。要求：输入值小于1则重输入，直到输入正确为止
+	19.把 /root 目录下所有一级目录 拷贝到 /tmp 目录下
+	20.批量建立用户 user_00,,,user_100 并让所有用户同属于users组。
+	21.截取文件test.log中包含'bin' 的行中的第三列（定界符为:）,然后把截取的数字排序（第三列为数字），打印出重复次数超过10次的列。   (扩展学习:select用法 ：www.apelearn.com/bbs/thread-7950-1-1.html
 
 	
+
+	20.
+		#!/bin/bash
+		groupadd  users1
+		for i in `seq 0 100`
+		do
+		        if [ $i -lt 10 ]
+		        then
+		                numb=0$i
+		        else
+		                numb=$i
+		        fi
+		        useradd -g users1 user_${numb}
+		done
+
+	19.
+		#!/bin/bash
+		cd /etc
+		for f in `ls`
+		do 
+		        if [ -d $f ]
+		        then
+		                mkdir /tmp2/$f
+		        fi
+		done 
+
+	18.
+		#!/bin/bash
+		error="输入只能是大于0的数值！请重新输入！";
+		st='从1到该数字的和为：'
+		while :
+		do
+		read -p "请输入一个数值：" n
+		num=0
+		if [ -z $n ] || echo $n | grep -q '[^0-9]'
+		then
+				echo $error
+				continue
+		fi
+		if [ $n -gt 1 ] 
+		then
+				for i in `seq 1 $n`
+				do  
+						num=$[$num+$i]
+				done
+				echo ${st}${num}
+				break
+		elif [ $n -eq 1 ] 
+		then
+				echo "${st}2"
+				break
+		else    
+				echo $error
+		fi
+		done   
+			
+	17.num=0;for i in `seq 1 100`;do echo $num+$i=$[$num+$i];num=$[$num+$i];done;
 	16.awk -F ':' 'NR>28 && NF>5 && $1=$3*$4 {print $0}' 1.txt
 	15.awk -F ':' '$1~/root/ && $2=="x" {OFS="--";print $2,$3}' 1.tx
 	14.grep -n '.' 1.txt | sed -r '20,$s/(.*)/aaa:\1/g'  	
@@ -41,6 +110,18 @@
 	3.sed '1,10p' -n 1.txt
 	2.cp /etc/passwd ./1.txt && sed '1p' 1.txt
 	1.set | grep 'HIS' | cut -d '=' -f 1,2 | sort -t '=' -k 2
+
+
+
+
+
+
+
+
+
+
+
+
 	
 //-- linux开机时生效的环境变量文件
 
@@ -51,6 +132,69 @@
 	~/.bashrc		//对当前用户起作用，在运行一个shell时执行
 	~/.bash_logout		//用户登出时执行的脚本
 	
+
+
+
+//-- ssh 远程shell登陆
+
+	ssh root@192.168.198.102
+
+
+
+
+//-- history 查看历史操作命令
+
+	history		查看历史操作命令
+		
+		/home/username/.bash_history 	文件存放位置	
+
+		HISTSIZE=500	设置历史操作命令的保存条数为500条
+
+
+
+
+
+//-- ntsysv	设置开机自启动（图形界面）
+
+	ntsysv
+
+
+
+
+
+//-- df 查看磁盘空间使用情况 
+
+	df
+
+
+
+//-- vmstat ?  查看磁盘IO情况
+
+	vmstat 1	指定每秒一次，不停的显示
+
+
+
+
+//-- top 查看动态的CPU，内存，进程等信息
+
+	top
+	
+
+
+
+//-- ps 查看所有程序信息
+
+	ps -aux
+
+
+
+
+//-- free 查看内存使用情况
+
+	free -m 
+
+		或 cat /proc/meminfo
+
 
 
 //-- . 等同于source 可让配置文件生效
@@ -142,6 +286,12 @@
 	`rm -rf `ls /test	//将ls /test 浏览到的结果 删除
 	rm -rf `ls | grep -v '1.txt'`	删除当前目录中除1.txt 以外的所有文件
 
+
+
+
+//-- w 获取服务器负载情况
+
+	w
 
 
 
@@ -489,9 +639,19 @@
 
 //-- awk 
 
-	awk {print $1}		//awk 默认使用空格做定界符来分段
 
-	-F  NR  NF  {OFS ; print $0}  ~//  =  ==  >  <  
+	-F  	指定定界符
+	-F [,%]	定界符可以是多个，或的关系，与正则的[]一样
+	NR	行数  
+	NF 	段数
+	$NF 	取最后一段
+	{OFS ; print $0}	打印与各段连接符
+	  ~//  == =   >  <  	匹配与条件判断
+
+	
+	df -h | awk '[ %]+' '{print $5}'	//定界符使用空格或%
+	
+	awk {print $1}		//awk 默认使用空格做定界符来分段
 
 	awk -F ':' '{print $1,$2}' 1.txt  	使用 : 将文件中每行分段，并打印每行的第1，2段
 		-F 用指定字符为界分隔内容, 
@@ -565,6 +725,8 @@
 
 	date -d "-1 day"	显示昨天的时期		2016年 10月 08日 星期六 22:24:45 CST
 
+	date -d "2 hours ago" +$s	获取两个小时以前的时间戳
+
 
 	显示昨天,明天,上周,下周,上月，下月，去年，明年的日期，并按指定格式显示年月日时分秒及简写---
 
@@ -583,7 +745,6 @@
 	
 
 	简写显示昨天,明天,上周,下周,上月，下月，去年，明年的日期---
-	
 	昨天，明天
 	date -d "-1 day" +"%F %T"
 	date -d "+1 day" +"%F %T"
@@ -684,6 +845,11 @@
 
 //-- shell 编程
 
+	//-- 计划任务中每分钟执行一次脚本
+		crontab -e
+			* * * * * cd /usr/local/sbin/bin; /bin/bash main.sh
+		
+
 	//-- 脚本编写示例
 		vim a.sh		//文件名后缀sh表明这是一个Bash脚本文件
 			#!/bin/sh 			//指定脚本解释器,这里是用/bin/sh做解释器(必需)
@@ -714,6 +880,11 @@
 		
 		bash -x a.sh
 
+
+	//-- 子脚本的运行（子程序）
+		#!/bin/bash
+			export send=1		//声明全局变量，这样子脚本中也可以访问访该变量
+			/bin/bash ../xxx/xx.sh		//运行另一个脚本（子脚本）
 	
 
 	//-- 交互式脚本
@@ -971,32 +1142,12 @@
 
 		要注意条件测试部分中的空格。在方括号的两侧都有空格，在-f、-lt、=等符号两侧同样也有空格。如果没有这些空格，Shell解释脚本的时候就会出错。
 
-		exec >1.log 2>&1	将所有输出定向到指定日志文件
+		exec >1.log 2>&1	将以后所有的输出定向到指定文件
 			
 
 
 
 
-
-
-
-
-
-	//-- while 循环
-
-		svn status | grep "?" | awk '{print $2}' | while read line;do svn add ${line};done;
-
-			svn status -- 该命令用于查看文件信息，其中M代表修改，？代表未知（即需要添加的文件）
-
-			grep "?"    -- 查找包含？的信息
-
-			将svn status 的结果重定向到grep "?"那么得到的结果就是新增文件
-
-			接下来使用awk处理字符串，awk '{print $2}'表示打印第二个数据，其中$0表示整行数据
-
-			svn status | grep "?" | awk '{print $2}'那么得到的结果就是文件名称了，接下来使用shell循环处理
-
-			while read line;do svn add ${line};done; -- 读取每一行数据，然后执行svn add
 
 
 
@@ -1036,36 +1187,184 @@
 
 
 
-		//-- for 循环
-			for i in `seq 1 10000`; 		//循环1万次
-			do cat /etc/passwd >> 1.txt; 		//每次将指定文件内容追加到1.txt
-			done					//结束
+	//-- for 循环
+
+		例一：
+		for i in `seq 1 10000`; 		//循环1万次
+		do cat /etc/passwd >> 1.txt; 		//每次将指定文件内容追加到1.txt
+		done					//结束
 
 			
+		例二：  将文件中每行遍历打印出来（行中包含空格或tab的）
+		#!/bin/bash
+		f="1.txt"
+		n=`wc -l $f|awk '{print $1}'`
+		for i in `seq 1 $n`
+		do
+		        sed -n "${i}p" $f
+		done
 
-			seq	序列：指定循环的节奏
-				seq 1 10 	循环1-10
-				seq 1 2 10 	循环1-10 ，步长为2
-				seq -1 -1 -10   
-
-
-
-
-
-
-
-
-
-
+		seq	序列：指定循环的节奏
+			seq 1 10 	循环1-10
+			seq 1 2 10 	循环1-10 ，步长为2
+			seq -1 -1 -10   
 
 
-
-
-
-
-
+		例三：
+		for ((i=0; i<10; i++))
+	 	do 
+			touch test_$i.txt 		
+		done 
 
 
 
 
+	//-- while 循环
+		关键字：
+			while
+			:
+			do
+				continue	路过当次循环
+				break		结束整个while循环
+				exit 		结束整个脚本，后面的代码也不执行了
+			done
+		例一：
 
+		while :;do w;sleep;done		//无限循环，显示服务器负载情况 （监控脚本）
+			:	代表真，一般 : 都使用在监控脚本中
+			w	显示服务器负载情况
+			sleep	睡眠（中止）
+
+
+		例二： 服务器监控脚本
+		#!/bin/bash
+		while :
+		do
+		        load=`w | head -1 | awk -F "load average: " '{print $2}' | cut -d. -f1`   
+		        if [ $load -gt 10 ]
+		        then
+		                top | mail -s "load is high: $load " tpcwre@163.com
+		        fi
+		        sleep 30
+		done
+
+
+		例三：无限输入交互，直到输入纯数字为止
+		#!/bin/bash
+		while :
+		do
+		        read -p "请输入一个值：" n
+		        if [ -z $n ]
+		        then
+        		        echo "输入内容不得为空！";
+        		        continue
+        		fi
+        		if [ `echo $n | grep '[^0-9]'`  ]
+       			then
+        	        	echo '只能输入纯数字！';
+                		continue
+        		fi
+        		break
+		done
+		echo $n
+
+
+
+
+		例：
+		svn status | grep "?" | awk '{print $2}' | while read line;do svn add ${line};done;
+
+			svn status -- 该命令用于查看文件信息，其中M代表修改，？代表未知（即需要添加的文件）
+
+			grep "?"    -- 查找包含？的信息
+
+			将svn status 的结果重定向到grep "?"那么得到的结果就是新增文件
+
+			接下来使用awk处理字符串，awk '{print $2}'表示打印第二个数据，其中$0表示整行数据
+
+			svn status | grep "?" | awk '{print $2}'那么得到的结果就是文件名称了，接下来使用shell循环处理
+
+			while read line;do svn add ${line};done; -- 读取每一行数据，然后执行svn add
+
+
+
+
+
+	//-- 函数
+
+		例一：
+		#!/bin/bash	
+		input (){		//声明一个函数，名字是input 
+			echo $1		//打印出该函数的第一个参数
+		}
+		input aaaaa		//调用函数并，给了一个参数为 aaaaa
+
+		
+		例二：
+		#!/bin/bash
+		gip (){			//函数的声明
+			ip=`ifconfig | grep -A1 "$1" | tail -1 | awk '{print $2}' | awk -F ":" '{print $2}'`
+			if echo $ip | grep -q '[0-9]'
+			then
+				echo "address is $ip"
+			else
+				echo '没有您所输入的网卡型号！请重新输入！'
+			fi
+		}
+		gip $1		//函数的调用，并将脚本的第一个参数传递给了函数作为第一个参数 。
+
+
+
+	
+
+
+	//-- 脚本监控
+		磁盘监控
+
+		负载监控
+
+		mysql主从监控
+			mysql -uroot -paaa -e "show slave status \G" | grep -i 'xxxx' ...
+
+
+		内存监控
+
+
+
+
+
+
+
+
+	//-- expect 远程登陆工具
+		//安装
+		yum -y install expect    
+
+	
+		//远程登陆脚本的编写
+			#! /usr/bin/expect
+			set host "192.168.198.103"		设置变量 host
+			set passwd "xxxx"
+			spawn ssh root@$host			使用用户名root远程登陆
+			expect {
+				"yes/no" { send "yes\r" exp_continue}		// \r 代表回车的意思
+				"assword:" {sed "$passwd\r"}
+			}
+			interact
+		
+		
+
+	//-- expect 远程登陆，并操作，再退出
+		
+			#! /usr/bin/expect
+			set host "192.168.198.103"		
+			set passwd "xxxx"
+			spawn ssh root@$host			
+			expect {
+				"yes/no" { send "yes\r" exp_continue}		
+				"assword:" {sed "$passwd\r"}
+			}
+			expect "]*"			// }*  代表 [root@tpcwreLinux /]#    #的位置也可能是$
+			send "touch /tmp/1.txt\r"	//发送一条 创建文件的命令
+			expect "]*"
+			send "exit"			//发送退出命令
