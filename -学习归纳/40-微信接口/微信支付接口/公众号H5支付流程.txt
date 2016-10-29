@@ -1,0 +1,103 @@
+
+
+	
+	
+	
+
+
+//-- 设置授权目录
+	登陆微信公众号（服务号），进入 微信支付功-》开发配置
+		在“支付授权目录”项中添加授权目录，如 http://www.lh0435.top/wx2/example/
+			
+
+			
+			
+//-- 下载示例SDK
+	到微信商户平台 https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_1# 下载示例SDK，解压并修改目录名与授权目录相同.
+
+
+
+
+//-- 设置商户信息及证书
+	//-- 编辑 lib 目录下的 WxPay.Config.php 文件 编辑商户信息
+		const APPID = 'wx426b3015555a46be';		//设置绑定商户的公众号appid
+		const APPSECRET = '7813490da6f1265e4901ffb80afaa36f';	//设置绑定商户的公众帐号secert
+		const MCHID = '1900009851';		//设置微信支付商户号
+		const KEY = '8934e7d15453e97507ef794cf7b0519d';		//添写在商户平台中设置的API密钥
+
+	
+	
+	//-- 添加设置证书
+		const SSLCERT_PATH = '../cert/apiclient_cert.pem';
+		const SSLKEY_PATH = '../cert/apiclient_key.pem';
+		
+		注：设置好证书路径后，到商户平台 https://pay.weixin.qq.com/index.php/core/cert/api_cert 下载本商户的安全证书，并将证书解压并存放到上面设置好的路径中。
+		
+
+
+
+		
+		
+
+//-- 设置订单信息
+	调用 WxPay.Data.php 页面 WxPayUnifiedOrder 类 下的如下方法来设置定单信息
+		$input = new WxPayUnifiedOrder();
+		$input->SetBody("test");		//设置商品或支付单简要描述
+		$input->SetAttach("test");		//自定义附加数据
+		$input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));	//商户系统内部的订单号
+		$input->SetTotal_fee("1");		//订单金额
+		$input->SetTime_start(date("YmdHis"));	//设置订单生成时间
+		$input->SetTime_expire(date("YmdHis", time() + 600));	//订单失效时间
+		$input->SetNotify_url("./example/notify.php"); //设置接收微信支付异步通知回调地址
+		$input->SetTrade_type("JSAPI");	//设置取值
+		$input->SetOpenid($openId);	//设置用户的Openid
+		
+		
+	
+		
+		
+		
+//-- 调用JS支付接口，并根据返回值确定定单是否支付
+	<button onclick="callpay()" >立即支付</button>
+	
+    <script type="text/javascript">
+        //调用微信JS api 支付
+        function jsApiCall()
+        {
+                WeixinJSBridge.invoke(
+                        'getBrandWCPayRequest',
+                        <?php echo $jsApiParameters; ?>,
+                        function(res){
+				if(res.err_msg == "get_brand_wcpay_request:ok"){
+					alert('支付成功');
+				}else{
+					alert('支付失败');
+				}
+                        }
+                );
+        }
+        function callpay()
+        {
+                if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+                        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                    }
+                }else{
+                    jsApiCall();
+                }
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
