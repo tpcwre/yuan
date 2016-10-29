@@ -1,0 +1,351 @@
+﻿
+//===== PHP相关
+	//编码解码相关
+	//-- json_encode(),json_decode(true) 数组或对象与json字串的转换
+	//-- base64_encode(),base64_decode() BASE64 编码,可让中文在网络顺利传输。
+	
+	//缓存相关
+	//-- ob_clean(); PHP清除缓冲区内容
+	
+	//xml或其它数据处理相关
+	//-- $GLOBALS["HTTP_RAW_POST_DATA"] 获取传输过来的xml或其它php不识别的原型数据
+	//-- simplexml_load_string() 将xml转成对象
+	
+	//时间相关
+	//-- mktime(0,0,0,12,30,1999) 按指定日期生成时间戳
+	//-- date() 显示当前或指定时间戳的日期
+	
+	
+	
+//===== JS 相关
+	//-- JSON.paser(string)	将josn 字串 解析成 json对象 
+	//-- JSON.stringify(obj)  将josn 对象 解析成 json字串 
+
+
+
+
+
+
+	
+	
+	
+
+//===== mysql 相关
+	//-- 查询mysql 各日志存储位置及状态
+	//-- mysql 设置 binlog 日志存储位置
+	//-- 使用 mysqldump 全库备份并重置binlog日志,及同时压缩备份文件
+	//-- mysql 使用 备份文件恢复数据库
+	//-- mysqlbinlog 查看mysql二进制备份文件
+	//-- 使用二进制binlog日志恢复指定区间的数据 
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+//===== JS 相关
+	
+	
+//-- JSON.paser(string)	将josn 字串 解析成 json对象 
+//-- JSON.stringify(obj)  将josn 对象 解析成 json字串 
+
+	<script>
+		a = "{"name":"aaa","age":18}";
+		b = JSON.parse(a);
+		alert(b.name);
+		
+		c = JSON.stringify(b);
+		alert(c);
+	</script>
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== PHP相关
+
+//-- mktime(0,0,0,12,30,1999) 按指定日期生成时间戳
+	$a = mktime(0,0,0,12,30,1999);
+	echo $a;		//946508400
+
+//-- date() 显示当前或指定时间戳的日期
+	echo date("Y-m-d H:i:s",$a);	//1999-12-30 00:00:00
+
+	
+
+//-- json_encode(),json_decode(true) 数组或对象与json字串的转换
+	echo "<pre>";
+	class obj{
+		public $name = "aaa";
+		public $age = 18;
+	}
+	$o = new obj();
+	$oo = array("name"=>"aaa","age"=>18);
+
+	//json_encode() 将对象或数组转成json字串
+	$b = json_encode($o);		
+	echo $b."<br>";
+	$bb = json_encode($oo);
+	echo $bb."<br>";
+
+	////json_decode() 将json字串转成对象或数组。
+	$c = json_decode($b);		//不带true，转对象，
+	var_dump($c);
+	$cc = json_decode($bb);
+	var_dump($cc);
+
+	$d = json_decode($b,true);	//带true 转数组
+	var_dump($d);
+	$dd = json_decode($bb,true);
+	var_dump($dd);
+
+
+
+
+
+
+//-- ob_clean(); PHP清除缓冲区内容
+
+	尤其在使用ThinkPHP3.2.3的验证码时，总会出现不显示图像的错误 ，就要使用该函数来清除缓冲区内容，如下
+		public function verify(){
+				ob_clean();
+				$verify = new \Think\Verify();    //使用默认样式
+				$verify->entry();       //生成验证码
+			}
+
+
+
+
+
+//-- base64_encode(),base64_decode() BASE64 编码,可让中文在网络顺利传输。
+
+	$b = base64_encode($a);
+	echo $b;
+	
+	$c = base64_decode($b);
+	echo $c;
+	string base64_encode(string data);
+	本函数将字符串以 MIME BASE64 编码。此编码方式可以让中文字或者图片也能在网络上顺利传输。在 BASE64 编码后的字符串只包含英文字母大小写、阿拉伯
+
+数字、加号与反斜线，共 64 个基本字符，不包含其它特殊的字符，因而才取名 BASE64。编码后的字符串比原来的字符串长度再加 1/3 左右。更多的 BASE64 编码信
+
+息可以参考 RFC2045 文件之 6.8 节。
+
+
+
+
+
+
+
+//-- $GLOBALS["HTTP_RAW_POST_DATA"] 获取传输过来的xml或其它php不识别的原型数据
+
+	 $xml = $GLOBALS["HTTP_RAW_POST_DATA"];		//获取到的xml数据
+
+
+
+
+
+
+
+//-- simplexml_load_string() 将xml转成对象
+
+	$obj = simplexml_load_string($xml,"SimpleXMLElement",LIBXML_NOCDATA);
+
+		LIBXML_COMPACT - 激活节点的优化配置（可加速应用程序）
+		LIBXML_DTDATTR - 设置默认的 DTD 属性
+		LIBXML_DTDLOAD - 装载额外的子集
+		LIBXML_DTDVALID - 验证 DTD 有效性
+		LIBXML_NOBLANKS - 删除空节点
+		LIBXML_NOCDATA - 将 CDATA 设置为文本节点
+		LIBXML_NOEMPTYTAG - 扩展空标签（例如 <br/> 到 <br></br>），仅在 DOMDocument->save() 和 DOMDocument->saveXML() 函数中有效
+		LIBXML_NOENT - 替代实体
+		LIBXML_NOERROR - 不显示错误报告
+		LIBXML_NONET - 装载文档时停止访问网络
+		LIBXML_NOWARNING - 不显示警告报告
+		LIBXML_NOXMLDECL - 当存储一个文档时放弃 XML 声明
+		LIBXML_NSCLEAN - 删除多余的名称空间声明
+		LIBXML_PARSEHUGE - 设置 XML_PARSE_HUGE 标志，用来放宽解析器的任何强制限制。这将影响诸如文档的最大深度和文本节点大小限制等。
+		LIBXML_XINCLUDE - 使用 XInclude 替代
+		LIBXML_ERR_ERROR - 获取可纠正的错误
+		LIBXML_ERR_FATAL - 获取致命错误
+		LIBXML_ERR_NONE - 不获取错误
+		LIBXML_ERR_WARNING - 获取简单警告
+		LIBXML_VERSION - 获取 libxml 版本（例如 20605 或 20617）
+		LIBXML_DOTTED_VERSION - 获取带点的 libxml 版本（例如 2.6.5 或 2.6.17）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== mysql 相关
+
+
+//-- 查询mysql 各日志存储位置及状态
+
+	mysql> show variables like "log_%";
+	+----------------------------------------+--------------------------------------+
+	| Variable_name                          | Value                                |
+	+----------------------------------------+--------------------------------------+
+	| log_bin                                | ON                                   | 	binlog 是否开启
+	| log_bin_basename                       | /usr/local/mysql/var/mysql-bin       |	binlog 存储位置
+	| log_bin_index                          | /usr/local/mysql/var/mysql-bin.index |	binlog 文件名
+	| log_bin_trust_function_creators        | OFF                                  |
+	| log_bin_use_v1_row_events              | OFF                                  |
+	| log_error                              | /usr/local/mysql/var/tpcwrework.err  |	mysql错误日志位置
+	| log_output                             | FILE                                 |
+	| log_queries_not_using_indexes          | OFF                                  |
+	| log_slave_updates                      | OFF                                  |
+	| log_slow_admin_statements              | OFF                                  |
+	| log_slow_slave_statements              | OFF                                  |
+	| log_throttle_queries_not_using_indexes | 0                                    |
+	| log_warnings                           | 1                                    |
+	+----------------------------------------+--------------------------------------+
+	
+	
+	
+	
+	
+
+	
+//-- mysql 设置 binlog 日志存储位置
+
+	找到 mysql运行时使用的配置文件（默认为/etc/my.cnf）
+		修改 [mysqld] 区块 下的  log-bin= 路径 即可，如下 ：
+		log-bin=/usr/local/mysql/log/m-bin
+	
+
+	
+	
+	
+	
+//-- 使用 mysqldump 全库备份并重置binlog日志,及同时压缩备份文件
+
+	mysqldump -uroot -pxiaodong123 --single-transaction --flush-logs --master-data=2 --all-databases --delete-master-logs | gzip> /usr/local/mysql/logzip/`date +%Y%m%d%H%M%S`.sql.gz
+	
+		--single-transaction	锁定事务表
+		--flush-logs			刷新使用文件
+		--all-databases			全库备份
+		--master-data=2 
+ 		 			1：从服同步主服时完全同步
+  					2：从服同步主服时要指定开始同步的节点
+		--delete-master-logs	删除master 日志
+		| gzip 					将备份文件直接以gzip格式压缩
+		`date +%Y%m%d%H%M%S`	使用当前时间做备份文件名
+
+
+
+		
+		
+		
+
+//-- mysql 使用备份文件恢复数据库
+
+	mysql -uroot -p 	//先登陆mysql
+
+	source /usr/local/mysql/logzip/full.sql		//使用备份文件恢复数据库
+	
+	
+	
+
+
+
+//-- 使用 mysqlbinlog 查看mysql二进制备份文件
+
+	mysqlbinlog m-bin.0000007		//查看指定的二进制文件
+
+
+
+
+
+
+//-- 使用二进制binlog日志恢复指定区间的数据 
+
+	mysqlbinlog --stop-position="4947" m-bin.000007 | mysql -uroot -p	
+		//用 m-bin.000007 文件恢复节点4947之前的数据
+
+	mysqlbinlog --start-position="120" m-bin.000007 | mysql -uroot -p	
+		//用 m-bin.000007 文件恢复节点120之后的数据
+	
+	mysqlbinlog --start-position="120" --stop-position="4947" m-bin.000007 | mysql -uroot -p	
+		//用 m-bin.000007 文件恢复节点120至4947之间的数据
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

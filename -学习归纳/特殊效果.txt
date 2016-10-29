@@ -541,14 +541,7 @@ http://lh.syssuper.com:8000/
 
 
 
-	//-- ob_clean(); 清除缓冲区内容
 
-		尤其在使用ThinkPHP3.2.3的验证码时，总会出现不显示图像的错误 ，就要使用该函数来清除缓冲区内容，如下
-           	public function verify(){
-                	ob_clean();
-                	$verify = new \Think\Verify();    //使用默认样式
-                	$verify->entry();       //生成验证码
-            	}
 
 
 	//-- json 数据的转换

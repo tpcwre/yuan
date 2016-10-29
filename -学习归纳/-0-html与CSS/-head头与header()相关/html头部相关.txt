@@ -16,7 +16,9 @@
 //===head 头的相关设置
 
 	<head>
-		
+		<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 		待查询
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+		<META HTTP-EQUIV="expires" CONTENT="0">
 		<meta http-equiv="refresh" content='3'>   意思是三秒钟刷新一次！
 		<meta http-equiv="refresh" content='3;url=http://www.baidu.com'> 就是三秒后跳转到指定页面
 		<meta http-equiv="content-type" content="text/html charset=utf-8" />	//设定页面编码

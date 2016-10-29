@@ -1,0 +1,445 @@
+
+
+
+//===== linux相关
+	//-- 清除 lnmp一键集成环境的页面缓存
+	//-- apache(httpd) 运行异常提示
+	
+	
+	
+//===== php 相关	
+	//-- linux 上使用php发送邮件出错
+	//-- use of undefined constant 错误的解决
+	//-- 提示 Cannot modify header information
+	//-- 解决连接字串时出现“口”字错误的问题
+	//-- cookie 或header出现information错误的解决方法
+	//-- Cannot send session cookie 错误
+
+
+//===== mysql 相关报错及解决	
+	//-- 调用数据库第一条数据显示，第二条数据不显示的问题
+	//-- 使用mysqld 修改密码时出现的异常
+	//-- MySql启动出现The server quit without updating PID file错误的解决
+	//-- 调用数据库第一条数据显示，第二条数据不显示的问题
+	//-- myadmin 无法在发生错误时创建会话 故障的解决
+	//-- 数据库存取数字型字段内容只显示127或固定数值
+	//-- This value is interpreted using strftime, mysql数据表无法导出的解决
+	//-- 提示 Call to undefined function mysql_connect()
+
+
+	
+//===== laravel 框架报错及解决
+	//-- Fatal error: Call to undefined function Illuminate\Foundation\Bootstrap\mb_internal_encoding() in D:\xampp\htdocs\la\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\LoadConfiguration.php on line 43
+
+//===== ThinkPhP框架报错及解决
+	//-- thinkphp 错误解决--Undefined class constant 'MYSQL_ATTR_INIT_COMMAND'  
+	//-- 如何让nginx支持ThinkPHP框架
+
+
+//===== smarty 模板中的报错与解决
+	//-- smarty 中出现 Strict standards: strftime() 错误的解决方法
+
+
+//===== ESshop 商城报错与解决
+	//-- 报错一： Strict Standards:Only variables should be passed by reference in ..... 
+	//-- 报错 二: Strict Standards: Non-static method cls_image::gd_version() should not be called statically in D:\X\www\ecshop\install\includes\lib_installer.php on line 31
+	//-- 默认时区问题
+
+
+//===== 其它
+	//-- 行内文字或元素莫明自动换行的问题
+	//-- dialog对话框触发时一闪即消失的异常问题
+	//-- 元素不能设置背景色或背景图片的原因
+	//-- 页面跳转后保持元素的背景色的问题
+
+
+
+
+
+
+
+	
+		
+	
+
+//-- linux 上使用php发送邮件出错
+
+	情况：windows平台正常，但转到liunx上就出错
+	Error: Cannot connenct to relay host smtp.163.com
+	Error: php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution (0)
+
+	原因，DNS解析问题
+	解决： 修改 /etc/resolv.conf 文件，添加google DNS     "nameserver 8.8.8.8"	即可解决
+		
+
+
+
+	
+	
+	
+	
+	
+	
+
+
+
+//-- 调用数据库第一条数据显示，第二条数据不显示的问题
+	有时调用数据库数据时，第一个显示，而第二个不显示，有可能是 function()中 的require ''; 重复引用了同一个页面造成的。
+	解决方法：检查，保证一个页面中不要引用相同的页面
+
+	
+	
+//-- use of undefined constant 错误的解决
+	产生这种错误时一般是定义不规范导致的。解决方法如下：
+	1：$_SERVER[REMOTE_HOST] 改成 $_SERVER["REMOTE_HOST"]  把中括号内容加上引号即可
+	2：修改php.ini文件内容
+		找到：error_reporting=E_ALL 改为 error_reporting= E_ALL&~E_NOTICE  (不建议使用本方法)
+
+
+
+//-- 提示 Cannot modify header information
+	php.ini 中找到并设置为 output_buffering = On
+	
+
+
+//-- 解决连接字串时出现“口”字错误的问题
+	一：在调取中文数据时有时出现 “口” 字错误的原因是 ，因为中文编码的UTF-8码的一个字符是3个字节。
+	当用substr等函数截取字符不能被3整除时，就会出现错误 。 所在在截取等操作时应将字节数设置为能被3整除，就会解决问题！
+	二：如果引用了其它页面时，请检查当页和被引用的页面的编码，如果utf-8码不行，可以改成utf-8无BOM编码，即可解决。
+		
+		
+
+//-- cookie 或header出现information错误的解决方法
+	查找网上解决此问题的方法多是一样的，不过今天又遇到了这样的问题。试过之后发现可行： 
+	在C盘的WINDOWS中找到php.ini 这个配置文件，然后查找一项：output_buffering将其值由原来的off改为on，重新启动Apache就ok了。 
+
+
+
+//-- Cannot send session cookie 错误
+	解决方案：
+	output_buffering =改为on
+	1)适用于有权限编辑PHP。INI的人
+	打开php。ini文件(你应试比我清楚你的php。ini在哪里)，找到
+	output_buffering =改为on或者任何数字。如果是IIS6，请一定改为ON，不然你的PHP效率会奇慢。
+	2)使用虚拟主机，不能编辑PHP。INI，怎么办？
+	简单：
+	在你的空间根目录下建立一个.htaccess文件，内容如下：
+	AllowOverride All
+	PHP_FLAG output_buffering On
+	不幸的情况是：还是不行？全部网页都不能显示啦？
+	那么，你可以打电话骂一通空间商，然后让他给你把apache的。htaccess AllowOverride打开
+	3)在PHP文件里解决
+	ob_start()
+	启用output buffering机制。 Output buffering支持多层次 
+
+		
+
+
+
+//-- 清除 lnmp一键集成环境的页面缓存
+
+	在php.ini 文件中找到	opcache.enable=0	并将其开启并设置为0  这样就关闭了页面的缓存
+				
+
+
+	
+	
+	
+	
+	
+	
+	 
+
+//-- apache(httpd) 运行异常提示
+	httpd: Could not reliably determine the server's fully qualified domain name
+	
+	解决方法：在httpd.conf 配置文件中加入一句  ServerName  localhost:80
+
+
+
+
+
+	
+	
+	
+	
+	
+
+
+		
+		
+		
+		
+
+
+//===== mysql 相关报错及解决		
+
+
+//-- 使用mysqld 修改密码时出现的异常
+
+	Fatal error: Please read "Security" section of the manual to find out how to run mysqld as root!
+
+	可以强制使用root用户来运行mysqld即解决。
+	
+		如：mysqld --user=root --skip-grant-table 
+
+
+
+//-- MySql启动出现The server quit without updating PID file错误的解决
+
+	
+	1.进入mysql目录下的var目录，将  mysql-bin.index 文件删除或改名，重启mysql即可
+
+	2.在修改mysql配置文件时，如果相应的文件或目录等没有相应的权限也会出现该提示。
+	
+
+
+	
+//-- 调用数据库第一条数据显示，第二条数据不显示的问题
+
+	有时调用数据库数据时，第一个显示，而第二个不显示，有可能是 function()中 的require ''; 重复引用了同一个页面造成的。
+	解决方法：检查，保证一个页面中不要引用相同的页面
+
+	
+//-- myadmin 无法在发生错误时创建会话 故障的解决
+
+	出现这种情况很大的原因是没有开启session功能而引起的
+
+	1，首先开启php.ini 中      session.save_path = "d:/server/tmp"  的功能  这里的路径根据实际情况设置。
+	2，设置权限，选择上面指定session的文件夹，在属性的安全项中设置user用户为完全控制。如果看不到安全选项，就在工具的文件夹选项里选择查看一栏，取消“使用简单文件共享”、就可以看到安全项了。
+	这样，设置了session路径并指定了权限基本就可以解决问题了。
+
+
+	
+//-- 数据库存取数字型字段内容只显示127或固定数值
+
+	将该字段的类型从int,tinyint改成varchar. 原理就是输入的不一定是数值。所以用int类型存取不了数据。
+	
+	
+	
+//-- This value is interpreted using strftime, mysql数据表无法导出的解决
+
+	如出现，无法导出数据表情况，可在最下方的‘另存为文件’中，选择zip压缩格式！
+	
+	
+
+//-- 提示 Call to undefined function mysql_connect()
+
+	1，设置好 extension_dir = "C:\AppServ\php5\ext"
+
+	2，启用 extension=php_mysql.dll
+			
+	
+			
+	
+	
+	
+	
+	
+
+
+
+
+-----------------------------------------------------------------------------------------
+
+//===== laravel 框架报错及解决
+
+
+
+//-- Fatal error: Call to undefined function Illuminate\Foundation\Bootstrap\mb_internal_encoding() in D:\xampp\htdocs\la\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\LoadConfiguration.php on line 43
+
+解决方法：将php.ini 中的 extension=php_mbstring.dll 开启即可
+
+
+
+
+
+
+
+
+
+
+		
+		
+
+-----------------------------------------------------------------------------------------
+
+//===== ThinkPhP框架报错及解决
+
+//-- thinkphp 错误解决--Undefined class constant 'MYSQL_ATTR_INIT_COMMAND'  
+
+	解决：php.ini中开启 ;extension=php_pdo_mysql.dll 即可
+
+
+	
+//-- thinkphp中使用用volist 遍历数组变量时报错，(待解决)
+
+	<volist name="date" id='vo'>
+		<{$vo.id}>--<{$vo.name}>
+	</volist>
+	描述：<volist></volist>正常 一旦加上name='date' 就报错，网上找原因说是appserv的原因，换上wamp即可，未证实
+
+
+//-- 如何让nginx支持ThinkPHP框架
+
+	http://jingyan.baidu.com/article/c843ea0b76477877931e4aac.html?qq-pf-to=pcqq.c2c
+	
+	
+		
+		
+		
+		
+		
+
+
+
+-----------------------------------------------------------------------------------------
+
+//===== smarty 模板中的报错与解决
+
+//-- smarty 中出现 Strict standards: strftime() 错误的解决方法
+
+	Strict standards: strftime() [function.strftime]: It is not safe to rely on the system's timezone settings.
+
+	解决方法：检查其它文件夹中是否存在 .htaccess 文件
+		可以将其删除 来解决问题
+	或
+		在.htaccess里添加：
+		php_value date.timezone Asia/Chongqing
+		php_value magic_quotes_gpc 0
+		php_value magic_quotes_runtime 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------
+
+//===== ESshop 商城报错与解决
+
+//-- 报错一： Strict Standards:Only variables should be passed by reference in ..... 
+
+	解决：
+		D:\xampp\htdocs\shop\upload\includes\cls_template.php  
+		 将 $tag_sel = array_shift(explode(' ',$tag))  分隔成下面两部分
+		   $tag_arr=explode(' ',$tag);
+		   $tag_sel=array_shift($tag_arr);
+
+
+
+
+//-- 报错 二: Strict Standards: Non-static method cls_image::gd_version() should not be called statically in D:\X\www\ecshop\install\includes\lib_installer.php on line 31
+
+		解决：找到install/includes/lib_installer.php中的第31行
+		return cls_image::gd_version();然后在找到include/cls_image.php中的678行，发现gd_version()方法未声明静态static，所以会出错。这时候只要：
+
+　　1）将function gd_version()改成static function gd_version()即可。		//这招有效
+
+　　2）或者将install/includes/lib_installer.php中的第31行return cls_image::gd_version();改成：
+			$p = new cls_image();
+			return $p->gd_version();
+　　2.检测环境的时候提示：是否支持 JPEG是不支持的。
+	解决：查看发现有libjpeg.lib库，GD2库也有，都加载了，也都正常。查看ecshop源代码发现install/includes/lib_installer.php中第100行,JPEG写成了JPG，正确的应该是：
+		$jpeg_enabled = ($gd_info['JPEG Support']=== true) ? $_LANG['support'] : $_LANG['not_support'];
+　　为何说Ecshop写错了，因为我打印数组$gd_info的时候，里面的键名是：JPEG Support。而$gd_info数组里的值都是直接调用系统环境变量的。
+
+
+
+
+
+
+//-- 默认时区问题：Warning: date_default_timezone_get(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in D:\X\www\ecshop\install\includes\lib_installer.php on line 225
+
+	解决：
+	方法1，将php.ini里是date.timezone前的";"去掉，改成：date.timezone = PRC;
+　　方法2，在页头使用 ini_set('date.timezone','Asia/Shanghai');
+　　方法3，在页头使用date_default_timezone_set()设置 date_default_timezone_set('PRC'); //东八时区 echo date('Y-m-d H:i:s');
+	方法4，php 5.3也可能出这个问题,需要修改php.ini文件 找到date.timezone
+	将它的改为 date.timezone=utc
+
+	解决方法原文：
+
+		今天在安装ecshop时候，报了上面的警告，
+		出现这个可能是以下原因
+		1.如果装xampp,可能是xampp没装好或者有问题,需要重装
+		2.php 5.3也可能出这个问题,需要修改php.ini文件 找到date.timezone
+		将它的改为 date.timezone=utc 将前面的分号去掉,重启服务器
+		或者在index.php中加上 date_default_timezone_set('UTC');
+		3.可以将index.php里面的
+		error_reporting(7);
+		改为
+		error_reporting(0);
+		即可避免它们的出现。
+
+
+
+	
+	
+	
+	
+	
+
+
+
+
+
+//===== 其它
+
+//-- 行内文字或元素莫明自动换行的问题
+
+	有时元素后面加的某些字符会导致元素的换行。解决方法将某些字符替换成其它。如下例
+
+	foreach($b as $k=>$v){
+		echo "<a>aaa</a> ";   //</a>后面加一个空格时不会自动换行。
+	或
+		echo "<a>aaa</a>-";   //</a>后面加一个‘-’时不会自动换行。
+	或
+		echo "<a>aaa</a>+";   //</a>后面加一个‘+’时，自动换行。
+	或
+		echo "<a>aaa</a>=";   //</a>后面加一个‘=’时，自动换行。
+	}
+
+
+
+
+
+//-- dialog对话框触发时一闪即消失的异常问题
+	是因为被点击的超链接 a href="" 中的 href指向为空，所以会一闪即逝。 href="#" 即可解决问题
+
+
+
+//-- 元素不能设置背景色或背景图片的原因
+	可以尝试先给元素设置一下宽度或高度再设置背景图片。即可解决！
+
+
+
+//-- 页面跳转后保持元素的背景色的问题
+	按单价搜索：1000 2000 3000
+	如上：每个选项的总页数都不同。选择了一个最大的总页数后，再切换到小的总页数后。将不会显示其页面，因为，当前页大于当前总页数
+	解决方法：	
+	使用jquery的cookie功能来设置当前页的变换，当点击切换选项时改变cookie中初始值为1，这样就解决了每切换选项后，都会默认从第一页开始。
+
+
+
+
+
+
+
+
+
+
+

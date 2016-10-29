@@ -1,1370 +1,1891 @@
-//===== 其它功能暂存于此
-	//-- 程序的开机自启动
-		将程序或脚本添加到 /etc/rc.local 文件中
+
+//===== 其它 
+
+	//- puppet 类似分发系统的linux 自动化运维工具
+
+//===== shell命令以外的其它要点
+//===== 系统服务操作相关
 
 
 
+	待解答：
+		sed -i "28i\void (*data);"  1.txt
 
-待解答：
-	sed -i "28i\void (*data);"  1.txt
-
-	sed -i "30i\$cfg['Servers'][$i]['auth_type'] = 'http';" 1.txt
+		sed -i "30i\$cfg['Servers'][$i]['auth_type'] = 'http';" 1.txt
 
 
-练习题：
-   	1.在全部环境变量中找出匹配‘his’的行，并用=截取前两段，并用第二段排序
-	
-	//练习题
-	2.把/etc/passwd 复制到 临时目录中，并用sed 打印所有行
-	3.sed打印文件中3到10行
-	4.打印文件中包含‘root’ 的行
-	5.删除文件中的15行以及以后所有行
-	6.删除文件中包含'bash'的行
-	7.替换文件中'root' 为 '-----'
-	8.替换文件中 '/sbin/nologin' 为 '/bin/login/'
-	9.删除文件中5到10行中的所有数字
-	10.删除文件中所有特殊字符（除了数字及大小写字母）
-	11.把文件中第一个单词和最后一个单词调换位置
-	12.把文件中出现的第一个数字和最后一个单词调换位置
-	13.把文件中第一个数字移动到行末尾
-	14.把文件中第20行到结束的行最前面加'aaa:'
-	15.awk分段，1段匹配root且2段精确匹配x,打印3,4段，并用‘--’连接
-	16.awk分段，取行数大于28且段数大于5的，并将3，4段的乘积赋值给段1，打印全行
-	17.计算1-100的和
-	18.输入一个数字，并计算出从1到该数字的和。要求：输入值小于1则重输入，直到输入正确为止
-	19.把 /root 目录下所有一级目录 拷贝到 /tmp 目录下
-	20.批量建立用户 user_00,,,user_100 并让所有用户同属于users组。
-	21.截取文件test.log中包含'bin' 的行中的第三列（定界符为:）,然后把截取的数字排序（第三列为数字），打印出重复次数超过10次的列。   (扩展学习:select用法 ：www.apelearn.com/bbs/thread-7950-1-1.html
+	练习题：
+		1.在全部环境变量中找出匹配‘his’的行，并用=截取前两段，并用第二段排序
+		
+		//练习题
+		2.把/etc/passwd 复制到 临时目录中，并用sed 打印所有行
+		3.sed打印文件中3到10行
+		4.打印文件中包含‘root’ 的行
+		5.删除文件中的15行以及以后所有行
+		6.删除文件中包含'bash'的行
+		7.替换文件中'root' 为 '-----'
+		8.替换文件中 '/sbin/nologin' 为 '/bin/login/'
+		9.删除文件中5到10行中的所有数字
+		10.删除文件中所有特殊字符（除了数字及大小写字母）
+		11.把文件中第一个单词和最后一个单词调换位置
+		12.把文件中出现的第一个数字和最后一个单词调换位置
+		13.把文件中第一个数字移动到行末尾
+		14.把文件中第20行到结束的行最前面加'aaa:'
+		15.awk分段，1段匹配root且2段精确匹配x,打印3,4段，并用‘--’连接
+		16.awk分段，取行数大于28且段数大于5的，并将3，4段的乘积赋值给段1，打印全行
+		17.计算1-100的和
+		18.输入一个数字，并计算出从1到该数字的和。要求：输入值小于1则重输入，直到输入正确为止
+		19.把 /root 目录下所有一级目录 拷贝到 /tmp 目录下
+		20.批量建立用户 user_00,,,user_100 并让所有用户同属于users组。
+		21.截取文件test.log中包含'bin' 的行中的第三列（定界符为:）,然后把截取的数字排序（第三列为数字），打印出重复次数超过10次的列。   (扩			22.shell编写九九乘法表
+		23.shell编写猜数游戏，1-100随机产生一个数，用户不停的猜，直到猜对为止
+		24.编写lamp,lnmp一键安装环境脚本 （详见第31课）
+		
+展学习:select用法 ：www.apelearn.com/bbs/thread-7950-1-1.html
 
-	
+		
 
-	20.
-		#!/bin/bash
-		groupadd  users1
-		for i in `seq 0 100`
-		do
-		        if [ $i -lt 10 ]
-		        then
-		                numb=0$i
-		        else
-		                numb=$i
-		        fi
-		        useradd -g users1 user_${numb}
-		done
 
-	19.
-		#!/bin/bash
-		cd /etc
-		for f in `ls`
-		do 
-		        if [ -d $f ]
-		        then
-		                mkdir /tmp2/$f
-		        fi
-		done 
-
-	18.
-		#!/bin/bash
-		error="输入只能是大于0的数值！请重新输入！";
-		st='从1到该数字的和为：'
-		while :
-		do
-		read -p "请输入一个数值：" n
-		num=0
-		if [ -z $n ] || echo $n | grep -q '[^0-9]'
-		then
-				echo $error
-				continue
-		fi
-		if [ $n -gt 1 ] 
-		then
-				for i in `seq 1 $n`
-				do  
-						num=$[$num+$i]
+		22
+			#!/bin/bash
+			for i in `seq 1 9`
+			do
+				for j in `seq 1 $i`
+				do
+					echo -en "${j} x ${i} = $[$i*$j] "
 				done
-				echo ${st}${num}
-				break
-		elif [ $n -eq 1 ] 
-		then
-				echo "${st}2"
-				break
-		else    
-				echo $error
-		fi
-		done   
-			
-	17.num=0;for i in `seq 1 100`;do echo $num+$i=$[$num+$i];num=$[$num+$i];done;
-	16.awk -F ':' 'NR>28 && NF>5 && $1=$3*$4 {print $0}' 1.txt
-	15.awk -F ':' '$1~/root/ && $2=="x" {OFS="--";print $2,$3}' 1.tx
-	14.grep -n '.' 1.txt | sed -r '20,$s/(.*)/aaa:\1/g'  	
-	13.sed -r 's/([^0-9]+)([0-9])(.*)/\1\3\2/g' 2.txt
-	12.sed -r 's/([^0-9]*)([0-9])(.*\/|.*\:|.*\s)([a-Z]+$)/\1\4\3\2/g' 1.txt
-	11.sed -r 's/([^:]+)(:.*\/)([^/]+)/\3\2\1/g' 1.txt
-	10.sed 's/[^0-9a-Z]//g' 1.txt
-	9.sed '5,10s/[0-9]//g' 1.txt
-	8.sed -r 's/(.*)(\/sbin\/nologin)(.*)/\1\/bin\/login\3/g' 1.txt
-	7.sed 's/root/-----/g'  1.txt 
-	6.grep -n "." 1.txt | sed '/bash/d' 
-	5.grep -n '.' 1.txt | sed '15,$d'
-	4.sed '/root/p' -n 1.txt
-	3.sed '1,10p' -n 1.txt
-	2.cp /etc/passwd ./1.txt && sed '1p' 1.txt
-	1.set | grep 'HIS' | cut -d '=' -f 1,2 | sort -t '=' -k 2
-
-
-
-
-
-
-
-
-
-
-
-
-	
-//-- linux开机时生效的环境变量文件
-
-	/etc/profile
-	/etc/profile.d/*.sh
-	/etc/bashrc
-	~/.bash_profile		//对当前用户起作用,在用户登陆时执行
-	~/.bashrc		//对当前用户起作用，在运行一个shell时执行
-	~/.bash_logout		//用户登出时执行的脚本
-	
-
-
-
-//-- ssh 远程shell登陆
-
-	ssh root@192.168.198.102
-
-
-
-
-//-- history 查看历史操作命令
-
-	history		查看历史操作命令
-		
-		/home/username/.bash_history 	文件存放位置	
-
-		HISTSIZE=500	设置历史操作命令的保存条数为500条
-
-
-
-
-
-//-- ntsysv	设置开机自启动（图形界面）
-
-	ntsysv
-
-
-
-
-
-//-- df 查看磁盘空间使用情况 
-
-	df
-
-
-
-//-- vmstat ?  查看磁盘IO情况
-
-	vmstat 1	指定每秒一次，不停的显示
-
-
-
-
-//-- top 查看动态的CPU，内存，进程等信息
-
-	top
-	
-
-
-
-//-- ps 查看所有程序信息
-
-	ps -aux
-
-
-
-
-//-- free 查看内存使用情况
-
-	free -m 
-
-		或 cat /proc/meminfo
-
-
-
-//-- . 等同于source 可让配置文件生效
-	. filename		使指定的配置文件生效
-	source filename
-
-		注：当配置文件修改后想要生效有两种方式，一种是重启服务，二是使用 . 或 source 
-
-
-
-
-
-//-- >	将文件清空或重置
-	> 1.txt			清空文件
-	echo  111 > 1.txt	将内容存储到1.txt中(但不会显示出来)
-
-
-//-- >> 追加文件内容
-
-	echo 'aa' >> 1.txt
-
-//-- < 内容反置
-//-- mail 发送邮件
-	
-	mail -s "title" abc@qq.com < 1.txt	将1.txt内容发送到邮件
-
-
-//-- 2>,2>> 将错误提示信息存储到指定日志
-	ls xxx 2>error.log	会把提示信息存储到error.log文件
-	ls xxx 2>>error.log	会把提示信息追加到error.log文件
-
-
-
-
-
-
-//-- 记录脚本操作日志
-//-- & 特殊符号  错误重定向，&1代表前面执行的文件
-//-- & 设置后台运行
-
-	sh xxx.sh > 1.log 2>1.log	这里的两个重置不会清空先前的
-	sh xxx.sh > 1.log 2>&1		等同于上面
-	sh xxx.sh >> 1.log 2>>1.log	多次执行脚本时可追加记录
-	sleep 100 &			后台运行
-	
-
-
-//-- &&,||,; 三种命令连接符的用处
-
-	ls && cd /tmp		//&& 前面的命令成功后才会执行后面的命令
-
-	cd /tmp || ls		//前面的命令失败后才会执行后面的命令
-
-	cd /tmp ; ls		//两个命令会按顺序执行，之间没有任何关系，相互不会影响
-
-
-
-//-- 系统变量
-
-	env		//显示部分系统变量
-	set 		//显示比env还全的系统变量
-	echo $PATH	//显示系统变量path
-	echo $HOSTNAME	//显示当前主机名
-	echo $lang	//显示当前字符集
-	......
-
-
-
-
-//-- export 声明变量为当前窗口的全局变量
-
-	export a=1	让变量a在全局可用(本shell窗口的全局，其它窗口无效)
-
-
-//-- unset 删除变量
-
-	unset a		删除变量a	注，删除bash中的子shell变量时不影响上一层中的变量
-
-
-//-- bash,exit  进入,退出 子shell
-
-	bash		//进入子shell
-	exit		//退出子shell
-
-
-
-//-- `` 反引号中可执行命令
-	
-	`rm -rf `ls /test	//将ls /test 浏览到的结果 删除
-	rm -rf `ls | grep -v '1.txt'`	删除当前目录中除1.txt 以外的所有文件
-
-
-
-
-//-- w 获取服务器负载情况
-
-	w
-
-
-
-
-
-//-- tee 将文件内容显示的同时并存储到指定文件中
-
-	cat 1.txt | tee 1.log		显示1.txt的内容，并将其内容转储到1.log文件中
-
-
-
-
-
-//-- nl 附带行号显示文件内容
-
-	nl 1.txt
-
-
-
-
-
-
-//-- tr 替换指定内容
-	
-	ls | tr 'a-z' 'A-Z'	//显示当前目录文件，并将所有显示的小写字母替换成大写字母
-	ls | tr 'm' 'z'
-
-
-
-
-
-
-
-
-//-- bc 命令行下的计算器
-
-	echo "365+7" |bc	//372
-
-	echo "365/7" |bc	//52
-
-	bc 		//进入运算模式
-	
-
-
-
-
-
-
-
-//-- PS1 设置 linux操作提示符的变量
-
-	[root@hostname ~]#			//原操作提示符
-
-	PS1='[\h@\u \w] \$'			//修改操作提示符的显示顺序
-		\h	主机名
-		\u	当前用户名
-		\w	当前全路径
-		\W	当前目录名
-		\$	用户区别标识符 
-
-	[hostname@root /tmp] #			//修改后的操作提示符
-
-
-
-
-		
-
-
-//-- cut 按指定字符剪切文件内容
-
-	cut -d ':' -f 1 /etc/passwd		以‘:’标记翦第一段
-		root
-	cut -d ':' -f 1,2 /etc/passwd		以‘:’标记翦1和2段
-		root:x
-	cut -d ':' -f 1-5 /etc/passwd		以‘:’标记翦1到5段
-		root:x:0
-
-	cut  -c 2 /etc/passwd			剪切每行第2个字符
-	cut  -c 2,5 /etc/passwd			剪切每行第2和第5的字符
-	cut  -c 2-5 /etc/passwd			剪切每行第2到5的字符
-	cut  -c 3- 1.txt 			剪切每行第3个字符到结束
-		oot:
-		-d 	指定分隔符，不指定时默认分隔符为空格
-		-f	指定翦几段
-		-c	指定要剪切字符的下标区域
-
-
-
-//-- wc 查看文件行数,单词数，字节信息
-	-l:	统计行数
-	-w:	统计单词个数
-	-c:	统计字节数
-
-
-
-
-//-- sort 排序
-//-- | 管道符，将前的执行的结果作为后面执行的条件 
-
-	sort -t ':' -k 3 /etc/passwd		//以:为界，并以第三段来排序(以ASCLL码排序方式)
-
-	sort -t ':' -k 3 -n /etc/passwd		//以数字自然排序
-
-	sort -t ':' -k 3 -n /etc/passwd | cut -d ':' -f 3 
-		//以:为界,以第三段自然排序，并只显示第三段内容
-		相当于：
-		cut -d ':' -f 3 `sort -t ":" -k3 -n /etc/passwd`
-
-		-t	指定以哪个字符为界来分段
-		-k	取第几段
-		-n	自然排序（0-9）
-		-r	倒序
-		-u	去重
-
-
-
-//-- uniq 唯一（去重）
-	cut -d ':' -f 3 1.txt | sort -nr | uniq -c
-		//对1.txt文件以：分段，只显示第3段，并对第3段自然排序，去掉重复内容，且计算相同内容出现的次数
-
-		-c 计算重复内容出现的次数
-
-
-
-
-
-
-
-
-//-- split 将大文件分割成多个小文件
-	
-	1.以行来分割
-		split -l 10000 1.txt 	以10000行为单位来分割1.txt文件
-		split -l 10000 1.txt a	指定分割后的文件名前缀为a
-
-	2.以大小来切割
-		split -b 100k 1.txt 	以大小100k为标准来分割1.txt 文件
-		split -b 100k 1.txt b	指定分割的文件名前缀为b
-
-
-
-
-
-
-
-//-- xargs 给命令传递参数的过滤器，组合多个命令的工具
-
-	
-	xargs 默认echo,空格为默认定界符。 所有的换行，空白将被空格所取代。如下
-		1.txt文件及内容
-			a b c
-			d e
-			f
-	
-		cat 1.txt | xargs 	//结果：a b c d e f
-			
-
-	-d 自定义定界符，来分段
-	-n 多行输出，指每第行显示几段
-		
-		echo 'aaaXbbbXcccXdddXeeeXfff' | xargs -dX -n3
-						//结果：
-							aaa bbb ccc
-							ddd eee fff
-
-	-I 将每行内容赋值给{}，并可使用{}代替每行内容来输出
-		例一：
-		echo 'aa-bb-cc' | xargs -n1 -d'-' -I {} echo +++{}---	
-			结果：	+++aa---
-				+++bb---
-				+++cc---
-			-d'-'将输出的内容以 ‘-’为界分段,-n1让每行显示一段，-I 使用{} 代替每行内容，echo 使用{}原内容拼接新内容并输出 
-
-		例二：
-		ls *.jpg | xargs -n1 -I {} cp {} /tmp/m2/{}	将当前所有jpg图片文件拷贝到/tmp/m2目录下
-	
-
-	-i 将内容分行显示，并直接用{}替代每行内容 ，同时具有 -n1 和 -I{} 的作用
-
-		ls | xargs -i echo ---{}	将当前目录文件前面加'---'
-			结果：	---aa.txt
-				---bb.txt		
-
-	
-
-
-
-
-
-
-
-
-//-- du 统计目录及文件的空间占用情况 
-
-	du -ah /boot	查看boot目录下每个文件的大小，及所有文件目录总大小
-	du -sh /boot	只查看boot目录的总大小
-	du -sh *		查看当前目录下所有目录与文件的大小
-
-		-a:	同时统计目录和文件(总大小)
-		-h:	实际的单位(k,m等)显示大小信息
-		-s:	只统计指定文件或目录占用空间的总大小
-
-
-
-
-
-
-
-//-- grep 正则
-	-A -B -C -c --color -i -n -o -r -v
-
-	//- grep 的特殊匹配
-		.	代表1个任意的字符
-		*	代表前字符为0到多个
-		?	代表前字符为0或1个(但使用时需要前面加参数 -E;如grep -E 'ro?t' 1.txt) 
-		+	代表前字符为1到个(但使用时需要前面加参数 -E;如grep -E 'ro+t' 1.txt) 
-		
-	grep 'mysql' passwd	显示指定文件中匹配条件的那行内容
-		//mysql:x:500:500::/home/mysql:/sbin/nologin
-
-
-	//-grep 匹配时不支持直接使用+,|,()等的解决方法
-	grep 'root\|mysql' 1.txt	匹配root或mysql的
-		grep -E 'root|mysql' 1.txt
-		egrep 'root|mysql' 1.txt
-
-		
-	grep -E '(oo){1,5}' 1.txt	匹配多字符
-	grep -E '(oo)+' 1.txt
-		grep '\(oo\)\+' 1.txt	
-		egrep '(oo)+' 1.txt
-
-	注：grep 匹配时 如 +,|,() 等不支持，请使用 -E 或 脱意符号'\' ,或egrep来解决
-
-
-
-
-	grep -A2 'root' 1.txt	-A? 显示带有root的那行内容，同时也连带显示其后面的?行内容
-
-	grep -B2 'root' 1.txt	-B? 显示带有root的那行内容，同时也连带显示其前面的?行内容
-
-	grep -C2 'root' 1.txt	-C? 显示带有root的那行内容，同时也连带显示其前后各?行内容
-	
-	grep -c 'root' passwd	-c 获取指定文件中匹配条件内容的行数
-		//2
-
-	grep --color -n 'root' 1.txt	--color 给关键字添加颜色
-
-	grep -in 'root' 1.txt  	-i 不区分大小写
-	
-	grep -n 'root' 1.txt	-n 获取匹配的那行内容并，显示行号
-
-	grep -o 'root' 1.txt	-o  只显示匹配到的关键字
-	grep -o 'root' 1.txt|wc -l	-o 结合wc -l 获取 root 出现的次数
-
-	grep -r 'root' /etc	-r 遍历并匹配指定目录下所有文件的内容
-
-	grep -v 'root' 1.txt 	-v(取反)获取文件行中不包含root 的内容
-
-	grep -q 'root' 1.txt	-q 不显示结果的匹配，一般作为if 判断时的条件 ，虽不显示结果，但它可以作为判断时的真假条件 
-
-	小案例
-		grep -n '[0-9]' 1.txt		获取文件中行内带有数字的内容
-
-		grep -nv '[0-9]' 1.txt		获取文件中行内不带数字的内容	
-	
-		grep -n '^#' 1.txt		获取文件中行内以#开头的内容
-		grep -nv '^#' 1.txt		获取文件中行内不是以#开头的内容
-
-		grep -n '#$' 1.txt		获取文件中行内以#结尾的内容
-		grep -nv '#$' 1.txt		获取文件中行内不是以#结尾的内容
-
-		grep -v '^$' 1.txt | grep -v '^#' 	去除所有空行和以#开头内容的行
-
-		grep  '^[^0-9]' 1.txt		获取所有以非数字开头的行
-
-
-
-
-
-
-
-
-
-//-- sed 正则加替换的使用
-
-	p d -e -i -n -r s//g
-
-	注：sed 不加-n会打印全部内容， 所以后面都要加上-n 
-
-	sed '1p' -n 1.txt		打印文件中第一行， 
-	sed '1,5p' -n 1.txt		打印1到5行
-	sed '38,$p' -n 1.txt		打印38到结束行
-
-	
-	sed '/root/p' 1.txt -n		匹配包含root内容的行
-
-	grep -n '.' 1.txt | sed '1,5p' -n 	打印1到5行并利用grep -n 显示行号
-
-	sed '/ro*t/p' -n 1.txt		*代表前字符0到多
-	
-	sed -r '/ro+t/p' -n 1.txt	+代表前字符1到多，但sed中不能直接用+ 需要加脱意符号或 加-r 如grep的 -E
-		sed '/ro\+t/p' -n 1.txt
-
-	sed -r '/ro?t/p' -n 1.txt	?代表前字符0或1
-		sed '/ro\?t/p' -n 1.txt
-
-
-
-	sed -r '/(oo)+/p' -n 1.txt	sed 匹配多字符
-		sed '/\(oo\)\+/p' -n 1.txt
-
-
-	sed -e '/root/p' -e '/mysql/p' -n 1.txt		-e 匹配多条件 
-		或
-		sed -e '/root/p;/mysql/p' -n 1.txt
-		注：这里两个-e 匹配不同与 and , and 是匹配 条件1与条件2同时成立的，而这里的两个-e 是匹配到条件会打印出来，匹配到条件 2 也会打印，如果同一行时同时有root 和mysql 那么就会打印两次（匹配root打印一次，匹配mysql再打印一次）。
-
-
-	sed '/[1-8]/d' 1.txt		d 不显示匹配到内容的行
-		sed '1d' 1.txt			不显示第一行	
-		sed '2,$d' 1.txt		不显示第2行到结束
-		sed '1,5d' 1.txt		不显示1到5行
-		sed -r '/root|mysql/d' 1.txt
-
-
-	sed 's/root/good/g' 1.txt	s  g 替换匹配到的内容 将root替换成good
-	sed 's|root|===|'  1.txt	s||| 只替换匹配到的首条内容
-	sed '1,5s/:/-----/g' 1.txt	只对1到5行执行替换用-----替换:
-	sed '30,$s/:/-----/g' 1.txt	只对30行到最后的行执行替换
-	sed 's/[0-9]//g' 1.txt		删除掉文件中所有的数字(就是把数字替换成空 )
-	sed 's/[^0-9]//g' 1.txt		删除掉所有非数字
-	sed 's/[a-Z]//g' 1.txt		删除掉所有字母
-
-	sed -r 's/([^:]+)(:.*:)([^:]+$)/\3\2\1/g'	将首段和未段调换
-		root:x:0:0:root:/root:/bin/bashmysql  调换前
-		/bin/bashmysql:x:0:0:root:/root:root  调换后
-
-	sed -ri 's/([^:]+)(:.*:)([^:]+$)/\3\2\1/g' 1.txt	-i 将匹配操作(替换)直接保存到文件
-
-
-
-
-
-
-//-- awk 
-
-
-	-F  	指定定界符
-	-F [,%]	定界符可以是多个，或的关系，与正则的[]一样
-	NR	行数  
-	NF 	段数
-	$NF 	取最后一段
-	{OFS ; print $0}	打印与各段连接符
-	  ~//  == =   >  <  	匹配与条件判断
-
-	
-	df -h | awk '[ %]+' '{print $5}'	//定界符使用空格或%
-	
-	awk {print $1}		//awk 默认使用空格做定界符来分段
-
-	awk -F ':' '{print $1,$2}' 1.txt  	使用 : 将文件中每行分段，并打印每行的第1，2段
-		-F 用指定字符为界分隔内容, 
-		print 打印输出
-		$1,$2 指定输出第几段内容
-
-
-	awk -F ':' '$1 ~ /root/' 1.txt		使用: 将文件每行分段，显示第1段中匹配root的那行
-		$1 	使用第一段
-		~ /root/	指定要匹配的内容为root
-
-
-	awk -F ':' '$1~/root/ {print $3,$4}' 1.txt	使用：将文件每行分段，将第一段中包含root的那行的第3，4段打印
-		$1~/root/ 	在第一段中匹配root
-		print $3,$4	打印3，4段
-
-
-	awk -F ':' '$1~/root/ {OFS="--";print $1,$2}' 1.txt
-		使用：将文件每行分段，将第一段中包含root的那行的第1,2段打印,并且使用 -- 来连接1,2段，默认使用空格做连接
-
-	
-	awk -F ':' '$1=="root" {print $1,$2}' 1.txt	$1=='root'精准匹配（非包含）
-
-	awk -F ':' 'NR>25 {print $1,$2}' 1.txt		NR 代表行数
-			
-	awk -F ':' '$1=="root" || NR>28 {print $1,$2}' 1.txt	分段，并1段精准匹配root或行号大于28的，打印第1，2段
-
-	awk -F ':' '$1=$3*$4  {print}' 1.txt		$1=$3*$4用3，4段的积赋值给第一段
-
-	awk -F ':' 'NF>3' 1.txt	 	匹配分割后，段数大于3的行	
-		NF 代表段数
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//-- date 时间
-
-	date +%Y		四位的年份 2016		y 两位年份   16
-
-	date +%m		两位的月份 10		n 带中文月分 10月
-
-	date +%d		两位的天   09
-
-	date +%H		时（24制） 22
-
-	date +%M		分钟	   53
-
-	date +%S		秒	   33
-
-	date +%w		周几	   1		W 一年的第几周  24
-
-	date +%s		获取当前日期的时间戳	1476021710
-		
-	date -d @1476021710	将时间戳转换成日期	2016年 10月 09日 星期日 22:01:50 CST
-
-	date -d "-1 day"	显示昨天的时期		2016年 10月 08日 星期六 22:24:45 CST
-
-	date -d "2 hours ago" +$s	获取两个小时以前的时间戳
-
-
-	显示昨天,明天,上周,下周,上月，下月，去年，明年的日期，并按指定格式显示年月日时分秒及简写---
-
-	昨天，明天
-	date -d "-1 day" +"%Y-%m-%d %H:%M:%S"		2016-10-09 22:34:28
-	date -d "+1 day" +"%Y-%m-%d %H:%M:%S"
-	上周，下周
-	date -d "-1 week" +"%Y-%m-%d %H:%M:%S"
-	date -d "+1 week" +"%Y-%m-%d %H:%M:%S"
-	上月，下月
-	date -d "-1 month" +"%Y-%m-%d %H:%M:%S"
-	date -d "+1 month" +"%Y-%m-%d %H:%M:%S"
-	去年，明年
-	date -d "+1 year" +"%Y-%m-%d %H:%M:%S"
-	date -d "+1 year" +"%Y-%m-%d %H:%M:%S"
-	
-
-	简写显示昨天,明天,上周,下周,上月，下月，去年，明年的日期---
-	昨天，明天
-	date -d "-1 day" +"%F %T"
-	date -d "+1 day" +"%F %T"
-	上周，下周
-	date -d "-1 week" +"%F %T"
-	date -d "+1 week" +"%F %T"
-	上月，下月
-	date -d "-1 month" +"%F %T"
-	date -d "+1 month" +"%F %T"
-	去年，明年
-	date -d "-1 month" +"%F %T"
-	date -d "+1 month" +"%F %T"
-
-	
-	简写显示当前日期的年月日
-	date +%F		2016-10-09
-
-	简写显示当前日期的时分秒
-	date +%T		22:13:15
-
-				
-	简写样式显示当前日期
-	date +%F' '%T		2016-10-09 22:14:50	
-	date +"%F %T"
-
-	自定义样式显示日期
-	date +"%Y_%m_%d %H:%M:%S"   	2016_10_09 22:17:19
-	
-
-	//其它
-	mysqldump -uroot -pxiaOdonGsIguO32906802 test2 > /test/`date +%Y%m%d%H%M%S`.sql			为mysql备份时创建动态文件名
-	echo `date +%Y%m%d%H%M%S` | xargs mkdir		创建以时间为名的动态目录
-	echo `date +%Y%m%d%H%M%S` | xargs touch		创建以时间为名的动态文件
-	echo `date +%Y%m%d%H%M%S`			按年月日时分秒显示当前时间：20160904154106			
-	echo `date +%F-%T`				按系统格式显示：2016-09-04-15:42:16
-	echo `date +%F==%T`				date参数中可加其它的连接字符2016-09-04==15:43:15
-
-	date +%Y%m%d         //显示现在天年月日
-	date +%Y%m%d --date="+1 day"  //显示后一天的日期
-	date +%Y%m%d --date="-1 day"  //显示前一天的日期
-	date +%Y%m%d --date="-1 month"  //显示上一月的日期
-	date +%Y%m%d --date="+1 month"  //显示下一月的日期
-	date +%Y%m%d --date="-1 year"  //显示前一年的日期
-	date +%Y%m%d --date="+1 year"  //显示下一年的日期
-	或者更简单点的  date=`date -d -${t}day '+%Y%m%d'` //为t为前几天
-
-
-
-	date -s //设置当前时间，只有root权限才能设置，其他只能查看。
-	date -s 20080523 //设置成20080523，这样会把具体时间设置成空00:00:00
-	date -s 01:01:01 //设置具体时间，不会对日期做更改
-	date -s “01:01:01 2008-05-23″ //这样可以设置全部时间
-	date -s “01:01:01 20080523″ //这样可以设置全部时间
-	date -s “2008-05-23 01:01:01″ //这样可以设置全部时间
-	date -s “20080523 01:01:01″ //这样可以设置全部时间
-
-	//date 参数大全
-
-	date 用法： date [OPTION]... [+FORMAT]
-	date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]
-	date 可以用来显示或设定系统的日期与时间。
-	1.在显示方面，使用者可以设定欲显示的格式，格式设定为一个加号后接数个标记，其中可用的标记列表如下: % :  打印出 %
-	%n : 下一行
-	%t : 跳格
-	%H : 小时(00..23)
-	%I : 小时(01..12)
-	%k : 小时(0..23)
-	%l : 小时(1..12)
-	%M : 分钟(00..59)
-	%p : 显示本地 AM 或 PM
-	%r : 直接显示时间 (12 小时制，格式为 hh:mm:ss [AP]M)
-	%s : 从 1970 年 1 月 1 日 00:00:00 UTC 到目前为止的秒数
-	%S : 秒(00..61)
-	%T : 系统格式的时分秒	15:49:49
-	%X : 相当于 %H:%M:%S
-	%Z : 显示时区 %a : 星期几 (Sun..Sat)
-	%A : 星期几 (Sunday..Saturday)
-	%b : 月份 (Jan..Dec)
-	%B : 月份 (January..December)
-	%c : 直接显示日期与时间
-	%d : 日 (01..31)
-	%D : 直接显示日期 (mm/dd/yy)
-	%h : 同 %b
-	%j : 一年中的第几天 (001..366)
-	%m : 月份 (01..12)
-	%U : 一年中的第几周 (00..53) (以 Sunday 为一周的第一天的情形)
-	%w : 一周中的第几天 (0..6)
-	%W : 一年中的第几周 (00..53) (以 Monday 为一周的第一天的情形)
-	%x : 直接显示日期 (mm/dd/yy)
-	%y : 年份的最后两位数字 (00.99)
-	%Y : 完整年份 (0000..9999)
-	%F : 系统格式的年月日 	2016-09-04
-
-	
-	
-	
-
-
-//-- shell 编程
-
-	//-- 计划任务中每分钟执行一次脚本
-		crontab -e
-			* * * * * cd /usr/local/sbin/bin; /bin/bash main.sh
-		
-
-	//-- 脚本编写示例
-		vim a.sh		//文件名后缀sh表明这是一个Bash脚本文件
-			#!/bin/sh 			//指定脚本解释器,这里是用/bin/sh做解释器(必需)
-			cd ~ 				//切换到当前用户的home目录
-			mkdir shell_tut 		//创建一个目录shell_tut
-			cd shell_tut 			//切换到shell_tut目录
-			for ((i=0; i<10; i++)); do 	//循环条件，一共循环10次
-			touch test_$i.txt 		//创建一个test_1…10.txt文件
+				echo 
+			done
+
+		21. 待写
+
+		20.
+			#!/bin/bash
+			groupadd  users1
+			for i in `seq 0 100`
+			do
+					if [ $i -lt 10 ]
+					then
+							numb=0$i
+					else
+							numb=$i
+					fi
+					useradd -g users1 user_${numb}
+			done
+
+		19.
+			#!/bin/bash
+			cd /etc
+			for f in `ls`
+			do 
+					if [ -d $f ]
+					then
+							mkdir /tmp2/$f
+					fi
 			done 
 
-	//-- shell中的注释
-
-		以“#”开头的行就是注释，会被解释器忽略。 多行注释 sh里没有多行注释，只能每一行加一个#号。就像这样：
-
-		如果在开发过程中，遇到大段的代码需要临时注释起来，过一会儿又取消注释，怎么办呢？每一行加个#符号太费力了，可以把这一段要注释的代码用一对花括号括起来，定义成一个函数，没有地方调用这个函数，这块代码就不会执行，达到了和注释一样的效果。
-
-
-	//-- shell脚本的执行方式
-		./filename.sh		执行方式
-		或
-		sh filename.sh
-		或
-		bash filename.sh
-
-		注：执行脚本的时候，要先将脚本文件的属性改为可执行的：chmod +x filename.sh
-
-	//-- 脚本检验命令
-		
-		bash -x a.sh
-
-
-	//-- 子脚本的运行（子程序）
-		#!/bin/bash
-			export send=1		//声明全局变量，这样子脚本中也可以访问访该变量
-			/bin/bash ../xxx/xx.sh		//运行另一个脚本（子脚本）
-	
-
-	//-- 交互式脚本
-		#!/bin/bash
-		read -p "请输入一个数字:" num
-		echo $num
-
-		或
-
-		#!/bin/bash
-		read -p "请输入一个数字:"
-		echo $REPLY		//系统内置交互变量
-			
-
-
-
-	//-- 内置变量 $*,$#,$0,$1,$2,$?,##*,,,,解释
-
-		//$1,$2..$*,$#		
-		编辑脚本并运行
+		18.
 			#!/bin/bash
-			echo '$1='$1
-			echo '$2='$2
-			echo '$3='$3
-			echo '$#='$#
-			echo '$0='$0
-			echo $*
-		
-
-		运行脚本后显示结果
-			[root@tpcwreLinux tmp]# sh a.sh aming linux
-			$1=aming
-			$2=linux
-			$3=
-			$#=2
-			$0=a.sh
-
-		注解：
-			$1 代表执行脚本时所带的第一个参数aming
-			$2 代表执行脚本时所带的第二个参数linux
-			$3 代表第三个参数，，，依次类推
-			$# 代表参数的总个数,这里是两个参数，所以就是2
-			$0 代表执行脚本a.sh的本身
-			$* 代表所有的参数
-
-
-		//##*
-		${1##*.tar.} 表示第一个参数去掉*.tar.后剩下的部分。
-
-
-		//$?
-		$? 是上一个程序执行是否成功的标志，如果执行成功则$? 为0，否则 不为0
-		
-
-
-	
-	//-- 变量
-
-		name='lily'		//定义变量时，变量名不加美元符号，且变量名和等号之间不能有空格
-
-		for file in `ls /etc`	//遍历/etc目录下文件名并赋值给变量file
-				
-					//调用变量
-		echo $name		
-		echo ${name}		
-		echo "I am good at ${skill}Script"
-
-
-					// 拼接字串
-		a='a'
-		b='b'
-		echo $a$b
-
-					// 获取字串长度
-
-		a1='abcde'
-		a2='hijklmn'
-		echo ${#a1}
-		echo ${#a2}
-
-
-					//截取字串 
-		string="alibaba is a great company" 
-		echo ${string:1:4} 			//输出：liba
-
-	
-					// 查找子字串
-		string="alibaba is a great company" 
-		echo `expr index "$string" is`		//8，这个语句的意思是：找出单词is在这名话中的位置
-		更多字串查找操作：http://tldp.org/LDP/abs/html/string-manipulation.html
-
-
-					//变量的计算
-		a=1; b=2	
-		c=$[$a+$b];		
-		c=$(($a+$b))
-
-
-
-
-
-
-
-	//-- if 判断
-
-	   例一：
-		#!/bin/bash
-		if :			// ：代表真的意思  
-		then
-		echo true
-		fi
-
-	   例二：
-		a=2
-		if [ $a == 1 ]		// 方括号中的两边和==必须有空格
-		then
-			echo "true"
-		else
-			echo "false"
-		fi
-
-	   例三：
-		#!/bin/bash
-		a=1
-		if [ $a -gt 2 ]
-		then
-		        echo '大于2'
-		elif [ $a == 2 ]
-		then
-		        echo '等于2'
-		else
-		        echo '小于2';
-		fi
-
-		
-	   例四
-		a=1
-		if (( $a < 2  ))		//注： if判断中不能在[] 中直接使用 >,< 想要使用就可以(()) 的方式来用
-		then
-	        echo 111111
-		else
-	        echo 2222222
-		fi
-
-
-	   例五
-		if [ $a -gt 1 ] && [ $a -lt 10 ];then echo 'ok'; fi
-
-		if [ $a -gt 1 ] || [ $a -lt 10 ];then echo 'ok'; fi
-
-		if [ $a -gt 1 -a $a -lt 10 ];then echo 'ok'; fi
-	
-		if [ $a -gt 1 -o $a -lt 10 ];then echo 'ok'; fi
-
-
-	   例六：输入一个值，判断是否为数值，并判断其是奇偶数
-		#!/bin/bash
-		read -p '输入一个数字：' n
-		n1=`echo ${n} | grep '[^0-9]' -c`
-		if [ ${n1} == 1 ]
-		then
-		        echo "请输入一个数字"
-		        exit 1
-		fi
-		n2=$[$n%2]
-		if [ $n2 == 1 ]
-		then
-		        echo '输入的是奇数！'
-		else
-		        echo '输入的是偶数'
-		fi
-
-	   例七：
-		if [ -e 1.sh ]; then echo 'exist'; fi
-
-		或
-	
-		[ -f 1.sh ] && echo 'exist'
-		[ -f 1.sh ] || echo 'no exist'
-
-
-
-
-	   例八：  非
-
-		if [ ! -e 1.sh ]; then echo 'no exist'; fi
-
-
-
-	   例九： if语句中可以使用命令执行的结果来做条件
-
-		if echo $n | grep -q '[^0-9]'		//如果匹配到了非数字，则执行下面的语句
-		then
-			echo "请输入纯数字"
-			exit 1
-		if
-
-		
-		if ls /etc/lakdsf > 1.log 2>1.log ;then echo 'ok' ;else echo 'not ok'; fi
-
-
-
-	   例十：  脚本中的时间date 与 exec 将所有输出定向到指定日志中
-		#!/bin/bash
-		d=`date +%F`
-		exec > ${d}.log 2>&1
-		echo "Begin at `date`"
-		ls /etc
-		ls /etc/sldfjls
-		echo "End at `date`"
-
-
-
-
-		line=`wc -l 4.txt|cut -d ' ' -f1`;	//获取4.txt文件的行数，单词数，大小信息，并将结果以空格分隔，再取第1段（也就是行数），将其赋值给变量line
-		if [ $line -lt 3 ]; then echo 'no'; fi	//判断line是否大于3 ，成立就显示no
-	
-
-
-		//判断条件示例
-		
-		[ $a == 3 ] 或 [ $a eq 3 ]	等于
-	
-		[ $a -ne 3 ]	-ne 不等于
-	
-		[ $a -lt 3 ]  	-lt 小于
-
-		[ $a -gt 3 ]	-gt 大于
-
-		[ $a -ge 3 ]	-ge 大于等于
-
-		[ $a -le 3 ]	-le 小于等于
-
-		[ -e "$fiel" ]	判断文件或目录是否存在 
-
-		[ -f "$file" ] 	判断$file是否是一个文件
-
-		[ -d "$file" ] 	判断$file是否是一个目录
-
-		[ -x "$file" ] 	判断文件是否有可执行
-
-		[ -r "$file" ]  判断文件是否可读
-
-		[ -w "$file" ]  判断文件是否可写
-
-		[ -n "$a" ] 	判断变量$a是否有值
-
-		[ -z "$a" ]	判断变量是否为空
-
-		[ ! -z "$a"] 	判断变量不为空
-
-		[ "$a" = "$b" ] 判断$a和$b的取值是否相等
-
-		[ cond1 -a cond2 ] 判断cond1和cond2是否同时成立相当于and，-o表示cond1和cond2有一成立,相当于or
-
-		要注意条件测试部分中的空格。在方括号的两侧都有空格，在-f、-lt、=等符号两侧同样也有空格。如果没有这些空格，Shell解释脚本的时候就会出错。
-
-		exec >1.log 2>&1	将以后所有的输出定向到指定文件
-			
-
-
-
-
-
-
-
-
-
-	//-- case 判断
-
-		#!/bin/bash
-		read -p '请输入一个值：' n
-		case $n in
-				1)
-						echo '星期一'
-						;;
-				2)
-						echo "星期二"
-						;;
-				3)
-						echo "星期三"
-						;;
-				4)
-						echo "星期四"
-						;;
-				5)
-						echo "星期五"
-						;;
-				6|7)
-						echo "大礼拜"
-						;;
-				*)
-						echo "请办入一个1-7的数字"
-						;;
-		esac
-
-
-
-
-
-
-
-	//-- for 循环
-
-		例一：
-		for i in `seq 1 10000`; 		//循环1万次
-		do cat /etc/passwd >> 1.txt; 		//每次将指定文件内容追加到1.txt
-		done					//结束
-
-			
-		例二：  将文件中每行遍历打印出来（行中包含空格或tab的）
-		#!/bin/bash
-		f="1.txt"
-		n=`wc -l $f|awk '{print $1}'`
-		for i in `seq 1 $n`
-		do
-		        sed -n "${i}p" $f
-		done
-
-		seq	序列：指定循环的节奏
-			seq 1 10 	循环1-10
-			seq 1 2 10 	循环1-10 ，步长为2
-			seq -1 -1 -10   
-
-
-		例三：
-		for ((i=0; i<10; i++))
-	 	do 
-			touch test_$i.txt 		
-		done 
-
-
-
-
-	//-- while 循环
-		关键字：
-			while
-			:
+			error="输入只能是大于0的数值！请重新输入！";
+			st='从1到该数字的和为：'
+			while :
 			do
-				continue	路过当次循环
-				break		结束整个while循环
-				exit 		结束整个脚本，后面的代码也不执行了
-			done
-		例一：
-
-		while :;do w;sleep;done		//无限循环，显示服务器负载情况 （监控脚本）
-			:	代表真，一般 : 都使用在监控脚本中
-			w	显示服务器负载情况
-			sleep	睡眠（中止）
-
-
-		例二： 服务器监控脚本
-		#!/bin/bash
-		while :
-		do
-		        load=`w | head -1 | awk -F "load average: " '{print $2}' | cut -d. -f1`   
-		        if [ $load -gt 10 ]
-		        then
-		                top | mail -s "load is high: $load " tpcwre@163.com
-		        fi
-		        sleep 30
-		done
-
-
-		例三：无限输入交互，直到输入纯数字为止
-		#!/bin/bash
-		while :
-		do
-		        read -p "请输入一个值：" n
-		        if [ -z $n ]
-		        then
-        		        echo "输入内容不得为空！";
-        		        continue
-        		fi
-        		if [ `echo $n | grep '[^0-9]'`  ]
-       			then
-        	        	echo '只能输入纯数字！';
-                		continue
-        		fi
-        		break
-		done
-		echo $n
-
-
-
-
-		例：
-		svn status | grep "?" | awk '{print $2}' | while read line;do svn add ${line};done;
-
-			svn status -- 该命令用于查看文件信息，其中M代表修改，？代表未知（即需要添加的文件）
-
-			grep "?"    -- 查找包含？的信息
-
-			将svn status 的结果重定向到grep "?"那么得到的结果就是新增文件
-
-			接下来使用awk处理字符串，awk '{print $2}'表示打印第二个数据，其中$0表示整行数据
-
-			svn status | grep "?" | awk '{print $2}'那么得到的结果就是文件名称了，接下来使用shell循环处理
-
-			while read line;do svn add ${line};done; -- 读取每一行数据，然后执行svn add
-
-
-
-
-
-	//-- 函数
-
-		例一：
-		#!/bin/bash	
-		input (){		//声明一个函数，名字是input 
-			echo $1		//打印出该函数的第一个参数
-		}
-		input aaaaa		//调用函数并，给了一个参数为 aaaaa
-
-		
-		例二：
-		#!/bin/bash
-		gip (){			//函数的声明
-			ip=`ifconfig | grep -A1 "$1" | tail -1 | awk '{print $2}' | awk -F ":" '{print $2}'`
-			if echo $ip | grep -q '[0-9]'
+			read -p "请输入一个数值：" n
+			num=0
+			if [ -z $n ] || echo $n | grep -q '[^0-9]'
 			then
-				echo "address is $ip"
-			else
-				echo '没有您所输入的网卡型号！请重新输入！'
+					echo $error
+					continue
 			fi
-		}
-		gip $1		//函数的调用，并将脚本的第一个参数传递给了函数作为第一个参数 。
+			if [ $n -gt 1 ] 
+			then
+					for i in `seq 1 $n`
+					do  
+							num=$[$num+$i]
+					done
+					echo ${st}${num}
+					break
+			elif [ $n -eq 1 ] 
+			then
+					echo "${st}2"
+					break
+			else    
+					echo $error
+			fi
+			done   
+				
+		17.num=0;for i in `seq 1 100`;do echo $num+$i=$[$num+$i];num=$[$num+$i];done;
+		16.awk -F ':' 'NR>28 && NF>5 && $1=$3*$4 {print $0}' 1.txt
+		15.awk -F ':' '$1~/root/ && $2=="x" {OFS="--";print $2,$3}' 1.tx
+		14.grep -n '.' 1.txt | sed -r '20,$s/(.*)/aaa:\1/g'  	
+		13.sed -r 's/([^0-9]+)([0-9])(.*)/\1\3\2/g' 2.txt
+		12.sed -r 's/([^0-9]*)([0-9])(.*\/|.*\:|.*\s)([a-Z]+$)/\1\4\3\2/g' 1.txt
+		11.sed -r 's/([^:]+)(:.*\/)([^/]+)/\3\2\1/g' 1.txt
+		10.sed 's/[^0-9a-Z]//g' 1.txt
+		9.sed '5,10s/[0-9]//g' 1.txt
+		8.sed -r 's/(.*)(\/sbin\/nologin)(.*)/\1\/bin\/login\3/g' 1.txt
+		7.sed 's/root/-----/g'  1.txt 
+		6.grep -n "." 1.txt | sed '/bash/d' 
+		5.grep -n '.' 1.txt | sed '15,$d'
+		4.sed '/root/p' -n 1.txt
+		3.sed '1,10p' -n 1.txt
+		2.cp /etc/passwd ./1.txt && sed '1p' 1.txt
+		1.set | grep 'HIS' | cut -d '=' -f 1,2 | sort -t '=' -k 2
 
 
 
+
+
+
+
+
+
+
+
+//===== shell命令以外的其它要点
+		
+	//-- linux开机时生效的环境变量文件
+
+		/etc/profile
+		/etc/profile.d/*.sh
+		/etc/bashrc
+		~/.bash_profile		//对当前用户起作用,在用户登陆时执行
+		~/.bashrc		//对当前用户起作用，在运行一个shell时执行
+		~/.bash_logout		//用户登出时执行的脚本
+		
+		
+		
+		
+	//-- linux 设置开机时运行的程序文件
+		
+		/etc/rc.local	该脚本中的命令会在开机时自动执行
+
+
+
+	//-- linux 开机自动运行脚本的目录
+
+		/etc/init.d/	该目录中的脚本会在开机时被自动执行
+
+
+
+
+
+	//-- 让程序可以全局调用
+
+		将可执行命令 链接到 /usr/local/bin 目录下  如：
+		ln -s /usr/local/php/bin/php /usr/local/bin/php		//如此 php命令即可全局使用了
+		
+		
 	
 
 
-	//-- 脚本监控
-		磁盘监控
-
-		负载监控
-
-		mysql主从监控
-			mysql -uroot -paaa -e "show slave status \G" | grep -i 'xxxx' ...
-
-
-		内存监控
-
+	//-- 清除内存(释放)
+		
+		echo 3 > /proc/sys/vm/drop_caches	
+			drop_caches的值可以是0-3之间的数字，代表不同的含义：
+			0：不释放（系统默认值）
+			1：释放页缓存
+			2：释放dentries和inodes
+			3：释放所有缓存
+				
 
 
 
+		
+		
+//===== 系统服务操作相关
+
+	//-- ssh 远程shell登陆
+
+		ssh root@192.168.198.102
+
+
+
+	//-- uname 查看系统及内核 
+
+		uname 		//linux
+
+		uname -r 	//2.6.32-279.el6.i686		i686 表示32位，x8664 表示64位
 
 
 
 
-	//-- expect 远程登陆工具
-		//安装
-		yum -y install expect    
 
+	//-- history 查看历史操作命令
+
+		history		查看历史操作命令
+			
+			/home/username/.bash_history 	文件存放位置	
+
+			HISTSIZE=500	设置历史操作命令的保存条数为500条
+
+
+
+
+
+	//-- ntsysv	设置开机自启动（图形界面）
+
+		ntsysv
+
+
+
+
+
+	//-- df 查看磁盘空间使用情况 
+
+		df -ah
+
+
+
+	//-- vmstat ?  查看磁盘IO情况
+
+		vmstat 1	指定每秒一次，不停的显示
+
+
+
+
+	//-- top 查看动态的CPU，内存，进程等信息
+
+		top
+			p	根据CPU使用量排序
+			M	根据内存使用量排序
+			T	根据运行时间排序
+			q	退出 
+				以上参数需要在运行时输入
+
+
+
+
+
+
+	//-- ps 查看静态的进程统计信息
+
+		ps -aux		//显示前后台指定的相关进程
+			a	显示前台所有进程
+			u	根据指定用户相关的进程
+			x	后台进程也显示
+			e	显示所有的进程
+			%CPU	cpu占用百分比
+			%MEM	内存占用百分比
+			VSZ	虚拟内存占用量
+			RSS	因定内存占有量
+			tty	登录终端
+
+
+ 
+
+
+
+
+	//-- free 查看内存使用情况
+
+		free -m 			或cat /proc/meminfo
+		
+		例:
+					 total       used       free     shared    buffers     cached
+		Mem:          7979       7897         82          0         30       3918
+		-/ buffers/cache:       3948       4031
+		Swap:         4996        438       4558
+
+		第一行用全局角度描述系统使用的内存状况：
+		total 内存总数
+		used 已经使用的内存数，一般情况这个值会比较大，因为这个值包括了cache 应用程序使用的内存
+		free 空闲的内存数
+		shared 多个进程共享的内存总额
+		buffers 缓存，主要用于目录方面,inode值等（ls大目录可看到这个值增加）
+		cached 缓存，用于已打开的文件
+
+		第二行描述应用程序的内存使用：
+		-buffers/cache 的内存数:used - buffers - cached
+		buffers/cache 的内存数:free buffers cached
+		前个值表示-buffers/cache 应用程序使用的内存大小，used减去缓存值
+		后个值表示 buffers/cache 所有可供应用程序使用的内存大小，free加上缓存值
+
+		第三行表示swap的使用：
+		used 已使用
+		free 未使用 
+
+		可用的内存=free memory buffers cached。
+		为什么free这么小，是否关闭应用后内存没有释放？但实际上，我们都知道这是因为Linux对内存的管理与Windows不同，free小并不是说内存不够用了，应该看的是free的第二行最后一个值：-/ buffers/cache:       3948       4031 ，这才是系统可用的内存大小。
+
+
+
+
+
+
+	//-- . 等同于source 可让配置文件生效
+		. filename		使指定的配置文件生效
+		source filename
+
+			注：当配置文件修改后想要生效有两种方式，一种是重启服务，二是使用 . 或 source 
+
+
+	//-- 系统变量
+
+		env		//显示部分系统变量
+		set 		//显示比env还全的系统变量
+		echo $PATH	//显示系统变量path
+		echo $HOSTNAME	//显示当前主机名
+		echo $lang	//显示当前字符集
+		......
+
+
+		
+	//-- sync 同步缓冲区与磁盘数据，将所有未写的系统缓冲区写到磁盘中
+			
+		sync
+		
+		
+		
+		
+		
+	//-- whereis 查询某命令的位置
+		whereis ls 		//查询ls 命令位置
+			结果：
+			ls：/bin/ls /usr/share/man/man1/ls.1.gz 	显示命令所在位置
+		
 	
-		//远程登陆脚本的编写
-			#! /usr/bin/expect
-			set host "192.168.198.103"		设置变量 host
-			set passwd "xxxx"
-			spawn ssh root@$host			使用用户名root远程登陆
-			expect {
-				"yes/no" { send "yes\r" exp_continue}		// \r 代表回车的意思
-				"assword:" {sed "$passwd\r"}
-			}
-			interact
+
+
+
+	//-- $RANDOM 命令行下的随机数
+
+		echo $RANDOM	
 		
 		
 
-	//-- expect 远程登陆，并操作，再退出
+
+
+
+	//安全相关
+
+	//-- selinux 防护状态的获取与设置
 		
-			#! /usr/bin/expect
-			set host "192.168.198.103"		
-			set passwd "xxxx"
-			spawn ssh root@$host			
-			expect {
-				"yes/no" { send "yes\r" exp_continue}		
-				"assword:" {sed "$passwd\r"}
+		getenforec		获取当前防护状态 inforcing/disabled
+
+		setenforce 0		临时关闭防护
+
+					永久关闭防护 
+		修改文件 /etc/selinux/config
+			将 SELINUX=enforcing 改为 disabled
+
+
+
+	//-- iptables 设置
+
+		iptables-save  	获取iptables的相关信息
+
+		iptables -F	清空iptables
+
+		service iptables save	保存当前iptables 状态	
+ 
+		
+
+
+
+	//用户相关
+
+	//-- useradd 添加用户及其3个参数
+
+		useradd mysql -g mysql -M -s /sbin/nologin 
+		
+			mysql：增加一个名为 mysql的用户。
+			-g：指定新用户所属的用户组(group)
+			-M：不建立家目录
+			-s：定义其使用的shell，/sbin/nologin代表用户不能登录系统
+
+
+
+
+
+
+
+
+	//-- crontabs 计划任务的使用
+
+		yum search crontab		查找crontab 的 yum 源
+
+		yum -y install crontabs		安装 crontab
+		
+		service crond start	//启动计划任务
+		service crond stop 	//关闭服务
+		service crond restart 	//重启服务
+		service crond reload 	//重新载入配置
+		service crond status	//查看运行状态
+
+		crontab -e 			编辑任务
+			-e	执行文字编辑器来编辑crontab，内定的文字编辑器是VI
+			-r	删除目前的crontab
+			-l	列出目前的crontab(查看专用)
+			-i	会和-r 配合使用，在删除当前的crontab时询问，输入y 则删除
+
+			
+			* * * * * .....		分，时，日，月，周	命令
+					crontab特殊的符号说明：
+					“*”代表所有的取值范围内的数字。特别要注意哦！
+					“/”代表每的意思，如”*/5″表示每5个单位
+					“-”代表从某个数字到某个数字
+					“,”分散的数字
+					
+					示例
+					30 21 * * * 表示每晚的21:30
+					45 4 1,10,22 * * 表示每月1、10、22日的4 : 45
+					10 1 * * 6,0 表示每周六、周日的1 : 10
+					0,30 18-23 * * * 表示在每天18 : 00至23 : 00之间每隔30分钟
+					0 23 * * 6 表示每星期六的11 : 00 pm
+					* */1 * * * 每一小时
+					* 23-7/1 * * * 晚上11点到早上7点之间，每隔一小时
+					* 8,13 * * 1-5 从周一到周五的上午8点和下午1点
+					0 11 4 * mon-wed 每月的4号与每周一到周三的11点
+					0 4 1 jan * 一月一号的4点
+
+
+
+
+		
+		
+		
+			
+			
+//===== 文件,内容,显示操作类相关
+
+	//--- .zip .gz .bz2	压缩和解压缩
+
+		zip,unzip 压缩和解压文件或目录
+			zip 压缩后保留源文件
+			zip yum.zip yum.log		压缩文件
+			zip -r zuan.zip zuan/	压缩目录
+			unzip yum.zip			解压
+
+
+		gzip,gunzip 将文件以gz格式压缩或解压 (只能压缩文件)
+			压缩后不保留源文件
+			gzip 1.txt				压缩
+			gzip -9 1.txt			高比压缩
+			gzip -d c.gz			解压
+			gunzip b.gz				解压
+
+
+		bzip2,bunzip2 将文件以bz2格式压缩或解压 (只能压缩文件)
+			压缩后不保留源文件
+			bzip2 b					压缩
+			bzip2 -9 abc.txt		高比压缩压
+			bzip2 -d b.bz2			解压
+			bunzip2 abc.txt.bz2		解压
+
+
+		-9,-d 参数解释
+			-9: 表示高压缩比，多在创建压缩包时用，
+			-d: 用于解压文件
+
+
+			
+			
+
+
+	//-- echo 显示指定内容
+
+	   echo the STRING(s) to standard output.
+
+	   -n     让输出的文字不换行。
+
+	   -e     当字串中出现以下字符时，会特别处理
+		\a 	发出警告声
+		\b	删除前一个字符
+		\c	最后不加上换行符号 
+		\f	换行，但光标留在原来位置
+		\v	与\f相同
+		\n	换行且光标移至行首
+		\t	插入tab
+		\\	插入 \
+		\nnn	插入nnn(八进制)代表的ASCLL字符
+
+
+		另 echo 也可在脚本循环中当作换行来使用
+
+
+
+	//-- rz,sz 文件的上传下载
+		
+		yum -y install lrzsz	CentOs上安装组件
+		apt-get install lrzsz	Ubantu上安装组件
+		rz 		上传文件
+		sz 		下载文件
+		
+		
+
+	//-- screen -S 开启一个远程后端执行，不会因断网或关闭窗口而终断程序的执行
+	
+		yum install screen 		CentOs上安装组件
+		apt-get install 		Ubantu上安装组件
+		screen -S lnmp
+		
+
+		
+		
+		
+
+	//--- scp 文件或目录的远程拷贝
+
+		scp /home/test/test.txt root@192.168.1.5:/home/root		将文件从本地复制到远程		
+		scp root@/full.tar.gz 192.168.1.5:/home/root/full.tar.gz home/test/full.tar.gz	将文件从远程复制到本地
+		scp -r local_folder remote_username@remote_ip:remote_folder		复制目录
+		[root@iZ28jm7ijkbZ ~]# scp -r c.php root@dongchenggroup.cn:/home/www
+		scp    	拷贝命令
+		-r 	表示递归copy，若source中含有目录名，则将目录下之档案亦皆依序拷贝至目的地；
+		c.php  	指定文件名也可以是*代表所有
+		root	目标主机用户名
+		dongchenggroup.cn 	目标主机域名或ip
+		:/home/www		目标目录
+		cp 	本机上的文件拷贝
+		scp 	不同机器间的文件拷贝
+		-a same as -dpR 尽可能将源文件状态、权限等资料都照原装予以复制，并且是递归copy；
+		-f 表示force，若目的地已经有相同档名的档案存在，则在复制前先予以删除再行复制；
+		-v 和大多数 linux 命令中的 -v 意思一样 , 用来显示进度 . 可以用来查看连接、认证、 或是配置错误
+		-C 使能压缩选项
+		-P 选择端口 . 注意 -p 已经被 rcp 使用 
+		
+			
+
+			
+			
+			
+	//-- >	将文件清空或重置
+		> 1.txt			清空文件
+		echo  111 > 1.txt	将内容存储到1.txt中(但不会显示出来)
+
+
+	//-- >> 追加文件内容
+
+		echo 'aa' >> 1.txt
+
+	//-- < 内容反置
+	//-- mail 发送邮件
+		
+		mail -s "title" abc@qq.com < 1.txt	将1.txt内容发送到邮件
+
+
+	//-- 2>,2>> 将错误提示信息存储到指定日志
+		ls xxx 2>error.log	会把提示信息存储到error.log文件
+		ls xxx 2>>error.log	会把提示信息追加到error.log文件
+
+
+
+
+
+
+	//-- 记录脚本操作日志
+	//-- & 特殊符号  错误重定向，&1代表前面执行的文件
+	//-- & 设置后台运行
+
+		sh xxx.sh > 1.log 2>1.log	这里的两个重置不会清空先前的
+		sh xxx.sh > 1.log 2>&1		等同于上面
+		sh xxx.sh >> 1.log 2>>1.log	多次执行脚本时可追加记录
+		sleep 100 &			后台运行
+		
+
+
+	//-- &&,||,; 三种命令连接符的用处
+
+		ls && cd /tmp		//&& 前面的命令成功后才会执行后面的命令
+
+		cd /tmp || ls		//前面的命令失败后才会执行后面的命令
+
+		cd /tmp ; ls		//两个命令会按顺序执行，之间没有任何关系，相互不会影响
+
+
+
+
+
+
+
+	//-- export 声明变量为当前窗口的全局变量
+
+		export a=1	让变量a在全局可用(本shell窗口的全局，其它窗口无效)
+
+
+	//-- unset 删除变量
+
+		unset a		删除变量a	注，删除bash中的子shell变量时不影响上一层中的变量
+
+
+	//-- bash,exit  进入,退出 子shell
+
+		bash		//进入子shell
+		exit		//退出子shell
+
+
+
+	//-- `` 反引号中可执行命令
+		
+		`rm -rf `ls /test	//将ls /test 浏览到的结果 删除
+		rm -rf `ls | grep -v '1.txt'`	删除当前目录中除1.txt 以外的所有文件
+
+
+
+
+	//-- w 获取服务器负载情况
+
+		w
+
+
+
+
+
+	//-- tee 将文件内容显示的同时并存储到指定文件中
+
+		cat 1.txt | tee 1.log		显示1.txt的内容，并将其内容转储到1.log文件中
+
+
+
+
+
+	//-- nl 附带行号显示文件内容
+
+		nl 1.txt
+
+
+
+
+
+
+	//-- tr 替换指定内容
+		
+		ls | tr 'a-z' 'A-Z'	//显示当前目录文件，并将所有显示的小写字母替换成大写字母
+		ls | tr 'm' 'z'
+
+
+
+
+
+
+
+
+	//-- bc 命令行下的计算器
+
+		echo "365+7" |bc	//372
+
+		echo "365/7" |bc	//52
+
+		bc 		//进入运算模式
+		
+
+
+
+
+
+
+
+	//-- PS1 设置 linux操作提示符的变量
+
+		[root@hostname ~]#			//原操作提示符
+
+		PS1='[\h@\u \w] \$'			//修改操作提示符的显示顺序
+			\h	主机名
+			\u	当前用户名
+			\w	当前全路径
+			\W	当前目录名
+			\$	用户区别标识符 
+
+		[hostname@root /tmp] #			//修改后的操作提示符
+
+
+
+
+			
+
+
+	//-- cut 按指定字符剪切文件内容
+
+		cut -d ':' -f 1 /etc/passwd		以‘:’标记翦第一段
+			root
+		cut -d ':' -f 1,2 /etc/passwd		以‘:’标记翦1和2段
+			root:x
+		cut -d ':' -f 1-5 /etc/passwd		以‘:’标记翦1到5段
+			root:x:0
+
+		cut  -c 2 /etc/passwd			剪切每行第2个字符
+		cut  -c 2,5 /etc/passwd			剪切每行第2和第5的字符
+		cut  -c 2-5 /etc/passwd			剪切每行第2到5的字符
+		cut  -c 3- 1.txt 			剪切每行第3个字符到结束
+			oot:
+			-d 	指定分隔符，不指定时默认分隔符为空格
+			-f	指定翦几段
+			-c	指定要剪切字符的下标区域
+
+
+
+	//-- wc 查看文件行数,单词数，字节信息
+		-l:	统计行数
+		-w:	统计单词个数
+		-c:	统计字节数
+
+
+
+
+	//-- sort 排序
+	//-- | 管道符，将前的执行的结果作为后面执行的条件 
+
+		sort -t ':' -k 3 /etc/passwd		//以:为界，并以第三段来排序(以ASCLL码排序方式)
+
+		sort -t ':' -k 3 -n /etc/passwd		//以数字自然排序
+
+		sort -t ':' -k 3 -n /etc/passwd | cut -d ':' -f 3 
+			//以:为界,以第三段自然排序，并只显示第三段内容
+			相当于：
+			cut -d ':' -f 3 `sort -t ":" -k3 -n /etc/passwd`
+
+			-t	指定以哪个字符为界来分段
+			-k	取第几段
+			-n	自然排序（0-9）
+			-r	倒序
+			-u	去重
+
+
+
+	//-- uniq 唯一（去重）
+		cut -d ':' -f 3 1.txt | sort -nr | uniq -c
+			//对1.txt文件以：分段，只显示第3段，并对第3段自然排序，去掉重复内容，且计算相同内容出现的次数
+
+			-c 计算重复内容出现的次数
+
+
+
+
+
+
+
+
+	//-- split 将大文件分割成多个小文件
+		
+		1.以行来分割
+			split -l 10000 1.txt 	以10000行为单位来分割1.txt文件
+			split -l 10000 1.txt a	指定分割后的文件名前缀为a
+
+		2.以大小来切割
+			split -b 100k 1.txt 	以大小100k为标准来分割1.txt 文件
+			split -b 100k 1.txt b	指定分割的文件名前缀为b
+
+
+
+
+
+
+
+	//-- xargs 给命令传递参数的过滤器，组合多个命令的工具
+
+		
+		xargs 默认echo,空格为默认定界符。 所有的换行，空白将被空格所取代。如下
+			1.txt文件及内容
+				a b c
+				d e
+				f
+		
+			cat 1.txt | xargs 	//结果：a b c d e f
+				
+
+		-d 自定义定界符，来分段
+		-n 多行输出，指每第行显示几段
+			
+			echo 'aaaXbbbXcccXdddXeeeXfff' | xargs -dX -n3
+							//结果：
+								aaa bbb ccc
+								ddd eee fff
+
+		-I 将每行内容赋值给{}，并可使用{}代替每行内容来输出
+			例一：
+			echo 'aa-bb-cc' | xargs -n1 -d'-' -I {} echo +++{}---	
+				结果：	+++aa---
+					+++bb---
+					+++cc---
+				-d'-'将输出的内容以 ‘-’为界分段,-n1让每行显示一段，-I 使用{} 代替每行内容，echo 使用{}原内容拼接新内容并输出 
+
+			例二：
+			ls *.jpg | xargs -n1 -I {} cp {} /tmp/m2/{}	将当前所有jpg图片文件拷贝到/tmp/m2目录下
+		
+
+		-i 将内容分行显示，并直接用{}替代每行内容 ，同时具有 -n1 和 -I{} 的作用
+
+			ls | xargs -i echo ---{}	将当前目录文件前面加'---'
+				结果：	---aa.txt
+					---bb.txt		
+
+		
+
+
+
+
+
+
+
+
+	//-- du 统计目录及文件的空间占用情况 
+
+		du -ah /boot	查看boot目录下每个文件的大小，及所有文件目录总大小
+		du -sh /boot	只查看boot目录的总大小
+		du -sh *		查看当前目录下所有目录与文件的大小
+
+			-a:	同时统计目录和文件(总大小)
+			-h:	实际的单位(k,m等)显示大小信息
+			-s:	只统计指定文件或目录占用空间的总大小
+
+
+
+
+
+
+
+	//-- grep 正则
+		-A -B -C -c --color -i -n -o -r -v
+
+		//- grep 的特殊匹配
+			.	代表1个任意的字符
+			*	代表前字符为0到多个
+			?	代表前字符为0或1个(但使用时需要前面加参数 -E;如grep -E 'ro?t' 1.txt) 
+			+	代表前字符为1到个(但使用时需要前面加参数 -E;如grep -E 'ro+t' 1.txt) 
+			
+		grep 'mysql' passwd	显示指定文件中匹配条件的那行内容
+			//mysql:x:500:500::/home/mysql:/sbin/nologin
+
+
+		//-grep 匹配时不支持直接使用+,|,()等的解决方法
+		grep 'root\|mysql' 1.txt	匹配root或mysql的
+			grep -E 'root|mysql' 1.txt
+			egrep 'root|mysql' 1.txt
+
+			
+		grep -E '(oo){1,5}' 1.txt	匹配多字符
+		grep -E '(oo)+' 1.txt
+			grep '\(oo\)\+' 1.txt	
+			egrep '(oo)+' 1.txt
+
+		注：grep 匹配时 如 +,|,() 等不支持，请使用 -E 或 脱意符号'\' ,或egrep来解决
+
+
+
+
+		grep -A2 'root' 1.txt	-A? 显示带有root的那行内容，同时也连带显示其后面的?行内容
+
+		grep -B2 'root' 1.txt	-B? 显示带有root的那行内容，同时也连带显示其前面的?行内容
+
+		grep -C2 'root' 1.txt	-C? 显示带有root的那行内容，同时也连带显示其前后各?行内容
+		
+		grep -c 'root' passwd	-c 获取指定文件中匹配条件内容的行数
+			//2
+
+		grep --color -n 'root' 1.txt	--color 给关键字添加颜色
+
+		grep -in 'root' 1.txt  	-i 不区分大小写
+		
+		grep -n 'root' 1.txt	-n 获取匹配的那行内容并，显示行号
+
+		grep -o 'root' 1.txt	-o  只显示匹配到的关键字
+		grep -o 'root' 1.txt|wc -l	-o 结合wc -l 获取 root 出现的次数
+
+		grep -r 'root' /etc	-r 遍历并匹配指定目录下所有文件的内容
+
+		grep -v 'root' 1.txt 	-v(取反)获取文件行中不包含root 的内容
+
+		grep -q 'root' 1.txt	-q 不显示结果的匹配，一般作为if 判断时的条件 ，虽不显示结果，但它可以作为判断时的真假条件 
+
+		小案例
+			grep -n '[0-9]' 1.txt		获取文件中行内带有数字的内容
+
+			grep -nv '[0-9]' 1.txt		获取文件中行内不带数字的内容	
+		
+			grep -n '^#' 1.txt		获取文件中行内以#开头的内容
+			grep -nv '^#' 1.txt		获取文件中行内不是以#开头的内容
+
+			grep -n '#$' 1.txt		获取文件中行内以#结尾的内容
+			grep -nv '#$' 1.txt		获取文件中行内不是以#结尾的内容
+
+			grep -v '^$' 1.txt | grep -v '^#' 	去除所有空行和以#开头内容的行
+
+			grep  '^[^0-9]' 1.txt		获取所有以非数字开头的行
+
+
+
+
+
+
+
+
+
+	//-- sed 正则加替换的使用
+
+		p d -e -i -n -r s//g
+
+		注：sed 不加-n会打印全部内容， 所以后面都要加上-n 
+
+		sed '1p' -n 1.txt		打印文件中第一行， 
+		sed '1,5p' -n 1.txt		打印1到5行
+		sed '38,$p' -n 1.txt		打印38到结束行
+
+
+		sed '/11/a\222'  1.txt		a\  表示向匹配到11内容的下行添加一段222
+
+		
+		sed '/root/p' 1.txt -n		匹配包含root内容的行
+
+		grep -n '.' 1.txt | sed '1,5p' -n 	打印1到5行并利用grep -n 显示行号
+
+		sed '/ro*t/p' -n 1.txt		*代表前字符0到多
+		
+		sed -r '/ro+t/p' -n 1.txt	+代表前字符1到多，但sed中不能直接用+ 需要加脱意符号或 加-r 如grep的 -E
+			sed '/ro\+t/p' -n 1.txt
+
+		sed -r '/ro?t/p' -n 1.txt	?代表前字符0或1
+			sed '/ro\?t/p' -n 1.txt
+
+
+
+		sed -r '/(oo)+/p' -n 1.txt	sed 匹配多字符
+			sed '/\(oo\)\+/p' -n 1.txt
+
+
+		sed -e '/root/p' -e '/mysql/p' -n 1.txt		-e 匹配多条件 
+			或
+			sed -e '/root/p;/mysql/p' -n 1.txt
+			注：这里两个-e 匹配不同与 and , and 是匹配 条件1与条件2同时成立的，而这里的两个-e 是匹配到条件会打印出来，匹配到条件 2 也会打印，如果同一行时同时有root 和mysql 那么就会打印两次（匹配root打印一次，匹配mysql再打印一次）。
+
+
+		sed '/[1-8]/d' 1.txt		d 不显示匹配到内容的行
+			sed '1d' 1.txt			不显示第一行	
+			sed '2,$d' 1.txt		不显示第2行到结束
+			sed '1,5d' 1.txt		不显示1到5行
+			sed -r '/root|mysql/d' 1.txt
+
+
+		sed 's/root/good/g' 1.txt	s  g 替换匹配到的内容 将root替换成good
+		sed 's|root|===|'  1.txt	s||| 只替换匹配到的首条内容
+		sed '1,5s/:/-----/g' 1.txt	只对1到5行执行替换用-----替换:
+		sed '30,$s/:/-----/g' 1.txt	只对30行到最后的行执行替换
+		sed 's/[0-9]//g' 1.txt		删除掉文件中所有的数字(就是把数字替换成空 )
+		sed 's/[^0-9]//g' 1.txt		删除掉所有非数字
+		sed 's/[a-Z]//g' 1.txt		删除掉所有字母
+
+		sed -r 's/([^:]+)(:.*:)([^:]+$)/\3\2\1/g'	将首段和未段调换
+			root:x:0:0:root:/root:/bin/bashmysql  调换前
+			/bin/bashmysql:x:0:0:root:/root:root  调换后
+
+		sed -ri 's/([^:]+)(:.*:)([^:]+$)/\3\2\1/g' 1.txt	-i 将匹配操作(替换)直接保存到文件
+
+
+
+
+
+
+	//-- awk 
+
+
+		-F  	指定定界符
+		-F [,%]	定界符可以是多个，或的关系，与正则的[]一样
+		NR	行数  
+		NF 	段数
+		$NF 	取最后一段
+		{OFS ; print $0}	打印与各段连接符
+		  ~//  == =   >  <  	匹配与条件判断
+
+		
+		df -h | awk '[ %]+' '{print $5}'	//定界符使用空格或%
+		
+		awk {print $1}		//awk 默认使用空格做定界符来分段
+
+		awk -F ':' '{print $1,$2}' 1.txt  	使用 : 将文件中每行分段，并打印每行的第1，2段
+			-F 用指定字符为界分隔内容, 
+			print 打印输出
+			$1,$2 指定输出第几段内容
+
+
+		awk -F ':' '$1 ~ /root/' 1.txt		使用: 将文件每行分段，显示第1段中匹配root的那行
+			$1 	使用第一段
+			~ /root/	指定要匹配的内容为root
+
+
+		awk -F ':' '$1~/root/ {print $3,$4}' 1.txt	使用：将文件每行分段，将第一段中包含root的那行的第3，4段打印
+			$1~/root/ 	在第一段中匹配root
+			print $3,$4	打印3，4段
+
+
+		awk -F ':' '$1~/root/ {OFS="--";print $1,$2}' 1.txt
+			使用：将文件每行分段，将第一段中包含root的那行的第1,2段打印,并且使用 -- 来连接1,2段，默认使用空格做连接
+
+		
+		awk -F ':' '$1=="root" {print $1,$2}' 1.txt	$1=='root'精准匹配（非包含）
+
+		awk -F ':' 'NR>25 {print $1,$2}' 1.txt		NR 代表行数
+				
+		awk -F ':' '$1=="root" || NR>28 {print $1,$2}' 1.txt	分段，并1段精准匹配root或行号大于28的，打印第1，2段
+
+		awk -F ':' '$1=$3*$4  {print}' 1.txt		$1=$3*$4用3，4段的积赋值给第一段
+
+		awk -F ':' 'NF>3' 1.txt	 	匹配分割后，段数大于3的行	
+			NF 代表段数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//-- date 时间操作
+
+		date +%Y		四位的年份 2016		y 两位年份   16
+
+		date +%m		两位的月份 10		n 带中文月分 10月
+
+		date +%d		两位的天   09
+
+		date +%H		时（24制） 22
+
+		date +%M		分钟	   53
+
+		date +%S		秒	   33
+
+		date +%w		周几	   1		W 一年的第几周  24
+
+		date +%s		获取当前日期的时间戳	1476021710
+			
+		date -d @1476021710	将时间戳转换成日期	2016年 10月 09日 星期日 22:01:50 CST
+
+		date -d "-1 day"	显示昨天的时期		2016年 10月 08日 星期六 22:24:45 CST
+
+		date -d "2 hours ago" +$s	获取两个小时以前的时间戳
+
+
+		显示昨天,明天,上周,下周,上月，下月，去年，明年的日期，并按指定格式显示年月日时分秒及简写---
+
+		昨天，明天
+		date -d "-1 day" +"%Y-%m-%d %H:%M:%S"		2016-10-09 22:34:28
+		date -d "+1 day" +"%Y-%m-%d %H:%M:%S"
+		上周，下周
+		date -d "-1 week" +"%Y-%m-%d %H:%M:%S"
+		date -d "+1 week" +"%Y-%m-%d %H:%M:%S"
+		上月，下月
+		date -d "-1 month" +"%Y-%m-%d %H:%M:%S"
+		date -d "+1 month" +"%Y-%m-%d %H:%M:%S"
+		去年，明年
+		date -d "+1 year" +"%Y-%m-%d %H:%M:%S"
+		date -d "+1 year" +"%Y-%m-%d %H:%M:%S"
+		
+
+		简写显示昨天,明天,上周,下周,上月，下月，去年，明年的日期---
+		昨天，明天
+		date -d "-1 day" +"%F %T"
+		date -d "+1 day" +"%F %T"
+		上周，下周
+		date -d "-1 week" +"%F %T"
+		date -d "+1 week" +"%F %T"
+		上月，下月
+		date -d "-1 month" +"%F %T"
+		date -d "+1 month" +"%F %T"
+		去年，明年
+		date -d "-1 month" +"%F %T"
+		date -d "+1 month" +"%F %T"
+
+		
+		简写显示当前日期的年月日
+		date +%F		2016-10-09
+
+		简写显示当前日期的时分秒
+		date +%T		22:13:15
+
+					
+		简写样式显示当前日期
+		date +%F' '%T		2016-10-09 22:14:50	
+		date +"%F %T"
+
+		自定义样式显示日期
+		date +"%Y_%m_%d %H:%M:%S"   	2016_10_09 22:17:19
+		
+
+		//其它
+		mysqldump -uroot -pxiaOdonGsIguO32906802 test2 > /test/`date +%Y%m%d%H%M%S`.sql			为mysql备份时创建动态文件名
+		echo `date +%Y%m%d%H%M%S` | xargs mkdir		创建以时间为名的动态目录
+		echo `date +%Y%m%d%H%M%S` | xargs touch		创建以时间为名的动态文件
+		echo `date +%Y%m%d%H%M%S`			按年月日时分秒显示当前时间：20160904154106			
+		echo `date +%F-%T`				按系统格式显示：2016-09-04-15:42:16
+		echo `date +%F==%T`				date参数中可加其它的连接字符2016-09-04==15:43:15
+
+		date +%Y%m%d         //显示现在天年月日
+		date +%Y%m%d --date="+1 day"  //显示后一天的日期
+		date +%Y%m%d --date="-1 day"  //显示前一天的日期
+		date +%Y%m%d --date="-1 month"  //显示上一月的日期
+		date +%Y%m%d --date="+1 month"  //显示下一月的日期
+		date +%Y%m%d --date="-1 year"  //显示前一年的日期
+		date +%Y%m%d --date="+1 year"  //显示下一年的日期
+		或者更简单点的  date=`date -d -${t}day '+%Y%m%d'` //为t为前几天
+
+
+
+		date -s //设置当前时间，只有root权限才能设置，其他只能查看。
+		date -s 20080523 //设置成20080523，这样会把具体时间设置成空00:00:00
+		date -s 01:01:01 //设置具体时间，不会对日期做更改
+		date -s “01:01:01 2008-05-23″ //这样可以设置全部时间
+		date -s “01:01:01 20080523″ //这样可以设置全部时间
+		date -s “2008-05-23 01:01:01″ //这样可以设置全部时间
+		date -s “20080523 01:01:01″ //这样可以设置全部时间
+
+		//date 参数大全
+
+		date 用法： date [OPTION]... [+FORMAT]
+		date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]
+		date 可以用来显示或设定系统的日期与时间。
+		1.在显示方面，使用者可以设定欲显示的格式，格式设定为一个加号后接数个标记，其中可用的标记列表如下: % :  打印出 %
+		%n : 下一行
+		%t : 跳格
+		%H : 小时(00..23)
+		%I : 小时(01..12)
+		%k : 小时(0..23)
+		%l : 小时(1..12)
+		%M : 分钟(00..59)
+		%p : 显示本地 AM 或 PM
+		%r : 直接显示时间 (12 小时制，格式为 hh:mm:ss [AP]M)
+		%s : 从 1970 年 1 月 1 日 00:00:00 UTC 到目前为止的秒数
+		%S : 秒(00..61)
+		%T : 系统格式的时分秒	15:49:49
+		%X : 相当于 %H:%M:%S
+		%Z : 显示时区 %a : 星期几 (Sun..Sat)
+		%A : 星期几 (Sunday..Saturday)
+		%b : 月份 (Jan..Dec)
+		%B : 月份 (January..December)
+		%c : 直接显示日期与时间
+		%d : 日 (01..31)
+		%D : 直接显示日期 (mm/dd/yy)
+		%h : 同 %b
+		%j : 一年中的第几天 (001..366)
+		%m : 月份 (01..12)
+		%U : 一年中的第几周 (00..53) (以 Sunday 为一周的第一天的情形)
+		%w : 一周中的第几天 (0..6)
+		%W : 一年中的第几周 (00..53) (以 Monday 为一周的第一天的情形)
+		%x : 直接显示日期 (mm/dd/yy)
+		%y : 年份的最后两位数字 (00.99)
+		%Y : 完整年份 (0000..9999)
+		%F : 系统格式的年月日 	2016-09-04
+
+		
+		
+		
+
+
+	//-- shell 编程
+
+		//-- 计划任务中每分钟执行一次脚本
+			crontab -e
+				* * * * * cd /usr/local/sbin/bin; /bin/bash main.sh
+			
+
+		//-- 脚本编写示例
+			vim a.sh		//文件名后缀sh表明这是一个Bash脚本文件
+				#!/bin/sh 			//指定脚本解释器,这里是用/bin/sh做解释器(必需)
+				cd ~ 				//切换到当前用户的home目录
+				mkdir shell_tut 		//创建一个目录shell_tut
+				cd shell_tut 			//切换到shell_tut目录
+				for ((i=0; i<10; i++)); do 	//循环条件，一共循环10次
+				touch test_$i.txt 		//创建一个test_1…10.txt文件
+				done 
+
+		//-- shell中的注释
+
+			以“#”开头的行就是注释，会被解释器忽略。 多行注释 sh里没有多行注释，只能每一行加一个#号。就像这样：
+
+			如果在开发过程中，遇到大段的代码需要临时注释起来，过一会儿又取消注释，怎么办呢？每一行加个#符号太费力了，可以把这一段要注释的代码用一对花括号括起来，定义成一个函数，没有地方调用这个函数，这块代码就不会执行，达到了和注释一样的效果。
+
+
+		//-- shell脚本的执行方式
+			./filename.sh		执行方式
+			或
+			sh filename.sh
+			或
+			bash filename.sh
+
+			注：执行脚本的时候，要先将脚本文件的属性改为可执行的：chmod +x filename.sh
+
+		//-- 脚本检验命令
+			
+			bash -x a.sh
+
+
+		//-- 子脚本的运行（子程序）
+			#!/bin/bash
+				export send=1		//声明全局变量，这样子脚本中也可以访问访该变量
+				/bin/bash ../xxx/xx.sh		//运行另一个脚本（子脚本）
+
+
+
+		//-- exec 将之脚本中之后所有产生的输出都定向到指定日志中
+
+			#!/bin/bash
+			d=`date +%F`
+			exec > ${d}.log 2>&1
+			echo "Begin at `date`"
+			ls /etc
+			ls /etc/sldfjls
+			echo "End at `date`"
+		
+
+		//-- 交互式脚本
+			#!/bin/bash
+			read -p "请输入一个数字:" num
+			echo $num
+
+			或
+
+			#!/bin/bash
+			read -p "请输入一个数字:"
+			echo $REPLY		//系统内置交互变量
+				
+
+
+		
+
+		//-- cat > 结合 <<EOF  大字串   给文件添加内容
+			#!/bin/bash
+			cat > 3.txt <<EOF
+			<?php
+				phpinfo();
+			?>
+			EOF
+
+
+
+
+
+
+		//-- 内置变量 $*,$#,$0,$1,$2,$?,##*,,,,解释
+
+			//$1,$2..$*,$#		
+			编辑脚本并运行
+				#!/bin/bash
+				echo '$1='$1
+				echo '$2='$2
+				echo '$3='$3
+				echo '$#='$#
+				echo '$0='$0
+				echo $*
+			
+
+			运行脚本后显示结果
+				[root@tpcwreLinux tmp]# sh a.sh aming linux
+				$1=aming
+				$2=linux
+				$3=
+				$#=2
+				$0=a.sh
+
+			注解：
+				$1 代表执行脚本时所带的第一个参数aming
+				$2 代表执行脚本时所带的第二个参数linux
+				$3 代表第三个参数，，，依次类推
+				$# 代表参数的总个数,这里是两个参数，所以就是2
+				$0 代表执行脚本a.sh的本身
+				$* 代表所有的参数
+
+
+			//##*
+			${1##*.tar.} 表示第一个参数去掉*.tar.后剩下的部分。
+
+
+			//$?
+			$? 是上一个程序执行是否成功的标志，如果执行成功则$? 为0，否则 不为0
+			
+
+
+		
+		//-- 变量
+
+			name='lily'		//定义变量时，变量名不加美元符号，且变量名和等号之间不能有空格
+
+			for file in `ls /etc`	//遍历/etc目录下文件名并赋值给变量file
+					
+						//调用变量
+			echo $name		
+			echo ${name}		
+			echo "I am good at ${skill}Script"
+
+
+						// 拼接字串
+			a='a'
+			b='b'
+			echo $a$b
+
+						// 获取字串长度
+
+			a1='abcde'
+			a2='hijklmn'
+			echo ${#a1}
+			echo ${#a2}
+
+
+						//截取字串 
+			string="alibaba is a great company" 
+			echo ${string:1:4} 			//输出：liba
+
+		
+						// 查找子字串
+			string="alibaba is a great company" 
+			echo `expr index "$string" is`		//8，这个语句的意思是：找出单词is在这名话中的位置
+			更多字串查找操作：http://tldp.org/LDP/abs/html/string-manipulation.html
+
+
+						//变量的计算
+			a=1; b=2	
+			c=$[$a+$b];		
+			c=$(($a+$b))
+
+
+
+
+
+
+
+		//-- if 判断
+
+		   特例1：
+			[ -d /usr/local/mysql ] 	//判断目录是否存在 （简便式if判断）
+
+		   例一：
+			#!/bin/bash
+			if :			// ：代表真的意思  
+			then
+			echo true
+			fi
+
+		   例二：
+			a=2
+			if [ $a == 1 ]		// 方括号中的两边和==必须有空格
+			then
+				echo "true"
+			else
+				echo "false"
+			fi
+
+		   例三：
+			#!/bin/bash
+			a=1
+			if [ $a -gt 2 ]
+			then
+					echo '大于2'
+			elif [ $a == 2 ]
+			then
+					echo '等于2'
+			else
+					echo '小于2';
+			fi
+
+			
+		   例四
+			a=1
+			if (( $a < 2  ))		//注： if判断中不能在[] 中直接使用 >,< 想要使用就可以(()) 的方式来用
+			then
+				echo 111111
+			else
+				echo 2222222
+			fi
+
+
+		   例五
+			if [ $a -gt 1 ] && [ $a -lt 10 ];then echo 'ok'; fi
+
+			if [ $a -gt 1 ] || [ $a -lt 10 ];then echo 'ok'; fi
+
+			if [ $a -gt 1 -a $a -lt 10 ];then echo 'ok'; fi
+		
+			if [ $a -gt 1 -o $a -lt 10 ];then echo 'ok'; fi
+
+
+		   例六：输入一个值，判断是否为数值，并判断其是奇偶数
+			#!/bin/bash
+			read -p '输入一个数字：' n
+			n1=`echo ${n} | grep '[^0-9]' -c`
+			if [ ${n1} == 1 ]
+			then
+					echo "请输入一个数字"
+					exit 1
+			fi
+			n2=$[$n%2]
+			if [ $n2 == 1 ]
+			then
+					echo '输入的是奇数！'
+			else
+					echo '输入的是偶数'
+			fi
+
+		   例七：
+			if [ -e 1.sh ]; then echo 'exist'; fi
+
+			或
+		
+			[ -f 1.sh ] && echo 'exist'
+			[ -f 1.sh ] || echo 'no exist'
+
+
+
+
+		   例八：  非
+
+			if [ ! -e 1.sh ]; then echo 'no exist'; fi
+
+
+
+		   例九： if语句中可以使用命令执行的结果来做条件
+
+			if echo $n | grep -q '[^0-9]'		//如果匹配到了非数字，则执行下面的语句
+			then
+				echo "请输入纯数字"
+				exit 1
+			if
+
+			
+			if ls /etc/lakdsf > 1.log 2>1.log ;then echo 'ok' ;else echo 'not ok'; fi
+
+
+
+		   例十：  脚本中的时间date 与 exec 将所有输出定向到指定日志中
+			#!/bin/bash
+			d=`date +%F`
+			exec > ${d}.log 2>&1
+			echo "Begin at `date`"
+			ls /etc
+			ls /etc/sldfjls
+			echo "End at `date`"
+
+
+
+
+			line=`wc -l 4.txt|cut -d ' ' -f1`;	//获取4.txt文件的行数，单词数，大小信息，并将结果以空格分隔，再取第1段（也就是行数），将其赋值给变量line
+			if [ $line -lt 3 ]; then echo 'no'; fi	//判断line是否大于3 ，成立就显示no
+		
+
+
+			//判断条件示例
+			
+			[ $a == 3 ] 或 [ $a eq 3 ]	等于
+		
+			[ $a -ne 3 ]	-ne 不等于
+		
+			[ $a -lt 3 ]  	-lt 小于
+
+			[ $a -gt 3 ]	-gt 大于
+
+			[ $a -ge 3 ]	-ge 大于等于
+
+			[ $a -le 3 ]	-le 小于等于
+
+			[ -e "$fiel" ]	判断文件或目录是否存在 
+
+			[ -f "$file" ] 	判断$file是否是一个文件
+
+			[ -d "$file" ] 	判断$file是否是一个目录
+
+			[ -x "$file" ] 	判断文件是否有可执行
+
+			[ -r "$file" ]  判断文件是否可读
+
+			[ -w "$file" ]  判断文件是否可写
+
+			[ -n "$a" ] 	判断变量$a是否有值
+
+			[ -z "$a" ]	判断变量是否为空
+
+			[ ! -z "$a"] 	判断变量不为空
+
+			[ "$a" = "$b" ] 判断$a和$b的取值是否相等
+
+			[ cond1 -a cond2 ] 判断cond1和cond2是否同时成立相当于and，-o表示cond1和cond2有一成立,相当于or
+
+			要注意条件测试部分中的空格。在方括号的两侧都有空格，在-f、-lt、=等符号两侧同样也有空格。如果没有这些空格，Shell解释脚本的时候就会出错。
+
+			exec >1.log 2>&1	将以后所有的输出定向到指定文件
+				
+
+
+
+
+
+
+
+
+
+		//-- case 判断
+
+			#!/bin/bash
+			read -p '请输入一个值：' n
+			case $n in
+					1)
+							echo '星期一'
+							;;
+					2)
+							echo "星期二"
+							;;
+					3)
+							echo "星期三"
+							;;
+					4)
+							echo "星期四"
+							;;
+					5)
+							echo "星期五"
+							;;
+					6|7)
+							echo "大礼拜"
+							;;
+					*)
+							echo "请办入一个1-7的数字"
+							;;
+			esac
+
+			
+			
+			
+			
+
+		//-- select 显示选择列表，按用户选择执行相应命令，但不退出，继续执行。
+		//-- PS3 设置交互式脚本时的输入提示符
+
+			#!/bin/bash
+			echo "input a number, 1:run w, 2: run top, 3: run free, 4: quit"
+			echo 
+			PS3="必须输入1-4的数字"
+			select command in w top free quit
+			do 
+				case $command in 
+				w)
+					w;;
+				top)
+					top;;
+				free)
+					free;;
+				quit)	
+					exit;;
+				*)
+					echo "please input a number:(1-4)";
+				esac
+			done
+
+
+		
+		
+
+
+		//-- for 循环
+
+			例一：
+			for i in `seq 1 10000`; 		//循环1万次
+			do cat /etc/passwd >> 1.txt; 		//每次将指定文件内容追加到1.txt
+			done					//结束
+
+				
+			例二：  将文件中每行遍历打印出来（行中包含空格或tab的）
+			#!/bin/bash
+			f="1.txt"
+			n=`wc -l $f|awk '{print $1}'`
+			for i in `seq 1 $n`
+			do
+					sed -n "${i}p" $f
+			done
+
+			seq	序列：指定循环的节奏
+				seq 1 10 	循环1-10
+				seq 1 2 10 	循环1-10 ，步长为2
+				seq -1 -1 -10   
+
+
+			例三：
+			for ((i=0; i<10; i++))
+			do 
+				touch test_$i.txt 		
+			done 
+
+
+
+
+		//-- while 循环
+			关键字：
+				while
+				:
+				do
+					continue	路过当次循环
+					break		结束整个while循环
+					exit 		结束整个脚本，后面的代码也不执行了
+				done
+			例一：
+
+			while :;do w;sleep;done		//无限循环，显示服务器负载情况 （监控脚本）
+				:	代表真，一般 : 都使用在监控脚本中
+				w	显示服务器负载情况
+				sleep	睡眠（中止）
+
+
+			例二： 服务器监控脚本
+			#!/bin/bash
+			while :
+			do
+					load=`w | head -1 | awk -F "load average: " '{print $2}' | cut -d. -f1`   
+					if [ $load -gt 10 ]
+					then
+							top | mail -s "load is high: $load " tpcwre@163.com
+					fi
+					sleep 30
+			done
+
+
+			例三：无限输入交互，直到输入纯数字为止
+			#!/bin/bash
+			while :
+			do
+					read -p "请输入一个值：" n
+					if [ -z $n ]
+					then
+							echo "输入内容不得为空！";
+							continue
+					fi
+					if [ `echo $n | grep '[^0-9]'`  ]
+					then
+							echo '只能输入纯数字！';
+							continue
+					fi
+					break
+			done
+			echo $n
+
+
+
+
+			例：
+			svn status | grep "?" | awk '{print $2}' | while read line;do svn add ${line};done;
+
+				svn status -- 该命令用于查看文件信息，其中M代表修改，？代表未知（即需要添加的文件）
+
+				grep "?"    -- 查找包含？的信息
+
+				将svn status 的结果重定向到grep "?"那么得到的结果就是新增文件
+
+				接下来使用awk处理字符串，awk '{print $2}'表示打印第二个数据，其中$0表示整行数据
+
+				svn status | grep "?" | awk '{print $2}'那么得到的结果就是文件名称了，接下来使用shell循环处理
+
+				while read line;do svn add ${line};done; -- 读取每一行数据，然后执行svn add
+
+
+
+
+
+		//-- 函数
+
+			例一：
+			#!/bin/bash	
+			input (){		//声明一个函数，名字是input 
+				echo $1		//打印出该函数的第一个参数
 			}
-			expect "]*"			// }*  代表 [root@tpcwreLinux /]#    #的位置也可能是$
-			send "touch /tmp/1.txt\r"	//发送一条 创建文件的命令
-			expect "]*"
-			send "exit"			//发送退出命令
+			input aaaaa		//调用函数并，给了一个参数为 aaaaa
+
+			
+			例二：
+			#!/bin/bash
+			gip (){			//函数的声明
+				ip=`ifconfig | grep -A1 "$1" | tail -1 | awk '{print $2}' | awk -F ":" '{print $2}'`
+				if echo $ip | grep -q '[0-9]'
+				then
+					echo "address is $ip"
+				else
+					echo '没有您所输入的网卡型号！请重新输入！'
+				fi
+			}
+			gip $1		//函数的调用，并将脚本的第一个参数传递给了函数作为第一个参数 。
+
+
+
+		
+
+
+		//-- 脚本监控
+			磁盘监控
+
+			负载监控
+
+			mysql主从监控
+				mysql -uroot -paaa -e "show slave status \G" | grep -i 'xxxx' ...
+
+
+			内存监控
+
+
+
+
+
+
+
+
+		//-- expect 远程登陆工具
+			//安装
+			yum -y install expect    
+
+		
+			//远程登陆脚本的编写
+				#! /usr/bin/expect
+				set host "192.168.198.103"		设置变量 host
+				set passwd "xxxx"
+				spawn ssh root@$host			使用用户名root远程登陆
+				expect {
+					"yes/no" { send "yes\r" exp_continue}		// \r 代表回车的意思
+					"assword:" {sed "$passwd\r"}
+				}
+				interact
+			
+			
+
+		//-- expect 远程登陆，执行操作，退出脚本示例
+
+			例一：			
+				#! /usr/bin/expect
+				set host "192.168.198.103"		
+				set passwd "xxxx"
+				spawn ssh root@$host			
+				expect {
+					"yes/no" { send "yes\r" exp_continue}		
+					"assword:" {sed "$passwd\r"}
+				}
+				expect "]*"			// }*  代表 [root@tpcwreLinux /]#    #的位置也可能是$
+				send "touch /tmp/1.txt\r"	//发送一条 创建文件的命令
+				expect "]*"
+				send "exit"			//发送退出命令
+
+				注：expect 是根据其匹配到指定内容后，发送命令
+
+
+			例二：expect 可以像shell一样可以调用参数
+
+				注：//和shell不一样，expect调用参数和变量名，有其自己的方式	
+
+				3.expect	//脚本名
+				#!/usr/local/expect
+				set user [lindex $argv 0]		//调用第一个参数
+				set host [lindex $argv 1]		//调用第二个参数
+				set passed "aaaa"			//设置一个变量
+				set cm [lindex $argv 2]			//调用第三个参数
+				spawn ssh $user@$host			//登陆主机
+				expect{
+					"yes/no" {send 'yes\r'}		//匹配到'yes/no'内容的行，就发送 yes 并回车
+					"password:" {send "$passwd\r"}	//匹配到'password:'内容的行，就发送密码
+				}
+				expect "]*"	//匹配到 ']$'或']#' 等就发送下面的命令
+				send "$cm\r"
+				expect "]*"
+				send "exit\r"
+
+				./3.expect root 192.168.3.100 "ls /tmp/12.txt"		//运行脚本并传入参数
+
+
+
+
+			例三：rsync 远程文件的同步
+				#!/usr/local/expect
+				set passwd "xxx"
+				spawn rsync -avzP root@192.168.1.100:/tmp/1.txt /tmp/	//将远程文件拷贝到目录tmp下
+				expect{
+					"yes/no" {send 'yes\r'}
+					"password:" {send "$passwd\r"}
+				}
+				expect eof			//eof 结束
+
+				注：rsync 命令需要本地和远程机都安装后才可运行，可使用yum -y install rsync 安装 
+
+
+
+
+			例四： 为指定IP主机同步文件
+				5.expect
+				#!/usr/local/expect
+				set passwd "xxx"
+				set host [lindex $argv 0]
+				set file [lindex $argv 1]
+				spawn rsync -av $file root@$host:$file		//同步文件
+				expect{
+					"yes/no" {send 'yes\r'}
+					"password:" {send "$passwd\r"}
+				}
+				expect eof
+
+				./5.expect 192.168.31.100 /tmp/12.txst		//运行脚本 
+			
+			
+
+
+
+
+		//-- 批量同步文件
+
+			步骤一：创建expect 同步文件脚本
+				1.expect
+				#!/usr/local/expect
+				set passwd "xxx"
+				set host [lindex $argv 0]
+				set file [lindex $argv 1]
+				spawn rsync -av --files-from=$file / root@$host:/	//批量同步文件列表中的文件
+				expect{
+					"yes/no" {send "yes\r"}
+					"password:" {send "$passwd\r"}
+				}
+				expect eof
+
+		
+			步骤二：创建遍历ip的shell脚本
+				2.sh
+				#!/bin/bash
+				for ip in `cat ip.list`
+				do
+					echo $ip list.txt
+					./1.expect $ip 
+
+
+
+		//-- 批量远程执行命令
+
+			步骤一：创建远程登陆脚本
+				exe.expect
+				#!/usr/local/expect
+				set host [lindex $argv 0]
+				set passwd "xxx"
+				set cm [lindex $argv 1]
+				spawn ssh root@$host
+				expect{
+					"yes/no" {send "yes\r"}
+					"password:" {send "$passwd\r"}
+				}
+				expect "]*"
+				send "$cm\r"
+				expect "]*"
+				send "exit\r"				
+
+
+
+			步骤二：创建一个循环ip列表的shell脚本
+				#!/bin/bash
+				for ip in `cat ip.list`
+				do
+					echo $ip
+					./exe.expect $ip 'w;free -m;ls /tmp'   //如果命令比较繁琐，可以写成脚本，然后在这调用 。
+				done
+
+				
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+
+
+	cd /mnt		
+
+	mkdir m0 m1			创建目录m0和m1	
+
+	mount /dev/sr0 /mnt/m0		将两张光盘挂载到指定目录
+
+	mount /dev/sr1 /mnt/m1
+
+	/etc/yum.repos.d		进入yum管理目录
+
+	rm -rf CentOS-Base.repo		将优先级最高的远程yum源配置删除或修改
+
+	vim CentOS-Media.repo		修改本地yum源配置文件
+	
+		baseurl=file:///mnt/m0   		设置yum数据源目录为两个挂载光驱的目录
+			file:///mnt/m1				
+		gpgcheck=0				关闭检查
+		enabled=1  				启用本配置功能
+
+		
+
+	完成以上步骤就可以使用本地yum源来安装程序了.
