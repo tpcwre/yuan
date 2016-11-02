@@ -1,5 +1,7 @@
 
+//-- ThinkPHP 异常-》 save 或add 数据无法更新或添加
 
+	删除Runtime 的缓存，并检查字段是否完全一致
 
 
 
