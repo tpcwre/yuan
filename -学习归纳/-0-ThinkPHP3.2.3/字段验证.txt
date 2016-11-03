@@ -1,0 +1,82 @@
+
+
+
+
+
+
+
+
+
+
+//-- 表单字段自动验证
+
+    1，在项目的Home/Model中创建一个自定义模型，并继承Model
+    2，重写父类的$_validate属性，设置验证规则
+	例：
+	UserModel.class.php
+	<?php
+	namespace Model;
+	use Think\Model;
+	class UserModel extends Model{
+		protected $patchValidate = true;			//--设置批量验证
+
+		protected $_validate = array(				//--设置验证规则
+			array('username','require','用户名必须填写'),		//必填字段
+			array('pwd','require','密码不得为空'),
+			array('pwd2','pwd','两次密码不一致',0,'confirm'),	//两项字段必须一致
+			array('email','email','邮箱格式不正确'),		//邮箱格式
+			array('qq','/^[1-9]\d{4,9}$/','qq格式不正确'),		//正则方式验证
+			array('qq','2,3,4,5','qq格式不正确',0,'in'),		//验证是否在指定范围内的值
+
+			array('box','aa','多选至少先两项',0,'callback'),	//callback方式验证 ,会调用下面的aa()方法
+
+			array('qq','2,3,4,5','qq格式不正确',0,'in',3,3),	
+						
+			//验证参数解释：
+				参数一：验证字段
+				参数二：验证规则
+				参数三：提示信息
+				参数四：验证条件（可选）
+					0：POST字段存在就验证
+					1：必须验证
+					2：值不为空时验证
+				参数五：验证附加规则（可选）
+					regex	正则验证（默认）
+					function 	函数验证
+					callback	方法验证，
+					equal		验证是否等于某个值，该值由前面的验证规则定义 
+					notequal	验证是否不等于某个值，
+					in		验证是否在某个范围内
+					notin		验证是否不在某个范围内
+					length		验证长度
+					between		验证满园
+					notbetween	验证不在某个范围
+					expire		验证是否在有效期
+					ip_allow	验证IP是否允许 
+					ip_deny		验证IP是否禁止
+					unique		验证是否唯一
+	
+
+				参数六：定义验证环境，1代表新数据增时验证，2代表数据修改时验证，3代表全部验证（默认）	
+	
+		);
+		public function aa($name){
+			if(count($name)>2){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+	
+
+     控制器中验证
+		$User = D('User');
+		$z = $User->create();		//获取接收POST字段并验证
+		if(!$z){
+			dump($User->getError());exit;
+		}
+
+
+
+

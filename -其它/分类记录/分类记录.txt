@@ -15,12 +15,22 @@
 	//-- mktime(0,0,0,12,30,1999) 按指定日期生成时间戳
 	//-- date() 显示当前或指定时间戳的日期
 	
+
+	//超全局变量相关
+	//-- $_SERVER['HTTP_USER_AGENT'] 获取浏览器相关信息的字串,关判断浏览器是否为IE类型
+
+
+
+	//字串函数
+	//-- strpos(str,str)	获取字串中某字符首次出现的位置
 	
 	
+
+
 //===== JS 相关
 	//-- JSON.paser(string)	将josn 字串 解析成 json对象 
 	//-- JSON.stringify(obj)  将josn 对象 解析成 json字串 
-
+	//-- input,select,textarea 内容改变事件及获取改变后的值
 
 
 
@@ -37,10 +47,14 @@
 	//-- mysql 使用 备份文件恢复数据库
 	//-- mysqlbinlog 查看mysql二进制备份文件
 	//-- 使用二进制binlog日志恢复指定区间的数据 
+	//-- 视图操作
 	
 	
 	
-	
+
+
+//===== nginx 相关
+	//-- nginx 包含多级子配置文件,重新指定服务根目录并绑定多域名及重写URL示例
 	
 
 
@@ -74,7 +88,30 @@
 	
 	
 	
-	
+
+//-- input,select,textarea 内容改变事件及获取改变后的值
+	<input id="a" name="a" />
+	<select id="b">
+		<option>1</option>
+		<option>2</option>
+		<option>3</option>
+	</select>
+	<textarea id="c" ></textarea>
+	<script>
+		var a = document.getElementById("a");
+		a.onchange=function(){
+			alert(this.value);
+		}
+		
+		var b = document.getElementById("b");
+		b.onchange=function(){
+			alert(this.value);
+		}
+		var c = document.getElementById("c");
+		c.onchange=function(){
+			alert(c.value);
+		}
+	</script>
 	
 
 
@@ -221,14 +258,25 @@
 
 
 
+//-- $_SERVER['HTTP_USER_AGENT'] 获取浏览器相关信息的字串,关判断浏览器是否为IE类型
+	
+	echo $_SERVER['HTTP_USER_AGENT'].'<BR>';
+
+	if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
+		echo '正在使用 Internet Explorer。<br />';
+	}else{
+		echo '正在使用非IE';
+	}
 
 
 
 
 
+//-- strpos(str,str)	获取字串中某字符首次出现的位置
+	echo strpos($_SERVER['HTTP_USER_AGENT'], '6.1');		
 
-
-
+	//Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0
+	//24
 
 
 
@@ -337,6 +385,42 @@
 	
 	
 	
+
+//-- 视图操作
+
+	//视图详解 
+
+	//语法
+	create algorithm=算法 view 视图名 as select语句 with 更新条件
+
+		algorithm = undefined | merge | temptable 		可选
+				undefined	MySQL将自动选择所要使用的算法
+				merge		将视图的语句与视图定义合并起来，使得视图定义的某一部分取代语句的对应部分
+				temptable	将视图的结果存入临时表，然后使用临时表执行语句
+
+
+		view 视图名			必选
+
+		as select 语句			必选
+
+		with CASCADED check option	可选
+				WITH CHECK OPTION表示更新视图时要保证在该试图的权限范围之内（可选参数）
+		　　		CASCADED：更新视图时要满足所有相关视图和表的条件
+		　　		LOCAL：更新视图时，要满足该视图本身定义的条件即可
+
+
+
+
+	//示例三表关联视图
+	create algorithm=merge view tp_perm_lan_view(id,name,addr,pid1,name1,pid2,name2) as select l3.id,l3.name,l3.addr,l3.pid1,l1.name name1,l3.pid2,l2.name name2 from ((tp_perm_lan3 l3 join tp_perm_lan2 l2) join tp_perm_lan1 l1) where ((l3.pid2 = l2.id) and l3.pid1 = l1.id);
+
+	//带排序 
+	create algorithm=merge view tp_perm_lan_view(id,name,addr,pid1,name1,pid2,name2) as select l3.id,l3.name,l3.addr,l3.pid1,l1.name name1,l3.pid2,l2.name name2 from ((tp_perm_lan3 l3 join tp_perm_lan2 l2) join tp_perm_lan1 l1) where ((l3.pid2 = l2.id) and l3.pid1 = l1.id) order by l3.pid1 asc;
+
+
+	//带with条件，更新视图时要满足所有相关视图和表的条件
+	create algorithm=merge view tp_perm_lan_view(id,name,addr,pid1,name1,pid2,name2) as select l3.id,l3.name,l3.addr,l3.pid1,l1.name name1,l3.pid2,l2.name name2 from ((tp_perm_lan3 l3 join tp_perm_lan2 l2) join tp_perm_lan1 l1) where ((l3.pid2 = l2.id) and l3.pid1 = l1.id) with CASCADED check option;
+
 	
 	
 	
@@ -347,5 +431,46 @@
 	
 	
 	
-	
+
+
+
+
+
+
+
+//===== nginx 相关
+
+
+//-- nginx 包含多级子配置文件,重新指定服务根目录并绑定多域名及重写URL示例
+
+	nginx.conf 主配置页面
+	    server {
+			listen 80;
+			server_name _;
+			access_log /data/wwwlogs/access_nginx.log combined;
+			root /data/wwwroot/default;
+			index index.html index.htm index.php;
+			include vhost/in2.conf;		//引入子配置
+		}
+
+		
+	in2.conf 子配置页面
+		server {
+			listen 80;
+			server_name test.tobeyoung.net;		//绑定域名，每个配置文件中可以绑不同域名，来达到绑定多域名
+			root /data/wwwroot/test.tobeyoung.net;	//绑定访问根目录：当访问上面的域名时会自动访问这个目录
+			access_log /data/wwwlogs/test.tobeyoung.net_nginx.log combined;
+			index index.html index.htm index.php;
+			include thinkphp.conf;	//引入重写规则配置文件
+		}
+		
+		
+	thinkphp.conf 子配置文件
+		location / {
+			if (!-e $request_filename) {
+				rewrite ^(.*)$ /index.php?s=$1 last;	
+				break;
+			}
+		}
+
 	

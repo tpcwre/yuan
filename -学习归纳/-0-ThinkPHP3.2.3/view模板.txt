@@ -51,6 +51,10 @@
 	<include file="Admin/bbb" />
 		只要模板文件存在即可
 
+	<include file='./Public/share/house_head_contents.html' />		包含public目录文件
+		注：如包含的文件中又包含了其它文件，那么子包含必须指明全路径如：
+			./Public/share/house_head_contents.html
+
 
 
 
