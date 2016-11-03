@@ -1,7 +1,36 @@
 什么是视图？个人理解，视图就是创建一个虚拟的表，该表中字段映射了指定的某些实体表中的字段，视图中的数据随映射的实体表中的数据变化而变化，视图像多表关联查询那样，可关联多个表中的不同字段的数据。方便了对数据的查询与修改，同时又增加了数据的安全性！
 
 
-//-- mysql 视图操作 
+
+
+
+//-- 视图详解 
+
+	//语法
+	create algorithm=算法 view 视图名 as select语句 with 更新条件
+
+		algorithm = undefined | merge | temptable 		可选
+				undefined	MySQL将自动选择所要使用的算法
+				merge		将视图的语句与视图定义合并起来，使得视图定义的某一部分取代语句的对应部分
+				temptable	将视图的结果存入临时表，然后使用临时表执行语句
+
+
+		view 视图名			必选
+
+		as select 语句			必选
+
+		with CASCADED check option	可选
+				WITH CHECK OPTION表示更新视图时要保证在该试图的权限范围之内（可选参数）
+		　　		CASCADED：更新视图时要满足所有相关视图和表的条件
+		　　		LOCAL：更新视图时，要满足该视图本身定义的条件即可
+
+
+
+
+
+
+//-- 示例--视图操作 
+
 	//-- 创建单表视图
 		create view vowner(roomid,owner_name) as select roomid,owner_name from owner;
 			view	声明创建数据库视图
@@ -58,34 +87,77 @@
 			
 			
 			
-//-- 视图详解 
 
-	CREATE [ALGORITHM]={UNDEFINED|MERGE|TEMPTABLE}]
-		   VIEW 视图名 [(属性清单)]
-		   AS SELECT 语句
-		   [WITH [CASCADED|LOCAL] CHECK OPTION];
 
-	ALGORITHM表示视图选择的算法（可选参数）
-
-		　　UNDEFINED：MySQL将自动选择所要使用的算法
-		　　MERGE：将视图的语句与视图定义合并起来，使得视图定义的某一部分取代语句的对应部分
-		　　TEMPTABLE：将视图的结果存入临时表，然后使用临时表执行语句
-
-	视图名：表示要创建的视图的名称
-
-	属性清单：表示视图中的列名，默认与SELECT查询结果中的列名相同（可选参数）
-
-	WITH CHECK OPTION表示更新视图时要保证在该试图的权限范围之内（可选参数）
-		　　CASCADED：更新视图时要满足所有相关视图和表的条件
-		　　LOCAL：更新视图时，要满足该视图本身定义的条件即可
-
-	tips：创建试图时最好加上WITH CASCADED CHECK OPTION参数，这种方式比较严格
 	
 	
-	
-	
-	
-	
+
+//-- 示例---三表关联视图
+
+
+mysql> select * from tp_perm_lan1;
++----+------+
+| id | name |
++----+------+
+|  1 | A    |
+|  2 | B    |
++----+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from tp_perm_lan2;
++----+------+------+
+| id | name | pid1 |
++----+------+------+
+|  1 | A1   | 1    |
+|  2 | A2   | 1    |
+|  3 | B1   | 2    |
+|  4 | B2   | 2    |
++----+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from tp_perm_lan3;
++----+------+------+------+------+
+| id | name | addr | pid1 | pid2 |
++----+------+------+------+------+
+|  1 | aa1  | aa1  | 1    | 1    |
+|  2 | aa2  | aa2  | 1    | 1    |
+|  3 | a21  | a21  | 1    | 2    |
+|  4 | a22  | a22  | 1    | 2    |
+|  5 | b11  | b11  | 2    | 3    |
+|  6 | b12  | b12  | 2    | 3    |
+|  7 | b21  | b21  | 2    | 4    |
+|  8 | b22  | b22  | 2    | 4    |
++----+------+------+------+------+
+
+mysql> select * from tp_perm_lan_view;
++----+------+------+------+-------+------+-------+
+| id | name | addr | pid1 | name1 | pid2 | name2 |
++----+------+------+------+-------+------+-------+
+|  1 | aa1  | aa1  | 1    | A     | 1    | A1    |
+|  2 | aa2  | aa2  | 1    | A     | 1    | A1    |
+|  3 | a21  | a21  | 1    | A     | 2    | A2    |
+|  4 | a22  | a22  | 1    | A     | 2    | A2    |
+|  5 | b11  | b11  | 2    | B     | 3    | B1    |
+|  6 | b12  | b12  | 2    | B     | 3    | B1    |
+|  7 | b21  | b21  | 2    | B     | 4    | B2    |
+|  8 | b22  | b22  | 2    | B     | 4    | B2    |
++----+------+------+------+-------+------+-------+
+8 rows in set (0.00 sec)
+
+//普通三表关联
+create algorithm=merge view tp_perm_lan_view(id,name,addr,pid1,name1,pid2,name2) as select l3.id,l3.name,l3.addr,l3.pid1,l1.name name1,l3.pid2,l2.name name2 from ((tp_perm_lan3 l3 join tp_perm_lan2 l2) join tp_perm_lan1 l1) where ((l3.pid2 = l2.id) and l3.pid1 = l1.id);
+
+//带排序 
+create algorithm=merge view tp_perm_lan_view(id,name,addr,pid1,name1,pid2,name2) as select l3.id,l3.name,l3.addr,l3.pid1,l1.name name1,l3.pid2,l2.name name2 from ((tp_perm_lan3 l3 join tp_perm_lan2 l2) join tp_perm_lan1 l1) where ((l3.pid2 = l2.id) and l3.pid1 = l1.id) order by l3.pid1 asc;
+
+
+//带with条件，更新视图时要满足所有相关视图和表的条件
+create algorithm=merge view tp_perm_lan_view(id,name,addr,pid1,name1,pid2,name2) as select l3.id,l3.name,l3.addr,l3.pid1,l1.name name1,l3.pid2,l2.name name2 from ((tp_perm_lan3 l3 join tp_perm_lan2 l2) join tp_perm_lan1 l1) where ((l3.pid2 = l2.id) and l3.pid1 = l1.id) with CASCADED check option;
+
+
+
+
+
 	
 	
 	

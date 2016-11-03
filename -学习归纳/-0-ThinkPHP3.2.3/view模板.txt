@@ -122,6 +122,8 @@
 
 					// if判断
 
+	注意： condition 判断中直接使用变量名，不需要加{} , 普通变量不能使用 xx.xx方式，要使用 xx['xx']方式
+
 	注意：除了首个 if 其余的后面都要加上 ‘/’
 	<if condition="$num gt 10"> num 大于10
 	<elseif condition="$num lt 10" />num 小于10
