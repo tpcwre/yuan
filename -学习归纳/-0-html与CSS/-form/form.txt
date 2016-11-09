@@ -16,6 +16,8 @@
 
 //===== password 密码框
 
+//===== date 日历框
+
 //===== radio	单选框
 
 //===== checkbox 复选框
@@ -207,6 +209,11 @@
 		name		表单项名
 
 
+		
+		
+//===== date 日历框
+
+	<input type='date' />		显示日历框
 		
 		
 		
