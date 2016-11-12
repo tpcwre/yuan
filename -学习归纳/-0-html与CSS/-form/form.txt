@@ -18,6 +18,8 @@
 
 //===== date 日历框
 
+//===== time 时间框
+
 //===== radio	单选框
 
 //===== checkbox 复选框
@@ -214,6 +216,13 @@
 //===== date 日历框
 
 	<input type='date' />		显示日历框
+		
+		
+		
+//===== time 时间框
+
+	<input type='time' />		显示时，分的时间框
+		
 		
 		
 		
