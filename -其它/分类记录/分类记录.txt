@@ -1,5 +1,7 @@
 ﻿
 //===== PHP相关
+	//-- php.ini 配置参数
+	
 	//编码解码相关
 	//-- json_encode(),json_decode(true) 数组或对象与json字串的转换
 	//-- base64_encode(),base64_decode() BASE64 编码,可让中文在网络顺利传输。
@@ -56,6 +58,11 @@
 //===== nginx 相关
 	//-- nginx 包含多级子配置文件,重新指定服务根目录并绑定多域名及重写URL示例
 	
+
+
+//===== apache 相关
+
+	//-- 指定 Apache 将哪些后缀作为 PHP 解析。
 
 
 
@@ -144,6 +151,45 @@
 
 
 //===== PHP相关
+
+
+//-- php.ini 配置参数
+	//必须的指令： 
+	extension_dir = <指向扩展库目录的路径> - extension_dir 需要指向存放 PHP 扩展库文件的目录。可以是绝对路径（如 "C:\PHP\ext"）或相对路径（如 ".\ext"）。在 php.ini 文件中要加载的扩展库都必须在 extension_dir 所指定的目录之中。 
+
+	extension = xxxxx.dll - 对每个需要激活的扩展，都需要一行相应的 "extension=" 语句来说明 PHP 启动时加载 extension_dir 目录下的哪些扩展。 
+
+	log_errors = On - PHP 有错误日志的功能可以将错误报告发送到一个文件中，或者系统服务中（例如系统日志），与下面的 error_log 指令配合工作。在 IIS 下运行时，log_errors 应被激活，并且配合有效的 error_log。 
+
+	error_log = <指向错误日志文件的路径> - error_log 需要指向一个具有绝对或相对路径的文件名用于记录 PHP 的错误日志。Web 服务器需要对此文件有可写权限。最常用的位置是各种临时目录，例如 "C:\inetpub\temp\php-errors.log"。 
+
+	cgi.force_redirect = 0 - 在 IIS 下运行时需要关闭此项指令。这是个在许多其它 web 服务器中都需要激活的目录安全功能，但是在 IIS 下如果激活则会导致 PHP 引擎在 Windows 中出错。 
+
+	cgi.fix_pathinfo = 1 - 此指令可以允许 PHP 遵从 CGI 规则访问真实路径信息。IIS 的 FastCGI 实现需要激活此指令。 
+
+	fastcgi.impersonate = 1 - IIS 下的 FastCGI 支持模拟呼叫用户方安全令牌的能力。这使得 IIS 可以定义请求方的安全上下文。 
+
+	fastcgi.logging = 0 - FastCGI 日志在 IIS 下应被关闭。如果激活，则任何类的任何消息都被 FastCGI 视为错误条件从而导致 IIS 产生 HTTP 500 错误。 
+
+
+
+	//可选指令： 
+	max_execution_time = ## - 此指令设定任何脚本所能够运行的最长时间。默认值是 30 秒。如果 PHP 程序需要更多时间运行则增大此值。 
+
+	memory_limit = ###M - PHP 进程能够占用的内存，单位为兆字节。默认值是 128M，对大多数程序都够用了。某些复杂程序可能需要更多。 
+
+	display_errors = Off - 此指令设定 PHP 是否将任何错误信息包含在返回给 web 服务器的数据流中。如果设定为 "On"，则 PHP 将任何由 error_reporting 指令所定义的错误信息作为错误数据流发给 web 服务器。为安全起见，建议对在线服务器设为 "Off" 以避免泄露任何可能包含在错误消息中的安全敏感信息。 
+
+	open_basedir = <指向目录的路径，由分号分隔> - 例如 openbasedir="C:\inetpub\wwwroot;C:\inetpub\temp"。此指令指定了允许 PHP 进行文件系统操作的目录。任何对这些目录之外的文件操作都会导致错误。此指令在共享主机环境中特别有用，可以阻止 PHP 脚本访问任何其网站根目录之外的文件。 
+
+	upload_max_filesize = ###M 和 post_max_size = ###M - 分别是上传文件的最大大小和 POST 方法提交数据的最大大小。如果 PHP 程序需要上传大型数据例如照片和视频文件，则应提高这两项的值。 
+
+
+
+
+
+
+
 
 //-- mktime(0,0,0,12,30,1999) 按指定日期生成时间戳
 	$a = mktime(0,0,0,12,30,1999);
@@ -474,3 +520,37 @@
 		}
 
 	
+
+
+
+
+
+
+
+
+
+
+
+//===== apache 相关
+
+	//-- 指定 Apache 将哪些后缀作为 PHP 解析。
+		例如，让 Apache 把 .php 后缀的文件解析为PHP。可以将任何后缀的文件解析为 PHP，只要在以下语句中加入并用空格分开。这里以添加一个 .phtml 来示例。
+
+     		AddType application/x-httpd-php .php .phtml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,7 @@
 <?php
 echo '<pre>';
 
-//-- stripslashes()
-//-- strspn() 返回字串中首次符合mask的子字串长度
-//-- strcspn() 返回字串中不符合mask子字串的长度
+
 
 
 
@@ -94,7 +92,7 @@ THESTRING;
 
 
 
-//-- http_build_query() 将数组转换成URL键值对
+//-- http_build_query() 将数组转换成URL键值字串
 	$a = array('aa','bb','cc'=>'ccc');
 	//echo http_build_query($a);		//0=aa&1=bb&cc=ccc
 	echo http_build_query($a,'index_');	//index_0=aa&index_1=bb&cc=ccc

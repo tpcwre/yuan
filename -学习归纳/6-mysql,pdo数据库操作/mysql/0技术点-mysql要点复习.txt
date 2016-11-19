@@ -59,17 +59,17 @@ create table a select * from b;		//复制表结构及数据（不包括索引 ）
 show create table a1;			//查看表信息（字段，索引，引擎，编码等）
 show table status like 'ly'\G		//查看表信息
 truncate table stu;//清空数据表
-alter table house add key(lx,stat);		//添加普通索引或复合索引
-alter table house add index name(id,stat);	//添加普通索引或复合索引自定义索引名方式
-alter table house drop key lx;		//删除指定索引
-alter table a1 change id reid char(33) not null;//修改字段名,类型,约束
-alter table a1 modify reid int auto_increment;//修改字段类型,约束
+alter table a1 add key(lx,stat);		//添加普通索引或复合索引
+alter table a1 add index name(id,stat);	//添加普通索引或复合索引自定义索引名方式
 alter table a1 add sex enum('0','1');//向表中末尾添加一个新字段
 alter table a1 add id int first;//向表中最前面添加一个新字段
 alter table a1 add age int after name;//在指定字段后面添加一个新字段
 alter table a1 drop sex;//删除指定字段
 alter table a1 drop primary key;//删除表a1的主键
+alter table a1 drop key lx;		//删除指定索引
 alter table a1 rename as newa1;	//修改表名
+alter table a1 change id reid char(33) not null;//修改字段名,类型,约束
+alter table a1 modify reid int auto_increment;//修改字段类型,约束
 alter table a1 engine=innodb;//修改指定表的引擎
 alter table 表名 disable keys;//关闭表的索引  (适用于表的复制)
 alter table 表名 enable keys;//开启表的索引 
@@ -87,14 +87,17 @@ source c:/user.sql	导入数据
 2，在控制面板中的计划任务中将新建的 dump.bat 批处理文件添加定时任务并设置好运行的时间及次数即可定时备份了，
 
 //windows下制做自动定时备份
-1，制做mysql备份命令的 dump.php 文件
-<?php
-$fname = date('YmdHis');
-$com = "E:/xampp/mysql/bin/mysqldump -uroot -p123 test t4 > c:\\$fname";
-echo exec($com);	// exec() 函数是PHP用来执行CMD 命令的一个函数 
-2，制做一个执行 php 的批处理文件 dump.bat 内容如下：
-E:\xampp\php\php.exe E:\xampp\htdocs\dump.php		//意为：使用php.exe 来执行 dump.php文件
-3，开启计划任务，并将 dump.bat 添加到任务中运行即可。
+1，制做mysql备份命令的文件
+   dump.php 文件
+	<?php
+	$fname = date('YmdHis');
+	$com = "E:/xampp/mysql/bin/mysqldump -uroot -p123 test t4 > c:\\$fname";
+	echo exec($com);	// exec() 函数是PHP用来执行CMD 命令的一个函数 
+
+2，制做一个执行 php 的批处理文件 
+   dump.bat
+	E:\xampp\php\php.exe E:\xampp\htdocs\dump.php		//意为：使用php.exe 来执行 dump.php文件
+	3，开启计划任务，并将 dump.bat 添加到任务中运行即可。
 		
 
 

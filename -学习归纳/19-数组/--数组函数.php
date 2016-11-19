@@ -429,13 +429,6 @@
 
 
 
-//-- compact(variable1,variable2,,,) 	将变量转换成数组-
-	$name = 'aa';
-	$age = 18;
-	$sex = 'nan';
-	$arr = compact('name','sex','age');
-	print_r($arr);		//Array ( [name] => aa [sex] => nan [age] => 18 ) 
-
 
 
 */
@@ -715,6 +708,26 @@
 
 	//0=foo&1=bar&a=aa
 	//myvar_0=foo&myvar_1=bar&a=aa 
+	
+	
+
+
+	
+	
+	
+	
+	
+//-- parse_str() 将url参数字串转成数组
+
+	$a= "id=23&name=abc&age=28";
+	parse_str($a,$arr);
+	print_r($arr);
+			Array
+			(
+				[id] => 23
+				[name] => abc
+				[age] => 28
+			)
 
 
 
@@ -729,6 +742,15 @@
 
 	
 	
+//-- compact(variable1,variable2,,,) 	将变量转换成数组-
+	$name = 'aa';
+	$age = 18;
+	$sex = 'nan';
+	$arr = compact('name','sex','age');
+	print_r($arr);		//Array ( [name] => aa [sex] => nan [age] => 18 ) 
+	
+
+	
 	
 
 //-- filter_has_var(type,variable) 过滤传值的类型，如get,post,cookie-
@@ -737,6 +759,7 @@
 			//INPUT_GET 		是否为GET传值
 			//INPUT_POST 		是否为POST传值
 			//INPUT_COOKIE 		是否为cookie传值 
+			//INPUT_SERVER 
 			//INPUT_SERVER 
 			//INPUT_ENV 
 
