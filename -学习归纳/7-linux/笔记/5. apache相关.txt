@@ -122,6 +122,13 @@
 	//-- vim httpd.conf		//编辑apache的配置文件
 
 
+
+
+     		
+
+
+
+
 	//-- apache 配置文件详解
 	
 		LoadModule rewrite_module libexec/apache2/mod_rewrite.so		//设置重写功能 ,可以配置更多的站点
@@ -131,7 +138,8 @@
 		listen 80	// 设置apache监听多个端口，以防apache与nginx或其它软件有端口冲突
 		listen 81
 
-
+		AddType application/x-httpd-php .php .phtml	
+				//指定 Apache 将哪些后缀作为 PHP 解析。这里将 .php 和 .phtml 后缀的文件做为php文件解析
 
 
 	//-- 配置站点或虚拟主机并设置host文件

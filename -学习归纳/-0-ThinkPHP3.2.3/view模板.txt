@@ -43,9 +43,17 @@
 		结果：aaaaaaaaaaaaaaaa kkkkkkkkkkkkkk cccccccccccc
 
 
+		继承Public目录中模板(使用以当前文件的相对路径来引入继承模板)
+		<extend name="../../Public/base/index" />
+
+
 
 
 //-- <include file= > 引入其它页面内容
+	注意：在引入其它目录中文件时，要以index.php为基础作相对路径引入，如：
+		file="./Public/a.html"
+		file="./Application/Public/a.html"
+			以上两种路径要根据环境的不同而变化
 
 	<include file="Index/aaa" />	
 	<include file="Admin/bbb" />

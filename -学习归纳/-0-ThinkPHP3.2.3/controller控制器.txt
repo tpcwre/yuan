@@ -294,9 +294,14 @@
 
 //-- 文件读写操作
 
+	//-- CACHE_PATH 操作Runtime/Cache目录文件缓存
         	$path =CACHE_PATH.'aa.txt';	//获取文件路径 ：./Pyj/Runtime/Cache/aa.txt
         	file_put_contents($path,'3333333333333333');
         	echo file_get_contents($path);	
+
+
+	//-- 获取项目下public目录中文件内容
+		echo file_get_contents('Application/Public/a.txt');	
 
 
 
