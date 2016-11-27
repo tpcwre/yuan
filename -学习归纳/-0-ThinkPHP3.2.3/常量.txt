@@ -28,6 +28,9 @@
 	    __EXT__		// 获取当前页面全用的后缀 如：html,shtml等
 
 
+	   THINK_PATH		/data/wwwroot/th.tobeyoung.net/ThinkPHP/
+
+
 	以上常量 存放在 ThinkPHP/Library/Behavior/ContentReplaceBehavior.class.php 文件下，只有这里注册的常量才能在模板中使用 如： __URL__
 
 
