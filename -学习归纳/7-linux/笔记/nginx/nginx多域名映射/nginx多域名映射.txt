@@ -1,0 +1,45 @@
+
+//进入想要存放项目的目录
+cd /data/wwwroot		
+
+
+//创建项目目录并将内容导入
+mkdir www.xxx.com
+...
+
+//进入配置文件目录	
+cd /usr/local/nginx/conf/vhost	
+
+
+//随便复制一个配置文件
+cp test.tobeyoung.net.conf www.xxx.com.conf				
+
+
+
+
+//修改配置文件
+vim www.xxx.com.conf
+
+
+//需要修改的内容
+server_name www.xxx.com;	//指定域名
+access_log /data/wwwlogs/www.xxx.com_nginx.log combined;	//指定日志目录名
+root /data/wwwroot/www.xxx.comt;	//指定访问目录
+
+
+
+
+//保存退出 并重启nginx
+
+:eq! 		//保存修改的内容
+service nginx restart		//重启服务
+
+域名映射完毕，即可访问!
+ 
+			
+
+
+
+
+
+
