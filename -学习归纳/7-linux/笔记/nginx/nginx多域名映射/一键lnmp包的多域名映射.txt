@@ -1,0 +1,23 @@
+
+
+vhost目录下的配置
+
+
+aaa.com.conf
+server
+    {   
+        listen 80; 
+        server_name aaa.com;
+        index index.html index.htm index.php;
+        access_log /home/wwwroot/logs/aaa.com__nginx.log combined;
+        root  /home/wwwroot/aaa.com;
+        charset utf-8;
+
+        location ~ [^/]\.php(/|$)
+	#location ~\.php$	//解析php(和上一行哪个都可以)
+        {   
+            fastcgi_pass  unix:/tmp/php-cgi.sock;
+            fastcgi_index index.php;
+            include fastcgi.conf;
+        }   
+    } 

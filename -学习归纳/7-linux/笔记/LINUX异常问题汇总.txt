@@ -6,12 +6,18 @@
 
 
 
-//-- 虚拟内中的网卡故障
+//-- 虚拟机中的网卡故障
 
 	当克隆一个linux系统时会因网卡MAC地址问题而导致网卡无法启动。
 	1.使用 ifconfig -a 查看并记录对应网卡的MAC地址。
-	2.打开 /etc/sysconfig/network-scripts/ 目录中对就网卡的配置文件，修改对应的MAC地址。
+	2.打开 /etc/sysconfig/network-scripts/ 目录中对就网卡的配置文件，修改对应的MAC地址。并将设置ONBOOT=yes
 	3.删除 /etc/udev/rules.d/70-persistent-net.rules 文件并重启系统，重新生成该文件
 	完成以上三步基本可解决网卡问题
 
 	如果添加新网卡时，可在虚拟机的设置管理中添加网卡设备，然后记录其MAC并对相应网卡进行配置
+
+
+
+
+
+

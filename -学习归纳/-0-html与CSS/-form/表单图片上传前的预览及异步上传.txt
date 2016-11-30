@@ -1,0 +1,86 @@
+
+
+
+//===== 表单图片上传前的预览及异步上传
+
+
+	//-- index.php 页面
+	
+	<form name='fileinfo' action="b.php" enctype="multipart/form-data" method="post">
+		<div>
+			<img id='img1' src='1.png' width=200px />
+			<input id='inp1' type="file" name="myfile1" onchange="previewFile('img1','inp1');" />
+			<input type="button" value="上传" onclick="sub('inp1','myfile1')" />
+		</div>
+		<div>
+			<img id='img2' src='1.png' width=200px />
+			<input id='inp2' type="file" name="myfile2" onchange="previewFile('img2','inp2');" />
+			<input type="button" value="上传" onclick="sub('inp2','myfile2')" />
+		</div>
+	</form>
+
+	<script>
+		//上传按钮
+		function sub(obj,fname){
+			var obj = document.getElementById(obj);
+			if(obj.value){
+				upload(fname);
+			}else{
+				alert('请选择文件');
+			}
+		}
+
+		//图片预览
+		function previewFile(img,inp) {  
+			var preview = document.getElementById(img);  
+			var file  = document.getElementById(inp).files[0];  
+			var reader = new FileReader();  
+			reader.onloadend = function () {  
+				preview.src = reader.result;  
+			};  
+			if (file) {  
+				reader.readAsDataURL(file);   
+			} else {  
+				preview.src = "";  
+			}  
+		}  
+
+		//图片上传
+		function upload(fname){  
+			var oData = new FormData(document.forms.namedItem("fileinfo")); //新建一个表彰对象  
+			oData.append("fname",fname); //在这可以向表单添加额外的数据 
+			var oReq = new XMLHttpRequest();   
+			oReq.open("POST", "b.php", true);  	//指定上传到b.php 页面
+			oReq.onload = function(oEvent) {  
+				if (oReq.response == 999) {  	
+					alert("更改头像成功！");  
+				} else {  
+					alert("更改头像失败！");  
+				}  
+			};  
+			oReq.send(oData);         
+		}  
+	</script>
+	
+	
+	
+	
+	
+	//-- b.php 页面
+	
+	<?php
+		$fname = $_POST['fname'];	
+		$data = $_FILES;
+		if(is_uploaded_file($data[$fname]['tmp_name'])){
+			if(move_uploaded_file($data[$fname]['tmp_name'],time().substr($data[$fname]['name'],strripos($data[$fname]['name'],'.')))){
+				echo 999;
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		

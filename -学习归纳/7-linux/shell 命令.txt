@@ -365,6 +365,8 @@
 
 		setenforce 0		临时关闭防护
 
+		setenforce 1		临时开启防护
+
 					永久关闭防护 
 		修改文件 /etc/selinux/config
 			将 SELINUX=enforcing 改为 disabled
