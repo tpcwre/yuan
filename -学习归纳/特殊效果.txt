@@ -3674,4 +3674,16 @@ alert(typeof(divs));
 	
 //===== 调用2345动态天气预报信息
 
-	<iframe allowtransparency="true" frameborder="0" width="255" height="98" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=0&d=1&bd=0&k=&f=ffffff&q=1&e=1&a=0&c=54363&w=255&h=98&align=left"></iframe>
+	<div style='background:blue'>
+		<iframe allowtransparency="true" frameborder="0" width="255" height="98" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=0&d=1&bd=0&k=&f=ffffff&q=1&e=1&a=0&c=54363&w=255&h=98&align=left"></iframe>
+	</div>
+
+
+
+
+
+
+
+
+
+
