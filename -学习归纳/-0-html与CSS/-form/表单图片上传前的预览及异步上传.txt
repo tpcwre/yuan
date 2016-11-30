@@ -1,4 +1,4 @@
-
+﻿
 
 
 //===== 表单图片上传前的预览及异步上传
@@ -84,3 +84,42 @@
 		
 		
 		
+
+
+
+
+//===== oReq 对象中的返回值列表
+
+	UNSENT0
+	OPENED--->1
+	HEADERS_RECEIVED--->2
+	oReq.LOADING--->3
+	oReq.DONE--->4
+	onreadystatechange--->null
+	readyState--->4
+	timeout--->0
+	withCredentials--->false
+	upload--->[object XMLHttpRequestUpload]
+	responseURL--->http://localhost/test1/b.php
+	status--->200		//通信是否成功
+	statusText--->OK	//通信是否成功
+	responseType--->
+	response--->999		//返回请求页面的内容
+	responseText--->999	//返回请求页面的内容
+	responseXML--->null
+	open--->function open() { [native code] }
+	setRequestHeader--->function setRequestHeader() { [native code] }
+	send--->function send() { [native code] }
+	abort--->function abort() { [native code] }
+	getResponseHeader--->function getResponseHeader() { [native code] }
+	getAllResponseHeaders--->function getAllResponseHeaders() { [native code] }
+	overrideMimeType--->function overrideMimeType() { [native code] }
+	onloadstart--->null
+	onprogress--->null
+	onabort--->null
+	onerror--->null
+	ontimeout--->null
+	onloadend--->null
+	addEventListener--->function addEventListener() { [native code] }
+	removeEventListener--->function removeEventListener() { [native code] }
+	dispatchEvent--->function dispatchEvent() { [native code] }
