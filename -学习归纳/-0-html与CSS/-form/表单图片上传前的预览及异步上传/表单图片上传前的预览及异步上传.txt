@@ -103,6 +103,8 @@
 
 //===== 表单图片上传前的预览及异步上传  （完整示例，验证了文件类型，大小，指定提交路径及保存路径）
 
+	注意：需要设置form 的 name ='fileinfo'  ,以及input type='file' 的 id  ,和img 的id
+
 
 	//-- index.php 页面
 
