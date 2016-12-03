@@ -33,6 +33,19 @@
 	//-- JSON.paser(string)	将josn 字串 解析成 json对象 
 	//-- JSON.stringify(obj)  将josn 对象 解析成 json字串 
 	//-- input,select,textarea 内容改变事件及获取改变后的值
+	//-- JS 使用 name 获取元素及表单值 
+	//-- JS 通过类名获取元素及属性
+	//-- JS 通过 name获取表单及其元素
+	//-- JS 获取文件后缀名
+	//-- JS函数 obj.lastIndexOf('x');	获取某字符最后一次出现的位置
+	//-- JS函数 obj.length;		获取字串长度
+	//-- JS函数 obj.substrng(start,end);	 截取从指定下标到指定下标区间的字符
+	//-- JS函数 obj.lenght; 获取字串或数组长度
+	//-- JS函数 new Array()创建数组
+	//-- JS函数 obj.split('x') 将字串以指定字符分割为数组
+	//-- JS函数 Math.floor() 向下取整
+	//-- JS函数 Math.ceil() 向上取整
+	//-- JS函数 Math.floor() 四舍五入
 
 
 
@@ -120,6 +133,95 @@
 		}
 	</script>
 	
+
+
+
+
+
+
+
+
+//-- JS 使用 name 获取元素及表单值 
+	var p1 = document.getElementsByName('price1')[0];
+
+
+
+//-- JS 通过类名获取元素及属性
+
+	var sp = document.getElementsByClassName('sihanplug');
+	alert(sp[0].name);
+
+
+
+
+//-- JS 通过 name获取表单及其元素
+
+	<form action="" name="myform" onsubmit="return doAdd()">
+		结 果：<input type="text" name="res" readonly style="border:0px;"/><br/><br/>
+		<input type="button" value="求和" onclick='doAdd()'/>
+	</form>
+	
+	document.myform.res.value=str;		//通过表单name myform 获取 元素 name 为res的元素，并设置其值 
+
+
+
+
+
+
+
+	
+
+//-- JS 获取文件后缀名
+//-- JS函数 obj.lastIndexOf('x');	获取某字符最后一次出现的位置
+//-- JS函数 obj.length;		获取字串长度
+//-- JS函数 obj.substrng(start,end);	 截取从指定下标到指定下标区间的字符
+
+	<script type="text/javascript">   
+		var filename="www/data/index.php";  
+		var index1=filename.lastIndexOf(".");  
+		alert(index1);  
+		var index2=filename.length;alert(index2);  
+		var postf=filename.substring(index1,index2);//后缀名  
+		alert(postf);  
+	</script>  
+
+
+	
+//-- JS函数 obj.lenght; 获取字串或数组长度
+//-- JS函数 new Array()创建数组
+//-- JS函数 obj.split('x') 将字串以指定字符分割为数组
+	<script>
+		var arr = new Array();
+		var str = 'jpg,png,gif';
+		alert(str.length);
+		arr = str.split(',');
+
+		for(var i=0;i<arr.length;i++){
+			alert(arr[i]);
+		}
+	</script>
+
+
+
+
+
+
+
+//-- JS函数 Math.floor() 向下取整
+//-- JS函数 Math.ceil() 向上取整
+//-- JS函数 Math.round() 四舍五入
+
+	alert(Math.floor(7/2));
+	alert(Math.ceil(7/2));
+	alert(Math.round(7/3));
+
+
+
+
+
+
+
+
 
 
 

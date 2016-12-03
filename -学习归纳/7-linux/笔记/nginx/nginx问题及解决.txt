@@ -1,7 +1,0 @@
-//===== nginx 启动时提示 could not open error log file 
-
-	> su 
-	输入密码		（进入 root模式）     
-	再次运行nginx 启动即可
-
-

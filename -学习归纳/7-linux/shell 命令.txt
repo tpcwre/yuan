@@ -390,14 +390,15 @@
 	//-- useradd 添加用户及其3个参数
 
 		useradd mysql -g mysql -M -s /sbin/nologin 
-		
 			mysql：增加一个名为 mysql的用户。
+		
+		useradd -d /home/ftp/ virtual
+			创建名为 virtual 的用户，并指定其家目录为 /home/ftp
+
 			-g：指定新用户所属的用户组(group)
 			-M：不建立家目录
 			-s：定义其使用的shell，/sbin/nologin代表用户不能登录系统
-
-
-
+			-d：创建用户时指定其家目录
 
 
 
@@ -450,6 +451,20 @@
 			
 			
 //===== 文件,内容,显示操作类相关
+
+	//-- chattr 设置比root权限更高级别的权限
+
+		有时在nginx环境下会发现有些文件连root权限都不无法操作，那么就先使用 chattr 执行一下再做其它操作即可
+
+		如：
+		直接删除文件 .user.ini 提示权限不够
+
+		chattr .user.ini
+
+		rm -rf .user.ini 		就可以删除了
+
+
+
 
 	//--- .zip .gz .bz2	压缩和解压缩
 
