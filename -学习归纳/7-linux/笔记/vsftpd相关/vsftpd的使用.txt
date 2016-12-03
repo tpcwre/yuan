@@ -1,0 +1,433 @@
+
+//===== FTP 安装
+//===== FTP服务的启动与关闭
+//===== 主程序
+//===== FTP用户黑名单 
+//===== 另一个控制用户登陆的文件(可黑白名单的转换)
+//===== 匿名用户的主目录(可修改)
+//===== vsftp 主配置文件
+//===== FTP操作命令
+//===== FTP  返回码信息意义
+//===== FTP 单服务并使用虚拟用户
+//===== 同务器上架设多个FTP服务
+//===== FTP脚本，自动登陆与取消自动登陆
+//===== 自动化运维-- FTP自动下载
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== FTP 安装
+
+	yum install vsftpd	//Redhat,CentOs的YUM安装方式
+	rpm -ivh vsftpd*.rpm	//Redhat,CentOs的rpm 安装方式
+
+	apt-get install vsftpd	//Debian,Ubuntu的DEB包安装方式
+
+				//源码包安装方式
+	tar vzxf vsftpd-2.0.3.tar.gz
+	cd vsftpd-2.0.3
+	make && make install
+	cp vsftpd.conf /etc
+
+
+
+//===== FTP服务的启动与关闭
+				//服务的启动
+	service vsftpd start	
+	或
+	/etc/init.d/vsftpd start
+
+				//服务的关闭
+	service vsftpd stop 
+	或
+	/etc/init.d/vsftpd stop
+	或
+	kill 进程号
+
+				//重启服务
+	service vsftpd restart
+	或
+	/etc/init.d/vsftpd restart
+
+
+				//检查服务状态
+	service vsftpd status
+	或
+	/etc/init.d/vsftpd status
+
+
+
+
+//===== 主程序
+	/usr/sbin/vsftpd
+
+
+
+
+//===== FTP用户黑名单 
+	该文件中的用户在任何情况下都不能登陆FTP服务
+	/etc/vsftpd/ftpusers
+
+
+
+
+//===== 另一个控制用户登陆的文件(可黑白名单的转换)
+	/etc/vsftpd/user_list	
+	
+	该用户文件需要vsftp.conf配置文件中的两个参数来控制
+
+	  userlist_enable=yes/no	
+		//该参数控制是否启用/etc/vsftpd/user_list用户控制文件
+
+	  userlist_deny=yes/no	 (默认为yes)	
+		//1,该参数控制/etc/vsftpd/user_list 用户控制文件是黑名间还是白名单(该参数在userlist_enable=yes 时才生效)
+		//2,设置为yes时，user_list 为黑名单。该文件中存在的用户不能使用ftp,以外的用户可以使用ftp
+		//3,设置为no 时，user_list 为白名单，该文件中存在的用户可以使用ftp,以外的用户不可以使用ftp
+
+
+
+
+
+
+//===== 匿名用户的主目录(可修改)
+	/var/ftp
+	
+
+
+
+
+//===== vsftp 主配置文件
+    /etc/vsfptd/vsftpd/conf
+
+		//匿名权限控制：
+		anonymous_enable=yes/no		是否允许匿名用户登陆(yes允许)
+		anon_umask=022：		匿名用户所上传文件的权限掩码
+		anon_root=/var/ftp：		匿名用户的FTP根目录
+		anon_upload_enable=yes/no	是否允许匿名用户上传文件
+		anon_mkdir_write_enable=yew/no	是否允许匿名用户创建目录
+		anon_other_write_enable=yes/no	开放其他写入权
+		anon_max_rate=0：		限制最大传输速率（字节/秒）
+
+
+	
+		//本地用户权限控制：
+		local_enable=yew/no		是否允许本地用户(linux用户)登陆FTP
+		local_umask=022			设置本地用户FTP上传文件的权限  (777-022=755，755就是文件的权限)
+		local_root=/var/ftp：		设置本地用户的FTP根目录
+		local_max_rate=0：		限制最大传输速率（字节/秒）	
+		chroot_local_user=YES：		是否将用户禁锢在主目录
+		chroot_list_enable=yes/no	锁定登陆用户在自己的家目录(需要配合下面的被限制用户列表文件)
+		chroot_list_file=/etc/chroot_list	该文件中的用户将被限制在自己的家目录中
+		virtual_use_local_privs=YES	虚拟用户和本地用户权限相同(重要！用来设置登陆用户的读写权限)
+
+		
+	
+		//访问限制：(用户访问控制（黑白名单的转换）)			
+		userlist_enable=yes/no
+		userlist_deny=yes/no
+			详见（//===== 另一个控制用户登陆的文件(可黑白名单的转换)）
+		
+		
+		//常用的全局配置项：
+		listen_address=192.168.4.1：设置监听的IP地址
+		listen_port=21：设置监听FTP服务的端口号
+		write_enable=YES：是否启用写入权限
+		download_enable＝YES：是否允许下载文件
+		max_clients=0：限制并发客户端连接数
+		max_per_ip=0：限制同一IP地址的并发连接数
+		Pasv_min_port=50000  将客户端的数据连接端口改在
+		Pasv_max_port=60000      50000—60000之间）
+		listen=yes			独立模式（默认），还有另一种代理模式
+		tcp_wrappers=yes 		是否启用TPCWrappers管理服务（可以控制ip网段的ftp访问策略）
+		user_config_dir=/etc/vsftpd/user_config（定义用户配置文件的目录）
+	
+
+
+
+
+
+
+
+//===== FTP操作命令
+
+
+	help 				//查看FTP所有命令
+
+	ftp 192.168.1.11	//直接登陆FTP服务器
+	ftp://192.168.1.11		//浏览器中登陆ftp
+		//-- ftp 常用参数
+			-v	显示进程服务器的所有响应信息
+			-i 	多个文件传送时关闭交互提示 
+			-n	禁止自动登录FTP
+			-g	取消文件名和路径中的通配符(*和?)的意义(让其失去通配符的意义)
+			-s	指定包含FTP命令的文本文件
+			-d	启用调试，显示客户端与服务器之间传递的所有FTP命令			
+
+	open 192.168.1.11	FTP控制台中登陆指定服务器
+		open host-2		可使用域名或主机名登陆
+
+
+	close		退出当前ftp服务连接，但停留在ftp控制台，可再次使用open来连接其它服务器
+
+	bye,quit	断开ftp，并完全退出ftp控制台
+
+
+	
+
+	!echo $HOSTNAME		'!' 表示在本地操作 (这里虽然连接了host2主机，但操作生效的是host1)
+
+
+	put 1.txt 		上传本地文件1.txt 到FTP (创建文件)
+	delete 1.txt 		删除FTP中的1.txt文件
+
+	mkdir eee		在ftp上创建一个目录eee
+	rm eee			删除一个目录（目录为空时才可以删除）
+
+	dir				//查看当前目录下的内容
+
+	pwd 				//查看当前路径（需要有权限）
+
+	get test.txt 			//下载文件
+
+	mget 		下载多个文件
+
+	put 		上传文件
+
+	mput 		上传多个文件
+
+	cd 		进入目录
+	
+	cdup 		进入父目录
+
+	ls		目录文件列表 
+	
+	pwd		显示当前路径 
+
+	delete		删除文件
+
+	mkdir		创建目录
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== FTP  返回码信息意义
+
+	2开头	表示成功
+		200	命令执行正常结束
+		220	新连接的用户服务已经就绪
+		221	成功断开与当前FTP服务器的连接
+		227	进入被动模式
+		230	用户以登入
+	3开头	表示权限问题
+	4开头	表示文件问题
+	5开头	表示服务器问题
+		530	没有登陆
+		550	服务器中找不到指定文件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== FTP 单服务并使用虚拟用户
+	
+	一：创建一个保存用户名和密码的文件
+		vim login.txt	//这里添加了两个用户guest和guest-1 密码与用户名相同
+			guest
+			guest
+			guest-1
+			guest-1
+
+	二：将该文本文件转换成VSFTP识别的认证文件
+		//使用db_load命令将txt文件转换成vsftp识别的认证文件,并保存到FTP目录下,并修改权限
+
+		db_load -T -t hash -f login.txt /etc/vsftpd/vsftpd_login.db
+
+			注：系统无db_load命令，可使用 yum install db4* 安装
+			
+
+	三：建立虚拟用户的访问权限
+		
+		chmod 600 /etc/vsftpd/vsftpd_login.db
+
+	四：配置VSFTP,开启虚拟用户
+		vim /etc/pam.d/vsftpd	将原有内容全部注释后，添加如下两行内容
+		auth required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
+		account required /lib/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login
+
+	五：创建映射虚拟用户的用户和家目录
+		useradd -d /home/ftp/ virtual		//创建用户并指定家目录
+		chmod 700 /home/ftp			//修改权限
+
+
+	六：修改主配置文件
+		vim /etc/vsftpd/vsftpd.conf
+			guest_enable=YES		//开启虚拟用户功能
+			guest_username=virtual		//指定虚拟用户映射的linux用户名
+
+		service vsftpd restart
+
+	完成
+
+		
+
+
+
+
+
+
+
+
+
+
+
+//===== 同务器上架设多个FTP服务
+
+		ifconfig etch0:0 192.168.1.13 up	//为服务器绑定一个新IP地址。
+
+	一：创建虚拟的FTP根目录
+	
+		mkdir -p /var/newftp/newpub		//创建新FTP的根目录	
+		chmod 755 -R /var/newftp/newpub/	//修改权限为755
+	
+
+	二：增加虚拟FTP服务器的用户
+		useradd -d /var/newftp -M  newftp	//创建新用户newftp
+
+	三：创建新FTP配置，并修改原有和新建的配置
+
+		cp vsftpd.conf vsftpd2.conf		//拷贝一个配置文件
+
+		vim vsftpd.conf				//修改原配置文件
+			listen_address=192.168.1.11		//指定该配置文件监听ip 192.168.1.11的FTP服务
+
+
+		vim vsftpd2.conf			//修改新添加的配置文件
+			listen_address=192.168.1.13		//指定该配置文件监听ip 192.168.1.11的FTP服务
+			ftp username=newftp			//指定该配置文件使用的映射虚拟用户的linux用户名
+
+
+		service vsftpd restart	
+
+		多FTP服务架设完毕
+
+
+
+
+
+
+
+
+
+//===== FTP脚本，自动登陆与取消自动登陆
+
+	//设置自动登陆FTP脚本
+	vim .netrc
+	machine host-2(可以是域名或ip) login xxx password xxx
+
+	//设置权限
+	chmod 600 .netrc
+
+
+	//免密自动登陆ftp
+	ftp host-2	
+
+
+	//取消自动登陆
+	ftp -n host-2		//将会要求输入密码登陆
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== 自动化运维-- FTP自动下载
+
+	vim ftp_autoget.sh
+	
+	#!/bin/base
+	
+	mkdir -p /tmplog
+
+	ip=$1
+	user=$2
+	pwd=$3
+
+	localdir=/tmp/log
+	remotedir=log
+	dirlist="/tmp/${id}.list"
+	tarpath="/tmp/$('id').tar.gz"
+
+
+	echo "Downloading..."
+
+		# -i 	上传或下载多个文件时不需要交互
+		# -v 	显示一个信息
+		# -n	不启用自动登陆
+		
+	ftp -ivn $ip <<EOF
+		user $user $pwd
+		!cd $localdir		#操作本地，进入指定目录
+		cd $remotedir		#进入远程目录
+		nlist *.log $dirlist	#将所有.log文件名写入到 专门存放文件名列表的文件
+		mget *.log 		#下载所有.log文件
+		bye			#完全退出 ftp
+		EOF			
+
+
+
+	tar vzcf $tarpath $localdir	#打包所有下载的文件
+	echo "tar files in $tarpath successful.."
+
+	rm -rf $localdir/*		#删除所有以下载的文件
+
+
+	//执行脚本 
+	chmod +x ftp_autoget.sh
+	./ftp_autoget.sh 192.168.1.12 username pwd	//执行脚本并指定参数ip,用户名，密码
+	
