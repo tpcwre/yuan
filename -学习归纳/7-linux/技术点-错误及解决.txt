@@ -1,7 +1,0 @@
-
-
-//===== 网络相关
-
-	//-- eth0: unknown interface: No such device	网卡不识别错误的解决
-
-		暂行办法，使用setup 图形界面管理重新添加一个eth1网卡，即可解决网络连接问题

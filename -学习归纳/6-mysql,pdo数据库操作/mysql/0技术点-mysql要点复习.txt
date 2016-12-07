@@ -1,4 +1,51 @@
 
+//-- 左连接，右连接，内连接，及连接嵌套查询
+
+//左连接 	left join on
+	格式：
+		select (要显示的左或右表字段) from 左表 left join 右表 on 左表字段=右表字段;
+	示例：
+		select room.room_name as rname,region.region_name as gname from tp_room room left join tp_region region on room.room_region=region.region_id;
+		
+	解释：
+		左表显示全部数据，右表只显满足on条件的数据(其中字段为空的显示 null 或者空白:要看右表定义时是否为not null)，
+
+
+
+
+//右连接 	right join on
+	格式：
+		select (要显示的左或右表字段) from 左表 right join 右表 on 左表字段=右表字段;
+	示例：
+		select room.room_name as rname,region.region_name as gname from tp_room room right join tp_region region on room.room_region=region.region_id;
+	解释：
+		右表显示全部数据，左表只显满足on条件的数据(其中字段为空的显示 null 或者空白:要看右表定义时是否为not null)，
+
+
+		
+//内连接	inner join on
+	格式：
+		select (要显示的左或右表字段) from 左表 inner join 右表 on 左表字段=右表字段;
+	示例：
+		select room.room_name as rname,region.region_name as gname from tp_room room inner join tp_region region on room.room_region=region.region_id;
+	解释：
+		左右两表同时满足on 条件时才显示左右表的数据，有一侧不满足时，两表都不显示
+
+
+
+//左右内连接的多表关联查询
+
+		
+	格式：
+		select (字段1,字段2...) from ((左表 left join 右表1 on 左表字段=右表1字段) left join 右表2 on 左表字段=右表2字段) left join 右表3 on 左表字段=右表3字段;
+	示例：	
+		select room.room_id as roomid,room.room_name as roomname,region.region_name as regionname,community.community_name as communityname,building.building_name as buildingname,apartment.apartment_name as apartmentname,owner.owner_name as ownername,owner.owner_phone as ownerphone from (((((tp_room room left join tp_region region on room.room_region=region.region_id) left join tp_community community on room.room_community=community.community_id) left join tp_building building on room.room_building=building_id) left join tp_apartment apartment on room.room_apartment=apartment.apartment_id) left join tp_owner owner on room.room_ownerid=owner.owner_id) limit 10;
+	解释：
+		多表关联查询形式 就是把每一个left join on 用户括号包起来，然后再跟着left join on 如下:
+		(((left join on) left join on) left join on) left join on ...
+
+
+
 
 
 
@@ -105,6 +152,26 @@ source c:/user.sql	导入数据
 //-- mysql 修改密码
 mysqladmin -u root -p password 123			密码修改(外部方式)
 set password for 'root'@'localhost' = password('123');	密码修改(内部方式)
+
+
+
+//--  MySQL忘记密码如何解决
+
+            步骤：
+                1、关闭正在运行的mysql
+                2、打开dos切换到mysql的bin目录下
+                cd  你的路径
+                cd C:\xampp\mysql\bin
+
+                3、输入mysqld --skip-grant-table 回车
+                4、再打开一个dos窗口进入到mysql的bin目录下
+                5、输入mysql回车
+                6、进入到mysql的mysql库中  use mysql
+                7、update user set password=password('新密码') where
+                user="root";
+                8、刷新权限
+                flush privileges 
+
 	
 //--if判断语句
 select class,count(if(score>=60,score,null)),count(if(score<60,score,null)) from student group by class
