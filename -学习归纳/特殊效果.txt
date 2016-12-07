@@ -59,7 +59,6 @@ http://lh.syssuper.com:8000/
 
 //=====在指定元素上使光标变成小手
 
-//=====设置网页标签上的ICON小图标
 
 //=====label标签的 for="id" 的关联属性
  
@@ -2924,9 +2923,6 @@ for 属性规定 label 与哪个表单元素绑定。 效果；点击文字就会自动选择相关联的表单元
 
 
 
-//=====设置网页标签上的ICON小图标
-
-<link rel="shortcut icon" type="image/x-icon" href="img/a.ico"/>
 
 
 
