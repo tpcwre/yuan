@@ -1,8 +1,9 @@
 
+1 在主配置文件中引入vhost下的该配置文件
+include vhost/aaa.com.conf
 
-vhost目录下的配置
 
-
+2 设置vhost目录下需要引入的配置文件
 aaa.com.conf
 server
     {   

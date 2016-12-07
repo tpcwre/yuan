@@ -50,6 +50,23 @@
 
 
 
+//===== windows下制做自动定时备份mysql数据
+
+	   1，制做mysql备份命令的 dump.php 文件
+		<?php
+		$fname = date('YmdHis');
+		$com = "E:/xampp/mysql/bin/mysqldump -uroot -p123 test t4 > c:\\$fname";
+		echo exec($com);	// exec() 函数是PHP用来执行CMD 命令的一个函数 
+
+	   2，制做一个执行 php 的批处理文件 dump.bat 内容如下：
+		E:\xampp\php\php.exe E:\xampp\htdocs\dump.php		//意为：使用php.exe 来执行 dump.php文件
+
+	   3，开启计划任务，并将 dump.bat 添加到任务中运行即可。
+
+
+
+
+
 
 
 
