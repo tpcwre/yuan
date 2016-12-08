@@ -1,0 +1,28 @@
+﻿
+
+在server 区中添加如下代码
+
+
+
+
+	location ~ [^/]\.php
+	
+	{	
+		fastcgi_pass  unix:/tmp/php-cgi.sock;
+
+		fastcgi_index index.php;
+
+		include fastcgi.conf;
+
+		include pathinfo.conf;
+
+	}
+ 
+	if (!-e $request_filename) 
+	{
+
+		rewrite  ^(.*)$  /index.php?s=$1  last;
+
+		break;
+
+	}
