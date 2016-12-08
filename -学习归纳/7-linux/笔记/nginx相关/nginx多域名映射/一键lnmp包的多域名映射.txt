@@ -2,15 +2,14 @@
 
 vhostÄ¿Â¼ÏÂµÄÅäÖÃ
 
-
 aaa.com.conf
 server
     {   
         listen 80; 
-        server_name aaa.com;
+        server_name www.a888.com;
         index index.html index.htm index.php;
-        access_log /home/wwwroot/logs/aaa.com__nginx.log combined;
-        root  /home/wwwroot/aaa.com;
+        access_log /home/wwwroot/logs/www.a888.com__nginx.log combined;
+        root  /home/wwwroot/www.a888.com;
         charset utf-8;
 
         location ~ [^/]\.php(/|$)
@@ -20,4 +19,5 @@ server
             fastcgi_index index.php;
             include fastcgi.conf;
         }   
-    } 
+    }  
+
