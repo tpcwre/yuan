@@ -14,3 +14,19 @@
 	完成以上三步基本可解决网卡问题
 
 	如果添加新网卡时，可在虚拟机的设置管理中添加网卡设备，然后记录其MAC并对相应网卡进行配置
+
+
+//-- 虚拟机无法上网的解决
+
+	首先按照上面//-- 虚拟机中的网卡故障  先设置好网卡
+	然后再设置DNS：
+		编辑 vi /etc/resolv.conf 
+			nameserver 202.98.0.68
+			nameserver 202.98.5.68
+			nameserver 8.8.8.8
+			nameserver 114.114.114
+			可以多设置几个，一个不好用，可以轮着用
+	
+		或在setup 或者是/etc/sysconfig/network-script/ifcfg-ethx中添加 DNS1=202.98.0.68等
+
+	基本上设置好网卡和DNS就会解决无法上网的问题了
