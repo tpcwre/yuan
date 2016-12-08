@@ -2,16 +2,19 @@
 1 在主配置文件中引入vhost下的该配置文件
 include vhost/aaa.com.conf
 
+<<<<<<< HEAD
+=======
 
 2 设置vhost目录下需要引入的配置文件
+>>>>>>> f54021878900b230ce0549ba7c2cc0dbc1adc582
 aaa.com.conf
 server
     {   
         listen 80; 
-        server_name aaa.com;
+        server_name www.a888.com;
         index index.html index.htm index.php;
-        access_log /home/wwwroot/logs/aaa.com__nginx.log combined;
-        root  /home/wwwroot/aaa.com;
+        access_log /home/wwwroot/logs/www.a888.com__nginx.log combined;
+        root  /home/wwwroot/www.a888.com;
         charset utf-8;
 
         location ~ [^/]\.php(/|$)
@@ -21,4 +24,5 @@ server
             fastcgi_index index.php;
             include fastcgi.conf;
         }   
-    } 
+    }  
+

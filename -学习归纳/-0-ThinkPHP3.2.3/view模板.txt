@@ -38,6 +38,8 @@
 		子模板：
 			View/Index/index.html
 				<extend name="Public:base" />
+				或使用绝对路径加文件名
+				<extend name='./Public/base.html' />
 				<block name='b'>kkkkkkkkkkkkkk</block>
 					
 		结果：aaaaaaaaaaaaaaaa kkkkkkkkkkkkkk cccccccccccc
