@@ -300,6 +300,7 @@
 		vim /etc/vsftpd/vsftpd.conf
 			guest_enable=YES		//开启虚拟用户功能
 			guest_username=virtual		//指定虚拟用户映射的linux用户名
+			virtual_use_local_privs=YES	//虚拟用户和本地用户权限相同(重要！用来设置登陆用户的读写权限)
 
 		service vsftpd restart
 
