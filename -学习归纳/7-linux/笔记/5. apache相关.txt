@@ -1,13 +1,11 @@
 
-
-//===== apache 的配置
-	//-- vim httpd.conf		//编辑apache的配置文件
-	//-- apache 配置文件详解
-	//-- 配置站点或虚拟主机并设置host文件
-//===== apache 配置虚拟主机
-//===== apache 禁止或允许浏览目录列表的三种方式
-
+//===== apache 源码安装
 //===== ubantu 使用软件包管理器快速安装 apache 以及启动关闭重启命令
+//===== apache 的配置
+//==== apache 配置虚拟主机
+//===== apache 绑定多域名（虚拟主机）
+//===== apache 禁止或允许浏览目录列表的三种方式
+//===== 设置apache重写模式，隐藏thinkphp中的index
 
 
 
@@ -223,14 +221,53 @@
 
 
 
+//===== apache 绑定多域名（虚拟主机）
 
 
 
+	一：配置域名：
+		如果是本地虚拟主机的话就修改 windows/system32/driver/etc/hosts 文件
+		这里添加了三个虚拟主机的域名
+		127.0.0.1			www.t1.com
+		127.0.0.1			www.t2.com
+		127.0.0.1			www.t3.com
 
 
 
+	二：修改 httpd.conf 配置文件
+		开启虚拟配置：
+		#Include conf/extra/httpd-vhosts.conf               //启用的话就把前面的#号去掉  #号相当于注释
+
+		编辑conf/extra/httpd-vhost.conf文件
+
+			注：配置虚拟域名时要先创建好对应的目录，如下面的C:/xampp/htdocs/www.t1.com/
+			<VirtualHost *:80>	//虚拟域名1	
+				ServerAdmin www.t1.com
+				DocumentRoot "C:/xampp/htdocs/www.t1.com/"
+				ServerName www.t1.com
+				ServerAlias www.t1.com
+				ErrorLog "logs/dummy-host.example.com-error.log"
+				CustomLog "logs/dummy-host.example.com-access.log" common
+			</VirtualHost>
+			<VirtualHost *:80>	//虚拟域名2
+				ServerAdmin www.t2.com
+				DocumentRoot "C:/xampp/htdocs/www.t2.com/"
+				ServerName www.t2.com
+				ServerAlias www.t2.com
+				ErrorLog "logs/dummy-host.example.com-error.log"
+				CustomLog "logs/dummy-host.example.com-access.log" common
+			</VirtualHost>
+			<VirtualHost *:80>	//虚拟域名3
+				ServerAdmin www.t3.com
+				DocumentRoot "C:/xampp/htdocs/www.t3.com/"
+				ServerName www.t3.com
+				ServerAlias www.t3.com
+				ErrorLog "logs/dummy-host.example.com-error.log"
+				CustomLog "logs/dummy-host.example.com-access.log" common
+			</VirtualHost>
 
 
+	
 
 
 
@@ -321,6 +358,22 @@
 
 
 
+
+
+
+//===== 设置apache重写模式，隐藏thinkphp中的index
+
+	     设置 URL 重写模式详述
+		1，先将apache配置文件httpd.conf中的 rewrite.so 前的 号去掉 ，开启重写apache的重写功能 
+		2，在项目中的index同级目录中创建 一个 .htaccess 文件 ，添加如下内容
+		   <IfModule mod_rewrite.c>
+  			Options +FollowSymlinks 	//linux系统中不加此句会出内部异常错误
+  			RewriteEngine On
+ 		 	RewriteCond %{REQUEST_FILENAME} !-d
+  			RewriteCond %{REQUEST_FILENAME} !-f
+  			RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+		   </IfModule>
+		3, 在thinkphp 的配置文件中设置URL模式为2 （重写模式）
 
 
 
