@@ -27,6 +27,7 @@
 	//-- 数据库存取数字型字段内容只显示127或固定数值
 	//-- This value is interpreted using strftime, mysql数据表无法导出的解决
 	//-- 提示 Call to undefined function mysql_connect()
+	//-- mysql 中文存储乱码的解决
 
 
 	
@@ -208,7 +209,23 @@
 		
 
 
-//===== mysql 相关报错及解决		
+//===== mysql 相关报错及解决	
+
+
+
+
+//-- mysql 中文存储乱码的解决
+
+	1，database 建库时要选用utf8 编码，(注意：如果库中已存在表，使用alter 修改的utf8 无效，必须重建)
+	2，table 建表时要选用utf8编码
+	3，Client 要使用gbk编码(一般默认就是GBK)
+	
+	可以进入库以后使用 status 命令或 show variables like "%char%" 来查看使用的编码
+
+	使用set names GBK	或 set 指定字段名来设置 编码
+
+
+	
 
 
 //-- 使用mysqld 修改密码时出现的异常
