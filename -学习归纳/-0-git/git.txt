@@ -464,3 +464,25 @@
 	5. 把4中生成的密钥文件复制到C:\Documents and Settings\Administrator\.ssh\ 目 录下。
 	6. 用记事本打开id_rsa.pub文件，复制内容，在github.com的网站上到ssh密钥管理页面，添加新公钥，随便取个名字，内容粘贴刚
 	7. 运行Git CMD 用cmd命令进入指定目录 进行git 命令操作 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== git 异常
+	当出现下列异常提示：
+	You can't push to git://github.com/tpcwre/www.t2.com.git
+  	Use https://github.com/tpcwre/www.t2.com.git
+
+	说明克隆仓库时使用的是 git://github.com:xx/xxx.git 的形式, 那么就会出现这个问题，因为这个protocol是不支持push的
+
+	使用 git clone git@github.com:username/myNCCL.git 的形式 就可以用git push了。
+
