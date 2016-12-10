@@ -27,6 +27,7 @@
 	//-- 数据库存取数字型字段内容只显示127或固定数值
 	//-- This value is interpreted using strftime, mysql数据表无法导出的解决
 	//-- 提示 Call to undefined function mysql_connect()
+	//-- mysql 中文存储乱码的解决
 
 
 	
@@ -36,6 +37,7 @@
 //===== ThinkPhP框架报错及解决
 	//-- thinkphp 错误解决--Undefined class constant 'MYSQL_ATTR_INIT_COMMAND'  
 	//-- 如何让nginx支持ThinkPHP框架
+	//-- 命名空间错误 Namespace declaration statement has to be the very first statement in the script
 
 
 //===== smarty 模板中的报错与解决
@@ -48,11 +50,44 @@
 	//-- 默认时区问题
 
 
+
+
+
+
+
+
+
+
+
+//===== git 相关异常
+	//-- git克隆仓库时提示 fatal: destination path 'bak' already exists and is not an empty directory.
+
+
+
 //===== 其它
 	//-- 行内文字或元素莫明自动换行的问题
 	//-- dialog对话框触发时一闪即消失的异常问题
 	//-- 元素不能设置背景色或背景图片的原因
 	//-- 页面跳转后保持元素的背景色的问题
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -174,7 +209,23 @@
 		
 
 
-//===== mysql 相关报错及解决		
+//===== mysql 相关报错及解决	
+
+
+
+
+//-- mysql 中文存储乱码的解决
+
+	1，database 建库时要选用utf8 编码，(注意：如果库中已存在表，使用alter 修改的utf8 无效，必须重建)
+	2，table 建表时要选用utf8编码
+	3，Client 要使用gbk编码(一般默认就是GBK)
+	
+	可以进入库以后使用 status 命令或 show variables like "%char%" 来查看使用的编码
+
+	使用set names GBK	或 set 指定字段名来设置 编码
+
+
+	
 
 
 //-- 使用mysqld 修改密码时出现的异常
@@ -285,6 +336,13 @@
 //-- 如何让nginx支持ThinkPHP框架
 
 	http://jingyan.baidu.com/article/c843ea0b76477877931e4aac.html?qq-pf-to=pcqq.c2c
+
+
+
+
+//-- 命名空间错误 Namespace declaration statement has to be the very first statement in the script
+
+	检查 namespace 是不是在首行，或者 前面是否有空格！去掉前面的空格
 	
 	
 		
@@ -479,6 +537,35 @@
 	> su 
 	输入密码		（进入 root模式）     
 	再次运行nginx 启动即可
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//===== git 相关异常
+
+
+
+
+//-- git克隆仓库时提示 fatal: destination path 'bak' already exists and is not an empty directory.
+
+	不能在根目录下克隆一个项目，需要创建一个空目录进入后，再克隆远程仓库
 
 
 

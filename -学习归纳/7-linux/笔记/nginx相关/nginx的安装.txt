@@ -1,0 +1,34 @@
+
+
+
+//-- 安装Nginx
+	wget     http://nginx.org/download/nginx-1.4.6.tar.gz
+
+	tar zxvf nginx-1.1.0.tar.gz
+
+	./configure
+
+	make
+
+	make install
+
+
+	需要注意的是在 configure 这步遇到点小麻烦：
+
+	./configure: error: the HTTP rewrite module requires the PCRE library.
+
+	安装 nginx 的时候， rewrite 模块默认是需要被安装的。但是 rewrite 模块所依赖的 PCRE 库需要额外安装。
+
+		You can either disable the module by using –without-http_rewrite_module
+
+		option, or install the PCRE library into the system, or build the PCRE library
+
+		statically from the source with nginx by using –with-pcre=<path> option.
+
+ 
+
+	解决办法： http://apps.hi.baidu.com/share/detail/34331473
+
+	先执行： yum -y install pcre-devel openssl openssl-devel  把依赖的东西安装上。
+
+	备注： PCRE (Perl Compatible Regular Expressions )是perl语言正则表达式。 Nginx的rewrite的正则表达式采用的是Perl语法集（常识：正则表达式有不同的语法集，我们常见的grep指令如果需要采用Perl语法集，需要grep -P 来指定）。

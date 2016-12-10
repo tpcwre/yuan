@@ -11,7 +11,7 @@
 	define("STORAGE_TYPE",File); 			//存储类型（默认为File,）
 		支持：File | Db | Apc | Memcache | Shmop | Sqlite | Xcache | Apachenote | Eaccelerator | sae
 
-	define('BIND_MODULE','Admin');			//创建并绑定 Admin 模块
+	define('BIND_MODULE','Admin');			//创建并绑定 Admin 模块 （创建后要删除该命令）
 	define('BIND_CONTROLLER','Index'); 		//绑定的控制器
 	define('BUILD_CONTROLLER_LIST','Index,User,Menu');	//创建Index,User,Menu 控制器
 	define('BUILD_MODEL_LIST','User,Menu');		//创建多个model模型

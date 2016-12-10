@@ -464,6 +464,12 @@
 
 
 
+//-- field('xx',true)	排除字段查询
+	$data = $m->field('user',true)->select();	//查询除了 user 以外的所有字段
+
+
+
+
 
 
 //-- alias 给操作的表设置别名
