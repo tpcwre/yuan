@@ -1,4 +1,36 @@
 
+
+
+
+//-- 框架命令
+//-- 模块分组
+//-- 空方法
+//-- 空控制器
+//-- before_,_after_ 前置和后置操作方法 
+//-- 跨控制器操作，跨模块操作
+//-- GET传值的接收
+//-- ajax异步提交
+//-- session 机制
+//-- cookie 机制
+//-- 文件读写操作
+//-- 同模块下类的继承
+//-- Common公共模块下类的继承
+//-- Library库下类的继承
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //-- 框架命令
 
 	$this->assigon('a','aaaa');		//-- 注册模板变量
@@ -87,7 +119,7 @@
 
 
 
-//--  空控制器
+//-- 空控制器
 
 	当访问一个不存在的控制器时如创建如下文件，就会执行以下内容
 	在Controller目录下创建一个EmptyController.class.php文件，内容如下
@@ -344,6 +376,65 @@
 	    }
 	}
 
+
+
+
+
+
+//-- Common公共模块下类的继承
+	
+	创建文件公共类：
+		项目名/Common/Controller/MainController.php
+	<?php
+	namespace Common\Controller;
+	use Think\Controller;
+	class MainController extends Controller{
+		public function bbb(){
+			echo 'bbb'; 
+		}
+	}
+
+
+	控制器中调用
+		项目名/Admin/Contorller/IndexController.class.php 中继承
+	<?php
+	namespace Admin\Controller;
+	use Common\Controller\MainController;
+	class IndexController extends MainController{
+	    public function aaa() {
+	    		echo 'aaa';
+	    		$this->bbb();
+	    }
+	}
+
+
+
+
+//-- Library库下类的继承
+
+	创建自定类文件 My/Test.class.php：
+		ThinkPHP/Library/My/Test.class.php
+	<?php
+	namespace My;
+	use Think\Controller;
+	class Test extends Controller{
+		public function ccc(){
+			echo 'ccc';
+		}
+	}
+
+
+	控制器中继承My/Test类并调用其方法
+
+	<?php
+	namespace Admin\Controller;
+	use My\Test;
+	class IndexController extends Test{
+	    public function aaa() {
+	    	echo 'aaaaq';
+	    	$this->ccc();
+	    }
+	}
 
 
 
