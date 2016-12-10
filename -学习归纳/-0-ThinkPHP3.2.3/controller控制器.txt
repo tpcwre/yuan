@@ -318,10 +318,31 @@
 
 
 
+//-- 同模块下类的继承
+
+	Admin模块下的 IndexController 类
+	
+	<?php
+	namespace Admin\Controller;
+	use Think\Controller;
+	class IndexController extends Controller
+	{
+	    public function index() {
+	    		echo '111';
+	    }
+	}
 
 
-
-
+	Admin模块下的 TestController 类
+	<?php
+	namespace Admin\Controller;
+	class TestController extends IndexController{	//这里直接继承了同模块Admin下的 IndexController 类
+	    public function aaa()
+	    {
+	    	echo $this->index();		//调用了继承类中的方法
+	    	echo '222';
+	    }
+	}
 
 
 
