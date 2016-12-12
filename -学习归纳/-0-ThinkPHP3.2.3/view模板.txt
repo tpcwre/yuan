@@ -132,7 +132,7 @@
 	</foreach>
 
 
-					// for循环
+					// for 循环
 	<for start='1' end='10' comparison='elt' name='k'>
 		{$k}<br>
 	</for>
@@ -141,7 +141,20 @@
 
 
 
-					// if判断
+
+					// in 判断，功能相当于in_array()
+	$this->assign('a',1);
+	$this->assign('b','1,2,3');
+	<in name='a' value="$b">在<else/>不在</in>
+	或
+	<in name='a' value="1,2,3">在<else/>不丰</in>
+
+
+
+
+
+
+					// if 判断
 
 	注意： condition 判断中直接使用变量名，不需要加{} , 普通变量不能使用 xx.xx方式，要使用 xx['xx']方式
 
