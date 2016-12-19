@@ -221,6 +221,8 @@
 
 	$tables = $m->db()->getTables();	//-- 获取库中所有的表名
 
+	$m->getDbFields();			//-- 获取表中所有字段
+
 	echo M()->getLastSql();			//-- 获取最后执行的sql语句
 
 	$info = $goods->getByName($name);	//-- 按字段查询

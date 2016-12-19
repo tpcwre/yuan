@@ -113,7 +113,10 @@ http://lh.syssuper.com:8000/
 
 
 
-//===== JavaScript 与jquery  相关	
+//===== JavaScript 与jquery  相关
+
+	//-- js 的三种URL编码函数
+	
 
 	//-- 获取 iframe标签中页面的高度; var h = document.getElementById('if1').contentWindow.document.body.scrollHeight;
 	//===== jquery 获取宽度和高度
@@ -429,8 +432,14 @@ http://lh.syssuper.com:8000/
 
 
 
+//-- js 的三种URL编码函数
 
+	encodeURI(url);
 
+	escape(url);			在处理unicode字符时会出现问题
+
+	encodeURIComponent(url);	推荐使用
+	decodeURIComponent(url);
 
 
 

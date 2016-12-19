@@ -18,20 +18,43 @@
 	
 //===== 数组函数 
 
-	concat() 连接两个或更多的数组，并返回结果。 1 4 
-	join() 把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。 1 4 
-	pop() 删除并返回数组的最后一个元素 1 5.5 
-	push() 向数组的末尾添加一个或更多元素，并返回新的长度。 1 5.5 
-	reverse() 颠倒数组中元素的顺序。 1 4 
-	shift() 删除并返回数组的第一个元素 1 5.5 
-	slice() 从某个已有的数组返回选定的元素 1 4 
-	sort() 对数组的元素进行排序 1 4 
-	splice() 删除元素，并向数组添加新元素。 1 5.5 
-	toSource() 返回该对象的源代码。 1 - 
-	toString() 把数组转换为字符串，并返回结果。 1 4 
-	toLocaleString() 把数组转换为本地数组，并返回结果。 1 4 
-	unshift() 向数组的开头添加一个或更多元素，并返回新的长度。 1 6 
-	valueOf() 返回数组对象的原始值 1 4 
+	arrobj.concat() 连接两个或更多的数组，并返回结果。 1 4 
+	arrobj.join() 把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。 1 4 
+	arrobj.pop() 删除并返回数组的最后一个元素 1 5.5 
+	arrobj.push(item1,item2);	//数组元素的添加到后面，并返回新的长度。 1 5.5 
+	arrobj.reverse() 颠倒数组中元素的顺序。 1 4 
+	arrobj.shift() 删除并返回数组的第一个元素 1 5.5 
+	arrobj.slice(start,[end]);	//截取数组元素
+	arrobj.sort() 对数组的元素进行排序 1 4 
+	arrobj.splice(pos,0,[item1,item2]) 	//将一或多个元素插入到数组指定位置，其它元素后移
+	arrobj.toSource() 返回该对象的源代码。 1 - 
+	arrobj.toString() 把数组转换为字符串，并返回结果。 1 4 
+	arrobj.toLocaleString() 把数组转换为本地数组，并返回结果。 1 4 
+	arrobj.unshift(item1,item2);//向数组的开头添加一个或更多元素，并返回新的长度。 1 6 
+	arrobj.valueOf() 返回数组对象的原始值 1 4 
+	shuffle(obj)	打乱数组顺序
+
+
+
+
+//===== 数组的声明，获取指定元素
+      success:function(res){
+        localStorage.info=res;
+        var arr = new Array();  //声明数组
+        arr = JSON.parse(localStorage.info,1);
+        alert(arr);
+        for(var i in arr){
+          for(var ii in arr[i]){	//获取指定数组元素
+            alert(ii)
+          }
+        }
+      }
+
+
+	
+	
+
+
 
 
 

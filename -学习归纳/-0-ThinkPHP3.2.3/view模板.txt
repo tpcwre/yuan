@@ -333,7 +333,20 @@
 		}
 	
 
+	注意：当JS并没有写在html文档中，而是被引入时，那么 U()以及__URL___ 等将会失效，请使用全地址方式 如下：
 
+  	$('#sjll').click(function(){
+    		$.ajax({
+      			url:'http://localhost/exercise/index.php/Home/Index/sjll',
+      			type:'post',
+      			data:{
+        			oname:$("#sel").val(),
+      			},
+      			success:function(res){
+        			alert(res);
+      			}
+    		});
+  	});
 
 
 
