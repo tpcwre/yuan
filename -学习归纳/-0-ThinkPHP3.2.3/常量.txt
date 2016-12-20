@@ -70,3 +70,82 @@
 
 
 
+
+
+
+
+
+
+常量	说明
+URL_COMMON=0	普通模式 URL
+URL_PATHINFO=1	PATHINFO URL
+URL_REWRITE=2	REWRITE URL
+URL_COMPAT=3	兼容模式 URL
+HAS_ONE=1	HAS_ONE 关联定义
+BELONGS_TO=2	BELONGS_TO 关联定义
+HAS_MANY=3	HAS_MANY 关联定义
+MANY_TO_MANY=4	MANY_TO_MANY 关联定义
+THINK_VERSION	框架版本号
+THINK_RELEASE	框架发行日期
+这些预定义常量不会随着环境的变化而变化。2
+路径常量
+系统和项目的路径常量用于系统默认的目录规范，可以通过重新定义改变，如果不希望定制目录，这些常量一般不需要更改。
+常量名	说明	默认值
+CORE_PATH	系统核心类库目录	THINK_PATH.'Lib/'
+EXTEND_PATH	系统扩展目录	THINK_PATH.'Extend/'
+MODE_PATH	模式扩展目录	EXTEND_PATH.'Mode/'
+ENGINE_PATH	引擎扩展目录	EXTEND_PATH.'Engine/'
+VENDOR_PATH	第三方类库目录	EXTEND_PATH.'Vendor/'
+LIBRARY_PATH	系统扩展类库目录	EXTEND_PATH.'Library/'
+COMMON_PATH	项目公共目录	APP_PATH.'Common/'
+LIB_PATH	项目类库目录	APP_PATH.'Lib/'
+RUNTIME_PATH	项目运行时目录	APP_PATH.'Runtime/'
+CONF_PATH	项目配置目录	APP_PATH.'Conf/'
+LOG_PATH	项目日志目录	RUNTIME_PATH.'Logs/'
+CACHE_PATH	项目模板缓存目录	RUNTIME_PATH.'Cache/'
+LANG_PATH	项目语言包目录	APP_PATH.'Lang/'
+TEMP_PATH	项目缓存目录	RUNTIME_PATH.'Temp/'
+DATA_PATH	项目数据目录	RUNTIME_PATH.'Data/'
+TMPL_PATH	项目模板目录	APP_PATH.'Tpl/'
+HTML_PATH	项目静态缓存目录	APP_PATH.'Html/'
+2
+系统常量
+下面这些系统常量会随着开发环境的改变或者设置的改变而产生变化。
+常量名	说明
+IS_CGI	是否属于 CGI模式
+IS_WIN	是否属于Windows 环境
+IS_CLI	是否属于命令行模式
+__ROOT__	网站根目录地址
+__APP__	当前项目（入口文件）地址
+__GROUP__	当前分组的URL地址
+__URL__	当前模块的URL地址
+__ACTION__	当前操作的URL地址
+__SELF__	当前URL地址
+__INFO__	当前的PATH_INFO字符串
+__EXT__	当前URL地址的扩展名
+APP_NAME	当前项目名
+GROUP_NAME	当前分组名
+MODULE_NAME	当前模块名
+ACTION_NAME	当前操作名
+APP_DEBUG	是否开启调试模式
+MODE_NAME	当前模式名称
+APP_PATH	当前项目路径
+THINK_PATH	系统框架路径
+MEMORY_LIMIT_ON	系统内存统计支持
+RUNTIME_FILE	项目编译缓存文件名
+THEME_NAME	当前主题名称
+THEME_PATH	当前模板主题路径
+APP_TMPL_PATH	当前模板URL路径
+LANG_SET	当前浏览器语言
+MAGIC_QUOTES_GPC	MAGIC_QUOTES_GPC
+NOW_TIME	当前请求时间（3.1新增）
+IS_GET	当前是否GET请求（3.1新增）
+IS_POST	当前是否POST请求（3.1新增）
+IS_PUT	当前是否PUT请求（3.1新增）
+IS_DELETE	当前是否DELETE请求（3.1新增）
+IS_AJAX	当前是否AJAX请求（3.1新增）
+
+
+
+
+

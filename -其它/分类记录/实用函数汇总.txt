@@ -1,0 +1,16 @@
+
+
+
+
+
+
+
+
+//===== µÝ¹é´´½¨Ä¿Â¼
+
+	function createFolder($fPath){          
+	    if (!file_exists($fPath)){
+	        $this->createFolder(dirname($fPath));
+	        mkdir($fPath,07777);
+	    }
+	}

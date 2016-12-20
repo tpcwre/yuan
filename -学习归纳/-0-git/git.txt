@@ -296,7 +296,7 @@
 
 	2.登陆GitHub，创建项目后打开“Account settings”，“SSH Keys”页面：然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容：点“Add Key”，你就应该看到已经添加的Key：有若干电脑,只要把每台电脑的Key都添加到GitHub
 
-	
+	可直接关联一个远程库，如果以关联了远程库也可以删除关联的远程库重新关联,关联后先使用push -u 推送并关联远程库
 	git remote add origin git@github.com:michaelliao/learngit.git		//关联远程库(可重复关联多个)
 				--origin 	GIT默认远程库名
 				--github.com	远程库地址（可设为其它）
