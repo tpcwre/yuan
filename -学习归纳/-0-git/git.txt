@@ -7,10 +7,7 @@
 
 //===== 异常与错误的解决
 
-	1，出现 *(no branch)： 使用 git checkout -b working 来将当前数据添加到一个新分支上，然后可以用合并分支来处理自己想要的效果
-
-
-	2，当使用 git log 或其它查看历史版本时退不出来 ，按 'q' 键即可退出	
+	
 
 
 
@@ -473,16 +470,4 @@
 
 
 
-
-
-
-
-//===== git 异常
-	当出现下列异常提示：
-	You can't push to git://github.com/tpcwre/www.t2.com.git
-  	Use https://github.com/tpcwre/www.t2.com.git
-
-	说明克隆仓库时使用的是 git://github.com:xx/xxx.git 的形式, 那么就会出现这个问题，因为这个protocol是不支持push的
-
-	使用 git clone git@github.com:username/myNCCL.git 的形式 就可以用git push了。
 

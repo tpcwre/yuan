@@ -61,6 +61,10 @@
 
 //===== git 相关异常
 	//-- git克隆仓库时提示 fatal: destination path 'bak' already exists and is not an empty directory.
+	//-- git在pull或push提示的错误
+	//-- git 无法拉取或推送数据的异常
+	//-- 出现 *(no branch) 的解决
+	//-- git log 查看历史版本时退不出来的解决
 
 
 
@@ -603,14 +607,29 @@ Please make sure you have the correct access rights
 
 
 
+//-- git 无法拉取或推送数据的异常
+
+当出现下列异常提示：
+	You can't push to git://github.com/tpcwre/www.t2.com.git
+  	Use https://github.com/tpcwre/www.t2.com.git
+
+	说明克隆仓库时使用的是 git://github.com:xx/xxx.git 的形式, 那么就会出现这个问题，因为这个protocol是不支持push的
+
+	使用 git clone git@github.com:username/myNCCL.git 的形式 就可以用git push了。
 
 
 
 
+//-- 出现 *(no branch) 的解决
+//-- git log 查看历史版本时退不出来的解决
+
+	1，出现 *(no branch)： 使用 git checkout -b working 来将当前数据添加到一个新分支上，然后可以用合并分支来处理自己想要的效果
 
 
 
+//-- git log 查看历史版本时退不出来的解决
 
+	2，当使用 git log 或其它查看历史版本时退不出来 ，按 'q' 键即可退出
 
 
 
