@@ -1,0 +1,12 @@
+
+
+
+//-- JS 函数 parseFloat(str) 强制转型为浮点数(必须是以数值开头的字串) 
+//-- JS 函数 toFixed(num) 指定数值小数点以后保留的位数（会四舍五入）
+
+	<script>
+		var a = '16.35a';
+		var b = '2b';
+		alert((parseFloat(a)*parseFloat(b)).toFixed(1));
+		alert((parseFloat(a)*parseFloat(b)).toFixed(2));
+	</script>

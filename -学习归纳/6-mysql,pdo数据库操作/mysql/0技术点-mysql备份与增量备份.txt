@@ -11,6 +11,8 @@
 
 
 
+	mysqldump -uroot -xiaoyangdb!@# --single-transaction --master-data=2 --all-databases > /bak/fullsql.sql
+
 
 
 
