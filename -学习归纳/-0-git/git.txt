@@ -1,11 +1,22 @@
 
-//===== 教程地址：http://www.liaoxuefeng.com/
+//-- 教程地址：http://www.liaoxuefeng.com/
+//-- 安装GIT
+//-- git 设置相关
+//-- GTI使用
+//-- 标签tag 
+//-- 分支操作
+//-- stash 暂存未完成的工作到另一个区域
+//-- ignore 忽略文件或目录的设置
+//-- 设置远程仓库
+//-- 搭建Git服务器
+//-- whindow 下创建 id_rsa 密钥
+//-- 恢复丢失的版本
 
 
 
 
 
-//===== 异常与错误的解决
+
 
 	
 
@@ -236,7 +247,7 @@
 
 
 
-//--  stash 暂存未完成的工作到另一个区域
+//-- stash 暂存未完成的工作到另一个区域
 
 	git stash			//暂存当前内容，先做别的，回头再恢复继续工作
 		
@@ -470,4 +481,7 @@
 
 
 
+//-- 恢复丢失的版本
+
+丢失版本最常见的问题就是 比如使用了 git reset –hard HEAD^ 之类的操作，结果发现丢弃的版本还想恢复回来，但是已经没有任何分支能够reference到这个commit了。幸运的是，git 对各个分支的head还有一份log记录叫做reflog，你可以在.git/logs/refs/heads/ 目录下看到它们。 通过 git reflog 可以显示变更历史。使用类似 master@{1} master@{“2 days ago”}之类的格式，就能索引到你想要的commit。例如对应于git reset –hard HEAD^ 使用 git reset –hard HEAD@{1}即可恢复到reset之前的commit上。
 
