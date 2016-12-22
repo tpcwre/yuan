@@ -26,6 +26,12 @@
 				2016.12.21   	-50
 	电费用户号：	0510361891
 
+	
+	公司号：
+	        const APPID = 'wx2024e23e35dbf1dc';
+        	const MCHID = '1386250602';
+        	const KEY = '52050164453600000085tuobiang2019';		sg3
+        	const APPSECRET = '3d14cb19ba7f85d7e613ef23387eec88';	sg3
 
 
 
