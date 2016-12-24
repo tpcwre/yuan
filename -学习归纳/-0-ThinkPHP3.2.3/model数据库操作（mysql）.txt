@@ -253,6 +253,8 @@
 	$goods = D('User');
 	$info = $goods->where("goods_price > 1000")->select();
 	$info = $goods->where("goods_price > 1000 and name like 'x%'")->select();
+	M('group_order')->field('order_id')->where("uptime <= ".(time()-600)." and status=0")->select();
+										//查询 uptime 在10分钟前且status=0  的信息
 
 	$info = $goods->field('id,name')->select();
 	$info = $goods->field('id,name',true)->select();			//排除字段
