@@ -5,7 +5,8 @@
 	//-- 清除 lnmp一键集成环境的页面缓存
 	//-- apache(httpd) 运行异常提示
 	//-- 虚拟机中的网卡故障
-	//--- nginx 启动时提示 could not open error log file 的解决方法
+	//-- nginx 启动时提示 could not open error log file 的解决方法
+	//-- 文件操作连root权限都无法操作的解决
 	
 	
 	
@@ -536,7 +537,7 @@
 
 
 
-//--- nginx 启动时提示 could not open error log file 的解决方法
+//-- nginx 启动时提示 could not open error log file 的解决方法
 
 	> su 
 	输入密码		（进入 root模式）     
@@ -548,10 +549,16 @@
 
 
 
+//-- 文件操作连root权限都无法操作的解决
 
 
+	有时在nginx环境下会发现有些文件连root权限都不无法操作，那么就先使用 chattr 执行一下再做其它操作即可
 
+	如：直接删除文件 .user.ini 提示权限不够
 
+	chattr .user.ini
+
+	rm -rf .user.ini 		就可以删除了
 
 
 
