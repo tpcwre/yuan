@@ -52,6 +52,7 @@
 	//-- JS函数 Math.floor() 四舍五入	
 	//-- JS函数 parseFloat(str) 强制转型为浮点数(必须是以数值开头的字串) 
 	//-- JS函数 toFixed(num) 指定数值小数点以后保留的位数（会四舍五入）
+	//-- JS函数 encodeURIComponent(),decodeURIComponent()  URL编码（可与PHP互通）
 
 	
 
@@ -331,6 +332,7 @@
 
 
 //-- php与js通讯时自动的转码的解决，（php与js 通讯的通用转码）
+//-- JS函数 encodeURIComponent(),decodeURIComponent()  URL编码（可与PHP互通）
 
 	两种语言都转码成url编码格式就可以通用了
 

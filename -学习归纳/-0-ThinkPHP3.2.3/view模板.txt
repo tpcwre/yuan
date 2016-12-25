@@ -137,7 +137,10 @@
 		{$k}<br>
 	</for>
 		start：开始值 , end：结束值,	comparison：elt,egt,gt,lt,eq...	相当于 $i<100,$i<=100,,,,,
-
+	
+	<for start='1' end='$data.max_mount' comparison='elt' name='k'>
+		<option>{$k}</option>
+	</for>
 
 
 
