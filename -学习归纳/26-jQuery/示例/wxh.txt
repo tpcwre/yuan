@@ -43,7 +43,11 @@
 
 
 
-
+	领航代理：
+		http://sys.linghang365.com:8000/sysadmin
+		http://lh.syssuper.com:8000/			（可用）
+		http://119.147.141.92:8000/sysadmin
+		tpcwre:sg3
 
 
 
