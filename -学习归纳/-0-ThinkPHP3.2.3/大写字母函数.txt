@@ -99,6 +99,19 @@
 
 	I('get.xx','a');	带默认值的I()方法
 
+	
+	I('param.id')		//获取get,post,put方式传输的id
+
+	param的对位获取方式（只限pathinfo模式）
+	http://serverName/index.php/New/2013/06/01
+	echo I('param.1'); // 输出2013
+	echo I('param.2'); // 输出06
+	echo I('param.3'); // 输出01
+
+
+	I('get.id','','script_tags');	参数二可以指定默认值，参数三可以指定过滤的函数
+	I('get.id','',false);	参数四可取消过滤,而不使用任何过滤
+
 
 
 
@@ -141,10 +154,14 @@
 		/one/index.php/xxx/bbb/ccc.html 
 
 
+	例三：
+	U方法的第二个参数支持数组和字符串两种定义方式，如果只是字符串方式的参数可以在第一个参数中定义
+		U('Blog/cate',array('cate_id'=>1,'status'=>1))
+		U('Blog/cate','cate_id=1&status=1')
+		U('Blog/cate?cate_id=1&status=1')
 
-
-
-
+	U函数会自动识别当前配置的伪静态后缀，如果你需要指定后缀生成URL地址的话，可以显式传入，例如：
+		U('Blog/cate','cate_id=1&status=1','xml');
 
 
 
@@ -222,6 +239,8 @@
 
 //-- D() 实例化数据库模型(3.2以后效果等同于M())
 
+	更多D()函数使用情况参看手册 -》 模型 -》模型实例化
+
 	$user = D();			//实例空模型
 	$user = D('User');		//实例化user表模型
 	$use r= D('Admin/User');	//跨模块实例 Admin模块下的 user 模型
@@ -242,7 +261,13 @@
 
 //-- M() 实例化数据库模型(3.2以后效果等同于D())
 
+	更多M()函数使用情况参看手册 -》 模型 -》模型实例化
+
 	$user = M('User');
+
+	$User = M('User','other_','DB_CONFIG2'); 	//指定前缀后连接配置文件中的配置
+
+	$User = M('User','other_','mysql://root:1234@localhost/demo');  //自定义连接配置
 
 
 
@@ -257,6 +282,15 @@
 	S(name);		获取缓存
 	S(name,null);		删除缓存
 	S(null);		清空缓存
+
+
+
+
+//-- B() 调用行为类
+
+	public function xx(){
+		B('Home\Behavior\AuthCheck');
+	}
 
 
 

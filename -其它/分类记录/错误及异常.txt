@@ -35,14 +35,22 @@
 //===== laravel 框架报错及解决
 	//-- Fatal error: Call to undefined function Illuminate\Foundation\Bootstrap\mb_internal_encoding() in D:\xampp\htdocs\la\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\LoadConfiguration.php on line 43
 
+
+
+
+
 //===== ThinkPhP框架报错及解决
 	//-- thinkphp 错误解决--Undefined class constant 'MYSQL_ATTR_INIT_COMMAND'  
 	//-- 如何让nginx支持ThinkPHP框架
 	//-- 命名空间错误 Namespace declaration statement has to be the very first statement in the script
+	//-- ThinkPHP 异常-》 save 或add 数据无法更新或添加
+
 
 
 //===== smarty 模板中的报错与解决
 	//-- smarty 中出现 Strict standards: strftime() 错误的解决方法
+
+
 
 
 //===== ESshop 商城报错与解决
@@ -353,7 +361,15 @@
 		
 		
 		
-		
+//-- ThinkPHP 异常-》 save 或add 数据无法更新或添加
+
+	删除Runtime 的缓存，并检查字段是否完全一致	
+
+
+
+
+
+
 		
 
 

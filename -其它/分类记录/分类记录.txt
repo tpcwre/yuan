@@ -87,7 +87,8 @@
 	//-- mysqlbinlog 查看mysql二进制备份文件
 	//-- 使用二进制binlog日志恢复指定区间的数据 
 	//-- 视图操作
-
+	//-- sql语句中可以使用md5,floor,rand等函数
+	//-- sql语句中生成随机字符，随机数
 	
 	
 	
@@ -679,6 +680,12 @@
 	
 	
 	
+//-- sql语句中可以使用md5,floor,rand等函数
+//-- sql语句中生成随机字符，随机数
+
+	insert into t2 values(null,'B',substring(md5(rand()),1,1),floor(rand()*100));
+
+
 	
 	
 	

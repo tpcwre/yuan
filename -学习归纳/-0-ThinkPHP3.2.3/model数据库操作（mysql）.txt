@@ -1,7 +1,9 @@
 
-//-- ThinkPHP 异常-》 save 或add 数据无法更新或添加
 
-	删除Runtime 的缓存，并检查字段是否完全一致
+	M();或 M('user') 	实例化基类模型
+	D('user')		实例化子类模型，如子类不存在，则加载基类
+
+	->getDbFields();	获取表中所有字段
 
 
 
@@ -309,6 +311,7 @@
 		$map['name']=array('like','%a%');
 		$map['age']=array('between','20,30');
 		$map['id']=array('in',array(1,3,8));
+		$map['create_time'] =  array(array('gt',21332443),array('lt',23445333));
 		$list = $mod->where($map)->select();
 
 

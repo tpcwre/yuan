@@ -125,6 +125,7 @@ __INFO__	当前的PATH_INFO字符串
 __EXT__	当前URL地址的扩展名
 APP_NAME	当前项目名
 GROUP_NAME	当前分组名
+CONTROLLER_NAME	当前控制器名
 MODULE_NAME	当前模块名
 ACTION_NAME	当前操作名
 APP_DEBUG	是否开启调试模式
@@ -144,7 +145,7 @@ IS_POST	当前是否POST请求（3.1新增）
 IS_PUT	当前是否PUT请求（3.1新增）
 IS_DELETE	当前是否DELETE请求（3.1新增）
 IS_AJAX	当前是否AJAX请求（3.1新增）
-
+REQUEST_METHOD 	当前提交类型
 
 
 

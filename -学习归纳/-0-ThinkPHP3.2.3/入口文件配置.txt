@@ -2,14 +2,24 @@
 
 <?php
 
-	function show_msg($msg){			//-- 制做一个输出调试函数
-		echo "<pre>";
-		var_dump($msg);
-	}
+	function show_msg($msg){}			//-- 自定义函数
 
-
-	define("STORAGE_TYPE",File); 			//存储类型（默认为File,）
+	define('APP_PATH','./Application/');		//-- 定义应用路径
+	define('APP_DEBUG',true);			//-- 开启调试模式
+	define('RUNTIME_PATH','/Application/Runtime/'); //-- 应用运行时目录（可写权限）
+	define("STORAGE_TYPE",File); 			//-- 设置存储类型（默认为File,）
 		支持：File | Db | Apc | Memcache | Shmop | Sqlite | Xcache | Apachenote | Eaccelerator | sae
+
+
+	define('BUILD_DIR_SECURE', false);		//-- 关闭目录安全文件的生成(各目录中的index.html)
+
+	define('APP_STATUS','office');			//-- 指定使用的配置文件
+								会加载 Application/Common/Conf/office.php
+
+	define('COMMON_PATH','./Common/');		//--公共模块可以重新定义为其它目录
+		//Common:应用的公共模块,但模块本身不能通过URL直接访问，公共模块的其他文件则可以被其他模块继承或者调用。
+
+
 
 	define('BIND_MODULE','Admin');			//创建并绑定 Admin 模块 （创建后要删除该命令）
 	define('BIND_CONTROLLER','Index'); 		//绑定的控制器
@@ -17,8 +27,6 @@
 	define('BUILD_MODEL_LIST','User,Menu');		//创建多个model模型
 
 	define('APP_NAME','Home');			//-- 定义应用文件夹名
-	define('APP_PATH','./Home/');			//-- 定义应用路径
-	define('APP_DEBUG',true);			//-- 开启调试模式
 
 	define('SITE_URL','http://web.1116.com/');	//-- 定义常量
 	{$Think.const.SITE_URL}				//-- 模板中调用常量
@@ -39,9 +47,6 @@
 	'VAR_CONTROLLER'=>'cc',
 	'VAR_ACTION'=>'aa',
 
-
-	define('COMMON_PATH','./Common/');	//公共模块可以重新定义为其它目录
-		//Common:应用的公共模块,但模块本身不能通过URL直接访问，公共模块的其他文件则可以被其他模块继承或者调用。
 
 
 	..... 更多 参见手册：架构-》应用模式
