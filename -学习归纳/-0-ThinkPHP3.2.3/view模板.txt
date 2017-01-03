@@ -1,5 +1,7 @@
 
 
+模板-》包含文件
+
 
 
 //-- 关闭模板缓存 
@@ -56,26 +58,34 @@
 		结果：aaaaaaaaaaaaaaaa kkkkkkkkkkkkkk cccccccccccc
 
 
-		继承Public目录中模板(使用以当前文件的相对路径来引入继承模板)
-		<extend name="../../Public/base/index" />
+		模板继承可以使用两种方式 
+			<extend name="Public:base" />	
+			 或
+			<extend name="./Template/Public/base.html" />  //绝对路径
 
 
 
 
-//-- <include file= > 引入其它页面内容
-	注意：在引入其它目录中文件时，要以index.php为基础作相对路径引入，如：
-		file="./Public/a.html"
-		file="./Application/Public/a.html"
-			以上两种路径要根据环境的不同而变化
+//-- <include file= > 引入其它页面内容(包含文件)
 
-	<include file="Index/aaa" />	
+	<include file="Public/header" /> // 包含头部模版header
+
+	或
+	<include file="./Public/a.html" />
+	或
+	<lnclude file="./Application/Public/a.html" />
+	注意：在引入其它目录中文件时，要以index.php为基础作相对路径引入.
+	
+
+	<include file="Index/aaa" />	//包含指定目录文件，只要模板文件存在即可
 	<include file="Admin/bbb" />
-		只要模板文件存在即可
+	
 
-	<include file='./Public/share/house_head_contents.html' />		包含public目录文件
-		注：如包含的文件中又包含了其它文件，那么子包含必须指明全路径如：
-			./Public/share/house_head_contents.html
 
+	<include file="Public/header,Public/menu" />	//同时包含多个模版
+
+					//模板可传参数
+	<include file="Public/header" title="ThinkPHP框架" keywords="开源WEB开发框架" />
 
 
 
@@ -93,15 +103,30 @@
 
 	{$xxx}				// 输出变量
 
+	{$arr.name}			//输出数组元素
+	{$arr['name']}
+	
+	{$data:name}			//输出对象属性
+
+	{$Think.const.MODULE_NAME}	//输出常量
+	{$Think.MODULE_NAME}
+
+	{$Think.config.url_model}	//输出配置参数
+
+	{$Think.lang.page_error}	//输出语言配置参数
+
 	{$xxx|default='aaa'}		// 如果变量不存在就显示默认值 
 
-	{$xx['yy']+1}			// 数值运算
+	{$xx['yy']+1}			// 数值运算,注意运算时不支持 $xx.xx形式
 
+					//-- 模板使用函数处理 手册-》模板-》使用函数
 	{$xxx|md5}			// 将变量md5加密
-
 	{$sex2|md5|substr=0,5}		// 截取字符串
-
 	{$now|date='Y-m-d H:i:s',###}	// 将时间戳格式化(如果$now没有值就使用后面的默认时间)
+
+	{:substr(strtoupper(md5($name)),0,3)} //函数的另一种使用方式
+
+	{$Think.get.name|getName|default="名称为空"}	//默认值和函数同时使用
 		
 	{$Think.now}			// Think系统时间  	2016-10-10 2:26 pm
 		{$Think.now|substr=0,15}			2016-10-10 2:25	
@@ -153,7 +178,10 @@
 	<in name='a' value="1,2,3">在<else/>不丰</in>
 
 
-
+					内置标签 eq 
+	<eq name='name' value='a'>
+		111
+	</eq>
 
 
 

@@ -690,8 +690,11 @@
 	
 	
 	
-	
-	
+//-- left(),right() 只获取字段内容中指定个数的内容
+		//获取字段 owner 从右数的7个字符
+	select right(name,7) from owner;
+		//获取字段 owner 从左数的7个字符
+	select left(name,7) from owner;
 
 
 

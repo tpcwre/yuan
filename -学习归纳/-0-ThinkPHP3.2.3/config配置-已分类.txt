@@ -33,6 +33,10 @@ return  array(
     'DEFAULT_V_LAYER'       =>  'View', // 默认的视图层名称
     'DEFAULT_LANG'          =>  'zh-cn', // 默认语言
     'DEFAULT_THEME'         =>  '',	// 默认模板主题名称
+		$this->theme('blue')->display('add');   // 在控制器中动态改变模板主题  
+		手册 -》 视图 -》 模板主题
+    'TMPL_LOAD_DEFAULTTHEME'=> true,	//启用默认式主题 如果指定主题下模板就自动定位到默认主题中的模板。
+
     'DEFAULT_MODULE'        =>  'House',  // 默认模块
     'DEFAULT_CONTROLLER'    =>  'User', // 默认控制器名称
     'DEFAULT_ACTION'        =>  'Login', // 默认操作名称
@@ -97,7 +101,8 @@ return  array(
     'TMPL_EXCEPTION_FILE'   =>  THINK_PATH.'Tpl/think_exception.tpl',// 异常页面的模板文件
     'TMPL_DETECT_THEME'     =>  false,       // 自动侦测模板主题
     'TMPL_TEMPLATE_SUFFIX'  =>  '.html',     // 默认模板文件后缀
-    'TMPL_FILE_DEPR'        =>  '/', //模板文件CONTROLLER_NAME与ACTION_NAME之间的分割符
+    'TMPL_FILE_DEPR'        =>  '/', 	     //视图目录和文件的分割符
+		如： 'TMPL_FILE_DEPR'=>'_',	默认的模板文件就变成了：View/User_add.html
     // 布局设置
     'TMPL_ENGINE_TYPE'      =>  'Think',     // 默认模板引擎 以下设置仅对使用Think模板引擎有效
     'TMPL_CACHFILE_SUFFIX'  =>  '.php',      // 默认模板缓存后缀
@@ -118,7 +123,7 @@ return  array(
     'TAGLIB_BEGIN'          =>  '<',  // 标签库标签开始标记
     'TAGLIB_END'            =>  '>',  // 标签库标签结束标记
     'TAGLIB_LOAD'           =>  true, // 是否使用内置标签库之外的其它标签库，默认自动检测
-    'TAGLIB_BUILD_IN'       =>  'cx', // 内置标签库名称(标签使用不必指定标签库名称),以逗号分隔 注意解析顺序
+    'TAGLIB_BUILD_IN'       =>  'cx', // 内置标签库名称(标签使用不必指定标签库名称),以逗号分隔 注意解析顺序 如：<eq ..></eq>  <cx:eq..></cx:eq>
     'TAGLIB_PRE_LOAD'       =>  '',   // 需要额外加载的标签库(须指定标签库名称)，多个以逗号分隔 
     
     /* URL设置 */

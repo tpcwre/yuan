@@ -33,13 +33,32 @@
 
 //-- 框架命令
 
-	$this->assigon('a','aaaa');		//-- 注册模板变量
+	$this->assigon('a','aaa');		//-- 变量的注册与调用 
 	$this->assign('sex','man')->assign('sex2','nv');
+	或
+	$this->a='aaa';		//模板中调用 {$a}
+	或
+	$array['name'] = 'aaa';
+    	$array['age'] = 18;
+    	$array['sex'] = 'woman';
+    	$this->assign($array);
 
 	$this->display()			//-- 调用当前控制器对应的模板
 	$this->display('index2');		//-- 调用当前控制器下的其它模板
 	$this->display('User:index2');		//-- 调用其它控制器对应下的模板
 	$this->display('my:User:index2');	//-- 关联到指定主题下的模板文件，(需要在conf开启主题支持)
+	$this->theme('blue')->display('User:edit'); 	//-- 跨主题调用,表示调用blue主题下面的User控制器的edit模板。
+	$this->display('read', 'utf-8', 'text/xml');	//-- 将read模板以utf-8编码输出XML页面
+	$this->display('./Template/Public/menu.html');  //-- 按入口文件位置输出指定模板文件
+
+
+
+						
+    	$this->name='lily';
+    	$content = $this->fetch();		//-- fetch() 获取模板内容而不输出
+    	$this->show($content);			//-- show() 输出fetch保存的模板内容
+	$this->show($content, 'utf-8', 'text/xml');
+
 
 
 	$this->redirect('模块/控制器/方法');	//-- 重定向（跳转）

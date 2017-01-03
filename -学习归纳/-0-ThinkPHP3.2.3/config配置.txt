@@ -73,7 +73,7 @@
 
 
 
-
+	'READ_DATA_MAP'=>true				//-- 开启数据库模型的字段映射
 
 	'URL_HTML_SUFFIX'=>'shtml'			//-- 设置伪静态后缀名
 	'URL_HTML_SUFFIX' => 'html|shtml|xml' 		//-- 设置多个伪静态后缀

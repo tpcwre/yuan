@@ -1,0 +1,621 @@
+
+
+
+//-- 自动验证
+	手册 -》 模型 -》 查询语言 -》 字段验证
+	
+	array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]),
+	array('verify','require',L('VERIFY_CODE_MUST')), 	//支持多语言版
+		验证条件：	0 存在字段就验证（默认）
+				1 必须验证 
+				2 值不为空的时候验证
+
+		验证时间：	1新增数据时候验证 
+				2编辑数据时候验证 
+				3全部情况下验证（默认）
+
+		附加规则：
+			regex 正则验证，定义的验证规则是一个正则表达式（默认） 
+			function 函数验证，定义的验证规则是一个函数名 
+			callback 方法验证，定义的验证规则是当前模型类的一个方法 
+			confirm 验证表单中的两个字段是否相同，定义的验证规则是一个字段名 
+			equal 验证是否等于某个值，该值由前面的验证规则定义 
+			notequal 验证是否不等于某个值，该值由前面的验证规则定义（3.1.2版本新增） 
+			in 验证是否在某个范围内，定义的验证规则可以是一个数组或者逗号分割的字符串 
+			notin 验证是否不在某个范围内，定义的验证规则可以是一个数组或者逗号分割的字符串（3.1.2版本新增） 
+			length 验证长度，定义的验证规则可以是一个数字（表示固定长度）或者数字范围（例如3,12 表示长度从3到12的范围） 
+			between 验证范围，定义的验证规则表示范围，可以使用字符串或者数组，例如1,31或者array(1,31) 
+			notbetween 验证不在某个范围，定义的验证规则表示范围，可以使用字符串或者数组（3.1.2版本新增） 
+			expire 验证是否在有效期，定义的验证规则表示时间范围，可以到时间，例如可以使用 2012-1-15,2013-1-15 表示当前提交有效期在2012-1-15到2013-1-15之间，也可以使用时间戳定义 
+			ip_allow 验证IP是否允许，定义的验证规则表示允许的IP地址列表，用逗号分隔，例如201.12.2.5,201.12.2.6 
+			ip_deny 验证IP是否禁止，定义的验证规则表示禁止的ip地址列表，用逗号分隔，例如201.12.2.5,201.12.2.6 
+			unique 验证是否唯一，系统会根据字段目前的值查询数据库来判断是否存在相同的值。 
+
+
+	示例：
+		//视图
+		<form action='__URL__/index_c' method='post'>
+		 	名字：<input type='text' name='name' />
+		 	<input type='submit' values='提交' />
+		</form>
+
+		//控制器
+	   	public function index_c(){
+			$rules = array(
+				array('name','require','数据不得重复且不得为空！',0,'unique',3),
+				//验证字段,验证规则,错误提示,[验证条件,附加规则,验证时间
+			);
+			$m = M('A1');
+			if(!$m->validate($rules)->create()){
+				dump($m->getError());
+			}
+
+	   	}
+
+
+//-- Mongo 模型操作
+	
+	模型 -》 查询语言 -》 Mongo模型
+
+
+
+
+//-- 数据库连贯操作的类型
+
+	手册 -》 模型 -》 连续操作
+
+	连贯操作 	作用 				支持的参数类型 
+	where* 	用于查询或者更新条件的定义 		字符串、数组和对象 
+	table 	用于定义要操作的数据表名称 		字符串和数组 
+	alias 	用于给当前数据表定义别名 		字符串 
+	data 	用于新增或者更新数据之前的数据对象赋值 	数组和对象 
+	field 	用于定义要查询的字段（支持字段排除） 	字符串和数组 
+	order 	用于对结果排序 				字符串和数组 
+	limit 	用于限制查询结果数量 			字符串和数字 
+	page 	用于查询分页（内部会转换成limit） 	字符串和数字 
+	group 	用于对查询的group支持 			字符串 
+	having 	用于对查询的having支持 			字符串 
+	join* 	用于对查询的join支持 			字符串和数组 
+	union* 	用于对查询的union支持 			字符串、数组和对象 
+	distinct 用于查询的distinct支持 		布尔值 
+	lock 	用于数据库的锁机制 			布尔值 
+	cache 	用于查询缓存 				支持多个参数 
+	relation 用于关联查询（需要关联模型支持） 	字符串 
+	result 	用于返回数据转换 			字符串 
+	validate 用于数据自动验证 			数组 
+	auto 	用于数据自动完成 			数组 
+	filter 	用于数据过滤 				字符串 
+	scope* 	用于命名范围 				字符串、数组 
+	bind* 	用于数据绑定操作 			数组或多个参数 
+	token 	用于令牌验证 				布尔值 
+	comment 用于SQL注释 				字符串 
+
+
+	表达式 		含义 
+	EQ 		等于（=） 
+	NEQ 		不等于（<>） 
+	GT 		大于（>） 
+	EGT 		大于等于（>=） 
+	LT 		小于（<） 
+	ELT 		小于等于（<=） 
+	LIKE 		模糊查询 
+	[NOT] BETWEEN 	（不在）区间查询 
+	[NOT] IN 	（不在）IN 查询 
+	EXP 		表达式查询，支持SQL语法 
+
+
+							//-- _logic 指定查询条件之间的关系 or 或者 and 
+	$condition['name'] = 'thinkphp';
+	$condition['account'] = 'thinkphp';
+	$condition['_logic'] = 'OR';// 把查询条件传入查询方法
+	$User->where($condition)->select(); 
+
+	$map['id']  = array('eq',100);
+	$map['id']  = array('neq',100);
+	$map['id']  = array('gt',100);
+	$map['id']  = array('egt',100);
+	$map['id']  = array('lt',100);
+	$map['id']  = array('elt',100);
+	$map['id']  = array('between','1,8');
+	$map['id']  = array('not in','1,5,8');
+	$map['id']  = array('exp',' IN (1,3,8) ');
+	$map['score'] = array('exp','score+1');
+	$map['name'] = array('like','thinkphp%');
+	$map['a'] =array('like',array('%thinkphp%','%tp'),'OR');
+	$map['b'] =array('notlike',array('%thinkphp%','%tp'),'AND');
+	$map['name|title'] = 'thinkphp';	//多字段或匹配
+	$map['status&title'] =array('1','thinkphp','_multi'=>true);	//多字段与匹配
+	$map['status&score&title'] =array('1',array('gt','0'),'thinkphp','_multi'=>true);
+	$map['id'] = array(array('gt',1),array('lt',10)) ;
+	$map['id'] = array(array('gt',3),array('lt',10), 'or') ;
+	$map['name']  = array(array('like','%a%'), array('like','%b%'), array('like','%c%'), 'ThinkPHP','or'); 
+
+							//-- _string 字串组合查询
+	$User = M("User"); // 实例化User对象
+	$map['id'] = array('neq',1);
+	$map['name'] = 'ok';
+	$map['_string'] = 'status=1 AND score>10';
+	或
+	$map['_string'] = ' (name like "%thinkphp%")  OR ( title like "%thinkphp") ';
+	$User->where($map)->select(); 最后得到的查询条件就成了：
+		( `id` != 1 ) AND ( `name` = 'ok' ) AND ( status=1 AND score>10 )
+
+
+							//-- _query 请求字串组合查询方式
+	$map['id'] = array('gt','100');
+	$map['_query'] = 'status=1&score=100&_logic=or';
+
+							//-- 状态为1的前10条记录，并按照用户的创建时间排序 
+	$User->where('status=1')->order('create_time')->limit(10)->select();
+	 或
+	$User->select(array('order'=>'create_time','where'=>'status=1','limit'=>'10'));
+		
+							//-- 查找id为1的首条数据，只获取字段 id,name,email
+	$User->where('id=1')->field('id,name,email')->find(); 
+		
+
+	
+							//-- 获取当前表下的所有字段
+	$m->getDbFields();		
+
+							//-- 使用悲观锁功能
+	$User->lock(true)->save($data);		手册 -》 模型 -》 查询语言 -》 高级模型 -》悲观锁
+	
+							//-- table() 操作指定的表
+		注意：table方法指定的数据表需要完整的表名
+	$Model->table('think_user')->where('status>1')->select();
+	$Model->field('user.name,role.title')->table(array('think_user'=>'user','think_role'=>'role'))->limit(10)->select();
+
+							//-- field() 可以给某个字段设置别名
+	$Model->field('id,nickname as name')->select();		
+							//-- field() 使用sql函数
+	$Model->field('id,SUM(score)')->select();	
+							//-- field() 数组方式的复杂查询
+	$Model->field(array('id','concat(name,'-',id)'=>'truename','LEFT(title,7)'=>'sub_title'))->select();
+	 相当于
+	SELECT id,concat(name,'-',id) as truename,
+ as sub_title FROM table
+							//-- field(true) 绝对获取所有的字段,哪怕有100个字段
+	$Model->field(true)->select();
+							//-- 字段排除
+	$Model->field('user_id,content',true)->select();
+	$Model->field(array('user_id','content'),true)->select();
+							//-- field()+create() 限制只能操作指定的某些字段
+	$Model->field('title,email,content')->create();
+							//-- order() 字段排序
+	$Model->where('status=1')->order('id desc,status')->limit(5)->select();
+	$Model->where('status=1')->order(array('order','id'=>'desc'))->limit(5)->select(); 
+							//-- limit() 限制查询条数
+	$Article->limit(10,25)->select();
+							//-- page() 分页
+	$Article->page(1,10)->select();
+	$Article->page('1,10')->select();
+							//-- page() 结合 limit() 分页
+	$Article->limit(25)->page(3)->select();
+							//-- group() 查询结果按照用户id进行分组统计
+	$this->field('username,max(score)')->group('user_id')->select();
+		SELECT username,max(score) FROM think_score GROUP BY user_id
+	$this->field('username,max(score)')->group('user_id,test_time')->select();
+		SELECT username,max(score) FROM think_score GROUP BY user_id,test_time
+							//-- distinct() 内容去重
+	$Model->distinct(true)->field('name')->select();
+							//-- cache() 缓存
+	$Model->where('id=5')->cache(true)->find();
+	$Model->cache(true,60,'xcache')->find();
+	$Model->cache('key',60)->find(); //设置标识，可以使用S() 来获取 如 S('key');
+							//-- field() + create() 指定所有字段中的某些操作字段
+	$data = $User->field('name,email')->create($data);
+							//-- field() + add() 只添加指定字段的数据
+	$User->field('name')->data($data)->add();
+							//-- addAll() 批量添加数据
+	$dataList[] = array('name'=>'thinkphp','email'=>'thinkphp@gamil.com');
+	$dataList[] = array('name'=>'onethink','email'=>'onethink@gamil.com');
+	$User->addAll($dataList);
+							//-- filter() 使用指定函数过滤数据
+	$User->data($data)->filter('strip_tags')->add();
+							//-- getField() 获取指定字段数据
+	$m->where("owner_id < 3")->getField('owner_id,owner_name');
+							//-- getField('',true) 获取指定列的所有数据
+	$m->getField('owner_id,owner_name',true); 注：会返回以getField方法的第一个字段名为key的二维数组
+	$m->getField('id,nickname,email',':');	键名是用户id，键值是 nickname:email的输出字符串。
+	$m->getField('id,name',5); // 限制返回5条记录
+							//-- setField()	修改指定字段数据
+	$User-> where('id=5')->setField('name','ThinkPHP');
+							//-- setField() 支持数组方式
+	$data = array('name'=>'ThinkPHP','email'=>'ThinkPHP@gmail.com');
+	$User-> where('id=5')->setField($data);		
+							//-- setInc() 自增，setDec() 自减
+	$User->where('id=5')->setInc('score',3); // 用户的积分加3
+	$User->where('id=5')->setInc('score'); // 用户的积分加1
+	$User->where('id=5')->setDec('score',5); // 用户的积分减5
+	$User->where('id=5')->setDec('score'); // 用户的积分减1
+
+							//-- setLazyInc(),set LazyDesc() 延迟更新
+	$User->where('id=3')->setLazyInc("score",10,60);
+	$User->where('id=3')->setLazyInc("score",30,60);
+	$User->where('id=3')->setLazyInc("score",10,60);
+	等效于
+	$User->where('id=3')->setInc("score",50);
+	还可以使用setLazyDec进行延迟更新操作
+
+							//-- delete() 删除数据
+	$Form->delete(5);
+	$User->where('id=5')->delete();
+	$User->delete('1,2,5'); 
+	$User->where('status=0')->delete();
+	$User->where('status=0')->order('create_time')->limit('5')->delete(); 
+	$User->where('1')->delete();		删除表中所有数据
+
+							//-- getByXxx() 获取以匹配指定字段内容的首条的数据
+	$m->getByOwner_roomid(244);
+	$m->getByOwner_phone(13180652222);
+	$m->getByOwner_name('aaa');	
+
+							//-- sql语句的生成与调用 
+	$subQuery = $model->table('tablename')->where($where)->select(false);  	方式一
+	$subQuery = $model->table('tablename')->where($where)->buildSql();	方式二
+	$model->table($subQuery.' a')->where()->order()->select();		调用SQL语句
+
+
+//-- 自定义模型的库表属性设置
+
+	手册 -》 模型 -》 连接数据库
+
+	class UserModel extends Model{
+
+		//-- 数据库连接配置(优先级高于配置文件中的连接设置)
+	   protected $connection = array(
+		'db_type'  => 'mysql',
+	        'db_user'  => 'root',
+	        'db_pwd'   => '1234',
+	        'db_host'  => 'localhost',
+	        'db_port'  => '3306', 
+	       	'db_name'  => 'thinkphp');		
+	    或
+		//DSN方式数据库连接配置
+	   protected $connection = 'mysql://root:1234@localhost:3306/thinkphp';
+
+	    或
+		//直接指定使用配置文件中以有的配置
+	   protected $connection = 'DB_CONFIG1';  // 或选择 DB_CONFIG2，DB_CONFIG3 ...
+
+
+	    	//-- 手动定义表字段名称，可避免IO，提升加载效率。'__pk'=>'id'	代表主键是id
+	   protected $fields = array('id','username','__pk'=>'id');	
+	    或
+		//手动定义表字段时还可以指定其类型
+	   protected $fields = array('id','name','_pk'=>'id','_type'=>array('id'=>'int','name'=>'varchar'));
+
+
+		//-- 新增数据的时候允许写入name和email字段
+    	   protected $insertFields = 'name,email';     
+		
+
+		//-- 编辑数据的时候只允许写入email字段
+           protected $updateFields = 'email'; 
+
+
+		//-- 关闭字段信息的自动检测
+	   Protected $autoCheckFields = false;
+
+
+		//-- 字段映射
+		注：需要配置文件中开启字段映射 'READ_DATA_MAP'=>true	
+     	   protected $_map = array(
+	         'name' =>'username', // 把表单中name映射到数据表的username字段
+	         'mail'  =>'email', // 把表单中的mail映射到数据表的email字段
+	     );
+
+
+		//-- 静态字段验证
+   	   protected $_validate = array(
+	     	array('verify','require','验证码必须！'), //默认情况下用正则进行验证     
+		array('name','','帐号名称已经存在！',0,'unique',1), // 在新增的时候验证name字段是否唯一     
+		array('value',array(1,2,3),'值的范围不正确！',2,'in'), // 当值不为空的时候判断是否在一个范围内     
+		array('repassword','password','确认密码不正确',0,'confirm'), // 验证确认密码是否和密码一致     
+		rray('password','checkPwd','密码格式不正确',0,'function'), // 自定义函数验证密码格式   
+		);
+
+    
+
+		//-- 高级模型中的字段过滤(需要继承Think\Model\AdvModel类)
+	   protected $_filter = array(
+		'过滤的字段'=>array('写入过滤规则','读取过滤规则',是否传入整个数据对象), 
+	   );
+		注：contentWriteFilter是自定义的对字符串进行安全过滤的函数，而contentReadFilter是自定义的一个对内容进行截取的函数。通常我们可以在项目的公共函数文件里面定义这些函数。
+
+		//-- 高级模型中的字段序列化(需要继承Think\Model\AdvModel类)
+	   protected $serializeField = array(
+	    	'info' => array('name', 'email', 'address'), 
+	   );
+		注解：info是真实表中字段，而name,email,address 并不是表中真实字段，可以通过字段序列化将三个字段序列化后保存到字段info中
+		手册 -》 模型 -》 查询语言 -》高级模型 ：序列化字段
+
+		//-- 高级模型中的只读字段(需要继承Think\Model\AdvModel类)
+	   protected $readonlyField = array('name', 'email'); //定义只读字段，不允许被更改
+
+
+	}
+
+
+
+
+
+//-- 配置文件中的二级参数的配置与调用（数组方式的配置参数）
+
+	注： 二级参数配置区分大小写
+	<?php
+	return array(
+		'c'=>array(		//数组方式配置参数
+			'c1'=>'c111',
+			'c2'=>'c222',
+		),
+	);
+
+
+    	public function index(){	//控制器中调取数组方式的参数
+	    	echo C('c.c1');
+	}
+
+
+
+
+
+//-- 数据库切换
+
+	$this->db(1,"mysql://root:123456@localhost:3306/test")->query("查询SQL"); //定义
+	$this->db(1)->query("查询SQL");	//操作
+	$this->db(0);	//切换
+
+	$this->db(1,"DB_CONFIG1")->query("查询SQL");	//按配置文件中的配置切换
+	$this->db(2,"DB_CONFIG2")->query("查询SQL");
+
+	$this->db(1)->table("top_user")->find();	//table() 指定要操作的表
+
+
+
+
+
+
+
+//-- 场景配置（如：切换公司或家里的不同配置）
+
+	define('APP_STATUS','office');	
+	define('APP_STATUS','home')
+	//在入口文件中指定使用的配置文件，那么就会自动加载该状态对应的配置文件
+		Application/Common/Conf/office.php
+		或
+		Application/Common/Conf/home.php
+
+
+
+
+
+//-- 临时动态设置配置参数
+
+	注：动态配置赋值仅对当前请求有效，不会对以后的请求造成影响。
+
+	C('DATA_CACHE_TIME');		//获取配置参数
+	C('DATA_CACHE_TIME',60);	//动态改变数据缓存的有效期为60秒
+
+	C('USER_CONFIG.USER_TYPE');	//获取二维参数
+	C('USER_CONFIG.USER_TYPE',1);	//动态设置二维参数
+
+					//批量配置动态参数
+	$config = array('WEB_SITE_TITLE'=>'ThinkPHP','WEB_SITE_DESCRIPTION'=>'开源PHP框架');
+	C($config);
+
+
+
+
+
+//-- 扩展配置
+
+	注：默认情况下，扩展配置文件中的设置参数会并入项目配置文件中。也就是默认都是一级配置参数
+
+	//config.php 主配置文件
+	<?php
+	return array(
+		'LOAD_EXT_CONFIG'=>'user,db',	//引入多个扩展配置文件
+	);
+
+	//同级目录下创建的扩展配置文件 user.php
+	<?php			
+	return array(
+		'user_type'=>'mysql',
+	);
+
+	//同级目录下创建的扩展配置文件 db.php	
+	<?php				
+	return array(
+		'dbs_name'=>'mongodb',
+	);
+
+	//控制器中调用扩展配置参数
+    	public function index(){	
+    		echo C('user_type');
+    		echo C('dbs_name');
+   	}
+
+
+
+
+
+
+
+//-- 为框架标签绑定行为及调用行为
+
+	手册-》架构-》CBD模式:: Behavior（行为）
+
+		1，系统标签与自定义标签
+		2，标签位的行为绑定
+		3，控制器中的行为调用
+
+
+	
+	Home/Behavior/TestBehavior.class.php	//创建行为类文件
+		<?php
+		namespace Home\Behavior;
+		use Think\Behavior;
+		class TestBehavior extends Behavior{
+			public function run(&$return){	//行为入口方法必须为run,且参数必须为引用
+					echo 11111111;
+			}
+		}
+
+	示例一：自定义行为及使用系统标签触发执行该行为
+	App/Conf/tags.php			//在应用配置目录创建标签触发文件
+		<?php
+		return array(
+		   'app_init'=>array(		//定义系统运行至标签app_init处触发执行下面的行为。
+			'Home\Behavior\TestBehavior',
+			'Home\Behavior\Test2Behavior',	//同个标签可执行多个行为。
+		   ),
+		  'app_end'=>array(
+			'Home\Behavior\TestBehavior',
+			'Home\Behavior\Test2Behavior',	//同个行为可被多个标签执行。
+		  ),
+		);
+
+	示例二：控制器中直接调用执行行为类
+		<?php
+		namespace Home\Controller;
+		use Think\Controller;
+		class IndexController extends Controller {
+		    public function index(){
+		    	B('Home\Behavior\Test');	//直接调用执行test行为
+		    }
+		}
+
+
+	示例三：控制器中自定义标签，并设置触发
+		<?php
+		namespace Home\Controller;
+		use Think\Controller;
+		class IndexController extends Controller {
+		    public function index(){
+		    	tag('check');		//设置自定义标签
+		    }
+		}
+
+		App/Conf/tags.php		//在应用配置目录签触发文件中设置
+		<?php
+		return array(
+		   'check'=>array(		//定义系统运行至标签app_init处触发执行下面的行为。
+			'Home\Behavior\TestBehavior',
+		   ),
+		);
+
+	//系统标签位
+		app_init 应用初始化标签位 
+		path_info PATH_INFO检测标签位 
+		app_begin 应用开始标签位 
+		action_name 操作方法名标签位 
+		action_begin 控制器开始标签位 
+		view_begin 视图输出开始标签位 
+		view_template 视图模板解析标签位 
+		view_parse 视图解析标签位 
+		template_filter 模板解析过滤标签位 
+		view_filter 视图输出过滤标签位 
+		view_end 视图输出结束标签位 
+		action_end 控制器结束标签位 
+		app_end 应用结束标签位 
+
+
+
+
+
+//-- Vendor及其import的第三方类库加载
+
+	架构 -》 自动加载 
+
+
+
+
+
+
+//-- 多层控制器的设置和定义
+
+	控制器 -》 控制器定义
+
+
+
+
+
+//-- URL伪静态后缀的设置（可禁止指定后缀）
+
+	控制器 -》 伪静态
+
+
+
+
+//-- 设置URL不用区分大小写及其注意事项
+
+	控制器 -》 URL大小写
+
+
+
+
+
+//-- 输入变量的获取 I()
+
+	控制器 -》 输入变量
+
+	I() 方法默认过滤方法为： 'DEFAULT_FILTER'        => 'htmlspecialchars'
+
+	I('param.id');	//获取get,post等多种方式的输入变量
+
+	I('param.id','');	//没有获取到值时设置默认值
+
+	I('get.name','','strip_tags'); 	//为输入变量指定过滤函数
+	
+	I("param.id",'',validate_ip);	//验证输入变量的格式
+
+		int，boolean，float，validate_regep，validate_url，
+		validate_email，validate_ip，string，stripped，encoded，
+		special_chars，unsafe_raw，email，url，number_int，
+		number_float，magic_quotes，callback
+
+	I('get.name','','');	//禁止对输入变量的任何过滤
+	I('get.id','',false);
+
+
+
+
+
+//-- 判断当前的请求类型
+
+	IS_GET 		判断是否是GET方式提交 
+	IS_POST 	判断是否是POST方式提交 
+	IS_PUT 		判断是否是PUT方式提交 
+	IS_DELETE 	判断是否是DELETE方式提交 
+	IS_AJAX 	判断是否是AJAX提交 
+	REQUEST_METHOD 	当前提交类型 
+
+
+
+
+
+//-- 自定义模型时，属性中对表名的设置
+	
+	模型 -》 模型定义
+	
+	tablePrefix 定义模型对应数据表的前缀，如果未定义则获取配置文件中的DB_PREFIX参数 
+	tableName 不包含表前缀的数据表名称，一般情况下默认和模型名称相同，只有当你的表名和当前的模型类的名称不同的时候才需要定义。 
+	trueTableName 包含前缀的数据表名称，也就是数据库中的实际表名，该名称无需设置，只有当上面的规则都不适用的情况或者特殊情况下才需要设置。 
+	dbName 定义模型当前对应的数据库名称，只有当你当前的模型类对应的数据库名称和配置文件不同的时候才需要定义。 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
