@@ -92,11 +92,38 @@
 
 
 //-- 模板中使用的常用命令
+					//js和css的引用方式
+	<js href="/Public/Js/Common.js" />
+	<css href="/Public/Css/common.css" />
+
+					//模板注释
+	{/* 注释内容 */ } 或 {// 注释内容 } 		单选注释
+	{/* 这是模板					多行注释
+	注释内容*/ }
 
 	{:I("get.aid")}			//模板中获取大字母函数内容
 	{:U('Index/index')}
 
 	{$Think.version}		// 查看当前版本号
+
+	{$Think.now}			// Think系统时间  	2016-10-10 2:26 pm
+		{$Think.now|substr=0,15}			2016-10-10 2:25	
+
+	{$Think.server.http_host}	// 输出当前域名
+
+	{$Think.session.a}		// 获取session中的a的值 
+
+	{$Think.const.MODULE_NAME}	//输出常量
+	{$Think.MODULE_NAME}
+
+	{$Think.config.url_model}	//输出配置参数
+
+	{$Think.lang.page_error}	//输出语言配置参数
+
+	{$Think.get.name|getName|default="名称为空"}	//默认值和函数同时使用
+		
+
+	
 
 	<?php echo $xx;?>		// PHP 方式输出变量
 	<php>echo $a;</php>
@@ -108,12 +135,7 @@
 	
 	{$data:name}			//输出对象属性
 
-	{$Think.const.MODULE_NAME}	//输出常量
-	{$Think.MODULE_NAME}
 
-	{$Think.config.url_model}	//输出配置参数
-
-	{$Think.lang.page_error}	//输出语言配置参数
 
 	{$xxx|default='aaa'}		// 如果变量不存在就显示默认值 
 
@@ -126,14 +148,6 @@
 
 	{:substr(strtoupper(md5($name)),0,3)} //函数的另一种使用方式
 
-	{$Think.get.name|getName|default="名称为空"}	//默认值和函数同时使用
-		
-	{$Think.now}			// Think系统时间  	2016-10-10 2:26 pm
-		{$Think.now|substr=0,15}			2016-10-10 2:25	
-
-	{$Think.server.http_host}	// 输出当前域名
-	
-	{$Think.session.a}		// 获取session中的a的值 
 
 	{$num>13?'大于':'不大于'}	// 三元运算
 	
@@ -144,9 +158,37 @@
 		li{list-style:none}
 	{/literal}</style>
 
+	<php><literal>echo '{$Think.config.CUSTOM.'.$key.'}';</literal></php>
+
+					//模板中为变量赋值
+	<assign name="var" value="$Think.get.name" />
+
+					//模板中定义常量 
+	<define name="MY_DEFINE_NAME" value="$Think.get.name" />
+	
 
 
-	<volist name="arr" item='key' id='vo'>	// 遍历数组（相当于foreach）
+					// <present>判断一个变量有没有赋值
+	<present name="name">
+		name已经赋值
+	<else /> 
+		name还没有赋值
+	</present> 
+	或
+	<notpresent name="name">name还没有赋值</notpresent>
+
+					// <empty> 判断一个变量是否为空
+	<empty name="name">name为空<else /> name不为空</empty> 
+	或
+	<notempty name="name">name不为空</notempty>
+		
+					//<define> 判断常量是否被定义
+	<defined name="NAME">NAME常量已经定义<else /> NAME常量未定义</defined> 
+	或
+	<notdefined name="NAME">NAME常量未定义</notdefined>
+
+					// 遍历数组（相当于foreach）
+	<volist name="arr" item='key' id='vo'>	
 		id:{$vo.id}--name:{$vo.name}--sex:{$vo.sex}<br>
 	</volist>
 

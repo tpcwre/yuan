@@ -102,6 +102,12 @@ return  array(
     'TMPL_DETECT_THEME'     =>  false,       // 自动侦测模板主题
     'TMPL_TEMPLATE_SUFFIX'  =>  '.html',     // 默认模板文件后缀
     'TMPL_FILE_DEPR'        =>  '/', 	     //视图目录和文件的分割符
+    'TMPL_PARSE_STRING'  =>array(
+	     '__PUBLIC__' => '/Common', // 更改默认的/Public 的路径
+	     '__JS__'     => '/Public/JS/', // 增加新的JS类库路径规则
+	     '__UPLOAD__' => '/Uploads', // 增加新的上传路径规则
+	),
+
 		如： 'TMPL_FILE_DEPR'=>'_',	默认的模板文件就变成了：View/User_add.html
     // 布局设置
     'TMPL_ENGINE_TYPE'      =>  'Think',     // 默认模板引擎 以下设置仅对使用Think模板引擎有效
