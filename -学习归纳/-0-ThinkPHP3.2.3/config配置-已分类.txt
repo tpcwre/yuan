@@ -106,6 +106,7 @@ return  array(
 	     '__PUBLIC__' => '/Common', // 更改默认的/Public 的路径
 	     '__JS__'     => '/Public/JS/', // 增加新的JS类库路径规则
 	     '__UPLOAD__' => '/Uploads', // 增加新的上传路径规则
+		.... 等等
 	),
 
 		如： 'TMPL_FILE_DEPR'=>'_',	默认的模板文件就变成了：View/User_add.html
