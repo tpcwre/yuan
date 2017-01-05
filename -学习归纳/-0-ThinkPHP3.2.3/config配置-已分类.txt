@@ -5,12 +5,16 @@ return  array(
     'LOAD_EXT_CONFIG' => 'user,db', 	//加载同级目录的扩展配置文件user.php和db.php
 
 
+    /*模块配置*/
+    'URL_MODULE_MAP'    =>    array('test'=>'admin'),	//模块映射 (将admin模块映射为test)
+
+
     /* 应用设定 */
     'SHOW_PAGE_TRACE'       =>  1,
     'APP_USE_NAMESPACE'     =>  true,    // 应用类库是否使用命名空间
     'APP_SUB_DOMAIN_DEPLOY' =>  false,   // 是否开启子域名部署
     'APP_SUB_DOMAIN_RULES'  =>  array(), // 子域名部署规则
-    'APP_DOMAIN_SUFFIX'     =>  '', // 域名后缀 如果是com.cn net.cn 之类的后缀必须设置    
+    'APP_DOMAIN_SUFFIX'     =>  '', // 设置域名后缀 如果是com.cn net.cn 之类的后缀必须设置    
     'ACTION_SUFFIX'         =>  '', // 操作方法后缀
     'MULTI_MODULE'          =>  true, // 是否允许多模块 如果为false 则必须设置 DEFAULT_MODULE
     'MODULE_DENY_LIST'      =>  array('Common','Runtime'),	//禁止访问的模块
@@ -63,25 +67,25 @@ return  array(
     'DB_MASTER_NUM'         =>  1, // 读写分离后 主服务器数量
     'DB_SLAVE_NO'           =>  '', // 指定从服务器序号
 
-    /* 数据缓存设置 */
+    /* 数据缓存设置 */		
     'DATA_CACHE_TIME'       =>  0,      // 数据缓存有效期 0表示永久缓存
     'DATA_CACHE_COMPRESS'   =>  false,   // 数据缓存是否压缩缓存
     'DATA_CACHE_CHECK'      =>  false,   // 数据缓存是否校验缓存
     'DATA_CACHE_PREFIX'     =>  '',     // 缓存前缀
-    'DATA_CACHE_TYPE'       =>  'File',  // 数据缓存类型,支持:File|Db|Apc|Memcache|Shmop|Sqlite|Xcache|Apachenote|Eaccelerator
+    'DATA_CACHE_TYPE'       =>  'File',  // 数据缓存类型,支持:Apachenote、Apc、Db、Eaccelerator、File、Memcache、Redis、Shmop、Sqlite、Wincache和Xcache   
     'DATA_CACHE_PATH'       =>  TEMP_PATH,// 缓存路径设置 (仅对File方式缓存有效)
     'DATA_CACHE_KEY'        =>  '',	// 缓存文件KEY (仅对File方式缓存有效)    
     'DATA_CACHE_SUBDIR'     =>  false,    // 使用子目录缓存 (自动根据缓存标识的哈希创建子目录)
     'DATA_PATH_LEVEL'       =>  1,        // 子目录缓存级别
 
     /* 错误设置 */
-    'ERROR_MESSAGE'         =>  '页面错误！请稍后再试～',//错误显示信息,非调试模式有效
     'ERROR_PAGE'            =>  '',	// 错误定向页面
-    'SHOW_ERROR_MSG'        =>  false,    // 显示错误信息
+    'SHOW_ERROR_MSG'        =>  false,    // 是否显示具体错误信息
+    'ERROR_MESSAGE'         =>  '页面错误！请稍后再试～',//用指定文字代替个体错误显示信息,非调试模式有效
     'TRACE_MAX_RECORD'      =>  100,    // 每个级别的错误信息 最大记录数
 
     /* 日志设置 */
-    'LOG_RECORD'            =>  false,   // 默认不记录日志
+    'LOG_RECORD'            =>  false,   // 是否开启日志记录
     'LOG_TYPE'              =>  'File', // 日志记录类型 默认为文件方式
     'LOG_LEVEL'             =>  'EMERG,ALERT,CRIT,ERR',// 允许记录的日志级别
     'LOG_FILE_SIZE'         =>  2097152,	// 日志文件大小限制
@@ -98,7 +102,7 @@ return  array(
     'TMPL_CONTENT_TYPE'     =>  'text/html', // 默认模板输出类型
     'TMPL_ACTION_ERROR'     =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认错误跳转对应的模板文件
     'TMPL_ACTION_SUCCESS'   =>  THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认成功跳转对应的模板文件
-    'TMPL_EXCEPTION_FILE'   =>  THINK_PATH.'Tpl/think_exception.tpl',// 异常页面的模板文件
+    'TMPL_EXCEPTION_FILE'   =>  THINK_PATH.'Tpl/think_exception.tpl',// 自定义异常页面的模板文件
     'TMPL_DETECT_THEME'     =>  false,       // 自动侦测模板主题
     'TMPL_TEMPLATE_SUFFIX'  =>  '.html',     // 默认模板文件后缀
     'TMPL_FILE_DEPR'        =>  '/', 	     //视图目录和文件的分割符

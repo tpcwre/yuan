@@ -75,6 +75,11 @@
 
 	'READ_DATA_MAP'=>true				//-- 开启数据库模型的字段映射
 
+	'DB_SQL_BUILD_CACHE' => true,			//-- 开启SQL解析缓存以减少SQL解析提高性能
+	'DB_SQL_BUILD_QUEUE' => 'xcache',		//-- 默认缓存方式为文件方式，还可以支持xcache和apc方式缓存
+	'DB_SQL_BUILD_LENGTH' => 20, 			//-- 设置SQL缓存的队列长度
+	
+
 	'URL_HTML_SUFFIX'=>'shtml'			//-- 设置伪静态后缀名
 	'URL_HTML_SUFFIX' => 'html|shtml|xml' 		//-- 设置多个伪静态后缀
 	'URL_DENY_SUFFIX' => 'pdf|ico|png|gif|jpg',	//-- URL禁止访问的后缀设置,比URL_HTML_SUFFIX优先级高
@@ -229,8 +234,8 @@
 			 'USER_TYPE' => 2,    
 			),
 			
-			
-			
+
+	'LANG_SWITCH_ON' => true,   				// 开启语言包功能
 			
 			
 		

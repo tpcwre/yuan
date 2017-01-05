@@ -32,6 +32,10 @@
 	echo G('name2','end');
 
 
+    	echo G('a','end',4).'s<br>';		显示小数点后4位
+    	echo G('a','end',6).'s<br>';		显示小数点后6位
+    	echo G('a','end','m').'kb<br>';		统计内存开销
+
 
 
 

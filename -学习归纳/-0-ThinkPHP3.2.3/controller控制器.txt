@@ -297,6 +297,9 @@
 
 
 //-- session 机制
+	手册 -》 专题 -》 session支持
+
+	session('?name');	//判断名称为name的session值是否已经设置
 
 	session('a');		//获取 session 
 
@@ -315,6 +318,8 @@
 	I('session.');		//获取全部session
 
 
+
+
 //-- cookie 机制
 
 	cookie('a');		//获取 cookie
@@ -324,6 +329,8 @@
 	cookie('a','aaa',有效时间);	//设置带时效的 cookie
 
 	cookie('a',null);	//删除指定 cookie 
+
+	cookie(null,'think_'); 	//清空指定前缀的所有cookie值
 
 	cookie(null);		//清空 cookie
 
