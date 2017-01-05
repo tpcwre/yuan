@@ -10,6 +10,11 @@
 	http://down.51cto.com/zt/181
 
 
+//-- H5 canvas 画出动态时钟示例（精典易懂）
+
+	http://www.imooc.com/learn/612
+
+
 
 
 
