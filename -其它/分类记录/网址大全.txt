@@ -15,6 +15,11 @@
 	http://www.imooc.com/learn/612
 
 
+//-- w3c 教程地址 全面详细 
+	
+	http://www.w3cschool.cn/tutorial
+
+
 
 
 
