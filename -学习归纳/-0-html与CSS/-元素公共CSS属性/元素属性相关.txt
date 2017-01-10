@@ -1,5 +1,8 @@
 
 
+//-- @media screen and (){} 根据页面宽度设置元素的宽度
+
+
 //===== DIV+CSS的兼容性问题；
 //===== CSS之间可以相互引用：
 //===== 盒子模型
@@ -43,6 +46,32 @@
 
 
 
+
+
+
+
+
+
+//-- @media screen and (){} 根据页面宽度设置元素的宽度
+	<style>
+		.abc{
+			height:300px;
+			border:1px solid #000;
+			margin:0 auto;
+		}
+		@media screen and (max-width:900px){
+			.abc{width:450px}
+			/*页面宽度900以下时 .abc的宽度为450*/
+		}
+		@media screen and (max-width: 600px) { 
+			.abc {width: 300px;}  
+			/*页面宽度600以下时 .abc的宽度为300*/
+		}
+		@media screen and (max-width: 300px) { 
+			.abc {width: 150px;}  
+			/*页面宽度300以下时 .abc的宽度为150*/
+		}
+	</style>
 
 
 
