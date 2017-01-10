@@ -162,7 +162,18 @@ PHP_array => 数组的排序操作(9个函数)---
 	$c=array(3,"b"=>"blue");
 	$c = array_merge_recursive($a,$b,$c);
 	print_r($c);
-	//Array ( [0] => 1 [1] => 2 [2] => 3 [a] => Array ( [0] => red [1] => yellow ) [3] => 2 [4] => 3 [5] => 4 ) 
+	//Array ( 
+		[0] => 1 
+		[1] => 2 
+		[2] => 3 
+		[a] => Array ( 
+			[0] => red 
+			[1] => yellow ) 
+			[3] => 2 
+			[4] => 3 
+			[5] => 4 
+		)
+	) 
 
 	
 	
