@@ -1,0 +1,100 @@
+
+
+
+
+
+
+
+//-- 数据类型转换
+		
+        Dim a As String = "111"
+        Dim b As Integer
+        Integer.TryParse(a, b)	//将变量a 的值 尝试转型为Integer,并赋值给b
+        Response.Write(b)
+
+		Integer可以换成其它数据类型,如 DateTime 等
+
+
+		
+		
+		
+		
+//-- io.file|Directory		目录或文件操作
+	
+		
+
+
+
+
+
+//-- Response.Write() 内容输出
+//-- for 循环
+	示例一： 
+		For i As Integer = 1 To 100
+			Response.Write(i & "<br />")
+		Next
+		
+		
+//-- Dim arr(10) As Integer  变量的声明（数组与整数）
+//-- for each 遍历数组	
+        Dim arr(10) As Integer
+        arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+        For Each i As Integer In arr
+            Response.Write(i & "<br />")
+        Next
+		
+		
+		
+		
+//-- while 循环		
+        Dim i As Integer = 1
+        While i < 10
+            Response.Write(i & "<br>")
+            i += 1
+        End While
+		
+		
+		
+		
+		
+		
+//-- Request.Form(string) 接收表单值 
+//-- Dim name As String 变量的声明（字串）
+//-- select case 循环(相当于 switch)
+
+	Dim name As String = Request.Form("name")
+	Select Case name
+		Case "1"
+			Response.Write("今天是周一")
+		Case "2"
+			Response.Write("今天是周二")
+		Case Else
+			Response.Write("天天放假！")
+	End Select
+	
+	
+
+//-- Response.Redirect()	页面重定向
+//-- if 判断 
+
+        Dim name As String = Request.Form("name")
+        If name = "1" Then
+            Response.Write("周一")
+        ElseIf name = "2" Then
+            Response.Write("周二")
+        Else
+            Response.Write("放假啦！")
+			Response.Redirect("test1/t1.aspx")
+        End If
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
