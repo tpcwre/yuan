@@ -1,5 +1,189 @@
 
+//===== 英文十二月普简写
 
-//-- 吸引流量的方法
+		月份        英文简写        英文全称
+		一月        Jan.        January
+		二月        Feb.        February
+		三月        Mar.        March
+		四月        Apr.        April
+		五月        May.        May
+		六月        June.       June
+		七月        July.       July
+		八月        Aug.        Aguest
+		九月        Sept.       September
+		十月        Oct.        October
+		十一月      Nov.        November
+		十二月      Dec.        December
 
-	找一款大家需求量较普及的产品（如，啤酒等），低价中奖方式向地区推广，加以公众号或网页形式的幸运抽奖及参与即送的方式。来达到快速吸引人群的目的。
+
+		
+//===== 英文周几的普简写
+
+		星期一： Mon.=Monday 
+		星期二： Tues.=Tuesday 
+		星期三： Wed.=Wednesday 
+		星期四： Thur.=Thursday 
+		星期五： Fri.=Friday 
+		星期六： Sat.=Saturday 
+		星期天： Sun.=Sunday
+
+
+
+
+
+//===== UCloud 云主机
+
+	https://www.ucloud.cn/
+
+
+
+
+
+
+
+
+//-- 左连接，右连接，内连接，及连接嵌套查询
+
+
+//左连接 	left join on
+	格式：
+		select (要显示的左或右表字段) from 左表 left join 右表 on 左表字段=右表字段;
+	示例：
+		select room.room_name as rname,region.region_name as gname from tp_room room left join tp_region region on room.room_region=region.region_id;
+		
+	解释：
+		左表显示全部数据，右表只显满足on条件的数据(其中字段为空的显示 null 或者空白:要看右表定义时是否为not null)，
+
+
+
+
+//右连接 	right join on
+	格式：
+		select (要显示的左或右表字段) from 左表 right join 右表 on 左表字段=右表字段;
+	示例：
+		select room.room_name as rname,region.region_name as gname from tp_room room right join tp_region region on room.room_region=region.region_id;
+	解释：
+		右表显示全部数据，左表只显满足on条件的数据(其中字段为空的显示 null 或者空白:要看右表定义时是否为not null)，
+
+
+		
+//内连接	inner join on
+	格式：
+		select (要显示的左或右表字段) from 左表 inner join 右表 on 左表字段=右表字段;
+	示例：
+		select room.room_name as rname,region.region_name as gname from tp_room room inner join tp_region region on room.room_region=region.region_id;
+	解释：
+		左右两表同时满足on 条件时才显示左右表的数据，有一侧不满足时，两表都不显示
+
+
+
+//左右内连接的多表关联查询
+
+		
+	格式：
+		select (字段1,字段2...) from ((左表 left join 右表1 on 左表字段=右表1字段) left join 右表2 on 左表字段=右表2字段) left join 右表3 on 左表字段=右表3字段;
+	示例：	
+		select room.room_id as roomid,room.room_name as roomname,region.region_name as regionname,community.community_name as communityname,building.building_name as buildingname,apartment.apartment_name as apartmentname,owner.owner_name as ownername,owner.owner_phone as ownerphone from (((((tp_room room left join tp_region region on room.room_region=region.region_id) left join tp_community community on room.room_community=community.community_id) left join tp_building building on room.room_building=building_id) left join tp_apartment apartment on room.room_apartment=apartment.apartment_id) left join tp_owner owner on room.room_ownerid=owner.owner_id) limit 10;
+	解释：
+		多表关联查询形式 就是把每一个left join on 用户括号包起来，然后再跟着left join on 如下:
+		(((left join on) left join on) left join on) left join on ...
+
+
+
+
+
+
+
+
+//===== 多表关联查询
+	//双表
+	select * from tp_room,tp_region where tp_room.room_region=tp_region.region_id;
+
+
+	//四表
+	select room.room_name,region.region_name,community.community_name,building.building_name from tp_room room,tp_region region,tp_community community,tp_building building where room.room_region=region.region_id and room.room_community=community.community_id and room.room_building=building.building_id limit 10;
+
+	//六表
+	select room.room_name,region.region_name,community.community_name,building.building_name,apartment.apartment_name,owner.owner_name,owner.owner_phone from tp_room room,tp_region region,tp_community community,tp_building building,tp_apartment apartment,tp_owner owner where room.room_region=region.region_id and room.room_community=community.community_id and room.room_building=building.building_id and room.room_apartment=apartment.apartment_id and room.room_ownerid=owner.owner_id limit 10;
+
+
+
+
+
+
+
+
+
+
+
+
+js函数 Number()、parseInt()、parseFloat()的区别：
+2013-01-10 15:38 26081人阅读 评论(0) 收藏 举报
+Number()、parseInt()、parseFloat()的区别： 
+
+Number()的强制类型转换与parseInt()和parseFloat()方法的处理方式相似，只是它转换的是整个值，而不是部分值。parseInt()和parseFloat()方法只转换第一个无效字符之前的字符串。如“3.4.5”被转换成“3.4”， 
+
+用Number()进行强制类型转换将返回NAN, 
+如果字符串值能被完整地转换，Number()将判断是调用parseInt()还是parseFloat()。 
+
+Js代码 复制代码 收藏代码
+var bb = "35.23ace23";   
+document.write(Number(bb));                    //NaN   
+document.write(parseFloat(bb));                //35.23   
+document.write(parseFloat(Number(bb)));        //NaN  
+[js] view plain copy
+var bb = "35.23ace23";  
+document.write(Number(bb));                    //NaN  
+document.write(parseFloat(bb));                //35.23  
+document.write(parseFloat(Number(bb)));        //NaN  
+
+
+
+Number.toFixed(x) 、 Number.toPrecision(x) 、 Math.Round(x)的区别： 
+
+Number.toFixed(x) 是将指定数字截取小数点后 x 位， Number.toPrecision(x) 是将整个数字截取指定（x）长度。 
+注意：一个是计算小数点后的长度，一个是计算整个数字的长度 。 
+Math.round() 方法可把一个数字舍入为最接近的整数。 
+
+Js代码 复制代码 收藏代码
+var aa = 2.3362;    
+document.write(aa.toFixed(1));                 // 2.3    
+document.write(aa.toFixed(2));                 // 2.34    
+document.write(aa.toPrecision(2));             // 2.3   
+document.write(aa.toPrecision(3));             // 2.34     
+document.write(Math.round(-4.60));             // -5   
+document.write(Math.round(aa * 10) / 10);      // 2.3    
+document.write(Math.round(aa * 100) / 100);    // 2.34    
+
+
+
+
+
+
+
+
+
+//-- isNaN(str)	判断值是否为数值
+
+		var a = '16.35';
+		alert(isNaN(a));
+
+
+
+
+
+isNull(str)||isInt(str);
+
+
+return reg.test(str);
+
+
+(isFloat(i)&&isFloat(y)))
+
+if(!isObj(i)||!isObj(y))//判断对象是 否存在
+
+
+obj.trim()
+
+
+ return typeof obj === 'number' && obj%1 === 0
