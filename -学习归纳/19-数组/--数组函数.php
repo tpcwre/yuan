@@ -16,9 +16,11 @@
 	array_merge($arr1,$arr2) 	合并多个数组-
 	array_slice($arr,start|start,end) 截取数组中部分元素-
 	array_merge_recursive() 递归地合并一个或多个数组-
-	explode('keyword',$str) 将字串分割成数组-
+	explode('keyword',$str,[number]) 	将字串以指定字符分割成数组
 	implode($arr) 将一个一维数组的值转化为字符串-
 	http_build_query($arr,[keywords]) 将数组转换成GET键值的URL字串-
+	parse_str(str,$arr) 将url参数字串转成数组
+	parse_url(str) 将url字串解析成数组
 
 	
 //== 比较,过滤
@@ -610,12 +612,35 @@
 		
 		
 
-//-- explode('keyword',$str) 将字串分割成数组-
-	$str = 'aa##bb##cc';
-	$arr = explode('##',$str);  // array('aa','bb','cc')
-	$arr = explode('#',$str);    // array('aa','','bb','','cc')
-	$arr = explode(' ',$str);             // array('')
-	var_dump($arr);
+//-- explode('keyword',$str,[number]) 	将字串以指定字符分割成数组
+	$a = "ab cd ef gh ij";
+	$b = explode(' ',$a);	//以指定字符分割
+	print_r($b);
+		Array
+		(
+		    [0] => ab
+		    [1] => cd
+		    [2] => ef
+		    [3] => gh
+		    [4] => ij
+		)
+
+	$c = explode(' ',$a,2);	//指定将字串分割为2个元素的数组
+	print_r($c);
+		Array
+		(
+		    [0] => ab
+		    [1] => cd ef gh ij
+		)
+
+
+	$d = explode(' ',$a,-3); //分割数组后并去除后三个元素
+	print_r($d);
+		Array
+		(
+		    [0] => ab
+		    [1] => cd
+		)
 
 
 	
@@ -631,15 +656,27 @@
 	
 
 //-- array_map(fun,arr) 将回调函数作用到给定数组的单元上-
+	例：
+		function cube($n){
+			return $n * $n * $n;
+		}
 
-	function cube($n)				//声明一个函数
-	{
-		return($n + $n + $n);
-	}
-	$a = array(1, 2, 3);
-	$b = array_map("cube", $a);		//调用函数，并指定函数的参数为$a
-	print_r($b);		//Array ( [0] => 3 [1] => 6 [2] => 9 ) 
+		$a = array(1, 2, 3);
+		$b = array_map("cube", $a);
 
+		echo '<pre>';
+		print_r($b);
+			结果：
+				Array
+				(
+					[0] => 1
+					[1] => 8
+					[2] => 27
+				)
+
+	注：调用类中方法或静态方法时使用下面方式
+		$b = array_map(array("myclass","myMethoed"), $a);	
+			//类中调用方法的形式
 	
 			
 			
@@ -717,7 +754,7 @@
 	
 	
 	
-//-- parse_str() 将url参数字串转成数组
+//-- parse_str(str,$arr) 将url参数字串转成数组
 
 	$a= "id=23&name=abc&age=28";
 	parse_str($a,$arr);
@@ -731,6 +768,24 @@
 
 
 
+//-- parse_url(str) 将url字串解析成数组
+	$url="http://www.baidu.com/obj/img/3024.html?id=32&name=abc";
+	$arr=parse_url($url);
+	var_dump($arr);
+		array(4) {
+		  ["scheme"]=>
+		  string(4) "http"
+		  ["host"]=>
+		  string(13) "www.baidu.com"
+		  ["path"]=>
+		  string(18) "/obj/img/3024.html"
+		  ["query"]=>
+		  string(14) "id=32&name=abc"
+		}	
+			
+			
+			
+			
 
 //-- extract($arr) 	把数组key转换成变量名，value转换成变量值-
 

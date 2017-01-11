@@ -96,8 +96,6 @@ http://lh.syssuper.com:8000/
 
 //===== 抓取远程页面内容
 
-//===== 让页面内容适应移动端，内容不绽放
-
 //===== 修改Agent 将浏览器设置成手机浏览器 （微信）
 
 //===== 判断服务器请求方式是否为htttps 或 http
@@ -2318,12 +2316,6 @@ Mozilla/5.0 (Linux; Android 4.4.4; MI 4LTE Build/KTU84P) AppleWebKit/537.36 (KHT
 
 
 
-
-
-//===== 让页面内容适应移动端，内容不绽放
-
-	<meta name='Viewport' content="width=device-width,initital-scale=1">
-		意为：宽度为适应物理屏幕大小，等比绽放为1 ，也就是不缩放
 
 
 
