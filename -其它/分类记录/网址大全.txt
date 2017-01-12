@@ -23,6 +23,20 @@
 
 
 
+//-- git托管地址
+
+	http://git.oschina.net/		开源中国-码云（中国站）
+	http://team.oschina.net/	开源中国-团队平台（中国站）
+
+	https://code.csdn.net/		CSDN代码托管（中国站）
+
+	https://coding.net/login	coding（中国站）
+
+
+	https://github.com/		git  (国外)
+
+
+
 
 
 

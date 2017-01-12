@@ -2,104 +2,104 @@
 
 PHP_array => 生成数组的六个函数---
 
-	array(val1,val2|arr1,arr2);	//生成一个数组
-	array_combine($arr1,$arr2);	//生成一个数组，用一个数组当键，另一个数组当值
-	compact(variable1,variable2,,,);	//将变量转换成数组
-	array_fill(index,count,val);	//创建数组，并指定起始下标，指定长度，指定值
-	array_fill_keys($arr,val);	//用数组做健名，并指定值，生成一个数组
-	range(start,end);	//使用指定范围的数值做值来创建一个数组
+array(val1,val2|arr1,arr2);	//生成一个数组
+array_combine($arr1,$arr2);	//生成一个数组，用一个数组当键，另一个数组当值
+compact(variable1,variable2,,,);	//将变量转换成数组
+array_fill(index,count,val);	//创建数组，并指定起始下标，指定长度，指定值
+array_fill_keys($arr,val);	//用数组做健名，并指定值，生成一个数组
+range(start,end);	//使用指定范围的数值做值来创建一个数组
 
 	
 
 PHP_array =>  数组拆分与合拼(8个函数)---
 
-	array_chunk($arr,len) 	//以指定长度，把一维数组分割为二维数组
-	array_merge($arr1,$arr2)	//合并多个数组
-	array_merge_recursive($arr1,$arr2)	//递归地合并一个或多个数组
-	array_slice($arr,start|start,end)//截取数组中部分元素
-	explode("keyword",$str)	//将字串分割成数组
-	implode('keyword',$arr)	//将一维数组使用指定字符连接成字串
-	http_build_query($arr,[keywords])	//将数组转换成URL传参字串
-	parse_str($str,$arr)	//将url参数字串转成数组
+array_chunk($arr,len) 	//以指定长度，把一维数组分割为二维数组
+array_merge($arr1,$arr2)	//合并多个数组
+array_merge_recursive($arr1,$arr2)	//递归地合并一个或多个数组
+array_slice($arr,start|start,end)//截取数组中部分元素
+explode("keyword",$str)	//将字串分割成数组
+implode('keyword',$arr)	//将一维数组使用指定字符连接成字串
+http_build_query($arr,[keywords])	//将数组转换成URL传参字串
+parse_str($str,$arr)	//将url参数字串转成数组
 
 	
 
 PHP_array => 数组的比较,过滤(5个函数)---
 
-	array_diff($arr1,$arr2)	//比较数组的值，返回数组1中有，2中没有的元素
-	array_diff_assoc($arr1,$arr2)	//比较数组的键和值，返回数组1中有，2中没有的元素
-	array_intersect($arr1,$arr2)	//返回两个数组中相同的元素
-	filter_has_var(type,variable)	//过滤传值的类型，如get,post,cookie
-	filter_var(val,type)	//过滤一个值是否匹配某格式，如邮箱，url,int,float
+array_diff($arr1,$arr2)	//比较数组的值，返回数组1中有，2中没有的元素
+array_diff_assoc($arr1,$arr2)	//比较数组的键和值，返回数组1中有，2中没有的元素
+array_intersect($arr1,$arr2)	//返回两个数组中相同的元素
+filter_has_var(type,variable)	//过滤传值的类型，如get,post,cookie
+filter_var(val,type)	//过滤一个值是否匹配某格式，如邮箱，url,int,float
 
 	
 
 PHP_array => 数组的查找,替换,统计(12个函数---
 
-	array_search(val,$arr)	//按值查找元素，并返回其下标或false
-	in_array(val,$arr)	//判断数组中是否存在指定的值，返回 true或false
-	array_key_exists(index,$arr)	//数组中是否存在指定下标
-	array_sum($arr)	//获取数组中所有值的总和
-	array_product($arr)	//计算数组中所有值的乘积
-	count($arr)	//计算数组元素的个数
-	array_count_values($arr)	//统计数组中所有值出现的次数
-	array_keys($arr)	//获取数组中的所有的键
-	array_values($arr)	//获取数组中的所有的值
-	array_splice($arr1,start,count,$arr2)	//将数组中指定元素用另一数组元素替换
-	array_replace($arr1,$arr2)	//使用后面数组的值替换第一个数组的值
-	array_replace_recursive($arr1,$arr2)	//递归地使用后面数组的值替换第一个数组的值
+array_search(val,$arr)	//按值查找元素，并返回其下标或false
+in_array(val,$arr)	//判断数组中是否存在指定的值，返回 true或false
+array_key_exists(index,$arr)	//数组中是否存在指定下标
+array_sum($arr)	//获取数组中所有值的总和
+array_product($arr)	//计算数组中所有值的乘积
+count($arr)	//计算数组元素的个数
+array_count_values($arr)	//统计数组中所有值出现的次数
+array_keys($arr)	//获取数组中的所有的键
+array_values($arr)	//获取数组中的所有的值
+array_splice($arr1,start,count,$arr2)	//将数组中指定元素用另一数组元素替换
+array_replace($arr1,$arr2)	//使用后面数组的值替换第一个数组的值
+array_replace_recursive($arr1,$arr2)	//递归地使用后面数组的值替换第一个数组的值
 
 	
 	
 PHP_array => 数组指针类操作(9个函数)---
 
-	key($arr)	//从数组中取得当前指针元素的键
-	current($arr)	//从数组中取得当前指针元素的值
-	next($arr)	//将指针下移并返回该值，末尾返回false
-	prev($arr)	//指针上移返回该值，到头返回false
-	reset($arr)	//指针移动到最前面
-	end($arr)	//指针移动到最后面
-	list($k,$v)	//获取数组中的元素列表，并把每个元素赋值给指定的变量
-	each($arr)	//返回数组中当前指针的键值对。并将指针向下移动
-	foreach($arr)	//数组的遍历
+key($arr)	//从数组中取得当前指针元素的键
+current($arr)	//从数组中取得当前指针元素的值
+next($arr)	//将指针下移并返回该值，末尾返回false
+prev($arr)	//指针上移返回该值，到头返回false
+reset($arr)	//指针移动到最前面
+end($arr)	//指针移动到最后面
+list($k,$v)	//获取数组中的元素列表，并把每个元素赋值给指定的变量
+each($arr)	//返回数组中当前指针的键值对。并将指针向下移动
+foreach($arr)	//数组的遍历
 
 	
 
 PHP_array => 数组的删除添加(6个函数)---
 
-	unset($arr[n])	//删除数组或删除数组中指定元素
-	array_unique($arr)	//删除数组中的重复值
-	array_shift($arr)	//从数组头部移除一个元素
-	array_unshift($arr,val)	//向数组开头插入一个或多个元素
-	array_push($arr,val)	//在数组最后插入一个或多个元素（入栈）
-	array_pop($arr)	//弹出数组最后一个元素(出栈)
+unset($arr[n])	//删除数组或删除数组中指定元素
+array_unique($arr)	//删除数组中的重复值
+array_shift($arr)	//从数组头部移除一个元素
+array_unshift($arr,val)	//向数组开头插入一个或多个元素
+array_push($arr,val)	//在数组最后插入一个或多个元素（入栈）
+array_pop($arr)	//弹出数组最后一个元素(出栈)
 
-	
+
 
 PHP_array => 数组的键值操作(8个函数)---
 
-	shuffle($arr)	//将数组中元素顺序打乱
-	array_reverse($arr)	//将数组元素顺序反置
-	array_flip($arr)	//调换数组中的键和值
-	array_change_key_case($arr,0|1)	//把数组中所有键更改为小写或大写
-	array_pad($arr,count,val)	//用指定值将数组填充到指定长度
-	array_rand($arr,[n])	//返回数组中一个或多个随机的键
-	array_map(fun,arr)	//将回调函数作用到给定数组的单元上
-	extract($arr)	//把数组key转换成变量名，value转换成变量值
+shuffle($arr)	//将数组中元素顺序打乱
+array_reverse($arr)	//将数组元素顺序反置
+array_flip($arr)	//调换数组中的键和值
+array_change_key_case($arr,0|1)	//把数组中所有键更改为小写或大写
+array_pad($arr,count,val)	//用指定值将数组填充到指定长度
+array_rand($arr,[n])	//返回数组中一个或多个随机的键
+array_map(fun,arr)	//将回调函数作用到给定数组的单元上
+extract($arr)	//把数组key转换成变量名，value转换成变量值
 
-	
+
 	
 PHP_array => 数组的排序操作(9个函数)---
 
-	sort($arr) //按值排序，不保留原下标
-	rsort($arr)	//按值反向排序，不保留原下标
-	asort($arr)	//按值排序，保留原下标
-	arsort($arr)	//按值反向排序，保留原下标
-	ksort($arr)	//按键排序
-	krsort($arr)	//按键反向排序
-	natsort($arr)	//按自然顺序排序，区分大小写
-	natcasesort($arr)	//按自然顺序排序，不区分大小写
-	array_multisort($arr,type,$arr)	//多维数组按值排序
+sort($arr) //按值排序，不保留原下标
+rsort($arr)	//按值反向排序，不保留原下标
+asort($arr)	//按值排序，保留原下标
+arsort($arr)	//按值反向排序，保留原下标
+ksort($arr)	//按键排序
+krsort($arr)	//按键反向排序
+natsort($arr)	//按自然顺序排序，区分大小写
+natcasesort($arr)	//按自然顺序排序，不区分大小写
+array_multisort($arr,type,$arr)	//多维数组按值排序
 
 
 

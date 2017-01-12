@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 PHP_string => 获取，查找 类(4个函数)---
 strrpos($str,char),strripos($str,char) //获取字符末位置
@@ -30,8 +30,8 @@ strcasecmp($str1,$str2)//获取首对有差异的字符，返回差值
 PHP_string => 截取,替换 类(6个函数)---
 strtr($str,$arr) //数组方式替换字串中的指定内容
 substr_replace($str,"char",start,[count])//替换字串中被截取的字串
-str_replace(char,char,$str,[varibale])
-str_ireplace(char,char,$str,[varibale])//替换字串中指定内容
+str_replace(char,char,$str,[num])
+str_ireplace(char,char,$str,[num])//替换字串中指定内容
 substr($str,start,count) 	//截取字串
 mb_substr($str,start,count,"type") //截取字符串并指定其编码
 nl2br($str) //将字串中 \\n 替换成<br>
@@ -482,9 +482,9 @@ THESTRING;
 
 
 	
-//-- str_ireplace(char,char,$str,[varibale]) 或 str_replace() 替换字串中指定内容
+//-- str_ireplace(char,char,$str,[num]) 或 str_replace() 替换字串中指定内容
 	
-	str_ireplace(char,char,$str,[varibale]) 替换字串中指定内容,不区分大小写
+	str_ireplace(char,char,$str,[num]) 替换字串中指定内容,不区分大小写
 	$a="Abcdefg";
 	echo str_ireplace("a","jjj",$a);		//jjjbcdefg
 	$y1=array("b","c");
