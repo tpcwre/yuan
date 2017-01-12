@@ -1,0 +1,15 @@
+
+
+git config --global user.name "tpcwre_pad"
+
+git config --global user.mail "tpcwre_pad@163.com"
+
+...
+
+git add .
+
+git ci -m ".."
+
+git remote add origin https://git.oschina.net/tpcwre/yuan.git
+
+git push -u origin master
